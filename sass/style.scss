@@ -1,0 +1,73 @@
+// General
+$primary: #E5222C;
+$secondary: #EFEFEF;
+$mainfont: Rockwell;
+$secondaryfont: arial;
+$medium-max: 749px;
+$medium-min: 750px;
+
+// Responsive
+$xs-fontsize: 1vw;
+$sm-fontsize: 2vw;
+$md-fontsize: 3vw;
+$lg-fontsize: 4vw;
+$xl-fontsize: 5vw;
+$xxl-fontsize: 6vw;
+
+// Not responsive
+$nr-xs-fontsize: 1vw;
+$nr-sm-fontsize: 2vw;
+$nr-md-fontsize: 3vw;
+$nr-lg-fontsize: 4vw;
+$nr-xl-fontsize: 5vw;
+
+@font-face {
+    font-family: Rockwell;
+    src: url(../fonts/rockb.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $secondary;
+    font-family: $mainfont;
+    padding: 2vw;
+}
+
+.header {
+    &__logo {
+        font-size: $xxl-fontsize;
+        color: $primary;
+        text-transform: uppercase;
+    }
+}
+
+.main {
+    display: grid;
+    grid-template-columns: auto minmax(200px, 400px);
+    &__highlighted {
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        grid-auto-rows: 30vh;
+        grid-gap: 2vw;
+        & {
+            &__block {
+                display: flex;
+                align-items: center;
+                font-size: $md-fontsize;
+                text-shadow: 0 0 $md-fontsize rgba(0,0,0,0.5);
+                justify-content: center;
+                border: 1px solid black;
+                background-position: center;
+                background-size: cover;
+                color: white;
+                background-color: rgba(0,0,0,0.1);
+            }
+        }
+    }
+}
