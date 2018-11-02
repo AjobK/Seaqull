@@ -1,2 +1,0 @@
-# Athena
-Athena programming blog
