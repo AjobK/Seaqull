@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import Main from '../components/home'
+import React, { Component } from 'react';
+import Header from '../components/home/header'
+import Main from '../components/home/main'
 
 import '../pages/App.scss';
 
@@ -7,15 +8,7 @@ class App extends Component {
     render() {
         return (
         <div class="wrapper">
-            <header class="header">
-                <h1 class="header__logo">Athena</h1>
-                <nav class="header__menu">
-                    <ul class="header__menu-ul">
-                        <li class="header__menu-link">Log in</li>
-                        <li class="header__menu-link__signup">Sign up</li>
-                    </ul>
-                </nav>
-            </header>
+            <Header />
             <Main />
         </div>
         );
