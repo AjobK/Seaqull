@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import styles from './contentblock.scss'
 
 class ContentBlock extends Component {
-    constructor() {
+    constructor(props) {
+        super(props)
+    }
+
+    render() {       
         let randomRGB = {
             red:    Math.random() * 255,
             green:  Math.random() * 255,
@@ -16,13 +20,11 @@ class ContentBlock extends Component {
         ];
         
         const { red, green, blue } = randomRGB
-        this.rgb = `rgb(${red},${green},${blue})`
-        this.gridClass = gridElOptions[Math.floor(Math.random() * gridElOptions.length - 1)]
-    }
+        const rgb = `rgb(${red},${green},${blue})`
+        const gridClass = gridElOptions[Math.floor(Math.random() * gridElOptions.length - 1)]
 
-    render() {
         return (
-            <article style={this.rgb} className={[this.gridClass, styles.block].join(' ')} />
+            <article style={{backgroundColor: rgb}} className={[gridClass, styles.block].join(' ')}> Article </article>
         )
     }
 }
