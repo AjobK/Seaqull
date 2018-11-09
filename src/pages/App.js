@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Main from '../components/home'
 
 import '../pages/App.scss';
 
@@ -15,12 +16,7 @@ class App extends Component {
                     </ul>
                 </nav>
             </header>
-            <main class="main">
-                <section class="main__highlighted">
-                </section>
-                <section class="main__viewing">
-                </section>
-            </main>
+            <Main />
         </div>
         );
     }
