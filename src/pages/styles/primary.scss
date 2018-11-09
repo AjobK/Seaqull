@@ -1,0 +1,16 @@
+@font-face {
+    font-family: Rockwell;
+    src: url(../fonts/rockb.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $secondary;
+    font-family: $mainfont;
+}
