@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './main.scss'
+import styles from './contentblock.scss'
 
 class ContentBlock extends Component {
     constructor() {
@@ -22,7 +22,7 @@ class ContentBlock extends Component {
 
     render() {
         return (
-            <article style={this.rgb} className={this.gridClass} />
+            <article style={this.rgb} className={[this.gridClass, styles.block].join(' ')} />
         )
     }
 }
