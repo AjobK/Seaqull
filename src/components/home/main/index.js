@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import styles from './main.scss'
 
 class Main extends Component {
     render() {
         return (
-            <main className="main">
-                <section className="main__highlighted">
+            <main className={styles.main}>
+                <section className={styles.highlighted}>
                     Hello
                 </section>
-                <section className="main__viewing">
+                <section className={styles.viewing}>
                     Bye
                 </section>
             </main>
