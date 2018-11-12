@@ -5,7 +5,7 @@ class App extends Component {
     render() {
         return (
         <>
-            <h3 className='head'>Athena 'scss' & 'hot-reload' Works!</h3>
+            <h3 className={styles.testb}>Athena 'scss' & 'hot-reload' Works!</h3>
         </>
         );
     }
