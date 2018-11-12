@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import styles from './App.scss';
+import Header from '../components/home/header'
 
 class App extends Component {
     render() {
         return (
         <>
-            <h3 className={styles.testb}>Athena 'scss' & 'hot-reload' Works!</h3>
+            <Header />
+            <h3 className={styles.testb}>Setup_v2 Branch Is working!</h3>
         </>
         );
     }

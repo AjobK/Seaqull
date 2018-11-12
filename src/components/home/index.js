@@ -13,3 +13,5 @@ class Home extends Component {
 }
  
 export default Home;
+export { default as Header } from './header'
+export { default as Main } from './main'
