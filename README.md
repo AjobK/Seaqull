@@ -2,6 +2,6 @@
 
 #### Commands 
 
-`- npm i`
+`- npm i` 
 
-`- npm start`
+`- npm run dev`
