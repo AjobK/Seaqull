@@ -1,4 +1,9 @@
-@import '../components/home/test.scss';
+@import '../pages/home/test.scss';
+
+body {
+    margin: 0;
+    padding: 0;
+}
 
 .testa {
     color: blue;
