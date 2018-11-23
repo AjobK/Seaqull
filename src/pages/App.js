@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import styles from './App.scss';
+import styles from '../layouts/main/contentblock.scss';
 import Header from '../layouts/header'
+import ContentBlock from '../layouts/main/contentblock'
 
 class App extends Component {
     render() {
         return (
         <>
+        <div>
             <Header />
-            <h3 className={styles.testb}>Setup_v2 Branch Is working!</h3>
+            <ContentBlock className={styles.block} />
+        </div>
         </>
         );
     }
