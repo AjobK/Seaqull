@@ -30,10 +30,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Controller via the second slash containing the function name ex. `test`)
 app.use('/user', user);
 
-// Host the server on port 8080
-const PORT = process.env.PORT || 8080
+// Host the server on port 8081
+const PORT = process.env.PORT || 8081
 app.listen(PORT, () => {
     console.log(`Athena Development server is running!`)
-    console.log('Server is hosted on url: http://localhost:8080')
+    console.log('Server is hosted on url: http://localhost:8081')
     console.log(`Don't forget to commit & push and check the linter!`)
 })
