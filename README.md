@@ -1,7 +1,16 @@
 # Athena
 
+
+## Webpack
+
+## Express
+
+## MongoDB
+
 #### Commands 
 
-`- npm i` 
+`- npm i` // Install Node modules
 
-`- npm run dev`
+`- npm run dev` // Webpack Server
+
+`- npm run star` //Express Server
