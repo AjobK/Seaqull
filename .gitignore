@@ -3,3 +3,6 @@
 
 # Distribution 
 /dist
+
+# PhpStorm
+.idea
