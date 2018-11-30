@@ -6,7 +6,7 @@ const user = require ('./src/routes/user.route');
 // Express Server
 const app = express(),
             DIST_DIR = __dirname,
-            HTML_FILE = path.join(DIST_DIR, 'index.html')
+            HTML_FILE = path.join(DIST_DIR, './dist/index.html')
 app.use(express.static(DIST_DIR))
 app.get('*', (req, res) => {
     res.sendFile(HTML_FILE)
