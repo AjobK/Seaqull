@@ -36,3 +36,4 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Import routes for users
 // Place the functions (the route files) in here (the first slash, ex. `users`, `posts' etc. which access the functions within the corresponding 
 // Controller via the second slash containing the function name ex. `test`)
+app.use('/user', user);
