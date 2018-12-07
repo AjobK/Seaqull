@@ -13,4 +13,4 @@
 
 `- npm run dev` // Webpack Server
 
-`- npm run star` //Express Server
+`- npm run start` //Express Server
