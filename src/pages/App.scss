@@ -1,15 +1,11 @@
 @import "../styles/style.scss";
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
 .wrapper {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     margin: 0 auto;
-    width: 1000px;
+    max-width: 1000px;
     padding: 0 20px;
 }
 
