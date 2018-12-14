@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './header.scss'
+import { Button } from '../../components'
 
 class Header extends Component {
     render() {
@@ -9,7 +10,7 @@ class Header extends Component {
                 <nav className={styles.menu}>
                     <ul className={styles.menu__ul}>
                         <li className={styles.menu__link}>Log in</li>
-                        <li className={styles.menu__signup}>Sign up</li>
+                        <Button value='Sign Up' />
                     </ul>
                 </nav>
             </header>

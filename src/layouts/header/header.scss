@@ -1,16 +1,15 @@
 @import '../../styles/variables.scss';
 
 .header {
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
     top: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: $grid-block-gap 0;
     background: $background;
-    z-index: 999;
+    z-index: 300;
+    width: 100%;
 }
 
 .logo {
@@ -41,15 +40,5 @@
     &__link {
         margin: 0 $nr-sm-fontsize;
         cursor: pointer;
-    }
-    &__signup {
-        margin: 0 $nr-sm-fontsize;
-        margin-right: 0;
-        padding: 10px 30px;
-        border-radius: 3px;
-        cursor: pointer;
-        background-color: $primary;
-        color: white;
-        text-align: center;
     }
 }
