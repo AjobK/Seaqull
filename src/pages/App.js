@@ -8,6 +8,8 @@ class App extends Component {
             <>
                 <Header />
                 <div className={styles.wrapper}>
+                    {/* This filler makes sure the content is aligned correctly   */}
+                    <Header filler />
                     <Main />
                 </div>
             </>

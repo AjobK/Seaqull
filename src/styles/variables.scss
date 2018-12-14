@@ -4,7 +4,7 @@
 $primary: #ff4040;
 $secondary: #EFEFEF;
 $background: #F4F4F4;
-$background-trans: rgba(244, 244, 244, 0.5);
+$background-trans: rgba(244, 244, 244, 0.95);
 
 // Fonts
 $mainfont: Rockwell;
@@ -14,6 +14,7 @@ $secondaryfont: arial;
 // Sizes
 $wrapper-width: 1000px;
 $logo-font-size: 82px;
+$logo-font-size-sm: 42px;
 
 // Responsive
 $xs-fontsize: 1vw;

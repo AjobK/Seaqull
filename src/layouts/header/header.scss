@@ -20,6 +20,16 @@
     }
 }
 
+.filler {
+    // Added everything necessary to hide and
+    // disable the header for maximum ensurance
+    opacity: 0;
+    visibility: hidden;
+    position: static;
+    pointer-events: none;
+    @extend .header
+}
+
 .logo {
     display: inline-block;
     font-size: $logo-font-size;
