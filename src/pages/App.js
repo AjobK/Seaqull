@@ -7,7 +7,7 @@ class App extends Component {
     render() {
         return (
         <>
-        <div>
+        <div className={styles.wrapper}>
             <Header />
             <ContentBlock className={styles.block} />
         </div>
