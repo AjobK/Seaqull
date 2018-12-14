@@ -1,33 +1,35 @@
 @import '../../styles/index.scss';
 
 .header {
+    @include noselect;
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background: $background;
+    background: $background-trans;
     z-index: 300;
+    width: 100%;
+    justify-content: center;
+
+    &Content {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        width: 100%;
+        max-width: $wrapper-width;
+        margin: 0 auto;
+    }
 }
 
 .logo {
-    @media screen and (max-width: 800px) {
-        font-size: $nr-xxl-fontsize;
-        line-height: $nr-xxl-fontsize * 0.75;
-    }
-    @media screen and (min-width: 801px) {
-        font-size: $nr-logo-fontsize;
-        line-height: $nr-logo-fontsize * 0.75;
-    }
+    display: inline-block;
+    font-size: $logo-font-size;
+    line-height: $logo-font-size * 0.75;
     color: $primary;
     text-transform: uppercase;
 }
 
 .menu {
+    margin-left: auto;
     &__ul {
         display: flex;
         list-style-type: none;

@@ -5,10 +5,12 @@ import styles from './App.scss'
 class App extends Component {
     render() {
         return (
-            <div className={styles.wrapper}>
+            <>
                 <Header />
-                <Main />
-            </div>
+                <div className={styles.wrapper}>
+                    <Main />
+                </div>
+            </>
         )
     }
 }
