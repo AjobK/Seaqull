@@ -11,7 +11,7 @@ class Header extends Component {
                 <nav className={styles.menu}>
                     <ul className={styles.menu__ul}>
                         <li className={styles.menu__link}>Log in</li>
-                        <Button value='Sign Up' />
+                        <Button value='Sign Up' className={styles.button} />
                     </ul>
                 </nav>
             </section>

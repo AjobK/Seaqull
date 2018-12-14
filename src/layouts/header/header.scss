@@ -13,7 +13,7 @@
     &Content {
         display: flex;
         align-items: center;
-        padding: 20px;
+        padding: $header-spacing;
         width: 100%;
         max-width: $wrapper-width;
         margin: 0 auto;
@@ -23,11 +23,20 @@
 .filler {
     // Added everything necessary to hide and
     // disable the header for maximum ensurance
-    opacity: 0;
-    visibility: hidden;
-    position: static;
-    pointer-events: none;
-    @extend .header
+    @extend .header;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: static !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    .headerContent {
+        padding: $header-spacing 0 !important;
+    }
+}
+
+.button {
+    margin: 0 $nr-sm-fontsize;
+    margin-right: 0;
 }
 
 .logo {
@@ -36,6 +45,11 @@
     line-height: $logo-font-size * 0.75;
     color: $primary;
     text-transform: uppercase;
+    
+    @include mobile-all {
+        font-size: $logo-font-size-sm;
+        line-height: $logo-font-size-sm * 0.75;
+    }
 }
 
 .menu {

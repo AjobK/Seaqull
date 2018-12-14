@@ -7,16 +7,19 @@ class Button extends Component {
         super(props)
     }
     render() {
+        const { value, className, noStyle } = this.props
         return (
-            <li className={styles.button}>
-                {this.props.value || 'Button'}
+            <li className={`${className} ${!noStyle && styles.button}`}>
+                {value || 'Button'}
             </li>
         )
     }
 }
 
 Button.propTypes = {
-    value: PropTypes.string
+    value: PropTypes.string,
+    className: PropTypes.array,
+    noStyle: PropTypes.bool
 }
 
 export default Button
