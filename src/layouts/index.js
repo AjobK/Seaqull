@@ -1,7 +1,7 @@
 import Header from './header'
 import Main from './main'
 
-export default {
+export {
     Header,
     Main
 }
