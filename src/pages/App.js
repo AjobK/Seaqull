@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import styles from '../layouts/main/contentblock.scss';
-import Header from '../layouts/header'
-import ContentBlock from '../layouts/main/contentblock'
+import { Header, Main } from '../layouts'
 
 class App extends Component {
     render() {
         return (
-        <>
-        <div className={styles.wrapper}>
-            <Header />
-            <ContentBlock className={styles.block} />
-        </div>
-        </>
-        );
+            <>
+                <Header />
+                <Main />
+            </>
+        )
     }
 }
 
