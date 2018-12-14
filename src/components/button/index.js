@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import styles from './button.scss'
 
 class Button extends Component {
@@ -12,6 +13,10 @@ class Button extends Component {
             </li>
         )
     }
+}
+
+Button.propTypes = {
+    value: PropTypes.string
 }
 
 export default Button
