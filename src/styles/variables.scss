@@ -1,13 +1,14 @@
 // General
-// $primary: #E5222C;
+
+// Colors
 $primary: #E5222C;
 $secondary: #EFEFEF;
+$background: rgba(239, 239, 239, 0.96);
+
+// Fonts
 $mainfont: Rockwell;
 $sidefont: Arial;
 $secondaryfont: arial;
-$medium-max: 749px;
-$medium-min: 750px;
-$full-percentage: 100%;
 
 // Responsive
 $xs-fontsize: 1vw;
@@ -27,7 +28,9 @@ $nr-xxl-fontsize: 48px;
 $nr-logo-fontsize: 94px;
 
 // Breakpoints
-
+$medium-max: 749px;
+$medium-min: 750px;
+$full-percentage: 100%;
 
 // Grid
 $grid-block-size: 25vh;
