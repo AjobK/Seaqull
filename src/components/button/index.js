@@ -22,7 +22,7 @@ class Button extends Component {
 
 Button.propTypes = {
     value: PropTypes.string,
-    className: PropTypes.array,
+    className: PropTypes.string,
     noStyle: PropTypes.bool,
     inverted: PropTypes.bool
 }
