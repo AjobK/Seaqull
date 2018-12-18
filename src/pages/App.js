@@ -1,18 +1,22 @@
-import React, { Component } from 'react'
-import { Header, Main } from '../layouts'
+import React, { Component, Fragment } from 'react'
+import { Header, SideNavigation, Main } from '../layouts'
 import styles from './App.scss'
 
 class App extends Component {
     render() {
         return (
-            <>
-                <Header />
+            <Fragment>
                 <div className={styles.wrapper}>
-                    {/* This filler makes sure the content is aligned correctly   */}
-                    <Header filler />
-                    <Main />
+                    <div className={styles.wrapperSideNavigation}>
+                        <SideNavigation open />
+                    </div>
+                    <div className={styles.wrapperContent}>
+                        <Header />
+                        <Header filler /> {/* Filler aligns content */}
+                        <Main />
+                    </div>
                 </div>
-            </>
+            </Fragment>
         )
     }
 }

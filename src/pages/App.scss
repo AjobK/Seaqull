@@ -1,12 +1,22 @@
 @import "../styles/index.scss";
 
 .wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    display: block;
     margin: 0 auto;
-    max-width: 1000px;
-    padding: 0 20px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    width: 100vw;
+
+    &Content {
+        display: inline-block;
+        width: 100vw;
+        position: relative;
+    }
+
+    &SideNavigation {
+        vertical-align: top;
+        display: inline-block;
+    }
 }
 
 

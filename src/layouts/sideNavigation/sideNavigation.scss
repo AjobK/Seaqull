@@ -1,0 +1,38 @@
+@import '../../styles/index.scss';
+
+.navigation {
+    background-color: $dark;
+    transition: 0.5s;
+    width: 0px;
+    background-color: $dark;
+    height: 100vh;
+    transition: ease;
+}
+
+.sNavOpen {
+    @include mobile {
+        transition: 0.5s;
+        width: 300px;
+    }
+}
+
+.menu {
+    justify-content: center;
+    &Ul {
+        list-style-type: none;
+        text-transform: uppercase;
+    }
+    &Item {
+        text-align: center;
+        font-weight: bold;
+        letter-spacing: 1px;
+        padding: 0 $header-spacing $header-spacing $header-spacing;
+        &:first-child {
+            padding: $header-spacing;
+        }
+    }
+    &Link {
+        color: white;
+        text-decoration: none;
+    }
+}
