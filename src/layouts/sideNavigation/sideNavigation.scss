@@ -10,7 +10,7 @@
 }
 
 .sNavOpen {
-    @include mobile {
+    @include mobile-all {
         transition: 0.5s;
         width: 300px;
     }

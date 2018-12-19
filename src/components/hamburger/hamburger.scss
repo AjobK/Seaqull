@@ -1,0 +1,32 @@
+@import '../../styles/index.scss';
+
+.hamburger {
+  &Line{
+    width: 26px;
+    height: 4px;
+    background-color: $primary;
+    display: block;
+    margin: 5px auto;
+    border-radius: 2px;
+    -webkit-transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+  }
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  &.hActive &Line:nth-child(2){
+    opacity: 0;
+  }
+
+  &.hActive &Line:nth-child(1){
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  &.hActive &Line:nth-child(3){
+    transform: translateY(-9px) rotate(-45deg);
+  }
+}
