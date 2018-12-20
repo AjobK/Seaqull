@@ -10,7 +10,7 @@ class Header extends Component {
         super(props)
         this.state = {
             hOpen: true,
-            testTitle: ''
+            testTitle: 'MOBX ERROR'
         }
     }
 
