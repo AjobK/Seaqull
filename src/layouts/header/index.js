@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types'
 import headerStyles from './header.scss'
 import { Button, Hamburger } from '../../components'
 
+@inject('store') @observer
 class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            hOpen: true
+            hOpen: true,
+            testTitle: ''
         }
+    }
+
+    componentDidMount () {
+        const { test } = this.props.store
+        this.setState({
+            testTitle: test.pieceOfText
+        })
     }
 
     hamburgerClick() {
@@ -45,7 +55,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    filler: PropTypes.bool
+    filler: PropTypes.bool,
+    store: PropTypes.any
 }
 
 export default Header
