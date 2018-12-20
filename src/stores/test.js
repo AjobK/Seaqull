@@ -4,11 +4,11 @@ import aboutpage from '../../data/aboutPage.json'
 
 const TestStore = types
   .model('PagesStore', {
-    pieceOfText: types.optional(types.string, 'ATHENA')
+    pieceOfText: types.optional(types.string, 'MOBX WORKING')
   })
   .actions(self => ({
     reset () {
-      self.pieceOfText = 'NOT ATHENA'
+      self.pieceOfText = 'MOBX WORKING'
     }
   }))
 
