@@ -1,6 +1,4 @@
 import { types } from 'mobx-state-tree'
-import homepage from '../../data/homePage.json'
-import aboutpage from '../../data/aboutPage.json'
 
 const TestStore = types
   .model('PagesStore', {
