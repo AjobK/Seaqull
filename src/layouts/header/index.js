@@ -31,7 +31,7 @@ class Header extends Component {
         let headerContent = (
             <section className={headerStyles.headerContent}>
                 <Hamburger onClick={this.hamburgerClick.bind(this)} active={this.state.hOpen} />
-                <h1 className={headerStyles.logo}>Athena</h1>
+                <h1 className={headerStyles.logo}>{ this.state.testTitle }</h1>
                 <nav className={headerStyles.menu}>
                     <ul className={headerStyles.menuUl}>
                         <li className={headerStyles.menuItem}>Log in</li>
