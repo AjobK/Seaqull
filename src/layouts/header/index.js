@@ -14,16 +14,15 @@ class Header extends Component {
     }
 
     hamburgerClick() {
-        this.setState({
-            hOpen: !this.state.hOpen
-        })
+        const { ui } = this.props.store
+        ui.toggleSubNav()
     }
 
     render() {
-        const { defaultData } = this.props.store
+        const { ui, defaultData } = this.props.store
         let headerContent = (
             <section className={headerStyles.headerContent}>
-                <Hamburger onClick={this.hamburgerClick.bind(this)} active={this.state.hOpen} />
+                <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={headerStyles.hamburger} />
                 <h1 className={headerStyles.logo}>{ defaultData.projectName }</h1>
                 <nav className={headerStyles.menu}>
                     <ul className={headerStyles.menuUl}>

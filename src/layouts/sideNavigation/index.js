@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types'
 import headerMobileStyles from './sideNavigation.scss'
 
+@inject('store') @observer
 class HeaderMobile extends Component {
     render() {
+        const { ui } = this.props.store
         const menuItems = {
             'log in': {
                 'href': '/login',
@@ -13,7 +16,7 @@ class HeaderMobile extends Component {
             }
         }
         return (
-            <section className={[headerMobileStyles.navigation, this.props.open && headerMobileStyles.sNavOpen].join(' ')}>
+            <section className={[headerMobileStyles.navigation, ui.subNavOpen && headerMobileStyles.sNavOpen].join(' ')}>
                 <div className={headerMobileStyles.menu}>
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
@@ -33,7 +36,8 @@ class HeaderMobile extends Component {
 }
 
 HeaderMobile.propTypes = {
-    open: PropTypes.bool
+    open: PropTypes.bool,
+    store: PropTypes.any
 }
 
 export default HeaderMobile

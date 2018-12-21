@@ -2,16 +2,15 @@
 
 .navigation {
     background-color: $dark;
-    transition: 0.5s;
+    transition: 1s;
     width: 0px;
     background-color: $dark;
     height: 100vh;
-    transition: ease;
 }
 
 .sNavOpen {
+    transition: 1s;
     @include mobile-all {
-        transition: 0.5s;
         width: 300px;
     }
 }

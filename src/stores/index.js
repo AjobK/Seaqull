@@ -1,11 +1,13 @@
 import { types, applySnapshot } from 'mobx-state-tree'
 import DefaultDataStore from './defaultData'
+import UIStore from './ui'
 
 let store = null
 
 const Store = types
   .model('Store', {
-    defaultData: types.optional(DefaultDataStore, {})
+    defaultData: types.optional(DefaultDataStore, {}),
+    ui: types.optional(UIStore, {})
   })
 
 export function initStore (isServer, snapshot = null) {
