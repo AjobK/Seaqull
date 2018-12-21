@@ -2,16 +2,19 @@
 
 .hamburger {
   &Line{
-    width: 26px;
-    height: 4px;
+    width: 30px;
+    height: 5px;
     background-color: $dark;
     display: block;
-    margin: 5px auto;
     border-radius: 2px;
     -webkit-transition: all 0.25s ease-in-out;
     -ms-transition: all 0.25s ease-in-out;
     -o-transition: all 0.25s ease-in-out;
     transition: all 0.25s ease-in-out;
+
+    &:nth-child(2)  {
+      margin: 6px auto;
+    }
   }
 
   &:hover{
@@ -23,10 +26,10 @@
   }
 
   &.hActive &Line:nth-child(1){
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(11px) rotate(45deg);
   }
 
   &.hActive &Line:nth-child(3){
-    transform: translateY(-9px) rotate(-45deg);
+    transform: translateY(-11px) rotate(-45deg);
   }
 }

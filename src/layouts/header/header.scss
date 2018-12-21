@@ -11,6 +11,10 @@
     width: 100%;
     justify-content: center;
 
+    @include mobile-all {
+        justify-content: none;
+    }
+
     &Content {
         display: flex;
         align-items: center;
@@ -54,6 +58,9 @@
 }
 
 .menu {
+    @include mobile-sm {
+        display: none;
+    }
     margin-left: auto;
     &Ul {
         display: flex;
@@ -72,7 +79,7 @@
 }
 
 .hamburger {
-    margin: 0 20px;
+    margin-right: 20px;
     display: none;
     @include mobile-all {
         display: block;

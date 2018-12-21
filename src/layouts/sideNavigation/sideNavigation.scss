@@ -4,6 +4,7 @@
     background-color: $dark;
     transition: 1s;
     width: 0px;
+    max-width: 0vw;
     background-color: $dark;
     height: 100vh;
 }
@@ -11,7 +12,8 @@
 .sNavOpen {
     transition: 1s;
     @include mobile-all {
-        width: 300px;
+        width: 325px;
+        max-width: 75vw;
     }
 }
 
