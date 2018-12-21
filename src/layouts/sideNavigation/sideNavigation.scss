@@ -10,8 +10,8 @@
 }
 
 .sNavOpen {
-    transition: 1s;
     @include mobile-all {
+        transition: 1s;
         width: 325px;
         max-width: 75vw;
     }

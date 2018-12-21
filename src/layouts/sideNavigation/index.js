@@ -5,16 +5,24 @@ import headerMobileStyles from './sideNavigation.scss'
 
 @inject('store') @observer
 class HeaderMobile extends Component {
-    render() {
-        const { ui } = this.props.store
-        const menuItems = {
-            'log in': {
-                'href': '/login',
-            },
-            'sign up': {
-                'href': '/signup'
-            }
+    constructor (props) {
+        super(props)
+        this.state = {
+            menuItems: {'':''}
         }
+    }
+
+    componentDidMount () {
+        const { nav } = this.props.store
+        this.setState({
+            menuItems: nav.menuItems
+        })
+    }
+
+    render () {
+        const { ui } = this.props.store
+        const { menuItems } = this.state
+
         return (
             <section className={[headerMobileStyles.navigation, ui.subNavOpen && headerMobileStyles.sNavOpen].join(' ')}>
                 <div className={headerMobileStyles.menu}>

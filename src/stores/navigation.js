@@ -1,19 +1,12 @@
 import { types } from 'mobx-state-tree'
 
-const menuItems = () => {
-    return ({
-        'log in': '/login',
-        'sign up': '/signup'
-    })
-}
-
 const NavigationStore = types
   .model('NavigationStore', {
-    menuItems: types.optional(types.frozen, menuItems())
+    menuItems: types.optional(types.boolean, true)
   })
   .actions(self => ({
     reset () {
-      self.menuItems = menuItems()
+      self.menuItems = true
     }
   }))
 
