@@ -21,10 +21,6 @@ class Header extends Component {
         })
     }
 
-    arrowFunction = () => {
-        console.log('Hallo miguel')
-    }
-
     hamburgerClick() {
         this.setState({
             hOpen: !this.state.hOpen

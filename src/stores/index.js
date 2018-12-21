@@ -1,21 +1,11 @@
 import { types, applySnapshot } from 'mobx-state-tree'
-import UiStore from './ui'
-import SliderManager from './slider-manager'
-import AuthStore from './user'
 import TestStore from './test'
-import FormStore from './newsletter'
-import PagesStore from './pages'
 
 let store = null
 
 const Store = types
   .model('Store', {
-    ui: types.optional(UiStore, {}),
-    newsletter: types.optional(FormStore, {}),
-    sliderManager: types.optional(SliderManager, {}),
-    user: types.optional(AuthStore, {}),
-    test: types.optional(TestStore, {}),
-    pages: types.optional(PagesStore, {})
+    test: types.optional(TestStore, {})
   })
 
 export function initStore (isServer, snapshot = null) {
