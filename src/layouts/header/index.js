@@ -9,16 +9,8 @@ class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            hOpen: true,
-            testTitle: 'MOBX ERROR'
+            hOpen: true
         }
-    }
-
-    componentDidMount () {
-        const { test } = this.props.store
-        this.setState({
-            testTitle: test.pieceOfText
-        })
     }
 
     hamburgerClick() {
@@ -28,10 +20,11 @@ class Header extends Component {
     }
 
     render() {
+        const { defaultData } = this.props.store
         let headerContent = (
             <section className={headerStyles.headerContent}>
                 <Hamburger onClick={this.hamburgerClick.bind(this)} active={this.state.hOpen} />
-                <h1 className={headerStyles.logo}>{ this.state.testTitle }</h1>
+                <h1 className={headerStyles.logo}>{ defaultData.projectName }</h1>
                 <nav className={headerStyles.menu}>
                     <ul className={headerStyles.menuUl}>
                         <li className={headerStyles.menuItem}>Log in</li>
