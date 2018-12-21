@@ -7,3 +7,10 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
   }
+
+@mixin transition-ease ($amount) {
+    -webkit-transition: all $amount ease-in-out;
+    -ms-transition: all $amount ease-in-out;
+    -o-transition: all $amount ease-in-out;
+    transition: all $amount ease-in-out;
+}

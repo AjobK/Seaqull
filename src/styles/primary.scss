@@ -1,10 +1,5 @@
 @import './fonts/Rockwell-Bold.ttf';
 
-@font-face {
-    font-family: Rockwell;
-    src: ('./fonts/Rockwell-Bold.ttf');
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -13,5 +8,5 @@
 
 body {
     background-color: $background;
-    font-family: $mainfont;
+    font-family: $mainfont, $sidefont;
 }

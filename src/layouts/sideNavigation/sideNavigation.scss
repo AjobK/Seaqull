@@ -1,11 +1,11 @@
 @import '../../styles/index.scss';
 
 .navigation {
-    background-color: $dark;
     transition: 1s;
     width: 0px;
     max-width: 0vw;
-    background-color: $dark;
+    overflow-x: hidden;
+    background-color: $darker;
     height: 100vh;
 }
 

@@ -14,7 +14,7 @@ class App extends Component {
             <Provider store={this.store}>
                 <div className={styles.wrapper}>
                     <div className={styles.wrapperSideNavigation}>
-                        <SideNavigation open />
+                        <SideNavigation />
                     </div>
                     <div className={styles.wrapperContent}>
                         <Header />

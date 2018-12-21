@@ -1,15 +1,23 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+@font-face {
+    font-family: 'RockwellBold';
+    src: ('./fonts/Rockwell-Bold.ttf');
+}
+
 // General
 
 // Colors
 $primary: #ff4040;
 $secondary: #EFEFEF;
 $dark: #4e4e4e;
+$darker: #2b2b2b;
 $background: #F4F4F4;
 $background-trans: rgba(244, 244, 244, 0.95);
 
 // Fonts
-$mainfont: Rockwell;
-$sidefont: Arial;
+$mainfont: RockwellBold;
+$sidefont: Arvo;
 $secondaryfont: arial;
 
 // Sizes
