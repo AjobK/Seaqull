@@ -11,10 +11,10 @@ class Banner extends Component {
         return (
             <div className={styles.wrapper}>
                 <div className={styles.content}>
-                    <h2 className={[className].join(' ')}>
+                    <h2 className={[styles.title].join(' ')}>
                         {title || 'Title'}
                     </h2>
-                    <h3 className={[className].join(' ')}>
+                    <h3 className={[styles.description].join(' ')}>
                         {description || 'Description'}
                     </h3>
                 </div>
