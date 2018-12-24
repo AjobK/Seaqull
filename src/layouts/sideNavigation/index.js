@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import PropTypes from 'prop-types'
 import headerMobileStyles from './sideNavigation.scss'
 
 @inject('store') @observer
@@ -43,12 +42,6 @@ class HeaderMobile extends Component {
             </section>
         )
     }
-}
-
-HeaderMobile.propTypes = {
-    open: PropTypes.bool,
-    filler: PropTypes.any,
-    store: PropTypes.any
 }
 
 export default HeaderMobile

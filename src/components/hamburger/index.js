@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import style from './hamburger.scss'
 
 class Hamburger extends Component {
@@ -12,12 +11,6 @@ class Hamburger extends Component {
       </div>
     )
   }
-}
-
-Hamburger.propTypes = {
-  active: PropTypes.boolean,
-  onClick: PropTypes.any,
-  className: PropTypes.string
 }
 
 export default Hamburger

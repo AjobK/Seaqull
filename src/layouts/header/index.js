@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import PropTypes from 'prop-types'
 import headerStyles from './header.scss'
 import { Button, Hamburger } from '../../components'
 
@@ -44,11 +43,6 @@ class Header extends Component {
             </header>
         )
     }
-}
-
-Header.propTypes = {
-    filler: PropTypes.bool,
-    store: PropTypes.any
 }
 
 export default Header

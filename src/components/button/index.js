@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styles from './button.scss'
 
 class Button extends Component {
@@ -18,13 +17,6 @@ class Button extends Component {
             </li>
         )
     }
-}
-
-Button.propTypes = {
-    value: PropTypes.string,
-    className: PropTypes.string,
-    noStyle: PropTypes.bool,
-    inverted: PropTypes.bool
 }
 
 export default Button

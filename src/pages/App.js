@@ -16,9 +16,7 @@ class App extends Component {
 
     preventXScroll = (e) => {
         const { ui } = this.store
-        if (e.which == 2 && ui.subNavOpen) {
-            e.preventDefault()
-        }
+        if (e.which == 2 && ui.subNavOpen) e.preventDefault()
     }
 
     render() {
