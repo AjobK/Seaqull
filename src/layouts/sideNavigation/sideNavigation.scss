@@ -7,6 +7,8 @@
     overflow-x: hidden;
     background-color: $background-darker;
     height: 100vh;
+    z-index: 2;
+    position: fixed;
 }
 
 .filler {
@@ -17,6 +19,7 @@
     position: static !important;
     pointer-events: none !important;
     z-index: 0 !important;
+    display: inline-block;
 }
 
 .sNavOpen {
