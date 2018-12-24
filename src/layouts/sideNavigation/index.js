@@ -8,7 +8,7 @@ class HeaderMobile extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            menuItems: {'':''}
+            menuItems: {'Log in':{'href': '/login'},'Sign Up':{'href': '/signup'}}
         }
     }
 
@@ -28,13 +28,11 @@ class HeaderMobile extends Component {
                 <div className={headerMobileStyles.menu}>
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
-                            Object.keys(menuItems).map((item, index) => {
-                                return (
-                                    <li className={headerMobileStyles.menuItem} key={index}>
-                                        <a className={headerMobileStyles.menuLink} href={menuItems[item].href}>{item}</a>
-                                    </li>
-                                ) 
-                            })
+                            Object.keys(menuItems).map((item, index) => (
+                                <li className={headerMobileStyles.menuItem} key={index}>
+                                    <a className={headerMobileStyles.menuLink} href={menuItems[item].href}>{item}</a>
+                                </li>
+                            ))
                         }
                     </ul>
                 </div>

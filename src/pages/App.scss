@@ -1,5 +1,9 @@
 @import "../styles/index.scss";
 
+.app {
+    overflow: hidden;
+}
+
 .wrapper {
     display: block;
     margin: 0 auto;

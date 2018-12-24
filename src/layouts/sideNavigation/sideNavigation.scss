@@ -5,8 +5,18 @@
     width: 0px;
     max-width: 0vw;
     overflow-x: hidden;
-    background-color: $darker;
+    background-color: $background-darker;
     height: 100vh;
+}
+
+.filler {
+    // Added everything necessary to hide and
+    // disable the header for maximum ensurance
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: static !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
 }
 
 .sNavOpen {

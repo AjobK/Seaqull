@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: row;
     @include noselect;
-    position: absolute;
+    position: fixed;
     top: 0;
     background: $background-trans;
     z-index: 300;
