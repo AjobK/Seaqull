@@ -1,26 +1,22 @@
 @import "../styles/index.scss";
 
-.app {
-    overflow: hidden;
-}
-
 .wrapper {
     display: block;
     margin: 0 auto;
-    overflow-x: hidden;
     white-space: nowrap;
-    width: 100vw;
-
-    &Content {
-        display: inline-block;
-        width: 100vw;
-        position: relative;
-    }
-
-    &SideNavigation {
-        vertical-align: top;
-        display: inline-block;
-    }
+    width: 100%;
+    justify-content: center;
 }
 
+.higherOrder {
+    position: fixed;
+    display: inline-block;
+    width: 100vw;
+}
 
+.lowerOrder {
+    white-space: nowrap;
+    overflow-x: hidden;
+    max-width: $wrapper-width;
+    margin: 0 auto;
+}

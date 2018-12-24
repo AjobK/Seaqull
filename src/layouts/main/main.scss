@@ -2,11 +2,14 @@
 .main {
     // justify-content: center;
     // max-width: $wrapper-width;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
-    grid-auto-rows: $grid-block-size;
-    grid-gap: $grid-block-gap;
-    padding: 0 $header-spacing $header-spacing $header-spacing;
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
+    // grid-auto-rows: $grid-block-size;
+    // grid-gap: $grid-block-gap;
+    display: inline-block;
+    margin-left: -4px;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .dummyBlock {
@@ -15,5 +18,6 @@
     justify-content: center;
     font-size: 2em;
     color: white;
+    overflow: hidden;
     background-color: red;
 }

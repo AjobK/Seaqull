@@ -12,19 +12,17 @@ class App extends Component {
     render() {
         return (
             <Provider store={this.store}>
-                <div className={styles.app}>
-                    <Header />
-                    <div className={styles.wrapper}>
-                        {/* <SideNavigation /> */}
-                        <div className={styles.wrapperSideNavigation}>
-                            <SideNavigation filler />
-                        </div>
-                        <div className={styles.wrapperContent}>
-                            <Header filler /> {/* Filler aligns content */}
-                            <Main />
-                        </div>
-                    </div>
-                </div>
+                <section className={styles.wrapper}>
+                    <aside className={styles.higherOrder}>
+                        <Header />
+                        <SideNavigation />
+                    </aside>
+                    <main className={styles.lowerOrder}>
+                        <Header filler /> {/* Filler aligns content */}
+                        <SideNavigation filler /> {/* Filler aligns content */}
+                        <Main />
+                    </main>
+                </section>
             </Provider>
         )
     }

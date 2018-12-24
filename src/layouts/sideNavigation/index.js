@@ -24,7 +24,11 @@ class HeaderMobile extends Component {
         const { menuItems } = this.state
 
         return (
-            <section className={[headerMobileStyles.navigation, ui.subNavOpen && headerMobileStyles.sNavOpen].join(' ')}>
+            <section className={[
+                headerMobileStyles.navigation,
+                ui.subNavOpen && headerMobileStyles.sNavOpen,
+                this.props.filler && headerMobileStyles.filler
+            ].join(' ')}>
                 <div className={headerMobileStyles.menu}>
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
@@ -43,6 +47,7 @@ class HeaderMobile extends Component {
 
 HeaderMobile.propTypes = {
     open: PropTypes.bool,
+    filler: PropTypes.any,
     store: PropTypes.any
 }
 

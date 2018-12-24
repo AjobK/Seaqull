@@ -7,7 +7,7 @@ class Main extends Component {
         for (let i = 0; i < 30; i++) {
             x.push(<div className={styles.dummyBlock} style={{
                 backgroundColor: `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
-            }}>{i}</div>)
+            }}>𝔸{` ${i}`}</div>)
         }
         return x
     }
@@ -15,7 +15,9 @@ class Main extends Component {
     render() {
         return (
             <div className={styles.main}>
-                {this.createDummyGrid()}
+                <div className={styles.grid}>
+                    {this.createDummyGrid()}
+                </div>
             </div>
         )
     }
