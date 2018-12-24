@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './main.scss'
+import generateRandomWord from 'random-words'
 
 class Main extends Component {
     createDummyGrid = () => {
@@ -7,7 +8,7 @@ class Main extends Component {
         for (let i = 0; i < 30; i++) {
             x.push(<div className={styles.dummyBlock} style={{
                 backgroundColor: `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
-            }}>𝔸{` ${i}`}</div>)
+            }}><p>{generateRandomWord(3).join(' ')}</p></div>)
         }
         return x
     }

@@ -18,10 +18,16 @@
 
 .dummyBlock {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
+    align-items: flex-end;
+    font-size: 1em;
+    padding: 20px;
+    text-transform: capitalize;
     color: white;
-    overflow: hidden;
     background-color: red;
+    > p {
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
