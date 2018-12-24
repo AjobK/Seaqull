@@ -9,6 +9,12 @@ class App extends Component {
         super(props)
         this.store = initStore(true)
     }
+
+    resetXScroll = (e) => {
+        if (e.target.offsetLeft > 0)
+            e.target.offsetLeft = 0
+    }
+
     render() {
         return (
             <Provider store={this.store}>
@@ -17,7 +23,7 @@ class App extends Component {
                         <Header />
                         <SideNavigation />
                     </aside>
-                    <main className={styles.lowerOrder}>
+                    <main className={styles.lowerOrder} onScroll={this.resetXScroll}>
                         <Header filler /> {/* Filler aligns content */}
                         <SideNavigation filler /> {/* Filler aligns content */}
                         <Main />
