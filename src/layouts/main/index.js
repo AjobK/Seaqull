@@ -6,7 +6,7 @@ class Main extends Component {
     createDummyGrid = () => {
         let x  = []
         for (let i = 0; i < 30; i++) {
-            x.push(<div className={styles.dummyBlock} style={{
+            x.push(<div key={i} className={styles.dummyBlock} style={{
                 backgroundColor: `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
             }}><p>{generateRandomWord(3).join(' ')}</p></div>)
         }

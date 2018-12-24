@@ -19,8 +19,7 @@ class HeaderMobile extends Component {
     }
 
     render () {
-        const { ui } = this.props.store
-        const { menuItems } = this.state
+        const { ui, nav } = this.props.store
 
         return (
             <section className={[
@@ -31,11 +30,11 @@ class HeaderMobile extends Component {
                 <div className={headerMobileStyles.menu}>
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
-                            Object.keys(menuItems).map((item, index) => (
-                                <li className={headerMobileStyles.menuItem} key={index}>
-                                    <a className={headerMobileStyles.menuLink} href={menuItems[item].href}>{item}</a>
-                                </li>
-                            ))
+                            Object.keys(nav.menuItems).map((item, index) => {
+                                return (<li className={headerMobileStyles.menuItem} key={index}>
+                                    <a className={headerMobileStyles.menuLink} href={nav.menuItems[index].href}>{nav.menuItems[index].title}</a>
+                                </li>)
+                            })
                         }
                     </ul>
                 </div>
