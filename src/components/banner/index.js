@@ -2,30 +2,32 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styles from './banner.scss'
 
-class Button extends Component {
+class Banner extends Component {
     constructor (props) {
         super(props)
     }
     render() {
-        const { Title, description, className } = this.props
+        const { title, description, className } = this.props
         return (
             <div className={styles.wrapper}>
-                <h2 className={[className].join(' ')}>
-                    {Title || 'Title'}
-                </h2>
-                <h3 className={[className].join(' ')}>
-                    {description || 'Description'}
-                </h3>
+                <div className={styles.content}>
+                    <h2 className={[className].join(' ')}>
+                        {title || 'Title'}
+                    </h2>
+                    <h3 className={[className].join(' ')}>
+                        {description || 'Description'}
+                    </h3>
+                </div>
             </div>
-
         )
     }
 }
 
-Button.propTypes = {
-    Title: PropTypes.string,
+Banner.propTypes = {
+    title: PropTypes.string,
     description: PropTypes.string,
+    color: PropTypes.string,
     className: PropTypes.string,
 }
 
-export default Button
+export default Banner

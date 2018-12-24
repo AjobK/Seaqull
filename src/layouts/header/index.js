@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types'
 import headerStyles from './header.scss'
 import { Button, Hamburger } from '../../components'
+import Banner from '../../components/banner'
 
 @inject('store') @observer
 class Header extends Component {
@@ -21,16 +22,19 @@ class Header extends Component {
     render() {
         const { ui, defaultData } = this.props.store
         let headerContent = (
-            <section className={headerStyles.headerContent}>
-                <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={headerStyles.hamburger} />
-                <h1 className={headerStyles.logo}>{ defaultData.projectName }</h1>
-                <nav className={headerStyles.menu}>
-                    <ul className={headerStyles.menuUl}>
-                        <li className={headerStyles.menuItem}>Log in</li>
-                        <Button value='Sign Up' className={headerStyles.button} />
-                    </ul>
-                </nav>
-            </section>
+            <div className={headerStyles.wrapper}>
+                <Banner title='Enjoying your stay?' description='Join our community entirely for free'/>
+                <section className={headerStyles.headerContent}>
+                    <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={headerStyles.hamburger} />
+                    <h1 className={headerStyles.logo}>{ defaultData.projectName }</h1>
+                    <nav className={headerStyles.menu}>
+                        <ul className={headerStyles.menuUl}>
+                            <li className={headerStyles.menuItem}>Log in</li>
+                            <Button value='Sign Up' className={headerStyles.button} />
+                        </ul>
+                    </nav>
+                </section>
+            </div>
         )
 
         const { filler } = this.props
