@@ -10,9 +10,15 @@ class App extends Component {
         this.store = initStore(true)
     }
 
-    resetXScroll = (e) => {
-        if (e.target.offsetLeft > 0)
-            e.target.offsetLeft = 0
+    componentDidMount() {
+        document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll);
+    }
+
+    preventXScroll = (e) => {
+        const { ui } = this.store
+        if (e.which == 2 && ui.subNavOpen) {
+            e.preventDefault()
+        }
     }
 
     render() {
@@ -23,7 +29,7 @@ class App extends Component {
                         <Header />
                         <SideNavigation />
                     </aside>
-                    <main className={styles.lowerOrder} onScroll={this.resetXScroll}>
+                    <main className={styles.lowerOrder}>
                         <Header filler /> {/* Filler aligns content */}
                         <SideNavigation filler /> {/* Filler aligns content */}
                         <Main />
@@ -34,4 +40,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default App

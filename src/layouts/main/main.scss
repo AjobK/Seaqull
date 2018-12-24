@@ -1,15 +1,19 @@
 @import '../../styles/variables';
 .main {
-    // justify-content: center;
-    // max-width: $wrapper-width;
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
-    // grid-auto-rows: $grid-block-size;
-    // grid-gap: $grid-block-gap;
     display: inline-block;
     margin-left: -4px;
     width: 100%;
+    max-width: $wrapper-width;
+    padding: 0 $header-spacing $header-spacing $header-spacing;
     overflow-x: hidden;
+}
+
+.grid {
+    max-width: $wrapper-width;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
+    grid-auto-rows: $grid-block-size;
+    grid-gap: $grid-block-gap;
 }
 
 .dummyBlock {
