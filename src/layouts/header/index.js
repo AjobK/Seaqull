@@ -5,13 +5,6 @@ import { Button, Hamburger } from '../../components'
 
 @inject('store') @observer
 class Header extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            hOpen: true
-        }
-    }
-
     hamburgerClick() {
         const { ui } = this.props.store
         ui.toggleSubNav()
@@ -32,8 +25,12 @@ class Header extends Component {
             </section>
         )
 
-        const { filler } = this.props
+        const { filler, fillerHeightOnly } = this.props
         return filler && ( // Ensuring there is only ONE header for Google SEO
+            <div className={headerStyles.filler}>
+                {headerContent}
+            </div>
+        ) || fillerHeightOnly && (
             <div className={headerStyles.filler}>
                 {headerContent}
             </div>

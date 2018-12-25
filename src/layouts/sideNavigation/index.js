@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
+import Header from '../header'
 import headerMobileStyles from './sideNavigation.scss'
 
 @inject('store') @observer
@@ -27,17 +28,23 @@ class HeaderMobile extends Component {
                 ui.subNavOpen && headerMobileStyles.sNavOpen,
                 this.props.filler && headerMobileStyles.filler
             ].join(' ')}>
+                {!this.props.filler &&
                 <div className={headerMobileStyles.menu}>
+                    <Header fillerHeightOnly />
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
                             Object.keys(nav.menuItems).map((item, index) => {
-                                return (<li className={headerMobileStyles.menuItem} key={index}>
-                                    <a className={headerMobileStyles.menuLink} href={nav.menuItems[index].href}>{nav.menuItems[index].title}</a>
-                                </li>)
+                                return (
+                                    <li className={headerMobileStyles.menuItem} key={index}>
+                                        <a className={headerMobileStyles.menuLink} href={nav.menuItems[index].href}>
+                                            {nav.menuItems[index].title}
+                                        </a>
+                                    </li>
+                                )
                             })
                         }
                     </ul>
-                </div>
+                </div>}
             </section>
         )
     }

@@ -39,6 +39,13 @@
     }
 }
 
+.fillerHeightOnly {
+    @extend .filler;
+    overflow: hidden !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+}
+
 .button {
     margin: 0 $nr-sm-fontsize;
     margin-right: 0;
