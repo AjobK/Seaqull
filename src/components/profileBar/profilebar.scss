@@ -6,6 +6,7 @@
     display: flex;
     background-color: $darker;
     height: 75px;
+
     &Picture {
         background-image: url('../../static/dummyprofile.jpg');
         background-size: cover;
@@ -15,15 +16,18 @@
         position: relative;
         border-right: 1px solid rgba(0,0,0,0.7);
     }
+    
     &Info {
         position: relative;
         width: calc(100% - 75px);
         display: flex;
         flex-direction: column;
         justify-content: center;
+
         &Wrapper {
             padding: 0 $header-spacing;
         }
+
         &UserName {
             overflow: hidden;
             white-space: nowrap;
@@ -31,6 +35,7 @@
             color: $background;
             font-size: 1em;
         }
+
         &UserRole {
             overflow: hidden;
             white-space: nowrap;
@@ -39,6 +44,7 @@
             color: $primary;
         }
     }
+    
     &Level {
         font-weight: bold;
         display: flex;
@@ -53,6 +59,7 @@
         width: auto;
         text-align: center;
         background-color: $primary;
+        
         &Number {
             font-family: $sidefont;
             color: white;
@@ -72,6 +79,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0,0,0,0.2);
+
     &Progress {
         background-color: $primary;
         opacity: 0.9;
