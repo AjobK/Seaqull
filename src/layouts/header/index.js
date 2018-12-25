@@ -16,12 +16,21 @@ class Header extends Component {
             <section className={headerStyles.headerContent}>
                 <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={headerStyles.hamburger} />
                 <h1 className={headerStyles.logo}>{ defaultData.projectName }</h1>
-                {!user.loggedIn && <nav className={headerStyles.menu}>
-                    <ul className={headerStyles.menuUl}>
-                        <li className={headerStyles.menuItem}>Log in</li>
-                        <Button value='Sign Up' className={headerStyles.button} />
-                    </ul>
-                </nav>}
+                {!user.loggedIn ? (
+                    <nav className={headerStyles.menu}>
+                        <ul className={headerStyles.menuUl}>
+                            <li className={headerStyles.menuItem}>Log in</li>
+                            <Button value='Sign Up' className={headerStyles.button} />
+                        </ul>
+                    </nav>
+                ) : (
+                    <nav className={headerStyles.menu}>
+                        <ul className={headerStyles.menuUl}>
+                            <li className={headerStyles.menuItem}>My profile</li>
+                            <li className={headerStyles.menuItem} onClick={user.logOut}>Logout</li>
+                        </ul>
+                    </nav>
+                )}
             </section>
         )
 

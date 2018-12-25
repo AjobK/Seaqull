@@ -12,7 +12,7 @@ class Button extends Component {
                 className,
                 !noStyle && styles.button,
                 !noStyle && inverted && styles.inverted
-            ].join(' ')}>
+            ].join(' ')} onClick={this.props.onClick}>
                 {value || 'Button'}
             </li>
         )

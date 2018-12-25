@@ -2,10 +2,10 @@ import { types } from 'mobx-state-tree'
 
 const UserStore = types
   .model('UserStore', {
-    loggedIn: types.optional(types.boolean, false)
+    loggedIn: types.optional(types.boolean, true)
   })
   .actions(self => ({
-    reset () {
+    logOut () {
       self.loggedIn = false
     }
   }))
