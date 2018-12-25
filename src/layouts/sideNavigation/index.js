@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Header from '../header'
 import headerMobileStyles from './sideNavigation.scss'
+import { ProfileBar } from '../../components'
 
 @inject('store') @observer
 class HeaderMobile extends Component {
@@ -31,6 +32,7 @@ class HeaderMobile extends Component {
                 {!this.props.filler &&
                 <div className={headerMobileStyles.menu}>
                     <Header fillerHeightOnly />
+                    <ProfileBar userRole='Developer' level={10} />
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
                             Object.keys(nav.menuItems).map((item, index) => {

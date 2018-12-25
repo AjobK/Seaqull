@@ -1,0 +1,60 @@
+@import '../../styles/index.scss';
+
+.profile {
+    @include noselect;
+    display: flex;
+    background-color: $darker;
+    height: 75px;
+    &Picture {
+        background-image: url('../../static/dummyprofile.jpg');
+        background-size: cover;
+        background-position: center;
+        width: 75px;
+        height: 75px;
+        position: relative;
+    }
+    &Info {
+        width: calc(100% - 75px);
+        padding: $header-spacing;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &UserName {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: $background;
+            font-size: 1em;
+        }
+        &UserRole {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 0.75em;
+            color: $primary;
+        }
+    }
+    &Level {
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        justify-content: center;
+        height: 25px;
+        min-width: 25px;
+        width: auto;
+        text-align: center;
+        background-color: $primary;
+        &Number {
+            font-family: $sidefont;
+            color: white;
+            font-size: 1em;
+            line-height: 0.8em;
+            margin-bottom: -2px;
+            padding: 0 6px;
+        }
+    }
+}

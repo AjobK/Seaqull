@@ -5,7 +5,7 @@
     width: 0px;
     max-width: 0vw;
     overflow-x: hidden;
-    background-color: $background-darker;
+    background-color: $dark;
     height: 100vh;
     z-index: 2;
     position: fixed;
@@ -31,22 +31,22 @@
 }
 
 .menu {
-    justify-content: center;
+    width: 325px;
+    max-width: 75vw;
     &Ul {
         list-style-type: none;
         text-transform: uppercase;
+        font-size: 1em;
     }
     &Item {
-        text-align: center;
         font-weight: bold;
         letter-spacing: 1px;
-        padding: 0 $header-spacing $header-spacing $header-spacing;
-        &:first-child {
-            padding: $header-spacing;
-        }
+        padding: $header-spacing;
+        transition: 0.2s;
+        cursor: pointer;
     }
     &Link {
-        color: $darker;
+        color: white;
         text-decoration: none;
     }
 }
