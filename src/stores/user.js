@@ -7,7 +7,10 @@ const UserStore = types
   .actions(self => ({
     logOut () {
       self.loggedIn = false
-    }
+    },
+    logIn () {
+      self.loggedIn = true
+    },
   }))
 
 export default UserStore

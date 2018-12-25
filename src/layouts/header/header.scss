@@ -80,7 +80,12 @@
         font-weight: bold;
     }
     &Item {
-        margin: 0 $nr-sm-fontsize;
+        &:not(:last-child) {
+            margin: 0 $nr-sm-fontsize;
+        }
+        &:last-child {
+            margin-left: $nr-sm-fontsize;
+        }
         color: rgba(0,0,0,0.6);
         &:hover {
             transition: 0.2s;

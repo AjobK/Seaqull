@@ -19,7 +19,7 @@ class Header extends Component {
                 {!user.loggedIn ? (
                     <nav className={headerStyles.menu}>
                         <ul className={headerStyles.menuUl}>
-                            <li className={headerStyles.menuItem}>Log in</li>
+                            <li className={headerStyles.menuItem} onClick={user.logIn}>Log in</li>
                             <Button value='Sign Up' className={headerStyles.button} />
                         </ul>
                     </nav>
