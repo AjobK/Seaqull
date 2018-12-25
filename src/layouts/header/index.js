@@ -11,17 +11,17 @@ class Header extends Component {
     }
 
     render() {
-        const { ui, defaultData } = this.props.store
+        const { ui, defaultData, user } = this.props.store
         let headerContent = (
             <section className={headerStyles.headerContent}>
                 <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={headerStyles.hamburger} />
                 <h1 className={headerStyles.logo}>{ defaultData.projectName }</h1>
-                <nav className={headerStyles.menu}>
+                {!user.loggedIn && <nav className={headerStyles.menu}>
                     <ul className={headerStyles.menuUl}>
                         <li className={headerStyles.menuItem}>Log in</li>
                         <Button value='Sign Up' className={headerStyles.button} />
                     </ul>
-                </nav>
+                </nav>}
             </section>
         )
 

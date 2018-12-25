@@ -2,6 +2,7 @@
 
 .profile {
     @include noselect;
+    position: relative;
     display: flex;
     background-color: $darker;
     height: 75px;
@@ -12,13 +13,17 @@
         width: 75px;
         height: 75px;
         position: relative;
+        border-right: 1px solid rgba(0,0,0,0.7);
     }
     &Info {
+        position: relative;
         width: calc(100% - 75px);
-        padding: $header-spacing;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        &Wrapper {
+            padding: 0 $header-spacing;
+        }
         &UserName {
             overflow: hidden;
             white-space: nowrap;
@@ -56,5 +61,20 @@
             margin-bottom: -2px;
             padding: 0 6px;
         }
+    }
+}
+
+.level {
+    align-self: flex-end;
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.2);
+    &Progress {
+        background-color: $primary;
+        opacity: 0.9;
+        height: 100%;
     }
 }

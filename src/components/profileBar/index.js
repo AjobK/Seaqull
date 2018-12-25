@@ -16,11 +16,13 @@ class ProfileBar extends Component {
                     </div>
                 </div>
                 <div className={styles.profileInfo}>
-                    <h2 className={styles.profileInfoUserName}>{userName || generateRandomWord(2).join('') + Math.floor(Math.random() * 10)}</h2>
-                    <p className={styles.profileInfoUserRole}>{userRole || 'Beginner'}</p>
-                </div>
-                <div className={styles.level}>
-                    <div className={styles.levelProgress} style={{ width: `${levelPercentage}%` || '50%' }} />
+                    <div className={styles.profileInfoWrapper}>
+                        <h2 className={styles.profileInfoUserName}>{userName || generateRandomWord(2).join('') + Math.floor(Math.random() * 10)}</h2>
+                        <p className={styles.profileInfoUserRole}>{userRole || 'Beginner'}</p>
+                    </div>
+                    <div className={styles.level}>
+                        <div className={styles.levelProgress} style={{ width: (levelPercentage && `${levelPercentage}%` || '50%') }} />
+                    </div>
                 </div>
             </section>
         )

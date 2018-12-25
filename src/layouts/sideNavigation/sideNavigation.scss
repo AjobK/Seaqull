@@ -44,6 +44,9 @@
         padding: $header-spacing;
         transition: 0.2s;
         cursor: pointer;
+        &:nth-of-type(even) {
+            background-color: rgba(0,0,0,0.1);
+        }
     }
     &Link {
         color: white;

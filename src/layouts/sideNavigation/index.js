@@ -6,13 +6,6 @@ import { ProfileBar } from '../../components'
 
 @inject('store') @observer
 class HeaderMobile extends Component {
-    constructor (props) {
-        super(props)
-        this.state = {
-            menuItems: {'Log in':{'href': '/login'},'Sign Up':{'href': '/signup'}}
-        }
-    }
-
     componentDidMount () {
         const { nav } = this.props.store
         this.setState({
@@ -21,7 +14,9 @@ class HeaderMobile extends Component {
     }
 
     render () {
-        const { ui, nav } = this.props.store
+        const { ui, nav, user } = this.props.store
+
+        const menuItems = user.loggedIn ? nav.menuItemsLoggedIn : nav.menuItemsLoggedOut
 
         return (
             <section className={[
@@ -32,14 +27,14 @@ class HeaderMobile extends Component {
                 {!this.props.filler &&
                 <div className={headerMobileStyles.menu}>
                     <Header fillerHeightOnly />
-                    <ProfileBar userRole='Developer' level={10} />
+                    {user.loggedIn && <ProfileBar userName='Elomin' userRole='Developer' levelPercentage={66} level={10} />}
                     <ul className={headerMobileStyles.menuUl}>
                         { // Iterating over all menu items
-                            Object.keys(nav.menuItems).map((item, index) => {
+                            Object.keys(menuItems).map((item, index) => {
                                 return (
                                     <li className={headerMobileStyles.menuItem} key={index}>
-                                        <a className={headerMobileStyles.menuLink} href={nav.menuItems[index].href}>
-                                            {nav.menuItems[index].title}
+                                        <a className={headerMobileStyles.menuLink} href={menuItems[index].href}>
+                                            {menuItems[index].title}
                                         </a>
                                     </li>
                                 )
