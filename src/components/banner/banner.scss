@@ -20,11 +20,48 @@
 }
 
 .title {
-    font-size: 3vw;
+    @include desktop {
+        font-size: 2.3vw;
+    }
+
+    @include tablet {
+        font-size: 4vw;
+    }
+
+    @include tablet-sm {
+        font-size: 4vw;
+    }
+
+    @include mobile {
+        font-size: 6vw;
+    }
+
+    @include mobile-sm {
+        font-size: 8vw;
+    }
 }
 
 .description {
-    font-size: 1.4vw;
     letter-spacing: 3px;
     color: #dee3e8;
+
+    @include desktop {
+        font-size: 1vw;
+    }
+
+    @include tablet {
+        font-size: 1.6vw;
+    }
+
+    @include tablet-sm {
+        font-size: 2vw;
+    }
+
+    @include mobile {
+        font-size: 3vw;
+    }
+
+    @include mobile-sm {
+        font-size: 3vw;
+    }
 }
