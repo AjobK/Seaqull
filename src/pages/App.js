@@ -3,7 +3,7 @@ import { Provider } from 'mobx-react'
 import { initStore } from '../stores'
 import { Header, SideNavigation, Main } from '../layouts'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import styles from './App.scss'
 
 class App extends Component {
@@ -11,6 +11,7 @@ class App extends Component {
         super(props)
         this.store = initStore(true)
         library.add(faCaretDown)
+        library.add(faCaretUp)
     }
 
     componentDidMount() {

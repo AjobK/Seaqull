@@ -22,7 +22,7 @@ class NavDropdown extends Component {
             <li className={styles.Item} key={index}>
                 <p className={styles.ItemHeading} onClick={this.toggleSubMenu}>
                     {title}
-                    <FontAwesomeIcon icon="caret-down" className={styles.arrow} />
+                    <FontAwesomeIcon icon={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
                 </p>
                 <ul className={[styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ')}>
                     {Object.keys(value).map((subitem) => (
