@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import { Provider } from 'mobx-react'
 import { initStore } from '../stores'
 import { Header, SideNavigation, Main } from '../layouts'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import styles from './App.scss'
 
 class App extends Component {
     constructor (props) {
         super(props)
         this.store = initStore(true)
+        library.add(faCaretDown)
     }
 
     componentDidMount() {

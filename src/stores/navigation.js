@@ -6,6 +6,7 @@ const NavigationStore = types
       home: '/',
       personal: [
         {title: 'profile', href: '/profile'},
+        {title: 'notifications', href: '/notifications'},
         {title: 'settings', href: '/settings'}
       ],
       general: [
