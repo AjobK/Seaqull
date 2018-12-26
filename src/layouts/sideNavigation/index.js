@@ -27,7 +27,7 @@ class HeaderMobile extends Component {
                 {!this.props.filler &&
                 <div className={headerMobileStyles.menu}>
                     <Header fillerHeightOnly />
-                    {user.loggedIn && <ProfileBar userName='Elomin' userRole='Developer' levelPercentage={66} level={10} />}
+                    {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
                     <ul className={headerMobileStyles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (
                             <NavDropdown title={item} key={index} value={menuItems[item]} />
