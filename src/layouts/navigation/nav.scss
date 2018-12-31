@@ -1,0 +1,59 @@
+@import '../../styles/index.scss';
+
+.navigation {
+    @include mobile-all {
+        display: none;
+    }
+    transition: 1s;
+    width: 50px;
+    overflow-x: hidden;
+    background-color: $background-darker;
+    height: 100vh;
+    z-index: 2;
+    float: left;
+}
+
+.filler {
+    // Added everything necessary to hide and
+    // disable the header for maximum ensurance
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: static !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    display: inline-block;
+}
+
+.sNavOpen {
+    @include desktop-tablet-sm {
+        transition: 1s;
+        width: 325px;
+        max-width: 75vw;
+    }
+}
+
+.menu {
+    &Ul {
+        list-style-type: none;
+        text-transform: capitalize;
+        font-size: 0.8em;
+        font-family: $navigationfont, 'Times New Roman', Times, serif;
+    }
+
+    &Item {
+        color: $darker;
+        font-size: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0,0,0,0.1);
+        > p {
+            width: 30px;
+            height: 30px;
+            background-color: $darker;
+            border-radius: 100%;
+        }
+    }
+}

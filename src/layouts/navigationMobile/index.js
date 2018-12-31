@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import Header from '../header'
-import headerMobileStyles from './sideNavigation.scss'
+import styles from './nav.scss'
 import { ProfileBar, NavDropdown } from '../../components'
 
 @inject('store') @observer
-class HeaderMobile extends Component {
+class NavigationMobile extends Component {
     componentDidMount () {
         const { nav } = this.props.store
         this.setState({
@@ -20,15 +20,15 @@ class HeaderMobile extends Component {
 
         return (
             <section className={[
-                headerMobileStyles.navigation,
-                ui.subNavOpen && headerMobileStyles.sNavOpen,
-                this.props.filler && headerMobileStyles.filler
+                styles.navigation,
+                ui.subNavOpen && styles.sNavOpen,
+                this.props.filler && styles.filler
             ].join(' ')}>
                 {!this.props.filler &&
-                <div className={headerMobileStyles.menu}>
+                <div className={styles.menu}>
                     <Header fillerHeightOnly />
                     {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
-                    <ul className={headerMobileStyles.menuUl}>
+                    <ul className={styles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (
                             <NavDropdown title={item} key={index} value={menuItems[item]} />
                         ))}
@@ -39,4 +39,4 @@ class HeaderMobile extends Component {
     }
 }
 
-export default HeaderMobile
+export default NavigationMobile

@@ -1,9 +1,11 @@
 import Header from './header'
-import SideNavigation from './sideNavigation'
+import Navigation from './navigation'
+import NavigationMobile from './navigationMobile'
 import Main from './main'
 
 export {
     Header,
-    SideNavigation,
+    Navigation,
+    NavigationMobile,
     Main
 }
