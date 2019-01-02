@@ -9,9 +9,10 @@
 }
 
 .higherOrder {
+    display: flex;
     position: fixed;
-    display: inline-block;
     width: 100vw;
+    height: 100vh;
 }
 
 .lowerOrder {
@@ -19,4 +20,8 @@
     overflow-x: hidden;
     max-width: $wrapper-width;
     margin: 0 auto;
+}
+
+.hasScroll {
+    width: calc(100vw - 14px) !important;
 }

@@ -4,12 +4,11 @@
     display: flex;
     flex-direction: row;
     @include noselect;
-    position: fixed;
     top: 0;
     background: $background-trans;
-    z-index: 300;
     width: 100%;
     justify-content: center;
+    height: 80px;
 
     @include mobile-all {
         justify-content: none;

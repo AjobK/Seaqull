@@ -2,34 +2,26 @@
 
 .navigation {
     @include mobile-all {
-        display: none;
+        display: none !important;
     }
     transition: 1s;
+    min-width: 50px;
     width: 50px;
     overflow-x: hidden;
-    background-color: $background-darker;
+    background-color: $darker;
     height: 100vh;
-    z-index: 2;
-    float: left;
 }
 
 .filler {
     // Added everything necessary to hide and
     // disable the header for maximum ensurance
     opacity: 0 !important;
+    height: 0;
     visibility: hidden !important;
     position: static !important;
     pointer-events: none !important;
     z-index: 0 !important;
     display: inline-block;
-}
-
-.sNavOpen {
-    @include desktop-tablet-sm {
-        transition: 1s;
-        width: 325px;
-        max-width: 75vw;
-    }
 }
 
 .menu {

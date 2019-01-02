@@ -7,7 +7,7 @@
     overflow-x: hidden;
     background-color: $dark;
     height: 100vh;
-    z-index: 2;
+    z-index: -1;
     position: fixed;
 }
 
