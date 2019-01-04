@@ -25,7 +25,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll) 
+        document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll)
         this.setState({hasScroll: document.body.offsetHeight > window.innerHeight})
     }
 
