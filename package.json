@@ -34,12 +34,15 @@
     "eslint-plugin-react": "^7.11.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "prop-types": "^15.6.2",
     "random-words": "^1.1.0",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "webpack": "^4.25.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "slice-ansi": "^2.0.0",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
     "@babel/core": "^7.2.2",
@@ -58,6 +61,7 @@
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "style-loader": "^0.23.1",
+    "stylelint": "^9.9.0",
     "url-loader": "^1.1.2"
   }
 }
