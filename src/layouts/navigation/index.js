@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './nav.scss'
-import { NavDropdown } from '../../components'
+import { NavDropdown, ProfileBar } from '../../components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 @inject('store') @observer
 class Navigation extends Component {
@@ -31,8 +32,18 @@ class Navigation extends Component {
             ].join(' ')}>
                 {!filler && !fillerWidthOnly &&
                 <div className={styles.wrapper}>
-                    <div className={styles.menuExpanded}>
+                    <div className={styles.menu}>
                         <ul className={styles.menuUl}>
+                            {Object.keys(menuItems).map((item, index) => (
+                                <li key={index} className={styles.menuItem} onClick={this.props.onClick}>
+                                    <FontAwesomeIcon icon={menuItems[item].icon} onClick={this.iconClick.bind(this)}/>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className={styles.menuExpanded}>
+                        {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
+                        <ul className={styles.menuExpandedUl}>
                             {Object.keys(menuItems).map((item, index) => (
                                 <NavDropdown
                                     title={item}

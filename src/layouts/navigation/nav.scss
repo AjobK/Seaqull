@@ -66,9 +66,11 @@
 }
 
 .menuExpanded {
+    background-color: $darkest;
     min-width: $navigation-width-expanded - $navigation-width;
     width: $navigation-width-expanded - $navigation-width;
     height: 100vh;
+    padding: $header-spacing;
 }
 
 .sNavOpen {
