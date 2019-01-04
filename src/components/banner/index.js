@@ -7,9 +7,9 @@ class Banner extends Component {
         super(props)
     }
     render() {
-        const { title, description, className } = this.props
+        const { title, description} = this.props
         return (
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper} background>
                 <div className={styles.content}>
                     <h2 className={[styles.title].join(' ')}>
                         {title || 'Title'}
@@ -27,7 +27,6 @@ Banner.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     color: PropTypes.string,
-    className: PropTypes.string,
 }
 
 export default Banner
