@@ -1,6 +1,7 @@
 @import '../../styles/index.scss';
 
 .navigation {
+    @include noselect;
     @include mobile-all {
         display: none !important;
     }
@@ -19,6 +20,8 @@
     @include mobile-all {
         display: none !important;
     }
+    min-width: $navigation-width;
+    width: $navigation-width;
     opacity: 0 !important;
     height: 0;
     visibility: hidden !important;
@@ -26,15 +29,6 @@
     pointer-events: none !important;
     z-index: 0 !important;
     display: inline-block;
-}
-
-.fillerWidth {
-    // @extend .filler;
-    @include mobile-all {
-        display: none !important;
-    }
-    min-width: $navigation-width;
-    width: $navigation-width;
 }
 
 .menu {
@@ -46,19 +40,30 @@
     }
 
     &Item {
-        color: $darker;
-        font-size: 0px;
+        font-size: $navigation-width * 0.35;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50px;
-        height: 50px;
-        background-color: rgba(0,0,0,0.1);
+        width: $navigation-width;
+        height: $navigation-width;
+        color: rgb(128, 128, 128);
+        cursor: pointer;
         > p {
             width: 30px;
             height: 30px;
             background-color: $darker;
             border-radius: 100%;
         }
+        &:hover {
+            transition: 0.2s;
+            color: white;
+        }
     }
 }
+
+.sNavOpen {
+    transition: 1s;
+    min-width: 375px;
+    width: 375px;
+}
+

@@ -30,7 +30,12 @@ class NavigationMobile extends Component {
                     {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
                     <ul className={styles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (
-                            <NavDropdown title={item} key={index} value={menuItems[item]} />
+                            <NavDropdown
+                                title={item}
+                                icon={menuItems[item].icon}
+                                key={index}
+                                value={menuItems[item].children
+                            } />
                         ))}
                     </ul>
                 </div>}

@@ -1,21 +1,28 @@
 @import '../../styles/index.scss';
 
-.main {
+.wrapper {
+    margin-top: $header-height;
     display: inline-block;
+    margin-left: -7px;
+    overflow: auto;
+    width: 100%;
+    @include desktop-tablet-sm {
+        width: calc(100% - #{$navigation-width});
+    }
+}
+
+.main {
     margin-top: $header-height;
     width: 100%;
     max-width: $wrapper-width;
+    justify-content: center;
+    align-items: center;
     padding: 0 $header-spacing $header-spacing;
-    overflow-x: hidden;
-
-    @include mobile-all {
-        margin-left: -4px; // Because inline-block adds 4px spacing
-    }
+    margin: 0 auto;
 }
 
 .grid {
     width: 100%;
-    display: grid;
     grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
     grid-auto-rows: $grid-block-size;
     grid-gap: $grid-block-gap;

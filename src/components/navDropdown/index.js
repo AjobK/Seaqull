@@ -17,17 +17,18 @@ class NavDropdown extends Component {
     }
 
     render() {
-        const { title, value, index } = this.props
+        const { title, value, index, icon } = this.props
         return Array.isArray(value) && (
             <li className={styles.Item} key={index}>
                 <p className={styles.ItemHeading} onClick={this.toggleSubMenu}>
+                    <FontAwesomeIcon icon={icon} className={styles.icon} />
                     {title}
                     <FontAwesomeIcon icon={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
                 </p>
                 <ul className={[styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ')}>
                     {Object.keys(value).map((subitem) => (
                         <li className={styles.ItemSub} key={subitem}>
-                            <a className={styles.ItemSubLink} href={value[subitem].href}>
+                            <a className={styles.ItemSubLink} href={value[subitem].ref}>
                                 {value[subitem].title}
                             </a>
                         </li>
@@ -36,7 +37,10 @@ class NavDropdown extends Component {
             </li>
         ) || (
             <li className={styles.Item} key={index}>
-                <p className={styles.ItemHeading}>{title}</p>
+                <p className={styles.ItemHeading}>
+                    <FontAwesomeIcon icon={icon} className={styles.icon} />
+                    {title}
+                </p>
             </li>
         )
     }

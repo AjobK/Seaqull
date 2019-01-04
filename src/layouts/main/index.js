@@ -15,9 +15,11 @@ class Main extends Component {
 
     render() {
         return (
-            <div className={styles.main}>
-                <div className={styles.grid}>
-                    {this.createDummyGrid()}
+            <div className={styles.wrapper}>
+                <div className={styles.main}>
+                    <div className={styles.grid}>
+                        {this.createDummyGrid()}
+                    </div>
                 </div>
             </div>
         )

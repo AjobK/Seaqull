@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import Header from '../header'
 import styles from './nav.scss'
 import { ProfileBar, NavDropdown } from '../../components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 @inject('store') @observer
 class Navigation extends Component {
@@ -11,6 +12,11 @@ class Navigation extends Component {
         this.setState({
             menuItems: nav.menuItems
         })
+    }
+
+    iconClick() {
+        const { ui } = this.props.store
+        ui.toggleSubNav()
     }
 
     render () {
@@ -22,15 +28,16 @@ class Navigation extends Component {
         return (
             <section className={[
                 fillerWidthOnly && styles.fillerWidth || styles.navigation,
-                filler && styles.filler
+                filler && styles.filler,
+                ui.subNavOpen && styles.sNavOpen
             ].join(' ')}>
                 {!filler && !fillerWidthOnly &&
                 <div className={styles.menu}>
                     <ul className={styles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (
-                            <div className={styles.menuItem} key={index}>
-                                <p>{item[0]}</p>
-                            </div> 
+                            <li key={index} className={styles.menuItem} onClick={this.props.onClick}>
+                                <FontAwesomeIcon icon={menuItems[item].icon} onClick={this.iconClick.bind(this)}/>
+                            </li>
                         ))}
                     </ul>
                 </div>}

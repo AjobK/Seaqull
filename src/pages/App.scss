@@ -17,17 +17,15 @@
 }
 
 .lowerOrder {
-    @include mobile-all {
+    // @include mobile-all {
         white-space: nowrap;
         overflow-x: hidden;
-        max-width: $wrapper-width;
-        margin: 0 auto;
-    }
-    @include desktop-tablet-sm {
-        align-items: center; 
-        display: flex;
-        justify-content: center;
-    }
+    // }
+    // @include desktop-tablet-sm {
+    //     align-items: center; 
+    //     display: flex;
+    //     justify-content: center;
+    // }
 }
 
 .hasScroll {
