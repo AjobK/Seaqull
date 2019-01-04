@@ -73,7 +73,8 @@
     padding: $header-spacing;
 
     &Item {
-        font-size: 14px;
+        font-family: $secondaryfont;
+        font-size: 12px;
         transition: 0.2s;
         margin-top: $header-spacing * 0.3;
         border-radius: 3px;
@@ -82,7 +83,9 @@
         align-items: center;
         background-color: $darker;
         text-transform: uppercase;
-        height: $navigation-width * 0.9;
+        font-weight: bold;
+        letter-spacing: 1px;
+        height: $navigation-width * 0.8;
         color: white;
         cursor: pointer;
         &:hover {
