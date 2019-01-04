@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import Header from '../header'
 import styles from './nav.scss'
-import { ProfileBar, NavDropdown } from '../../components'
+import { NavDropdown } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 @inject('store') @observer
@@ -32,14 +31,28 @@ class Navigation extends Component {
                 ui.subNavOpen && styles.sNavOpen
             ].join(' ')}>
                 {!filler && !fillerWidthOnly &&
-                <div className={styles.menu}>
-                    <ul className={styles.menuUl}>
-                        {Object.keys(menuItems).map((item, index) => (
-                            <li key={index} className={styles.menuItem} onClick={this.props.onClick}>
-                                <FontAwesomeIcon icon={menuItems[item].icon} onClick={this.iconClick.bind(this)}/>
-                            </li>
-                        ))}
-                    </ul>
+                <div className={styles.wrapper}>
+                    <div className={styles.menu}>
+                        <ul className={styles.menuUl}>
+                            {Object.keys(menuItems).map((item, index) => (
+                                <li key={index} className={styles.menuItem} onClick={this.props.onClick}>
+                                    <FontAwesomeIcon icon={menuItems[item].icon} onClick={this.iconClick.bind(this)}/>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className={styles.menuExpanded}>
+                        <ul className={styles.menuUl}>
+                            {Object.keys(menuItems).map((item, index) => (
+                                <NavDropdown
+                                    title={item}
+                                    icon={menuItems[item].icon}
+                                    key={index}
+                                    value={menuItems[item].children
+                                } />
+                            ))}
+                        </ul>
+                    </div>
                 </div>}
             </section>
         )

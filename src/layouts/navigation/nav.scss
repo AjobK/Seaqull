@@ -14,6 +14,10 @@
     pointer-events: auto;
 }
 
+.wrapper {
+    display: flex;
+}
+
 .filler {
     // Added everything necessary to hide and
     // disable the header for maximum ensurance
@@ -46,7 +50,7 @@
         justify-content: center;
         width: $navigation-width;
         height: $navigation-width;
-        color: rgb(128, 128, 128);
+        color: $nav-items;
         cursor: pointer;
         > p {
             width: 30px;
@@ -61,9 +65,15 @@
     }
 }
 
+.menuExpanded {
+    min-width: $navigation-width-expanded - $navigation-width;
+    width: $navigation-width-expanded - $navigation-width;
+    height: 100vh;
+}
+
 .sNavOpen {
     transition: 1s;
-    min-width: 375px;
-    width: 375px;
+    width: $navigation-width-expanded;
+    min-width: $navigation-width-expanded;
 }
 

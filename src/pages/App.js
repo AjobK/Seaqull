@@ -44,11 +44,11 @@ class App extends Component {
                         <Navigation />
                         <NavigationMobile />
                         <Header mobile />
+                        <Header desktop />
                     </aside>
                     <main className={styles.lowerOrder}>
-                        <Header desktop />
-                        <Navigation filler /> {/* Filler aligns content */}
                         <NavigationMobile filler /> {/* Filler aligns content */}
+                        <Navigation filler /> {/* Filler aligns content */}
                         <Main />
                     </main>
                 </section>

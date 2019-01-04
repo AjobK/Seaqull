@@ -50,8 +50,24 @@
     @include mobile-all {
         display: none !important;
     }
+    transition: 1s;
+    margin-left: 0px;
+    margin-top: 0px;
+    justify-content: none;
+}
+
+.hWrap {
+    transition: 1s;
+    right: 0vw;
+    top: 0;
     width: calc(100% - #{$navigation-width});
-    background-color: darkslategrey;
+    position: fixed;
+    z-index: 9999;
+}
+
+.sNavOpen {
+    transition: 1s;
+    right: $navigation-width - $navigation-width-expanded;
 }
 
 .mobile {

@@ -9,6 +9,7 @@
     cursor: pointer;
     background-color: rgba(0,0,0,0.3);
     border-bottom: 1px solid rgba(0,0,0,0.15);
+
     &Heading {
         color: white;
         padding: $header-spacing;
@@ -31,6 +32,28 @@
             color: white;
         }
     }
+
+    // Desktop
+    @include desktop-tablet-sm {
+        background-color: transparent;
+        height: $navigation-width;
+        display: flex;
+        align-items: center;
+        border: none;
+        &Heading {
+            padding: 0px;
+        }
+        &Sub {
+            &Link {
+                color: $nav-items;
+            }
+        }
+        &Heading {
+            padding-right: $header-spacing * 0.8;
+            width: 100%;
+            color: $nav-items;
+        }
+    }
 }
 
 .arrow {
@@ -38,5 +61,8 @@
 }
 
 .icon {
+    @include desktop-tablet-sm {
+        display: none;
+    }
     margin-right: 10px;
 }

@@ -12,7 +12,7 @@ class Header extends Component {
 
     render() {
         const { ui, defaultData, user } = this.props.store
-        const { desktop, mobile } = this.props
+        const { desktop, mobile, filler, fillerHeightOnly } = this.props
         let headerContent = (
             <section className={styles.headerContent}>
                 <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
@@ -35,7 +35,6 @@ class Header extends Component {
             </section>
         )
 
-        const { filler, fillerHeightOnly } = this.props
         return filler && ( // Ensuring there is only ONE header for Google SEO
             <div className={styles.filler}>
                 {headerContent}
@@ -43,6 +42,19 @@ class Header extends Component {
         ) || fillerHeightOnly && (
             <div className={styles.filler}>
                 {headerContent}
+            </div>
+        ) || desktop && (
+            <div className={[
+                styles.hWrap,
+                ui.subNavOpen && styles.sNavOpen
+            ].join(' ')}>
+                <header className={[
+                    styles.header,
+                    desktop && styles.desktop,
+                    mobile && styles.mobile
+                ].join(' ')}>
+                    {headerContent}
+                </header>
             </div>
         ) || (
             <header className={[

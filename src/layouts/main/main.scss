@@ -12,16 +12,18 @@
 }
 
 .main {
+    position: relative;
+    z-index: -1;
     margin-top: $header-height;
     width: 100%;
     max-width: $wrapper-width;
     justify-content: center;
     align-items: center;
-    padding: 0 $header-spacing $header-spacing;
     margin: 0 auto;
 }
 
 .grid {
+    padding: 0 $header-spacing $header-spacing;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
