@@ -8,7 +8,7 @@
     background: $background-trans;
     width: 100%;
     justify-content: center;
-    height: 80px;
+    height: $header-height;
 
     @include mobile-all {
         justify-content: none;

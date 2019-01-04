@@ -15,15 +15,16 @@ class Navigation extends Component {
 
     render () {
         const { ui, nav, user } = this.props.store
+        const { filler, fillerWidthOnly } = this.props
 
         const menuItems = user.loggedIn ? nav.menuItemsLoggedIn : nav.menuItemsLoggedOut
 
         return (
             <section className={[
-                styles.navigation,
-                this.props.filler && styles.filler
+                fillerWidthOnly && styles.fillerWidth || styles.navigation,
+                filler && styles.filler
             ].join(' ')}>
-                {!this.props.filler &&
+                {!filler && !fillerWidthOnly &&
                 <div className={styles.menu}>
                     <ul className={styles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (

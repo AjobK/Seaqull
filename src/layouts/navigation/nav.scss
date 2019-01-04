@@ -5,8 +5,8 @@
         display: none !important;
     }
     transition: 1s;
-    min-width: 50px;
-    width: 50px;
+    min-width: $navigation-width;
+    width: $navigation-width;
     overflow-x: hidden;
     background-color: $darker;
     height: 100vh;
@@ -15,6 +15,9 @@
 .filler {
     // Added everything necessary to hide and
     // disable the header for maximum ensurance
+    @include mobile-all {
+        display: none !important;
+    }
     opacity: 0 !important;
     height: 0;
     visibility: hidden !important;
@@ -22,6 +25,15 @@
     pointer-events: none !important;
     z-index: 0 !important;
     display: inline-block;
+}
+
+.fillerWidth {
+    // @extend .filler;
+    @include mobile-all {
+        display: none !important;
+    }
+    min-width: $navigation-width;
+    width: $navigation-width;
 }
 
 .menu {

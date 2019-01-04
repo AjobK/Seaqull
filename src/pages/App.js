@@ -13,12 +13,13 @@ class App extends Component {
         library.add(faCaretDown)
         library.add(faCaretUp)
         this.state = {
-            hasScroll: false
+            hasScroll: false,
+            device: 'desktop'
         }
     }
 
     componentDidMount() {
-        document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll);
+        document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll)
         this.setState({hasScroll: document.body.offsetHeight > window.innerHeight})
     }
 
@@ -29,6 +30,7 @@ class App extends Component {
 
     render() {
         const { hasScroll } = this.state
+
         return (
             <Provider store={this.store}>
                 <section className={styles.wrapper}>
@@ -38,8 +40,7 @@ class App extends Component {
                         <Header />
                     </aside>
                     <main className={styles.lowerOrder}>
-                        <Header filler /> {/* Filler aligns content */}
-                        <Navigation filler /> {/* Filler aligns content */}
+                        <Navigation fillerWidthOnly /> {/* Filler aligns content */}
                         <NavigationMobile filler /> {/* Filler aligns content */}
                         <Main />
                     </main>

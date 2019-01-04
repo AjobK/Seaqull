@@ -2,9 +2,9 @@
 .main {
     display: inline-block;
     margin-left: -4px; // Because inline-block adds 4px spacing
-    width: 100%;
-    max-width: $wrapper-width;
-    padding: 0 $header-spacing $header-spacing $header-spacing;
+    margin-top: $header-height;
+    width: 1000px;
+    padding: 0 $header-spacing;
     overflow-x: hidden;
 }
 
