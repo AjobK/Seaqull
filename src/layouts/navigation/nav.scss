@@ -10,6 +10,7 @@
     overflow-x: hidden;
     background-color: $darker;
     height: 100vh;
+    pointer-events: auto;
 }
 
 .filler {

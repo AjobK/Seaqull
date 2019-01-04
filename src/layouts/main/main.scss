@@ -1,12 +1,16 @@
-@import '../../styles/variables';
+@import '../../styles/index.scss';
+
 .main {
     display: inline-block;
-    margin-left: -4px; // Because inline-block adds 4px spacing
     margin-top: $header-height;
     width: 100%;
     max-width: $wrapper-width;
-    padding: 0 $header-spacing;
+    padding: 0 $header-spacing $header-spacing;
     overflow-x: hidden;
+
+    @include mobile-all {
+        margin-left: -4px; // Because inline-block adds 4px spacing
+    }
 }
 
 .grid {

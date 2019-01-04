@@ -9,6 +9,7 @@
     width: 100%;
     justify-content: center;
     height: $header-height;
+    pointer-events: auto;
 
     @include mobile-all {
         justify-content: none;
