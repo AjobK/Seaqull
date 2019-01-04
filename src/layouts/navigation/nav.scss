@@ -71,6 +71,18 @@
     width: $navigation-width-expanded - $navigation-width;
     height: 100vh;
     padding: $header-spacing;
+
+    &Item {
+        margin-top: $header-spacing / 2;
+        border-radius: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $darker;
+        text-transform: uppercase;
+        height: $navigation-width;
+        color: white;
+    }
 }
 
 .sNavOpen {

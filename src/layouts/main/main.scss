@@ -7,6 +7,7 @@
     overflow: auto;
     width: 100%;
     @include desktop-tablet-sm {
+        margin-left: -7px; // For inline blocks
         width: calc(100% - #{$navigation-width});
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './nav.scss'
-import { NavDropdown, ProfileBar } from '../../components'
+import { ProfileBar } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 @inject('store') @observer
@@ -13,9 +13,10 @@ class Navigation extends Component {
         })
     }
 
-    iconClick() {
+    iconClick = arg => event => {
         const { ui } = this.props.store
-        ui.toggleSubNav()
+        !ui.subNavOpen && ui.toggleSubNav()
+        ui.setCurrentOpenTab(arg)
     }
 
     render () {
@@ -35,8 +36,8 @@ class Navigation extends Component {
                     <div className={styles.menu}>
                         <ul className={styles.menuUl}>
                             {Object.keys(menuItems).map((item, index) => (
-                                <li key={index} className={styles.menuItem} onClick={this.props.onClick}>
-                                    <FontAwesomeIcon icon={menuItems[item].icon} onClick={this.iconClick.bind(this)}/>
+                                <li key={index} className={styles.menuItem} onClick={this.iconClick(item)} itemName={item}>
+                                    <FontAwesomeIcon icon={menuItems[item].icon} />
                                 </li>
                             ))}
                         </ul>
@@ -44,13 +45,11 @@ class Navigation extends Component {
                     <div className={styles.menuExpanded}>
                         {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
                         <ul className={styles.menuExpandedUl}>
-                            {Object.keys(menuItems).map((item, index) => (
-                                <NavDropdown
-                                    title={item}
-                                    icon={menuItems[item].icon}
-                                    key={index}
-                                    value={menuItems[item].children
-                                } />
+                            {menuItems[ui.currentOpenTab].children &&
+                            Object.keys(menuItems[ui.currentOpenTab].children).map((item, index) => (
+                                <div className={styles.menuExpandedItem} key={index}>
+                                    {menuItems[ui.currentOpenTab].children[index].title}
+                                </div>
                             ))}
                         </ul>
                     </div>
