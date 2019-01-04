@@ -3,7 +3,7 @@
 .wrapper {
     margin-top: $header-height;
     display: inline-block;
-    margin-left: -7px;
+    margin-left: -4px; // For inline blocks
     overflow: auto;
     width: 100%;
     @include desktop-tablet-sm {
@@ -13,7 +13,7 @@
 
 .main {
     position: relative;
-    z-index: -1;
+    z-index: 1;
     margin-top: $header-height;
     width: 100%;
     max-width: $wrapper-width;

@@ -40,11 +40,11 @@ class App extends Component {
         return (
             <Provider store={this.store}>
                 <section className={styles.wrapper}>
+                    <Header desktop />
+                    <Header mobile />
                     <aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
                         <Navigation />
                         <NavigationMobile />
-                        <Header mobile />
-                        <Header desktop />
                     </aside>
                     <main className={styles.lowerOrder}>
                         <NavigationMobile filler /> {/* Filler aligns content */}
