@@ -52,12 +52,20 @@
         height: $navigation-width;
         color: $nav-items;
         cursor: pointer;
+
+        &Active {
+            transition: 0s;
+            background-color: rgba(0,0,0,0.2);
+            color: white;
+        }
+
         > p {
             width: 30px;
             height: 30px;
             background-color: $darker;
             border-radius: 100%;
         }
+
         &:hover {
             transition: 0.2s;
             color: white;
