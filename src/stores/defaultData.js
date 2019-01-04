@@ -6,7 +6,7 @@ const DefaultDataStore = types
   })
   .actions(self => ({
     reset () {
-      self.projectName = 'Athena'
+      self.projectName = 'Seaqull'
     }
   }))
 

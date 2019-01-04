@@ -1,5 +1,5 @@
 {
-  "name": "athena",
+  "name": "seaqull",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AjobK/Athena.git"
+    "url": "git+https://github.com/AjobK/Seaqull.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AjobK/Athena/issues"
+    "url": "https://github.com/AjobK/Seaqull/issues"
   },
-  "homepage": "https://github.com/AjobK/Athena#readme",
+  "homepage": "https://github.com/AjobK/Seaqull#readme",
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
