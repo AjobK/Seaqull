@@ -46,6 +46,21 @@
     white-space: nowrap !important;
 }
 
+.desktop {
+    @include mobile-all {
+        display: none !important;
+    }
+    width: calc(100% - #{$navigation-width});
+    background-color: darkslategrey;
+}
+
+.mobile {
+    @include desktop-tablet-sm {
+        display: none !important;
+    }
+    justify-content: none;
+}
+
 .button {
     margin: 0 $nr-sm-fontsize;
     margin-right: 0;

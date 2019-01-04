@@ -23,6 +23,7 @@
 
 .grid {
     width: 100%;
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
     grid-auto-rows: $grid-block-size;
     grid-gap: $grid-block-gap;
