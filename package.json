@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --open --mode development",
-    "build": "webpack"
+    "build": "webpack",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -38,7 +40,11 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "@storybook/react": "^4.1.4",
+    "@storybook/addon-actions": "^4.1.4",
+    "@storybook/addon-links": "^4.1.4",
+    "@storybook/addons": "^4.1.4"
   },
   "dependencies": {
     "css-loader": "^1.0.1",
