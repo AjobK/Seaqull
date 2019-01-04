@@ -1,27 +1,27 @@
-@import "../styles/index.scss";
+@import '../styles/index.scss';
 
 .wrapper {
-    display: block;
-    margin: 0 auto;
-    white-space: nowrap;
-    width: 100%;
-    justify-content: center;
+	display: block;
+	margin: 0 auto;
+	white-space: nowrap;
+	width: 100%;
+	justify-content: center;
 }
 
 .higherOrder {
-    display: flex;
-    flex-wrap: nowrap;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
+	display: flex;
+	flex-wrap: nowrap;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
 }
 
 .lowerOrder {
-    white-space: nowrap;
-    overflow-x: hidden;
+	white-space: nowrap;
+	overflow-x: hidden;
 }
 
 .hasScroll {
-    width: calc(100vw - 14px) !important;
+	width: calc(100vw - 14px) !important;
 }

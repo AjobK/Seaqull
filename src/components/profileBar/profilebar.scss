@@ -1,88 +1,88 @@
 @import '../../styles/index.scss';
 
 .profile {
-    @include noselect;
-    position: relative;
-    display: flex;
-    background-color: $darker;
-    height: 75px;
+	@include noselect;
+	position: relative;
+	display: flex;
+	background-color: $darker;
+	height: 75px;
 
-    &Picture {
-        background-image: url('../../static/dummyprofile.jpg');
-        background-size: cover;
-        background-position: center;
-        width: 75px;
-        height: 75px;
-        position: relative;
-        border-right: 1px solid rgba(0,0,0,0.7);
-    }
-    
-    &Info {
-        position: relative;
-        width: calc(100% - 75px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+	&Picture {
+		background-image: url('../../static/dummyprofile.jpg');
+		background-size: cover;
+		background-position: center;
+		width: 75px;
+		height: 75px;
+		position: relative;
+		border-right: 1px solid rgba(0,0,0,0.7);
+	}
+	
+	&Info {
+		position: relative;
+		width: calc(100% - 75px);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 
-        &Wrapper {
-            padding: 0 $header-spacing;
-        }
+		&Wrapper {
+			padding: 0 $header-spacing;
+		}
 
-        &UserName {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            color: $background;
-            font-size: 1em;
-        }
+		&UserName {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: $background;
+			font-size: 1em;
+		}
 
-        &UserRole {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            font-size: 0.75em;
-            color: $primary;
-        }
-    }
-    
-    &Level {
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        justify-content: center;
-        height: 25px;
-        min-width: 25px;
-        width: auto;
-        text-align: center;
-        background-color: $primary;
-        
-        &Number {
-            font-family: $sidefont;
-            color: white;
-            font-size: 1em;
-            line-height: 0.8em;
-            margin-bottom: -2px;
-            padding: 0 6px;
-        }
-    }
+		&UserRole {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			font-size: 0.75em;
+			color: $primary;
+		}
+	}
+	
+	&Level {
+		font-weight: bold;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		justify-content: center;
+		height: 25px;
+		min-width: 25px;
+		width: auto;
+		text-align: center;
+		background-color: $primary;
+		
+		&Number {
+			font-family: $sidefont;
+			color: white;
+			font-size: 1em;
+			line-height: 0.8em;
+			margin-bottom: -2px;
+			padding: 0 6px;
+		}
+	}
 }
 
 .level {
-    align-self: flex-end;
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.2);
+	align-self: flex-end;
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.2);
 
-    &Progress {
-        background-color: $primary;
-        opacity: 0.9;
-        height: 100%;
-    }
+	&Progress {
+		background-color: $primary;
+		opacity: 0.9;
+		height: 100%;
+	}
 }

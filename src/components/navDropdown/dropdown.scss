@@ -1,68 +1,67 @@
 @import '../../styles/index.scss';
 
-
 .Item {
-    @include noselect;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: 0.2s;
-    cursor: pointer;
-    background-color: rgba(0,0,0,0.3);
-    border-bottom: 1px solid rgba(0,0,0,0.15);
+	@include noselect;
+	font-weight: bold;
+	letter-spacing: 1px;
+	transition: 0.2s;
+	cursor: pointer;
+	background-color: rgba(0,0,0,0.3);
+	border-bottom: 1px solid rgba(0,0,0,0.15);
 
-    &Heading {
-        color: white;
-        padding: $header-spacing;
-    }
-    &List {
-        list-style-type: none;
-        background-color: rgba(0,0,0,0.15);
-        &Closed {
-            display: none;
-        }
-    }
-    &Sub {
-        padding: $header-spacing;
-        padding-left: $header-spacing * 1.75;
-        &:not(:last-child) {
-            padding-bottom: 0;
-        }
-        &Link {
-            text-decoration: none;
-            color: white;
-        }
-    }
+	&Heading {
+		color: white;
+		padding: $header-spacing;
+	}
+	&List {
+		list-style-type: none;
+		background-color: rgba(0,0,0,0.15);
+		&Closed {
+			display: none;
+		}
+	}
+	&Sub {
+		padding: $header-spacing;
+		padding-left: $header-spacing * 1.75;
+		&:not(:last-child) {
+			padding-bottom: 0;
+		}
+		&Link {
+			text-decoration: none;
+			color: white;
+		}
+	}
 
-    // Desktop
-    @include desktop-tablet-sm {
-        background-color: transparent;
-        height: $navigation-width;
-        display: flex;
-        align-items: center;
-        border: none;
-        &Heading {
-            padding: 0px;
-        }
-        &Sub {
-            &Link {
-                color: $nav-items;
-            }
-        }
-        &Heading {
-            padding-right: $header-spacing * 0.8;
-            width: 100%;
-            color: $nav-items;
-        }
-    }
+	// Desktop
+	@include desktop-tablet-sm {
+		background-color: transparent;
+		height: $navigation-width;
+		display: flex;
+		align-items: center;
+		border: none;
+		&Heading {
+			padding: 0;
+		}
+		&Sub {
+			&Link {
+				color: $nav-items;
+			}
+		}
+		&Heading {
+			padding-right: $header-spacing * 0.8;
+			width: 100%;
+			color: $nav-items;
+		}
+	}
 }
 
 .arrow {
-    float: right;
+	float: right;
 }
 
 .icon {
-    @include desktop-tablet-sm {
-        display: none;
-    }
-    margin-right: 10px;
+	@include desktop-tablet-sm {
+		display: none;
+	}
+	margin-right: 10px;
 }

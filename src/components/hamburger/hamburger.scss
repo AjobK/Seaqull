@@ -1,34 +1,34 @@
 @import '../../styles/index.scss';
 
 .hamburger {
-  cursor: pointer;
+	cursor: pointer;
 
-  &Line{
-    width: 30px;
-    height: 5px;
-    background-color: $dark;
-    display: block;
-    border-radius: 2px;
-    @include transition-ease(0.5s);
+	&Line{
+		width: 30px;
+		height: 5px;
+		background-color: $dark;
+		display: block;
+		border-radius: 2px;
+		@include transition-ease(0.5s);
 
-    &:nth-child(2)  {
-      margin: 6px auto;
-    }
-  }
+		&:nth-child(2)  {
+			margin: 6px auto;
+		}
+	}
 
-  &:hover{
-    cursor: pointer;
-  }
+	&:hover{
+		cursor: pointer;
+	}
 
-  &.hActive &Line:nth-child(2){
-    opacity: 0;
-  }
+	&.hActive &Line:nth-child(2){
+		opacity: 0;
+	}
 
-  &.hActive &Line:nth-child(1){
-    transform: translateY(11px) rotate(45deg);
-  }
+	&.hActive &Line:nth-child(1){
+		transform: translateY(11px) rotate(45deg);
+	}
 
-  &.hActive &Line:nth-child(3){
-    transform: translateY(-11px) rotate(-45deg);
-  }
+	&.hActive &Line:nth-child(3){
+		transform: translateY(-11px) rotate(-45deg);
+	}
 }

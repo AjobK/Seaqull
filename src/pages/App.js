@@ -7,54 +7,54 @@ import { faCaretDown, faCaretUp, faHome, faCog, faSignOutAlt, faSignInAlt, faUse
 import styles from './App.scss'
 
 class App extends Component {
-    constructor (props) {
-        super(props)
-        this.store = initStore(true)
-        library.add(faCaretDown)
-        library.add(faCaretUp)
-        library.add(faHome)
-        library.add(faCog)
-        library.add(faSignOutAlt)
-        library.add(faSignInAlt)
-        library.add(faUser)
-        library.add(faUsers)
-        library.add(faTh)
-        this.state = {
-            hasScroll: false
-        }
-    }
+	constructor(props) {
+		super(props)
+		this.store = initStore(true)
+		library.add(faCaretDown)
+		library.add(faCaretUp)
+		library.add(faHome)
+		library.add(faCog)
+		library.add(faSignOutAlt)
+		library.add(faSignInAlt)
+		library.add(faUser)
+		library.add(faUsers)
+		library.add(faTh)
+		this.state = {
+			hasScroll: false
+		}
+	}
 
-    componentDidMount() {
-        document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll)
-        this.setState({hasScroll: document.body.offsetHeight > window.innerHeight})
-    }
+	componentDidMount() {
+		document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll)
+		this.setState({ hasScroll: document.body.offsetHeight > window.innerHeight })
+	}
 
-    preventXScroll = (e) => {
-        const { ui } = this.store
-        if (e.which == 2 && ui.subNavOpen) e.preventDefault()
-    }
+	preventXScroll = (e) => {
+		const { ui } = this.store
+		if (e.which == 2 && ui.subNavOpen) e.preventDefault()
+	}
 
-    render() {
-        const { hasScroll } = this.state
+	render() {
+		const { hasScroll } = this.state
 
-        return (
-            <Provider store={this.store}>
-                <section className={styles.wrapper}>
-                    <Header desktop />
-                    <Header mobile />
-                    <aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
-                        <Navigation />
-                        <NavigationMobile />
-                    </aside>
-                    <main className={styles.lowerOrder}>
-                        <NavigationMobile filler /> {/* Filler aligns content */}
-                        <Navigation filler /> {/* Filler aligns content */}
-                        <Main />
-                    </main>
-                </section>
-            </Provider>
-        )
-    }
+		return (
+			<Provider store={this.store}>
+				<section className={styles.wrapper}>
+					<Header desktop />
+					<Header mobile />
+					<aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
+						<Navigation />
+						<NavigationMobile />
+					</aside>
+					<main className={styles.lowerOrder}>
+						<NavigationMobile filler /> {/* Filler aligns content */}
+						<Navigation filler /> {/* Filler aligns content */}
+						<Main />
+					</main>
+				</section>
+			</Provider>
+		)
+	}
 }
 
 export default App
