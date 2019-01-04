@@ -65,6 +65,16 @@
     }
 }
 
+.currentHeading {
+    margin-top: $header-spacing;
+    margin-bottom: $header-spacing;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $dark;
+    text-align: center;
+}
+
 .menuExpanded {
     background-color: $darkest;
     min-width: $navigation-width-expanded - $navigation-width;

@@ -15,7 +15,7 @@ class Navigation extends Component {
 
     iconClick = arg => event => {
         const { ui } = this.props.store
-        !ui.subNavOpen && ui.toggleSubNav()
+        if (!ui.subNavOpen || ui.currentOpenTab == arg) ui.toggleSubNav()
         ui.setCurrentOpenTab(arg)
     }
 
@@ -44,6 +44,7 @@ class Navigation extends Component {
                     </div>
                     <div className={styles.menuExpanded}>
                         {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
+                        <h2 className={styles.currentHeading}>{ui.currentOpenTab}</h2>
                         <ul className={styles.menuExpandedUl}>
                             {menuItems[ui.currentOpenTab].children &&
                             Object.keys(menuItems[ui.currentOpenTab].children).map((item, index) => (
