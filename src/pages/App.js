@@ -43,7 +43,7 @@ class App extends Component {
                     <Header desktop />
                     <Header mobile />
                     <aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
-                        <Navigation />
+                        <Navigation /> 
                         <NavigationMobile />
                     </aside>
                     <main className={styles.lowerOrder}>
