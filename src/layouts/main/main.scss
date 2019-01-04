@@ -3,13 +3,14 @@
     display: inline-block;
     margin-left: -4px; // Because inline-block adds 4px spacing
     margin-top: $header-height;
-    width: 1000px;
+    width: 100%;
+    max-width: $wrapper-width;
     padding: 0 $header-spacing;
     overflow-x: hidden;
 }
 
 .grid {
-    max-width: $wrapper-width;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
     grid-auto-rows: $grid-block-size;
