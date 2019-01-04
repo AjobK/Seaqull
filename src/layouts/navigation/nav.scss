@@ -73,21 +73,22 @@
     padding: $header-spacing;
 
     &Item {
+        font-size: 14px;
         transition: 0.2s;
-        margin-top: $header-spacing / 2;
+        margin-top: $header-spacing * 0.3;
         border-radius: 3px;
         display: flex;
-        padding: 0 $header-spacing;
+        padding: 0 ($header-spacing * 0.75);
         align-items: center;
         background-color: $darker;
         text-transform: uppercase;
-        height: $navigation-width;
+        height: $navigation-width * 0.9;
         color: white;
         cursor: pointer;
         &:hover {
             transition: 0.2s;
             background-color: $primary;
-            padding-left: $header-spacing * 2;
+            padding-left: $header-spacing * 1.25;
         }
     }
 }
