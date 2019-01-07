@@ -24,7 +24,9 @@ class Navigation extends Component {
         const { filler, fillerWidthOnly } = this.props
 
         const menuItems = user.loggedIn ? nav.menuItemsLoggedIn : nav.menuItemsLoggedOut
-
+        
+        if (!menuItems[ui.currentOpenTab]) ui.setCurrentOpenTab(Object.keys(menuItems)[0])
+        
         return (
             <section className={[
                 fillerWidthOnly && styles.fillerWidth || styles.navigation,
