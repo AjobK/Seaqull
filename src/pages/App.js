@@ -10,15 +10,7 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.store = initStore(true)
-		library.add(faCaretDown)
-		library.add(faCaretUp)
-		library.add(faHome)
-		library.add(faCog)
-		library.add(faSignOutAlt)
-		library.add(faSignInAlt)
-		library.add(faUser)
-		library.add(faUsers)
-		library.add(faTh)
+		library.add(faCaretDown, faCaretUp, faHome, faCog, faSignOutAlt, faSignInAlt, faUser, faUsers, faTh)
 		this.state = {
 			hasScroll: false
 		}

@@ -5,8 +5,8 @@ const UserStore = types
     loggedIn: types.optional(types.boolean, true),
     name: types.optional(types.string, 'Elomin'),
     role: types.optional(types.string, 'Best Developer'),
-    level: types.optional(types.string, '10'),
-    percentage: types.optional(types.string, '66') // Percentage
+    level: types.optional(types.integer, 10),
+    percentage: types.optional(types.number, 59.8) // Percentage
   })
   .actions(self => ({
     logOut () {

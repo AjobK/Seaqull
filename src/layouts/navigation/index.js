@@ -45,7 +45,7 @@ class Navigation extends Component {
                             {Object.keys(menuItems).map((item, index) => (
                                 <li key={index} className={[
                                         styles.menuItem,
-                                        ui.currentOpenTab == item && styles.menuItemActive
+                                        ui.currentOpenTab == item && (ui.subNavOpen || !menuItems[item].children) && styles.menuItemActive
                                     ].join(' ')}
                                     onClick={this.iconClick(item)} itemName={item}>
                                     <FontAwesomeIcon icon={menuItems[item].icon} />
