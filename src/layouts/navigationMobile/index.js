@@ -27,7 +27,7 @@ class NavigationMobile extends Component {
                 {!this.props.filler &&
                 <div className={styles.menu}>
                     <Header fillerHeightOnly />
-                    {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
+                    {user.loggedIn && <ProfileBar userName={user.name} userRole={user.role} levelPercentage={user.percentage} level={user.level} />}
                     <ul className={styles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (
                             <NavDropdown

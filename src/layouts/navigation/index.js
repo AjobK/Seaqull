@@ -55,7 +55,7 @@ class Navigation extends Component {
                     </div>
                     { menuItems[ui.currentOpenTab].children &&
                         <div className={styles.menuExpanded}>
-                            {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
+                            {user.loggedIn && <ProfileBar userName={user.name} userRole={user.role} levelPercentage={user.percentage} level={user.level} />}
                             <h2 className={styles.currentHeading}>{ui.currentOpenTab}</h2>
                             <ul className={styles.menuExpandedUl}>
                                 {Object.keys(menuItems[ui.currentOpenTab].children).map((item, index) => (
