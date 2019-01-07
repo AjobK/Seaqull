@@ -58,7 +58,7 @@
 
 .hWrap {
 	transition: 1s;
-	right: 0;
+	left: $navigation-width;
 	top: 0;
 	width: calc(100% - #{$navigation-width});
 	position: fixed;
@@ -67,7 +67,7 @@
 
 .sNavOpen {
 	transition: 1s;
-	right: $navigation-width - $navigation-width-expanded;
+	left: $navigation-width-expanded;
 }
 
 .mobile {

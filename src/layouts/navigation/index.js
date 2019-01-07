@@ -22,7 +22,6 @@ class Navigation extends Component {
             if (!ui.subNavOpen || ui.currentOpenTab == arg) ui.toggleSubNav()
         }
         ui.setCurrentOpenTab(arg)
-        console.log(menuItems[arg])
     }
 
     render () {
