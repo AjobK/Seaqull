@@ -14,9 +14,15 @@ class Navigation extends Component {
     }
 
     iconClick = arg => event => {
-        const { ui } = this.props.store
-        if (!ui.subNavOpen || ui.currentOpenTab == arg) ui.toggleSubNav()
+        const { ui, nav, user } = this.props.store
+        const menuItems = user.loggedIn ? nav.menuItemsLoggedIn : nav.menuItemsLoggedOut
+        if (!menuItems[arg].children) {
+            if (ui.subNavOpen) ui.closeSubNav()
+        } else {
+            if (!ui.subNavOpen || ui.currentOpenTab == arg) ui.toggleSubNav()
+        }
         ui.setCurrentOpenTab(arg)
+        console.log(menuItems[arg])
     }
 
     render () {
@@ -40,7 +46,7 @@ class Navigation extends Component {
                             {Object.keys(menuItems).map((item, index) => (
                                 <li key={index} className={[
                                         styles.menuItem,
-                                        ui.currentOpenTab == item && ui.subNavOpen && styles.menuItemActive
+                                        ui.currentOpenTab == item && styles.menuItemActive
                                     ].join(' ')}
                                     onClick={this.iconClick(item)} itemName={item}>
                                     <FontAwesomeIcon icon={menuItems[item].icon} />
@@ -48,18 +54,19 @@ class Navigation extends Component {
                             ))}
                         </ul>
                     </div>
-                    <div className={styles.menuExpanded}>
-                        {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
-                        <h2 className={styles.currentHeading}>{ui.currentOpenTab}</h2>
-                        <ul className={styles.menuExpandedUl}>
-                            {menuItems[ui.currentOpenTab].children &&
-                            Object.keys(menuItems[ui.currentOpenTab].children).map((item, index) => (
-                                <div className={styles.menuExpandedItem} key={index}>
-                                    {menuItems[ui.currentOpenTab].children[index].title}
-                                </div>
-                            ))}
-                        </ul>
-                    </div>
+                    { menuItems[ui.currentOpenTab].children &&
+                        <div className={styles.menuExpanded}>
+                            {user.loggedIn && <ProfileBar userName='Elomin' userRole='Best Developer' levelPercentage={66} level={10} />}
+                            <h2 className={styles.currentHeading}>{ui.currentOpenTab}</h2>
+                            <ul className={styles.menuExpandedUl}>
+                                {Object.keys(menuItems[ui.currentOpenTab].children).map((item, index) => (
+                                    <div className={styles.menuExpandedItem} key={index}>
+                                        {menuItems[ui.currentOpenTab].children[index].title}
+                                    </div>
+                                ))}
+                            </ul>
+                        </div>
+                    }
                 </div>}
             </section>
         )

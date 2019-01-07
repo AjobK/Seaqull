@@ -10,6 +10,9 @@ const UIStore = types
       self.subNavOpen = false
       self.currentOpenTab = 'home'
     },
+    closeSubNav () {
+      self.subNavOpen = false
+    },
     toggleSubNav () {
       self.subNavOpen = !self.subNavOpen
     },
