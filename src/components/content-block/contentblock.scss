@@ -1,14 +1,14 @@
 @import '../../styles/style.scss';
 
 .block {
-    display: flex;
-    align-items: center;
-    font-size: $md-fontsize;
-    justify-content: center;
-    background-position: center;
-    background-size: cover;
-    color: white;
-    background-color: rgba(0,0,0,0.3);
-    cursor: pointer;
-    transition: 0.15s;
+	display: flex;
+	align-items: center;
+	font-size: $md-fontsize;
+	justify-content: center;
+	background-position: center;
+	background-size: cover;
+	color: white;
+	background-color: rgba(0,0,0,0.3);
+	cursor: pointer;
+	transition: 0.15s;
 }

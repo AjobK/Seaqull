@@ -3,10 +3,20 @@ import styles from './popup.scss'
 import Icon from '../icon';
 
 class Popup extends React.Component {
+  constructor(props){
+    super(props)
+
+    this.state = ({ popupOverlayClass: styles.popupOverlayShow })
+  }
+
   componentDidMount() {
-    const target = styles.popupIcon
-    document.addEventListener('click', () => {
-      console.log('test klik')
+    document.addEventListener('click', event => {
+      if(event.target.className === styles.popupOverlayShow) {
+        this.setState({ popupOverlayClass: styles.popupOverlayHidden })
+      }
+      if(event.target.className === this.props.target) {
+        this.setState({ popupOverlayClass: styles.popupOverlayShow })
+      }
     })
   }
 
@@ -14,7 +24,7 @@ class Popup extends React.Component {
   setOverlayColor () {
       return (
       <style jsx>{`
-        .${styles.popupOverlay} {
+        .${this.styles.popupOverlayShow} {
           background-color: ${this.props.overlayColor}
         }
       `}
@@ -25,7 +35,7 @@ class Popup extends React.Component {
   render () {
     return (
       <>
-        <div className={styles.popupOverlay}>
+        <div className={this.state.popupOverlayClass}>
           <div className={styles.popupHolder}>
             <Icon className={styles.popupIcon} iconName='faTimes' />
             {this.props.children}

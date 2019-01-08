@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './header.scss'
+import Popup from '../../components/popup';
 
 class Header extends Component {
     render() {
@@ -12,6 +13,9 @@ class Header extends Component {
                         <li className={styles.menu__signup}>Sign up</li>
                     </ul>
                 </nav>
+                <Popup target={styles.menu__signup}>
+                    <h1>test</h1>
+                </Popup>
             </header>
         )
     }

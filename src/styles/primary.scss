@@ -1,17 +1,17 @@
 @import './fonts/Rockwell-Bold.ttf';
 
 @font-face {
-    font-family: Rockwell;
+	font-family: Rockwell;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    outline: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	box-sizing: border-box;
 }
 
 body {
-    background-color: $background;
-    font-family: $mainfont;
+	background-color: $background;
+	font-family: $mainfont;
 }

@@ -1,46 +1,46 @@
 @import '../../styles/variables';
 
 .main {
-    display: grid;
-    grid-template-columns: auto;
-    position: relative;
+	display: grid;
+	grid-template-columns: auto;
+	position: relative;
 }
 .highlighted {
-    display: grid;
-    @media screen and (max-width: 1169px) {
-        grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
-    }
-    @media screen and (min-width: 1170px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    grid-auto-rows: $grid-block-size;
-    grid-gap: $grid-block-gap;
-    & {
-        &__block {
-            display: flex;
-            align-items: center;
-            font-size: $md-fontsize;
-            justify-content: center;
-            background-position: center;
-            background-size: cover;
-            color: white;
-            background-color: rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: 0.15s;
-        }
-    }
+	display: grid;
+	@media screen and (max-width: 1169px) {
+		grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
+	}
+	@media screen and (min-width: 1170px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+	grid-auto-rows: $grid-block-size;
+	grid-gap: $grid-block-gap;
+	& {
+		&__block {
+			display: flex;
+			align-items: center;
+			font-size: $md-fontsize;
+			justify-content: center;
+			background-position: center;
+			background-size: cover;
+			color: white;
+			background-color: rgba(0,0,0,0.3);
+			cursor: pointer;
+			transition: 0.15s;
+		}
+	}
 }
 .viewing {
-    display: grid;
-    width: 100%;
-    z-index: -1;
-    @media screen and (max-width: 1169px) {
-        grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
-    }
-    @media screen and (min-width: 1170px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    grid-auto-rows: $grid-block-size;
-    grid-gap: $grid-block-gap;
-    position: absolute;
+	display: grid;
+	width: 100%;
+	z-index: -1;
+	@media screen and (max-width: 1169px) {
+		grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
+	}
+	@media screen and (min-width: 1170px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+	grid-auto-rows: $grid-block-size;
+	grid-gap: $grid-block-gap;
+	position: absolute;
 }

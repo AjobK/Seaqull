@@ -1,16 +1,22 @@
 .popup {
 	&Overlay {
-		height: 100%;
-		width: 100%;
-		background-color: rgba(255, 64, 64, 0.7);
-		z-index: 1000;
-		cursor: pointer;
-		position: absolute;
-		right: 0;
-		top: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		&Show{
+			height: 100%;
+			width: 100%;
+			background-color: rgba(255, 64, 64, 0.7);
+			z-index: 1000;
+			cursor: pointer;
+			position: absolute;
+			right: 0;
+			top: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		&Hidden {
+			display: none;
+		}
 	}
 
 	&Holder {
