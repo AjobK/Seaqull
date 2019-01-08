@@ -1,0 +1,35 @@
+.popup {
+	&Overlay {
+		height: 100%;
+		width: 100%;
+		background-color: rgba(255, 64, 64, 0.7);
+		z-index: 1000;
+		cursor: pointer;
+		position: absolute;
+		right: 0;
+		top: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&Holder {
+		height: 400px;
+		width: 100%;
+		max-width: 750px;
+		background-color: #F2F2F2;
+		cursor: default;
+		border-radius: 25px;
+		position: relative;
+		padding-left: 10px;
+	}
+
+	&Icon {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		font-size: 30px;
+		cursor: pointer;
+		justify-self: end;
+	}
+}
