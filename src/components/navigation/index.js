@@ -47,7 +47,7 @@ class Navigation extends Component {
                                         styles.menuItem,
                                         ui.currentOpenTab == item && (ui.subNavOpen || !menuItems[item].children) && styles.menuItemActive
                                     ].join(' ')}
-                                    onClick={this.iconClick(item)} itemName={item}>
+                                    onClick={this.iconClick(item)}>
                                     <FontAwesomeIcon icon={menuItems[item].icon} />
                                 </li>
                             ))}
