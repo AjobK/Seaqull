@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Provider } from 'mobx-react'
 import { initStore } from '../stores'
-import { Header, Navigation, NavigationMobile, Main } from '../layouts'
+import { Header, Main } from '../layouts'
+import { Navigation, NavigationMobile } from '../components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCaretDown, faCaretUp, faHome, faCog, faSignOutAlt, faSignInAlt, faUsers, faUser, faTh } from '@fortawesome/free-solid-svg-icons'
 import styles from './App.scss'
@@ -17,13 +18,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		document.querySelector(`.${styles.lowerOrder}`).addEventListener('mousedown', this.preventXScroll)
 		this.setState({ hasScroll: document.body.offsetHeight > window.innerHeight })
-	}
-
-	preventXScroll = (e) => {
-		const { ui } = this.store
-		if (e.which == 2 && ui.subNavOpen) e.preventDefault()
 	}
 
 	render() {
@@ -38,11 +33,9 @@ class App extends Component {
 						<Navigation />
 						<NavigationMobile />
 					</aside>
-					<main className={styles.lowerOrder}>
-						<NavigationMobile filler /> {/* Filler aligns content */}
-						<Navigation filler /> {/* Filler aligns content */}
-						<Main />
-					</main>
+					<NavigationMobile filler /> {/* Filler aligns content */}
+					<Navigation filler /> {/* Filler aligns content */}
+					<Main />
 				</section>
 			</Provider>
 		)

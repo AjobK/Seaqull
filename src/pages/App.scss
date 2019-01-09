@@ -6,6 +6,7 @@
 	white-space: nowrap;
 	width: 100%;
 	justify-content: center;
+	overflow-x: hidden;
 }
 
 .higherOrder {
@@ -15,11 +16,6 @@
 	width: 100vw;
 	height: 100vh;
 	pointer-events: none;
-}
-
-.lowerOrder {
-	white-space: nowrap;
-	overflow-x: hidden;
 }
 
 .hasScroll {

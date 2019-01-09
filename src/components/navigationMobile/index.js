@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import Header from '../header'
 import styles from './nav.scss'
 import { ProfileBar, NavDropdown } from '../../components'
 
@@ -26,7 +25,6 @@ class NavigationMobile extends Component {
             ].join(' ')}>
                 {!this.props.filler &&
                 <div className={styles.menu}>
-                    <Header fillerHeightOnly />
                     {user.loggedIn && <ProfileBar userName={user.name} userRole={user.role} levelPercentage={user.percentage} level={user.level} />}
                     <ul className={styles.menuUl}>
                         {Object.keys(menuItems).map((item, index) => (

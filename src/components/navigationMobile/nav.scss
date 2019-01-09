@@ -6,7 +6,8 @@
 	max-width: 0;
 	overflow-x: hidden;
 	background-color: $darker;
-	height: 100vh;
+	height: calc(100vh - #{$header-height});
+	bottom: 0;
 	z-index: -1;
 	position: fixed;
 	pointer-events: auto;

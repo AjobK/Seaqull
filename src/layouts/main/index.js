@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 import styles from './main.scss'
 import generateRandomWord from 'random-words'
 
+@inject('store') @observer
 class Main extends Component {
     createDummyGrid = () => {
         let gridBlocks = []
@@ -16,6 +18,14 @@ class Main extends Component {
         }
         return gridBlocks
     }
+
+	componentDidMount() {
+		document.querySelector(`.${styles.wrapper}`).addEventListener('mousedown', this.preventXScroll)
+	}
+
+	preventXScroll = (e) => {
+        if (e.which == 2 && this.props.store.ui.subNavOpen) e.preventDefault()
+	}
 
     render() {
         return (

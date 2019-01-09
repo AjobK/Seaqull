@@ -13,7 +13,7 @@ class Navigation extends Component {
         })
     }
 
-    iconClick = arg => event => {
+    iconClick = arg => () => {
         const { ui, nav, user } = this.props.store
         const menuItems = user.loggedIn ? nav.menuItemsLoggedIn : nav.menuItemsLoggedOut
         if (!menuItems[arg].children) {

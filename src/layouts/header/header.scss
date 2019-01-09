@@ -25,27 +25,6 @@
 	}
 }
 
-.filler {
-	// Added everything necessary to hide and
-	// disable the header for maximum ensurance
-	@extend .header;
-	opacity: 0 !important;
-	visibility: hidden !important;
-	position: static !important;
-	pointer-events: none !important;
-	z-index: 0 !important;
-	.headerContent {
-		padding: $header-spacing 0 !important;
-	}
-}
-
-.fillerHeightOnly {
-	@extend .filler;
-	overflow: hidden !important;
-	width: 100% !important;
-	white-space: nowrap !important;
-}
-
 .desktop {
 	@include mobile-all {
 		display: none !important;
@@ -94,43 +73,6 @@
 	@include mobile-all {
 		font-size: $logo-font-size-sm;
 		line-height: $logo-font-size-sm * 0.75;
-	}
-}
-
-.menu {
-	margin-left: auto;
-
-	@include mobile-sm {
-		display: none;
-	}
-	
-	&Ul {
-		display: flex;
-		list-style-type: none;
-		font-family: $sidefont;
-		font-size: $nr-sm-fontsize;
-		text-transform: capitalize;
-		align-items: center;
-		letter-spacing: 1px;
-		font-weight: bold;
-	}
-
-	&Item {
-		color: rgba(0,0,0,0.6);
-		cursor: pointer;
-
-		&:not(:last-child) {
-			margin: 0 $nr-sm-fontsize;
-		}
-
-		&:last-child {
-			margin-left: $nr-sm-fontsize;
-		}
-
-		&:hover {
-			transition: 0.2s;
-			color: rgba(0,0,0,1);
-		}
 	}
 }
 
