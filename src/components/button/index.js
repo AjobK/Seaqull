@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import styles from './button.scss'
 
 class Button extends Component {
-    constructor (props) {
-        super(props)
-    }
     render() {
         const { value, className, noStyle, inverted } = this.props
         return (
