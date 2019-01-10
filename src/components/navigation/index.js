@@ -13,7 +13,7 @@ class Navigation extends Component {
         })
     }
 
-    iconClick = arg => () => {
+    iconClick (arg) {
         const { ui, nav, user } = this.props.store
         const menuItems = user.loggedIn ? nav.menuItemsLoggedIn : nav.menuItemsLoggedOut
         if (!menuItems[arg].children) {
@@ -42,15 +42,17 @@ class Navigation extends Component {
                 <div className={styles.wrapper}>
                     <div className={styles.menu}>
                         <ul className={styles.menuUl}>
-                            {Object.keys(menuItems).map((item, index) => (
-                                <li key={index} className={[
-                                        styles.menuItem,
-                                        ui.currentOpenTab == item && (ui.subNavOpen || !menuItems[item].children) && styles.menuItemActive
-                                    ].join(' ')}
-                                    onClick={this.iconClick(item)}>
-                                    <FontAwesomeIcon icon={menuItems[item].icon} />
-                                </li>
-                            ))}
+                            {Object.keys(menuItems).map((item, index) => {
+                                return (
+                                    <li key={index} className={[
+                                            styles.menuItem,
+                                            ui.currentOpenTab == item && (ui.subNavOpen || !menuItems[item].children) && styles.menuItemActive
+                                        ].join(' ')}
+                                        onClick={() => this.iconClick(item)}>
+                                        <FontAwesomeIcon icon={menuItems[item].icon} />
+                                    </li>
+                                )
+                            })}
                         </ul>
                     </div>
                     { menuItems[ui.currentOpenTab].children &&
