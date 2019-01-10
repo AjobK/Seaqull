@@ -13,7 +13,7 @@ class Header extends Component {
                         <li className={styles.menu__signup}>Sign up</li>
                     </ul>
                 </nav>
-                <Popup target={styles.menu__signup}>
+                <Popup overlayColor='#ffffff' target={styles.menu__signup}>
                     <h1>test</h1>
                 </Popup>
             </header>

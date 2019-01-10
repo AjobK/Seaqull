@@ -24,7 +24,7 @@ class Popup extends React.Component {
   setOverlayColor () {
       return (
       <style jsx>{`
-        .${this.styles.popupOverlayShow} {
+        .${styles.popupOverlayShow} {
           background-color: ${this.props.overlayColor}
         }
       `}
