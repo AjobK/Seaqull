@@ -11,6 +11,19 @@
 	height: $header-height;
 	pointer-events: auto;
 
+	@include desktop-tablet-sm {
+		transition: 1s;
+		margin-left: 0;
+		margin-top: 0;
+		justify-content: none;
+	}
+
+	@include mobile-all {
+		position: fixed;
+		z-index: 2;
+		justify-content: none;
+	}
+
 	@include mobile-all {
 		justify-content: none;
 	}
@@ -25,37 +38,20 @@
 	}
 
 	&Wrap {
-		transition: 1s;
-		left: $navigation-width;
-		top: 0;
-		width: calc(100% - #{$navigation-width});
-		position: fixed;
-		z-index: 100;
+		@include desktop-tablet-sm {
+			transition: 1s;
+			left: $navigation-width;
+			top: 0;
+			width: calc(100% - #{$navigation-width});
+			position: fixed;
+			z-index: 100;
+		}
 	}
-}
-
-.desktop {
-	@include mobile-all {
-		display: none !important;
-	}
-	transition: 1s;
-	margin-left: 0;
-	margin-top: 0;
-	justify-content: none;
 }
 
 .sNavOpen {
 	transition: 1s;
 	left: $navigation-width-expanded;
-}
-
-.mobile {
-	@include desktop-tablet-sm {
-		display: none !important;
-	}
-	position: fixed;
-	z-index: 2;
-	justify-content: none;
 }
 
 .button {

@@ -12,7 +12,6 @@ class Header extends Component {
 
 	render() {
 		const { ui, defaultData } = this.props.store
-		const { desktop, mobile } = this.props
 
 		let headerContent = (
 			<section className={styles.headerContent}>
@@ -22,27 +21,17 @@ class Header extends Component {
 			</section>
 		)
 
-		return desktop && (
+		return (
 			<div className={[
 				styles.headerWrap,
 				ui.subNavOpen && styles.sNavOpen
 			].join(' ')}>
 				<header className={[
-					styles.header,
-					desktop && styles.desktop,
-					mobile && styles.mobile
+					styles.header
 				].join(' ')}>
 					{headerContent}
 				</header>
 			</div>
-		) || (
-			<header className={[
-				styles.header,
-				desktop && styles.desktop,
-				mobile && styles.mobile
-			].join(' ')}>
-				{headerContent}
-			</header>
 		)
 	}
 }

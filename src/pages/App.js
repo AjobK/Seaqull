@@ -27,8 +27,7 @@ class App extends Component {
 		return (
 			<Provider store={this.store}>
 				<section className={styles.wrapper}>
-					<Header desktop />
-					<Header mobile />
+					<Header />
 					<aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
 						<Navigation />
 						<NavigationMobile />
