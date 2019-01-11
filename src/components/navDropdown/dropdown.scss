@@ -35,31 +35,6 @@
 			color: white;
 		}
 	}
-
-	// Desktop
-	@include desktop-tablet-sm {
-		background-color: transparent;
-		height: $navigation-width;
-		display: flex;
-		align-items: center;
-		border: none;
-
-		&Heading {
-			padding: 0;
-		}
-
-		&Sub {
-			&Link {
-				color: $nav-items;
-			}
-		}
-
-		&Heading {
-			padding-right: $header-spacing * 0.8;
-			width: 100%;
-			color: $nav-items;
-		}
-	}
 }
 
 .arrow {
