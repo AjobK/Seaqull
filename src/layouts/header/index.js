@@ -24,7 +24,7 @@ class Header extends Component {
 
 		return desktop && (
 			<div className={[
-				styles.hWrap,
+				styles.headerWrap,
 				ui.subNavOpen && styles.sNavOpen
 			].join(' ')}>
 				<header className={[

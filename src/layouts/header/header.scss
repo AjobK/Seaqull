@@ -23,6 +23,15 @@
 		max-width: $wrapper-width;
 		margin: 0 auto;
 	}
+
+	&Wrap {
+		transition: 1s;
+		left: $navigation-width;
+		top: 0;
+		width: calc(100% - #{$navigation-width});
+		position: fixed;
+		z-index: 100;
+	}
 }
 
 .desktop {
@@ -33,15 +42,6 @@
 	margin-left: 0;
 	margin-top: 0;
 	justify-content: none;
-}
-
-.hWrap {
-	transition: 1s;
-	left: $navigation-width;
-	top: 0;
-	width: calc(100% - #{$navigation-width});
-	position: fixed;
-	z-index: 100;
 }
 
 .sNavOpen {

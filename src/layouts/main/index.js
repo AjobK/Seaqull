@@ -14,7 +14,7 @@ class Main extends Component {
                     ${Math.floor(Math.random() * 255)},
                     ${Math.floor(Math.random() * 255)})
                 `
-            }}><p>{generateRandomWord(3).join(' ')}</p></div>)
+            }}><p className={styles.dummyBlockText}>{generateRandomWord(3).join(' ')}</p></div>)
         }
         return gridBlocks
     }
