@@ -1,0 +1,15 @@
+@import '../../styles/index.scss';
+
+.button {
+	padding: 10px 30px;
+	border-radius: 3px;
+	cursor: pointer;
+	background-color: $primary;
+	color: white;
+	text-align: center;
+}
+
+.inverted {
+	background-color: white;
+	color: $primary;
+}

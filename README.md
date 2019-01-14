@@ -1,7 +1,3 @@
-# Athena
+# Seaqull
 
-#### Commands 
-
-`- npm i` 
-
-`- npm run dev`
+This is the programming blog Seaqull

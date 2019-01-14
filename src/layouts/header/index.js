@@ -1,20 +1,39 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
+import { Hamburger, HeaderNavigation } from '../../components'
 
+@inject('store') @observer
 class Header extends Component {
-    render() {
-        return (
-            <header className={styles.header}>
-                <h1 className={styles.logo}>Athena</h1>
-                <nav className={styles.menu}>
-                    <ul className={styles.menu__ul}>
-                        <li className={styles.menu__link}>Log in</li>
-                        <li className={styles.menu__signup}>Sign up</li>
-                    </ul>
-                </nav>
-            </header>
-        )
-    }
+	hamburgerClick() {
+		const { ui } = this.props.store
+		ui.toggleSubNav()
+	}
+
+	render() {
+		const { ui, defaultData } = this.props.store
+
+		let headerContent = (
+			<section className={styles.headerContent}>
+				<Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
+				<h1 className={styles.logo}>{defaultData.projectName}</h1>
+				<HeaderNavigation />
+			</section>
+		)
+
+		return (
+			<div className={[
+				styles.headerWrap,
+				ui.subNavOpen && styles.sNavOpen
+			].join(' ')}>
+				<header className={[
+					styles.header
+				].join(' ')}>
+					{headerContent}
+				</header>
+			</div>
+		)
+	}
 }
 
 export default Header
