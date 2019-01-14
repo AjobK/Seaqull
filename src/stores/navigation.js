@@ -8,21 +8,8 @@ const NavigationStore = types
         icon: 'home'
       },
       personal: {
-        children: [
-          {title: 'profile', ref: '/profile'},
-          {title: 'notifications', ref: '/notifications'},
-          {title: 'favorite posts', ref: '/favorite-posts'},
-          {title: 'create post', ref: '/create-post'},
-          {title: 'settings', ref: '/settings'}
-        ],
+        ref: '/',
         icon: 'user'
-      },
-      general: {
-        children: [
-          {title: 'about', ref: '/about'},
-          {title: 'contact', ref: '/contact'}
-        ],
-        icon: 'th'
       },
       logout: {
         ref: '/logout',
@@ -33,13 +20,6 @@ const NavigationStore = types
       home: {
         ref: '/',
         icon: 'home'
-      },
-      general: {
-        children: [
-          {title: 'about', ref: '/about'},
-          {title: 'contact', ref: '/contact'},
-        ],
-        icon: 'th'
       },
       'log in': {
         ref: '/login',
