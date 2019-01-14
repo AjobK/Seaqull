@@ -43,8 +43,4 @@
 
 .icon {
 	margin-right: 10px;
-
-	@include desktop-tablet-sm {
-		display: none;
-	}
 }
