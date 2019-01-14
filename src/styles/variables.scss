@@ -30,8 +30,8 @@ $wrapper-width: 1000px;
 $logo-font-size: 54px;
 $logo-font-size-sm: 44px;
 $header-height: 80px;
-$navigation-width: 50px;
-$navigation-width-expanded: 400px;
+$navigation-width: 0; // Normally 50px
+$navigation-width-expanded: 0; // Normally 400px
 
 // Spacing
 $header-spacing: 20px;
