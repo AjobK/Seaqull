@@ -1,46 +1,47 @@
-@import '../../styles/variables';
+@import '../../styles/index.scss';
+
+.wrapper {
+	margin-top: $header-height;
+	display: inline-block;
+	margin-left: -4px; // For inline blocks
+	overflow: auto;
+	width: 100%;
+	@include desktop-tablet-sm {
+		margin-left: -7px; // For inline blocks
+		width: calc(100% - #{$navigation-width});
+	}
+}
 
 .main {
-    display: grid;
-    grid-template-columns: auto;
-    position: relative;
+	position: relative;
+	z-index: 1;
+	margin-top: $header-height;
+	width: 100%;
+	max-width: $wrapper-width;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
 }
-.highlighted {
-    display: grid;
-    @media screen and (max-width: 1169px) {
-        grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
-    }
-    @media screen and (min-width: 1170px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    grid-auto-rows: $grid-block-size;
-    grid-gap: $grid-block-gap;
-    & {
-        &__block {
-            display: flex;
-            align-items: center;
-            font-size: $md-fontsize;
-            justify-content: center;
-            background-position: center;
-            background-size: cover;
-            color: white;
-            background-color: rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: 0.15s;
-        }
-    }
+
+.grid {
+	padding: 0 $header-spacing $header-spacing;
+	width: 100%;
 }
-.viewing {
-    display: grid;
-    width: 100%;
-    z-index: -1;
-    @media screen and (max-width: 1169px) {
-        grid-template-columns: repeat(auto-fill, minmax($grid-block-size, 1fr));
-    }
-    @media screen and (min-width: 1170px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    grid-auto-rows: $grid-block-size;
-    grid-gap: $grid-block-gap;
-    position: absolute;
+
+.dummyBlock {
+	display: flex;
+	align-items: flex-end;
+	font-size: 1em;
+	height: 35vh;
+	margin-bottom: $header-spacing;
+	padding: $header-spacing * 2;
+	text-transform: capitalize;
+	color: white;
+	background-color: red;
+	&Text {
+		overflow: hidden;
+		width: 100%;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

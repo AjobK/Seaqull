@@ -1,14 +1,40 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+@font-face {
+	font-family: 'RockwellBold';
+	src: ('./fonts/Rockwell-Bold.ttf');
+}
+
 // General
 
 // Colors
-$primary: #E5222C;
+$primary: #ff4040;
 $secondary: #EFEFEF;
+$dark: #4e4e4e;
+$darker: #2b2b2b;
+$darkest: #1f1f1f;
+$nav-items: #808080;
 $background: #F4F4F4;
+$background-trans: rgba(244, 244, 244, 0.95);
+$background-darker: #dedede;
 
 // Fonts
-$mainfont: Rockwell;
-$sidefont: Arial;
+$mainfont: RockwellBold;
+$sidefont: 'arvo';
+$navigationfont: 'Work Sans';
 $secondaryfont: arial;
+
+// Sizes
+$wrapper-width: 1000px;
+$logo-font-size: 54px;
+$logo-font-size-sm: 44px;
+$header-height: 80px;
+$navigation-width: 0px; /* stylelint-disable-line length-zero-no-unit */ // Normally 50px
+$navigation-width-expanded: 0px; /* stylelint-disable-line length-zero-no-unit */ // Normally 400px
+
+// Spacing
+$header-spacing: 20px;
 
 // Responsive
 $xs-fontsize: 1vw;
