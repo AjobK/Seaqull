@@ -11,14 +11,14 @@
 #### ISSUES
 ___________
 
-I will be making issue templates:
+We will be making issue templates:
 * idea
 * hotfix / improvement
 * question  
 
 When making your issue it should follow one of these templates. If you think your issue is done and ready for the next sprint.
-Please tag @vQFire I will then review your issue and check if it follows the template.
-I *won't* be checking if it is relevant, that will be done we plan our next sprint.
+Please tag @vQFire We will then review your issue and check if it follows the template.
+We *won't* be checking if it is relevant, that will be done we plan our next sprint.
 Only with my approval your issue will be able to enter the next sprint. It will be labeld when it is approved.  
 
 > You are always allowed to make a new issue with a new idea / bug / improvement / question
@@ -29,7 +29,7 @@ ____________
 
 From now on we will be working with sprints, this will ensure more structure in the project. Each sprint will take 2 weaks.
 The sprint will always end on a Friday and start on a Saturday. Each Friday we will decide what issues will be used for the coming sprint.
-I have an idea for picking issues without to much discussions.  
+We have an idea for picking issues without to much discussions.  
 It goes like this:
 * Each member gets 5 points.
 * Each member can spend his points on issues to the ones they think are usefull.
@@ -37,7 +37,7 @@ It goes like this:
 * Then each issue will be distributed among the members
 * You can lose and earn points. Explained in the workdays section
 
-Like I said this is an expirament, if it does not work we will try something else.
+Like it said this is an expirament, if it does not work we will try something else.
 You are allowed to work on an issues for multiple sprints. This needs to be requested within 3 days from starting the sprint.
 
 #### WORKDAYS
@@ -54,7 +54,7 @@ If you are sick or any other reasons like a relatives decease, just tell us in d
 #### PULL REQUEST
 _________________
 
-I will be making a template for pull requests. It is required to follow this template. This will make sure it is easy to review.
+We will be making a template for pull requests. It is required to follow this template. This will make sure it is easy to review.
 So we spend less time on reviewing and more on coding. Don't forget to label your pull request.
 You are **never** allowed to merge your own pull request this to ensure good quality code.  
 And **NEVER** think oh he/she wrote this code it will be fine. You never know what you will find!
