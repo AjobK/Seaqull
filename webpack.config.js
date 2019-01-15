@@ -39,10 +39,10 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback = true
+    historyApiFallback: true
   },
   output: {
-    publicPath = '/'
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebPackPlugin({
