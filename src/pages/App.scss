@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import '../styles/style.scss';
 
 .wrapper {
@@ -8,3 +9,28 @@
 	max-width: 1000px;
 	padding: 0 20px;
 }
+=======
+@import '../styles/index.scss';
+
+.wrapper {
+	display: block;
+	margin: 0 auto;
+	white-space: nowrap;
+	width: 100%;
+	justify-content: center;
+	overflow-x: hidden;
+}
+
+.higherOrder {
+	display: flex;
+	flex-wrap: nowrap;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+}
+
+.hasScroll {
+	width: calc(100vw - 14px) !important;
+}
+>>>>>>> 698f49c7f147296847f7ee6d6da3b48f5ef5f8c6
