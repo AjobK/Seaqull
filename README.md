@@ -19,7 +19,10 @@ I will be making issue templates:
 When making your issue it should follow one of these templates. If you think your issue is done and ready for the next sprint.
 Please tag @vQFire I will then review your issue and check if it follows the template.
 I *won't* be checking if it is relevant, that will be done we plan our next sprint.
-Only with my approval your issue will be able to enter the next sprint. It will be labeld when it is approved.
+Only with my approval your issue will be able to enter the next sprint. It will be labeld when it is approved.  
+
+> You are always allowed to make a new issue with a new idea / bug / improvement / question
+
 
 #### SPRINTS
 ____________
@@ -52,6 +55,6 @@ If you are sick or any other reasons like a relatives decease, just tell us in d
 _________________
 
 I will be making a template for pull requests. It is required to follow this template. This will make sure it is easy to review.
-So we spend less time on reviewing and more on coding.  
+So we spend less time on reviewing and more on coding. Don't forget to label your pull request.
 You are **never** allowed to merge your own pull request this to ensure good quality code.  
 And **NEVER** think oh he/she wrote this code it will be fine. You never know what you will find!
