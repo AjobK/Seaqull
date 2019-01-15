@@ -59,6 +59,7 @@
     "mobx-react": "^5.4.2",
     "mobx-state-tree": "^3.9.0",
     "mobx-utils": "^5.1.0",
+    "mysql": "^2.16.0",
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",

@@ -1,12 +1,5 @@
 @import './fonts/Rockwell-Bold.ttf';
 
-<<<<<<< HEAD
-@font-face {
-	font-family: Rockwell;
-}
-
-=======
->>>>>>> 698f49c7f147296847f7ee6d6da3b48f5ef5f8c6
 * {
 	margin: 0;
 	padding: 0;
@@ -16,9 +9,5 @@
 
 body {
 	background-color: $background;
-<<<<<<< HEAD
-	font-family: $mainfont;
-=======
 	font-family: $mainfont, $sidefont;
->>>>>>> 698f49c7f147296847f7ee6d6da3b48f5ef5f8c6
 }

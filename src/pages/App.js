@@ -19,6 +19,13 @@ class App extends Component {
 
 	componentDidMount() {
 		this.setState({ hasScroll: document.body.offsetHeight > window.innerHeight })
+		fetch('http://127.0.0.1:3000/test')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(myJson) {
+            console.log(JSON.stringify(myJson));
+        })
 	}
 
 	render() {
