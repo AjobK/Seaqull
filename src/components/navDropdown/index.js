@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './dropdown.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Icon } from '../../components'
 
 class NavDropdown extends Component {
     constructor(props) {
@@ -21,9 +21,9 @@ class NavDropdown extends Component {
         return Array.isArray(value) && (
             <li className={styles.Item} key={index}>
                 <p className={styles.ItemHeading} onClick={this.toggleSubMenu}>
-                    <FontAwesomeIcon icon={icon} className={styles.icon} />
+                    <Icon iconName={icon} className={styles.icon} />
                     {title}
-                    <FontAwesomeIcon icon={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
+                    <Icon iconName={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
                 </p>
                 <ul className={[styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ')}>
                     {Object.keys(value).map((subitem) => (
@@ -38,7 +38,7 @@ class NavDropdown extends Component {
         ) || (
             <li className={styles.Item} key={index}>
                 <p className={styles.ItemHeading}>
-                    <FontAwesomeIcon icon={icon} className={styles.icon} />
+                    <Icon iconName={icon} className={styles.icon} />
                     {title}
                 </p>
             </li>

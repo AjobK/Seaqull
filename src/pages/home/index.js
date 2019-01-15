@@ -1,8 +1,8 @@
 import React from 'react'
-import App from '../'
+import App from '../App'
 import { Header, Main } from '../../layouts'
 import { Navigation, NavigationMobile } from '../../components'
-import styles from './../Home.scss'
+import styles from './home.scss'
 
 class Home extends App {
 	constructor(props) {
@@ -11,7 +11,7 @@ class Home extends App {
 			hasScroll: false
 		}
 	}
-
+	
 	componentDidMount() {
 		this.setState({ hasScroll: document.body.offsetHeight > window.innerHeight })
 	}

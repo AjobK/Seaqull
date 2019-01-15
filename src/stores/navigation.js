@@ -5,29 +5,29 @@ const NavigationStore = types
     menuItemsLoggedIn: types.optional(types.frozen(), {
       home: {
         ref: '/',
-        icon: 'home'
+        icon: 'Home'
       },
       personal: {
         ref: '/',
-        icon: 'user'
+        icon: 'User'
       },
       logout: {
         ref: '/logout',
-        icon: 'sign-out-alt'
+        icon: 'SignOutAlt'
       }
     }),
     menuItemsLoggedOut: types.optional(types.frozen(), {
       home: {
         ref: '/',
-        icon: 'home'
+        icon: 'Home'
       },
       'log in': {
         ref: '/login',
-        icon: 'sign-in-alt'
+        icon: 'SingInAlt'
       },
       'sign up': {
         ref: '/signup',
-        icon: 'users'
+        icon: 'Users'
       }
     })
   })

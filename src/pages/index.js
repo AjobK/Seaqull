@@ -1,32 +1,28 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Component} from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import { initStore } from '../stores'
+import { Provider } from 'mobx-react'
+import Home from './home'
+import Profile from './profile'
 
-const Index = () => <h2>Home</h2>;
-const About = () => <h2>About</h2>;
-const Users = () => <h2>Users</h2>;
+class AppRouter extends Component {
+	constructor (props) {
+		super(props)
+		this.store = initStore(true)
+	}	
 
-const AppRouter = () => (
-  <Router>
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about/">About</Link>
-          </li>
-          <li>
-            <Link to="/users/">Users</Link>
-          </li>
-        </ul>
-      </nav>
+	render () {
+		return (
+			<Provider store={this.store}>
+				<Router>
+					<div>
+						<Route path="/" exact component={Home} />
+						<Route path="/profile" exact component={Profile} />
+					</div>
+				</Router>
+			</Provider>
+		)
+	}
+}
 
-      <Route path="/" exact component={Index} />
-      <Route path="/about/" exact component={About} />
-      <Route path="/users/" exact component={Users} />
-    </div>
-  </Router>
-);
-
-export default AppRouter;
+export default AppRouter

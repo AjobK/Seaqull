@@ -5,6 +5,7 @@ import NavDropdown from './navDropdown'
 import HeaderNavigation from './headerNavigation'
 import Navigation from './navigation'
 import NavigationMobile from './navigationMobile'
+import Icon from './icon'
 
 export {
     Button,
@@ -13,5 +14,6 @@ export {
     HeaderNavigation,
     Navigation,
     NavigationMobile,
-    NavDropdown
+    NavDropdown,
+    Icon
 }
