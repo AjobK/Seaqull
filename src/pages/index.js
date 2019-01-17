@@ -4,6 +4,7 @@ import { initStore } from '../stores'
 import { Provider } from 'mobx-react'
 import Home from './home'
 import Profile from './profile'
+import Post from './post'
 
 class AppRouter extends Component {
 	constructor (props) {
@@ -18,6 +19,8 @@ class AppRouter extends Component {
 					<div>
 						<Route path="/" exact component={Home} />
 						<Route path="/profile" exact component={Profile} />
+						<Route path="/posts" exact component={Post} />
+						<Route path="/posts/:postUrl" exact component={Post} />
 					</div>
 				</Router>
 			</Provider>
