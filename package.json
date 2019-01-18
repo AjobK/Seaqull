@@ -35,7 +35,6 @@
     "eslint-plugin-react": "^7.11.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
-    "mysql": "^2.16.0",
     "prop-types": "^15.6.2",
     "random-words": "^1.1.0",
     "react": "^16.6.3",
