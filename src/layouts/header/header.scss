@@ -1,55 +1,82 @@
-@import '../../styles/variables.scss';
+@import '../../styles/index.scss';
 
 .header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: $grid-block-gap 0;
-    background-color: rgba(239,239,239,0.96);
-    z-index: 999;
+	display: flex;
+	flex-direction: row;
+	@include noselect;
+	top: 0;
+	background: $background-trans;
+	width: 100%;
+	justify-content: center;
+	height: $header-height;
+	pointer-events: auto;
+
+	@include desktop-tablet-sm {
+		transition: 1s;
+		margin-left: 0;
+		margin-top: 0;
+		justify-content: none;
+	}
+
+	@include mobile-all {
+		position: fixed;
+		z-index: 2;
+		justify-content: none;
+	}
+
+	@include mobile-all {
+		justify-content: none;
+	}
+
+	&Content {
+		display: flex;
+		align-items: center;
+		padding: $header-spacing;
+		width: 100%;
+		max-width: $wrapper-width;
+		margin: 0 auto;
+	}
+
+	&Wrap {
+		@include desktop-tablet-sm {
+			transition: 1s;
+			left: $navigation-width;
+			top: 0;
+			width: calc(100% - #{$navigation-width});
+			position: fixed;
+			z-index: 100;
+		}
+	}
+}
+
+.sNavOpen {
+	transition: 1s;
+	left: $navigation-width-expanded;
+}
+
+.button {
+	margin: 0 $nr-sm-fontsize;
+	margin-right: 0;
 }
 
 .logo {
-    @media screen and (max-width: 800px) {
-        font-size: $nr-xxl-fontsize;
-        line-height: $nr-xxl-fontsize * 0.75;
-    }
-    @media screen and (min-width: 801px) {
-        font-size: $nr-logo-fontsize;
-        line-height: $nr-logo-fontsize * 0.75;
-    }
-    color: $primary;
-    text-transform: uppercase;
+	display: inline-block;
+	font-size: $logo-font-size;
+	line-height: $logo-font-size * 0.75;
+	color: $primary;
+	text-transform: uppercase;
+	
+	@include mobile-all {
+		font-size: $logo-font-size-sm;
+		line-height: $logo-font-size-sm * 0.75;
+	}
 }
 
-.menu {
-    &__ul {
-        display: flex;
-        list-style-type: none;
-        font-family: $sidefont;
-        color: rgba(0,0,0,0.5);
-        font-size: $nr-sm-fontsize;
-        text-transform: capitalize;
-        align-items: center;
-        letter-spacing: 1px;
-        font-weight: bold;
-    }
-    &__link {
-        margin: 0 $nr-sm-fontsize;
-        cursor: pointer;
-    }
-    &__signup {
-        margin: 0 $nr-sm-fontsize;
-        margin-right: 0;
-        padding: 10px 30px;
-        border-radius: 3px;
-        cursor: pointer;
-        background-color: $primary;
-        color: white;
-        text-align: center;
-    }
+.hamburger {
+	margin-right: $header-spacing;
+	display: none;
+
+	@include mobile-all {
+		display: block;
+	}
 }

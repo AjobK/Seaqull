@@ -1,24 +1,23 @@
-@import '../pages/home/test.scss';
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.testa {
-    color: blue;
-}
-
-.testb {
-    color: red;
-    text-align: center;
-    font-size: 62px;
-}
+@import '../styles/index.scss';
 
 .wrapper {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 0 20px;
-  }
+	display: block;
+	margin: 0 auto;
+	white-space: nowrap;
+	width: 100%;
+	justify-content: center;
+	overflow-x: hidden;
+}
 
+.higherOrder {
+	display: flex;
+	flex-wrap: nowrap;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+}
 
+.hasScroll {
+	width: calc(100vw - 14px) !important;
+}
