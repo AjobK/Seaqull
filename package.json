@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --open --mode development",
     "prod": "webpack-dev-server --open --mode production",
     "none": "webpack-dev-server --open --mode none",
     "shared": "webpack-dev-server --port 8080 --hot --host 0.0.0.0",
     "build": "webpack",
-    "backend": "node system/app.js"
+    "frontend": "webpack-dev-server --open --mode development",
+    "backend": "node system/app.js",
+    "dev": "concurrently --kill-others \"npm run frontend\" \"npm run backend\""
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
+    "concurrently": "^4.1.0",
     "dotenv": "^6.2.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
