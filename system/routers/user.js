@@ -6,7 +6,7 @@ const update = require('../functions/update')
 const archive = require('../functions/archive')
 const bodyParser = require('body-parser')
 
-const table = 'POSTS'
+const table = 'Users'
 
 router.use(bodyParser.json())
 
@@ -20,8 +20,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
 	const body = req.body
-	const title = body.Title
-	create(res, table, 'id, Title, Date, Archived', `null, '${title}', NOW(), 0`)
+	create(res, )
 })
 
 router.post('/update', (req, res) => {
@@ -30,15 +29,11 @@ router.post('/update', (req, res) => {
 		return res.send({ status: 412, message: 'ID has not been defined!' })
 	}
 	const id = body.id
-	let title
-	let set
-	if (body.Title) {
-		title = body.Title
-		set += `Title = '${title}'`
-	}
+  let set
+
 	update(res, table, set, `id = ${id}`)
 })
-
+ 
 router.get('archive/:id', (req, res) => {
 	archive(res, table, `id = ${req.params.id}`)
 })
