@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './headerNavigation.scss'
+import { Link } from 'react-router-dom'
 import { Button } from '../../components'
 
 @inject('store') @observer
@@ -12,12 +13,18 @@ class HeaderNavigation extends Component {
 			<nav className={styles.menu}>
 				{user.loggedIn ? ( // Logged in content
 					<ul className={styles.menuUl}>
-						<li className={styles.menuItem}>My profile</li>
-						<li className={styles.menuItem} onClick={user.logOut}>Logout</li>
+						<Link to='/profile' className={styles.menuItem}>
+							<li>My profile</li>
+						</Link>
+						<Link to='/' className={styles.menuItem}>
+							<li onClick={user.logOut}>Logout</li>
+						</Link>
 					</ul>
 				) : ( // Logged out content
 					<ul className={styles.menuUl}>
-						<li className={styles.menuItem} onClick={user.logIn}>Log in</li>
+						<Link to='/' className={styles.menuItem}>
+							<li onClick={user.logIn}>Log in</li>
+						</Link>
 						<Button value='Sign Up' className={styles.button} />
 					</ul>
 				)}
