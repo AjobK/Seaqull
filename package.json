@@ -6,15 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --open --mode development",
-<<<<<<< HEAD
-    "build": "webpack",
-    "server": "node ./server.js"
-=======
     "prod": "webpack-dev-server --open --mode production",
     "none": "webpack-dev-server --open --mode none",
     "shared": "webpack-dev-server --port 8080 --hot --host 0.0.0.0",
     "build": "webpack"
->>>>>>> 698f49c7f147296847f7ee6d6da3b48f5ef5f8c6
   },
   "repository": {
     "type": "git",
