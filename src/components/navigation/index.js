@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './nav.scss'
-import { ProfileBar } from '../../components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ProfileBar, Icon } from '../../components'
 
 @inject('store') @observer
 class Navigation extends Component {
@@ -49,7 +48,7 @@ class Navigation extends Component {
                                             ui.currentOpenTab == item && (ui.subNavOpen || !menuItems[item].children) && styles.menuItemActive
                                         ].join(' ')}
                                         onClick={() => this.iconClick(item)}>
-                                        <FontAwesomeIcon icon={menuItems[item].icon} />
+                                        <Icon icon={menuItems[item].icon} />
                                     </li>
                                 )
                             })}
