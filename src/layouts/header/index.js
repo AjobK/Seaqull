@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
-// import Popup from '../../components/popup'
 import { Hamburger, HeaderNavigation } from '../../components'
 
 @inject('store') @observer
