@@ -10,4 +10,7 @@
 body {
 	background-color: $background;
 	font-family: $mainfont, $sidefont;
+	a {
+		text-decoration: none;
+	}
 }
