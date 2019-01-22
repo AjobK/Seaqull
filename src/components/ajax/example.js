@@ -1,4 +1,33 @@
+const url = 'http://jsonplaceholder.typicode.com/';
+let uri = url + 'users';
 
+let formdata = new FormData();
+formdata.append("id", 3);
+formdata.append('name', 'This is my title');
+formdata.append('username', 'This is the body text of the post');
+formdata.append('email', 'This is the body text of the post');
+
+let options = {
+    method: 'POST',
+    mode: 'cors',
+    body: formdata
+}
+let req = new Request(uri, options);
+
+fetch(req)
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Dosen\'t Work Try Again!')
+        }
+    })
+    .then((j) => {
+        console.log(j);
+    })
+    .catch((err) => {
+        console.log('ERROR:', err.message);
+    });
 
 // Commented code hier onder = gewoon een paar tests
 // Yes it will be removed before a PR will be made!
