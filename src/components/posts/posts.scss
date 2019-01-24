@@ -17,6 +17,9 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
+	&s {
+		position: static;
+	}
 }
 
 .post {
