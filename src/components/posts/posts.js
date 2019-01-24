@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './contact.scss'
+import styles from './posts.scss'
 
 let randomRGB = {
   red:    Math.random() * 255,
@@ -17,12 +17,9 @@ const { red, green, blue } = randomRGB
 const rgb = `rgb(${red},${green},${blue})`
 const gridClass = gridElOptions[Math.floor(Math.random() * gridElOptions.length - 1)]
 
-const Contact = (props) => <article style={{backgroundColor: rgb}} className={[gridClass, styles.contact].join(' ')}>
-  <div className={styles.title}>{ props.name }</div>
-  {/* <div>{ props.email }</div>
-  <div>{ props.phone }</div>
-  <div>{ props.address } { props.suite }</div>
-  <div>{ props.city } { props.state }, { props.zip }</div> */}
-</article>
+const Posts = (props) => 
+  <article style={{backgroundColor: rgb}} className={[gridClass, styles.contact].join(' ')}>
+    <div className={styles.title}>{ props.name }</div>
+  </article>
 
-export default Contact
+export default Posts

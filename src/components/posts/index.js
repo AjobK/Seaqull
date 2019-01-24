@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
-import Contact from './contact'
-import styles from './contact.scss'
+import Contact from './posts'
+import styles from './posts.scss'
 
-class ContactList extends React.Component {
+class Posts extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -65,4 +65,4 @@ class ContactList extends React.Component {
   }
 }
 
-export default ContactList
+export default Posts

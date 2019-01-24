@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import styles from './main.scss'
 import generateRandomWord from 'random-words'
-import ContactList from '../../components/contact-list'
+import Posts from '../../components/posts'
 
 @inject('store') @observer
 class Main extends Component {
@@ -41,7 +41,7 @@ class Main extends Component {
 			<div className={styles.wrapper}>
 				<div className={styles.main}>
 					<div className={styles.grid}>
-						<ContactList />
+						<Posts />
 					</div>
 				</div>
 			</div>
