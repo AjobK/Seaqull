@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
-import Contact from './posts'
+import Post from './posts'
 import styles from './posts.scss'
 
 class Posts extends Component {
@@ -70,7 +70,7 @@ class Posts extends Component {
 				{
 					this.state.contacts.map(contact => (
 						<li key={contact.id} className={styles.post}>
-							<Contact {...contact} />
+							<Post {...contact} />
 						</li>
 					))
 				}
