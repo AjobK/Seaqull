@@ -11,10 +11,10 @@ class Main extends Component {
 		for (let i = 0; i < 30; i++) {
 			gridBlocks.push(<div key={i} className={styles.dummyBlock} style={{
 				backgroundColor: `rgb(
-				${Math.floor(Math.random() * 255)},
-				${Math.floor(Math.random() * 255)},
-				${Math.floor(Math.random() * 255)})
-			`
+					${Math.floor(Math.random() * 255)},
+					${Math.floor(Math.random() * 255)},
+					${Math.floor(Math.random() * 255)})
+					`
 			}}><p className={styles.dummyBlockText}>{generateRandomWord(3).join(' ')}</p></div>)
 		}
 		return gridBlocks

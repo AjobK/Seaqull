@@ -60,6 +60,7 @@
     "mobx-state-tree": "^3.9.0",
     "mobx-utils": "^5.1.0",
     "node-sass": "^4.10.0",
+    "object-assign": "^4.1.1",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "style-loader": "^0.23.1",
