@@ -17,9 +17,8 @@ const { red, green, blue } = randomRGB
 const rgb = `rgb(${red},${green},${blue})`
 const gridClass = gridElOptions[Math.floor(Math.random() * gridElOptions.length - 1)]
 
-const Posts = (props) => 
-  <article style={{backgroundColor: rgb}} className={[gridClass, styles.contact].join(' ')}>
-    <div className={styles.title}>{ props.name }</div>
-  </article>
+const Posts = (props) => <article style={{backgroundColor: rgb}} className={[gridClass, styles.contact].join(' ')}>
+  <div className={styles.contactText}>{ props.name }</div>
+</article>
 
 export default Posts

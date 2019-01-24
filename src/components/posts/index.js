@@ -8,7 +8,7 @@ class Posts extends Component {
     super(props)
     this.state = {
       contacts: [],
-      per: 2,
+      per: 10,
       page: 1,
       totalPages: null,
     }
@@ -16,7 +16,7 @@ class Posts extends Component {
   
   loadContacts = () => {
       const { per, page, contacts } = this.state
-      const url = 'https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page={page}'
+      const url = `https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page=${page}`
       fetch(url)
       .then(response => response.json())
       .then(json => this.setState({
@@ -40,7 +40,7 @@ class Posts extends Component {
     const lastLi = document.querySelector('ul.contacts > li:last-child')
     const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
     const pageOffset = window.pageYOffset + window.innerHeight
-    let bottomOffset = 120
+    let bottomOffset = window.innerHeight
     if (pageOffset > lastLiOffset - bottomOffset) this.loadMore()
   }
 
