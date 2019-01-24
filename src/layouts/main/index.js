@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
+import { Link } from 'react-router-dom'
 import styles from './main.scss'
 import generateRandomWord from 'random-words'
 import ContactList from '../../components/contact-list'
@@ -9,13 +10,20 @@ class Main extends Component {
 	createDummyGrid = () => {
 		let gridBlocks = []
 		for (let i = 0; i < 30; i++) {
-			gridBlocks.push(<div key={i} className={styles.dummyBlock} style={{
-				backgroundColor: `rgb(
-					${Math.floor(Math.random() * 255)},
-					${Math.floor(Math.random() * 255)},
-					${Math.floor(Math.random() * 255)})
-					`
-			}}><p className={styles.dummyBlockText}>{generateRandomWord(3).join(' ')}</p></div>)
+			let randomWord = generateRandomWord(3).join(' ')
+			let color = `rgb(
+				${Math.floor(Math.random() * 255)},
+				${Math.floor(Math.random() * 255)},
+				${Math.floor(Math.random() * 255)})
+			`
+
+			gridBlocks.push(
+				<Link to={`/posts/${randomWord.split(' ').join('-')}`} key={i} className={styles.menuItem}>
+					<div className={styles.dummyBlock} style={{ backgroundColor: color }}>
+						<p className={styles.dummyBlockText}>{randomWord}</p>
+					</div>
+				</Link>
+			)
 		}
 		return gridBlocks
 	}
