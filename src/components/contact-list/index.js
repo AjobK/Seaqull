@@ -4,65 +4,67 @@ import Contact from './contact'
 import styles from './contact.scss'
 
 class ContactList extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      contacts: [],
-      per: 10,
-      page: 1,
-      totalPages: null,
-    }
-  }
-  
-  loadContacts = () => {
-      const { per, page, contacts } = this.state
-      const url = `https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page=${page}`
-      fetch(url)
-      .then(response => response.json())
-      .then(json => this.setState({
-        contacts: [...contacts, ...json.contacts],
-        scrolling: false,
-        totalPages: json.totalPages,
-      }))
-  }
+	constructor(props) {
+		super(props)
+		this.state = {
+			contacts: [],
+			per: 10,
+			page: 1,
+			totalPages: null,
+		}
+	}
 
-  componentWillMount() {
-    this.loadContacts()
-    this.scrollListener = window.addEventListener('scroll', (e) => {
-      this.handleScroll(e)
-    })
-  }
+	loadContacts = () => {
+		const { per, page, contacts } = this.state
+		const url = `https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page=${page}`
+		fetch(url)
+			.then(response => response.json())
+			.then(json => this.setState({
+				contacts: [...contacts, ...json.contacts],
+				scrolling: false,
+				totalPages: json.totalPages,
+			}))
+	}
 
-  handleScroll = (e) => {
-    const { scrolling, totalPages, page } = this.state
-    if (scrolling) return
-    if (totalPages <= page) return
-    const lastLi = document.querySelector('ul.contacts > li:last-child')
-    const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
-    const pageOffset = window.pageYOffset + window.innerHeight
-    let bottomOffset = window.innerHeight
-    if (pageOffset > lastLiOffset - bottomOffset) this.loadMore()
-  }
+	componentWillMount() {
+		this.loadContacts()
+		this.scrollListener = window.addEventListener('scroll', (e) => {
+			this.handleScroll(e)
+		})
+	}
+
+	handleScroll = (e) => {
+		const { scrolling, totalPages, page } = this.state
+		if (scrolling) return
+		if (totalPages <= page) return
+		const lastLi = document.querySelector('ul.contacts > li:last-child')
+		const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
+		const pageOffset = window.pageYOffset + window.innerHeight
+		let bottomOffset = window.innerHeight
+		if (pageOffset > lastLiOffset - bottomOffset) this.loadMore()
+	}
 
 
-  loadMore = () => {
-      this.setState(prevState => ({
-          page: prevState.page + 1,
-          scrolling: true
-      }), this.loadContacts)
-  }
+	loadMore = () => {
+		this.setState(prevState => ({
+			page: prevState.page + 1,
+			scrolling: true
+		}), this.loadContacts)
+	}
 
-  render() {
-    return <div>
-        <ul className="contacts">
-      {
-        this.state.contacts.map(contact => <li key={contact.id} className={styles.post}>
-          <Contact {...contact} />
-        </li>)
-      }
-    </ul>
-    </div>
-  }
+	render() {
+		return <div>
+			<ul className="contacts">
+				{
+					this.state.contacts.map(contact => (
+						<li key={contact.id} className={styles.post}>
+							<Contact {...contact} />
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	}
 }
 
 export default ContactList
