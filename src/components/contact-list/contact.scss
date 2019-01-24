@@ -9,7 +9,6 @@
 	padding: $header-spacing * 2;
 	text-transform: capitalize;
 	color: white;
-	background-color: red;
 	&Text {
 		overflow: hidden;
 		width: 100%;
@@ -18,20 +17,6 @@
 	}
 }
 
-.titlek {
-	display: flex;
-	align-items: flex-end;
-	font-size: 1em;
-	height: 35vh;
-	margin-bottom: $header-spacing;
-	padding: $header-spacing * 2;
-	text-transform: capitalize;
-	color: white;
-	background-color: red;
-	&Text {
-		overflow: hidden;
-		width: 100%;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
+.post {
+	list-style: none
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import fetch from 'isomorphic-fetch'
 import Contact from './contact'
+import styles from './contact.scss'
 
 class ContactList extends React.Component {
   constructor (props) {
@@ -39,7 +40,7 @@ class ContactList extends React.Component {
     const lastLi = document.querySelector('ul.contacts > li:last-child')
     const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
     const pageOffset = window.pageYOffset + window.innerHeight
-    let bottomOffset = 80
+    let bottomOffset = 120
     if (pageOffset > lastLiOffset - bottomOffset) this.loadMore()
   }
 
@@ -55,7 +56,7 @@ class ContactList extends React.Component {
     return <div>
         <ul className="contacts">
       {
-        this.state.contacts.map(contact => <li key={contact.id}>
+        this.state.contacts.map(contact => <li key={contact.id} className={styles.post}>
           <Contact {...contact} />
         </li>)
       }
