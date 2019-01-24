@@ -33,12 +33,8 @@ class Main extends Component {
 			<div className={styles.wrapper}>
 				<div className={styles.main}>
 					<div className={styles.grid}>
-						{this.createDummyGrid()}
+						<ContactList />
 					</div>
-				</div>
-				<div className="container">
-					<h1>Contacts</h1>
-					<ContactList />
 				</div>
 			</div>
 		)

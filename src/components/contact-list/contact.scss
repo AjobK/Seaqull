@@ -2,13 +2,36 @@
 
 .contact {
 	display: flex;
-	align-items: center;
-	font-size: $md-fontsize;
-	justify-content: center;
-	background-position: center;
-	background-size: cover;
+	align-items: flex-end;
+	font-size: 1em;
+	height: 35vh;
+	margin-bottom: $header-spacing;
+	padding: $header-spacing * 2;
+	text-transform: capitalize;
 	color: white;
-	background-color: rgba(0,0,0,0.3);
-	cursor: pointer;
-	transition: 0.15s;
+	background-color: red;
+	&Text {
+		overflow: hidden;
+		width: 100%;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+.titlek {
+	display: flex;
+	align-items: flex-end;
+	font-size: 1em;
+	height: 35vh;
+	margin-bottom: $header-spacing;
+	padding: $header-spacing * 2;
+	text-transform: capitalize;
+	color: white;
+	background-color: red;
+	&Text {
+		overflow: hidden;
+		width: 100%;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

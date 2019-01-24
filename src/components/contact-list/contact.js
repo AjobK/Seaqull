@@ -18,7 +18,7 @@ const rgb = `rgb(${red},${green},${blue})`
 const gridClass = gridElOptions[Math.floor(Math.random() * gridElOptions.length - 1)]
 
 const Contact = (props) => <article style={{backgroundColor: rgb}} className={[gridClass, styles.contact].join(' ')}>
-  <div>{ props.name }</div>
+  <div className={styles.title}>{ props.name }</div>
   {/* <div>{ props.email }</div>
   <div>{ props.phone }</div>
   <div>{ props.address } { props.suite }</div>
