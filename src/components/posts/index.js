@@ -58,7 +58,7 @@ class Posts extends Component {
 		})
 	}
 
-	handleScroll = (e) => {
+	handleScroll = () => {
 		const { scrolling } = this
 		if (scrolling) return
 		const lastLi = document.querySelector('.' + styles.contacts)
