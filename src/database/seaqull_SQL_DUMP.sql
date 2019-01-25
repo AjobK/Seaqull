@@ -4,7 +4,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+01:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,11 +27,11 @@ CREATE TABLE `post` (
   `user_id` varchar(10) NOT NULL,
   `title` text NOT NULL,
   `content` longtext NOT NULL,
-  `description` text NOT NULL,
-  `thumbnail` int(11) NOT NULL,
   `path` text NOT NULL,
+  `description` text NOT NULL,
   `created_at` datetime NOT NULL,
-  `updatet_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  `archived_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -44,7 +44,8 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `role` text NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  `archived_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
