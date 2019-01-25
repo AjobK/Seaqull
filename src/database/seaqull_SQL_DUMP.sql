@@ -70,7 +70,6 @@ CREATE TABLE `token` (
 CREATE TABLE `user` (
   `id` varchar(10) NOT NULL,
   `role` int(11) NOT NULL,
-  `user_token` varchar(10) NOT NULL,
   `user_name` text NOT NULL,
   `display_name` text NOT NULL,
   `password` text NOT NULL,
