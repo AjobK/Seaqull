@@ -82,6 +82,18 @@ CREATE TABLE `user` (
   `archived_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `like`
+--
+
+CREATE TABLE `like` (
+  `id` int(11) NOT NULL,
+  `post_id` VARCHAR(10) NOT NULL,
+  `user_id` VARCHAR(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexen voor geëxporteerde tabellen
 --
