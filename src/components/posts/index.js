@@ -19,7 +19,6 @@ class Posts extends Component {
 			.then(response => response.json())
 			.then(json => {
 				if (!this.totalPages) this.totalPages = json.total_pages
-				this.page = this.page >= this.totalPages ? 0 : this.pages + 1
 
 				this.contacts = json.contacts
 				this.setNewContacts()
@@ -49,7 +48,6 @@ class Posts extends Component {
 			article.appendChild(contactText)
 			singleLi.appendChild(article)
 		}
-
 		document.getElementsByClassName(styles.contacts)[0].appendChild(singleLi)
 	}
 
@@ -73,11 +71,13 @@ class Posts extends Component {
 
 
 	loadMore = () => {
-		const { page, totalPages } = this
-		let nextPage = page + 1
-		if (nextPage >=  totalPages) nextPage = 1
+		const { totalPages } = this
 
-		this.page = nextPage 
+		if (this.page >= totalPages)
+			this.page = 1
+		else
+			this.page++
+
 		this.scrolling = true
 		this.loadContacts()
 	}
