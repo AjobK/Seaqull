@@ -1,32 +1,58 @@
 import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
-import Post from './posts'
 import styles from './posts.scss'
 
 class Posts extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			contacts: [],
-			per: 5,
-			page: 1,
-			totalPages: null,
-			innerCounter: 0
-		}
+		this.contacts = []
+		this.per = 5
+		this.page = 1
+		this.totalPages = null
+		this.scrolling = false
 	}
 
 	loadContacts = () => {
-		const { per, page, contacts } = this.state
+		const { per, page } = this
 		const url = `https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page=${page}`
 		fetch(url)
 			.then(response => response.json())
-			.then(json => this.setState({
-				contacts: [...contacts, ...json.contacts],
-				scrolling: false,
-				totalPages: json.total_pages,
-			}))
+			.then(json => {
+				if (!this.totalPages) this.totalPages = json.total_pages
+				this.page = this.page >= this.totalPages ? 0 : this.pages + 1
+
+				this.contacts = json.contacts
+				this.setNewContacts()
+				this.scrolling = false
+			})
 	}
-	
+
+	setNewContacts() {
+		let singleLi = document.createElement('li')
+		singleLi.classList.add(styles.post)
+
+		for (let i = 0; i < this.contacts.length; i++) {
+			let randomRGB = {
+				red: Math.random() * 255,
+				green: Math.random() * 255,
+				blue: Math.random() * 255
+			}
+			let { red, green, blue } = randomRGB
+			let rgb = `rgb(${red},${green},${blue})`
+
+			let article = document.createElement('article')
+			article.style.backgroundColor = rgb
+			article.classList.add(styles.contact)
+			let contactText = document.createElement('div')
+			contactText.innerText = this.contacts[i].name
+			contactText.classList.add(styles.contactText)
+			article.appendChild(contactText)
+			singleLi.appendChild(article)
+		}
+
+		document.getElementsByClassName(styles.contacts)[0].appendChild(singleLi)
+	}
+
 	componentWillMount() {
 		this.loadContacts()
 		this.scrollListener = window.addEventListener('scroll', (e) => {
@@ -35,49 +61,31 @@ class Posts extends Component {
 	}
 
 	handleScroll = (e) => {
-		const { scrolling, totalPages, page } = this.state
+		const { scrolling } = this
 		if (scrolling) return
-		if (totalPages <= page) return
-		const lastLi = document.querySelector('ul.' + styles.contacts + ' > li:last-child')
+		const lastLi = document.querySelector('.' + styles.contacts)
 		const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
 		const pageOffset = window.pageYOffset + window.innerHeight
 		let bottomOffset = window.innerHeight
-		if (pageOffset > lastLiOffset - bottomOffset) this.loadMore()
+		if (pageOffset > lastLiOffset - bottomOffset) 
+		this.loadMore()
 	}
 
 
 	loadMore = () => {
-		const { page, totalPages, startPoint, contacts } = this.state
+		const { page, totalPages } = this
 		let nextPage = page + 1
-		if (nextPage >=  totalPages) {
-			nextPage = 1
-			this.setState({
-				startPoint: startPoint + contacts.length
-			})
-		}
+		if (nextPage >=  totalPages) nextPage = 1
 
-		this.setState(() => ({
-			page: nextPage,
-			scrolling: true
-		}), this.loadContacts)
+		this.page = nextPage 
+		this.scrolling = true
+		this.loadContacts()
 	}
 
 	render() {
-		const { per, totalPages } = this.state
-		let innerCount = this.state.innerCounter
 		return (
 			<div>
-				<ul className={styles.contacts}>
-					{
-						this.state.contacts.map((contact, index) => {
-							return (
-								<li key={per * totalPages + innerCount + index} className={styles.post}>
-									<Post {...contact} />
-								</li>
-							)
-						})
-					}
-				</ul>
+				<ul className={styles.contacts} />
 			</div>
 		)
 	}
