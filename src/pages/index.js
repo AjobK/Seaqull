@@ -24,7 +24,7 @@ class AppRouter extends Component {
 						<Route path="/500" exact component={() => <Error title={500} sub={'Internal server error'} />} />
 						<Route path="/posts" exact component={Post} />
 						<Route path="/posts/:postUrl" exact component={Post} />
-						<Route path="/:we" exact component={Error} />
+						<Route path="/:other" exact component={Error} />
 					</div>
 				</Router>
 			</Provider>
