@@ -3,9 +3,6 @@ import styles from './profilebar.scss'
 import generateRandomWord from 'random-words'
 
 class ProfileBar extends Component {
-	constructor(props) {
-		super(props)
-	}
 	render() {
 		const { userName, userRole, level, levelPercentage } = this.props
 		return (

@@ -27,14 +27,6 @@ class Main extends Component {
 		return gridBlocks
 	}
 
-	componentDidMount() {
-		document.querySelector(`.${styles.wrapper}`).addEventListener('mousedown', this.preventXScroll)
-	}
-
-	preventXScroll = (e) => {
-		if (e.which == 2 && this.props.store.ui.subNavOpen) e.preventDefault()
-	}
-
 	render() {
 		return (
 			<div className={styles.wrapper}>

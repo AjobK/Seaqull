@@ -5,6 +5,7 @@ import NavDropdown from './navDropdown'
 import HeaderNavigation from './headerNavigation'
 import Navigation from './navigation'
 import NavigationMobile from './navigationMobile'
+import UserBanner from './userBanner'
 import Icon from './icon'
 
 export {
@@ -15,5 +16,6 @@ export {
 	Navigation,
 	NavigationMobile,
 	NavDropdown,
+	UserBanner,
 	Icon
 }

@@ -1,18 +1,21 @@
 import React from 'react'
 import App from '../App'
+import { Standard } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom"
+import { UserBanner } from '../../components'
 
 @inject('store') @observer
 class Profile extends App {
 	render() {
 		const { user } = this.props.store
+
+		if (!user.loggedIn) return <Redirect to='/500'/>
+
 		return (
-			<>
-				<h1> This is my profile </h1>
-				<h2> User logged in {user.loggedIn ? 'True' : 'false'} </h2>
-				<Link to='/'>Go home</Link>
-			</>
+			<Standard>
+				<UserBanner />
+			</Standard>
 		)
 	}
 }

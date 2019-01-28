@@ -1,0 +1,36 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	display: block;
+	margin: 0 auto;
+	white-space: nowrap;
+	width: 100%;
+	justify-content: center;
+	overflow-x: hidden;
+}
+
+.innerWrapper {
+	margin-top: $header-height;
+	display: inline-block;
+	margin-left: -4px; // For inline blocks
+	overflow: auto;
+	width: 100%;
+	vertical-align: top;
+	@include desktop-tablet-sm {
+		margin-left: -7px; // For inline blocks
+		width: calc(100% - #{$navigation-width});
+	}
+}
+
+.higherOrder {
+	display: flex;
+	flex-wrap: nowrap;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+}
+
+.hasScroll {
+	width: calc(100vw - 14px) !important;
+}

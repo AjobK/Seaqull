@@ -1,0 +1,24 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	height: calc(50vh + #{$header-height});
+	background-color: $darker;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.picture {
+	height: 200px;
+	width: 200px;
+	border-radius: 100%;
+	background-size: cover;
+	background-position: center;
+	background-color: $darkest;
+}
+
+.innerWrapper {
+	padding: $header-spacing;
+	width: $wrapper-width;
+	display: flex;
+}

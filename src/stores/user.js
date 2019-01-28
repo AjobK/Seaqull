@@ -3,6 +3,7 @@ import { types } from 'mobx-state-tree'
 const UserStore = types
 	.model('UserStore', {
 		loggedIn: types.optional(types.boolean, true),
+		picture: types.optional(types.string, '../static/dummyprofile.png'),
 		name: types.optional(types.string, 'Elomin'),
 		role: types.optional(types.string, 'Best Developer'),
 		level: types.optional(types.integer, 10),
