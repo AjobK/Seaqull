@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   module: {
     rules: [
       {
@@ -36,6 +37,12 @@ module.exports = {
         use: 'file-loader'
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true
+  },
+  output: {
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebPackPlugin({

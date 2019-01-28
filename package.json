@@ -1,30 +1,38 @@
 {
-  "name": "athena",
+  "name": "seaqull",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --open --mode development",
-    "build": "webpack"
+    "build": "webpack",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "prod": "webpack-dev-server --open --mode production",
+    "none": "webpack-dev-server --open --mode none",
+    "shared": "webpack-dev-server --port 8080 --hot --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AjobK/Athena.git"
+    "url": "git+https://github.com/AjobK/Seaqull.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AjobK/Athena/issues"
+    "url": "https://github.com/AjobK/Seaqull/issues"
   },
-  "homepage": "https://github.com/AjobK/Athena#readme",
+  "homepage": "https://github.com/AjobK/Seaqull#readme",
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
+    "@babel/plugin-proposal-decorators": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^4.1.6",
+    "@storybook/addon-links": "^4.1.6",
+    "@storybook/addons": "^4.1.4",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
-    "eslint": "^5.10.0",
+    "dotenv": "^6.2.0",
+    "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
@@ -33,17 +41,32 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "prop-types": "^15.6.2",
+    "random-words": "^1.1.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1",
+    "slice-ansi": "^2.0.0",
     "stylelint-webpack-plugin": "^0.10.5",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "@storybook/react": "^4.1.6"
   },
   "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/preset-env": "^7.2.3",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "css-loader": "^1.0.1",
     "file-loader": "^2.0.0",
-    "node-sass": "^4.11.0",
+    "mobx": "^4.6.0",
+    "mobx-react": "^5.4.2",
+    "mobx-state-tree": "^3.9.0",
+    "mobx-utils": "^5.1.0",
+    "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
     "style-loader": "^0.23.1",

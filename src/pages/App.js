@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-import { Header, Main } from '../layouts'
-import styles from './App.scss'
+import { Provider } from 'mobx-react'
+import { initStore } from '../stores'
 
 class App extends Component {
-    render() {
-        return (
-            <div className={styles.wrapper}>
-                <Header />
-                <Main />
-            </div>
-        )
-    }
+	componentDidMount() {
+		this.store = initStore(true)
+	}
+
+	render() {
+		return (
+			<Provider store={this.store}>
+				{this.props.children}
+			</Provider>
+		)
+	}
 }
 
-export default App;
+export default App

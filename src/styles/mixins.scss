@@ -1,0 +1,25 @@
+@mixin noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+@mixin transition-ease ($amount) {
+	-webkit-transition: all $amount ease-in-out;
+	-ms-transition: all $amount ease-in-out;
+	-o-transition: all $amount ease-in-out;
+	transition: all $amount ease-in-out;
+}
+
+@mixin primary-gradient () {
+	background: rgba(255,64,64,1);
+	background: -moz-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
+	background: -webkit-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
+	background: -o-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
+	background: -ms-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
+	background: linear-gradient(to right, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4040', endColorstr='#ff4040', GradientType=1 );
+}
