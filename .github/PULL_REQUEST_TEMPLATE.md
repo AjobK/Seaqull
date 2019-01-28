@@ -1,11 +1,3 @@
----
-name: Pull Request
-about: Pull Request for your branch
-title: ''
-labels: ''
-assignees: ''
-
----
 closes #XXX
 
 **What is it supposed to do**
