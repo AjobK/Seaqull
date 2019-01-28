@@ -7,7 +7,7 @@ Explain in short what your component is supposed to do
 Explain how can test your branch Ex. width, height etc...
 
 
-**What broweser have been checked**
+**What browser have been checked**
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Opera
