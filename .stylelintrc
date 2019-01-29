@@ -1,6 +1,8 @@
 {
   "rules": {
     "indentation": "tab",
+    "block-no-empty": null,
+    "color-no-invalid-hex": true,
     "max-empty-lines": 1,
     "no-missing-end-of-source-newline": true,
     "at-rule-name-space-after": "always",
