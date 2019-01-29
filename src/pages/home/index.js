@@ -5,33 +5,33 @@ import { Navigation, NavigationMobile } from '../../components'
 import styles from './home.scss'
 
 class Home extends App {
-	constructor(props) {
-		super(props)
-		this.state = {
-			hasScroll: false
-		}
-	}
-	
-	componentDidMount() {
-		this.setState({ hasScroll: document.body.offsetHeight > window.innerHeight })
-	}
+  constructor(props) {
+    super(props)
+    this.state = {
+      hasScroll: false
+    }
+  }
 
-	render() {
-		const { hasScroll } = this.state
+  componentDidMount() {
+    this.setState({ hasScroll: document.body.offsetHeight > window.innerHeight })
+  }
 
-		return (
-			<section className={styles.wrapper}>
-				<Header />
-				<aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
-					<Navigation />
-					<NavigationMobile />
-				</aside>
-				<NavigationMobile filler /> {/* Filler aligns content */}
-				<Navigation filler /> {/* Filler aligns content */}
-				<Main />
-			</section>
-		)
-	}
+  render() {
+    const { hasScroll } = this.state
+
+    return (
+      <section className={styles.wrapper}>
+        <Header />
+        <aside className={[styles.higherOrder, hasScroll && styles.hasScroll].join(' ')}>
+          <Navigation />
+          <NavigationMobile />
+        </aside>
+        <NavigationMobile filler /> {/* Filler aligns content */}
+        <Navigation filler /> {/* Filler aligns content */}
+        <Main />
+      </section>
+    )
+  }
 }
 
 export default Home

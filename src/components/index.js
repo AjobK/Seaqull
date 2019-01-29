@@ -8,12 +8,12 @@ import NavigationMobile from './navigationMobile'
 import Icon from './icon'
 
 export {
-	Button,
-	Hamburger,
-	ProfileBar,
-	HeaderNavigation,
-	Navigation,
-	NavigationMobile,
-	NavDropdown,
-	Icon
+  Button,
+  Hamburger,
+  ProfileBar,
+  HeaderNavigation,
+  Navigation,
+  NavigationMobile,
+  NavDropdown,
+  Icon
 }
