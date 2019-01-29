@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
 import { Hamburger, HeaderNavigation } from '../../components'
+import { Link } from 'react-router-dom'
 
 @inject('store') @observer
 class Header extends Component {
@@ -16,7 +17,7 @@ class Header extends Component {
 		let headerContent = (
 			<section className={styles.headerContent}>
 				<Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
-				<h1 className={styles.logo}>{defaultData.projectName}</h1>
+				<Link to='/' className={styles.logo}>{defaultData.projectName}</Link>
 				<HeaderNavigation />
 			</section>
 		)

@@ -9,8 +9,17 @@
 }
 
 .picture {
-	height: 200px;
-	width: 200px;
+	@media (orientation: landscape) {
+		min-width: 200px;
+		min-height: 200px;
+		width: 10vw;
+		height: 10vw;
+	}
+	@media (orientation: portrait) {
+		width: 20vh;
+		height: 20vh;
+	}
+	box-shadow: 0 0 $header-spacing $darkest;
 	border-radius: 100%;
 	background-size: cover;
 	background-position: center;
@@ -21,4 +30,59 @@
 	padding: $header-spacing;
 	width: $wrapper-width;
 	display: flex;
+	@media (orientation: portrait) {
+		align-items: center;
+		flex-direction: column;
+	}
+}
+
+.info {
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	@media (orientation: landscape) {
+		min-height: 200px;
+		height: 10vw;
+		margin-left: $header-spacing * 2;
+	}
+	@media (orientation: portrait) {
+		margin-top: $header-spacing;
+	}
+}
+
+.achieved {
+	display: flex;
+}
+
+.level {
+	border-radius: 0.25rem;
+	display: table;
+	align-self: center;
+	height: 1.5rem;
+	padding: 0 0.5rem;
+	font-size: 1rem;
+	line-height: 1.5rem;
+	font-weight: bold;
+	letter-spacing: 2px;
+	display: block;
+	color: white;
+	background-color: $primary;
+}
+
+.role {
+	margin-left: $header-spacing / 2;
+	font-weight: normal;
+	color: $primary;
+	text-shadow: 0 0 $header-spacing $darkest;
+}
+
+.name {
+	word-break: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: white;
+	font-weight: bold;
+	font-size: 3rem;
+	text-shadow: 0 0 $header-spacing $darkest;
 }

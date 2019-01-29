@@ -12,10 +12,10 @@ class UserBanner extends Component {
 				<div className={styles.innerWrapper}>
 					<div className={styles.picture} style={{backgroundImage: `url(${user.picture})` }} />
 					<div className={styles.info}>
-						<h2>{ user.name || ''}</h2>
+						<h2 className={styles.name}>{ user.name || ''}</h2>
 						<div className={styles.achieved}>
-							<span>{ user.level || ''}</span>
-							<h3>{ user.role || ''}</h3>
+							<span className={styles.level}>{ user.level || ''}</span>
+							<h3 className={styles.role}>{ user.role || ''}</h3>
 						</div>
 					</div>
 				</div>
