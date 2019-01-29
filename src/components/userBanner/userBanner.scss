@@ -27,6 +27,9 @@
 }
 
 .innerWrapper {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	padding: $header-spacing;
 	width: $wrapper-width;
 	display: flex;
@@ -47,12 +50,18 @@
 		margin-left: $header-spacing * 2;
 	}
 	@media (orientation: portrait) {
+		align-items: center;
 		margin-top: $header-spacing;
+		text-align: center;
+		max-width: 80%;
 	}
 }
 
 .achieved {
 	display: flex;
+	@media (orientation: portrait) {
+		margin-top: $header-spacing / 2;
+	}
 }
 
 .level {
@@ -78,7 +87,11 @@
 }
 
 .name {
-	word-break: nowrap;
+	@media (orientation: portrait) {
+		text-align: center;
+		width: 100%;
+	}
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: white;
