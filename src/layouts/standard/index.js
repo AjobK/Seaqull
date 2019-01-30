@@ -24,7 +24,7 @@ class Standard extends Component {
 				</aside>
 				<NavigationMobile filler /> {/* Filler aligns content */}
 				<Navigation filler /> {/* Filler aligns content */}
-				<div className={styles.innerWrapper}>
+				<div className={styles.innerWrapper} onClick={this.props.store.ui.closeSubNav}>
 					{ this.props.children }
 				</div>
 			</section>
