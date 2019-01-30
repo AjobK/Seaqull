@@ -1,6 +1,9 @@
 @import '../../styles/index.scss';
 
 .wrapper {
+	position: relative;
+	background-position: center;
+	background-size: cover;
 	height: calc(50vh + #{$header-height});
 	background-color: $darker;
 	display: flex;
@@ -19,20 +22,40 @@
 		width: 20vh;
 		height: 20vh;
 	}
-	box-shadow: 0 0 $header-spacing $darkest;
+	@include box-shadow;
 	border-radius: 100%;
 	background-size: cover;
 	background-position: center;
 	background-color: $darkest;
 }
 
+.background {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: center;
+	opacity: 0.75;
+	background-color: white;
+}
+
 .innerWrapper {
+	z-index: 1;
+	transition: 0.5s;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: $header-spacing;
 	width: $wrapper-width;
 	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	@include text-shadow;
+	@include desktop-small {
+		justify-content: center;
+	}
 	@media (orientation: portrait) {
 		align-items: center;
 		flex-direction: column;
@@ -47,7 +70,7 @@
 	@media (orientation: landscape) {
 		min-height: 200px;
 		height: 10vw;
-		margin-left: $header-spacing * 2;
+		padding: 0 $header-spacing * 2;
 	}
 	@media (orientation: portrait) {
 		align-items: center;
@@ -59,12 +82,11 @@
 
 .achieved {
 	display: flex;
-	@media (orientation: portrait) {
-		margin-top: $header-spacing / 2;
-	}
+	margin-top: $header-spacing / 2;
 }
 
 .level {
+	@include box-shadow;
 	border-radius: 0.25rem;
 	display: table;
 	align-self: center;
@@ -80,10 +102,11 @@
 }
 
 .role {
+	font-size: 1.2rem;
 	margin-left: $header-spacing / 2;
 	font-weight: normal;
 	color: $primary;
-	text-shadow: 0 0 $header-spacing $darkest;
+	@include text-shadow;
 }
 
 .name {
@@ -91,13 +114,15 @@
 		text-align: center;
 		width: 100%;
 	}
-	white-space: nowrap;
 	overflow: hidden;
+	margin: -$header-spacing;
+	padding: $header-spacing;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 	color: white;
 	font-weight: bold;
 	font-size: 3rem;
-	text-shadow: 0 0 $header-spacing $darkest;
+	@include text-shadow;
 
 	&Large {
 		font-size: 2.5rem;

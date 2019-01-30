@@ -67,3 +67,10 @@
 		@content;
 	}
 }
+
+// Custom
+@mixin desktop-small {
+	@media all and (max-width: 1275px) {
+		@content;
+	}
+}

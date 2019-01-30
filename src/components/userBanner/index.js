@@ -29,6 +29,7 @@ class UserBanner extends Component {
 						</div>
 					</div>
 				</div>
+				<div className={styles.background} style={{backgroundImage: `url(${user.banner})`}} />
 			</section>
 		)
 	}
