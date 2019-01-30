@@ -98,4 +98,16 @@
 	font-weight: bold;
 	font-size: 3rem;
 	text-shadow: 0 0 $header-spacing $darkest;
+
+	&Large {
+		font-size: 2.5rem;
+	}
+
+	&Medium {
+		font-size: 2rem;
+	}
+
+	&Small {
+		font-size: 1.5rem;
+	}
 }
