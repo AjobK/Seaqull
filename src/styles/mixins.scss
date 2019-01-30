@@ -29,5 +29,5 @@
 }
 
 @mixin text-shadow () {
-	text-shadow: 0 0 ($header-spacing) rgba(0,0,0,0.2);
+	text-shadow: 0 0 ($header-spacing / 2) rgba(0,0,0,0.5);
 }
