@@ -24,8 +24,8 @@
 	width: 10vw;
 	height: 10vw;
 	@include mobile-all-portrait {
-		min-width: 20vh;
-		min-height: 20vh;
+		min-width: 0;
+		min-height: 0;
 		width: 20vh;
 		height: 20vh;
 		max-width: 80vw;
@@ -63,44 +63,32 @@
 }
 
 .info {
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	width: normal;
-	align-items: normal;
-	margin-top: normal;
-	text-align: normal;
-	height: 20vw;
 	padding-left: 5%;
+	overflow: hidden;
 
 	@include mobile-all-portrait {
 		padding-left: 0;
 		width: 100%;
 		height: auto;
-		align-items: center;
 		margin-top: $header-spacing;
 		text-align: center;
 	}
 }
 
 .achieved {
-	max-width: 100%;
-	align-self: flex-start;
 	@include mobile-all-portrait {
 		align-self: center;
 	}
+	display: inline-block;
 	background-color: rgba(0,0,0,0.75);
 	padding: $header-spacing / 2;
 	border-radius: $header-spacing / 3;
-	display: flex;
-	flex-wrap: nowrap;
 	margin-top: $header-spacing / 2;
 }
 
 .level {
 	border-radius: 0.25rem;
-	display: table;
+	display: inline-block;
 	align-self: center;
 	height: 1.5rem;
 	padding: 0 0.5rem;
@@ -108,7 +96,6 @@
 	line-height: 1.5rem;
 	font-weight: bold;
 	letter-spacing: 2px;
-	display: block;
 	color: white;
 	background-color: $primary;
 	
@@ -132,7 +119,8 @@
 }
 
 .role {
-	max-width: 100%;
+	vertical-align: middle;
+	display: inline-block;
 	font-size: 1.2rem;
 	margin-left: $header-spacing / 2;
 	font-weight: normal;
@@ -149,19 +137,23 @@
 }
 
 .name {
-	min-width: 0;
+	width: 100%;
 	word-spacing: 0.5rem;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	margin: -$header-spacing;
-	padding: $header-spacing;
 	color: white;
 	font-weight: bold;
 	font-size: 3rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	@include text-shadow;
 	@include mobile-all-portrait {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		text-align: center;
 		width: 100%;
+		margin: 0;
+		padding: 0;
 	}
 
 	&Large {
@@ -174,21 +166,5 @@
 
 	&Small {
 		font-size: 1.5rem;
-	}
-
-	@include mobile-all-portrait {
-		font-size: 2rem;
-
-		&Large {
-			font-size: 1.5rem;
-		}
-
-		&Medium {
-			font-size: 1rem;
-		}
-
-		&Small {
-			font-size: 0.5rem;
-		}
 	}
 }
