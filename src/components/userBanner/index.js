@@ -4,37 +4,37 @@ import { inject, observer } from 'mobx-react';
 
 @inject('store') @observer
 class UserBanner extends Component {
-	render() {
-		const { user } = this.props.store
+  render() {
+    const { user } = this.props.store
 
-		let fontSize = ''
+    let fontSize = ''
 
-		if (user.name.length > 30) {
-			fontSize = styles.nameSmall
-		} else if (user.name.length > 20) {
-			fontSize = styles.nameMedium
-		} else if (user.name.length > 10) {
-			fontSize = styles.nameLarge
-		}
+    if (user.name.length > 30) {
+      fontSize = styles.nameSmall
+    } else if (user.name.length > 20) {
+      fontSize = styles.nameMedium
+    } else if (user.name.length > 10) {
+      fontSize = styles.nameLarge
+    }
 
-		return (
-			<section className={styles.wrapper}>
-				<div className={styles.innerWrapper}>
-					<div className={styles.picture} style={{backgroundImage: `url(${user.picture})` }}>
-						<span className={styles.levelMobile}>{ user.level || ''}</span>
-					</div>
-					<div className={styles.info}>
-						<h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
-						<div className={styles.achieved}>
-							<span className={styles.level}>{ user.level || ''}</span>
-							<h3 className={styles.role}>{ user.role || ''}</h3>
-						</div>
-					</div>
-				</div>
-				<div className={styles.background} style={{backgroundImage: `url(${user.banner})`}} />
-			</section>
-		)
-	}
+    return (
+      <section className={styles.wrapper}>
+        <div className={styles.innerWrapper}>
+          <div className={styles.picture} style={{backgroundImage: `url(${user.picture})` }}>
+            <span className={styles.levelMobile}>{ user.level || ''}</span>
+          </div>
+          <div className={styles.info}>
+            <h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
+            <div className={styles.achieved}>
+              <span className={styles.level}>{ user.level || ''}</span>
+              <h3 className={styles.role}>{ user.role || ''}</h3>
+            </div>
+          </div>
+        </div>
+        <div className={styles.background} style={{backgroundImage: `url(${user.banner})`}} />
+      </section>
+    )
+  }
 }
 
 export default UserBanner
