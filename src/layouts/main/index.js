@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import styles from './main.scss'
-import generateRandomWord from 'random-words'
 
 @inject('store') @observer
 class Main extends Component {
 	createDummyGrid = () => {
 		let gridBlocks = []
 		for (let i = 0; i < 30; i++) {
-			let randomWord = generateRandomWord(3).join(' ')
+			let randomWord = 'Hello'
 			let color = `rgb(
 				${Math.floor(Math.random() * 255)},
 				${Math.floor(Math.random() * 255)},
