@@ -28,8 +28,8 @@
 		min-height: 20vh;
 		width: 20vh;
 		height: 20vh;
-		max-width: 200px;
-		max-height: 200px;
+		max-width: 80vw;
+		max-height: 80vw;
 	}
 	@include box-shadow;
 }
@@ -149,6 +149,7 @@
 }
 
 .name {
+	min-width: 0;
 	word-spacing: 0.5rem;
 	overflow: hidden;
 	white-space: nowrap;
