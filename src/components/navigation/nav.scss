@@ -2,7 +2,7 @@
 
 .navigation {
 	@include noselect;
-	@include mobile-all {
+	@include mobile-all-portrait {
 		display: none !important;
 	}
 	transition: 1s;
@@ -21,7 +21,7 @@
 .filler {
 	// Added everything necessary to hide and
 	// disable the header for maximum ensurance
-	@include mobile-all {
+	@include mobile-all-portrait {
 		display: none !important;
 	}
 	min-width: $navigation-width;

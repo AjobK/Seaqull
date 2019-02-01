@@ -12,23 +12,26 @@
 }
 
 .picture {
-	@media (orientation: landscape) {
-		min-width: 200px;
-		min-height: 200px;
-		width: 10vw;
-		height: 10vw;
-	}
-	@media (orientation: portrait) {
+	overflow: hidden;
+	border-radius: 100%;
+	background-size: cover;
+	background-position: center;
+	background-color: $darkest;
+	display: flex;
+	justify-content: center;
+	min-width: 200px;
+	min-height: 200px;
+	width: 10vw;
+	height: 10vw;
+	@include mobile-all-portrait {
+		min-width: 20vh;
+		min-height: 20vh;
 		width: 20vh;
 		height: 20vh;
 		max-width: 200px;
 		max-height: 200px;
 	}
 	@include box-shadow;
-	border-radius: 100%;
-	background-size: cover;
-	background-position: center;
-	background-color: $darkest;
 }
 
 .background {
@@ -39,23 +42,21 @@
 	bottom: 0;
 	background-size: cover;
 	background-position: center;
-	opacity: 0.75;
+	opacity: 0.5;
 	background-color: white;
 }
 
 .innerWrapper {
+	min-width: 80%;
 	z-index: 1;
 	transition: 0.5s;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	padding: $header-spacing;
 	width: $wrapper-width;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	@include text-shadow;
-	@media (orientation: portrait) {
+	@include mobile-all-portrait {
 		align-items: center;
 		flex-direction: column;
 	}
@@ -66,13 +67,17 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	@media (orientation: landscape) {
-		min-height: 200px;
-		height: 10vw;
-		padding: 0 $header-spacing * 2;
-	}
-	@media (orientation: portrait) {
+	width: normal;
+	align-items: normal;
+	margin-top: normal;
+	text-align: normal;
+	height: 20vw;
+	padding-left: 5%;
+
+	@include mobile-all-portrait {
+		padding-left: 0;
 		width: 100%;
+		height: auto;
 		align-items: center;
 		margin-top: $header-spacing;
 		text-align: center;
@@ -80,18 +85,20 @@
 }
 
 .achieved {
-	@media (orientation: landscape) {
-		align-self: flex-start;
+	max-width: 100%;
+	align-self: flex-start;
+	@include mobile-all-portrait {
+		align-self: center;
 	}
 	background-color: rgba(0,0,0,0.75);
 	padding: $header-spacing / 2;
-	border-radius: $header-spacing / 2;
+	border-radius: $header-spacing / 3;
 	display: flex;
+	flex-wrap: nowrap;
 	margin-top: $header-spacing / 2;
 }
 
 .level {
-	@include box-shadow;
 	border-radius: 0.25rem;
 	display: table;
 	align-self: center;
@@ -104,31 +111,57 @@
 	display: block;
 	color: white;
 	background-color: $primary;
+	
+	@include box-shadow;
+	@include mobile-all-portrait {
+		display: none;
+	}
+
+	&Mobile {
+		@extend .level;
+
+		align-self: flex-end;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		display: none;
+
+		@include mobile-all-portrait {
+			display: block;
+		}
+	}
 }
 
 .role {
+	max-width: 100%;
 	font-size: 1.2rem;
 	margin-left: $header-spacing / 2;
 	font-weight: normal;
 	color: $primary;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	@include text-shadow;
+	@include mobile-all-portrait {
+		white-space: pre-wrap;
+		font-size: 1rem;
+		margin-left: 0;
+	}
 }
 
 .name {
-	@media (orientation: portrait) {
-		text-align: center;
-		width: 80%;
-	}
 	word-spacing: 0.5rem;
 	overflow: hidden;
-	margin: -$header-spacing;
-	padding: $header-spacing;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	margin: -$header-spacing;
+	padding: $header-spacing;
 	color: white;
 	font-weight: bold;
 	font-size: 3rem;
 	@include text-shadow;
+	@include mobile-all-portrait {
+		width: 100%;
+	}
 
 	&Large {
 		font-size: 2.5rem;
@@ -140,5 +173,21 @@
 
 	&Small {
 		font-size: 1.5rem;
+	}
+
+	@include mobile-all-portrait {
+		font-size: 2rem;
+
+		&Large {
+			font-size: 1.5rem;
+		}
+
+		&Medium {
+			font-size: 1rem;
+		}
+
+		&Small {
+			font-size: 0.5rem;
+		}
 	}
 }

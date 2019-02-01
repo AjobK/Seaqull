@@ -4,11 +4,14 @@
 	position: relative;
 	z-index: 1;
 	margin-top: $header-height;
-	width: 100%;
-	max-width: $wrapper-width;
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
+	width: $wrapper-width;
+
+	@include mobile-all-portrait {
+		width: 100%;
+	}
 }
 
 .grid {

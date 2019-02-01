@@ -74,3 +74,21 @@
 		@content;
 	}
 }
+
+@mixin mobile-all-portrait {
+	@media (orientation: portrait) {
+		@content;
+	}
+	@include mobile-all {
+		@content;
+	}
+}
+
+@mixin desktop-tablet-sm-landscape {
+	@media (orientation: landscape) {
+		@content;
+	}
+	@include desktop-tablet-sm {
+		@content;
+	}
+}
