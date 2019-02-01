@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { observer, inject } from 'mobx-react'
+import React, { Component } from 'react'import { observer, inject } from 'mobx-react'
 import styles from './headerNavigation.scss'
 import { Link } from 'react-router-dom'
 import { Button } from '../../components'
