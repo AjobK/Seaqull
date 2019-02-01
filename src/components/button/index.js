@@ -4,7 +4,7 @@ import styles from './button.scss'
 class Button extends Component {
   render() {
     const { value, className, noStyle, inverted } = this.props
-    
+
     return (
       <li className={[
         className,

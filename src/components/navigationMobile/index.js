@@ -7,7 +7,7 @@ import { ProfileBar, NavDropdown } from '../../components'
 class NavigationMobile extends Component {
   componentDidMount() {
     const { nav } = this.props.store
-    
+
     this.setState({
       menuItems: nav.menuItems
     })
