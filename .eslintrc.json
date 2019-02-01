@@ -73,7 +73,7 @@
         "array-bracket-newline": 2,
         "capitalized-comments": 2,
         "indent": ["error", 2],
-        "jsx-quotes": [2, "single"],
+        "jsx-quotes": [2, "prefer-single"],
         "newline-before-return": 2,
         "newline-after-var": 2,
         "no-empty-function": 2,
