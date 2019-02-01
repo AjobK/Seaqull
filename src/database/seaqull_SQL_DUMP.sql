@@ -41,7 +41,7 @@ CREATE TABLE `post` (
 --
 
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
+  `id` int(1) NOT NULL,
   `role` text NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -69,8 +69,8 @@ CREATE TABLE `token` (
 
 CREATE TABLE `user` (
   `id` varchar(10) NOT NULL,
-  `role` int(11) NOT NULL,
-  `user_name` text NOT NULL,
+  `role` int(1) NOT NULL,
+  `username` text NOT NULL,
   `display_name` text NOT NULL,
   `password` text NOT NULL,
   `email` text NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE `user` (
 --
 
 CREATE TABLE `like` (
-  `id` int(11) NOT NULL,
+  `id` int(1) NOT NULL,
   `post_id` VARCHAR(10) NOT NULL,
   `user_id` VARCHAR(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
