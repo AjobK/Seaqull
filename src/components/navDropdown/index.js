@@ -22,9 +22,9 @@ class NavDropdown extends Component {
 		for (var key in value) {
 			if (value.hasOwnProperty(key)) {
 				arr.push(
-					<li className={styles.ItemSub} key={subitem}>
-						<a className={styles.ItemSubLink} href={value[subitem].ref}>
-							{value[subitem].title}
+					<li className={styles.ItemSub} key={Math.random()}>
+						<a className={styles.ItemSubLink} href={value[key].ref}>
+							{value[key].title}
 						</a>
 					</li>
 				)
