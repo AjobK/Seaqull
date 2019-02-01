@@ -20,7 +20,7 @@ class AppRouter extends Component {
 					<div>
 						<h1> IE11 Working </h1>
 						<Button />
-						{/* <Route path="/" exact component={Home} />
+						{/* <Route path="/" exact component={Home} /> 
 						<Route path="/profile" exact component={Profile} />
 						<Route path="/posts" exact component={Post} />
 						<Route path="/posts/:postUrl" exact component={Post} /> */}
