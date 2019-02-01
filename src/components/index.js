@@ -3,7 +3,7 @@ import Hamburger from './hamburger'
 import ProfileBar from './profileBar'
 import NavDropdown from './navDropdown'
 import HeaderNavigation from './headerNavigation'
-import Navigation from './navigation'
+// import Navigation from './navigation'
 import NavigationMobile from './navigationMobile'
 import Icon from './icon'
 
@@ -12,7 +12,7 @@ export {
 	Hamburger,
 	ProfileBar,
 	HeaderNavigation,
-	Navigation,
+	// Navigation,
 	NavigationMobile,
 	NavDropdown,
 	Icon
