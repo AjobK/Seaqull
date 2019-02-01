@@ -6,4 +6,4 @@ import { storiesOf } from '@storybook/react';
 
 storiesOf('Hamburger', module)
   .add('Normal', () => <Hamburger />)
-  .add('Clicked', () => <Hamburger active="true" />)
+  .add('Clicked', () => <Hamburger active='true' />)
