@@ -13,19 +13,19 @@ class HeaderNavigation extends Component {
       <nav className={styles.menu}>
         {user.loggedIn ? ( // Logged in content
           <ul className={styles.menuUl}>
-            <Link to="/profile" className={styles.menuItem}>
+            <Link to='/profile' className={styles.menuItem}>
               <li>My profile</li>
             </Link>
-            <Link to="/" className={styles.menuItem}>
+            <Link to='/' className={styles.menuItem}>
               <li onClick={user.logOut}>Logout</li>
             </Link>
           </ul>
         ) : ( // Logged out content
           <ul className={styles.menuUl}>
-            <Link to="/" className={styles.menuItem}>
+            <Link to='/' className={styles.menuItem}>
               <li onClick={user.logIn}>Log in</li>
             </Link>
-            <Button value="Sign Up" className={styles.button} />
+            <Button value='Sign Up' className={styles.button} />
           </ul>
         )}
       </nav>
