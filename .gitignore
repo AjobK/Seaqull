@@ -3,3 +3,6 @@
 
 # Distribution 
 /dist
+
+# Storybook static files
+/storybook-static
