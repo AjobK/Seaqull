@@ -17,10 +17,10 @@ class AppRouter extends Component {
       <Provider store={this.store}>
         <Router>
           <div>
-            <Route path="/" exact component={Home} />
-            <Route path="/profile" exact component={Profile} />
-            <Route path="/posts" exact component={Post} />
-            <Route path="/posts/:postUrl" exact component={Post} />
+            <Route path='/' exact component={Home} />
+            <Route path='/profile' exact component={Profile} />
+            <Route path='/posts' exact component={Post} />
+            <Route path='/posts/:postUrl' exact component={Post} />
           </div>
         </Router>
       </Provider>

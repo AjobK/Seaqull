@@ -12,7 +12,7 @@ class Profile extends App {
       <>
         <h1> This is my profile </h1>
         <h2> User logged in {user.loggedIn ? 'True' : 'false'} </h2>
-        <Link to="/">Go home</Link>
+        <Link to='/'>Go home</Link>
       </>
     )
   }
