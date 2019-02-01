@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { Redirect } from "react-router-dom"
-import { UserBanner } from '../../components'
+import { UserBanner, EllipsisTest } from '../../components'
 
 @inject('store') @observer
 class Profile extends App {
@@ -15,6 +15,7 @@ class Profile extends App {
 		return (
 			<Standard>
 				<UserBanner />
+				<EllipsisTest value={user.name} />
 			</Standard>
 		)
 	}

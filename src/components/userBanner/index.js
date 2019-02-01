@@ -9,11 +9,11 @@ class UserBanner extends Component {
 
     let fontSize = ''
 
-    if (user.name.length > 30) {
+    if (user.name.length >= 22) {
       fontSize = styles.nameSmall
-    } else if (user.name.length > 20) {
+    } else if (user.name.length >= 14) {
       fontSize = styles.nameMedium
-    } else if (user.name.length > 10) {
+    } else if (user.name.length >= 8) {
       fontSize = styles.nameLarge
     }
 

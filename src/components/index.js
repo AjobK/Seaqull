@@ -7,6 +7,7 @@ import Navigation from './navigation'
 import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
 import Icon from './icon'
+import EllipsisTest from './ellipsisTest'
 
 export {
 	Button,
@@ -17,5 +18,6 @@ export {
 	NavigationMobile,
 	NavDropdown,
 	UserBanner,
+	EllipsisTest,
 	Icon
 }
