@@ -1,6 +1,6 @@
 import React from 'react'
 import App from '../App'
-import { Standard } from '../../layouts'
+import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 import { UserBanner } from '../../components'
@@ -15,6 +15,8 @@ class Profile extends App {
     return (
       <Standard>
         <UserBanner />
+        <Section />
+        <Section />
       </Standard>
     )
   }
