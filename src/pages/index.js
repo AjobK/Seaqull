@@ -1,5 +1,5 @@
-import React, { Component} from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { initStore } from '../stores'
 import { Provider } from 'mobx-react'
 import Home from './home'
@@ -8,10 +8,10 @@ import Post from './post'
 import Error from './error'
 
 class AppRouter extends Component {
-	constructor (props) {
-		super(props)
-		this.store = initStore(true)
-	}	
+  constructor(props) {
+    super(props)
+    this.store = initStore(true)
+  }
 
 	render () {
 		return (

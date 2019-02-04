@@ -5,16 +5,18 @@ import * as brands from '@fortawesome/fontawesome-free-brands'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 class Icon extends Component {
-	render() {
-		const classNames = []
-		const { className, iconName, onClick } = this.props
-		if (className) classNames.push(className)
+  render() {
+    const classNames = []
+    const { className, iconName, onClick } = this.props
 
-		let icon = icons[`fa${iconName}`] || brands[`fa${iconName}`] || icons['faBan']
-		library.add(icon)
+    if (className) classNames.push(className)
 
-		return <FontAwesomeIcon className={classNames.join(' ')} icon={icon} onClick={onClick} />
-	}
+    let icon = icons[`fa${iconName}`] || brands[`fa${iconName}`] || icons['faBan']
+
+    library.add(icon)
+
+    return <FontAwesomeIcon className={classNames.join(' ')} icon={icon} onClick={onClick} />
+  }
 }
 
 export default Icon

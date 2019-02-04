@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import styles from './main.scss'
 import generateRandomWord from 'random-words'
+import Posts from '../../components/posts'
 
 @inject('store') @observer
 class Main extends Component {

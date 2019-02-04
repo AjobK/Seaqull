@@ -6,35 +6,34 @@ import { Link } from 'react-router-dom'
 
 @inject('store') @observer
 class Header extends Component {
-	hamburgerClick() {
-		const { ui } = this.props.store
-		ui.toggleSubNav()
-	}
+  hamburgerClick() {
+    const { ui } = this.props.store
 
-	render() {
-		const { ui, defaultData } = this.props.store
+    ui.toggleSubNav()
+  }
 
-		let headerContent = (
-			<section className={styles.headerContent}>
-				<Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
-				<Link to='/' className={styles.logo}>{defaultData.projectName}</Link>
-				<HeaderNavigation />
-			</section>
-		)
+  render() {
+    const { ui, defaultData } = this.props.store
 
-		return (
-			<div className={[
-				styles.headerWrap,
-				ui.subNavOpen && styles.sNavOpen
-			].join(' ')}>
-				<header className={[
-					styles.header
-				].join(' ')}>
-					{headerContent}
-				</header>
-			</div>
-		)
-	}
+    let headerContent = (
+      <section className={styles.headerContent}>
+        <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
+        <h1 className={styles.logo}>{defaultData.projectName}</h1>
+        <HeaderNavigation />
+      </section>
+    )
+
+    return (
+      <div className={[
+        styles.headerWrap,
+        ui.subNavOpen && styles.sNavOpen
+      ].join(' ')}>
+        <header className={[styles.header].join(' ')}>
+          {headerContent}
+        </header>
+      </div>
+    )
+  }
 }
 
 export default Header

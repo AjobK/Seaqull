@@ -1,0 +1,28 @@
+@import '../../styles/index.scss';
+
+.contact {
+	display: flex;
+	align-items: flex-end;
+	font-size: 1em;
+	height: 35vh;
+	margin-bottom: $header-spacing;
+	padding: $header-spacing * 2;
+	text-transform: capitalize;
+	color: white;
+	overflow: hidden;
+	&Text {
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	&s {
+		position: static;
+		min-height: 300vh;
+	}
+}
+
+.post {
+	list-style: none
+}
