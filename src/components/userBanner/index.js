@@ -20,7 +20,7 @@ class UserBanner extends Component {
     return (
       <section className={styles.wrapper}>
         <div className={styles.innerWrapper}>
-          <div className={styles.picture} style={{backgroundImage: `url(${user.picture})` }}>
+          <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={styles.levelMobile}>{ user.level || ''}</span>
           </div>
           <div className={styles.info}>
@@ -31,7 +31,7 @@ class UserBanner extends Component {
             </div>
           </div>
         </div>
-        <div className={styles.background} style={{backgroundImage: `url(${user.banner})`}} />
+        <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
       </section>
     )
   }

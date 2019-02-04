@@ -13,22 +13,22 @@ class AppRouter extends Component {
     this.store = initStore(true)
   }
 
-	render () {
-		return (
-			<Provider store={this.store}>
-				<Router>
-					<div>
-						<Route path="/" exact component={Home} />
-						<Route path="/profile" exact component={Profile} />
-						<Route path="/404" exact component={Error} />
-						<Route path="/500" exact component={() => <Error title={500} sub={'Internal server error'} />} />
-						<Route path="/posts" exact component={Post} />
-						<Route path="/posts/:postUrl" exact component={Post} />
-					</div>
-				</Router>
-			</Provider>
-		)
-	}
+  render () {
+    return (
+      <Provider store={this.store}>
+        <Router>
+          <div>
+            <Route path='/' exact component={Home} />
+            <Route path='/profile' exact component={Profile} />
+            <Route path='/404' exact component={Error} />
+            <Route path='/500' exact component={() => <Error title={500} sub={'Internal server error'} />} />
+            <Route path='/posts' exact component={Post} />
+            <Route path='/posts/:postUrl' exact component={Post} />
+          </div>
+        </Router>
+      </Provider>
+    )
+  }
 }
 
 export default AppRouter

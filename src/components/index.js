@@ -7,17 +7,15 @@ import Navigation from './navigation'
 import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
 import Icon from './icon'
-import EllipsisTest from './ellipsisTest'
 
 export {
-	Button,
-	Hamburger,
-	ProfileBar,
-	HeaderNavigation,
-	Navigation,
-	NavigationMobile,
-	NavDropdown,
-	UserBanner,
-	EllipsisTest,
-	Icon
+  Button,
+  Hamburger,
+  ProfileBar,
+  HeaderNavigation,
+  Navigation,
+  NavigationMobile,
+  NavDropdown,
+  UserBanner,
+  Icon
 }

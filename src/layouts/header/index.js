@@ -18,7 +18,9 @@ class Header extends Component {
     let headerContent = (
       <section className={styles.headerContent}>
         <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
-        <h1 className={styles.logo}>{defaultData.projectName}</h1>
+        <Link to={'/'}>
+          <h1 className={styles.logo}>{defaultData.projectName}</h1>
+        </Link>
         <HeaderNavigation />
       </section>
     )
