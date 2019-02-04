@@ -6,6 +6,7 @@ import HeaderNavigation from './headerNavigation'
 import Navigation from './navigation'
 import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
+import Title from './title'
 import Icon from './icon'
 
 export {
@@ -17,5 +18,6 @@ export {
   NavigationMobile,
   NavDropdown,
   UserBanner,
+  Title,
   Icon
 }

@@ -15,8 +15,15 @@ class Profile extends App {
     return (
       <Standard>
         <UserBanner />
-        <Section />
-        <Section />
+        <Section title={'CREATED POSTS'}>
+          Lorem Ipsum
+        </Section>
+        <Section title={'LIKED POSTS'}>
+          Lorem Ipsum
+        </Section>
+        <Section title={'STATISTICS'}>
+          Lorem Ipsum
+        </Section>
       </Standard>
     )
   }

@@ -1,38 +1,22 @@
 @import '../../styles/index.scss';
 
-.main {
-	position: relative;
-	z-index: 1;
-	margin-top: $header-height;
-	justify-content: center;
-	align-items: center;
-	margin: 0 auto;
+.wrapper {
 	width: $wrapper-width;
+	margin: 0 auto;
+	padding: $header-spacing * 4;
 
 	@include mobile-all-portrait {
+		padding: $header-spacing * 2;
 		width: 100%;
 	}
 }
 
-.grid {
-	padding: 0 $header-spacing $header-spacing;
-	width: 100%;
-}
+.content {
+	margin-top: $header-spacing * 2;
+	min-height: 10vh;
 
-.dummyBlock {
-	display: flex;
-	align-items: flex-end;
-	font-size: 1em;
-	height: 35vh;
-	margin-bottom: $header-spacing;
-	padding: $header-spacing * 2;
-	text-transform: capitalize;
-	color: white;
-	background-color: red;
-	&Text {
-		overflow: hidden;
+	@include mobile-all-portrait {
+		margin-top: $header-spacing;
 		width: 100%;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 	}
 }
