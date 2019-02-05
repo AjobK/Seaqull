@@ -11,11 +11,11 @@
 }
 
 .content {
-	margin-top: $header-spacing * 2;
+	margin-top: 2vh * 2;
 	min-height: 10vh;
 
 	@include mobile-all-portrait {
-		margin-top: $header-spacing;
+		margin-top: 2vh;
 		width: 100%;
 	}
 }
