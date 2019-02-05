@@ -7,6 +7,7 @@ import HeaderNavigation from './headerNavigation'
 import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
 import Title from './title'
+import PostsPreview from './postsPreview'
 import Icon from './icon'
 
 export {
@@ -19,5 +20,6 @@ export {
   NavDropdown,
   UserBanner,
   Title,
+  PostsPreview,
   Icon
 }

@@ -1,0 +1,87 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
+	overflow: hidden;
+	padding: $header-spacing;
+}
+
+.article {
+	overflow: hidden;
+	position: relative;
+	min-width: calc(100% / 4 - #{$header-spacing} / 4 * 3);
+	padding-top: calc(100% / 4 - #{$header-spacing} / 4 * 3);
+	margin-bottom: $header-spacing;
+	background-color: $primary;
+
+	&:nth-child(n+9) {
+		display: none;
+	}
+	
+	@include mobile-all {
+		min-width: calc(100% / 3 - #{$header-spacing} / 3 * 2);
+		padding-top: calc(100% / 3 - #{$header-spacing} / 3 * 2);
+		margin-bottom: $header-spacing;
+
+		&:nth-child(n+7) {
+			display: none;
+		}
+	}
+
+	@include mobile-xs {
+		min-width: calc(100% / 2 - #{$header-spacing} / 2 * 1);
+		padding-top: calc(100% / 2 - #{$header-spacing} / 2 * 1);
+		margin-bottom: $header-spacing;
+
+		&:nth-child(n+5) {
+			display: none;
+		}
+	}
+
+	&Text {
+		@include text-shadow;
+		color: white;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		line-height: 16px;
+		font-size: 16px;
+		position: absolute;
+		bottom: 5%;
+		left: 5%;
+	}
+}
+
+.add {
+	@extend .article;
+	@include noselect;
+	transition: 0.2s;
+	background-color: transparent !important;
+	position: relative;
+	cursor: pointer;
+	&:hover {
+		transition: 0.2s;
+		background-color: rgba(0,0,0,0.1) !important;
+	}
+	
+	&Icon {
+		position: absolute;
+		top: 30%;
+		left: 30%;
+		width: 40%;
+		height: 40%;
+		margin: 0 auto;
+	}
+}
+
+.filler {
+	pointer-events: none;
+	visibility: hidden;
+
+	&Mobile {
+		@extend .filler;
+	}
+}

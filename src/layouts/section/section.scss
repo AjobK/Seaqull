@@ -1,12 +1,11 @@
 @import '../../styles/index.scss';
 
 .wrapper {
-	width: $wrapper-width;
+	width: 100%;
+	max-width: $wrapper-width;
 	margin: 0 auto;
-	padding: $header-spacing * 4;
 
 	@include mobile-all-portrait {
-		padding: $header-spacing * 2;
 		width: 100%;
 	}
 }

@@ -19,7 +19,6 @@
 	min-height: calc(100vh - #{$header-height});
 	vertical-align: top;
 	@include desktop-tablet-sm {
-		margin-left: -8px; // For inline blocks
 		width: calc(100% - #{$navigation-width});
 	}
 }

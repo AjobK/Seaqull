@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
-import { UserBanner } from '../../components'
+import { UserBanner, PostsPreview } from '../../components'
 
 @inject('store') @observer
 class Profile extends App {
@@ -16,10 +16,10 @@ class Profile extends App {
       <Standard>
         <UserBanner />
         <Section title={'CREATED POSTS'}>
-          Lorem Ipsum
+          <PostsPreview create />
         </Section>
         <Section title={'LIKED POSTS'}>
-          Lorem Ipsum
+          <PostsPreview />
         </Section>
         <Section title={'STATISTICS'}>
           Lorem Ipsum
