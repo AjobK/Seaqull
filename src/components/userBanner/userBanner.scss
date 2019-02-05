@@ -12,7 +12,6 @@
 }
 
 .picture {
-	overflow: hidden;
 	border-radius: 100%;
 	background-size: cover;
 	background-position: center;
@@ -79,7 +78,8 @@
 	@include mobile-all-portrait {
 		align-self: center;
 	}
-	display: inline-block;
+	display: inline-flex;
+	overflow: hidden;
 	background-color: rgba(0,0,0,0.75);
 	padding: $header-spacing / 2;
 	border-radius: $header-spacing / 3;
@@ -87,13 +87,13 @@
 }
 
 .level {
+	display: flex;
+	align-items: center;
 	border-radius: 0.25rem;
-	display: inline-block;
 	align-self: center;
-	height: 1.5rem;
-	padding: 0 0.5rem;
+	height: 1.8rem;
+	padding: 0 0.6rem;
 	font-size: 1rem;
-	line-height: 1.5rem;
 	font-weight: bold;
 	letter-spacing: 2px;
 	color: white;
@@ -108,19 +108,22 @@
 		@extend .level;
 
 		align-self: flex-end;
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
+		border-radius: 0.2rem;
+		margin-bottom: -0.5rem;
+		min-width: 6vw;
+		height: 2rem;
 		display: none;
 
 		@include mobile-all-portrait {
-			display: block;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 }
 
 .role {
-	vertical-align: middle;
-	display: inline-block;
+	align-items: center;
 	font-size: 1.2rem;
 	margin-left: $header-spacing / 2;
 	font-weight: normal;

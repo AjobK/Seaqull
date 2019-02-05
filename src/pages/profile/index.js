@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
-import { UserBanner, PostsPreview } from '../../components'
+import { UserBanner, PostsPreview, Statistics } from '../../components'
 
 @inject('store') @observer
 class Profile extends App {
@@ -22,7 +22,7 @@ class Profile extends App {
           <PostsPreview />
         </Section>
         <Section title={'STATISTICS'}>
-          Lorem Ipsum
+          <Statistics />
         </Section>
       </Standard>
     )
