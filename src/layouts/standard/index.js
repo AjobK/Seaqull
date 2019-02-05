@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Header } from '../../layouts'
-import { Navigation, NavigationMobile } from '../../components'
+import { NavigationMobile } from '../../components'
 import { observer, inject } from 'mobx-react'
 import styles from './standard.scss'
 
@@ -19,11 +19,9 @@ class Standard extends Component {
       <section className={styles.wrapper}>
         <Header />
         <aside className={styles.higherOrder}>
-          <Navigation />
           <NavigationMobile />
         </aside>
         <NavigationMobile filler /> {/* Filler aligns content */}
-        <Navigation filler /> {/* Filler aligns content */}
         <div className={styles.innerWrapper} onClick={this.props.store.ui.closeSubNav}>
           { this.props.children }
         </div>

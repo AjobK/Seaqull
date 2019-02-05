@@ -16,9 +16,21 @@ class NavDropdown extends Component {
     })
   }
 
-<<<<<<< HEAD
   render() {
     const { title, value, index, icon } = this.props
+    let arr = []
+
+    for (let key in value) {
+      if (value.hasOwnProperty(key)) {
+        arr.push(
+          <li className={styles.ItemSub} key={Math.random()}>
+            <a className={styles.ItemSubLink} href={value[key].ref}>
+              {value[key].title}
+            </a>
+          </li>
+        )
+      }
+    }
 
     return Array.isArray(value) && (
       <li className={styles.Item} key={index}>
@@ -28,13 +40,7 @@ class NavDropdown extends Component {
           <Icon iconName={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
         </p>
         <ul className={[styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ')}>
-          {Object.keys(value).map((subitem) => (
-            <li className={styles.ItemSub} key={subitem}>
-              <a className={styles.ItemSubLink} href={value[subitem].ref}>
-                {value[subitem].title}
-              </a>
-            </li>
-          ))}
+          {arr}
         </ul>
       </li>
     ) || (
@@ -46,43 +52,6 @@ class NavDropdown extends Component {
       </li>
     )
   }
-=======
-	render() {
-		const { title, value, index, icon } = this.props
-		let arr = []
-		for (var key in value) {
-			if (value.hasOwnProperty(key)) {
-				arr.push(
-					<li className={styles.ItemSub} key={Math.random()}>
-						<a className={styles.ItemSubLink} href={value[key].ref}>
-							{value[key].title}
-						</a>
-					</li>
-				)
-			}
-		}
-		
-		return Array.isArray(value) && (
-			<li className={styles.Item} key={index}>
-				<p className={styles.ItemHeading} onClick={this.toggleSubMenu}>
-					<Icon iconName={icon} className={styles.icon} />
-					{title}
-					<Icon iconName={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
-				</p>
-				<ul className={[styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ')}>
-					{arr}
-				</ul>
-			</li>
-		) || (
-			<li className={styles.Item} key={index}>
-				<p className={styles.ItemHeading}>
-					<Icon iconName={icon} className={styles.icon} />
-					{title}
-				</p>
-			</li>
-		)
-	}
->>>>>>> f4f3d4d5bd2edd33a7b1a61e4d94aa215e5b887b
 }
 
 export default NavDropdown

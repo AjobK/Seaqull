@@ -5,15 +5,8 @@ import styles from './main.scss'
 
 @inject('store') @observer
 class Main extends Component {
-	createDummyGrid = () => {
-		let gridBlocks = []
-		for (let i = 0; i < 30; i++) {
-			let randomWord = 'Hello'
-			let color = `rgb(
-				${Math.floor(Math.random() * 255)},
-				${Math.floor(Math.random() * 255)},
-				${Math.floor(Math.random() * 255)})
-			`
+  createDummyGrid = () => {
+    let gridBlocks = []
 
     for (let i = 0; i < 30; i++) {
       let randomWord = 'Article'

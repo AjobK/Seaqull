@@ -61,12 +61,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.4",
-<<<<<<< HEAD
-    "acorn": "^6.0.5",
-=======
+    "acorn": "^6.0.7",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
     "babel-polyfill": "^6.26.0",
->>>>>>> f4f3d4d5bd2edd33a7b1a61e4d94aa215e5b887b
     "css-loader": "^1.0.1",
     "file-loader": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
