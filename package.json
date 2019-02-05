@@ -24,11 +24,15 @@
   },
   "homepage": "https://github.com/AjobK/Seaqull#readme",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-decorators": "^7.2.3",
+    "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^4.1.6",
     "@storybook/addon-links": "^4.1.6",
     "@storybook/addons": "^4.1.4",
+    "@storybook/react": "^4.1.6",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "dotenv": "^6.2.0",
@@ -48,18 +52,21 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14",
-    "@storybook/react": "^4.1.6"
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/preset-env": "^7.2.3",
+    "@babel/polyfill": "^7.2.5",
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.4",
+<<<<<<< HEAD
     "acorn": "^6.0.5",
+=======
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
+>>>>>>> f4f3d4d5bd2edd33a7b1a61e4d94aa215e5b887b
     "css-loader": "^1.0.1",
     "file-loader": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
