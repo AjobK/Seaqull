@@ -10,6 +10,7 @@
 }
 
 .article {
+	cursor: pointer;
 	overflow: hidden;
 	position: relative;
 	min-width: calc(100% / 4 - #{$header-spacing} / 4 * 3);
@@ -20,7 +21,7 @@
 	&:nth-child(n+9) {
 		display: none;
 	}
-	
+
 	@include mobile-all {
 		min-width: calc(100% / 3 - #{$header-spacing} / 3 * 2);
 		padding-top: calc(100% / 3 - #{$header-spacing} / 3 * 2);
@@ -41,19 +42,26 @@
 		}
 	}
 
+	&:hover &Text {
+		transition: 0.2s;
+		background-color: rgba(0,0,0,0.2);
+		opacity: 1;
+	}
+
 	&Text {
+		transition: 0.2s;
+		opacity: 0.6;
+		background-color: rgba(0,0,0,0);
 		@include text-shadow;
 		color: white;
-		overflow: hidden;
-		word-break: break-all;
-		text-overflow: ellipsis;
+		white-space: normal;
 		line-height: 1rem;
 		font-size: 1rem;
 		position: absolute;
-		max-height: 2rem;
-		bottom: 5%;
-		right: 5%;
-		left: 5%;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		padding: 5%;
 	}
 }
 

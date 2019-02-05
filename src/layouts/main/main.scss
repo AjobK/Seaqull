@@ -7,7 +7,8 @@
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
-	width: $wrapper-width;
+	width: 100%;
+	max-width: $wrapper-width;
 
 	@include mobile-all-portrait {
 		width: 100%;

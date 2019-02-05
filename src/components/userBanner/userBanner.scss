@@ -50,7 +50,8 @@
 	z-index: 1;
 	transition: 0.5s;
 	padding: $header-spacing;
-	width: $wrapper-width;
+	width: 100%;
+	max-width: $wrapper-width;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -62,10 +63,11 @@
 }
 
 .info {
-	padding-left: 15%;
+	margin-left: 15%;
+	overflow: hidden;
 
 	@include mobile-all-portrait {
-		padding-left: 0;
+		margin-left: 0;
 		width: 100%;
 		height: auto;
 		margin-top: $header-spacing;
@@ -136,8 +138,9 @@
 
 .name {
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	width: 100%;
-	overflow-wrap: break-word;
 	letter-spacing: 0.1rem;
 	color: white;
 	font-weight: bold;
@@ -159,9 +162,8 @@
 	@include mobile-all-portrait {
 		text-align: center;
 		overflow: hidden;
-		word-wrap: nowrap;
+		white-space: nowrap;
 		text-overflow: ellipsis;
-		width: 100%;
 		margin: 0;
 		padding: 0;
 		font-size: 1vw;
