@@ -1,10 +1,10 @@
 @import '../../styles/index.scss';
 
 .wrapper {
+	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	width: 100%;
 	overflow: hidden;
 	padding: $header-spacing;
 }
@@ -45,12 +45,14 @@
 		@include text-shadow;
 		color: white;
 		overflow: hidden;
-		white-space: nowrap;
+		word-break: break-all;
 		text-overflow: ellipsis;
-		line-height: 16px;
-		font-size: 16px;
+		line-height: 1rem;
+		font-size: 1rem;
 		position: absolute;
+		max-height: 2rem;
 		bottom: 5%;
+		right: 5%;
 		left: 5%;
 	}
 }

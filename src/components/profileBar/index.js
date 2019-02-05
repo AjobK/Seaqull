@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './profilebar.scss'
+import { Link } from 'react-router-dom'
 // Import generateRandomWord from 'random-words'
 
 class ProfileBar extends Component {
@@ -8,11 +9,13 @@ class ProfileBar extends Component {
 
     return (
       <section className={styles.profile}>
-        <div className={styles.profilePicture}>
-          <div className={styles.profileLevel}>
-            <div className={styles.profileLevelNumber}>{level || Math.floor(Math.random() * 100)}</div>
+        <Link to={'/profile'}>
+          <div className={styles.profilePicture}>
+            <div className={styles.profileLevel}>
+              <div className={styles.profileLevelNumber}>{level || Math.floor(Math.random() * 100)}</div>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className={styles.profileInfo}>
           <div className={styles.profileInfoWrapper}>
             <h2 className={styles.profileInfoUserName}>{userName || 'Other name'}</h2>

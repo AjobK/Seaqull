@@ -18,7 +18,7 @@ class PostsPreview extends Component {
       arr.push(
         <article key={i} className={styles.article} style={{ backgroundColor: rgb }}>
           <p className={styles.articleText}>
-            {'Article ' + i}
+            {'This article is about developers ' + i}
           </p>
         </article>
       )

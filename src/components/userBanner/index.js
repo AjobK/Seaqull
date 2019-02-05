@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './userBanner.scss'
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react'
 
 @inject('store') @observer
 class UserBanner extends Component {
