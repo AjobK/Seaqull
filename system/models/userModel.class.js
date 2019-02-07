@@ -1,31 +1,31 @@
 const Connection = require('../connection.js')
 
 class UserModel {
-  constructor () {
-    this.user = {
-      id: {
-        type: 'int',
-        required: true
-      },
-      username: {
-        type: 'string',
-        required: true
-      }
-    }
-  }
-
   selectAll (callback) {
     const sql = 'SELECT * FROM User'
-    const test = []
 
     Connection.query(sql, (err, result) => {
       if (err) throw err
-      const user = Object.getOwnPropertyNames(this.user)
-
-      user.forEach(element => {
-        test.push(result[0][element])
-      })
       callback(result)
+    })
+  }
+
+  selectOne (id, callback) {
+    const sql = 'SELECT * FROM User WHERE id = ?'
+    
+    Connection.query(sql, [id], (err, result) => {
+      if (err) throw err
+      callback(result)
+    })
+  }
+
+  create (body, callback) {
+    // INSERT INTO `user` (`id`, `role`, `username`, `display_name`, `password`, `email`, `level`, `rows_scrolled`, `created_at`, `updated_at`, `archived_at`) VALUES ('', '', '', '', '', '', '', '', '', '', NULL)
+    const sql = 'INSERT INTO User (`id`, `role`, `username`, `display_name`, `password`, `email`, `level`, `rows_scrolled`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+
+    Connection.query(sql, Object.values(body), (err, result) => {
+      if (err) throw err
+      callback()
     })
   }
 }
