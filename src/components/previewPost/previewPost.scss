@@ -1,15 +1,7 @@
 @import '../../styles/index.scss';
 
-.wrapper {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	overflow: hidden;
-	padding: $header-spacing;
-}
-
 .article {
+	position: relative;
 	background-size: cover;
 	background-position: center;
 	cursor: pointer;
@@ -51,6 +43,9 @@
 	}
 
 	&Text {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 		transition: 0.2s;
 		opacity: 0.6;
 		background-color: rgba(0,0,0,0);
@@ -63,37 +58,26 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
+		top: 0;
 		padding: 5%;
 	}
 }
 
-.add {
-	@extend .article;
-	@include noselect;
-	transition: 0.2s;
-	background-color: transparent !important;
-	position: relative;
-	cursor: pointer;
-	&:hover {
-		transition: 0.2s;
-		background-color: rgba(0,0,0,0.1) !important;
-	}
-	
-	&Icon {
-		position: absolute;
-		top: 33%;
-		left: 33%;
-		width: 34%;
-		height: 34%;
-		margin: 0 auto;
-	}
-}
+.stats {
+	color: $primary;
+	padding-bottom: 5%;
+	font-size: 1.5rem;
+	@include text-shadow;
 
-.filler {
-	pointer-events: none;
-	visibility: hidden;
-
-	&Mobile {
-		@extend .filler;
+	&Likes {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+		&Text {
+			margin-left: 5%;
+			font-size: 1.2rem;
+			line-height: 1rem * 0.7;
+			color: white;
+		}
 	}
 }

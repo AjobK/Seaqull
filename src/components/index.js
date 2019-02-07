@@ -8,7 +8,9 @@ import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
 import Title from './title'
 import PostsPreview from './postsPreview'
+import PreviewPost from './previewPost'
 import Statistics from './statistics'
+import Logo from './logo'
 import Icon from './icon'
 
 export {
@@ -22,6 +24,8 @@ export {
   UserBanner,
   Title,
   PostsPreview,
+  PreviewPost,
   Statistics,
+  Logo,
   Icon
 }

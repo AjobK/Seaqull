@@ -5,6 +5,7 @@
 	background-position: center;
 	background-size: cover;
 	height: calc(50vh + #{$header-height});
+	min-height: 450px;
 	background-color: $darker;
 	display: flex;
 	justify-content: center;
@@ -23,8 +24,8 @@
 	width: 10vw;
 	height: 10vw;
 	@include mobile-all-portrait {
-		min-width: 0;
-		min-height: 0;
+		min-width: 150px;
+		min-height: 150px;
 		width: 20vh;
 		height: 20vh;
 		max-width: 80vw;
@@ -54,7 +55,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	@include text-shadow;
 	@include mobile-all-portrait {
 		align-items: center;
 		flex-direction: column;
