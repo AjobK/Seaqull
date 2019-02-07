@@ -21,18 +21,20 @@ class previewPost extends Component {
         backgroundColor: rgb,
         backgroundImage: `url('https://picsum.photos/225/225/?image=${randomNumber}')`
       }}>
-        <div className={styles.articleText}>
-          <div className={styles.stats}>
+        <div className={styles.articleWrapper}>
+          <div className={styles.articleWrapperStats}>
             {likes > 0 && (
-              <div className={styles.statsLikes}>
-                <Icon iconName='Heart' />
-                <p className={styles.statsLikesText}>{likes || 0}</p>
+              <div className={styles.articleWrapperStatsLikes}>
+                <Icon iconName='FeatherAlt' />
+                <p className={styles.articleWrapperStatsLikesText}>{likes || 0}</p>
               </div>
             ) || null}
           </div>
-          <p className={styles.title}>
-            {title || 'This article is about developers'}
-          </p>
+          <div className={styles.articleWrapperText}>
+            <p className={styles.articleWrapperTextTitle}>
+              {title || 'This article is about developers'}
+            </p>
+          </div>
         </div>
       </article>
     )

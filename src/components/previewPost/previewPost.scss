@@ -6,7 +6,6 @@
 	background-position: center;
 	cursor: pointer;
 	overflow: hidden;
-	position: relative;
 	min-width: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	padding-top: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	margin-bottom: $header-spacing;
@@ -36,48 +35,73 @@
 		}
 	}
 
-	&:hover &Text {
-		transition: 0.2s;
-		background-color: rgba(0,0,0,0.2);
-		opacity: 1;
-	}
-
-	&Text {
+	&Wrapper {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		transition: 0.2s;
-		opacity: 0.6;
-		background-color: rgba(0,0,0,0);
-		@include text-shadow;
-		color: white;
-		white-space: normal;
-		line-height: 1rem;
-		font-size: 1rem;
 		position: absolute;
-		bottom: 0;
-		right: 0;
 		left: 0;
+		right: 0;
 		top: 0;
-		padding: 5%;
-	}
-}
+		bottom: 0;
 
-.stats {
-	color: $primary;
-	padding-bottom: 5%;
-	font-size: 1.5rem;
-	@include text-shadow;
+		&:hover {
+			transition: 0.2s;
+			background-color: rgba(0,0,0,0.5);
 
-	&Likes {
-		display: flex;
-		align-items: center;
-		margin-left: auto;
+			.articleWrapperText {
+				opacity: 1;
+				background-color: rgba(0,0,0,0);
+			}
+
+			.articleWrapperStatsLikes {
+				background-color: rgba(0,0,0,0);
+			}
+		}
+
 		&Text {
-			margin-left: 5%;
-			font-size: 1.2rem;
-			line-height: 1rem * 0.7;
+			transition: 0.3s;
+			opacity: 0.75;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			transition: 0.2s;
+			background-color: rgba(0,0,0,0.5);
 			color: white;
+			white-space: normal;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			padding: 5%;
+			
+			&Title {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-height: 1.6rem;
+				line-height: 0.8rem;
+				font-size: 0.8rem;
+			}
+		}
+
+		&Stats {
+			color: $primary;
+			margin: 5%;
+			font-size: 1.1rem;
+
+			&Likes {
+				transition: 0.3s;
+				display: inline-flex;
+				padding: 2% 4%;
+				border-radius: 10%;
+				align-items: center;
+				margin-left: auto;
+				background-color: rgba(0,0,0,0.5);
+				&Text {
+					margin-left: 0.5rem;
+					font-size: 0.9rem;
+					color: white;
+				}
+			}
 		}
 	}
 }
