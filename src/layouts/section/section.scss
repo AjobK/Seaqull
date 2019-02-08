@@ -1,7 +1,7 @@
 @import '../../styles/index.scss';
 
 .wrapper {
-	transition: 1s;
+	transition: 0.65s;
 	opacity: 0.35;
 	width: 100%;
 	max-width: $wrapper-width;
@@ -23,6 +23,6 @@
 }
 
 .visible {
-	transition: 0.3s;
+	transition: 0.65s;
 	opacity: 1;
 }
