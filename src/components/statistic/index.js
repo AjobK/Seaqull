@@ -15,19 +15,38 @@ class Statistic extends Component {
 
   timeFormat(input) { // Give input in minutes
     let hour = 60
+    let day = 60 * 24
 
     let passed = {
       minutes: 0,
-      hours: 0
+      hours: 0,
+      days: 0
+    }
+
+    let timeFormat = []
+
+    passed.days = Math.floor(input / day)
+
+    if (passed.days > 0) {
+      timeFormat.push(passed.days + 'D')
+      input -= passed.days * day
     }
 
     passed.hours = Math.floor(input / hour)
-    input -= Math.floor(input / hour) * hour
+
+    if (passed.hours > 0) {
+      timeFormat.push(passed.hours + 'H')
+    }
+
+    input -= passed.hours * hour
     passed.minutes = input
 
-    return passed.hours > 0
-      ? `${passed.hours}H ${passed.minutes}M`
-      : `${passed.minutes}M`
+    if (passed.minutes > 0 && timeFormat.length < 2) {
+      timeFormat.push(passed.minutes + 'M')
+    }
+
+    return timeFormat.join(' ')
+
   }
 
   render() {
