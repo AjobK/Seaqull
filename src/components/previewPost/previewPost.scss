@@ -6,6 +6,7 @@
 	background-position: center;
 	cursor: pointer;
 	overflow: hidden;
+	border-radius: 5px;
 	min-width: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	padding-top: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	margin-bottom: $header-spacing;
