@@ -3,17 +3,17 @@ import { Provider } from 'mobx-react'
 import { initStore } from '../stores'
 
 class App extends Component {
-	componentDidMount() {
-		this.store = initStore(true)
-	}
+  componentDidMount() {
+    this.store = initStore(true)
+  }
 
-	render() {
-		return (
-			<Provider store={this.store}>
-				{this.props.children}
-			</Provider>
-		)
-	}
+  render() {
+    return (
+      <Provider store={this.store}>
+        {this.props.children}
+      </Provider>
+    )
+  }
 }
 
 export default App

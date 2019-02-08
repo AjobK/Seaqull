@@ -1,4 +1,4 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
@@ -8,13 +8,13 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader' , 'eslint-loader'] 
+        use: ['babel-loader', 'eslint-loader']
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader"
+            loader: 'html-loader'
           }
         ]
       },
@@ -24,15 +24,17 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif)$/,
-        use: [{
-          /* inline if smaller than 10 KB, otherwise load as a file */
-          loader: 'url-loader',
-          options: {
-            limit: 10000
+        use: [
+          {
+            /* Inline if smaller than 10 KB, otherwise load as a file */
+            loader: 'url-loader',
+            options: {
+              limit: 10000
+            }
           }
-        }]
+        ]
       },
-      { 
+      {
         test: /\.(eot|svg|ttf|woff2?|otf)$/,
         use: 'file-loader'
       }
@@ -46,15 +48,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html"
+      template: './src/index.html',
+      filename: './index.html'
     }),
     new StyleLintPlugin({
       configFile: '.stylelintrc',
       context: 'src',
       files: '**/*.scss',
       failOnError: false,
-      quiet: false,
+      quiet: false
     })
   ]
 };
