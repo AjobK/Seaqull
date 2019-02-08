@@ -10,6 +10,7 @@ import Title from './title'
 import PostsPreview from './postsPreview'
 import PreviewPost from './previewPost'
 import Statistics from './statistics'
+import Statistic from './statistic'
 import Logo from './logo'
 import Icon from './icon'
 
@@ -26,6 +27,7 @@ export {
   PostsPreview,
   PreviewPost,
   Statistics,
+  Statistic,
   Logo,
   Icon
 }

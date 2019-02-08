@@ -1,0 +1,130 @@
+@import '../../styles/index.scss';
+
+@keyframes statisticAnimation {
+	0% {
+		transform: translatey(0vw); /* stylelint-disable-line length-zero-no-unit */
+	}
+	50% {
+		transform: translatey(-1vw);
+	}
+	100% {
+		transform: translatey(0vw); /* stylelint-disable-line length-zero-no-unit */
+	}
+}
+
+.statistic {
+	align-self: center;
+	display: inline-block;
+	width: 23%;
+
+	&:nth-child(4) {
+		margin-right: 0;
+	}
+
+	@include desktop {
+		&:hover {
+			.statisticIcon {
+				transition: 0.2s;
+				font-size: 3.5rem * 1.25;
+			}
+		}
+	}
+
+	@include mobile-all-portrait {
+		padding-bottom: 0;
+	}
+
+	&Image {
+		display: block;
+		width: 100%;
+	}
+
+	&Wrapper {
+		position: relative;
+	}
+
+	&Content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		position: absolute;
+		top: 15%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 45%;
+	}
+
+	&Type {
+		font-size: 2rem;
+		margin-top: 2rem * 0.75;
+		letter-spacing: 2rem * 0.1;
+		text-transform: uppercase;
+		text-align: center;
+		color: $statistic-color;
+
+		@include mobile-all {
+			font-size: 1.5rem;
+			margin-top: 1.5rem * 0.75;
+			letter-spacing: 1.5rem * 0.1;
+		}
+
+		@include mobile-sm {
+			font-size: 1.2rem;
+			margin-top: 1.2rem * 0.75;
+			letter-spacing: 1.5rem * 0.1;
+		}
+
+		@include mobile-xs {
+			font-size: 0.8rem;
+			letter-spacing: 0.8rem * 0.1;
+		}
+	}
+
+	&Counter {
+		font-weight: bold;
+		color: $background-darker;
+		text-align: center;
+
+		font-size: 2rem;
+		letter-spacing: 2rem * 0.1;
+
+		@include mobile-all {
+			font-size: 1.5rem;
+			letter-spacing: 1.5rem * 0.1;
+		}
+
+		@include mobile-sm {
+			font-size: 1.2rem;
+			letter-spacing: 1.5rem * 0.1;
+		}
+		
+		@include mobile-xs {
+			font-size: 0.8rem;
+			letter-spacing: 0.8rem * 0.1;
+		}
+	}
+
+	&Icon {
+		transition: 0.2s;
+		color: $primary;
+		margin: 0 auto;
+		font-size: 3.5rem;
+		-webkit-animation: statisticAnimation 3s infinite; /* Safari 4+ */
+		-moz-animation: statisticAnimation 3s infinite; /* Fx 5+ */
+		-o-animation: statisticAnimation 3s infinite; /* Opera 12+ */
+		animation: statisticAnimation 3s infinite; /* IE 10+, Fx 29+ */
+
+		@include mobile-all {
+			font-size: 2.5rem;
+		}
+
+		@include mobile-sm {
+			font-size: 1.5rem;
+		}
+
+		@include mobile-xs {
+			font-size: 1.1rem;
+		}
+	}
+}
