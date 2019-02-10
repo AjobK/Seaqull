@@ -1,23 +1,23 @@
 ---
 name: Feature
 about: Suggest an idea for Seaqull
-title: '#XXX ISSUE NAME'
-labels: 'Improvement'
-milestone: 'SPRINT 2'
+title: ''
+labels: ''
+assignees: ''
 
----
+ ---
 
-**Please describe**
+ **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-**Describe the solution you would like**
+ **Describe the solution you'd like**
 A clear and concise description of what you want to happen.
 
-**Describe alternatives you have considered**
+ **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
 
-**Additional context**
-Add any other context or designs.
+ **Additional context**
+Add any other context or designs about the feature request here.
 
-**Definition Of Done**
-Describe when your feature will be complete!
+ **D.O.D.**
+Describe when your feature would be complete!
