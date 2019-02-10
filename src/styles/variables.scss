@@ -1,13 +1,5 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
-@import url('https://fonts.googleapis.com/css?family=Arvo:300,300i,400,400i,600,600i,700,700i,800,800i');
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
-@font-face {
-	font-family: 'RockwellBold';
-	src: ('./fonts/Rockwell-Bold.ttf');
-}
-
-// General
 
 // Colors
 $primary: #ff4040;
@@ -29,7 +21,6 @@ $secondaryfont: arial;
 
 // Sizes
 $wrapper-width: 1000px;
-// $logo-font-size: 54px;
 $logo-font-size: 44px;
 $logo-font-size-sm: 44px;
 $header-height: 80px;
