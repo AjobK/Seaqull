@@ -71,12 +71,12 @@
 	@extend .article;
 	@include noselect;
 	transition: 0.2s;
-	background-color: transparent !important;
+	background-color: transparent;
 	position: relative;
 	cursor: pointer;
 	&:hover {
 		transition: 0.2s;
-		background-color: rgba(0,0,0,0.1) !important;
+		background-color: rgba(0,0,0,0.1);
 	}
 	
 	&Icon {

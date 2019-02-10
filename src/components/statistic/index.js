@@ -4,7 +4,10 @@ import StatisticImage from '../../static/statistic.svg'
 import { Icon } from '..';
 
 class Statistic extends Component {
-  numberFormat(input) { // Give input in integers
+  /**
+  * @param {number} input
+  */
+  numberFormat(input) {
     if (+input >= 999999)
       return (Math.round(+input / 1e5) / 10) + 'M'
     else if (+input >= 999)
@@ -13,7 +16,10 @@ class Statistic extends Component {
       return +input
   }
 
-  timeFormat(input) { // Give input in minutes
+  /**
+  * @param {number} input
+  */
+  timeFormat(input) {
     let hour = 60
     let day = 60 * 24
 
