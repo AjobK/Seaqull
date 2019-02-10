@@ -92,6 +92,7 @@ class Posts extends Component {
     return (
       <div>
         <ul className={styles.contacts} />
+        <div className={styles.loader} />
       </div>
     )
   }

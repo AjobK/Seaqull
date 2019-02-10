@@ -1,5 +1,28 @@
 @import '../../styles/index.scss';
 
+@keyframes load {
+	0% {
+		height: 75px;
+		width: 75px;
+		background-color: rgba(0, 0, 0, 0);
+		border: 15px solid rgb(255, 0, 0);
+	}
+	50% {
+		height: 50px;
+		width: 50px;
+		background-color: rgba(255, 0, 0, 0.25);
+		border: 15px solid rgb(11, 82, 122);
+		transform: rotate(45deg);
+	}
+	100% {
+		height: 75px;
+		width: 75px;
+		border: 15px solid rgb(255, 0, 0);
+		background-color: rgba(0, 0, 0, 0);
+		transform: rotate(90deg);
+	}
+}
+
 .contact {
 	display: flex;
 	align-items: flex-end;
@@ -25,4 +48,11 @@
 
 .post {
 	list-style: none
+}
+
+.loader {
+	border-radius: 20%;
+	margin: 10vh auto 10vh auto;
+	border: 10px solid $primary;
+	animation: load 1.5s infinite;
 }
