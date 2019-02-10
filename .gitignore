@@ -1,0 +1,14 @@
+# Node Modules
+/node_modules
+
+# Distribution 
+/dist
+
+# Storybook static files
+/storybook-static
+
+# PHP storm files
+/.idea
+
+# Envoirement file
+.env
