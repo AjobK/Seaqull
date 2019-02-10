@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import styles from './postsPreview.scss'
 import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
+import { inject, observer } from 'mobx-react';
 
+@inject('store') @observer
 class PostsPreview extends Component {
   render() {
+    const { user } = this.props.store
     let arr = []
 
     for (let i = 1; i <= 8; i++) {
@@ -15,7 +18,7 @@ class PostsPreview extends Component {
 
     return (
       <section className={styles.wrapper}>
-        {this.props.create &&
+        {user.loggedIn && this.props.create &&
           (<div className={styles.add}>
             <img className={styles.addIcon} src={Plus} draggable={false} />
           </div>)

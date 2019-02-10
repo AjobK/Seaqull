@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
+import { Icon } from '..';
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -22,6 +23,9 @@ class UserBanner extends Component {
         <div className={styles.innerWrapper}>
           <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={styles.levelMobile}>{ user.level || ''}</span>
+            {user.loggedIn && <span className={styles.pictureEdit}>
+              <Icon iconName={'Pen'} />
+            </span>}
           </div>
           <div className={styles.info}>
             <h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
