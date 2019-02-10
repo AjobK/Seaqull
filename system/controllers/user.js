@@ -6,7 +6,7 @@ const CheckClass = require('../checkTemplate.class.js')
 
 const template = {
   id: {
-    type: 'string',
+    type: 'id',
     required: true
   },
   role: {
@@ -75,15 +75,30 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const body = req.body
-  const check = Check.check(template, body)
+  const check = Check.create(template, body)
 
   if (typeof check !== 'undefined') {
-    res.status(412).send(check)
-
-    return
+    return res.status(412).send(check)
   }
   User.create(body, () => {
     res.status(201).send( { 'msg': 'User has been created' } )
+  })
+})
+
+router.post('/update', (req, res) => {
+  const body = req.body
+
+  if (!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+  const check = Check.update(template, body)
+
+  if (typeof check !== 'undefined') {
+    return res.status(412).send(check)
+  }
+
+  User.update(body, () => {
+    res.send( { 'msg': `User with ID: ${body.id} has been updated` } )
   })
 })
 

@@ -12,10 +12,10 @@ const user = require('./controllers/user.js')
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(session({
-  name: 'seaqull-session',
   secret: `${process.env.SECRET_SESSION_KEY}`,
-  saveUninitialized: false,
-  resave: false
+  saveUninitialized: true,
+  resave: false,
+  cookie: { secure: true }
 }))
 app.use(passport.initialize());
 app.use(passport.session());
