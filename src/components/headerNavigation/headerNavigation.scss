@@ -1,8 +1,7 @@
 @import '../../styles/index.scss';
 
 .menu {
-	margin-left: auto;
-
+	float: right;
 	@include mobile-sm {
 		display: none;
 	}

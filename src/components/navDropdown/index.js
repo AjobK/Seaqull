@@ -18,6 +18,19 @@ class NavDropdown extends Component {
 
   render() {
     const { title, value, index, icon } = this.props
+    let arr = []
+
+    for (let key in value) {
+      if (value.hasOwnProperty(key)) {
+        arr.push(
+          <li className={styles.ItemSub} key={Math.random()}>
+            <a className={styles.ItemSubLink} href={value[key].ref}>
+              {value[key].title}
+            </a>
+          </li>
+        )
+      }
+    }
 
     return Array.isArray(value) && (
       <li className={styles.Item} key={index}>
@@ -27,13 +40,7 @@ class NavDropdown extends Component {
           <Icon iconName={this.state.open ? 'caret-up' : 'caret-down'} className={styles.arrow} />
         </p>
         <ul className={[styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ')}>
-          {Object.keys(value).map((subitem) => (
-            <li className={styles.ItemSub} key={subitem}>
-              <a className={styles.ItemSubLink} href={value[subitem].ref}>
-                {value[subitem].title}
-              </a>
-            </li>
-          ))}
+          {arr}
         </ul>
       </li>
     ) || (

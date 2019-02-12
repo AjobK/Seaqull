@@ -8,18 +8,19 @@
 	height: 75px;
 
 	&Picture {
-		background-image: url('../../static/dummyprofile.jpg');
+		border-radius: 15px;
 		background-size: cover;
 		background-position: center;
 		width: 75px;
 		height: 75px;
 		position: relative;
-		border-right: 1px solid rgba(0,0,0,0.7);
+		border: 8px solid $darker;
 		cursor: pointer;
 	}
 	
 	&Info {
 		position: relative;
+		background-color: #363636;
 		width: calc(100% - 75px);
 		display: flex;
 		flex-direction: column;

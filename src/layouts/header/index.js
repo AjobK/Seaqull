@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
-import { Hamburger, HeaderNavigation } from '../../components'
+import { Hamburger, HeaderNavigation, Logo } from '../../components'
 
 @inject('store') @observer
 class Header extends Component {
@@ -12,12 +12,12 @@ class Header extends Component {
   }
 
   render() {
-    const { ui, defaultData } = this.props.store
+    const { ui } = this.props.store
 
     let headerContent = (
       <section className={styles.headerContent}>
         <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
-        <h1 className={styles.logo}>{defaultData.projectName}</h1>
+        <Logo />
         <HeaderNavigation />
       </section>
     )

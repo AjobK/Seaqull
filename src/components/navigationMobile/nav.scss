@@ -11,6 +11,8 @@
 	z-index: -1;
 	position: fixed;
 	pointer-events: auto;
+	margin-left: -1px;
+	border-right: 1px solid black;
 }
 
 .filler {
@@ -25,7 +27,7 @@
 }
 
 .sNavOpen {
-	@include mobile-all {
+	@include mobile-all-portrait {
 		transition: 1s;
 		width: 325px;
 		max-width: 75vw;

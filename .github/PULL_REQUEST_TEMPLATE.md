@@ -1,13 +1,13 @@
-Closes #XXX
+closes #XXX
 
-**What it is supposed to do**
+ **What is it supposed to do**
 Explain in short what your component is supposed to do
 
-**How can we test your branch**
-Preperation before testing (Eg. width, height)
+ **How can we test your branch**
+Explain how can test your branch Ex. width, height etc...
 
 
-**What browser(s) has/have been checked**
+ **What broweser have been checked**
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Opera
