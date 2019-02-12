@@ -21,17 +21,20 @@ class PostBanner extends Component {
     return (
       <section className={styles.wrapper}>
         <div className={styles.innerWrapper}>
-          <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
-          </div>
-          <div className={styles.info}>
-            <h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
-            <div className={styles.achieved}>
-              <span className={styles.level}>{ user.level || ''}</span>
-              <h3 className={styles.role}>{ user.role || ''}</h3>
+          <div className={styles.postUserinfo}>
+            <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
+            </div>
+            <div className={styles.info}>
+              <h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
+              <div className={styles.achieved}>
+                <span className={styles.level}>{ user.level || ''}</span>
+                <h3 className={styles.role}>{ user.role || ''}</h3>
+              </div>
             </div>
           </div>
+          <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
         </div>
-        <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
+          
       </section>
     )
   }

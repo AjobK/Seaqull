@@ -12,6 +12,32 @@
 	align-items: center;
 }
 
+.innerWrapper {
+	z-index: 1;
+	transition: 0.5s;
+	padding: $header-spacing;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	align-self: flex-end;
+	background-color: rgba(0,0,0,0.45);
+	@include mobile-all-portrait {
+		align-items: center;
+		flex-direction: column;
+	}
+}
+
+.postUserinfo{
+	z-index: 2;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-self: flex-end;
+	max-width: 1200px;
+}
+
 .picture {
 	overflow: hidden;
 	border-radius: 100%;
@@ -46,24 +72,7 @@
 	background-size: cover;
 	background-position: center;
 	opacity: 0.5;
-	background-color: white;
-}
-
-.innerWrapper {
-	z-index: 1;
-	transition: 0.5s;
-	padding: $header-spacing;
-	width: 100%;
-	max-width: $wrapper-width;
-	display: flex;
-	align-items: center;
-	justify-content: left;
-	align-self: flex-end;
-	background-color: rgba(0,0,0,0.45);
-	@include mobile-all-portrait {
-		align-items: center;
-		flex-direction: column;
-	}
+	background-color: white; 
 }
 
 .info {
