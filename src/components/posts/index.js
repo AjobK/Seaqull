@@ -22,6 +22,7 @@ class Posts extends Component {
         if (!this.totalPages) this.totalPages = json.total_pages
 
         this.contacts = json.contacts
+        this.offsetTop = document.body.offsetHeight - window.innerWidth * 0.25
         this.setNewContacts()
         this.scrolling = false
       })
