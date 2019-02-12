@@ -1,25 +1,29 @@
 import React, { Component } from 'react'
 import styles from './profilebar.scss'
-import generateRandomWord from 'random-words'
+import { Link } from 'react-router-dom'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class ProfileBar extends Component {
   render() {
-    const { userName, userRole, level, levelPercentage } = this.props
+    const { name, role, picture, level, percentage } = this.props.store.user
 
     return (
       <section className={styles.profile}>
-        <div className={styles.profilePicture}>
-          <div className={styles.profileLevel}>
-            <div className={styles.profileLevelNumber}>{level || Math.floor(Math.random() * 100)}</div>
+        <Link to={'/profile'}>
+          <div className={styles.profilePicture} style={{ backgroundImage: `url('${picture}')` }}>
+            <div className={styles.profileLevel}>
+              <div className={styles.profileLevelNumber}>{level || Math.floor(Math.random() * 100)}</div>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className={styles.profileInfo}>
           <div className={styles.profileInfoWrapper}>
-            <h2 className={styles.profileInfoUserName}>{userName || generateRandomWord(2).join('') + Math.floor(Math.random() * 10)}</h2>
-            <p className={styles.profileInfoUserRole}>{userRole || 'Beginner'}</p>
+            <h2 className={styles.profileInfoUserName}>{name || 'Username'}</h2>
+            <p className={styles.profileInfoUserRole}>{role || 'Developer'}</p>
           </div>
           <div className={styles.level}>
-            <div className={styles.levelProgress} style={{ width: (levelPercentage && `${levelPercentage}%` || '50%') }} />
+            <div className={styles.levelProgress} style={{ width: (percentage && `${percentage}%` || '50%') }} />
           </div>
         </div>
       </section>

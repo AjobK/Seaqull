@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Loader } from '../../components'
 import fetch from 'isomorphic-fetch'
 import styles from './posts.scss'
 
@@ -22,10 +23,18 @@ class Posts extends Component {
         if (!this.totalPages) this.totalPages = json.total_pages
 
         this.contacts = json.contacts
-        this.offsetTop = document.body.offsetHeight - window.innerWidth * 0.25
         this.setNewContacts()
         this.scrolling = false
       })
+  }
+
+  // Checks if user is at end of page
+  isAtEndOfPage() {
+    const height = window.innerHeight
+    const offset = document.body.offsetHeight
+    const scrollY = window.pageYOffset
+
+    return scrollY > offset - height - 2
   }
 
   setNewContacts() {
@@ -54,6 +63,11 @@ class Posts extends Component {
       singleLi.appendChild(article)
     }
     document.getElementsByClassName(styles.contacts)[0].appendChild(singleLi)
+
+    // Scroll reset
+    if (this.isAtEndOfPage()) {
+      window.scrollTo(0, this.offsetTop)
+    }
   }
 
   componentWillMount() {
@@ -74,6 +88,9 @@ class Posts extends Component {
 
     if (pageOffset > lastLiOffset - bottomOffset)
       this.loadMore()
+
+    if (window.pageYOffset >= document.body.clientHeight)
+      window.scrollTo(0, document.body.clientHeight)
   }
 
 
@@ -93,7 +110,7 @@ class Posts extends Component {
     return (
       <div>
         <ul className={styles.contacts} />
-        <div className={styles.loader} />
+        <Loader />
       </div>
     )
   }

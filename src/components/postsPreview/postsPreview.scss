@@ -1,0 +1,99 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	overflow: hidden;
+	padding: $header-spacing;
+}
+
+.article {
+	background-size: cover;
+	background-position: center;
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+	min-width: calc(100% / 4 - #{$header-spacing} / 4 * 3);
+	padding-top: calc(100% / 4 - #{$header-spacing} / 4 * 3);
+	margin-bottom: $header-spacing;
+	background-color: $primary;
+
+	&:nth-child(n+9) {
+		display: none;
+	}
+
+	@include mobile-all {
+		min-width: calc(100% / 3 - #{$header-spacing} / 3 * 2);
+		padding-top: calc(100% / 3 - #{$header-spacing} / 3 * 2);
+		margin-bottom: $header-spacing;
+
+		&:nth-child(n+7) {
+			display: none;
+		}
+	}
+
+	@include mobile-xs {
+		min-width: calc(100% / 2 - #{$header-spacing} / 2 * 1);
+		padding-top: calc(100% / 2 - #{$header-spacing} / 2 * 1);
+		margin-bottom: $header-spacing;
+
+		&:nth-child(n+5) {
+			display: none;
+		}
+	}
+
+	&:hover &Text {
+		transition: 0.2s;
+		background-color: rgba(0,0,0,0.2);
+		opacity: 1;
+	}
+
+	&Text {
+		transition: 0.2s;
+		opacity: 0.6;
+		background-color: rgba(0,0,0,0);
+		@include text-shadow;
+		color: white;
+		white-space: normal;
+		line-height: 1rem;
+		font-size: 1rem;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		padding: 5%;
+	}
+}
+
+.add {
+	@extend .article;
+	@include noselect;
+	transition: 0.2s;
+	background-color: transparent;
+	position: relative;
+	cursor: pointer;
+	&:hover {
+		transition: 0.2s;
+		background-color: rgba(0,0,0,0.1);
+	}
+	
+	&Icon {
+		position: absolute;
+		top: 33%;
+		left: 33%;
+		width: 34%;
+		height: 34%;
+		margin: 0 auto;
+	}
+}
+
+.filler {
+	pointer-events: none;
+	visibility: hidden;
+
+	&Mobile {
+		@extend .filler;
+	}
+}

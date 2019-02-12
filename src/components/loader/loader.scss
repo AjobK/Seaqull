@@ -1,0 +1,47 @@
+@import '../../styles/index.scss';
+
+@keyframes load {
+	0% {
+		transform: rotate(0);
+		-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+		box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+	}
+	70% {
+		-moz-box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+		box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+	}
+	100% {
+		transform: rotate(360deg);
+		-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+		box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+	}
+}
+
+.wrapper {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100px;
+}
+
+.loader {
+	display: inline-block;
+	margin: 0 auto;
+	animation: load 1.5s infinite;
+	border-radius: 100%;
+
+	&Image {
+		border-radius: 100%;
+		max-height: 50px;
+		max-width: 50px;
+		min-height: 35px;
+		min-width: 35px;
+		width: 10vw;
+		height: 10vw;
+		background-image: url('../../static/icons/loader.png');
+		background-repeat: no-repeat;
+		background-position: bottom;
+		background-size: cover;
+	}
+}

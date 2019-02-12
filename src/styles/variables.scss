@@ -1,12 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Arvo');
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
-@font-face {
-	font-family: 'RockwellBold';
-	src: ('./fonts/Rockwell-Bold.ttf');
-}
-
-// General
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
 
 // Colors
 $primary: #ff4040;
@@ -16,19 +9,20 @@ $darker: #2b2b2b;
 $darkest: #1f1f1f;
 $nav-items: #808080;
 $background: #F4F4F4;
+$statistic-color: #333333;
 $background-trans: rgba(244, 244, 244, 0.95);
 $background-darker: #dedede;
 
 // Fonts
 $mainfont: RockwellBold;
-$sidefont: 'arvo';
-$navigationfont: 'Work Sans';
+$sidefont: 'poppins';
+$navigationfont: 'poppins';
 $secondaryfont: arial;
 
 // Sizes
 $wrapper-width: 1000px;
-$logo-font-size: 54px;
-$logo-font-size-sm: 44px;
+$logo-font-size: 2.5rem;
+$logo-font-size-sm: 2.5rem;
 $header-height: 80px;
 $navigation-width: 0px; /* stylelint-disable-line length-zero-no-unit */ // Normally 50px
 $navigation-width-expanded: 0px; /* stylelint-disable-line length-zero-no-unit */ // Normally 400px

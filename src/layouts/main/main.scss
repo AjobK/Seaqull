@@ -1,26 +1,18 @@
 @import '../../styles/index.scss';
 
-.wrapper {
-	margin-top: $header-height;
-	display: inline-block;
-	margin-left: -4px; // For inline blocks
-	overflow: auto;
-	width: 100%;
-	@include desktop-tablet-sm {
-		margin-left: -7px; // For inline blocks
-		width: calc(100% - #{$navigation-width});
-	}
-}
-
 .main {
 	position: relative;
 	z-index: 1;
 	margin-top: $header-height;
-	width: 100%;
-	max-width: $wrapper-width;
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
+	width: 100%;
+	max-width: $wrapper-width;
+
+	@include mobile-all-portrait {
+		width: 100%;
+	}
 }
 
 .grid {

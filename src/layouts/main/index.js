@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import styles from './main.scss'
-import generateRandomWord from 'random-words'
-import Posts from '../../components/posts'
+import { Posts } from '../../components'
 
 @inject('store') @observer
 class Main extends Component {
@@ -11,7 +10,7 @@ class Main extends Component {
     let gridBlocks = []
 
     for (let i = 0; i < 30; i++) {
-      let randomWord = generateRandomWord(3).join(' ')
+      let randomWord = 'Article'
       let color = `rgb(
         ${Math.floor(Math.random() * 255)},
         ${Math.floor(Math.random() * 255)},
@@ -28,14 +27,6 @@ class Main extends Component {
     }
 
     return gridBlocks
-  }
-
-  componentDidMount() {
-    document.querySelector(`.${styles.wrapper}`).addEventListener('mousedown', this.preventXScroll)
-  }
-
-  preventXScroll = (e) => {
-    if (e.which == 2 && this.props.store.ui.subNavOpen) e.preventDefault()
   }
 
   render() {

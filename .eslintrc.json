@@ -73,7 +73,6 @@
         "valid-typeof": 2,
         "array-bracket-spacing": 2,
         "array-bracket-newline": 2,
-        "capitalized-comments": 2,
         "indent": ["error", 2],
         "jsx-quotes": [2, "prefer-single"],
         "newline-before-return": 2,

@@ -1,0 +1,27 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	opacity: 0.35;
+	width: 100%;
+	max-width: $wrapper-width;
+	margin: 0 auto;
+
+	@include mobile-all-portrait {
+		width: 100%;
+	}
+}
+
+.content {
+	margin-top: 2vh * 2;
+	min-height: 10vh;
+
+	@include mobile-all-portrait {
+		margin-top: 2vh;
+		width: 100%;
+	}
+}
+
+.visible {
+	transition: 0.65s;
+	opacity: 1;
+}
