@@ -16,15 +16,11 @@ class HeaderNavigation extends Component {
             <Link to='/profile' className={styles.menuItem}>
               <li>My profile</li>
             </Link>
-            <Link to='/' className={styles.menuItem}>
-              <li onClick={user.logOut}>Logout</li>
-            </Link>
+            <li onClick={user.logOut} className={styles.menuItem}>Logout</li>
           </ul>
         ) : ( // Logged out content
           <ul className={styles.menuUl}>
-            <Link to='/' className={styles.menuItem}>
-              <li onClick={user.logIn}>Log in</li>
-            </Link>
+            <li onClick={user.logIn} className={styles.menuItem}>Log in</li>
             <Button value='Sign Up' className={styles.button} />
           </ul>
         )}

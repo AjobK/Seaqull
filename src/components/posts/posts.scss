@@ -17,10 +17,11 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	&s {
-		position: static;
-		min-height: 300vh;
-	}
+}
+
+.contacts {
+	position: static;
+	min-height: 100vh;
 }
 
 .post {
