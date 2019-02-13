@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   next()
 })
 
-//Place routes under here
+// Place routes under here
 
 app.use('/user', user)
 
