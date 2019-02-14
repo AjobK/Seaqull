@@ -7,6 +7,7 @@ class CheckTemplate {
    */
   create (template, body) {
     const object = Object.getOwnPropertyNames(template)
+
     let msg
 
     object.forEach(element => {
@@ -17,7 +18,7 @@ class CheckTemplate {
             if (typeof body[element] !== 'string') {
               msg = { 'msg': `${element} is not a string` }
             }
-            break;  
+            break;
           case 'int' :
             if (isNaN(body[element])) {
               msg = { 'msg': `${element} is not a integer` }
@@ -35,7 +36,7 @@ class CheckTemplate {
             break;
           }
         } else {
-          msg = { 'msg': 'body is not complete!' }
+          msg = { 'msg': 'body is not complete! missing: ' + element }
         }
       } else {
         if (body[element]) {
@@ -44,7 +45,7 @@ class CheckTemplate {
             if (typeof body[element] !== 'string') {
               msg = { 'msg': `${element} is not a string` }
             }
-            break;  
+            break;
           case 'int' :
             if (isNaN(body[element])) {
               msg = { 'msg': `${element} is not a integer` }

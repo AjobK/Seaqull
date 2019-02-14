@@ -1,41 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/Model.class.js')
-const User = new Model('user')
+const Role = new Model('role')
 const CheckClass = require('../checkTemplate.class.js')
 
 const template = {
   id: {
     type: 'id',
-    required: true
-  },
-  role: {
-    type: 'int',
-    required: true
-  },
-  username: {
-    type: 'string',
-    required: true
-  },
-  display_name: {
-    type: 'string',
-    required: true
-  },
-  password: {
-    type: 'hash',
-    required: true
-  },
-  email: {
-    type: 'email',
-    required: true
-  },
-  level: {
-    type: 'int',
     required: false
   },
-  rows_scrolled: {
-    type: 'int',
-    required: true
+  role: {
+    type: 'string',
+    required: false
   },
   created_at: {
     type: 'date',
@@ -44,23 +20,19 @@ const template = {
   updated_at: {
     type: 'date',
     required: false
-  },
-  archived_at: {
-    type: 'date',
-    required: false
   }
 }
 
 const Check = new CheckClass()
 
 router.get('/', (req, res) => {
-  User.selectAll(result => {
+  Role.selectAll(result => {
     res.send(result)
   })
 })
 
 router.get('/:id', (req, res) => {
-  User.selectOne(req.params.id, (result) => {
+  Role.selectOne(req.params.id, (result) => {
     if (isNaN(req.params.id)) {
       res.status(412).send( { 'msg': 'ID parameter must be an integer' } )
     } else {
@@ -80,31 +52,14 @@ router.post('/', (req, res) => {
   if (typeof check !== 'undefined') {
     return res.status(412).send(check)
   }
-  User.create(body, () => {
-    res.status(201).send( { 'msg': 'User has been created' } )
-  })
-})
-
-router.put('/update', (req, res) => {
-  const body = req.body
-
-  if (!body.id) {
-    return res.status(412).send( { 'msg': 'ID has not been defined' } )
-  }
-  const check = Check.update(template, body)
-
-  if (typeof check !== 'undefined') {
-    return res.status(412).send(check)
-  }
-
-  User.update(body, () => {
-    res.send( { 'msg': `Post with ID: ${body.id} has been updated` } )
+  Role.create(body, () => {
+    res.status(201).send( { 'msg': 'Role has been created' } )
   })
 })
 
 router.put('/archive', (req, res) => {
-  User.archiveOne(req.params.id, (result) => {
-    if (typeof req.params.id === 'string') {
+  Role.archiveOne(req.params.id, (result) => {
+    if (isNaN(req.params.id)) {
       res.status(412).send( { 'msg': 'ID parameter must be an integer' } )
     } else {
       if (result.length === 0) {
@@ -115,5 +70,6 @@ router.put('/archive', (req, res) => {
     }
   })
 })
+
 
 module.exports = router

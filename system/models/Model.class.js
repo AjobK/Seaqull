@@ -24,7 +24,7 @@ class Model {
   }
 
   create (body, callback) {
-    const sql = 'INSERT INTO ' + this.table + ' (`id`, `role`, `username`, `display_name`, `password`, `email`, `level`, `rows_scrolled`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+    const sql = 'INSERT INTO ' + this.table + ' (`id`, `user_id`, `title`, `content`, `path`, `description`, `thumbnail`, `created_at`, `updated_at`, `archived_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
 
     Connection.query(sql, Object.values(body), (err, result) => {
       if (err) throw err
@@ -56,6 +56,19 @@ class Model {
       callback()
     })
   }
+
+  archiveOne (id, callback) {
+    const d = new Date();
+    const date = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+    const sql = 'UPDATE `' + this.table + '` SET `archived_at` = ? WHERE `' + this.table + '`.`id` = ?'
+
+    Connection.query(sql, [date, id], (err, result) => {
+      if (err) throw err
+      callback(result)
+    })
+  }
 }
+
+
 
 module.exports = Model

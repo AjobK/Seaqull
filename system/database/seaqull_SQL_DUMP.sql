@@ -29,6 +29,7 @@ CREATE TABLE `post` (
   `content` longtext NOT NULL,
   `path` text NOT NULL,
   `description` text NOT NULL,
+  `thumbnail` text,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `archived_at` datetime DEFAULT NULL

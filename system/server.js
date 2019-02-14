@@ -9,6 +9,7 @@ const port = process.env.BPORT || 3000
 // Importing all controllers
 const user = require('./controllers/user.js')
 const post = require('./controllers/post.js')
+const role = require('./controllers/role.js')
 
 // Makes sure we can read the body and the cookies
 
@@ -36,5 +37,6 @@ app.use((req, res, next) => {
 
 app.use('/user', user)
 app.use('/post', post)
+app.use('/role', role)
 
 app.listen(port, () => console.log(`The api is available on port: ${port}!`))
