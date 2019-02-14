@@ -20,6 +20,15 @@ class UserModel {
     })
   }
 
+  selectName (user_name, callback) {
+    const sql = 'SELECT * FROM User WHERE user_name = ?'
+
+    Connection.query(sql, user_name, (err, result) => {
+      if (err) throw err
+      callback(result)
+    })
+  }
+
   create (body, callback) {
     let names = Object.getOwnPropertyNames(body)
     const values = Object.values(body)
@@ -54,6 +63,13 @@ class UserModel {
     const sql = `UPDATE User SET ${update}, updated_at = NOW() WHERE id = ?`
 
     Connection.query(sql, body.id, err => {
+      if (err) throw err
+      callback()
+    })
+  }
+
+  archive (id, callback) {
+    Connection.query('UPDATE User SET archived_at = NOW() WHERE id = ?', id, err => {
       if (err) throw err
       callback()
     })
