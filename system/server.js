@@ -5,7 +5,10 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
 const port = process.env.BPORT || 3000
+
+// Importing all controllers
 const user = require('./controllers/user.js')
+const post = require('./controllers/post.js')
 
 // Makes sure we can read the body and the cookies
 
@@ -32,5 +35,6 @@ app.use((req, res, next) => {
 // Place routes under here
 
 app.use('/user', user)
+app.use('/post', post)
 
 app.listen(port, () => console.log(`The api is available on port: ${port}!`))

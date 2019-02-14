@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/Model.class.js')
-const User = new Model()
+const User = new Model('user')
 const CheckClass = require('../checkTemplate.class.js')
 
 const template = {

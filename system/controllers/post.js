@@ -21,10 +21,6 @@ const template = {
     type: 'string',
     required: true
   },
-  path: {
-    tye: 'string',
-    required: true
-  },
   description: {
     type: 'string',
     required: true
@@ -32,6 +28,10 @@ const template = {
   created_at: {
     type: 'date',
     required: false
+  },
+  path: {
+    tye: 'string',
+    required: true
   },
   updated_at: {
     type: 'date',
@@ -64,3 +64,5 @@ router.get('/:id', (req, res) => {
     }
   })
 })
+
+module.exports = router
