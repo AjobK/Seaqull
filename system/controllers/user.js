@@ -2,20 +2,21 @@ const express = require('express')
 const router = express.Router()
 const UserModel = require('../models/userModel.class.js')
 const User = new UserModel()
-const CheckClass = require('../checkTemplate.class.js')
+const CheckClass = require('../globalFunctions/checkTemplate.class.js')
 
 const template = {
-  id: {
-    type: 'id',
-    required: true
-  },
   role: {
     type: 'int',
-    required: true
+    required: true,
+    foreign: {
+      table: 'role',
+      row: 'id'
+    }
   },
-  username: {
+  user_name: {
     type: 'string',
-    required: true
+    required: true,
+    unique: 'user'
   },
   display_name: {
     type: 'string',
@@ -27,26 +28,11 @@ const template = {
   },
   email: {
     type: 'email',
-    required: true
+    required: true,
+    unique: 'user'
   },
   level: {
     type: 'int',
-    required: false
-  },
-  rows_scrolled: {
-    type: 'int',
-    required: true
-  },
-  created_at: {
-    type: 'date',
-    required: false
-  },
-  updated_at: {
-    type: 'date',
-    required: false
-  },
-  archived_at: {
-    type: 'date',
     required: false
   }
 }
@@ -73,25 +59,28 @@ router.get('/:id', (req, res) => {
   })
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const body = req.body
-  const check = Check.create(template, body)
+
+  const check = await Check.create(template, body)
 
   if (typeof check !== 'undefined') {
     return res.status(412).send(check)
   }
+
   User.create(body, () => {
     res.status(201).send( { 'msg': 'User has been created' } )
   })
 })
 
-router.post('/update', (req, res) => {
+router.post('/update', async (req, res) => {
   const body = req.body
 
   if (!body.id) {
     return res.status(412).send( { 'msg': 'ID has not been defined' } )
   }
-  const check = Check.update(template, body)
+
+  const check = await Check.update(template, body)
 
   if (typeof check !== 'undefined') {
     return res.status(412).send(check)
