@@ -9,7 +9,7 @@ class Posts extends Component {
     this.data = []
     this.per = 5
     this.page = 1
-    this.totalPages = null
+    this.totalPages = 100
     this.scrolling = false
   }
 
@@ -26,15 +26,6 @@ class Posts extends Component {
         this.setNewPosts()
         this.scrolling = false
       })
-  }
-
-  // Checks if user is at end of page
-  isAtEndOfPage() {
-    const height = window.innerHeight
-    const offset = document.body.offsetHeight
-    const scrollY = window.pageYOffset
-
-    return scrollY > offset - height - 2
   }
 
   setNewPosts() {
@@ -57,17 +48,12 @@ class Posts extends Component {
       article.classList.add(styles.contact)
       let contactText = document.createElement('div')
 
-      contactText.innerText = `${this.data[i].title}`
+      contactText.innerText = `${this.per * (this.page-1) + i}. ${this.data[i].title}`
       contactText.classList.add(styles.contactText)
       article.appendChild(contactText)
       singleLi.appendChild(article)
     }
     document.getElementsByClassName(styles.contacts)[0].appendChild(singleLi)
-
-    // Scroll reset
-    if (this.isAtEndOfPage()) {
-      window.scrollTo(0, this.offsetTop)
-    }
   }
 
   componentWillMount() {
@@ -97,12 +83,7 @@ class Posts extends Component {
 
 
   loadMore = () => {
-    const { totalPages } = this
-
-    if (this.page >= totalPages)
-      this.page = 1
-    else
-      this.page++
+    this.page = this.page >= this.totalPages / this.per ? 1 : this.page + 1;
 
     this.scrolling = true
     this.loadContacts()
