@@ -21,7 +21,7 @@
 	align-items: center;
 	justify-content: left;
 	align-self: flex-end;
-	background-color: rgba(0,0,0,0.75);
+	background-color: rgba(0,0,0,0.65);
 	@include mobile-all-portrait {
 		align-items: center;
 		flex-direction: column;
@@ -30,6 +30,7 @@
 
 .postUserinfo{
 	z-index: 2;
+	flex-wrap: wrap;
 	width: 100%;
 	display: flex;
 	align-items: center;
