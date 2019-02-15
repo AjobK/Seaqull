@@ -14,12 +14,12 @@ class Post extends App {
         <Standard>
           <PostBanner/>
           <Section title={'Front-end vs Back-end'} >
+            <h1> This is my Post {this.props.match.params.postUrl || 'NONE'} </h1>
+            <Link to='/'>Go home</Link>
+            <br />
+            <Link to={`/posts/${pageNumber}`}>Go to {pageNumber}</Link>
           </Section>
         </Standard>
-        <h1> This is my Post {this.props.match.params.postUrl || 'NONE'} </h1>
-        <Link to='/'>Go home</Link>
-        <br />
-        <Link to={`/posts/${pageNumber}`}>Go to {pageNumber}</Link>
       </>
     )
   }
