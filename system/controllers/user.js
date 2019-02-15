@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const UserModel = require('../models/userModel.class.js')
-const User = new UserModel()
+const User = new UserModel('User')
 const CheckClass = require('../globalFunctions/checkTemplate.class.js')
 
 const template = {

@@ -7,6 +7,7 @@ const passport = require('passport')
 const port = process.env.BPORT || 3000
 const user = require('./controllers/user')
 const post = require('./controllers/post')
+const role = require('./controllers/role')
 
 // Makes sure we can read the body and the cookies
 
@@ -34,5 +35,6 @@ app.use((req, res, next) => {
 
 app.use('/user', user)
 app.use('/posts', post)
+app.use('/role', role)
 
 app.listen(port, () => console.log(`The api is available on port: ${port}!`))
