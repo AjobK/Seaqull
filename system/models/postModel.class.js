@@ -1,9 +1,9 @@
 const Connection = require('../connection.js')
 const randomID = require('../globalFunctions/randomId.js')
 
-class UserModel {
+class PostModel {
   selectAll (callback) {
-    const sql = 'SELECT * FROM User'
+    const sql = 'SELECT * FROM Post'
 
     Connection.query(sql, (err, result) => {
       if (err) throw err
@@ -12,7 +12,7 @@ class UserModel {
   }
 
   selectOne (id, callback) {
-    const sql = 'SELECT * FROM User WHERE id = ?'
+    const sql = 'SELECT * FROM Post WHERE id = ?'
 
     Connection.query(sql, [id], (err, result) => {
       if (err) throw err
@@ -20,13 +20,13 @@ class UserModel {
     })
   }
 
-  selectName (user_name, callback) {
-    let formatUser = '%'
+  selectName (title, callback) {
+    let formatTitle = '%'
 
-    formatUser += user_name + '%'
-    const sql = 'SELECT id, user_name, display_name, level, role FROM User WHERE user_name LIKE ?'
+    formatTitle += title + '%'
+    const sql = 'SELECT id, title, description FROM Post WHERE title LIKE ?'
 
-    Connection.query(sql, formatUser, (err, result) => {
+    Connection.query(sql, formatTitle, (err, result) => {
       if (err) throw err
       callback(result)
     })
@@ -42,10 +42,10 @@ class UserModel {
     }
 
     names = names.join(', ')
-    const sql = `INSERT INTO User (id, ${names}) VALUES ('${randomID('user')}' ${question})`
+    const sql = `INSERT INTO Post (id, ${names}) VALUES ('${randomID('user')}' ${question})`
 
     Connection.query(sql, Object.values(body), err => {
-      if (err) throw err
+      if (err) console.log(err)
       callback()
     })
   }
@@ -63,7 +63,7 @@ class UserModel {
 
     update = update.join(', ')
 
-    const sql = `UPDATE User SET ${update}, updated_at = NOW() WHERE id = ?`
+    const sql = `UPDATE Post SET ${update}, updated_at = NOW() WHERE id = ?`
 
     Connection.query(sql, body.id, err => {
       if (err) throw err
@@ -72,11 +72,11 @@ class UserModel {
   }
 
   archive (id, callback) {
-    Connection.query('UPDATE User SET archived_at = NOW() WHERE id = ?', id, err => {
+    Connection.query('UPDATE Post SET archived_at = NOW() WHERE id = ?', id, err => {
       if (err) throw err
       callback()
     })
   }
 }
 
-module.exports = UserModel
+module.exports = PostModel
