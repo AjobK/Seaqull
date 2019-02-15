@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
-// import { Icon } from '..';
+import { Icon } from '..';
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -21,6 +21,9 @@ class PostBanner extends Component {
     return (
       <section className={styles.wrapper}>
         <div className={styles.innerWrapper}>
+          {user.loggedIn && <span className={styles.pictureEdit}>
+            <Icon iconName={'Pen'} />
+          </span>}
           <div className={styles.postUserinfo}>
             <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             </div>
