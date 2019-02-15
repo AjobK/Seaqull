@@ -18,7 +18,7 @@ class Model {
   selectOne (id, callback) {
     const sql = `SELECT * FROM ${this.table} WHERE id = ?`
 
-    Connection.query(sql, [id], (err, result) => {
+    Connection.query(sql, id, (err, result) => {
       if (err) throw err
       callback(result)
     })

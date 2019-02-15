@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
       res.status(412).send( { 'msg': 'ID parameter must be a string' } )
     } else {
       if (result.length === 0) {
-        res.status(404).send( { 'msg': `User with id '${req.params.id}' can't be found` } )
+        res.status(404).send( { 'msg': `Post with id '${req.params.id}' can't be found` } )
       } else {
         res.send(result)
       }
