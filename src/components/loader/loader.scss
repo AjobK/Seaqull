@@ -22,7 +22,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100px;
+	padding: $header-spacing * 2;
+
+	@include mobile-all {
+		padding: $header-spacing * 1.5;
+	}
 }
 
 .loader {
@@ -33,15 +37,16 @@
 
 	&Image {
 		border-radius: 100%;
-		max-height: 50px;
-		max-width: 50px;
-		min-height: 35px;
-		min-width: 35px;
-		width: 10vw;
-		height: 10vw;
+		height: 65px;
+		width: 65px;
 		background-image: url('../../static/icons/loader.png');
 		background-repeat: no-repeat;
 		background-position: bottom;
 		background-size: cover;
+
+		@include mobile-all {
+			height: 40px;
+			width: 40px;
+		}
 	}
 }
