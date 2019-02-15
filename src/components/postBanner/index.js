@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon } from '..';
+// import { Icon } from '..';
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -34,7 +34,6 @@ class PostBanner extends Component {
           </div>
           <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
         </div>
-          
       </section>
     )
   }
