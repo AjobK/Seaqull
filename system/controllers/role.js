@@ -1,25 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const Model = require('../models/Model.class.js')
-const Role = new Model('role')
-const CheckClass = require('../checkTemplate.class.js')
+const RoleModel = require('../models/defaultModel.class.js')
+const Role = new RoleModel('Role')
+const CheckClass = require('../globalFunctions/checkTemplate.class.js')
 
 const template = {
-  id: {
-    type: 'id',
-    required: false
-  },
-  role: {
+  name: {
     type: 'string',
-    required: false
-  },
-  created_at: {
-    type: 'date',
-    required: false
-  },
-  updated_at: {
-    type: 'date',
-    required: false
+    required: true,
+    unique: 'role'
   }
 }
 
@@ -32,22 +21,21 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  Role.selectOne(req.params.id, (result) => {
-    if (isNaN(req.params.id)) {
-      res.status(412).send( { 'msg': 'ID parameter must be an integer' } )
+  if (isNaN(req.params.id)) {
+    return res.status(412).send({ 'msg': 'ID must be a string'})
+  }
+  Role.selectOne(req.params.id, result => {
+    if (result.length === 0) {
+      res.status(404).send( { 'msg': `There is no role with id: ${req.params.id}`})
     } else {
-      if (result.length === 0) {
-        res.status(404).send( { 'msg': `User with id '${req.params.id}' can't be found` } )
-      } else {
-        res.send(result)
-      }
+      res.send(result)
     }
   })
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const body = req.body
-  const check = Check.create(template, body)
+  const check = await Check.create(template, body)
 
   if (typeof check !== 'undefined') {
     return res.status(412).send(check)
@@ -57,19 +45,46 @@ router.post('/', (req, res) => {
   })
 })
 
-router.put('/archive', (req, res) => {
-  Role.archiveOne(req.params.id, (result) => {
-    if (isNaN(req.params.id)) {
-      res.status(412).send( { 'msg': 'ID parameter must be an integer' } )
-    } else {
-      if (result.length === 0) {
-        res.status(404).send( { 'msg': `User with id '${req.params.id}' can't be found` } )
-      } else {
-        res.send(result)
-      }
-    }
+router.post('/update', async (req, res) => {
+  const body = req.body
+
+  if (!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+
+  const check = await Check.update(template, body)
+
+  if (typeof check !== 'undefined') {
+    return res.status(412).send(check)
+  }
+
+  Role.update(body, () => {
+    res.send( { 'msg': `Role with ID: ${body.id} has been updated` } )
   })
 })
 
+router.post('/archive', (req, res) => {
+  const body = req.body
+
+  if (!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+
+  Role.archive(body.id, () => {
+    res.send( { 'msg': `Role with ID: ${body.id} has been archived` } )
+  })
+})
+
+router.post('/delete', (req, res) => {
+  const body = req.body
+
+  if (!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+
+  Role.delete(body.id, () => {
+    res.send( { 'msg': `Role with ID: ${body.id} has been deleted` } )
+  })
+})
 
 module.exports = router

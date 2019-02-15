@@ -1,52 +1,16 @@
 const Connection = require('../connection.js')
+const defaultModel = require('./defaultModel.class.js')
 
-class UserModel {
-  selectAll (callback) {
-    const sql = 'SELECT * FROM User'
+class UserModel extends defaultModel {
+  selectName (user_name, callback) {
+    let formatUser = '%'
 
-    Connection.query(sql, (err, result) => {
+    formatUser += user_name + '%'
+    const sql = 'SELECT id, user_name, display_name, level, role FROM User WHERE user_name LIKE ?'
+
+    Connection.query(sql, formatUser, (err, result) => {
       if (err) throw err
       callback(result)
-    })
-  }
-
-  selectOne (id, callback) {
-    const sql = 'SELECT * FROM User WHERE id = ?'
-
-    Connection.query(sql, [id], (err, result) => {
-      if (err) throw err
-      callback(result)
-    })
-  }
-
-  create (body, callback) {
-    const sql = 'INSERT INTO User (`id`, `role`, `username`, `display_name`, `password`, `email`, `level`, `rows_scrolled`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-
-    Connection.query(sql, Object.values(body), (err, result) => {
-      if (err) throw err
-      callback()
-    })
-  }
-
-  update (body, callback) {
-    const values = Object.values(body)
-    const names = Object.getOwnPropertyNames(body)
-    const sql = 'UPDATE User SET ? , updated_at = NOW() WHERE id = ?'
-    let update = []
-
-    for(let x = 1; x < names.length; x++) {
-      const item = '"' + names[x] + '"' + ' = ' + '"' + values[x] + '"'
-
-      update.push(item)
-    }
-
-    update = update.join(', ')
-
-    console.log(update)
-
-    Connection.query(sql, [update, body.id], (err, result) => {
-      if (err) throw err
-      callback()
     })
   }
 }

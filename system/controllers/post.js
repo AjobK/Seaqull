@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const Model = require('../models/Model.class.js')
+const Model = require('../models/PostModel.class.js')
 const Post = new Model('post')
-const CheckClass = require('../checkTemplate.class.js')
+const CheckClass = require('../globalFunctions/checkTemplate.class.js')
 
 const template = {
-  id: {
-    type: 'id',
-    required: false
-  },
   user_id: {
     type: 'id',
-    required: false
+    required: false,
+    foreign: {
+      table: 'user',
+      row: 'id'
+    }
   },
   title: {
     type: 'string',
@@ -23,7 +23,8 @@ const template = {
   },
   path: {
     type: 'string',
-    required: false
+    required: true,
+    unique: 'post'
   },
   description: {
     type: 'string',
@@ -57,11 +58,11 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   Post.selectOne(req.params.id, (result) => {
-    if (typeof req.params.id === 'string') {
-      res.status(412).send( { 'msg': 'ID parameter must be an integer' } )
+    if (typeof req.params.id !== 'string') {
+      res.status(412).send( { 'msg': 'ID parameter must be a string' } )
     } else {
       if (result.length === 0) {
-        res.status(404).send( { 'msg': `User with id '${req.params.id}' can't be found` } )
+        res.status(404).send( { 'msg': `Post with id '${req.params.id}' can't be found` } )
       } else {
         res.send(result)
       }
@@ -69,9 +70,19 @@ router.get('/:id', (req, res) => {
   })
 })
 
-router.post('/', (req, res) => {
+router.get('/title/:title', (req, res) => {
+  Post.selectName(req.params.title, result => {
+    if (result.length > 0) {
+      res.send(result)
+    } else {
+      res.status(404).send( { 'msg': `There is no post with the title: ${req.params.title}` } )
+    }
+  })
+})
+
+router.post('/', async (req, res) => {
   const body = req.body
-  const check = Check.create(template, body)
+  const check = await Check.create(template, body)
 
   if (typeof check !== 'undefined') {
     return res.status(412).send(check)
@@ -81,19 +92,46 @@ router.post('/', (req, res) => {
   })
 })
 
-router.put('/archive', (req, res) => {
-  Post.archiveOne(req.params.id, (result) => {
-    if (typeof req.params.id === 'string') {
-      res.status(412).send( { 'msg': 'ID parameter must be an integer' } )
-    } else {
-      if (result.length === 0) {
-        res.status(404).send( { 'msg': `User with id '${req.params.id}' can't be found` } )
-      } else {
-        res.send(result)
-      }
-    }
+router.post('/update', async (req, res) => {
+  const body = req.body
+
+  if (!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+
+  const check = await Check.update(template, body)
+
+  if (typeof check !== 'undefined') {
+    return res.status(412).send(check)
+  }
+
+  Post.update(body, () => {
+    res.send( { 'msg': `Post with ID: ${body.id} has been updated` } )
   })
 })
 
+router.post('/archive', (req, res) => {
+  const body = req.body
+
+  if (!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+
+  Post.archive(body.id, () => {
+    res.send( { 'msg': `User with ID: ${body.id} has been archived` } )
+  })
+})
+
+router.post('/delete', (req, res) => {
+  const body = req.body
+
+  if(!body.id) {
+    return res.status(412).send( { 'msg': 'ID has not been defined' } )
+  }
+
+  Post.delete(body.id, () => {
+    res.send( { 'msg': `Post with ID: ${body.id} has been deleted` } )
+  })
+})
 
 module.exports = router
