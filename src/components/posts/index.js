@@ -6,7 +6,7 @@ import styles from './posts.scss'
 class Posts extends Component {
   constructor(props) {
     super(props)
-    this.contacts = []
+    this.data = []
     this.per = 5
     this.page = 1
     this.totalPages = null
@@ -14,16 +14,16 @@ class Posts extends Component {
   }
 
   loadContacts = () => {
-    const { per, page } = this
-    const url = `https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page=${page}`
+    const { page, per } = this
+    const url = `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${per}`
 
     fetch(url)
       .then(response => response.json())
       .then(json => {
         if (!this.totalPages) this.totalPages = json.total_pages
 
-        this.contacts = json.contacts
-        this.setNewContacts()
+        this.data = json
+        this.setNewPosts()
         this.scrolling = false
       })
   }
@@ -37,12 +37,12 @@ class Posts extends Component {
     return scrollY > offset - height - 2
   }
 
-  setNewContacts() {
+  setNewPosts() {
     let singleLi = document.createElement('li')
 
     singleLi.classList.add(styles.post)
 
-    for (let i = 0; i < this.contacts.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       let randomRGB = {
         red: Math.random() * 255,
         green: Math.random() * 255,
@@ -57,7 +57,7 @@ class Posts extends Component {
       article.classList.add(styles.contact)
       let contactText = document.createElement('div')
 
-      contactText.innerText = this.contacts[i].name
+      contactText.innerText = `${this.data[i].title}`
       contactText.classList.add(styles.contactText)
       article.appendChild(contactText)
       singleLi.appendChild(article)
