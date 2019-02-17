@@ -118,6 +118,7 @@
 .achieved {
 	@include mobile-all-portrait {
 		align-self: center;
+		padding: 10px 20px;
 	}
 	display: inline-flex;
 	overflow: hidden;
