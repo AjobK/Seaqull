@@ -45,7 +45,7 @@ class Posts extends Component {
 
       article.style.backgroundColor = rgb
       article.classList.add(styles.contact)
-      let contactText =        document.createElement('div')
+      let contactText = document.createElement('div')
 
       contactText.innerText = this.contacts[i].name
       contactText.classList.add(styles.contactText)

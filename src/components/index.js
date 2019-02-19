@@ -7,6 +7,7 @@ import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
 import Title from './title'
 import PostsPreview from './postsPreview'
+import PostBanner from './postBanner'
 import PreviewPost from './previewPost'
 import Statistics from './statistics'
 import Statistic from './statistic'
@@ -23,6 +24,7 @@ export {
   UserBanner,
   Title,
   PostsPreview,
+  PostBanner,
   PreviewPost,
   Statistics,
   Statistic,
