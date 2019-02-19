@@ -13,7 +13,7 @@
 	align-items: center;
 
 	&Edit {
-		z-index: 1;
+		z-index: 2;
 		transition: 0.2s;
 		opacity: 0;
 		position: absolute;
@@ -29,9 +29,11 @@
 		font-size: 2rem;
 
 		&:hover {
+			z-index: 4;
 			cursor: pointer;
 			transition: 0.2s;
 			opacity: 1;
+			bottom: 0;
 		}
 
 		@include mobile-all-portrait {
