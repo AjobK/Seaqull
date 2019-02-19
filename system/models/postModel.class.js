@@ -13,6 +13,15 @@ class PostModel extends defaultModel {
       callback(result)
     })
   }
+
+  selectLimit (limit, offset, callback) {
+    const sql = 'SELECT * from Post LIMIT ? OFFSET ?'
+
+    Connection.query(sql, [parseInt(limit), parseInt(offset)], (err, result) => {
+      if (err) console.log(err)
+      callback(result)
+    })
+  }
 }
 
 module.exports = PostModel

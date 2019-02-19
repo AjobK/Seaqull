@@ -64,6 +64,21 @@ router.get('/title/:title', (req, res) => {
   })
 })
 
+router.get('/:page/:limit', (req, res) => {
+  const page = req.params.page - 1
+
+  if (page < 0) {
+    return res.status(412).send( { 'msg': 'page must be higher than 0'} )
+  }
+
+  const limit = req.params.limit
+  const offset = page * limit
+
+  Post.selectLimit(limit, offset, result => {
+    res.send(result)
+  })
+})
+
 router.post('/', async (req, res) => {
   const body = req.body
   const check = await Check.create(template, body)

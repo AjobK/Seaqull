@@ -91,7 +91,6 @@ class CheckTemplate {
           }
         }
 
-
         switch (template[element].type) {
         case 'string':
           if (typeof body[element] !== 'string') {
