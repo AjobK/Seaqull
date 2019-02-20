@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon } from '..';
+import { Link } from 'react-router-dom';
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -14,7 +15,7 @@ class PostBanner extends Component {
           <Icon iconName={'Pen'} />
         </span>}
         <div className={styles.innerWrapper}>
-          <div className={styles.info}>
+          <Link to='/profile' className={styles.info}>
             <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
               <span className={styles.levelMobile}>{ user.level || ''}</span>
             </div>
@@ -25,7 +26,7 @@ class PostBanner extends Component {
                 <h3 className={styles.role}>{ user.role || ''}</h3>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
       </section>

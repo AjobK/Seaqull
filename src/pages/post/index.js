@@ -15,7 +15,7 @@ class Post extends App {
       <>
         <Standard>
           <PostBanner />
-          <Section title={'CREATED POSTS'}>
+          <Section title={'Frontend vs Backend'}>
             <h1> This is my Post {this.props.match.params.postUrl || 'NONE'} </h1>
             <Link to='/'>Go home</Link>
             <br />
