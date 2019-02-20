@@ -18,7 +18,7 @@
 		opacity: 0;
 		position: absolute;
 		top: 0;
-		bottom: 20vh;
+		bottom: 0;
 		left: 0;
 		right: 0;
 		background-color: rgba(0,0,0,0.75);
@@ -29,7 +29,6 @@
 		font-size: 2rem;
 
 		&:hover {
-			z-index: 4;
 			cursor: pointer;
 			transition: 0.2s;
 			opacity: 1;
@@ -68,12 +67,12 @@
 }
 
 .backdrop {
+	z-index: 1;
 	position: absolute;
 	bottom: 0;
-	z-index: 0;
 	padding: 10vh;
 	width: 100%;
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,0.4);
 }
 
 .picture {
@@ -97,7 +96,7 @@
 }
 
 .info {
-	z-index: 2;
+	z-index: 4;
 	width: 100%;
 	overflow: hidden;
 	display: flex;
