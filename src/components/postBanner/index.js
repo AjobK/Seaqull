@@ -13,7 +13,6 @@ class PostBanner extends Component {
         {user.loggedIn && <span className={styles.wrapperEdit}>
           <Icon iconName={'Pen'} />
         </span>}
-        <div className={styles.backdrop}/>
         <div className={styles.innerWrapper}>
           <div className={styles.info}>
             <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
