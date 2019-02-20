@@ -103,6 +103,9 @@
 	overflow: hidden;
 	display: flex;
 	flex-wrap: wrap;
+	@include mobile-all-portrait {
+		padding: 0;
+	}
 }
 
 .achieved {
@@ -141,6 +144,7 @@
 		align-self: flex-end;
 		border-radius: 0.2rem;
 		margin-bottom: -0.5rem;
+		font-size: 0.8rem;
 		min-width: 6vw;
 		height: 2rem;
 		display: none;
@@ -165,7 +169,7 @@
 	@include text-shadow;
 	@include mobile-all-portrait {
 		white-space: pre-wrap;
-		font-size: 1rem;
+		font-size: 0.8rem;
 		margin-left: 0;
 	}
 }
@@ -182,6 +186,6 @@
 
 	@include text-shadow;
 	@include mobile-all-portrait {
-		font-size: 1.5rem;
+		font-size: 1rem;
 	}
 }
