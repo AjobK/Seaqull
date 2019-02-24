@@ -12,7 +12,7 @@ class Post extends App {
     const pageNumber = postUrl ? Number(postUrl) + 1 : 1
 
     return (
-      <Standard> 
+      <Standard>
         <PostBanner />
         <Section title={'Frontend vs Backend'}>
           <h1> This is my Post {this.props.match.params.postUrl || 'NONE'} </h1>
