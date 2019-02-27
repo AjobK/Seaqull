@@ -27,6 +27,7 @@
 		justify-content: center;
 		align-items: center;
 		font-size: 2rem;
+		cursor: pointer;
 
 		&:hover {
 			cursor: pointer;
@@ -105,19 +106,21 @@
 	flex-wrap: wrap;
 	@include mobile-all-portrait {
 		padding: 0;
+		justify-content: center;
 	}
 }
 
 .achieved {
-	@include mobile-all-portrait {
-		align-self: center;
-	}
 	display: inline-flex;
 	overflow: hidden;
 	background-color: rgba(0,0,0,0.75);
 	padding: $header-spacing / 2;
 	border-radius: $header-spacing / 3;
 	margin-top: $header-spacing / 2;
+	@include mobile-all-portrait {
+		justify-content: center;
+		display: flex;
+	}
 }
 
 .level {
@@ -142,10 +145,11 @@
 		@extend .level;
 
 		align-self: flex-end;
+		justify-content: center;
 		border-radius: 0.2rem;
-		margin-bottom: -0.5rem;
+		margin-bottom: -0.2rem;
 		font-size: 0.8rem;
-		min-width: 6vw;
+		min-width: 4vw;
 		height: 2rem;
 		display: none;
 
