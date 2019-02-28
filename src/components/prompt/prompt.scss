@@ -1,0 +1,41 @@
+@import '../../styles/index.scss';
+
+.prompt {
+    background-color: white;
+    border: 1px solid whitesmoke;
+    border-radius: 20px;
+    width: 400px;
+    height: 300px;
+    position: relative;
+    padding-top: 5px;
+}
+
+.text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.username {
+    position: relative;
+}
+
+.input {
+    color: gray;
+    border: none;
+    border-bottom: 1px solid gray;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.label {
+    color: gray;
+    font-size: 10px;
+    z-index: 2;
+    margin-top: 20px;
+}
+
+.form {
+    padding: 0 40px 0 40px;
+}
