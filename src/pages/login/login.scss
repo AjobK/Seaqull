@@ -1,0 +1,28 @@
+@import '../../styles/index.scss';
+
+.container {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	background-image: url('../../static/login/mountains.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.background {
+	background-color: #ff6060;
+	width: 100%;
+	opacity: 0.7;
+	z-index: 1;
+	height: 89vh;
+}
+
+.prompt {
+	margin-top: 10%;
+	z-index: 2;
+	position: absolute;
+	
+	@include mobile {
+		margin-top: 1vh;
+	}
+}

@@ -8,7 +8,10 @@ class Home extends App {
   render() {
     return (
       <Standard>
-        <Prompt className={styles.prompt} />
+        <div className={styles.container}>
+          <div className={styles.background} />
+          <Prompt className={styles.prompt} />
+        </div>
       </Standard>
     )
   }

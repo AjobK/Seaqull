@@ -12,18 +12,18 @@ class Prompt extends Component {
         <p className={styles.text}> Welcome back! </p>
         <form action={action} method='POST' className={styles.form}>
           <div className={styles.inputs}>
-            <div className={styles.usernamelo}>
-              <label htmlor='username' className={styles.label}>Username</label><br />
+            <div className={styles.username}>
+              <label htmlFor='username' className={styles.label}>Username</label>
               <input type='text' id='username' name='username' className={styles.input} />
             </div>
             <div className={styles.password}> <br />
-              <label htmlFor='password' className={styles.label}>Password</label><br />
+              <label htmlFor='password' className={styles.label}>Password</label>
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
           </div>
           <input type='submit' name='submit' value='Log in' className={styles.submit} />
         </form>
-        <img src='../../static/login_phone.svg' className={styles.image} />
+        <img className={styles.image} />
       </div>
     )
   }

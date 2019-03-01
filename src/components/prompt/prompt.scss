@@ -8,6 +8,11 @@
 	height: 320px;
 	position: relative;
 	padding-top: 5px;
+	
+	@include mobile {
+		width: 99vw;
+		height: 100vh;
+	}
 }
 
 .text {
@@ -15,10 +20,23 @@
 	font-weight: bold;
 	font-size: 30px;
 	margin-top: 20px;
+
+	@include mobile {
+		font-size: 50px;
+	}
 }
 
 .username {
-	position: relative;
+	// position: relative;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.inputs {
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .input {
@@ -27,37 +45,63 @@
 	border-bottom: 1px solid gray;
 	z-index: 1;
 	margin-bottom: 10px;
+	font-size: 10px;
+	cursor: pointer;
+
+	@include mobile {
+		width: 80%;
+		font-size: 20px;
+		align-self: center;
+	}
 }
 
 .label {
 	color: gray;
-	font-size: 10px;
+	font-size: 30px;
 	z-index: 2;
 	margin-top: 20px;
+	display: block;
+	align-self: flex-start;
 }
 
 .form {
 	padding: 0 40px 0 40px;
 	margin-top: 20px;
+
+	@include mobile {
+		margin-top: 40px;
+	}
 }
 
 .submit {
-	width: 80px;
-	height: 30px;
+	width: 160px;
+	height: 60px;
 	padding: 0 10px 0 10px;
 	border: none;
 	border-radius: 50px;
 	color: white;
 	background-color: $primary;
 	margin-top: 15px;
+	font-size: 30;
 }
 
 .image {
-	width: 125px;
-	height: 60%;
-	border: 1px black solid;
+	width: 120px;
+	height: 57%;
+	border-radius: 10px;
 	position: absolute;
 	bottom: 0;
 	right: 0;
 	margin: 0 55px 41px 0;
+	background-image: url('../../static/login/phone.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	@include mobile {
+		position: static;
+		display: flex;
+		align-self: center;
+		margin: 30px auto;
+		width: 240px;
+	}
 }
