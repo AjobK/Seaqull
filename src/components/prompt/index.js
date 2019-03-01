@@ -8,7 +8,7 @@ class Prompt extends Component {
     const action = 'localhost:8080/user/login'
 
     return (
-      <div className={styles.prompt}>
+      <div className={[styles.prompt, this.props.className].join(' ')}>
         <p className={styles.text}> Welcome back! </p>
         <form action={action} method='POST' className={styles.form}>
           <div className={styles.inputs}>

@@ -26,7 +26,6 @@ class AppRouter extends Component {
             <Route path='/posts' exact component={Post} />
             <Route path='/posts/:postUrl' exact component={Post} />
             <Route path='/login' exact component={Login} />
-            <Route path='/login/:loginUrl' exact component={Login} />
           </div>
         </Router>
       </Provider>

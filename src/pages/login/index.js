@@ -1,16 +1,17 @@
 import React from 'react'
 import App from '../App'
-import { observer, inject } from 'mobx-react'
 import { Standard } from '../../layouts'
 import Prompt from '../../components/prompt'
+import styles from './login.scss'
 
-@inject('store') @observer
-class Login extends App {
+class Home extends App {
   render() {
-    <Standard>
-      <Prompt />
-    </Standard>
+    return (
+      <Standard>
+        <Prompt className={styles.prompt} />
+      </Standard>
+    )
   }
 }
 
-export default Login
+export default Home
