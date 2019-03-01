@@ -1,41 +1,62 @@
 @import '../../styles/index.scss';
 
 .prompt {
-    background-color: white;
-    border: 1px solid whitesmoke;
-    border-radius: 20px;
-    width: 400px;
-    height: 300px;
-    position: relative;
-    padding-top: 5px;
+	background-color: white;
+	border: 1px solid whitesmoke;
+	border-radius: 20px;
+	width: 400px;
+	height: 300px;
+	position: relative;
+	padding-top: 5px;
 }
 
 .text {
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
-    margin-top: 20px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+	margin-top: 20px;
 }
 
 .username {
-    position: relative;
+	position: relative;
 }
 
 .input {
-    color: gray;
-    border: none;
-    border-bottom: 1px solid gray;
-    z-index: 1;
-    margin-bottom: 10px;
+	color: gray;
+	border: none;
+	border-bottom: 1px solid gray;
+	z-index: 1;
+	margin-bottom: 10px;
 }
 
 .label {
-    color: gray;
-    font-size: 10px;
-    z-index: 2;
-    margin-top: 20px;
+	color: gray;
+	font-size: 10px;
+	z-index: 2;
+	margin-top: 20px;
 }
 
 .form {
-    padding: 0 40px 0 40px;
+	padding: 0 40px 0 40px;
+}
+
+.submit {
+	width: 80px;
+	height: 30px;
+	padding: 0 10px 0 10px;
+	border: none;
+	border-radius: 50px;
+	color: white;
+	background-color: $primary;
+	margin-top: 15px;
+}
+
+.image {
+	width: 150px;
+	height: 60%;;
+	border: 1px black solid;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin-bottom: 
 }
