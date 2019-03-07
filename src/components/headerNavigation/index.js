@@ -20,7 +20,9 @@ class HeaderNavigation extends Component {
           </ul>
         ) : ( // Logged out content
           <ul className={styles.menuUl}>
-            <li onClick={user.logIn} className={styles.menuItem}>Log in</li>
+            <Link to='/login' className={styles.menuItem}>
+              <li>Log in</li>
+            </Link>
             <Button value='Sign Up' className={styles.button} />
           </ul>
         )}

@@ -21,7 +21,7 @@ class Prompt extends Component {
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
           </div>
-          <input type='submit' name='submit' value='Log in' className={styles.submit} />
+          <input type='submit' name='submit' value='Log in!' className={styles.submit} />
         </form>
         <img className={styles.image} />
       </div>
