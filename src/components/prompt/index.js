@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styles from './prompt.scss'
+import { Link } from 'react-router-dom'
+
 // import { inject, observer } from 'mobx-react'
 
 // @inject('store') @observer
@@ -21,7 +23,9 @@ class Prompt extends Component {
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
           </div>
-          <input type='submit' name='submit' value='Log in!' className={styles.submit} />
+          <Link to='/'>
+            <input type='submit' name='submit' value='Log in!' className={styles.submit} />
+          </Link>
         </form>
         <img className={styles.image} />
       </div>
