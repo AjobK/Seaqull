@@ -158,6 +158,8 @@
 	text-overflow: ellipsis;
 	min-width: 8rem;
 	max-width: 16rem;
+	justify-content: center;
+	
 	@include text-shadow;
 	@include mobile-all-portrait {
 		display: flex;
