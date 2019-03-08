@@ -16,9 +16,7 @@ class PostBanner extends Component {
         </span>}
         <div className={styles.innerWrapper}>
           <Link to='/profile' className={styles.info}>
-            <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
-              <span className={styles.levelMobile}>{ user.level || ''}</span>
-            </div>
+            <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }} />
             <div className={styles.user_info}>
               <h2 className={[styles.name].join(' ')}>{ user.name || ''}</h2>
               <div className={styles.achieved}>

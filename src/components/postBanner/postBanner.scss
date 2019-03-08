@@ -104,9 +104,11 @@
 	overflow: hidden;
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	@include mobile-all-portrait {
 		padding: 0;
 		justify-content: center;
+		align-items: center;
 	}
 }
 
@@ -138,26 +140,7 @@
 	
 	@include box-shadow;
 	@include mobile-all-portrait {
-		display: none;
-	}
-
-	&Mobile {
-		@extend .level;
-
-		align-self: flex-end;
-		justify-content: center;
-		border-radius: 0.2rem;
-		margin-bottom: -0.2rem;
-		font-size: 0.8rem;
-		min-width: 4vw;
-		height: 2rem;
-		display: none;
-
-		@include mobile-all-portrait {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+		margin-right: 0.2rem;
 	}
 }
 
@@ -170,11 +153,14 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	min-width: 4rem;
 	@include text-shadow;
 	@include mobile-all-portrait {
+		display: flex;
 		white-space: pre-wrap;
 		font-size: 0.8rem;
 		margin-left: 0;
+		// align-items: center;
 	}
 }
 
@@ -185,6 +171,7 @@
 	letter-spacing: 0.1rem;
 	color: white;
 	width: 100%;
+	max-width: 12rem;
 	font-weight: bold;
 	font-size: 1.5rem;
 
