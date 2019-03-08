@@ -13,22 +13,22 @@ class Prompt extends Component {
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
-        <form action={action} method='POST' className={styles.form}>
-          <div className={styles.inputs}>
+        <div className={styles.formWrapper}>
+          <form action={action} method='POST' className={styles.form}>
             <div className={styles.username}>
               <label htmlFor='username' className={styles.label}>Username</label>
               <input type='text' id='username' name='username' className={styles.input} />
             </div>
-            <div className={styles.password}> <br />
+            <div className={styles.password}>
               <label htmlFor='password' className={styles.label}>Password</label>
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
-          </div>
-          <Link to='/'>
-            <input type='submit' name='submit' value='Log in' className={styles.submit} />
-          </Link>
-        </form>
-        <div className={styles.image} />
+            <Link to='/'>
+              <input type='submit' name='submit' value='Log in' className={styles.submit} />
+            </Link>
+          </form>
+          <div className={styles.image} />
+        </div>
       </div>
     )
   }

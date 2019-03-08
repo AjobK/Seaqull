@@ -4,10 +4,10 @@
 	background-color: white;
 	border: 1px solid whitesmoke;
 	border-radius: 13px;
-	width: 445px;
-	height: 50vh;
+	max-width: 450px;
+	width: 100%;
+	padding: 50px 60px;
 	position: relative;
-	padding-top: 5px;
 	
 	@include mobile-all {
 		width: 99vw;
@@ -37,29 +37,10 @@
 	text-align: center;
 	font-weight: bold;
 	font-size: 33px;
-	margin-top: 20px;
+	line-height: 33px;
 
 	@include mobile-all {
 		font-size: 2.3em;
-	}
-}
-
-.username {
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-.password {
-	margin: -17px 0 5px;
-}
-
-.inputs {
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	@include mobile-all{
-		text-align: center;
 	}
 }
 
@@ -69,7 +50,6 @@
 	border: none;
 	border-bottom: 1px solid gray;
 	z-index: 1;
-	margin-bottom: 10px;
 	cursor: text;
 
 	@include mobile-all {
@@ -82,8 +62,10 @@
 .label {
 	color: gray;
 	font-size: 12px;
-	z-index: 2;
-	margin-top: 20px;
+
+	&:first-child {
+		margin-top: 0;
+	}
 	display: block;
 	align-self: flex-start;
 
@@ -93,8 +75,15 @@
 }
 
 .form {
-	padding: 0 50px ;
-	margin-top: 10px;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+
+	&Wrapper {
+		padding-top: 35px;
+		justify-content: space-between;
+		display: flex;
+	}
 
 	@include mobile-all {
 		margin-top: 40px;
@@ -103,17 +92,16 @@
 }
 
 .submit {
+	cursor: pointer;
 	font-family: $mainfont, $sidefont;
 	font-size: 12px;
+	letter-spacing: 1px;
 	font-weight: bold;
-	width: 90px;
-	height: 32px;
-	padding: 0 10px 0 10px;
+	padding: 10px 30px;
 	border: none;
 	border-radius: 48px;
 	color: white;
 	background-color: $primary;
-	margin-top: 15px;
 
 	@include mobile-all {
 		width: 100%;
@@ -125,13 +113,10 @@
 }
 
 .image {
-	width: 30%;
-	height: 57%;
+	display: inline-block;
+	width: 110px;
+	height: calc(110px * 1.65);
 	border-radius: 10px;
-	position: absolute;
-	top: 15.5vh;
-	right: 0;
-	margin: 0 40px 60px 0;
 	background-repeat: no-repeat;
 	background-image: url('../../static/login/phone.svg');
 	// background-size: cover;

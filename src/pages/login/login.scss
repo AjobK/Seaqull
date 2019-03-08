@@ -3,6 +3,7 @@
 .container {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	position: relative;
 	background-image: url('../../static/login/antony-sklivagkos-658428-unsplash.jpg');
 	background-size: cover;
@@ -13,13 +14,10 @@
 	background-color: #ff6060;
 	width: 100%;
 	opacity: 0.7;
-	z-index: 1;
 	height: calc(100vh - #{$header-height});
 }
 
 .prompt {
-	margin-top: 10%;
-	z-index: 2;
 	position: absolute;
 	
 	@include mobile-all {
