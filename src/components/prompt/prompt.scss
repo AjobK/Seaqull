@@ -19,6 +19,20 @@
 	}
 }
 
+.logo {
+	@include mobile-all {
+		background-image: url('../../static/commercial/logo.svg');
+		width: 90%;
+		height: 90%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		border: none;
+		opacity: 0.2;
+		position: absolute;
+		right: 0;
+	}
+}
+
 .text {
 	text-align: center;
 	font-weight: bold;

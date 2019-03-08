@@ -11,6 +11,7 @@ class Prompt extends Component {
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
+        <img className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
         <form action={action} method='POST' className={styles.form}>
           <div className={styles.inputs}>
