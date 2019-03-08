@@ -123,8 +123,6 @@
 	@include mobile-all-portrait {
 		justify-content: center;
 		display: flex;
-		min-width: 4rem;
-		max-width: 11.5rem;
 	}
 }
 
@@ -156,8 +154,6 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	min-width: 8rem;
-	max-width: 16rem;
 	justify-content: center;
 	
 	@include text-shadow;
@@ -165,8 +161,7 @@
 		display: flex;
 		white-space: pre-wrap;
 		font-size: 0.8rem;
-		margin-left: 0;
-		// align-items: center;
+		margin-left: 8px;
 	}
 }
 
@@ -177,8 +172,6 @@
 	letter-spacing: 0.1rem;
 	color: white;
 	width: 100%;
-	min-width: 12rem;
-	max-width: 16rem;
 	font-weight: bold;
 	font-size: 1.5rem;
 
