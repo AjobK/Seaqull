@@ -119,9 +119,12 @@
 	padding: $header-spacing / 2;
 	border-radius: $header-spacing / 3;
 	margin-top: $header-spacing / 2;
+	min-width: 15.5rem;
 	@include mobile-all-portrait {
 		justify-content: center;
 		display: flex;
+		min-width: 4rem;
+		max-width: 11.5rem;
 	}
 }
 
@@ -153,8 +156,8 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	min-width: 6rem;
-	max-width: 12rem;
+	min-width: 8rem;
+	max-width: 16rem;
 	@include text-shadow;
 	@include mobile-all-portrait {
 		display: flex;
@@ -172,8 +175,8 @@
 	letter-spacing: 0.1rem;
 	color: white;
 	width: 100%;
-	min-width: 6rem;
-	max-width: 12rem;
+	min-width: 12rem;
+	max-width: 16rem;
 	font-weight: bold;
 	font-size: 1.5rem;
 
