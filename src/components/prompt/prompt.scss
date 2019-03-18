@@ -10,10 +10,14 @@
 	position: relative;
 	
 	@include mobile-all {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		background-color: white;
 		border: none;
 		width: 100%;
-		height: 100%;
+		// height: 100%;
 		padding: auto;
 	}
 }
@@ -26,6 +30,10 @@
 
 	@include mobile-all {
 		font-size: 1.8em;
+		display: flex;
+		height: fit-content;
+		width: fit-content;
+		text-align: center;
 	}
 }
 
@@ -40,6 +48,7 @@
 	@include mobile-all {
 		font-size: 1.2rem;
 		display: flex;
+		text-align: center;
 		align-self: center;
 		justify-content: center;
 		padding: 0;
@@ -70,6 +79,7 @@
 	&Wrapper {
 		padding-top: 35px;
 		justify-content: space-around;
+		width: fit-content;
 		display: flex;
 	}
 
