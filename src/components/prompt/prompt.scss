@@ -10,37 +10,22 @@
 	position: relative;
 	
 	@include mobile-all {
-		width: 99vw;
-		height: 85vh;
-	}
-	
-	@include mobile {
-		height: 85vh;
-	}
-}
-
-.logo {
-	@include mobile-all {
-		background-image: url('../../static/commercial/logo.svg');
-		width: 90%;
-		height: 90%;
-		background-repeat: no-repeat;
-		background-size: cover;
+		background-color: white;
 		border: none;
-		opacity: 0.2;
-		position: absolute;
-		right: 0;
+		width: 100%;
+		height: 100%;
+		padding: auto;
 	}
 }
 
 .text {
 	text-align: center;
 	font-weight: bold;
-	font-size: 33px;
+	font-size: 2.3rem;
 	line-height: 33px;
 
 	@include mobile-all {
-		font-size: 2.3em;
+		font-size: 1.8em;
 	}
 }
 
@@ -53,9 +38,12 @@
 	cursor: text;
 
 	@include mobile-all {
-		width: 80%;
-		font-size: 20px;
+		font-size: 1.2rem;
+		display: flex;
 		align-self: center;
+		justify-content: center;
+		padding: 0;
+		margin: 0;
 	}
 }
 
@@ -67,27 +55,28 @@
 		margin-top: 0;
 	}
 	display: block;
-	align-self: flex-start;
 
 	@include mobile-all {
-		font-size: 30px;
+		font-size: 1.5rem;
+		// display: none;
 	}
 }
 
 .form {
-	justify-content: space-between;
 	display: flex;
+	justify-content: space-between;
 	flex-direction: column;
 
 	&Wrapper {
 		padding-top: 35px;
-		justify-content: space-between;
+		justify-content: space-around;
 		display: flex;
 	}
 
 	@include mobile-all {
-		margin-top: 40px;
-		text-align: center;
+		margin-top: 0;
+		justify-content: center;
+		// text-align: center;
 	}
 }
 
@@ -104,11 +93,18 @@
 	background-color: $primary;
 
 	@include mobile-all {
-		width: 100%;
-		height: 20vh;
-		font-size: 30px;
+		width: 70%;
+		height: 70%;
+		font-size: 1.5rem;
 		border-radius: 30px;
-		margin-top: 6vh;
+		margin-top: 30px;
+
+		&_wrapper {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+		}
 	}
 }
 
@@ -119,22 +115,8 @@
 	border-radius: 10px;
 	background-repeat: no-repeat;
 	background-image: url('../../static/login/phone.svg');
-	// background-size: cover;
-	// background-color: $primary;
 
-	@include mobile {
-		// position: static;
-		// display: flex;
-		// align-self: center;
-		// margin: 0 auto 10px;
-		// width: 127px;
-		// height: 40%;
-		// transform: rotate(90deg);
-		// margin: -20px auto;
-		display: none;
-	}
-
-	@include mobile-xs {
+	@include mobile-all {
 		display: none;
 	}
 }
