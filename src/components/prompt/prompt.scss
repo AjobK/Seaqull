@@ -71,6 +71,7 @@
 	@include mobile-all {
 		font-size: 1rem;
 		color: rgba(0, 0, 0, 0.4);
+		font-weight: bold;
 	}
 }
 
@@ -79,15 +80,19 @@
 	justify-content: space-between;
 	flex-direction: column;
 
+	@include mobile-all {
+		margin-top: 0;
+		justify-content: center;
+	}
+
 	&Wrapper {
-		padding-top: 35px;
+		padding-top: 30px;
 		justify-content: space-around;
 		display: flex;
 	}
 
-	@include mobile-all {
-		margin-top: 0;
-		justify-content: center;
+	&Group {
+		margin-top: 30px;
 	}
 }
 

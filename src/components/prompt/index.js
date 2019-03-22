@@ -15,11 +15,11 @@ class Prompt extends Component {
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
           <form action={action} method='POST' className={styles.form}>
-            <div>
+            <div className={styles.formGroup}>
               <label htmlFor='username' className={styles.label}>Username</label>
               <input type='text' id='username' name='username' className={styles.input} />
             </div>
-            <div>
+            <div className={styles.formGroup}>
               <label htmlFor='password' className={styles.label}>Password</label>
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
