@@ -22,6 +22,6 @@
 	position: absolute;
 	
 	@include mobile-all {
-		margin-top: 1vh;
+		border-radius: 0;
 	}
 }
