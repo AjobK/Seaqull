@@ -11,6 +11,7 @@
 	
 	@include mobile-all {
 		display: flex;
+		background-color: $primary;
 		justify-content: center;
 		flex-direction: column;
 		align-items: center;
@@ -18,6 +19,7 @@
 		border: none;
 		border-radius: none;
 		height: 100%;
+		max-width: 100%; 
 		// width: 100%;
 		// padding: auto;
 	}
@@ -49,9 +51,11 @@
 		display: flex;
 		text-align: center;
 		align-self: center;
+		background: $primary;
 		// justify-content: center;
 		padding: 0;
 		margin: 0;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 	}
 }
 
@@ -66,7 +70,7 @@
 
 	@include mobile-all {
 		font-size: 1rem;
-		color: $darker;
+		color: rgba(0, 0, 0, 0.4);
 	}
 }
 
@@ -102,7 +106,7 @@
 	@include mobile-all {
 		width: 50%;
 		height: 60%;
-		font-size: 1.2rem;
+		font-size: 1rem;
 		border-radius: 30px;
 		margin-top: 30px;
 		background-color: $darker;
