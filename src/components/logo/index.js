@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import styles from './logo.scss'
-import LogoSvg from '../../static/commercial/logo.svg'
+import LogoPNG from '../../static/commercial/logo.png'
 
 @inject('store') @observer
 class Button extends Component {
@@ -12,7 +12,7 @@ class Button extends Component {
 
     return (
       <Link to={'/'} className={[styles.logo, ...className || ''].join(' ')}>
-        <img className={styles.logoImage} src={LogoSvg} draggable={false} />
+        <img className={styles.logoImage} src={LogoPNG} draggable={false} />
         {!onlyIcon && <h1 className={styles.logoText}>{defaultData.projectName}</h1>}
       </Link>
     )
