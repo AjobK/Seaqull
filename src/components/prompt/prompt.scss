@@ -47,15 +47,13 @@
 	cursor: text;
 
 	@include mobile-all {
-		font-size: 1.6rem;
+		// font-size: 1.8rem;
 		display: flex;
-		text-align: center;
-		align-self: center;
 		background: $primary;
-		// justify-content: center;
 		padding: 0;
 		margin: 0;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+		min-width: 300px;
 	}
 }
 
@@ -65,7 +63,7 @@
 	font-size: 12px;
 
 	&:first-child {
-		margin-top: 0;
+		width: 100%;
 	}
 
 	@include mobile-all {
@@ -108,10 +106,11 @@
 	color: white;
 	background-color: $primary;
 	margin-top: 30px;
+	width: fit-content;
 
 	@include mobile-all {
-		width: 50%;
-		height: 60%;
+		// width: 45%;
+		// height: 60%;
 		font-size: 1rem;
 		border-radius: 30px;
 		background-color: $darker;
