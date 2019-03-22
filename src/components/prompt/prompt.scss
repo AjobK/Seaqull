@@ -50,6 +50,7 @@
 		padding: 0;
 		margin: 0;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+		height: 40px;
 		width: 100%;
 		max-width: 300px;
 	}
@@ -93,13 +94,17 @@
 
 	&Group {
 		margin-top: 25px;
+
+		@include mobile-all {
+			margin-top: 40px;
+		}
 	}
 }
 
 .submit {
 	cursor: pointer;
 	font-family: $mainfont, $sidefont;
-	font-size: 12px;
+	font-size: 0.75rem;
 	letter-spacing: 1px;
 	font-weight: bold;
 	padding: 10px 30px;
@@ -114,6 +119,7 @@
 		font-size: 1rem;
 		border-radius: 30px;
 		background-color: $darker;
+		padding: 10px 45px;
 		
 		&_wrapper {
 			display: flex;
