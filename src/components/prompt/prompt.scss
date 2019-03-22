@@ -8,7 +8,7 @@
 	max-width: 450px;
 	padding: 50px 60px;
 	
-	@include mobile-all {
+	@include mobile-all-portrait {
 		display: flex;
 		background-color: $primary;
 		justify-content: center;
@@ -28,7 +28,7 @@
 	font-size: 2.3rem;
 	line-height: 33px;
 
-	@include mobile-all {
+	@include mobile-all-portrait {
 		word-break: break-all;
 		font-size: 2rem;
 		color: #fff;
@@ -44,7 +44,7 @@
 	z-index: 1;
 	cursor: text;
 
-	@include mobile-all {
+	@include mobile-all-portrait {
 		display: flex;
 		background: $primary;
 		padding: 0;
@@ -65,7 +65,7 @@
 		width: 100%;
 	}
 
-	@include mobile-all {
+	@include mobile-all-portrait {
 		font-size: 1rem;
 		color: rgba(0, 0, 0, 0.4);
 		font-weight: bold;
@@ -78,7 +78,7 @@
 	flex-direction: column;
 	width: 100%;
 
-	@include mobile-all {
+	@include mobile-all-portrait {
 		margin-top: 0;
 		justify-content: center;
 		padding: $header-spacing;
@@ -115,7 +115,7 @@
 	margin-top: 30px;
 	width: fit-content;
 
-	@include mobile-all {
+	@include mobile-all-portrait {
 		font-size: 1rem;
 		border-radius: 30px;
 		background-color: $darker;
@@ -140,7 +140,7 @@
 	background-repeat: no-repeat;
 	background-image: url('../../static/login/phone.svg');
 
-	@include mobile-all {
+	@include mobile-all-portrait {
 		display: none;
 	}
 }
