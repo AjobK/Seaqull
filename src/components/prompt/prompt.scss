@@ -60,13 +60,13 @@
 }
 
 .label {
+	display: block;
 	color: gray;
 	font-size: 12px;
 
 	&:first-child {
 		margin-top: 0;
 	}
-	display: block;
 
 	@include mobile-all {
 		font-size: 1rem;
@@ -86,13 +86,13 @@
 	}
 
 	&Wrapper {
-		padding-top: 30px;
+		padding-top: 35px;
 		justify-content: space-around;
 		display: flex;
 	}
 
 	&Group {
-		margin-top: 30px;
+		margin-top: 25px;
 	}
 }
 
@@ -107,13 +107,13 @@
 	border-radius: 48px;
 	color: white;
 	background-color: $primary;
+	margin-top: 30px;
 
 	@include mobile-all {
 		width: 50%;
 		height: 60%;
 		font-size: 1rem;
 		border-radius: 30px;
-		margin-top: 30px;
 		background-color: $darker;
 		
 		&_wrapper {
