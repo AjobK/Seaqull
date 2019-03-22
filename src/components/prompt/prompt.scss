@@ -90,7 +90,7 @@
 	}
 
 	&Wrapper {
-		padding-top: 35px;
+		margin-top: 15px;
 		justify-content: space-around;
 		display: flex;
 		width: 100%;
@@ -133,7 +133,8 @@
 
 .image {
 	display: inline-block;
-	width: 110px;
+	min-width: 110px;
+	margin-top: auto;
 	height: calc(110px * 1.65);
 	border-radius: 10px;
 	margin-left: 30px;
