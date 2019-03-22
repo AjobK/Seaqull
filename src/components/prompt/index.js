@@ -23,7 +23,7 @@ class Prompt extends Component {
               <label htmlFor='password' className={styles.label}>Password</label>
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
-            <Link to='/' class={styles.submit_wrapper}>
+            <Link to='/' className={styles.submit_wrapper}>
               <input type='submit' name='submit' value='Log in' className={styles.submit} />
             </Link>
           </form>
