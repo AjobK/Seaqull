@@ -97,6 +97,7 @@
 	}
 
 	&Group {
+		margin-top: 20px;
 		@include mobile-all-portrait {
 			margin-top: 40px;
 		}
