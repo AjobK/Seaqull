@@ -37,6 +37,7 @@
 }
 
 .input {
+	font-family: Poppins;
 	font-size: 1rem;
 	color: gray;
 	border: none;
@@ -45,12 +46,14 @@
 	cursor: text;
 
 	@include mobile-all-portrait {
+		color: white;
 		display: flex;
 		background: $primary;
 		padding: 0;
 		margin: 0;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+		border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 		height: 40px;
+		font-size: 20px;
 		width: 100%;
 		max-width: 300px;
 	}
@@ -94,9 +97,7 @@
 	}
 
 	&Group {
-		margin-top: 25px;
-
-		@include mobile-all {
+		@include mobile-all-portrait {
 			margin-top: 40px;
 		}
 	}
