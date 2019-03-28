@@ -8,7 +8,7 @@ class RegisterPrompt extends Component {
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
-        <p className={styles.text}>Join our community!</p>
+        <p className={styles.text}>Join our community</p>
         <div className={styles.formWrapper}>
           <form action={action} method='POST' className={styles.form}>
             <div className={styles.formGroup}>
