@@ -7,6 +7,7 @@ import Profile from './profile'
 import Post from './post'
 import Error from './error'
 import Login from'./login'
+import Register from'./register'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class AppRouter extends Component {
             <Route path='/posts' exact component={Post} />
             <Route path='/posts/:postUrl' exact component={Post} />
             <Route path='/login' exact component={Login} />
+            <Route path='/register' exact component={Register} />
           </div>
         </Router>
       </Provider>
