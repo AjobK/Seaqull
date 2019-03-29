@@ -30,7 +30,7 @@ class RegisterPrompt extends Component {
           </form>
           <div className={styles.image} />
         </div>
-        <p className={styles.textFooter}>By registering I confirm that I have read and agree to the <a className={styles.textFooter_link}href='#'>Terms of service</a></p>
+        <p className={styles.textFooter}><small>By registering I confirm that I have read and agree to the </small><a className={styles.textFooter_link}href='#'>Terms of service</a></p>
       </div>
     )
   }
