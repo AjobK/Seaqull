@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './registerprompt.scss'
+import Button from '../button'
 
 class RegisterPrompt extends Component {
   render() {
@@ -8,7 +9,7 @@ class RegisterPrompt extends Component {
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
-        <p className={styles.text}>Join our community</p>
+        <p className={styles.text}>Join our <span className={styles.textBreak}>community</span></p>
         <div className={styles.formWrapper}>
           <form action={action} method='POST' className={styles.form}>
             <div className={styles.formGroup}>
@@ -24,7 +25,7 @@ class RegisterPrompt extends Component {
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <input type='submit' name='submit' value='Register' className={styles.submit} />
+              <Button type='submit' name='submit' value='Register' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />

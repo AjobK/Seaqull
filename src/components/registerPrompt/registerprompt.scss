@@ -39,6 +39,12 @@
 		font-weight: bold;
 	}
 
+	&Break {
+		@include mobile-all-portrait {
+			display: block;
+		}
+	}
+
 	&Footer {
 		width: 100%;
 		text-align: center;
@@ -150,12 +156,16 @@
 	background-color: $primary;
 	margin-top: 30px;
 	width: fit-content;
+	list-style-type: none;
 
 	@include mobile-all-portrait {
 		font-size: 1rem;
 		border-radius: 30px;
 		background-color: $darker;
 		padding: 10px 45px;
+		height: 38px;
+		display: flex;
+		align-items: center;
 		
 		&_wrapper {
 			display: flex;
