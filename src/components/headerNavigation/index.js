@@ -23,7 +23,9 @@ class HeaderNavigation extends Component {
             <Link to='/login' className={styles.menuItem}>
               <li>Log in</li>
             </Link>
-            <Button value='Sign Up' className={styles.button} />
+            <Link to='/register'>
+              <Button value='Sign Up' className={styles.button} />
+            </Link>
           </ul>
         )}
       </nav>
