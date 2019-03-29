@@ -4,16 +4,13 @@ import styles from './input.scss'
 
 // @inject('store') @observer
 class Input extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const { name, type, title } = this.props
 
     return (
       <div className={styles.username}>
-        <label for={name} className={styles.label}>{title}</label><br />
+        <label htmlFor={name} className={styles.label}>{title}</label><br />
         <input type={type} id={name} name={name} className={styles.input} />
       </div>
     )
