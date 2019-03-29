@@ -9,7 +9,7 @@ class RegisterPrompt extends Component {
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
-        <p className={styles.text}>Join our <span className={styles.textBreak}>community</span></p>
+        <p className={styles.text}>Join our community</p>
         <div className={styles.formWrapper}>
           <form action={action} method='POST' className={styles.form}>
             <div className={styles.formGroup}>
@@ -30,7 +30,7 @@ class RegisterPrompt extends Component {
           </form>
           <div className={styles.image} />
         </div>
-        <p className={styles.textFooter}><small>By registering I confirm that I have read and agree to the </small><a className={styles.textFooter_link}href='#'>Terms of service</a></p>
+        <p className={styles.textFooter}><small className={styles.textFooterSmall}>By registering I confirm that I have read and agree to the </small><a className={styles.textFooter_link}href='#'>Terms of service</a></p>
       </div>
     )
   }

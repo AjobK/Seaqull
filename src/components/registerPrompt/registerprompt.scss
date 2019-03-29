@@ -22,6 +22,8 @@
 }
 
 .text {
+	word-break: break-word;
+	white-space: normal;
 	padding: 0 2rem;
 	font-size: 2rem;
 	line-height: 33px;
@@ -30,7 +32,7 @@
 	text-align: center;
 
 	@include mobile-all-portrait {
-		word-break: break-all;
+		word-break: break-word;
 		font-size: 1.8rem;
 		color: #fff;
 		font-weight: bold;
@@ -51,7 +53,7 @@
 		color: #9b9b9b;
 
 		@include mobile-all-portrait {
-			word-break: break-all;
+			width: 80%;
 			font-size: 0.8rem;
 			color: #fff;
 		}
@@ -61,10 +63,14 @@
 			text-decoration: underline;
 
 			@include mobile-all-portrait {
-				word-break: break-all;
 				color: #fff;
 				font-weight: bold;
 			}
+		}
+
+		&Small {
+			word-break: break-word;
+			white-space: normal;
 		}
 	}
 }
