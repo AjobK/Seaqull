@@ -1,0 +1,27 @@
+@import '../../styles/index.scss';
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-image: url('../../static/login/antony-sklivagkos-658428-unsplash.jpg');
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.background {
+	background-color: #ff6060;
+	width: 100%;
+	opacity: 0.7;
+	height: calc(100vh - #{$header-height});
+}
+
+.prompt {
+	position: absolute;
+	
+	@include mobile-all {
+		border-radius: 0;
+	}
+}
