@@ -10,7 +10,7 @@ class Post extends App {
       <Standard>
         <PostBanner />
         <Section title={'Front-End vs. Back-End'}>
-          <PostHeader/>
+          <PostHeader heading={'Visuals are key'}/>
         </Section>
       </Standard>
     )

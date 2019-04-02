@@ -7,11 +7,12 @@ import { inject, observer } from 'mobx-react'
 class PostHeader extends Component {
   render() {
     const { user } = this.props.store
+    const { heading, className } = this.props
 
     return (
       <section className={styles.title}>
         {user.loggedIn && <span className={styles.titleEdit}><Icon iconName={'Pen'} /> Heading </span>}
-        <h3>Visuals are key</h3>
+        <h3 className={[styles.title, ...className || ''].join(' ')}>{heading || 'Sample title'}</h3>
       </section>
     )
   }
