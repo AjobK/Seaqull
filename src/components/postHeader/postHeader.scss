@@ -1,0 +1,14 @@
+@import '../../styles/index.scss';
+
+.title {
+	font-weight: normal;
+	font-size: 1rem;
+	letter-spacing: 0.15rem;
+	padding-top: 80px;
+	color: $primary;
+
+	&Edit {
+		color: #4e4e4e;
+		font-size: 0.8rem;
+	}
+}
