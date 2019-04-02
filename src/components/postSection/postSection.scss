@@ -2,16 +2,29 @@
 
 .paragraph {
 	font-weight: bold;
-	font-size: 0.8rem;
+	font-size: 1rem;
 	letter-spacing: 0.15rem;
 
 	&Edit {
 		color: gray;
-		font-size: 0.8rem;
+		font-size: 1rem;
+		font-weight: bold;
 		cursor: pointer;
+
+		&Pressed {
+			color: black;
+		}
 	}
 
 	&Wrapper {
 		margin: 10px 0;
 	}
+}
+
+.icon {
+	background-color: gray;
+	color: white;
+	border-radius: 30px;
+	font-size: 1rem;
+	padding: 4px;
 }
