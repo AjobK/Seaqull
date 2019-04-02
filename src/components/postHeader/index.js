@@ -6,12 +6,12 @@ import { inject, observer } from 'mobx-react'
 @inject('store') @observer
 class PostHeader extends Component {
   render() {
-    const { user } = this.props.store
+    const { post } = this.props.store
     const { heading, className } = this.props
 
     return (
       <section className={styles.title}>
-        {user.loggedIn && <span className={styles.titleEdit}><Icon iconName={'Pen'} className={styles.icon} /> Heading </span>}
+        {post.loggedIn && <span className={styles.titleEdit}><Icon iconName={'Pen'} className={styles.icon} /> Heading </span>}
         <h3 className={[styles.title, ...className || ''].join(' ')}>{heading || 'Sample title'}</h3>
       </section>
     )

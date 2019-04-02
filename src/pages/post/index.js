@@ -1,9 +1,10 @@
 import React from 'react'
 import App from '../App'
+import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
 import { PostBanner, PostHeader, PostSection } from '../../components'
 
-// @inject('store') @observer
+@inject('store') @observer
 class Post extends App {
   render() {
     return (
