@@ -7,7 +7,16 @@
 	color: $primary;
 
 	&Edit {
-		color: #4e4e4e;
+		color: gray;
 		font-size: 0.8rem;
+		cursor: pointer;
 	}
+}
+
+.icon {
+	background-color: gray;
+	color: white;
+	border-radius: 30px;
+	font-size: 1rem;
+	padding: 4px;
 }

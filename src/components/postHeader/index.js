@@ -11,7 +11,7 @@ class PostHeader extends Component {
 
     return (
       <section className={styles.title}>
-        {user.loggedIn && <span className={styles.titleEdit}><Icon iconName={'Pen'} /> Heading </span>}
+        {user.loggedIn && <span className={styles.titleEdit}><Icon iconName={'Pen'} className={styles.icon} /> Heading </span>}
         <h3 className={[styles.title, ...className || ''].join(' ')}>{heading || 'Sample title'}</h3>
       </section>
     )
