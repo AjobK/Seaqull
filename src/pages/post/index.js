@@ -9,8 +9,11 @@ class Post extends App {
     return (
       <Standard>
         <PostBanner />
-        <Section title={props => <PostHeader {...props.postUrl || 'NONE'}/>}>
-          <h3>De Article url naam is {this.props.match.params.postUrl || 'NONE'}</h3>
+        <Section title={'test'}>
+          <PostHeader render={data => (
+            <h3>Hello {data.target}</h3>
+          )}/>
+          {/* <h3>De Article url naam is {this.props.match.params.postUrl || 'NONE'}</h3> */}
         </Section>
       </Standard>
     )
