@@ -1,0 +1,17 @@
+@import '../../styles/index.scss';
+
+.paragraph {
+	font-weight: bold;
+	font-size: 0.8rem;
+	letter-spacing: 0.15rem;
+
+	&Edit {
+		color: gray;
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+
+	&Wrapper {
+		margin: 10px 0;
+	}
+}

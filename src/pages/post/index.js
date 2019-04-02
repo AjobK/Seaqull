@@ -1,7 +1,7 @@
 import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostHeader } from '../../components'
+import { PostBanner, PostHeader, PostSection } from '../../components'
 
 // @inject('store') @observer
 class Post extends App {
@@ -11,8 +11,10 @@ class Post extends App {
         <PostBanner />
         <Section title={'Front-End vs. Back-End'}>
           <PostHeader heading={'Visuals are key'}/>
+          <PostSection />
           <br/>
           <PostHeader heading={'Understanding colors'}/>
+          <PostSection />
         </Section>
       </Standard>
     )

@@ -9,6 +9,7 @@ import Title from './title'
 import PostsPreview from './postsPreview'
 import PostBanner from './postBanner'
 import PostHeader from './postHeader'
+import PostSection from './postSection'
 import PreviewPost from './previewPost'
 import Statistics from './statistics'
 import Statistic from './statistic'
@@ -27,6 +28,7 @@ export {
   Title,
   PostsPreview,
   PostBanner,
+  PostSection,
   PostHeader,
   PreviewPost,
   Statistics,
