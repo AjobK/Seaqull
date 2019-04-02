@@ -12,7 +12,7 @@ class PostBanner extends Component {
     return (
       <section className={styles.wrapper}>
         {user.loggedIn && <span className={styles.wrapperEdit}>
-          <Icon iconName={'Pen'} />
+          Click to edit &nbsp; <Icon iconName={'Pen'} />
         </span>}
         <div className={styles.innerWrapper}>
           <Link to='/profile' className={styles.info}>
