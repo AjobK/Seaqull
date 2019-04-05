@@ -36,7 +36,7 @@
 			font-size: 1.2rem;
 		}
 
-		@include mobile-all-portrait {
+		@include mobile-xs {
 			display: none;
 		}
 	}
@@ -112,7 +112,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	@include mobile-all-portrait {
+	@include mobile-xs {
 		padding: 0;
 		justify-content: center;
 		align-items: center;
@@ -122,7 +122,7 @@
 .achieved {
 	display: inline-flex;
 	overflow: hidden;
-	@include mobile-all-portrait {
+	@include mobile-xs {
 		justify-content: center;
 		display: flex;
 	}
@@ -131,7 +131,7 @@
 .level {
 	display: flex;
 	align-items: center;
-	border-radius: 6px;
+	border-radius: 4px;
 	align-self: center;
 	height: 1.2rem;
 	padding: 0.4rem 0.4rem;
@@ -142,7 +142,7 @@
 	background-color: $primary;
 	
 	@include box-shadow;
-	@include mobile-all-portrait {
+	@include mobile-xs {
 		margin-right: 0.2rem;
 	}
 }
@@ -159,7 +159,7 @@
 	justify-content: center;
 	
 	@include text-shadow;
-	@include mobile-all-portrait {
+	@include mobile-xs {
 		display: flex;
 		white-space: pre-wrap;
 		font-size: 0.8rem;
@@ -178,7 +178,7 @@
 	font-size: 1.5rem;
 
 	@include text-shadow;
-	@include mobile-all-portrait {
+	@include mobile-xs {
 		font-size: 1rem;
 	}
 }
