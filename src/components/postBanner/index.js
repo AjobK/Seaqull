@@ -14,6 +14,7 @@ class PostBanner extends Component {
         {post.loggedIn && <span className={styles.wrapperEdit}>
           Click to edit &nbsp; <Icon iconName={'Pen'} />
         </span>}
+        <div className={styles.backdrop}/>
         <div className={styles.innerWrapper}>
           <Link to='/profile' className={styles.info}>
             <div className={styles.picture} style={{ backgroundImage: `url(${post.picture})` }} />
