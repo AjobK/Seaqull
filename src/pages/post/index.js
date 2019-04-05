@@ -13,9 +13,11 @@ class Post extends App {
         <Section title={'Front-End vs. Back-End'}>
           <PostContentHeading value={'Visuals are key'}/>
           <br />
+          <PostContentParagraph value={'The importance is visuals is in it\'s essence very simple.'} />
+          <br />
           <PostContentHeading value={'Understanding color'} />
           <br />
-          <PostContentParagraph value={'Understanding color'} />
+          <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
           <br />
         </Section>
       </Standard>
