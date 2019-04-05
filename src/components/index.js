@@ -14,6 +14,7 @@ import Statistic from './statistic'
 import Logo from './logo'
 import Loader from './loader'
 import Icon from './icon'
+import RegisterPrompt from './registerPrompt'
 
 export {
   Button,
@@ -31,5 +32,6 @@ export {
   Statistic,
   Logo,
   Loader,
-  Icon
+  Icon,
+  RegisterPrompt
 }
