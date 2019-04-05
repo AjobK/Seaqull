@@ -26,13 +26,13 @@ class PostContentBlock extends Component {
 
   render() {
     const { user } = this.props.store
-    const { content, heading, className } = this.props
+    const { children, heading, className } = this.props
 
     return (
       <section className={styles.paragraphWrapper} onClick={this.edit} onBlur={this.quitEdit}>
         {user.loggedIn && <PostEditHeading editing={this.state.editing} heading={heading} />}
         {
-          content ||
+          children ||
           <p className={[styles.paragraph, ...className || ''].join(' ')}> NO CONTENT </p>
         }
       </section>
