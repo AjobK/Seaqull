@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostSection, PostContentBlock, PostContentHeading } from '../../components'
+import { PostBanner, PostContentHeading, PostContentParagraph } from '../../components'
 
 @inject('store') @observer
 class Post extends App {
@@ -15,13 +15,8 @@ class Post extends App {
           <br />
           <PostContentHeading value={'Understanding color'} />
           <br />
-          <PostContentBlock />
+          <PostContentParagraph value={'Understanding color'} />
           <br />
-          <PostContentBlock />
-          <br />
-          <PostContentBlock />
-          <br/>
-          <PostSection />
         </Section>
       </Standard>
     )
