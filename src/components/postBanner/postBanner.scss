@@ -24,11 +24,17 @@
 		bottom: 30%;
 		border-radius: 30px;
 		padding: 10px;
+		font-weight: bolder;
 		justify-content: flex-end;
 		align-items: center;
 		font-size: 1rem;
 		cursor: pointer;
 		transition: all .2s ease-in-out;
+
+		&Content {
+			padding: 0 15px;
+			font-size: 1.2rem;
+		}
 
 		@include mobile-all-portrait {
 			display: none;
@@ -83,13 +89,13 @@
 	position: relative;
 	background-size: cover;
 	background-position: center;
-	background-color: $darkest;
+	background-color: #1f1f1f;
 	display: flex;
 	justify-content: center;
-	min-width: 100px;
-	min-height: 100px;
-	width: 6vw;
-	height: 6vw;
+	min-width: 80px;
+	min-height: 80px;
+	width: 3vw;
+	height: 3vw;
 	@include box-shadow;
 }
 
@@ -116,11 +122,6 @@
 .achieved {
 	display: inline-flex;
 	overflow: hidden;
-	background-color: rgba(0,0,0,0.75);
-	padding: $header-spacing / 2;
-	border-radius: $header-spacing / 3;
-	margin-top: $header-spacing / 2;
-	min-width: 15.5rem;
 	@include mobile-all-portrait {
 		justify-content: center;
 		display: flex;
@@ -132,7 +133,7 @@
 	align-items: center;
 	border-radius: 0.25rem;
 	align-self: center;
-	height: 1.8rem;
+	height: 1.2rem;
 	padding: 0 0.6rem;
 	font-size: 1rem;
 	font-weight: bold;
@@ -150,7 +151,7 @@
 	align-items: center;
 	font-size: 1.2rem;
 	margin-left: $header-spacing / 2;
-	font-weight: normal;
+	font-weight: bolder;
 	color: $primary;
 	overflow: hidden;
 	white-space: nowrap;

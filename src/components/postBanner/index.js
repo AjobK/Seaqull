@@ -12,7 +12,7 @@ class PostBanner extends Component {
     return (
       <section className={styles.wrapper}>
         {post.loggedIn && <span className={styles.wrapperEdit}>
-          Click to edit &nbsp; <Icon iconName={'Pen'} />
+          <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
         </span>}
         <div className={styles.backdrop}/>
         <div className={styles.innerWrapper}>
