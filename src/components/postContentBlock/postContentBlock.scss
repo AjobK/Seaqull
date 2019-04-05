@@ -1,27 +1,15 @@
 @import '../../styles/index.scss';
 
-.paragraph {
+.title {
 	font-weight: bold;
-	font-size: 0.8rem;
+	font-size: 1.2rem;
 	letter-spacing: 0.15rem;
+	color: $primary;
 
 	&Edit {
 		color: gray;
 		font-size: 1rem;
-		font-weight: bold;
 		cursor: pointer;
-
-		&ing {
-			color: black;
-
-			> .icon {
-				background-color: black;
-			}
-		}
-	}
-
-	&Wrapper {
-		margin: 10px 0;
 	}
 }
 

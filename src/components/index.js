@@ -10,6 +10,8 @@ import PostsPreview from './postsPreview'
 import PostBanner from './postBanner'
 import PostHeader from './postHeader'
 import PostSection from './postSection'
+import PostContentBlock from './postContentBlock'
+import PostEditHeading from './postEditHeading'
 import PreviewPost from './previewPost'
 import Statistics from './statistics'
 import Statistic from './statistic'
@@ -29,6 +31,8 @@ export {
   PostsPreview,
   PostBanner,
   PostSection,
+  PostContentBlock,
+  PostEditHeading,
   PostHeader,
   PreviewPost,
   Statistics,

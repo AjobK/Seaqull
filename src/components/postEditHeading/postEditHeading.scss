@@ -1,0 +1,26 @@
+@import '../../styles/index.scss';
+
+.edit {
+	@include noselect;
+	text-transform: uppercase;
+	color: gray;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+
+	&ing {
+		color: black;
+
+		> .icon {
+			background-color: black;
+		}
+	}
+}
+
+.icon {
+	background-color: gray;
+	color: white;
+	border-radius: 30px;
+	font-size: 1rem;
+	padding: 4px;
+}
