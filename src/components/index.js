@@ -8,9 +8,9 @@ import UserBanner from './userBanner'
 import Title from './title'
 import PostsPreview from './postsPreview'
 import PostBanner from './postBanner'
-import PostSection from './postSection'
 import PostContentBlock from './postContentBlock'
 import PostContentHeading from './postContentHeading'
+import PostContentParagraph from './postContentParagraph'
 import PostEditHeading from './postEditHeading'
 import PreviewPost from './previewPost'
 import Statistics from './statistics'
@@ -30,9 +30,9 @@ export {
   Title,
   PostsPreview,
   PostBanner,
-  PostSection,
   PostContentBlock,
   PostContentHeading,
+  PostContentParagraph,
   PostEditHeading,
   PreviewPost,
   Statistics,
