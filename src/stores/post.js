@@ -6,7 +6,7 @@ const PostStore = types
     picture: types.optional(types.string, '../src/static/dummy/post/profile.jpg'),
     banner: types.optional(types.string, '../src/static/dummy/post/banner.jpg'),
     name: types.optional(types.string, 'John Doe'),
-    role: types.optional(types.string, 'Web Developer'),
+    role: types.optional(types.string, 'Best Developer'),
     level: types.optional(types.integer, 91),
     percentage: types.optional(types.number, 8)
   })
