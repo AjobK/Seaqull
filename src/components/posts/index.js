@@ -7,24 +7,20 @@ class Posts extends Component {
   constructor(props) {
     super(props)
     this.data = []
-    this.per = 5
-    this.page = 1
-    this.totalPages = 100
+    this.page = 2
+    this.totalPages = 4
     this.scrolling = false
   }
 
-  loadContacts = () => {
-    const { page, per } = this
-    const url = `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${per}`
+  loadArticle = () => {
+    const url = 'http://localhost:8000/api/post'
 
     fetch(url)
       .then(response => response.json())
       .then(json => {
-        if (!this.totalPages) this.totalPages = json.total_pages
-
-        this.data = json
+        this.data = json.data
+        console.log(this.data.data[0])
         this.setNewPosts()
-        this.scrolling = false
       })
   }
 
@@ -33,7 +29,7 @@ class Posts extends Component {
 
     singleLi.classList.add(styles.post)
 
-    for (let i = 0; i < this.data.length; i++) {
+    for (let i = 0; i < this.data.data.length; i++) {
       let randomRGB = {
         red: Math.random() * 255,
         green: Math.random() * 255,
@@ -45,19 +41,19 @@ class Posts extends Component {
       let article = document.createElement('article')
 
       article.style.backgroundColor = rgb
-      article.classList.add(styles.contact)
-      let contactText = document.createElement('div')
+      article.classList.add(styles.postItem)
+      let postItem = document.createElement('div')
 
-      contactText.innerText = `${this.per * (this.page-1) + i}. ${this.data[i].title}`
-      contactText.classList.add(styles.contactText)
-      article.appendChild(contactText)
-      singleLi.appendChild(article)
+      postItem.innerText = this.data.data[i].title
+      postItem.classList.add(styles.postItemText)
+      article.appendChild(postItem) // Dit zet de <div> in de <article>
+      singleLi.appendChild(article) // Dit zet de <article> in de <li>
     }
-    document.getElementsByClassName(styles.contacts)[0].appendChild(singleLi)
+    document.getElementsByClassName(styles.article)[0].appendChild(singleLi)
   }
 
   componentWillMount() {
-    this.loadContacts()
+    this.loadArticle()
     window.addEventListener('scroll', this.handleScroll)
   }
 
@@ -69,7 +65,7 @@ class Posts extends Component {
     const { scrolling } = this
 
     if (scrolling) return
-    const lastLi = document.querySelector('.' + styles.contacts)
+    const lastLi = document.querySelector('.' + styles.article)
     const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
     const pageOffset = window.pageYOffset + window.innerHeight
     let bottomOffset = window.innerHeight
@@ -83,16 +79,16 @@ class Posts extends Component {
 
 
   loadMore = () => {
-    this.page = this.page >= this.totalPages / this.per ? 1 : this.page + 1;
+    this.page = this.page >= this.totalPages / this.page + 1;
 
     this.scrolling = true
-    this.loadContacts()
+    this.loadArticle()
   }
 
   render() {
     return (
       <div>
-        <ul className={styles.contacts} />
+        <ul className={styles.article} />
         <Loader />
       </div>
     )
