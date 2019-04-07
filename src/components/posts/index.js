@@ -19,6 +19,7 @@ class Posts extends Component {
       .then(response => response.json())
       .then(json => {
         this.data = json.data
+        // eslint-disable-next-line no-console
         console.log(this.data.data[0])
         this.setNewPosts()
       })
