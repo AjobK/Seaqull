@@ -18,7 +18,7 @@ class AddedRoleToUser extends Migration
 
             $table->foreign('role_id')
                     ->references('id')
-                    ->on('role');
+                    ->on('roles');
         });
     }
 
