@@ -11,9 +11,14 @@ class PostBanner extends Component {
 
     return (
       <section className={styles.wrapper}>
-        {post.loggedIn && <span className={styles.wrapperEdit}>
-          <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
-        </span>}
+        <div className={styles.background} style={{ backgroundImage: `url(${post.banner})` }} />
+        {post.loggedIn &&
+          <div className={styles.wrapperEditContainer}>
+            <span className={styles.wrapperEdit}>
+              <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
+            </span>
+          </div>
+        }
         <div className={styles.backdrop}/>
         <div className={styles.innerWrapper}>
           <Link to='/profile' className={styles.info}>
@@ -27,7 +32,6 @@ class PostBanner extends Component {
             </div>
           </Link>
         </div>
-        <div className={styles.background} style={{ backgroundImage: `url(${post.banner})` }} />
       </section>
     )
   }
