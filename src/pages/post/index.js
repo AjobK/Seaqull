@@ -10,7 +10,7 @@ class Post extends App {
     return (
       <Standard>
         <PostBanner />
-        <Section title={'Front-End vs. Back-End'}>
+        <Section title={'Front-End vs. Back-End'} editable>
           <PostContentHeading value={'Visuals are key'}/>
           <br />
           <PostContentParagraph value={'The importance is visuals is in it\'s essence very simple.'} />
