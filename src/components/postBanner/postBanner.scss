@@ -105,17 +105,25 @@
 }
 
 .user_info {
-	margin-left: 3%;
+	margin-left: $header-spacing;
+	display: inline-block;
+}
+
+.profileLink {
+	display: inline-block;
 }
 
 .info {
 	width: 100%;
 	max-width: $wrapper-width;
 	overflow: hidden;
-	display: flex;
 	padding: $header-spacing;
-	flex-wrap: wrap;
-	align-items: center;
+	&Inner {
+		width: auto;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
 	@include mobile-xs {
 		justify-content: center;
 		align-items: center;

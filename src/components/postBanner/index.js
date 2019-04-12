@@ -21,16 +21,20 @@ class PostBanner extends Component {
         }
         <div className={styles.backdrop}/>
         <div className={styles.innerWrapper}>
-          <Link to='/profile' className={styles.info}>
-            <div className={styles.picture} style={{ backgroundImage: `url(${post.picture})` }} />
-            <div className={styles.user_info}>
-              <h2 className={[styles.name].join(' ')}>{ post.name || ''}</h2>
-              <div className={styles.achieved}>
-                <span className={styles.level}>{ post.level || ''}</span>
-                <h3 className={styles.role}>{ post.role || ''}</h3>
+          <div className={styles.info}>
+            <Link to='/profile' className={styles.profileLink}>
+              <div className={styles.infoInner}>
+                <div className={styles.picture} style={{ backgroundImage: `url(${post.picture})` }} />
+                <div className={styles.user_info}>
+                  <h2 className={[styles.name].join(' ')}>{ post.name || ''}</h2>
+                  <div className={styles.achieved}>
+                    <span className={styles.level}>{ post.level || ''}</span>
+                    <h3 className={styles.role}>{ post.role || ''}</h3>
+                  </div>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
       </section>
     )
