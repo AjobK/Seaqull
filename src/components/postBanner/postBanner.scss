@@ -35,6 +35,7 @@
 		}
 
 		&Container {
+			pointer-events: none;
 			z-index: 1;
 			margin: 0 auto;
 			display: flex;
@@ -73,6 +74,12 @@
 	justify-content: center;
 }
 
+.owner .backdrop:hover {
+	transition: 0.3s;
+	opacity: 0.8;
+	cursor: pointer;
+}
+
 .backdrop {
 	position: absolute;
 	bottom: 0;
@@ -80,12 +87,6 @@
 	width: 100%;
 	opacity: 0;
 	background-color: rgba(0,0,0,0.6);
-
-	&:hover {
-		transition: 0.3s;
-		opacity: 0.8;
-		cursor: pointer;
-	}
 }
 
 .picture {

@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 @inject('store') @observer
 class PostBanner extends Component {
   render() {
-    const { post } = this.props.store
+    const { post, user } = this.props.store
 
     return (
-      <section className={styles.wrapper}>
+      <section className={`${styles.wrapper} ${user.loggedIn ? styles.owner : ''}`}>
         <div className={styles.background} style={{ backgroundImage: `url(${post.banner})` }} />
-        {post.loggedIn &&
+        {user.loggedIn &&
           <div className={styles.wrapperEditContainer}>
             <span className={styles.wrapperEdit}>
               <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
