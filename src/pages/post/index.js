@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContentHeading, PostContentParagraph } from '../../components'
+import { PostBanner, PostContentHeading, PostContentParagraph, InsertContent } from '../../components'
 
 @inject('store') @observer
 class Post extends App {
@@ -20,6 +20,7 @@ class Post extends App {
           <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
           <br />
         </Section>
+        <InsertContent/>
       </Standard>
     )
   }
