@@ -7,6 +7,8 @@ import { PostBanner, PostContentHeading, PostContentParagraph, InsertContent } f
 @inject('store') @observer
 class Post extends App {
   render() {
+    const { user } = this.props.store;
+
     return (
       <Standard>
         <PostBanner />
@@ -20,7 +22,7 @@ class Post extends App {
           <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
           <br />
         </Section>
-        <InsertContent/>
+        { user.loggedIn && <InsertContent/> }
       </Standard>
     )
   }
