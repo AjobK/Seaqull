@@ -1,5 +1,6 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
+@import url('https://fonts.googleapis.com/css?family=Sanchez');
 
 // Colors
 $primary: #ff4040;
@@ -14,9 +15,9 @@ $background-trans: rgba(244, 244, 244, 0.95);
 $background-darker: #dedede;
 
 // Fonts
-$mainfont: 'poppins';
-$sidefont: 'poppins';
-$navigationfont: 'poppins';
+$mainfont: Poppins;
+$sidefont: Sanchez;
+$navigationfont: Poppins;
 $secondaryfont: arial;
 
 // Sizes
