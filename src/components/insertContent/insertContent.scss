@@ -5,6 +5,7 @@
 	justify-content: center;
 	flex-direction: column;
 	padding-top: 30px;
+	
 }
 
 .title {
@@ -48,6 +49,7 @@
 		background: $color;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
 	}
 	
 	&Title {
