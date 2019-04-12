@@ -5,7 +5,6 @@
 	justify-content: center;
 	flex-direction: column;
 	padding-top: 30px;
-	
 }
 
 .title {
@@ -63,6 +62,13 @@
 	&Img {
 		@include insertbutton(#1EB5C4);
 	}
+
+	&Eye {
+		@include insertbutton(#FFF);
+		margin-left: 15px;
+		color: $primary;
+		font-size: 1.5rem
+	}
 }
 
 .insert {
@@ -70,4 +76,5 @@
 	justify-content: center;
 	align-items: center;
 	min-height: 10vh;
+	padding-bottom: 30px;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './insertContent.scss'
+import { Icon } from '..';
 
 @inject('store') @observer
 class InsertContent extends Component {
@@ -15,7 +16,7 @@ class InsertContent extends Component {
           <span className={styles.insertButtonImg}>IMG</span>
         </div>
         <div className={styles.save}>
-          <span className={styles.saveButton}>Save Changes</span>
+          <span className={styles.saveButton}>Save Changes</span><span className={styles.insertButtonEye}><Icon iconName={'Eye'}/></span>
         </div>
       </div>
     )
