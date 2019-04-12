@@ -67,7 +67,6 @@
 	width: 100%;
 	bottom: 0;
 	transition: 0.5s;
-	padding: $header-spacing;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -111,10 +110,10 @@
 
 .info {
 	width: 100%;
-	padding: 0 $header-spacing;
 	max-width: $wrapper-width;
 	overflow: hidden;
 	display: flex;
+	padding: $header-spacing;
 	flex-wrap: wrap;
 	align-items: center;
 	@include mobile-xs {
