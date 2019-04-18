@@ -19,7 +19,7 @@ class PostContentHeading extends Component {
 
   render() {
     if (this.props.theCB)
-      this.props.theCB()
+      this.props.theCB('Callback text')
 
     return (
       <PostContentBlock heading={'heading'} ref={this.myRef}>

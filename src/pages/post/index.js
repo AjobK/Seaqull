@@ -11,8 +11,9 @@ class Post extends App {
     this.exampleMsg = 'Hello world!'
   }
 
-  theCallBackFunc = () => {
+  theCallBackFunc = (hello) => {
     console.log(this.exampleMsg);
+    console.log(hello);
   }
 
   render() {
