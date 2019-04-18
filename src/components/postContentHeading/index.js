@@ -13,13 +13,20 @@ class PostContentHeading extends Component {
     this.myRef = React.createRef();
   }
 
-  render() {
+  callBackData = () => {
     if (this.props.theCB)
       this.props.theCB(this.state.value)
+  }
+
+  render() {
+    let a = this
+    setTimeout(() => {
+      a.setState({ value: 'Another value' })
+    }, 2000)
 
     return (
       <PostContentBlock heading={'heading'} ref={this.myRef}>
-        <h3 className={styles.title}>{this.state.value || 'Sample title'}</h3>
+        <h3 className={styles.title} onClick={this.callBackData}>{this.state.value || 'Sample title'}</h3>
       </PostContentBlock>
     )
   }
