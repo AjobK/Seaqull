@@ -13,13 +13,9 @@ class PostContentHeading extends Component {
     this.myRef = React.createRef();
   }
 
-  getValue() {
-    return this.state.value
-  }
-
   render() {
     if (this.props.theCB)
-      this.props.theCB('Callback text')
+      this.props.theCB(this.state.value)
 
     return (
       <PostContentBlock heading={'heading'} ref={this.myRef}>
