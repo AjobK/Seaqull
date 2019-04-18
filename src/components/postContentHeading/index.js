@@ -5,10 +5,21 @@ import PostContentBlock from '../postContentBlock';
 
 @inject('store') @observer
 class PostContentHeading extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: props.value || ''
+    }
+  }
+
+  getValue() {
+    return this.state.value
+  }
+
   render() {
     return (
       <PostContentBlock heading={'heading'}>
-        <h3 className={styles.title}>{this.props.value || 'Sample title'}</h3>
+        <h3 className={styles.title}>{this.state.value || 'Sample title'}</h3>
       </PostContentBlock>
     )
   }
