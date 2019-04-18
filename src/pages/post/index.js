@@ -8,54 +8,29 @@ import { PostBanner, PostContentHeading, PostContentParagraph, InsertContent } f
 class Post extends App {
   constructor(props) {
     super(props)
+    this.exampleMsg = 'Hello world!'
   }
 
-  addField(contentBlock) {
-    let newBlock = null
-
-    /*eslint indent: ["error", 2, { "SwitchCase": 1 }]*/
-    switch (contentBlock.toLowerCase()) {
-      case 'heading':
-        newBlock = <PostContentHeading />
-        break;
-      case 'paragraph':
-        newBlock = <PostContentParagraph />
-        break;
-      case 'img':
-        newBlock = <PostContentParagraph />
-        break;
-    }
-
-    if (!newBlock) return
-
-    this.setState({
-      contentBlocks: [...this.state.contentBlocks, newBlock]
-    })
-  }
-
-  getData() {
-    this.state.contentBlocks.length
+  theCallBackFunc = () => {
+    console.log(this.exampleMsg);
   }
 
   render() {
     const { user } = this.props.store
 
-    let a = <PostContentHeading value={'Secondary text'}/>
-    console.log(a)
-
     return (
       <Standard>
         <PostBanner />
         <Section title={'Front-End vs. Back-End'} editable>
-          {/* { this.state.contentBlocks } */}
-          <PostContentHeading value={'Visuals are key'} />
+          {/* <PostContentHeading value={'Visuals are key'} />
           <br />
           <PostContentParagraph value={'The importance is visuals is in it\'s essence very simple.'} />
           <br />
           <PostContentHeading value={'Understanding color'} />
           <br />
           <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
-          <br />
+          <br /> */}
+          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc}/>
         </Section>
         {user.loggedIn && <InsertContent />}
       </Standard>

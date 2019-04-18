@@ -10,6 +10,7 @@ class PostContentHeading extends Component {
     this.state = {
       value: props.value || ''
     }
+    this.myRef = React.createRef();
   }
 
   getValue() {
@@ -17,8 +18,11 @@ class PostContentHeading extends Component {
   }
 
   render() {
+    if (this.props.theCB)
+      this.props.theCB()
+
     return (
-      <PostContentBlock heading={'heading'}>
+      <PostContentBlock heading={'heading'} ref={this.myRef}>
         <h3 className={styles.title}>{this.state.value || 'Sample title'}</h3>
       </PostContentBlock>
     )
