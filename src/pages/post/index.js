@@ -1,4 +1,5 @@
 import React from 'react'
+import update from 'react-addons-update'; // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
@@ -8,12 +9,19 @@ import { PostBanner, PostContentHeading, PostContentParagraph, InsertContent } f
 class Post extends App {
   constructor(props) {
     super(props)
-    this.exampleMsg = 'Hello world!'
+    this.state = {
+      title: 'Front-End vs. Back-End',
+      content: []
+    }
+    this.key = 0
   }
 
-  theCallBackFunc = (hello) => {
-    console.log(this.exampleMsg);
-    console.log(hello);
+  theCallBackFunc = (item) => {
+    this.setState({
+      content: update(this.state.content, { [item.props.key]: { $set:  item.state.value } })
+    })
+
+    console.log(this.state.content)
   }
 
   render() {
@@ -22,7 +30,7 @@ class Post extends App {
     return (
       <Standard>
         <PostBanner />
-        <Section title={'Front-End vs. Back-End'} editable>
+        <Section title={this.state.title} editable>
           {/* <PostContentHeading value={'Visuals are key'} />
           <br />
           <PostContentParagraph value={'The importance is visuals is in it\'s essence very simple.'} />
@@ -31,7 +39,8 @@ class Post extends App {
           <br />
           <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
           <br /> */}
-          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc}/>
+          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} key={0} />
+          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} key={1} />
         </Section>
         {user.loggedIn && <InsertContent />}
       </Standard>
