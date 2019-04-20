@@ -11,18 +11,56 @@ class Post extends App {
     super(props)
     this.state = {
       title: 'Front-End vs. Back-End',
-      content: ['','']
+      content: [
+        { type: 'heading', value: 'Welcome to the world' },
+        { type: 'paragraph', value: 'This is an awesome paragraph!' },
+        { type: 'heading', value: 'Hello and greetings from the earth human' },
+        { type: 'paragraph', value: 'Well well, is this a piece of text?' }
+      ]
     }
     this.cbKey = 0
   }
 
   theCallBackFunc = (item) => {
-    console.log(item.props.cbKey)
+    console.log('CB KEY: ' + item.props.cbKey)
     this.setState({
-      content: update(this.state.content, { [item.props.cbKey]: { $set:  item.state.value } })
+      content: update(this.state.content, { [item.props.cbKey]: { $set:  { // Cost efficient
+        type: item.type,
+        value: item.state.value
+      } } })
+    }, () => { // Async
+      this.sendDataToDB()
+    })
+  }
+
+  sendDataToDB() {
+    // Send this data
+    console.log(JSON.stringify(this.state.content))
+  }
+
+  returnComponentsFromJson(data = null) {
+    this.cbKey = 0
+
+    let arr = []
+    const content = JSON.parse(data) || this.state.content
+
+    content.forEach((item, counter) => {
+      const { type, value } = item
+
+      /*eslint indent: ["error", 2, { "SwitchCase": 1 }]*/
+      switch(type) {
+        case 'heading':
+          arr.push(<PostContentHeading cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} />)
+          break;
+        case 'paragraph':
+          arr.push(<PostContentParagraph cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} />)
+          break;
+      }
+
+      this.cbKey++
     })
 
-    console.log(this.state.content)
+    return arr
   }
 
   render() {
@@ -32,16 +70,9 @@ class Post extends App {
       <Standard>
         <PostBanner />
         <Section title={this.state.title} editable>
-          {/* <PostContentHeading value={'Visuals are key'} />
-          <br />
-          <PostContentParagraph value={'The importance is visuals is in it\'s essence very simple.'} />
-          <br />
-          <PostContentHeading value={'Understanding color'} />
-          <br />
-          <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
-          <br /> */}
-          <PostContentHeading value={'First text'} theCB={this.theCallBackFunc} cbKey={0} />
-          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} cbKey={1} />
+          {/* <PostContentHeading value={'First text'} theCB={this.theCallBackFunc} cbKey={0} />
+          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} cbKey={1} /> */}
+          {this.returnComponentsFromJson()}
         </Section>
         {user.loggedIn && <InsertContent />}
       </Standard>

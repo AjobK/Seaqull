@@ -7,6 +7,7 @@ import PostContentBlock from '../postContentBlock';
 class PostContentHeading extends Component {
   constructor(props) {
     super(props)
+    this.type = 'heading'
     this.state = {
       value: props.value || ''
     }
@@ -20,6 +21,7 @@ class PostContentHeading extends Component {
   render() {
     if (this.props.cbKey == 1) {
       let a = this
+
       setTimeout(() => {
         a.setState({ value: 'Another value' })
       }, 2000)
