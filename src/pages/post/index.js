@@ -11,14 +11,15 @@ class Post extends App {
     super(props)
     this.state = {
       title: 'Front-End vs. Back-End',
-      content: []
+      content: ['','']
     }
-    this.key = 0
+    this.cbKey = 0
   }
 
   theCallBackFunc = (item) => {
+    console.log(item.props.cbKey)
     this.setState({
-      content: update(this.state.content, { [item.props.key]: { $set:  item.state.value } })
+      content: update(this.state.content, { [item.props.cbKey]: { $set:  item.state.value } })
     })
 
     console.log(this.state.content)
@@ -39,8 +40,8 @@ class Post extends App {
           <br />
           <PostContentParagraph value={'To be the master of colors, you have to understand how they work.'} />
           <br /> */}
-          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} key={0} />
-          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} key={1} />
+          <PostContentHeading value={'First text'} theCB={this.theCallBackFunc} cbKey={0} />
+          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} cbKey={1} />
         </Section>
         {user.loggedIn && <InsertContent />}
       </Standard>

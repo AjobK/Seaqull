@@ -18,10 +18,12 @@ class PostContentHeading extends Component {
   }
 
   render() {
-    let a = this
-    setTimeout(() => {
-      a.setState({ value: 'Another value' })
-    }, 2000)
+    if (this.props.cbKey == 1) {
+      let a = this
+      setTimeout(() => {
+        a.setState({ value: 'Another value' })
+      }, 2000)
+    }
 
     return (
       <PostContentBlock heading={'heading'}>
