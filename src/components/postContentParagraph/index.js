@@ -15,12 +15,15 @@ class PostContentParagraph extends Component {
 
   onClick = () => {
     this.callBackData()
-    // this.setEditing()
   }
 
-  // setEditing() {
-  //   this.setState({ editable: true })
-  // }
+  setValue = (e) => {
+    this.setState({
+      value: e.target.value
+    }, () => {
+      this.callBackData()
+    })
+  }
 
   callBackData = () => {
     if (this.props.theCB)
@@ -31,7 +34,7 @@ class PostContentParagraph extends Component {
     return (
       <>
         <PostContentBlock heading={'paragraph'}>
-          <p className={styles.paragraph} onClick={this.onClick}>{this.state.value || 'Sample paragraph'}</p>
+          <textarea className={styles.paragraph} onClick={this.onClick} value={this.state.value || ''} onChange={this.setValue}/>
         </PostContentBlock>
         <br />
       </>

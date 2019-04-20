@@ -31,7 +31,7 @@ class PostContentBlock extends Component {
     return (
       <section className={styles.paragraphWrapper}>
         {user.loggedIn && <PostEditHeading editing={this.state.editing} heading={heading} />}
-        <div onClick={this.edit} onBlur={this.quitEdit}>
+        <div onFocus={this.edit} onBlur={this.quitEdit}>
           {
             children ||
             <p className={[styles.paragraph, ...className || ''].join(' ')}> NO CONTENT </p>
