@@ -18,6 +18,14 @@ class PostContentHeading extends Component {
       this.props.theCB(this)
   }
 
+  setValue = (e) => {
+    this.setState({
+      value: e.target.value
+    }, () => {
+      this.callBackData()
+    })
+  }
+
   render() {
     if (this.props.cbKey == 1) {
       let a = this
@@ -28,9 +36,11 @@ class PostContentHeading extends Component {
     }
 
     return (
-      <PostContentBlock heading={'heading'}>
-        <h3 className={styles.title} onClick={this.callBackData}>{this.state.value || 'Sample title'}</h3>
-      </PostContentBlock>
+      <>
+        <PostContentBlock heading={'heading'}>
+          <textarea className={styles.title} onClick={this.callBackData} value={this.state.value || ''} onChange={this.setValue} />
+        </PostContentBlock>
+      </>
     )
   }
 }

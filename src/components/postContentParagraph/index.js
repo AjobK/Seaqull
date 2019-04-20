@@ -13,6 +13,15 @@ class PostContentParagraph extends Component {
     }
   }
 
+  onClick = () => {
+    this.callBackData()
+    // this.setEditing()
+  }
+
+  // setEditing() {
+  //   this.setState({ editable: true })
+  // }
+
   callBackData = () => {
     if (this.props.theCB)
       this.props.theCB(this)
@@ -20,9 +29,12 @@ class PostContentParagraph extends Component {
 
   render() {
     return (
-      <PostContentBlock heading={'paragraph'}>
-        <p className={styles.paragraph} onClick={this.callBackData}>{this.state.value || 'Sample paragraph'}</p>
-      </PostContentBlock>
+      <>
+        <PostContentBlock heading={'paragraph'}>
+          <p className={styles.paragraph} onClick={this.onClick}>{this.state.value || 'Sample paragraph'}</p>
+        </PostContentBlock>
+        <br />
+      </>
     )
   }
 }
