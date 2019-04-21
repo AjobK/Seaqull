@@ -18,7 +18,6 @@ import Statistic from './statistic'
 import Logo from './logo'
 import Icon from './icon'
 import RegisterPrompt from './registerPrompt'
-import InsertContent from './InsertContent'
 
 export {
   Button,
@@ -41,5 +40,4 @@ export {
   Logo,
   Icon,
   RegisterPrompt,
-  InsertContent
 }

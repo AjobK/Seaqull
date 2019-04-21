@@ -52,12 +52,14 @@
 	}
 }
 
-.save {
+.saveContainer {
 	background: $primary;
 	min-height: 10vh;
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin-top: 30px;
 }
 
 .saveButton {
@@ -71,4 +73,6 @@
 	font-size: 1rem;
 	transition: all .2s ease-in-out;
 	cursor: pointer;
+	list-style-type: none;
+	margin-left: 2rem;
 }
