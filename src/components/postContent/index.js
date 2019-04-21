@@ -11,8 +11,9 @@ class PostContent extends Component {
     super(props)
     this.type = this.props.type || 'paragraph'
     this.sanitizeFilter = {
-      paragraph: '',
-      heading: ''
+      paragraph: {
+        allowedTags: [ 'br', 'b', 'i', 'em', 'strong' ]
+      }
     }
     this.state = {
       value: props.value || ''
@@ -25,7 +26,8 @@ class PostContent extends Component {
 
   setValue = (e) => {
     this.setState({
-      value: e.target.value
+      // value: e.target.value
+      value: sanitizeHtml(e.target.value, this.sanitizeFilter[this.type])
     }, () => {
       this.callBackData()
     })
@@ -36,6 +38,10 @@ class PostContent extends Component {
       this.props.theCB(this)
   }
 
+  sanitize = () => {
+    this.setState({ value: sanitizeHtml(this.state.value, this.sanitizeFilter[this.type]) });
+  }
+
   render() {
     const { type, store } = this.props
 
@@ -44,8 +50,9 @@ class PostContent extends Component {
         <ContentEditable
           className={`${styles.postContent} ${styles[type]}`}
           onClick={this.onClick}
-          html={sanitizeHtml(this.state.value, this.sanitizeFilter[type]) || ''}
+          html={this.state.value || ''}
           onChange={this.setValue}
+          onBlur={this.sanitize}
           disabled={!store.user.loggedIn}
         />
       </PostContentBlock>
