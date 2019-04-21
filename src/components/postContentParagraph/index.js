@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styles from './postContentParagraph.scss'
 import { inject, observer } from 'mobx-react'
-import PostContentBlock from '../postContentBlock';
+import PostContentBlock from '../postContentBlock'
+import ContentEditable from 'react-contenteditable'
 
 @inject('store') @observer
 class PostContentParagraph extends Component {  
@@ -34,7 +35,7 @@ class PostContentParagraph extends Component {
     return (
       <>
         <PostContentBlock heading={'paragraph'}>
-          <textarea className={styles.paragraph} onClick={this.onClick} value={this.state.value || ''} onChange={this.setValue}/>
+          <ContentEditable onClick={this.onClick} html={this.state.value || ''} onChange={this.setValue}/>
         </PostContentBlock>
         <br />
       </>

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import styles from './postContentHeading.scss'
 import { inject, observer } from 'mobx-react'
-import PostContentBlock from '../postContentBlock';
+import PostContentBlock from '../postContentBlock'
+import ContentEditable from 'react-contenteditable'
 
 @inject('store') @observer
 class PostContentHeading extends Component {
   constructor(props) {
     super(props)
     this.type = 'heading'
+    this.contentEditable = React.createRef()
     this.state = {
       value: props.value || ''
     }
@@ -38,7 +40,7 @@ class PostContentHeading extends Component {
     return (
       <>
         <PostContentBlock heading={'heading'}>
-          <textarea className={styles.title} onClick={this.callBackData} value={this.state.value || ''} onChange={this.setValue} />
+          <ContentEditable className={styles.title} onClick={this.callBackData} html={this.state.value || ''} onChange={this.setValue} />
         </PostContentBlock>
       </>
     )

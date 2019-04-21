@@ -72,6 +72,7 @@
     "node-sass": "^4.10.0",
     "npm-check": "^5.9.0",
     "react-addons-update": "^15.6.2",
+    "react-contenteditable": "^3.2.6",
     "react-visibility-sensor": "^5.0.2",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^2.0.0",
