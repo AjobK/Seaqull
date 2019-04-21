@@ -3,6 +3,7 @@ import styles from './postContentParagraph.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import ContentEditable from 'react-contenteditable'
+import sanitizeHtml from 'sanitize-html'
 
 @inject('store') @observer
 class PostContentParagraph extends Component {  
@@ -38,7 +39,7 @@ class PostContentParagraph extends Component {
           <ContentEditable
             className={styles.paragraph}
             onClick={this.onClick}
-            html={this.state.value || ''}
+            html={sanitizeHtml(this.state.value) || ''}
             onChange={this.setValue}
             disabled={!this.props.store.user.loggedIn}
           />
