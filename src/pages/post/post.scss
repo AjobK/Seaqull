@@ -1,13 +1,45 @@
 @import '../../styles/index.scss';
 
-.title {
-	font-weight: bold;
-	font-size: 1rem;
-	letter-spacing: 0.15rem;
-	color: $primary;
+.container {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding-top: 30px;
+}
 
-	&Edit {
-		color: #4e4e4e;
-		font-size: 0.8rem;
+.insertButton {
+	@mixin insertbutton($color) {
+		margin: 0 5px;
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		color: #fff;
+		font-weight: bold;
+		display: flex;
+		background: $color;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+	
+	&Title {
+		@include insertbutton($primary);
+	}
+
+	&Text {
+		@include insertbutton(#4D4D4D);
+	}
+
+	&Img {
+		@include insertbutton(#1EB5C4);
+	}
+
+	&Eye {
+		@include insertbutton(#FFF);
+		width: 46px;
+		height: 46px;
+		margin-left: 15px;
+		color: $primary;
+		font-size: 1.6rem
 	}
 }

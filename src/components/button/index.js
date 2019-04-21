@@ -3,7 +3,7 @@ import styles from './button.scss'
 
 class Button extends Component {
   render() {
-    const { value, className, noStyle, inverted } = this.props
+    const { value, noStyle, inverted, className } = this.props
 
     return (
       <li className={[
