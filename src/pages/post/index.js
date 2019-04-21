@@ -70,8 +70,10 @@ class Post extends App {
           <Button className={styles.insertButtonImg} value='IMG' />
         </div>
         <div className={styles.saveContainer}>
-          <Button className={styles.saveButton} value='Save Changes'/>
-          <div className={styles.insertButtonEye}><Icon iconName={'Eye'}/></div>
+          <div className={styles.save}>
+            <Button className={styles.saveButton} value='Save Changes'/>
+            <div className={styles.insertButtonEye}><Icon iconName={'Eye'}/></div>
+          </div>
         </div>
       </Standard>
     )

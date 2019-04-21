@@ -48,7 +48,10 @@
 		height: 46px;
 		margin-left: 15px;
 		color: $primary;
-		font-size: 1.6rem
+		font-size: 1.6rem;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 }
 
@@ -60,6 +63,12 @@
 	justify-content: center;
 	align-items: center;
 	margin-top: 30px;
+}
+
+.save{
+	position: relative;
+	width: fit-content;
+	padding: 0 60px;
 }
 
 .saveButton {
@@ -74,5 +83,4 @@
 	transition: all .2s ease-in-out;
 	cursor: pointer;
 	list-style-type: none;
-	margin-left: 2rem;
 }
