@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
-import styles from './postContentParagraph.scss'
+import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import ContentEditable from 'react-contenteditable'
 import sanitizeHtml from 'sanitize-html'
 
 @inject('store') @observer
-class PostContentParagraph extends Component {  
+class PostContent extends Component {  
   constructor(props) {
     super(props)
-    this.type = 'paragraph'
+    this.type = this.props.type || 'paragraph'
+    this.sanitizeFilter = {
+      paragraph: '',
+      heading: ''
+    }
     this.state = {
       value: props.value || ''
     }
@@ -33,21 +37,20 @@ class PostContentParagraph extends Component {
   }
 
   render() {
+    const { type, store } = this.props
+
     return (
-      <>
-        <PostContentBlock heading={'paragraph'}>
-          <ContentEditable
-            className={styles.paragraph}
-            onClick={this.onClick}
-            html={sanitizeHtml(this.state.value) || ''}
-            onChange={this.setValue}
-            disabled={!this.props.store.user.loggedIn}
-          />
-        </PostContentBlock>
-        <br />
-      </>
+      <PostContentBlock heading={type}>
+        <ContentEditable
+          className={`${styles.postContent} ${styles[type]}`}
+          onClick={this.onClick}
+          html={sanitizeHtml(this.state.value, this.sanitizeFilter[type]) || ''}
+          onChange={this.setValue}
+          disabled={!store.user.loggedIn}
+        />
+      </PostContentBlock>
     )
   }
 }
 
-export default PostContentParagraph
+export default PostContent

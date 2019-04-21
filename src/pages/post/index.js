@@ -3,7 +3,7 @@ import update from 'react-addons-update'; // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContentHeading, PostContentParagraph, Button, Title, Icon } from '../../components'
+import { PostBanner, PostContent, Button, Title, Icon } from '../../components'
 import styles from './post.scss'
 
 @inject('store') @observer
@@ -48,15 +48,7 @@ class Post extends App {
     content.forEach((item, counter) => {
       const { type, value } = item
 
-      /*eslint indent: ["error", 2, { "SwitchCase": 1 }]*/
-      switch(type) {
-        case 'heading':
-          arr.push(<PostContentHeading cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} />)
-          break;
-        case 'paragraph':
-          arr.push(<PostContentParagraph cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} />)
-          break;
-      }
+      arr.push(<PostContent cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} type={type} />)
 
       this.cbKey++
     })
