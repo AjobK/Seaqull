@@ -57,14 +57,10 @@ class Post extends App {
   }
 
   render() {
-    const { user } = this.props.store
-
     return (
       <Standard>
         <PostBanner />
         <Section title={this.state.title} editable>
-          {/* <PostContentHeading value={'First text'} theCB={this.theCallBackFunc} cbKey={0} />
-          <PostContentHeading value={'Secondary text'} theCB={this.theCallBackFunc} cbKey={1} /> */}
           {this.returnComponentsFromJson()}
         </Section>
         <Title classname={styles.title} center value='INSERT CONTENT'/>
