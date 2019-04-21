@@ -3,8 +3,16 @@
 .container {
 	display: flex;
 	justify-content: center;
-	flex-direction: column;
-	padding-top: 30px;
+	flex-direction: row;
+	padding-top: 15px;
+}
+
+.title {
+	color: #4D4D4D;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 2rem;
 }
 
 .insertButton {
@@ -42,4 +50,25 @@
 		color: $primary;
 		font-size: 1.6rem
 	}
+}
+
+.save {
+	background: $primary;
+	min-height: 10vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.saveButton {
+	width: fit-content;
+	height: fit-content;
+	background-color: #262626;
+	color: white;
+	border-radius: 30px;
+	padding: 10px 40px;
+	font-weight: bold;
+	font-size: 1rem;
+	transition: all .2s ease-in-out;
+	cursor: pointer;
 }

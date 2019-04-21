@@ -3,7 +3,8 @@ import update from 'react-addons-update'; // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContentHeading, PostContentParagraph, Button } from '../../components'
+import { PostBanner, PostContentHeading, PostContentParagraph, Button, Title } from '../../components'
+import { Icon } from '..';
 import styles from './post.scss'
 
 @inject('store') @observer
@@ -76,10 +77,11 @@ class Post extends App {
           {this.returnComponentsFromJson()}
         </Section>
         {/* {user.loggedIn && <InsertContent />} */}
+        <Title classname={styles.title} center value='Insert Content'/>
         <div className={styles.container}>
-          <Button classname={styles.insertButtonTitle} value='TITLE'/>
-          <Button value='TEXT' />
-          <Button value='IMG' />
+          <Button className={styles.insertButtonTitle} value='TITLE'/>
+          <Button className={styles.insertButtonText} value='TEXT' />
+          <Button className={styles.insertButtonImg} value='IMG' />
         </div>
       </Standard>
     )
