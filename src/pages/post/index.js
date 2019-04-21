@@ -4,7 +4,6 @@ import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
 import { PostBanner, PostContentHeading, PostContentParagraph, Button, Title } from '../../components'
-import { Icon } from '..';
 import styles from './post.scss'
 
 @inject('store') @observer
