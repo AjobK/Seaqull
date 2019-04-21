@@ -1,12 +1,12 @@
 @import '../../styles/index.scss';
 
 .paragraph {
-	font-family: $sidefont;
-	color: rgba(0,0,0,0.8);
+	font-family: $sidefont !important;
+	color: rgba(0,0,0,0.8) !important;
 	font-size: 1.25rem;
 	letter-spacing: 0.05rem;
 	border: none;
-	background-color: transparent;
+	background-color: transparent !important;
 	resize: none;
 	max-height: 1000px;
 	width: 100%;

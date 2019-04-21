@@ -35,7 +35,13 @@ class PostContentParagraph extends Component {
     return (
       <>
         <PostContentBlock heading={'paragraph'}>
-          <ContentEditable className={styles.paragraph} onClick={this.onClick} html={this.state.value || ''} onChange={this.setValue}/>
+          <ContentEditable
+            className={styles.paragraph}
+            onClick={this.onClick}
+            html={this.state.value || ''}
+            onChange={this.setValue}
+            disabled={!this.props.store.user.loggedIn}
+          />
         </PostContentBlock>
         <br />
       </>
