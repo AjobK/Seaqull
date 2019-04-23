@@ -1,20 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import ContentEditable from 'react-contenteditable'
 import update from 'react-addons-update'; // ES6
 import sanitizeHtml from 'sanitize-html'
-import { array } from 'mobx-state-tree/dist/internal';
 
 @inject('store') @observer
 class PostContent extends Component {  
   constructor(props) {
     super(props)
     this.type = this.props.type || 'paragraph'
+    this.elRef = createRef()
     this.sanitizeFilter = {
       paragraph: {
-        allowedTags: [ 'br', 'b', 'i', 'em', 'strong' ]
+        allowedTags: [ 'img', 'br', 'div', 'b', 'i', 'em', 'strong' ],
+        allowedAttributes: {
+          'img': ['src']
+        },
+        allowedIframeHostnames: ['www.youtube.com']
       }
     }
     this.state = {
@@ -27,9 +31,10 @@ class PostContent extends Component {
     this.callBackData()
   }
 
-  setValue = (e) => {
+  setValue = () => {
     this.setState({
-      value: sanitizeHtml(e.target.value, this.sanitizeFilter[this.type])
+      value: this.elRef.current.innerText
+      // value: e.target.value
     }, () => {
       this.callBackData()
     })
@@ -57,20 +62,35 @@ class PostContent extends Component {
   }
 
   addUndo = () => {
+    console.log(this.state.undoList)
     this.setState({
       undoList: update(this.state.undoList,
         { [this.state.undoList.length]: 
-          { $set: sanitizeHtml(this.state.value) }
+          { $set: sanitizeHtml(this.state.value, this.sanitizeFilter[this.type]) }
         })
     })
   }
 
   keyDown = (e) => {
+    let dirty = this.elRef.current.innerText
+
+    if (!dirty)
+      return false
+
+    this.setState({
+      value: sanitizeHtml(dirty, this.sanitizeFilter[this.type])
+      // value: e.target.value
+    })
+
     if (e.keyCode == 90 && e.ctrlKey && this.state.undoList.length >= 0) {
-      console.log(this.state.undoList)
       e.preventDefault()
       this.undo()
+      console.log(this.state.undoList)
     } else if (!e.ctrlKey && e.keyCode == 32) {
+      this.addUndo(this.state.value)
+    } else if (!e.ctrlKey && e.keyCode == 13) {
+      this.addUndo(this.state.value)
+    } else if (e.ctrlKey && e.keyCode == 86) {
       this.addUndo(this.state.value)
     }
   }
@@ -87,6 +107,7 @@ class PostContent extends Component {
           onChange={this.setValue}
           onKeyDown={this.keyDown}
           disabled={!store.user.loggedIn}
+          innerRef={this.elRef}
         />
       </PostContentBlock>
     )
