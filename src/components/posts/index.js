@@ -18,9 +18,7 @@ class Posts extends Component {
     fetch(url)
       .then(response => response.json())
       .then(json => {
-        this.data = json.data
-        // eslint-disable-next-line no-console
-        console.log(this.data.data[0])
+        this.data = json.data.data
         this.setNewPosts()
       })
   }
@@ -30,7 +28,7 @@ class Posts extends Component {
 
     singleLi.classList.add(styles.post)
 
-    for (let i = 0; i < this.data.data.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       let randomRGB = {
         red: Math.random() * 255,
         green: Math.random() * 255,
@@ -45,7 +43,7 @@ class Posts extends Component {
       article.classList.add(styles.postItem)
       let postItem = document.createElement('div')
 
-      postItem.innerText = this.data.data[i].title
+      postItem.innerText = this.data[i].title
       postItem.classList.add(styles.postItemText)
       article.appendChild(postItem) // Dit zet de <div> in de <article>
       singleLi.appendChild(article) // Dit zet de <article> in de <li>

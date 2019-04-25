@@ -3,8 +3,18 @@ import styles from './registerprompt.scss'
 import Button from '../button'
 
 class RegisterPrompt extends Component {
+  auth = () => {
+    const url = 'localhost:8080/user/register'
+    const email = document.querySelector('#email').value
+    const user = document.querySelector('#username').value
+    const pass = document.querySelector('#password').value
+    const data = {
+      name: '' + user + '',
+      email: '' + email + '',
+      password: '' + pass + ''
+    }
+  }
   render() {
-    const action = 'localhost:8080/user/register'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
