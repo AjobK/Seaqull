@@ -15,20 +15,13 @@ class PostContent extends Component {
     this.sanitizeFilter = {
       paragraph: {
         allowedTags: [ 'img', 'br', 'div', 'b', 'i', 'em', 'strong' ],
-        allowedAttributes: {
-          'img': ['src']
-        },
         allowedIframeHostnames: ['www.youtube.com']
       }
     }
     this.state = {
       value: props.value || '',
-      undoList: [props.value || '']
+      // undoList: [props.value || '']
     }
-  }
-
-  onClick = () => {
-    this.callBackData()
   }
 
   setValue = () => {
@@ -45,32 +38,6 @@ class PostContent extends Component {
       this.props.theCB(this)
   }
 
-  // ContentEditable in combination with sanitizeHTML is really, really bad at undoing.
-  // Therefore I have made my own functionalities to make sure this is done properly.
-
-  undo = () => {
-    console.log(this.state.undoList)
-    this.setState({
-      value: this.state.undoList[this.state.undoList.length - 1]
-    }, () => {
-      let tempArr = [...this.state.undoList]
-      tempArr.splice(-1, 1)
-      this.setState({
-        undoList: tempArr
-      })
-    })
-  }
-
-  addUndo = () => {
-    console.log(this.state.undoList)
-    this.setState({
-      undoList: update(this.state.undoList,
-        { [this.state.undoList.length]: 
-          { $set: sanitizeHtml(this.state.value, this.sanitizeFilter[this.type]) }
-        })
-    })
-  }
-
   keyDown = (e) => {
     let dirty = this.elRef.current.innerText
 
@@ -79,20 +46,7 @@ class PostContent extends Component {
 
     this.setState({
       value: sanitizeHtml(dirty, this.sanitizeFilter[this.type])
-      // value: e.target.value
     })
-
-    if (e.keyCode == 90 && e.ctrlKey && this.state.undoList.length >= 0) {
-      e.preventDefault()
-      this.undo()
-      console.log(this.state.undoList)
-    } else if (!e.ctrlKey && e.keyCode == 32) {
-      this.addUndo(this.state.value)
-    } else if (!e.ctrlKey && e.keyCode == 13) {
-      this.addUndo(this.state.value)
-    } else if (e.ctrlKey && e.keyCode == 86) {
-      this.addUndo(this.state.value)
-    }
   }
 
   render() {
