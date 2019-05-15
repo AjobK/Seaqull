@@ -22,4 +22,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', 'PassportController@details');
     Route::post('post', 'PostController@store');
     Route::post('post/{id}', 'PostController@update');
+    Route::get('post/path/{path}', 'PostController@showPath');
+    Route::get('post/user/{id}', 'PostController@showUser');
 });
