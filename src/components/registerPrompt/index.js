@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styles from './registerprompt.scss'
 import Button from '../button'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class RegisterPrompt extends Component {
   auth = () => {
-    const url = 'http://localhost:8000/api/register'
+    const url = `${this.props.store.defaultData.backendUrl}/api/register`
     const email = document.querySelector('#email').value
     const name = document.querySelector('#name').value
     const password = document.querySelector('#password').value
