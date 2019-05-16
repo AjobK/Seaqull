@@ -8,15 +8,8 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    private function pathString ($length = 11) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-
-        $path = Post::where('path', $randomString);
+    private function pathString ($length = 12) {
+        $path = Post::where('path', Str::random($length));
 
         if ($path->first()) {
             $this->pathString();
@@ -24,6 +17,7 @@ class PostController extends Controller
             return $randomString;
         }
     }
+
     public function index () {
         $posts = Post::paginate(15);
 
@@ -32,9 +26,10 @@ class PostController extends Controller
             'data' => $posts
         ]);
     }
+
     public function show ($id) {
         if (auth()->user()) {
-            $post =Post::find($id);
+            $post = Post::find($id);
 
             if (!$post) {
                 return response()->json([

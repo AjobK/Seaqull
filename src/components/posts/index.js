@@ -7,17 +7,18 @@ class Posts extends Component {
   constructor(props) {
     super(props)
     this.data = []
-    this.page = 2
-    this.totalPages = 4
+    this.page = 1
+    this.totalPages = null
     this.scrolling = false
   }
 
   loadArticle = () => {
-    const url = 'http://localhost:8000/api/post'
+    const url = `http://localhost:8000/api/post?page=${this.page}`
 
     fetch(url)
       .then(response => response.json())
       .then(json => {
+        if (!this.totalPages) this.totalPages = json.data.last_page
         this.data = json.data.data
         this.setNewPosts()
       })
@@ -45,8 +46,8 @@ class Posts extends Component {
 
       postItem.innerText = this.data[i].title
       postItem.classList.add(styles.postItemText)
-      article.appendChild(postItem) // Dit zet de <div> in de <article>
-      singleLi.appendChild(article) // Dit zet de <article> in de <li>
+      article.appendChild(postItem)
+      singleLi.appendChild(article)
     }
     document.getElementsByClassName(styles.article)[0].appendChild(singleLi)
   }
@@ -61,9 +62,10 @@ class Posts extends Component {
   }
 
   handleScroll = () => {
-    const { scrolling } = this
+    // Did not fix scroll detection yet
 
-    if (scrolling) return
+    // const { scrolling } = this
+    // if (scrolling) return
     const lastLi = document.querySelector('.' + styles.article)
     const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
     const pageOffset = window.pageYOffset + window.innerHeight
@@ -78,7 +80,8 @@ class Posts extends Component {
 
 
   loadMore = () => {
-    this.page = this.page >= this.totalPages / this.page + 1;
+    this.page = this.page % this.totalPages
+    this.page++
 
     this.scrolling = true
     this.loadArticle()
