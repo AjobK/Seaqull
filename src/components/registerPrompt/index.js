@@ -24,7 +24,7 @@ class RegisterPrompt extends Component {
         <div className={styles.logo} />
         <p className={styles.text}>Join our community</p>
         <div className={styles.formWrapper}>
-          <form method='POST' action={'http://localhost:8000/api/register'} className={styles.form}>
+          <form method='POST' className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor='name' className={styles.label}>Username</label>
               <input type='text' id='name' name='name' className={styles.input} />

@@ -156,7 +156,7 @@
 	color: white;
 	background-color: $primary;
 	margin-top: 30px;
-	width: fit-content;
+	display: inline-block;
 	list-style-type: none;
 
 	@include mobile-all-portrait {
