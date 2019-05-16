@@ -37,9 +37,9 @@
 
 	&Image {
 		border-radius: 100%;
-		height: 65px;
-		width: 65px;
-		background-image: url('../../static/icons/loader.png');
+		height: 40px;
+		width: 40px;
+		background-color: $primary;
 		background-repeat: no-repeat;
 		background-position: bottom;
 		background-size: cover;
