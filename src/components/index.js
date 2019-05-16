@@ -6,6 +6,7 @@ import HeaderNavigation from './headerNavigation'
 import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
 import Title from './title'
+import Posts from './posts'
 import PostsPreview from './postsPreview'
 import PostBanner from './postBanner'
 import PostContent from './postContent'
@@ -15,6 +16,7 @@ import PreviewPost from './previewPost'
 import Statistics from './statistics'
 import Statistic from './statistic'
 import Logo from './logo'
+import Loader from './loader'
 import Icon from './icon'
 import RegisterPrompt from './registerPrompt'
 
@@ -27,6 +29,7 @@ export {
   NavDropdown,
   UserBanner,
   Title,
+  Posts,
   PostsPreview,
   PostBanner,
   PostContent,
@@ -36,6 +39,7 @@ export {
   Statistics,
   Statistic,
   Logo,
+  Loader,
   Icon,
-  RegisterPrompt,
+  RegisterPrompt
 }

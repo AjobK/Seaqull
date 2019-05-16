@@ -3,24 +3,22 @@ import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import ContentEditable from 'react-contenteditable'
-import update from 'react-addons-update'; // ES6
 import sanitizeHtml from 'sanitize-html'
 
 @inject('store') @observer
-class PostContent extends Component {  
+class PostContent extends Component {
   constructor(props) {
     super(props)
     this.type = this.props.type || 'paragraph'
     this.elRef = createRef()
     this.sanitizeFilter = {
       paragraph: {
-        allowedTags: [ 'img', 'br', 'div', 'b', 'i', 'em', 'strong' ],
+        allowedTags: ['img', 'br', 'div', 'b', 'i', 'em', 'strong'],
         allowedIframeHostnames: ['www.youtube.com']
       }
     }
     this.state = {
-      value: props.value || '',
-      // undoList: [props.value || '']
+      value: props.value || ''
     }
   }
 
@@ -38,7 +36,7 @@ class PostContent extends Component {
       this.props.theCB(this)
   }
 
-  keyDown = (e) => {
+  keyDown = () => {
     let dirty = this.elRef.current.innerText
 
     if (!dirty)

@@ -1,38 +1,35 @@
 import React, { Component } from 'react'
+import { Loader } from '../../components'
 import fetch from 'isomorphic-fetch'
 import styles from './posts.scss'
 
 class Posts extends Component {
   constructor(props) {
     super(props)
-    this.contacts = []
-    this.per = 5
+    this.data = []
     this.page = 1
     this.totalPages = null
     this.scrolling = false
   }
 
-  loadContacts = () => {
-    const { per, page } = this
-    const url = `https://student-example-api.herokuapp.com/v1/contacts.json?per=${per}&page=${page}`
+  loadArticle = () => {
+    const url = `http://localhost:8000/api/post?page=${this.page}`
 
     fetch(url)
       .then(response => response.json())
       .then(json => {
-        if (!this.totalPages) this.totalPages = json.total_pages
-
-        this.contacts = json.contacts
-        this.setNewContacts()
-        this.scrolling = false
+        if (!this.totalPages) this.totalPages = json.data.last_page
+        this.data = json.data.data
+        this.setNewPosts()
       })
   }
 
-  setNewContacts() {
+  setNewPosts() {
     let singleLi = document.createElement('li')
 
     singleLi.classList.add(styles.post)
 
-    for (let i = 0; i < this.contacts.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       let randomRGB = {
         red: Math.random() * 255,
         green: Math.random() * 255,
@@ -44,54 +41,57 @@ class Posts extends Component {
       let article = document.createElement('article')
 
       article.style.backgroundColor = rgb
-      article.classList.add(styles.contact)
-      let contactText = document.createElement('div')
+      article.classList.add(styles.postItem)
+      let postItem = document.createElement('div')
 
-      contactText.innerText = this.contacts[i].name
-      contactText.classList.add(styles.contactText)
-      article.appendChild(contactText)
+      postItem.innerText = this.data[i].title
+      postItem.classList.add(styles.postItemText)
+      article.appendChild(postItem)
       singleLi.appendChild(article)
     }
-    document.getElementsByClassName(styles.contacts)[0].appendChild(singleLi)
+    document.getElementsByClassName(styles.article)[0].appendChild(singleLi)
   }
 
   componentWillMount() {
-    this.loadContacts()
-    this.scrollListener = window.addEventListener('scroll', (e) => {
-      this.handleScroll(e)
-    })
+    this.loadArticle()
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
   handleScroll = () => {
-    const { scrolling } = this
+    // Did not fix scroll detection yet
 
-    if (scrolling) return
-    const lastLi = document.querySelector('.' + styles.contacts)
+    // const { scrolling } = this
+    // if (scrolling) return
+    const lastLi = document.querySelector('.' + styles.article)
     const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
     const pageOffset = window.pageYOffset + window.innerHeight
     let bottomOffset = window.innerHeight
 
     if (pageOffset > lastLiOffset - bottomOffset)
       this.loadMore()
+
+    if (window.pageYOffset >= document.body.clientHeight)
+      window.scrollTo(0, document.body.clientHeight)
   }
 
 
   loadMore = () => {
-    const { totalPages } = this
-
-    if (this.page >= totalPages)
-      this.page = 1
-    else
-      this.page++
+    this.page = this.page % this.totalPages
+    this.page++
 
     this.scrolling = true
-    this.loadContacts()
+    this.loadArticle()
   }
 
   render() {
     return (
       <div>
-        <ul className={styles.contacts} />
+        <ul className={styles.article} />
+        <Loader />
       </div>
     )
   }

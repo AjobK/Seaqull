@@ -16,11 +16,12 @@ use Illuminate\Http\Request;
 Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
 Route::get('post', 'PostController@index');
+Route::get('post/{id}', 'PostController@show');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'PassportController@details');
-
-    Route::get('post/{id}', 'PostController@show');
     Route::post('post', 'PostController@store');
     Route::post('post/{id}', 'PostController@update');
+    Route::get('post/path/{path}', 'PostController@showPath');
+    Route::get('post/user/{id}', 'PostController@showUser');
 });
