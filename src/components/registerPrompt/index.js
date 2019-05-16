@@ -4,31 +4,25 @@ import Button from '../button'
 
 class RegisterPrompt extends Component {
   auth = () => {
-    const url = 'http://api.seaqull.com/api/register'
+    const url = 'http://localhost:8000/api/register'
     const email = document.querySelector('#email').value
-    const user = document.querySelector('#name').value
-    const pass = document.querySelector('#password').value
-    const bodyData = `name=${user}&email=${email}&password=${pass}`
-    const headersData = { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/x-www-form-urlencoded', mode: 'no-cors'}
-    const request = {method:'POST',mode:'no-cors', headers: headersData, body: bodyData}
+    const name = document.querySelector('#name').value
+    const password = document.querySelector('#password').value
 
-    fetch(url,request)
-      .then(response => {
-        console.log(bodyData)
-        console.log(headersData)
-        return response
-      })
-      .then(dataReturned => console.log(dataReturned))
-      .catch(error => alert(error))
+    fetch(url, {
+      method:'POST',
+      mode:'cors',
+      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json'},
+      body: JSON.stringify({ name: name, email: email, password: password })
+    }).then(json => json.json()).then(data => alert(data))
   }
   render() {
-
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
         <p className={styles.text}>Join our community</p>
         <div className={styles.formWrapper}>
-          <form method='POST' className={styles.form}>
+          <form method='POST' action={'http://localhost:8000/api/register'} className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor='name' className={styles.label}>Username</label>
               <input type='text' id='name' name='name' className={styles.input} />
@@ -42,7 +36,7 @@ class RegisterPrompt extends Component {
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <Button onClick={this.auth} type='submit' name='submit' value='Register' className={styles.submit} />
+              <Button onClick={this.auth} value='Register' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />
