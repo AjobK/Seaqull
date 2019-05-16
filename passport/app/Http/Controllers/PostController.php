@@ -47,6 +47,11 @@ class PostController extends Controller
                     'data' => $post->toArray()
                 ]);
             }
+        } else {
+            return response()->json([
+                'succes' => false,
+                'message' => 'No authentication for user'
+            ], 400);
         }
     }
 
@@ -90,7 +95,7 @@ class PostController extends Controller
             if ($posts) {
                 return response()->json([
                     'succes' => false,
-                    'message' => 'The user did not make this post!'
+                    'message' => 'User did not create this post'
                 ]);
             }  else {
                 return response()->json([
@@ -104,7 +109,8 @@ class PostController extends Controller
 
         if ($updated)
             return response()->json([
-                'success' => true
+                'success' => true,
+                'post' => $post
             ]);
         else
             return response()->json([
