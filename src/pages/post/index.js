@@ -1,5 +1,5 @@
 import React from 'react'
-import update from 'react-addons-update'; // ES6
+import update from 'react-addons-update' // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
