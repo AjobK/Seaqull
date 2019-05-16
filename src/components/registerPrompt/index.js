@@ -4,13 +4,13 @@ import Button from '../button'
 
 class RegisterPrompt extends Component {
   auth = () => {
-    const url = 'https://crossorigin.me/http://localhost:8000/api/register'
+    const url = 'http://api.seaqull.com/api/register'
     const email = document.querySelector('#email').value
     const user = document.querySelector('#name').value
     const pass = document.querySelector('#password').value
-    const bodyData = { name: user,email:email,password:pass }
-    const headersData = { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', mode: 'cors'}
-    const request = {method:'POST',mode:'cors',headers: headersData,body: bodyData}
+    const bodyData = `name=${user}&email=${email}&password=${pass}`
+    const headersData = { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/x-www-form-urlencoded', mode: 'no-cors'}
+    const request = {method:'POST',mode:'no-cors', headers: headersData, body: bodyData}
 
     fetch(url,request)
       .then(response => {
