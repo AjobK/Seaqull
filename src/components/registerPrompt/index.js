@@ -4,39 +4,22 @@ import Button from '../button'
 
 class RegisterPrompt extends Component {
   auth = () => {
-    const url = 'http://localhost:8000/api/register'
+    const url = 'https://crossorigin.me/http://localhost:8000/api/register'
     const email = document.querySelector('#email').value
-    const user = document.querySelector('#username').value
+    const user = document.querySelector('#name').value
     const pass = document.querySelector('#password').value
-    const data = {
-      name: '' + user + '',
-      email: '' + email + '',
-      password: '' + pass + ''
-    }
-    const formData = new FormData()
-
-    for (let k in data) {
-      formData.append(k, data[k]);
-    }
-
-    const request = {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: data
-    }
+    const bodyData = { name: user,email:email,password:pass }
+    const headersData = { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', mode: 'cors'}
+    const request = {method:'POST',mode:'cors',headers: headersData,body: bodyData}
 
     fetch(url,request)
       .then(response => {
-        if(!response.ok){
-          throw new Error('something went wrong, please try again')
-        }
-
+        console.log(bodyData)
+        console.log(headersData)
         return response
       })
+      .then(dataReturned => console.log(dataReturned))
+      .catch(error => alert(error))
   }
   render() {
 
@@ -47,8 +30,8 @@ class RegisterPrompt extends Component {
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form}>
             <div className={styles.formGroup}>
-              <label htmlFor='username' className={styles.label}>Username</label>
-              <input type='text' id='username' name='username' className={styles.input} />
+              <label htmlFor='name' className={styles.label}>Username</label>
+              <input type='text' id='name' name='name' className={styles.input} />
             </div>
             <div className={styles.formGroup}>
               <label htmlFor='email' className={styles.label}>Email</label>
