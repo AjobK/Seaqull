@@ -145,6 +145,7 @@
 }
 
 .submit {
+	transition: 0.2s;
 	cursor: pointer;
 	font-family: $mainfont, $sidefont;
 	font-size: 0.75rem;
@@ -158,6 +159,11 @@
 	margin-top: 30px;
 	display: inline-block;
 	list-style-type: none;
+
+	&:hover {
+		transition: 0.2s;
+		background-color: tint($primary, -20%)
+	}
 
 	@include mobile-all-portrait {
 		font-size: 1rem;
