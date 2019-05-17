@@ -20,19 +20,18 @@ class Prompt extends Component {
         data => localStorage.setItem('token', data)   
     ) 
   }*/
-  handleClick(event){
-    var apiBaseUrl = "http://localhost:8000/api/";
-    var self = this;
-    var payload={
-      "email":document.querySelector('#email').value,
-      "password":document.querySelector('#password').value
+  handleClick(){
+    const apiBaseUrl = 'http://localhost:8000/api/';
+    const payload={
+      'email':document.querySelector('#email').value,
+      'password':document.querySelector('#password').value
     }
     axios.post(apiBaseUrl+'login', payload)
     .then(function (response) {
-      console.log(response.data.token);
-     
-     sessionStorage.setItem('token', response.data.token)
-    });
+      sessionStorage.setItem('token', response.data.token)
+    }).catch(function (error) {
+      console.log('login mislukt: ' + error)
+    })
   }
 
   render() {
