@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Validator;
 use Illuminate\Http\Request;
 
 class PassportController extends Controller
@@ -15,11 +16,22 @@ class PassportController extends Controller
      */
     public function register(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            // This includes a check if the password contains three of the following
+            // English uppercase characters (A – Z)
+            // English lowercase characters (a – z)
+            // Base 10 digits (0 – 9)
+            // Non-alphanumeric (For example: !, $, #, or %)
+            // Unicode characters
+            // 'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/',
         ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 200);
+        }
 
         $user = User::create([
             'name' => $request->name,

@@ -11,7 +11,7 @@ return [
     |
     */
    'supportsCredentials' => false,
-   'allowedOrigins' => ['*'],
+   'allowedOrigins' => ['http://localhost:8080'],
    'allowedOriginPatterns' => [],
    'allowedHeaders' => ['*'],
    'allowedMethods' => ['*'], // ex: ['GET', 'POST', 'PUT', 'DELETE']

@@ -98,13 +98,11 @@
 }
 
 .label {
-	display: block;
+	align-items: center;
+	display: flex;
 	color: gray;
 	font-size: 12px;
-
-	&:first-child {
-		width: 100%;
-	}
+	margin-bottom: 5px;
 
 	@include mobile-all-portrait {
 		font-size: 1rem;
@@ -162,7 +160,7 @@
 
 	&:hover {
 		transition: 0.2s;
-		background-color: tint($primary, -20%)
+		background-color: darken($primary, 20%)
 	}
 
 	@include mobile-all-portrait {
@@ -195,5 +193,36 @@
 
 	@include mobile-all-portrait {
 		display: none;
+	}
+}
+
+.icon {
+	font-size: 14px;
+	margin-right: 5px;
+
+	&Check {
+		color: $success;
+	}
+	&Times {
+		color: $failure;
+	}
+}
+
+.toolTip {
+	min-width: 200px;
+	max-width: 50vw;
+	&Ul {
+		padding: 5px 0;
+		width: 100%;
+		list-style-type: none;
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	&Li {
+		font-weight: bold;
+		letter-spacing: 1px;
+		font-size: 12px;
+		line-height: 12px;
 	}
 }
