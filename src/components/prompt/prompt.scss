@@ -23,15 +23,13 @@
 }
 
 .text {
-	word-break: break-word;
-	white-space: normal;
 	text-align: center;
 	font-weight: bold;
-	font-size: 2.3rem;
+	font-size: 2rem;
 	line-height: 33px;
 
 	@include mobile-all-portrait {
-		padding: 0 1rem;
+		word-break: break-all;
 		font-size: 2rem;
 		color: #fff;
 		font-weight: bold;
@@ -39,7 +37,7 @@
 }
 
 .input {
-	font-family: Poppins;
+	// font-family: Poppins;
 	font-size: 1rem;
 	color: gray;
 	border: none;
@@ -57,6 +55,7 @@
 		height: 40px;
 		font-size: 20px;
 		width: 100%;
+		max-width: 300px;
 	}
 }
 
@@ -78,22 +77,20 @@
 
 .form {
 	display: flex;
-	flex-shrink: 1;
 	justify-content: space-between;
 	flex-direction: column;
 	width: 100%;
 
 	@include mobile-all-portrait {
-		width: 80%;
 		margin-top: 20px;
 		justify-content: center;
 		padding: $header-spacing;
 		padding-bottom: 0;
-		max-width: 800px;
+		max-width: 350px;
 	}
 
 	&Wrapper {
-		margin-top: 24px;
+		margin-top: 15px;
 		justify-content: space-around;
 		display: flex;
 		width: 100%;
@@ -130,7 +127,6 @@
 		&_wrapper {
 			display: flex;
 			justify-content: flex-end;
-
 			width: 100%;
 			height: 100%;
 		}

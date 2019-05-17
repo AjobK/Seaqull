@@ -5,8 +5,12 @@
 	width: 100%;
 	max-width: $wrapper-width;
 	margin: 0 auto;
+	padding: 0 $header-spacing;
+	padding-top: $header-spacing * 4;
+	white-space: normal;
 
 	@include mobile-all-portrait {
+		padding-top: $header-spacing * 2;
 		width: 100%;
 	}
 }
