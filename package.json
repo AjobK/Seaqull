@@ -63,6 +63,7 @@
     "acorn": "^6.0.7",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
     "css-loader": "^1.0.1",
+    "draft-js": "^0.10.5",
     "file-loader": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
     "mobx": "^4.6.0",

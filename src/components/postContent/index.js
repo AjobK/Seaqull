@@ -13,12 +13,18 @@ class PostContent extends Component {
     this.elRef = createRef()
     this.sanitizeFilter = {
       paragraph: {
-        allowedTags: ['img', 'br', 'div', 'b', 'i', 'em', 'strong'],
+        // allowedTags: [ 'img' ],
+        selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+        allowProtocolRelative: true,
+        allowedAttributes: {
+          'a': [ 'href' ]
+        },
         allowedIframeHostnames: ['www.youtube.com']
       }
     }
     this.state = {
-      value: props.value || ''
+      value: props.value || '',
+      valueTwo: props.value || ''
     }
   }
 
@@ -47,6 +53,20 @@ class PostContent extends Component {
     })
   }
 
+  onChange = (e) => {
+    console.log('*******************')
+    console.log(e.target.value)
+    console.log(sanitizeHtml(e.target.value, this.sanitizeFilter[this.type]))
+    console.log('*******************')
+
+    this.setState({
+      value: e.target.value,
+      valueTwo: e.target.value
+    }, () => {
+      // this.callBackData()
+    })
+  }
+
   render() {
     const { type, store } = this.props
 
@@ -54,12 +74,21 @@ class PostContent extends Component {
       <PostContentBlock heading={type}>
         <ContentEditable
           className={`${styles.postContent} ${styles[type]}`}
-          onClick={this.onClick}
-          html={this.state.value || ''}
-          onChange={this.setValue}
-          onKeyDown={this.keyDown}
+          // onClick={this.onClick}
+          html={sanitizeHtml(this.state.value, this.sanitizeFilter[this.type]) || ''}
+          onChange={this.onChange}
+          // onKeyDown={this.keyDown}
           disabled={!store.user.loggedIn}
-          innerRef={this.elRef}
+          // innerRef={this.elRef}
+        />
+        <ContentEditable
+          className={`${styles.postContent} ${styles[type]}`}
+          // onClick={this.onClick}
+          html={this.state.valueTwo || ''}
+          onChange={this.onChange}
+          // onKeyDown={this.keyDown}
+          disabled={!store.user.loggedIn}
+          // innerRef={this.elRef}
         />
       </PostContentBlock>
     )
