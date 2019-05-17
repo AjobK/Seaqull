@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import styles from './prompt.scss'
-import { inject, observer } from 'mobx-react'
 
-@inject('store') @observer
 class Prompt extends Component {
 <<<<<<< HEAD
     auth = () => {
@@ -79,11 +77,15 @@ class Prompt extends Component {
               <input type='password' id='password' name='password' className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
+<<<<<<< Updated upstream
 <<<<<<< HEAD
               <input onClick={this.auth}  type='submit' name='submit' value='Log in' className={styles.submit} />
 =======
               <input onClick={this.auth} id='submit' type='button' name='submit' value='Log in' className={styles.submit} />
 >>>>>>> 5c70728c5d20ae6e71320ad008ab3165885b1adc
+=======
+              <input  type='submit' name='submit' value='Log in' className={styles.submit} />
+>>>>>>> Stashed changes
             </div>
           </form>
           <div className={styles.image} />
