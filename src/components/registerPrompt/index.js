@@ -44,7 +44,12 @@ class RegisterPrompt extends Component {
           email: [],
           password: []
         })
-        alert('Registered!')
+        // Put user data in user store
+        fetch('http://localhost:8000/api/user', {
+          method:'GET',
+          mode:'cors',
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${json.token}` }
+        }).then(user => user.json()).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
       }
     })
   }

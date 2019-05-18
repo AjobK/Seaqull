@@ -16,6 +16,12 @@ const UserStore = types
     },
     logIn() {
       self.loggedIn = true
+    },
+    fillUserData(user = null) {
+      self.loggedIn = !!user
+      if (user) {
+        self.name = user.name || self.name
+      }
     }
   }))
 
