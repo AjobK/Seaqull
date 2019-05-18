@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Hash;
 
 $factory->define(User::class, function (Faker $faker) {
     $roles = App\Role::pluck('id')->toArray();
+    $username = $faker->unique()->userName;
+
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'name' => $username,
+        'email' => $username.'@'.$faker->safeEmailDomain,
         'email_verified_at' => now(),
         'password' => bcrypt('qwerty'),
         'remember_token' => Str::random(10),
