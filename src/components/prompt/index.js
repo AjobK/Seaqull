@@ -4,22 +4,6 @@ import styles from './prompt.scss'
 import { Button } from '../../components'
 
 class Prompt extends Component {
-  /*auth = () => {
-    const url = `http://localhost:8000/api/login`
-    const email = document.querySelector('#email').value
-    const password = document.querySelector('#password').value
-
-    fetch(url, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: password })
-    }).then(json => json.json())
-    .then(
-        data => console.log(data),
-        data => localStorage.setItem('token', data)   
-    ) 
-  }*/
   handleClick(){
     const apiBaseUrl = 'http://localhost:8000/api/';
     const payload={
