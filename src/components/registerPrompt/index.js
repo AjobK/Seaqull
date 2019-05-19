@@ -86,7 +86,7 @@ class RegisterPrompt extends Component {
                 />
                 Username
               </label>
-              <input data-tip data-for={this.getElId('nameToolTip')} data-event='focus blur' type='text' id={this.getElId('name')} name={this.getElId('name')} className={styles.input}/>
+              <input data-tip data-for={this.getElId('nameToolTip')} data-event='focus' data-event-off='blur' type='text' id={this.getElId('name')} name={this.getElId('name')} className={styles.input}/>
               {(name && name.length > 0 && <ReactTooltip id={this.getElId('nameToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
                 <ul className={styles.toolTipUl}>
                   {name.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
@@ -101,7 +101,7 @@ class RegisterPrompt extends Component {
                 />
                 Email
               </label>
-              <input data-tip data-for={this.getElId('emailToolTip')} data-event='focus blur' type='text' id={this.getElId('email')} name={this.getElId('email')} className={styles.input} />
+              <input data-tip data-for={this.getElId('emailToolTip')} data-event='focus' data-event-off='blur' type='text' id={this.getElId('email')} name={this.getElId('email')} className={styles.input} />
               {(email && email.length > 0 && <ReactTooltip id={this.getElId('emailToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
                 <ul className={styles.toolTipUl}>
                   {email.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
@@ -121,7 +121,7 @@ class RegisterPrompt extends Component {
                 </ul>
               </ReactTooltip>)}
               </label>
-              <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
+              <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
               <Button onClick={this.auth} value='Register' className={styles.submit} />
