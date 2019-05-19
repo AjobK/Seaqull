@@ -3,16 +3,16 @@ import styles from './registerprompt.scss'
 import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon } from '../../components'
-import { Redirect } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
+
     this.elId = {}
+
     this.state = {
-      redirectToProfile: null,
       data: null,
       name: null,
       email: null,
@@ -64,11 +64,7 @@ class RegisterPrompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${json.token}` }
-        }).then(user => user.json()).then(userData => this.props.store.user.fillUserData(userData.user)).then(
-          setTimeout(() => {this.setState({
-            redirectToProfile: <Redirect to='/profile' />
-          })}, 2000) // Added delay to show succesful register. User should be notified normally to confirm email
-        )
+        }).then(user => user.json()).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
       }
     })
   }
@@ -78,7 +74,6 @@ class RegisterPrompt extends Component {
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
-        { this.state.redirectToProfile }
         <div className={styles.logo} />
         <p className={styles.text}>Join our community</p>
         <div className={styles.formWrapper}>
