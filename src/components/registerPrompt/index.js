@@ -3,13 +3,16 @@ import styles from './registerprompt.scss'
 import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon } from '../../components'
+import { Redirect } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
+    this.elId = {}
     this.state = {
+      redirectToProfile: null,
       data: null,
       name: null,
       email: null,
@@ -17,11 +20,23 @@ class RegisterPrompt extends Component {
     }
   }
 
+  // Unique keys to avoid botting
+  getElId(param) {
+    if (!this.elId[param]) {
+      this.elId[param] = param + '-' + (
+        Math.random().toString(36).substring(2, 15) + 
+        Math.random().toString(36).substring(2, 15)
+      )
+    }
+
+    return this.elId[param]
+  }
+
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
-    const email = document.querySelector('#email').value
-    const name = document.querySelector('#name').value
-    const password = document.querySelector('#password').value
+    const name = document.getElementById(this.elId.name).value
+    const email = document.getElementById(this.elId.email).value
+    const password = document.getElementById(this.elId.password).value
 
     fetch(url, {
       method:'POST',
@@ -49,7 +64,11 @@ class RegisterPrompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${json.token}` }
-        }).then(user => user.json()).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
+        }).then(user => user.json()).then(userData => this.props.store.user.fillUserData(userData.user)).then(
+          setTimeout(() => {this.setState({
+            redirectToProfile: <Redirect to='/profile' />
+          })}, 2000) // Added delay to show succesful register. User should be notified normally to confirm email
+        )
       }
     })
   }
@@ -59,54 +78,55 @@ class RegisterPrompt extends Component {
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
+        { this.state.redirectToProfile }
         <div className={styles.logo} />
         <p className={styles.text}>Join our community</p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form}>
             <div className={styles.formGroup}>
-              <label htmlFor='name' className={styles.label}>
+              <label htmlFor={this.getElId('name')} className={styles.label}>
                 <Icon
                   iconName={ (name == null && 'MinusCircle') || (name.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
                   className={`${styles.icon} ${ (name == null && 'noClass') || (name.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
                 />
                 Username
               </label>
-              <input data-tip data-for='nameToolTip' data-event='focus blur' type='text' id='name' name='name' className={styles.input}/>
-              {(name && name.length > 0 && <ReactTooltip id='nameToolTip' effect={'solid'} place={'right'} className={styles.toolTip}>
+              <input data-tip data-for={this.getElId('nameToolTip')} data-event='focus blur' type='text' id={this.getElId('name')} name={this.getElId('name')} className={styles.input}/>
+              {(name && name.length > 0 && <ReactTooltip id={this.getElId('nameToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
                 <ul className={styles.toolTipUl}>
                   {name.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
                 </ul>
               </ReactTooltip>)}
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor='email' className={styles.label}>
+              <label htmlFor={this.getElId('email')} className={styles.label}>
                 <Icon
                   iconName={ (email == null && 'MinusCircle') || (email.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
                   className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
                 />
                 Email
               </label>
-              <input data-tip data-for='emailToolTip' data-event='focus blur' type='text' id='email' name='email' className={styles.input} />
-              {(email && email.length > 0 && <ReactTooltip id='emailToolTip' effect={'solid'} place={'right'} className={styles.toolTip}>
+              <input data-tip data-for={this.getElId('emailToolTip')} data-event='focus blur' type='text' id={this.getElId('email')} name={this.getElId('email')} className={styles.input} />
+              {(email && email.length > 0 && <ReactTooltip id={this.getElId('emailToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
                 <ul className={styles.toolTipUl}>
                   {email.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
                 </ul>
               </ReactTooltip>)}
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor='password' className={styles.label}>
+              <label htmlFor={this.elId.password} className={styles.label}>
                 <Icon
                   iconName={ (password == null && 'MinusCircle') || (password.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
                   className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
                 />
                 Password
-              {(password && password.length > 0 && <ReactTooltip id='passwordToolTip' effect={'solid'} place={'right'} className={styles.toolTip}>
+              {(password && password.length > 0 && <ReactTooltip id={this.getElId('passwordToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
                 <ul className={styles.toolTipUl}>
                   {password.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
                 </ul>
               </ReactTooltip>)}
               </label>
-              <input data-tip data-for='passwordToolTip' data-event='focus blur' type='password' id='password' name='password' className={styles.input} />
+              <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
               <Button onClick={this.auth} value='Register' className={styles.submit} />

@@ -160,7 +160,7 @@
 
 	&:hover {
 		transition: 0.2s;
-		background-color: darken($primary, 20%)
+		@include pulse();
 	}
 
 	@include mobile-all-portrait {
