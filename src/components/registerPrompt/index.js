@@ -14,7 +14,7 @@ class RegisterPrompt extends Component {
 
     this.state = {
       data: null,
-      name: ['The world is dangerous'],
+      name: null,
       email: null,
       password: null
     }
