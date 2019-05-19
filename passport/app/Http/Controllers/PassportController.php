@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Validator;
+use App\Rules\Uppercase;
+use App\Rules\Lowercase;
+use App\Rules\NumberOrSpecial;
 use Illuminate\Http\Request;
 
 class PassportController extends Controller
@@ -19,7 +22,14 @@ class PassportController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            // 'password' => 'required|min:6',
+            'password' => [
+                'required',
+                'min:6',
+                new Uppercase(),
+                new Lowercase(),
+                new NumberOrSpecial()
+            ],
             // This includes a check if the password contains three of the following
             // English uppercase characters (A – Z)
             // English lowercase characters (a – z)
