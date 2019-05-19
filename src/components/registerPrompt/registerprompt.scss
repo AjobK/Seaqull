@@ -1,5 +1,17 @@
 @import '../../styles/index.scss';
 
+@keyframes bubbleAnimation {
+	0% {
+		transform: translatey(1px); /* stylelint-disable-line length-zero-no-unit */
+	}
+	50% {
+		transform: translatey(-5px);
+	}
+	100% {
+		transform: translatey(1px); /* stylelint-disable-line length-zero-no-unit */
+	}
+}
+
 .prompt {
 	background-color: white;
 	border: 1px solid whitesmoke;
@@ -8,7 +20,7 @@
 	
 	@include mobile-all-portrait {
 		display: flex;
-		background-color: $primary;
+		background-color: $background-trans-less;
 		justify-content: center;
 		flex-direction: column;
 		align-items: center;
@@ -31,10 +43,25 @@
 	width: 100%;
 	text-align: center;
 
+	&Icon {
+		display: none;
+		color: $primary;
+		margin-left: 5px;
+
+		@include mobile-all-portrait {
+			display: inline;
+		}
+
+		&Bubble {
+			vertical-align: 14px;
+			animation: bubbleAnimation 3s infinite;
+		}
+	}
+
 	@include mobile-all-portrait {
 		word-break: break-word;
 		font-size: 1.8rem;
-		color: #fff;
+		color: black;
 		font-weight: bold;
 	}
 
@@ -55,7 +82,7 @@
 		@include mobile-all-portrait {
 			width: 80%;
 			font-size: 0.8rem;
-			color: #fff;
+			color: $darker;
 		}
 
 		&_link {
@@ -63,7 +90,7 @@
 			text-decoration: underline;
 
 			@include mobile-all-portrait {
-				color: #fff;
+				color: $primary;
 				font-weight: bold;
 			}
 		}
@@ -85,9 +112,9 @@
 	cursor: text;
 
 	@include mobile-all-portrait {
-		color: white;
+		background-color: transparent;
+		color: $darker;
 		display: flex;
-		background: $primary;
 		padding: 0;
 		margin: 0;
 		border-bottom: 2px solid rgba(0, 0, 0, 0.4);
@@ -106,7 +133,7 @@
 
 	@include mobile-all-portrait {
 		font-size: 1rem;
-		color: rgba(0, 0, 0, 0.4);
+		color: $darker;
 		font-weight: bold;
 	}
 }
@@ -139,6 +166,10 @@
 
 	&Group {
 		margin-top: 20px;
+		
+		@include mobile-all-portrait {
+			margin-top: 30px;
+		}
 	}
 }
 
@@ -166,8 +197,7 @@
 	@include mobile-all-portrait {
 		font-size: 1rem;
 		border-radius: 30px;
-		background-color: $darker;
-		padding: 10px 45px;
+		padding: 25px 45px;
 		height: 38px;
 		display: flex;
 		align-items: center;
@@ -199,6 +229,12 @@
 .icon {
 	font-size: 14px;
 	margin-right: 5px;
+	background-color: white;
+	border-radius: 100%;
+
+	@include mobile-all-portrait {
+		font-size: 16px;
+	}
 
 	&Check {
 		color: $success;
