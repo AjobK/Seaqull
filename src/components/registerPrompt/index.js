@@ -14,7 +14,7 @@ class RegisterPrompt extends Component {
 
     this.state = {
       data: null,
-      name: null,
+      name: ['The world is dangerous'],
       email: null,
       password: null
     }
@@ -75,7 +75,7 @@ class RegisterPrompt extends Component {
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
-        <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /><Icon className={`${styles.textIcon} ${styles.textIconBubble}`} iconName={'CommentDots'} /></p>
+        <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form}>
             <div className={styles.formGroup}>
