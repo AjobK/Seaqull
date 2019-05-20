@@ -18,11 +18,11 @@ class Prompt extends Component {
     }
   }
 
-  handleClick(){
+  handleClick = () => {
     const apiBaseUrl = 'http://localhost:8000/api/';
     const payload={
-      'email':document.querySelector('#email').value,
-      'password':document.querySelector('#password').value
+      email: document.getElementById(this.elId.email).value,
+      password: document.getElementById(this.elId.password).value
     }
     axios.post(apiBaseUrl+'login', payload)
     .then(function (response) {
