@@ -2,7 +2,8 @@ import { types } from 'mobx-state-tree'
 
 const DefaultDataStore = types
   .model('DefaultDataStore', {
-    projectName: types.optional(types.string, 'Seaqull')
+    projectName: types.optional(types.string, 'Seaqull'),
+    backendUrl: types.optional(types.string, 'http://localhost:8000')
   })
   .actions(self => ({
     reset() {
