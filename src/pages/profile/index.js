@@ -8,9 +8,7 @@ import { UserBanner, PostsPreview, Statistics } from '../../components'
 class Profile extends App {
 
   componentDidMount() {
-    const { uid } = this.props.match.params
-
-    
+    //const { uid } = this.props.match.params
   }
 
   render() {
