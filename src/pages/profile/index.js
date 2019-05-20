@@ -3,12 +3,18 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { UserBanner, PostsPreview, Statistics } from '../../components'
+import Axios from 'axios'
 
 @inject('store') @observer
 class Profile extends App {
 
   componentDidMount() {
-    //const { uid } = this.props.match.params
+    const { uid } = this.props.match.params
+
+    Axios.get(`${this.props.store.defaultData.backendUrl}/api/profile/${uid}`)
+      .then((response) => {
+        console.log(response);
+      })
   }
 
   render() {
