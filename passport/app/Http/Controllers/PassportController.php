@@ -70,10 +70,6 @@ class PassportController extends Controller
      */
     public function profile(Request $request, $id)
     {
-        if (!auth()->user()) {
-            return response()->json(['error' => 'UnAuthorised'], 401);
-        }
-
         $user = User::find($id);
 
         if (!$user) {
