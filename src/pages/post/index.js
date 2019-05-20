@@ -48,7 +48,7 @@ class Post extends App {
     content.forEach((item, counter) => {
       const { type, value } = item
 
-      arr.push(<PostContent cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} type={type} />)
+      arr.push(<PostContent key={counter} type={type} />)
 
       this.cbKey++
     })
