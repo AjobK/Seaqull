@@ -6,6 +6,13 @@ import { UserBanner, PostsPreview, Statistics } from '../../components'
 
 @inject('store') @observer
 class Profile extends App {
+
+  componentDidMount() {
+    const { uid } = this.props.match.params
+
+    
+  }
+
   render() {
     return (
       <Standard>
