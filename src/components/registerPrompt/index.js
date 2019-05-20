@@ -109,7 +109,7 @@ class RegisterPrompt extends Component {
               </ReactTooltip>)}
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor={this.elId.password} className={styles.label}>
+              <label htmlFor={this.getElId('password')} className={styles.label}>
                 <Icon
                   iconName={ (password == null && 'MinusCircle') || (password.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
                   className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
