@@ -8,19 +8,36 @@ import Axios from 'axios'
 @inject('store') @observer
 class Profile extends App {
 
+  constructor(props) {
+    super(props);
+    const { user } = this.props.store
+
+    this.state = {
+      user: user
+    }
+  }
+
   componentDidMount() {
     const { uid } = this.props.match.params
 
     Axios.get(`${this.props.store.defaultData.backendUrl}/api/profile/${uid}`)
       .then((response) => {
-        console.log(response);
+        this.updateProfile(response.data.profile)
       })
+  }
+
+  updateProfile(profile) {
+    const { user } = this.props.store
+
+    user.setName(profile.name)
+
+    this.setState({ user: user })
   }
 
   render() {
     return (
       <Standard>
-        <UserBanner />
+        <UserBanner user={this.state.user}/>
         <Section title={'CREATED POSTS'}>
           <PostsPreview create />
         </Section>

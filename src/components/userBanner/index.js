@@ -6,7 +6,7 @@ import { Icon } from '..';
 @inject('store') @observer
 class UserBanner extends Component {
   render() {
-    const { user } = this.props.store
+    const user = this.props.user;
 
     let fontSize = ''
 

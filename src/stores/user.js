@@ -16,6 +16,9 @@ const UserStore = types
     },
     logIn() {
       self.loggedIn = true
+    },
+    setName(name) {
+      self.name = name;
     }
   }))
 
