@@ -36,15 +36,16 @@ class PostContent extends Component {
     // console.log('Is called OnChange')
     const contentState = editorState.getCurrentContent()
     const oldContent = this.state.editorState.getCurrentContent()
-    const currentUnix = ~~(Date.now() / 1000)
-
-    if (currentUnix > this.nextCallBackTime) {
-      this.props.callBackFunc(this)
-      this.nextCallBackTime = currentUnix + 10 // Adding 10 seconds till next possible callBack
-    }
 
     if (contentState === oldContent || !this.maxLength || contentState.getPlainText().length <= this.maxLength) {
-      this.setState({ editorState })
+      this.setState({ editorState }, () => {
+        const currentUnix = ~~(Date.now() / 1000)
+    
+        if (currentUnix >= this.nextCallBackTime) {
+          this.props.callBackFunc(this)
+          this.nextCallBackTime = currentUnix + 0 // Adding 10 seconds till next possible callBack
+        }
+      })
     }
   }
 
