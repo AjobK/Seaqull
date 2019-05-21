@@ -24,7 +24,6 @@ class Post extends App {
   }
 
   callBackFunc = (item) => {
-    console.log('CB KEY: ' + item.props.cbKey)
     this.setState({
       content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
         type: item.type,

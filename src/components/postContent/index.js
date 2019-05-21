@@ -21,7 +21,6 @@ class PostContent extends Component {
   setValue = () => {
     this.setState({
       value: this.elRef.current.innerText
-      // value: e.target.value
     }, () => {
       this.callBackData()
     })
@@ -33,7 +32,6 @@ class PostContent extends Component {
   }
 
   onChange = (editorState) => {
-    // console.log('Is called OnChange')
     const contentState = editorState.getCurrentContent()
     const oldContent = this.state.editorState.getCurrentContent()
 
@@ -50,7 +48,6 @@ class PostContent extends Component {
   }
 
   handleBeforeInput = (chars) => {
-    // console.log('Is called HandleBeforeInput')
     if (!this.maxLength) return false
 
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + chars.length
@@ -58,7 +55,6 @@ class PostContent extends Component {
   }
 
   handlePastedText = (text) => {
-    // console.log('Is called HandlePastedText')
     if (!this.maxLength) return false
 
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + text.length
@@ -66,7 +62,6 @@ class PostContent extends Component {
   }
 
   render() {
-    // console.log('Is called Render')
     const { type, store } = this.props
     const editorState = this.state.editorState;
 
