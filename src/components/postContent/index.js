@@ -34,25 +34,11 @@ class PostContent extends Component {
       this.props.theCB(this)
   }
 
-  keyDown = () => {
-    let dirty = this.elRef.current.innerText
-
-    if (!dirty)
-      return false
-
-    this.setState({
-      value: sanitizeHtml(dirty, this.sanitizeFilter[this.type])
-    })
-  }
-
   onChange = (editorState) => {
-    console.log(editorState)
     const contentState = editorState.getCurrentContent()
     const oldContent = this.state.editorState.getCurrentContent()
 
     if (contentState === oldContent || !this.maxLength || contentState.getPlainText().length <= this.maxLength) {
-      console.log('Allowed')
-      console.log((Math.random() * 100).toFixed(0))
       this.setState({ editorState })
     }
   }
@@ -76,13 +62,12 @@ class PostContent extends Component {
     const editorState = this.state.editorState;
 
     return (
-      <PostContentBlock heading={type}>
+      <PostContentBlock heading={type} className={[styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]]}>
         <Editor
           editorState={editorState}
           onChange={this.onChange}
           handleBeforeInput={this.handleBeforeInput}
           handlePastedText={this.handlePastedText}
-          onKeydown={this.handleBeforeInput}
           blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
         />
       </PostContentBlock>

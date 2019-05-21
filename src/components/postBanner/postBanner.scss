@@ -13,14 +13,11 @@
 	align-items: flex-end;
 
 	&Edit {
-		width: fit-content;
-		height: fit-content;
 		background-color: rgba(0,0,0,0.4);
 		color: white;
 		display: flex;
-		bottom: 25%;
 		border-radius: 30px;
-		padding: 10px;
+		padding: 10px 20px;
 		font-weight: bolder;
 		justify-content: flex-end;
 		align-items: center;
@@ -29,8 +26,12 @@
 		transition: all .2s ease-in-out;
 		margin: $header-spacing;
 
+		@include mobile-sm {
+			margin: $header-spacing auto;
+		}
+
 		&Content {
-			padding: 0 15px;
+			margin-right: 15px;
 			font-size: 1.2rem;
 		}
 
@@ -42,10 +43,6 @@
 			justify-content: flex-end;
 			max-width: $wrapper-width;
 			width: 100%;
-		}
-
-		@include mobile-xs {
-			display: none;
 		}
 	}
 }

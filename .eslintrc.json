@@ -73,7 +73,6 @@
         "valid-typeof": 1,
         "array-bracket-spacing": 1,
         "array-bracket-newline": 1,
-        "indent": ["error", 2],
         "jsx-quotes": [1, "prefer-single"],
         "newline-before-return": 1,
         "newline-after-var": 1,
@@ -81,8 +80,8 @@
         "no-duplicate-imports": 1,
         "no-useless-constructor": 1,
         "no-var": 1,
-        "object-curly-spacing": ["error", "always"],
-        "quotes": [2, "single"]
+        "object-curly-spacing": [1, "always"],
+        "quotes": [1, "single"]
     },
     "settings": {
         "react": {
