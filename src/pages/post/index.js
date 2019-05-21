@@ -4,6 +4,7 @@ import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
 import { PostBanner, PostContent, Button, Title, Icon } from '../../components'
+import { convertToRaw, convertFromRaw } from 'draft-js'
 import styles from './post.scss'
 
 @inject('store') @observer
@@ -12,22 +13,22 @@ class Post extends App {
     super(props)
     this.state = {
       title: 'Front-End vs. Back-End',
-      content: [
-        { type: 'heading', value: 'Welcome to the world' },
-        { type: 'paragraph', value: 'This is an awesome paragraph!' },
-        { type: 'heading', value: 'Hello and greetings from the earth human' },
-        { type: 'paragraph', value: 'Well well, is this a piece of text?' }
+      content: JSON.parse(window.localStorage.getItem('content')) || [
+        { type: 'heading', value: null },
+        { type: 'paragraph', value: null },
+        { type: 'heading', value: null },
+        { type: 'paragraph', value: null }
       ]
     }
     this.cbKey = 0
   }
 
-  theCallBackFunc = (item) => {
+  callBackFunc = (item) => {
     console.log('CB KEY: ' + item.props.cbKey)
     this.setState({
       content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
         type: item.type,
-        value: item.state.value
+        value: convertToRaw(item.state.editorState.getCurrentContent())
       } } })
     }, () => { // Async
       this.sendDataToDB()
@@ -36,7 +37,7 @@ class Post extends App {
 
   sendDataToDB() {
     // Send this data
-    console.log(JSON.stringify(this.state.content))
+    window.localStorage.setItem('content', JSON.stringify(this.state.content));
   }
 
   returnComponentsFromJson(data = null) {
@@ -48,7 +49,7 @@ class Post extends App {
     content.forEach((item, counter) => {
       const { type, value } = item
 
-      arr.push(<PostContent key={counter} type={type} />)
+      arr.push(<PostContent key={counter} type={type} callBackFunc={this.callBackFunc} cbKey={this.cbKey} value={value && convertFromRaw(value)} />)
 
       this.cbKey++
     })
