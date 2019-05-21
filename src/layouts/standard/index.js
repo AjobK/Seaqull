@@ -15,8 +15,9 @@ class Standard extends Component {
   }
 
   render() {
+    const { className } = this.props
     return (
-      <section className={styles.wrapper}>
+      <section className={[styles.wrapper, ...(className ? className : [''])].join(' ')}>
         <Header />
         <aside className={styles.higherOrder}>
           <NavigationMobile />

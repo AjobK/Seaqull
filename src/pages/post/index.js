@@ -58,7 +58,7 @@ class Post extends App {
 
   render() {
     return (
-      <Standard>
+      <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
         <Section title={this.state.title} editable>
           {this.returnComponentsFromJson()}

@@ -10,9 +10,9 @@ class PostEditHeading extends Component {
     let editingClass = [styles.edit, this.props.editing ? styles.editing : ''].join(' ')
 
     return (
-      <span className={editingClass}>
+      <label className={editingClass}>
         <Icon iconName={'Pen'} className={styles.icon} /> {heading || 'Text'} { editing && ' - Editing'}
-      </span>
+      </label>
     )
   }
 }

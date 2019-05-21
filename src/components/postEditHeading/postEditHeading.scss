@@ -4,11 +4,13 @@
 	@include noselect;
 	text-transform: uppercase;
 	color: gray;
+	opacity: 0.5;
 	font-size: 1rem;
 	font-weight: bold;
 
 	&ing {
 		color: black;
+		opacity: 1;
 
 		> .icon {
 			background-color: black;
