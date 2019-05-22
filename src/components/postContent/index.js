@@ -18,19 +18,6 @@ class PostContent extends Component {
     }
   }
 
-  setValue = () => {
-    this.setState({
-      value: this.elRef.current.innerText
-    }, () => {
-      this.callBackData()
-    })
-  }
-
-  callBackData = () => {
-    if (this.props.theCB)
-      this.props.theCB(this)
-  }
-
   onChange = (editorState) => {
     const contentState = editorState.getCurrentContent()
     const oldContent = this.state.editorState.getCurrentContent()
@@ -41,7 +28,7 @@ class PostContent extends Component {
     
         if (currentUnix >= this.nextCallBackTime) {
           this.props.callBackFunc(this)
-          this.nextCallBackTime = currentUnix + 0 // Adding 10 seconds till next possible callBack
+          this.nextCallBackTime = currentUnix + 0 // Adding delay for next callback
         }
       })
     }
