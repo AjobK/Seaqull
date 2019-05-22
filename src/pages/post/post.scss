@@ -7,7 +7,6 @@
 .container {
 	align-items: center;
 	padding: $header-spacing;
-	border-radius: 99999px; // This is so that the container does not have an oval shape
 	border: 4px dotted $background-darker;
 	background-color: rgba($background, 0.4);
 	margin: $header-spacing auto 0 auto;
