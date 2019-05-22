@@ -6,7 +6,7 @@ import { Icon } from '..';
 @inject('store') @observer
 class UserBanner extends Component {
   render() {
-    const user = this.props.user;
+    const { user } = this.props.store
 
     let fontSize = ''
 
@@ -31,7 +31,7 @@ class UserBanner extends Component {
             <h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
             <div className={styles.achieved}>
               <span className={styles.level}>{ user.level || ''}</span>
-              <h3 className={styles.role}>{ user.role || ''}</h3>
+              <h3 className={styles.role}>{ user.title || ''}</h3>
             </div>
           </div>
         </div>

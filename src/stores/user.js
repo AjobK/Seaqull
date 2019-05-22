@@ -6,7 +6,7 @@ const UserStore = types
     picture: types.optional(types.string, '/src/static/dummy/user/profile.jpg'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
     name: types.optional(types.string, 'Emily Washington'),
-    role: types.optional(types.string, 'Software Engineer'),
+    title: types.optional(types.string, 'Software Engineer'),
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10)
   })
@@ -19,6 +19,12 @@ const UserStore = types
     },
     setName(name) {
       self.name = name;
+    },
+    setTitle(title) {
+      self.title = title;
+    },
+    setLevel(level) {
+      self.level = level;
     }
   }))
 

@@ -68,19 +68,21 @@ class PassportController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function profile(Request $request, $id)
+    public function profile(Request $request, $path)
     {
-        $user = User::find($id);
+        $user = User::where('path', '=', $path)->first();
 
         if (!$user) {
             return response()->json([
                 'succes' => false,
-                'message' => 'User with ID: ' . $id . ' cannot be found'
+                'message' => 'User with path: ' . $path . ' cannot be found'
             ], 400);
         }
 
         $profile = [
-            'name' => $user->name
+            'name' => $user->name,
+            'title' => $user->title->name,
+            'exp' => $user->experience
         ];
 
         return response()->json(['profile' => $profile], 200);

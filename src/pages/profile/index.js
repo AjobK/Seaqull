@@ -8,15 +8,6 @@ import Axios from 'axios'
 @inject('store') @observer
 class Profile extends App {
 
-  constructor(props) {
-    super(props);
-    const { user } = this.props.store
-
-    this.state = {
-      user: user
-    }
-  }
-
   componentDidMount() {
     const { uid } = this.props.match.params
 
@@ -30,14 +21,14 @@ class Profile extends App {
     const { user } = this.props.store
 
     user.setName(profile.name)
-
-    this.setState({ user: user })
+    user.setTitle(profile.title)
+    user.setLevel(profile.exp || 1)
   }
 
   render() {
     return (
       <Standard>
-        <UserBanner user={this.state.user}/>
+        <UserBanner />
         <Section title={'CREATED POSTS'}>
           <PostsPreview create />
         </Section>
