@@ -39,6 +39,15 @@ class Post extends App {
     window.localStorage.setItem('content', JSON.stringify(this.state.content));
   }
 
+  createContentBlock(type) {
+    const newContent = this.state.content
+    newContent[this.cbKey] = { type: type, value: null }
+    this.cbKey++
+    this.setState({
+      content: newContent
+    })
+  }
+
   returnComponentsFromJson(data = null) {
     this.cbKey = 0
 
@@ -62,13 +71,13 @@ class Post extends App {
         <PostBanner />
         <Section title={this.state.title} editable>
           {this.returnComponentsFromJson()}
+          <div className={styles.container}>
+            <Button className={styles.insertButtonHeading} noStyle value='HEADING' onClick={() => this.createContentBlock('heading')}/>
+            <Button className={styles.insertButtonParagraph} noStyle value='PARAGRAPH' onClick={() => this.createContentBlock('paragraph')} />
+            <Button className={styles.insertButtonCode} noStyle value='CODE' onClick={() => this.createContentBlock('code')} />
+            <Button className={styles.insertButtonImg} noStyle value='IMAGE' onClick={() => this.createContentBlock('image')} />
+          </div>
         </Section>
-        <Title classname={styles.title} center value='INSERT CONTENT'/>
-        <div className={styles.container}>
-          <Button className={styles.insertButtonTitle} value='TITLE'/>
-          <Button className={styles.insertButtonText} value='TEXT' />
-          <Button className={styles.insertButtonImg} value='IMG' />
-        </div>
         <div className={styles.saveContainer}>
           <div className={styles.save}>
             <Button className={styles.saveButton} value='Save Changes'/>

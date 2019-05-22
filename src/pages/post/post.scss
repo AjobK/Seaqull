@@ -5,10 +5,17 @@
 }
 
 .container {
+	align-items: center;
+	padding: $header-spacing;
+	border-radius: 99999px; // This is so that the container does not have an oval shape
+	border: 4px dotted $background-darker;
+	background-color: rgba($background, 0.4);
+	margin: $header-spacing auto 0 auto;
+	width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
 	flex-direction: row;
-	padding-top: 15px;
 }
 
 .title {
@@ -21,25 +28,33 @@
 
 .insertButton {
 	@mixin insertbutton($color) {
-		margin: 0 5px;
-		width: 60px;
-		height: 60px;
-		border-radius: 50%;
-		color: #fff;
+		transition: 0.2s;
+		opacity: 0.7;
+		border-bottom: 2px solid transparent;
 		font-weight: bold;
 		display: flex;
-		background: $color;
+		color: $color;
 		justify-content: center;
 		align-items: center;
+		margin: 0 calc(#{$header-spacing} / 2);
 		cursor: pointer;
+		&:hover {
+			transition: 0.2s;
+			opacity: 1;
+			border-bottom: 2px solid $color;
+		}
 	}
 	
-	&Title {
+	&Heading {
 		@include insertbutton($primary);
 	}
 
-	&Text {
+	&Paragraph {
 		@include insertbutton(#4D4D4D);
+	}
+
+	&Code {
+		@include insertbutton(#9c1ec4);
 	}
 
 	&Img {
