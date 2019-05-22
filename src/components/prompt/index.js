@@ -32,6 +32,7 @@ class Prompt extends Component {
       
       if (token) {
         sessionStorage.setItem('token', token)
+        this.setState({ email: [], password: [] })
       } else if (error) {
         this.setState({ email: error, password: error })
       }
@@ -49,6 +50,7 @@ class Prompt extends Component {
 
     return this.elId[param]
   }
+  
 
   render() {
     const { email, password } = this.state
