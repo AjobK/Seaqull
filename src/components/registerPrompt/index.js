@@ -4,6 +4,7 @@ import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon } from '../../components'
 import ReactTooltip from 'react-tooltip'
+import Axios from 'axios';
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
@@ -34,20 +35,17 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
-    const name = document.getElementById(this.elId.name).value
-    const email = document.getElementById(this.elId.email).value
-    const password = document.getElementById(this.elId.password).value
+    
+    const payload={
+      name: document.getElementById(this.elId.name).value,
+      email: document.getElementById(this.elId.email).value,
+      password: document.getElementById(this.elId.password).value
+    }
 
-    fetch(url, {
-      method:'POST',
-      mode:'cors',
-      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json' },
-      body: JSON.stringify({ name: name, email: email, password: password })
-    })
-    .then(res => res.json())
-    .then(json => {
-      if (json.errors) {
-        const { name, email, password } = json.errors
+    Axios.post(url, payload)
+    .then(res => {
+      if (res.data.errors) {
+        const { name, email, password } = res.data.errors
         this.setState({
           name: name || [],
           email: email || [],
@@ -59,12 +57,13 @@ class RegisterPrompt extends Component {
           email: [],
           password: []
         })
+        
         // Put user data in user store
-        fetch('http://localhost:8000/api/user', {
+        Axios.get('http://localhost:8000/api/user', {
           method:'GET',
           mode:'cors',
-          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${json.token}` }
-        }).then(user => user.json()).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
+        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
       }
     })
   }
