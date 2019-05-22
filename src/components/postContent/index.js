@@ -2,19 +2,19 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { convertToRaw, EditorState, Editor } from 'draft-js'
+import { EditorState, Editor } from 'draft-js'
 
 @inject('store') @observer
 class PostContent extends Component {
   constructor(props) {
     super(props)
     this.type = this.props.type || 'paragraph'
-    this.maxLength = this.type == 'heading' ? 128 : null 
+    this.maxLength = this.type == 'heading' ? 128 : null
     this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000)
 
     this.state = {
-      editorState: this.props.value ? EditorState.createWithContent(this.props.value) : EditorState.createEmpty(),
+      editorState: this.props.value ? EditorState.createWithContent(this.props.value) : EditorState.createEmpty()
     }
   }
 
@@ -25,7 +25,7 @@ class PostContent extends Component {
     if (contentState === oldContent || !this.maxLength || contentState.getPlainText().length <= this.maxLength) {
       this.setState({ editorState }, () => {
         const currentUnix = ~~(Date.now() / 1000)
-    
+
         if (currentUnix >= this.nextCallBackTime) {
           this.props.callBackFunc(this)
           this.nextCallBackTime = currentUnix + 0 // Adding delay for next callback
@@ -38,6 +38,7 @@ class PostContent extends Component {
     if (!this.maxLength) return false
 
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + chars.length
+
     return totalLength > this.maxLength;
   }
 
@@ -45,6 +46,7 @@ class PostContent extends Component {
     if (!this.maxLength) return false
 
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + text.length
+
     return totalLength > this.maxLength;
   }
 
