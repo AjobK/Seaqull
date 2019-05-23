@@ -64,11 +64,14 @@ class Post extends App {
     const content = JSON.parse(data) || this.state.content
 
     content.forEach((item, counter) => {
-      if (!item) return
+      if (!item) {
+        this.cbKey++
+        return
+      }
       const { type, value } = item
 
       arr.push(<PostContent key={counter} type={type} callBackFunc={this.callBackFunc} callBackItemRemoval={this.callBackItemRemoval} cbKey={this.cbKey} value={value && convertFromRaw(value)} />)
-
+      
       this.cbKey++
     })
 
