@@ -1,50 +1,60 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import styles from './prompt.scss'
+import { Button } from '../../components'
+import { Icon } from '../../components'
+import ReactTooltip from 'react-tooltip'
 
 class Prompt extends Component {
+  constructor(props) {
+    super(props)
 
-  auth = () => {
-    const url = 'http://localhost:8000/api/login'
-    const email = document.querySelector('#username').value
-    const pass = document.querySelector('#password').value
-    const data = {
-      email: '' + email + '',
-      password: '' + pass + ''
+    this.elId = {}
+
+    this.state = {
+      data: null,
+      email: null,
+      password: null
     }
-    const formData = new FormData()
+  }
 
-    for (let k in data) {
-      formData.append(k, data[k]);
+  handleClick = () => {
+
+    const apiBaseUrl = 'http://localhost:8000/api/';
+    const payload={
+      email: document.getElementById(this.elId.email).value,
+      password: document.getElementById(this.elId.password).value
     }
 
-    const request = {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: {
-        email: 'little.dolores@example.net',
-        password: 'admin123'
+    axios.post(apiBaseUrl + 'login', payload)
+    .then(response => {
+      const { token, error } = response.data
+      
+      if (token) {
+        sessionStorage.setItem('token', token)
+        this.setState({ email: [], password: [] })
+      } else if (error) {
+        this.setState({ email: error, password: error })
       }
+    })
+  }
+
+  // Unique keys to avoid botting
+  getElId(param) {
+    if (!this.elId[param]) {
+      this.elId[param] = param + '-' + (
+        Math.random().toString(36).substring(2, 15) + 
+        Math.random().toString(36).substring(2, 15)
+      )
     }
 
-    fetch(url, request)
-      .then(response => response.json())
-      .then(json => {
-        // eslint-disable-next-line no-console
-        console.log(json)
-      })
+    return this.elId[param]
   }
-
-  componentDidMount() {
-    // this.props.user = document.querySelector('#username').value
-    // this.props.pass = document.querySelector('#password').value
-    // document.querySelector('#submit').addEventListener('click', this.auth())
-  }
+  
 
   render() {
+    const { email, password } = this.state
+
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
@@ -52,15 +62,37 @@ class Prompt extends Component {
         <div className={styles.formWrapper}>
           <form className={styles.form}>
             <div className={styles.formGroup}>
-              <label htmlFor='username' className={styles.label}>Username</label>
-              <input type='text' id='username' name='username' className={styles.input} />
+              <label htmlFor={this.getElId('email')} className={styles.label}>
+              <Icon
+                  iconName={ (email == null && 'MinusCircle') || (email.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
+                  className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                />
+                Email
+              </label>
+              <input data-tip data-for={this.getElId('emailToolTip')} data-event='focus' data-event-off='blur' type='text' id={this.getElId('email')} name={this.getElId('email')} className={styles.input} />
+              {(email && email.length > 0 && <ReactTooltip id={this.getElId('emailToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
+                <ul className={styles.toolTipUl}>
+                  {email.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
+                </ul>
+              </ReactTooltip>)}
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor='password' className={styles.label}>Password</label>
-              <input type='password' id='password' name='password' className={styles.input} />
+              <label htmlFor={this.getElId('password')} className={styles.label}>
+                <Icon
+                  iconName={ (password == null && 'MinusCircle') || (password.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
+                  className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                />
+                Password
+              {(password && password.length > 0 && <ReactTooltip id={this.getElId('passwordToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
+                <ul className={styles.toolTipUl}>
+                  {password.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
+                </ul>
+              </ReactTooltip>)}
+              </label>
+              <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <input onClick={this.auth} id='submit' type='button' name='submit' value='Log in' className={styles.submit} />
+              <Button onClick={this.handleClick} value='Log In' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />
