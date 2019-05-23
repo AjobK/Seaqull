@@ -4,7 +4,8 @@ import styles from './prompt.scss'
 import { Button } from '../../components'
 import { Icon } from '../../components'
 import ReactTooltip from 'react-tooltip'
-
+import { inject, observer } from 'mobx-react'
+@inject('store') @observer
 class Prompt extends Component {
   constructor(props) {
     super(props)
@@ -33,6 +34,11 @@ class Prompt extends Component {
       if (token) {
         sessionStorage.setItem('token', token)
         this.setState({ email: [], password: [] })
+        axios.get('http://localhost:8000/api/user', {
+          method:'GET',
+          mode:'cors',
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
+        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
       } else if (error) {
         this.setState({ email: error, password: error })
       }
