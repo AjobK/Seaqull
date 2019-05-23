@@ -28,12 +28,9 @@ class PostContentBlock extends Component {
     const { user } = this.props.store
     const { children, heading, className, onClick } = this.props
 
-    console.log(this.props.callBackItemRemoval)
-
     return (
       <section className={styles.paragraphWrapper} onClick={onClick}>
-        {user.loggedIn && <PostEditHeading editing={this.state.editing} heading={heading} />}
-        <span> remove </span>
+        {user.loggedIn && <PostEditHeading editing={this.state.editing} heading={heading} removeItem={this.props.removeItem} />}
         <div className={[styles.paragraph, ...className || ''].join(' ')} onFocus={this.edit} onBlur={this.quitEdit}>
           {
             children || <p> NO CONTENT </p>

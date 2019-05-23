@@ -1,6 +1,9 @@
 @import '../../styles/index.scss';
 
 .edit {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	@include noselect;
 	text-transform: uppercase;
 	color: gray;
@@ -12,9 +15,25 @@
 		color: black;
 		opacity: 1;
 
+		> .remove {
+			display: initial;
+		}
+
 		> .icon {
 			background-color: black;
 		}
+	}
+}
+
+.remove {
+	cursor: pointer;
+	display: none;
+	transition: 0.2s;
+	opacity: 0.5;
+	&:hover {
+		transition: 0.2s;
+		opacity: 1;
+		color: $primary;
 	}
 }
 

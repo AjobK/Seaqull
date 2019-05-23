@@ -11,7 +11,7 @@ class PostContent extends Component {
     this.type = this.props.type || 'paragraph'
     this.maxLength = this.type == 'heading' ? 128 : null
     this.elRef = createRef()
-    this.nextCallBackTime = ~~(Date.now() / 1000)
+    this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.state = {
       editorState: this.props.value ? EditorState.createWithContent(this.props.value) : EditorState.createEmpty()
@@ -27,8 +27,8 @@ class PostContent extends Component {
         const currentUnix = ~~(Date.now() / 1000)
 
         if (currentUnix >= this.nextCallBackTime) {
-          this.props.callBackFunc(this)
-          this.nextCallBackTime = currentUnix + 0 // Adding delay for next callback
+          this.props.callBackSaveData(this)
+          this.nextCallBackTime = currentUnix + 10 // Adding delay for next callback
         }
       })
     }
@@ -53,16 +53,19 @@ class PostContent extends Component {
   render() {
     const { type, store } = this.props
     const editorState = this.state.editorState;
+    const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     return (
-      <PostContentBlock heading={type} className={[styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]]}>
-        <div onClick={() => {
-          this.props.callBackItemRemoval(this)
-        }}>Remove</div>
+      <PostContentBlock
+        heading={type}
+        removeItem={() => { this.props.callBackItemRemoval(this) }}
+        className={[style]}>
+        <span>{ this.props.cbKey }</span>
         <Editor
           readOnly={!store.user.loggedIn}
           editorState={editorState}
           onChange={this.onChange}
+          onBlur={() => this.props.callBackSaveData(this)}
           handleBeforeInput={this.handleBeforeInput}
           handlePastedText={this.handlePastedText}
           blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}

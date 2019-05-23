@@ -3,7 +3,7 @@ import update from 'react-addons-update' // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Title, Icon } from '../../components'
+import { PostBanner, PostContent, Button, Icon } from '../../components'
 import { convertToRaw, convertFromRaw } from 'draft-js'
 import styles from './post.scss'
 
@@ -23,57 +23,74 @@ class Post extends App {
     this.cbKey = 0
   }
 
-  callBackFunc = (item) => {
+  callBackSaveData = (item) => {
+    console.log('Saving')
+    const content = this.state.content
+    content[item.props.cbKey] = { type: item.type, value: convertToRaw(item.state.editorState.getCurrentContent())}
     this.setState({
-      content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
-        type: item.type,
-        value: convertToRaw(item.state.editorState.getCurrentContent())
-      } } })
+      content
     }, () => { // Async
       this.sendDataToDB()
     })
   }
 
+  // callBackSaveData = (item) => {
+  //   this.setState({
+  //     content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
+  //       type: item.type,
+  //       value: convertToRaw(item.state.editorState.getCurrentContent())
+  //     } } })
+  //   }, () => { // Async
+  //     this.sendDataToDB()
+  //   })
+  // }
+
   callBackItemRemoval = (item) => {
-    let content = this.state.content
-    delete content[item.props.cbKey]
+    console.log('Removal')
+    let content = [...this.state.content]
+    console.log(item.props.cbKey)
+    let a = content.splice(item.props.cbKey, 1)
+    console.log(a)
+    console.log('---------------')
+
     this.setState({ content: content }, () => { // Async
-      console.log(this.state.content)
       this.sendDataToDB()
     })
   }
 
   sendDataToDB() {
     // Send this data
+    console.table(this.state.content)
     window.localStorage.setItem('content', JSON.stringify(this.state.content));
   }
 
   createContentBlock(type) {
+    console.log('Creation')
     const newContent = this.state.content
+
     newContent[this.cbKey] = { type: type, value: null }
-    this.cbKey++
     this.setState({
       content: newContent
+    }, () => { // Async
+      this.sendDataToDB()
     })
   }
 
   returnComponentsFromJson(data = null) {
+    console.log('ReturnComponents')
     this.cbKey = 0
 
     let arr = []
-    const content = JSON.parse(data) || this.state.content
+    let content = JSON.parse(data) || this.state.content
 
     content.forEach((item, counter) => {
-      if (!item) {
-        this.cbKey++
-        return
-      }
       const { type, value } = item
 
-      arr.push(<PostContent key={counter} type={type} callBackFunc={this.callBackFunc} callBackItemRemoval={this.callBackItemRemoval} cbKey={this.cbKey} value={value && convertFromRaw(value)} />)
-      
-      this.cbKey++
+      arr.push(<PostContent key={counter} type={type} callBackSaveData={this.callBackSaveData} callBackItemRemoval={this.callBackItemRemoval} cbKey={counter} value={value && convertFromRaw(value)} />)
     })
+    
+    this.cbKey = arr.length
+    console.log(this.cbKey)
 
     return arr
   }
