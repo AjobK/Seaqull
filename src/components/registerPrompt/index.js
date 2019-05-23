@@ -25,7 +25,7 @@ class RegisterPrompt extends Component {
   getElId(param) {
     if (!this.elId[param]) {
       this.elId[param] = param + '-' + (
-        Math.random().toString(36).substring(2, 15) + 
+        Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
       )
     }
@@ -35,7 +35,7 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
-    
+
     const payload={
       name: document.getElementById(this.elId.name).value,
       email: document.getElementById(this.elId.email).value,
@@ -46,6 +46,7 @@ class RegisterPrompt extends Component {
     .then(res => {
       if (res.data.errors) {
         const { name, email, password } = res.data.errors
+
         this.setState({
           name: name || [],
           email: email || [],
@@ -57,18 +58,22 @@ class RegisterPrompt extends Component {
           email: [],
           password: []
         })
-        
+
+        //storing token in local
+        localStorage.setItem('token', res.data.token)
+
         // Put user data in user store
         Axios.get('http://localhost:8000/api/user', {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
+        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user))
       }
     })
   }
 
   render() {
+
     const { name, email, password } = this.state
 
     return (
@@ -81,7 +86,7 @@ class RegisterPrompt extends Component {
               <label htmlFor={this.getElId('name')} className={styles.label}>
                 <Icon
                   iconName={ (name == null && 'MinusCircle') || (name.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (name == null && 'noClass') || (name.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                  className={`${styles.icon} ${ (name == null && 'noClass') || (name.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
                 />
                 Username
               </label>
@@ -95,8 +100,8 @@ class RegisterPrompt extends Component {
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('email')} className={styles.label}>
                 <Icon
-                  iconName={ (email == null && 'MinusCircle') || (email.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                  iconName={ (email == null && 'MinusCircle') || (email.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
+                  className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
                 />
                 Email
               </label>
@@ -110,8 +115,8 @@ class RegisterPrompt extends Component {
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('password')} className={styles.label}>
                 <Icon
-                  iconName={ (password == null && 'MinusCircle') || (password.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                  iconName={ (password == null && 'MinusCircle') || (password.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
+                  className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
                 />
                 Password
               {(password && password.length > 0 && <ReactTooltip id={this.getElId('passwordToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import styles from './prompt.scss'
-import { Button } from '../../components'
-import { Icon } from '../../components'
+import { Icon, Button } from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { inject, observer } from 'mobx-react'
 @inject('store') @observer
@@ -30,15 +29,15 @@ class Prompt extends Component {
     axios.post(apiBaseUrl + 'login', payload)
     .then(response => {
       const { token, error } = response.data
-      
+
       if (token) {
-        sessionStorage.setItem('token', token)
+        localStorage.setItem('token', token)
         this.setState({ email: [], password: [] })
         axios.get('http://localhost:8000/api/user', {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
-        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user)).then(console.log(this.props.store.user.name))
+        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user))
       } else if (error) {
         this.setState({ email: error, password: error })
       }
@@ -49,16 +48,23 @@ class Prompt extends Component {
   getElId(param) {
     if (!this.elId[param]) {
       this.elId[param] = param + '-' + (
-        Math.random().toString(36).substring(2, 15) + 
+        Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15)
       )
     }
 
     return this.elId[param]
   }
-  
 
   render() {
+    if(!(localStorage.token == null)){
+          axios.get('http://localhost:8000/api/user', {
+          method:'GET',
+          mode:'cors',
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${localStorage.token}` }
+        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user))
+    }
+
     const { email, password } = this.state
 
     return (
@@ -70,8 +76,8 @@ class Prompt extends Component {
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('email')} className={styles.label}>
               <Icon
-                  iconName={ (email == null && 'MinusCircle') || (email.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                  iconName={ (email == null && 'MinusCircle') || (email.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
+                  className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
                 />
                 Email
               </label>
@@ -85,8 +91,8 @@ class Prompt extends Component {
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('password')} className={styles.label}>
                 <Icon
-                  iconName={ (password == null && 'MinusCircle') || (password.length <= 0  ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`} 
+                  iconName={ (password == null && 'MinusCircle') || (password.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
+                  className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
                 />
                 Password
               {(password && password.length > 0 && <ReactTooltip id={this.getElId('passwordToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>

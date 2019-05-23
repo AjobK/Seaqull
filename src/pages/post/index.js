@@ -23,7 +23,6 @@ class Post extends App {
   }
 
   theCallBackFunc = (item) => {
-    console.log('CB KEY: ' + item.props.cbKey)
     this.setState({
       content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
         type: item.type,
@@ -36,7 +35,6 @@ class Post extends App {
 
   sendDataToDB() {
     // Send this data
-    console.log(JSON.stringify(this.state.content))
   }
 
   returnComponentsFromJson(data = null) {
