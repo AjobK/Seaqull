@@ -56,6 +56,9 @@ class PostContent extends Component {
 
     return (
       <PostContentBlock heading={type} className={[styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]]}>
+        <div onClick={() => {
+          this.props.callBackItemRemoval(this)
+        }}>Remove</div>
         <Editor
           readOnly={!store.user.loggedIn}
           editorState={editorState}

@@ -34,6 +34,15 @@ class Post extends App {
     })
   }
 
+  callBackItemRemoval = (item) => {
+    let content = this.state.content
+    delete content[item.props.cbKey]
+    this.setState({ content: content }, () => { // Async
+      console.log(this.state.content)
+      this.sendDataToDB()
+    })
+  }
+
   sendDataToDB() {
     // Send this data
     window.localStorage.setItem('content', JSON.stringify(this.state.content));
@@ -55,9 +64,10 @@ class Post extends App {
     const content = JSON.parse(data) || this.state.content
 
     content.forEach((item, counter) => {
+      if (!item) return
       const { type, value } = item
 
-      arr.push(<PostContent key={counter} type={type} callBackFunc={this.callBackFunc} cbKey={this.cbKey} value={value && convertFromRaw(value)} />)
+      arr.push(<PostContent key={counter} type={type} callBackFunc={this.callBackFunc} callBackItemRemoval={this.callBackItemRemoval} cbKey={this.cbKey} value={value && convertFromRaw(value)} />)
 
       this.cbKey++
     })
