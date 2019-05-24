@@ -105,3 +105,8 @@
 		}
 	}
 }
+
+.filler {
+	background-color: darken($background, 10%);
+	cursor: default;
+}
