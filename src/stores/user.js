@@ -7,7 +7,7 @@ const Posts = types
 
 const UserStore = types
   .model('UserStore', {
-    isOwner: types.optional(types.boolean, false),
+    isOwner: types.optional(types.boolean, true),
     picture: types.optional(types.string, '/src/static/dummy/user/profile.jpg'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
     name: types.optional(types.string, 'Emily Washington'),

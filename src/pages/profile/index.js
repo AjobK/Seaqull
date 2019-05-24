@@ -12,7 +12,7 @@ class Profile extends App {
     super(props);
 
     const user = {
-      editable: false,
+      isOwner: false,
       name: '',
       title: '',
       level: 0,
@@ -31,10 +31,7 @@ class Profile extends App {
     const { user } = this.props.store
 
     if(user.path === path) {
-      this.updateProfile({
-        isOwner: true,
-        ...user
-      });
+      this.updateProfile(user);
     }
     else {
       this.fetchProfileData(path);
@@ -85,10 +82,15 @@ class Profile extends App {
       picture: '/src/static/dummy/user/profile.jpg'
     }
 
+    console.log(profile);
+
     this.setState({ user })
   }
 
   render() {
+
+    console.log(this.state.user.isOwner);
+
     return (
       <Standard>
         <UserBanner user={this.state.user}/>
