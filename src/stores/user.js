@@ -15,12 +15,9 @@ const UserStore = types
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10),
     posts: types.optional(types.array(Posts), []),
-    path: types.optional(types.string, 'timon')
+    path: types.optional(types.string, '')
   })
   .actions(self => ({
-    setIsOwner(isOnwer) {
-      self.isOnwer = isOnwer
-    },
     setPosts(posts) {
       self.posts = posts;
     },
