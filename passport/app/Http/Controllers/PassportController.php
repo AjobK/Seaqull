@@ -86,7 +86,7 @@ class PassportController extends Controller
         $posts = $user
             ->posts()
             ->orderBy('created_at')
-            ->take($isOwner ? 5 : 6)
+            ->take($isOwner ? 7 : 8)
             ->get(['title'])
             ->toArray()
         ;

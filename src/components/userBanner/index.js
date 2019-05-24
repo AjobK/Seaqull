@@ -23,7 +23,7 @@ class UserBanner extends Component {
         <div className={styles.innerWrapper}>
           <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={styles.levelMobile}>{ user.level || ''}</span>
-            {user.loggedIn && <span className={styles.pictureEdit}>
+            {user.editable && <span className={styles.pictureEdit}>
               <Icon iconName={'Pen'} />
             </span>}
           </div>
