@@ -3,7 +3,6 @@ import styles from './registerprompt.scss'
 import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
-import ReactTooltip from 'react-tooltip'
 import Axios from 'axios'
 
 @inject('store') @observer
@@ -19,25 +18,13 @@ class RegisterPrompt extends Component {
     this.elId = {}
   }
 
-  // Unique keys to avoid botting
-  getElId = (param) => {
-    if (!this.elId[param]) {
-      this.elId[param] = param + '-' + (
-        Math.random().toString(36).substring(2, 15) +
-        Math.random().toString(36).substring(2, 15)
-      )
-    }
-
-    return this.elId[param]
-  }
-
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
 
     const payload = {
-      name: document.getElementById(this.elId.name).value,
-      email: document.getElementById(this.elId.email).value,
-      password: document.getElementById(this.elId.password).value
+      name: document.getElementById(this.elId.Username).value,
+      email: document.getElementById(this.elId.Email).value,
+      password: document.getElementById(this.elId.Password).value
     }
 
     Axios.post(url, payload)
@@ -75,10 +62,13 @@ class RegisterPrompt extends Component {
     this.auth()
   }
 
+  setElId = (item, id) => {
+    this.elId[item.props.name] = id
+  }
+
   render() {
 
     const { name, email, password } = this.state
-    const { getElId } = this
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
@@ -86,9 +76,9 @@ class RegisterPrompt extends Component {
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput name={'Username'} errors={name} className={[styles.formGroup]} id={getElId('name')}/>
-            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} id={getElId('email')}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} id={getElId('password')} password/>
+            <FormInput name={'Username'} errors={name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submit_wrapper}>
               <Button value={'Register'} className={styles.submit} />
             </div>

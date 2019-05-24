@@ -1,8 +1,8 @@
 import React, { Component, KeyboardEvent } from 'react'
 import Axios from 'axios'
 import styles from './prompt.scss'
-import { Icon, Button } from '../../components'
-import ReactTooltip from 'react-tooltip'
+import { Button } from '../../components'
+import { Icon, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 @inject('store') @observer
 class Prompt extends Component {
@@ -45,7 +45,7 @@ class Prompt extends Component {
   }
 
   // Unique keys to avoid botting
-  getElId(param) {
+  setElId(param) {
     if (!this.elId[param]) {
       this.elId[param] = param + '-' + (
         Math.random().toString(36).substring(2, 15) +
@@ -70,36 +70,8 @@ class Prompt extends Component {
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <div className={styles.formGroup}>
-              <label htmlFor={this.getElId('email')} className={styles.label}>
-              <Icon
-                  iconName={ (email == null && 'MinusCircle') || (email.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (email == null && 'noClass') || (email.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
-                />
-                Email
-              </label>
-              <input data-tip data-for={this.getElId('emailToolTip')} data-event='focus' data-event-off='blur' type='text' id={this.getElId('email')} name={this.getElId('email')} className={styles.input} />
-              {(email && email.length > 0 && <ReactTooltip id={this.getElId('emailToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
-                <ul className={styles.toolTipUl}>
-                  {email.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
-                </ul>
-              </ReactTooltip>)}
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor={this.getElId('password')} className={styles.label}>
-                <Icon
-                  iconName={ (password == null && 'MinusCircle') || (password.length <= 0 ? 'CheckCircle' : 'TimesCircle') }
-                  className={`${styles.icon} ${ (password == null && 'noClass') || (password.length <= 0 ? styles.iconCheck : styles.iconTimes) }`}
-                />
-                Password
-              {(password && password.length > 0 && <ReactTooltip id={this.getElId('passwordToolTip')} effect={'solid'} place={'right'} className={styles.toolTip}>
-                <ul className={styles.toolTipUl}>
-                  {password.map((msg, i) => <li key={i} className={styles.toolTipLi}>{msg}</li>)}
-                </ul>
-              </ReactTooltip>)}
-              </label>
-              <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
-            </div>
+            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} id={getElId('email')}/>
+            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} id={getElId('password')} password/>
             <div to='/' className={styles.submit_wrapper}>
               <Button value='Log In' className={styles.submit} />
             </div>

@@ -6,15 +6,17 @@ import ReactTooltip from 'react-tooltip'
 class FormInput extends Component {
   constructor(props) {
     super(props)
-    const { name, id, toolTipId } = this.props
+    const { name, callBack } = this.props
 
     this.elId = []
-    this.id = id || this.getElId(name)
-    this.toolTipId = toolTipId || this.getElId(`${name}ToolTip`)
+    this.id = this.getElId(name)
+    this.toolTipId = this.getElId(`${name}ToolTip`)
+
+    callBack(this, this.id)
   }
 
   // Unique keys to avoid botting
-  getElId(param) {
+  getElId = (param) => {
     if (!this.elId[param]) {
       this.elId[param] = param + '-' + (
         Math.random().toString(36).substring(2, 15) +
@@ -25,7 +27,7 @@ class FormInput extends Component {
     return this.elId[param]
   }
 
-  getErrorMessages(errors) {
+  getErrorMessages = (errors) => {
     const { toolTipId } = this
 
     return (
@@ -40,6 +42,7 @@ class FormInput extends Component {
   render() {
     const { name, className, errors, password } = this.props
     const { id, toolTipId } = this
+    console.log(name + ' rendering...')
     const hasErrors = errors && errors.length > 0,
           iconClassName = (errors == null && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
           iconName = (errors == null && 'MinusCircle') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
@@ -52,9 +55,9 @@ class FormInput extends Component {
             className={`${styles.icon} ${iconClassName}`}
             iconName={iconName}
           />
-          {name}
+          <span>{name}</span>
         </label>
-        <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' />
+        <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
         {(hasErrors && this.getErrorMessages(errors))}
       </div>
     )
