@@ -1,0 +1,86 @@
+@import '../../styles/index.scss';
+
+.input {
+	font-family: Poppins;
+	font-size: 1rem;
+	height: 1.6rem;
+	color: #7f7f7f;
+	border: none;
+	border-bottom: 1px solid gray;
+	cursor: text;
+
+	@include mobile-all-portrait {
+		background-color: transparent;
+		color: $darker;
+		display: flex;
+		padding: 0;
+		margin: 0;
+		border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+		height: 40px;
+		font-size: 20px;
+		width: 100%;
+	}
+
+	@include mobile-xs {
+		font-size: 15px;
+		height: 30px;
+	}
+}
+
+.label {
+	align-items: center;
+	display: flex;
+	color: gray;
+	font-size: 12px;
+	margin-bottom: 5px;
+
+	@include mobile-all-portrait {
+		font-size: 1rem;
+		color: $darker;
+		font-weight: bold;
+	}
+
+	@include mobile-xs {
+		font-size: 0.9rem;
+	}
+}
+
+.icon {
+	font-size: 14px;
+	margin-right: 5px;
+	background-color: white;
+	border-radius: 100%;
+
+	@include mobile-all-portrait {
+		font-size: 1rem;
+	}
+
+	@include mobile-xs {
+		font-size: 0.9rem;
+	}
+
+	&Check {
+		color: $success;
+	}
+	&Times {
+		color: $failure;
+	}
+}
+
+.toolTip {
+	min-width: 200px;
+	&Ul {
+		padding: 5px 0;
+		width: 100%;
+		list-style-type: none;
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	&Li {
+		font-weight: bold;
+		letter-spacing: 1px;
+		font-size: 0.8rem;
+		line-height: 1.2rem;
+	}
+}
