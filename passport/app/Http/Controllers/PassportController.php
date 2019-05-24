@@ -79,10 +79,24 @@ class PassportController extends Controller
             ], 400);
         }
 
+        $isOwner = $user->is(auth()->guard('api')->user());
+        $name = $user->name;
+        $exp = $user->experience;
+        $title = $user->title ? $user->title->name : "";
+        $posts = $user
+            ->posts()
+            ->orderBy('created_at')
+            ->take($isOwner ? 5 : 6)
+            ->get(['title'])
+            ->toArray()
+        ;
+
         $profile = [
-            'name' => $user->name,
-            'title' => $user->title->name,
-            'exp' => $user->experience
+            'name' => $name,
+            'title' => $title,
+            'experience' => $exp,
+            'isOwner' => $isOwner,
+            'posts' => $posts
         ];
 
         return response()->json(['profile' => $profile], 200);
