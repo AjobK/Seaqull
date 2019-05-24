@@ -23,6 +23,7 @@ const UserStore = types
       self.loggedIn = !!user
       if (user) {
         self.name = user.name || self.name
+        self.loggedIn = true
       }
     },
   }))

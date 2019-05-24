@@ -4,6 +4,7 @@ import styles from './prompt.scss'
 import { Button } from '../../components'
 import { Icon, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
+import { Redirect } from 'react-router-dom'
 
 @inject('store') @observer
 class Prompt extends Component {
@@ -12,7 +13,8 @@ class Prompt extends Component {
     this.state = {
       data: null,
       email: null,
-      password: null
+      password: null,
+      redirect: null
     }
 
     this.elId = {}
@@ -38,7 +40,9 @@ class Prompt extends Component {
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
         }).then(user => user.data)
         .then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
-        .then(this.props.store.user.fillUserData(JSON.parse(localStorage.user)))
+        .then(this.props.store.user.fillUserData(localStorage.user))
+        .then(this.setState({ redirect: <Redirect to='/profile' />}))
+
       } else if (error) {
         this.setState({ email: error, password: error })
       }
