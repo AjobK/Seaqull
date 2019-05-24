@@ -11,27 +11,16 @@ import styles from './post.scss'
 class Post extends App {
   constructor(props) {
     super(props)
+    this.content = JSON.parse(window.localStorage.getItem('content')) || [
+      { type: 'heading', value: null },
+      { type: 'paragraph', value: null },
+      { type: 'heading', value: null },
+      { type: 'paragraph', value: null }
+    ]
     this.state = {
       title: 'Front-End vs. Back-End',
-      content: JSON.parse(window.localStorage.getItem('content')) || [
-        { type: 'heading', value: null },
-        { type: 'paragraph', value: null },
-        { type: 'heading', value: null },
-        { type: 'paragraph', value: null }
-      ]
+      renderContent: this.returnComponentsFromJson(true)
     }
-    this.cbKey = 0
-  }
-
-  callBackSaveData = (item) => {
-    console.log('Saving')
-    const content = this.state.content
-    content[item.props.cbKey] = { type: item.type, value: convertToRaw(item.state.editorState.getCurrentContent())}
-    this.setState({
-      content
-    }, () => { // Async
-      this.sendDataToDB()
-    })
   }
 
   // callBackSaveData = (item) => {
@@ -45,54 +34,45 @@ class Post extends App {
   //   })
   // }
 
+  callBackSaveData = (item) => {
+    console.log('Saving')
+    this.content[item.props.cbKey] = { type: item.type, value: convertToRaw(item.state.editorState.getCurrentContent())}
+    this.returnComponentsFromJson()
+  }
+
   callBackItemRemoval = (item) => {
     console.log('Removal')
-    let content = [...this.state.content]
-    console.log(item.props.cbKey)
-    let a = content.splice(item.props.cbKey, 1)
-    console.log(a)
-    console.log('---------------')
+    this.content.splice(item.props.cbKey, 1)
+    this.returnComponentsFromJson()
+  }
 
-    this.setState({ content: content }, () => { // Async
+  createContentBlock = (type) => {
+    console.log('Creation')
+    this.content.push({ type: type, value: null })
+    this.returnComponentsFromJson()
+  }
+
+  returnComponentsFromJson = (noSetState = false, noSendDB = false) => {
+    let contentArr = []
+
+    this.content.forEach((item, counter) => {
+      const { type, value } = item
+
+      contentArr.push(<PostContent key={counter} val={counter} type={type} callBackSaveData={this.callBackSaveData} callBackItemRemoval={this.callBackItemRemoval} cbKey={counter} value={value && convertFromRaw(value)} />)
+    })
+    
+    if (noSetState) return
+
+    this.setState({
+      renderContent: contentArr
+    }, () => {
       this.sendDataToDB()
     })
   }
 
   sendDataToDB() {
     // Send this data
-    console.table(this.state.content)
-    window.localStorage.setItem('content', JSON.stringify(this.state.content));
-  }
-
-  createContentBlock(type) {
-    console.log('Creation')
-    const newContent = this.state.content
-
-    newContent[this.cbKey] = { type: type, value: null }
-    this.setState({
-      content: newContent
-    }, () => { // Async
-      this.sendDataToDB()
-    })
-  }
-
-  returnComponentsFromJson(data = null) {
-    console.log('ReturnComponents')
-    this.cbKey = 0
-
-    let arr = []
-    let content = JSON.parse(data) || this.state.content
-
-    content.forEach((item, counter) => {
-      const { type, value } = item
-
-      arr.push(<PostContent key={counter} type={type} callBackSaveData={this.callBackSaveData} callBackItemRemoval={this.callBackItemRemoval} cbKey={counter} value={value && convertFromRaw(value)} />)
-    })
-    
-    this.cbKey = arr.length
-    console.log(this.cbKey)
-
-    return arr
+    window.localStorage.setItem('content', JSON.stringify(this.content));
   }
 
   render() {
@@ -100,7 +80,7 @@ class Post extends App {
       <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
         <Section title={this.state.title} editable>
-          {this.returnComponentsFromJson()}
+          { this.state.renderContent }
           <div className={styles.container}>
             <Button className={styles.insertButtonHeading} noStyle value='HEADING' onClick={() => this.createContentBlock('heading')}/>
             <Button className={styles.insertButtonParagraph} noStyle value='PARAGRAPH' onClick={() => this.createContentBlock('paragraph')} />
@@ -108,7 +88,7 @@ class Post extends App {
             <Button className={styles.insertButtonImg} noStyle value='IMAGE' onClick={() => this.createContentBlock('image')} />
           </div>
         </Section>
-        <div className={styles.saveContainer}>
+        <div className={styles.saveContainer} onClick={this.onClick2}>
           <div className={styles.save}>
             <Button className={styles.saveButton} value='Save Changes'/>
             <div className={styles.insertButtonEye}><Icon iconName={'Eye'}/></div>
