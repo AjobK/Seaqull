@@ -55,14 +55,13 @@ class Prompt extends Component {
 
     return this.elId[param]
   }
-  handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-      this.auth();
-    }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    this.auth()
   }
   
   render() {
-
     const { email, password } = this.state
 
     return (
@@ -70,7 +69,7 @@ class Prompt extends Component {
         <div className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
-          <form onKeyPress={this.handleKeyPress} className={styles.form}>
+          <form onSubmit={this.onSubmit} className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('email')} className={styles.label}>
               <Icon
