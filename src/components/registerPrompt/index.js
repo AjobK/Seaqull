@@ -15,6 +15,7 @@ class RegisterPrompt extends Component {
       email: null,
       password: null
     }
+
     this.elId = {}
   }
 
