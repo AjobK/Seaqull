@@ -101,7 +101,7 @@ class Prompt extends Component {
               <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <Button onClick={this.handleClick} value='Log In' className={styles.submit} />
+              <Button value='Log In' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />
