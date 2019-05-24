@@ -77,6 +77,11 @@ class RegisterPrompt extends Component {
     })
   }
 
+  onSubmit = (e) => {
+    e.preventDefault()
+    this.auth()
+  }
+
   render() {
 
     const { name, email, password } = this.state
@@ -86,7 +91,7 @@ class RegisterPrompt extends Component {
         <div className={styles.logo} />
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
-          <form method='POST' className={styles.form}>
+          <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('name')} className={styles.label}>
                 <Icon
