@@ -12,7 +12,7 @@
 }
 
 .background {
-	background-color: #ff6060;
+	background-color: $background;
 	width: 100%;
 	opacity: 0.7;
 	height: calc(100vh - #{$header-height});
@@ -26,6 +26,7 @@
 
 .prompt {
 	position: absolute;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	
 	@include mobile-all {
 		border-radius: 0;
