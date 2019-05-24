@@ -61,7 +61,7 @@ class Prompt extends Component {
     e.preventDefault()
     this.auth()
   }
-
+  
   render() {
     const { email, password } = this.state
 

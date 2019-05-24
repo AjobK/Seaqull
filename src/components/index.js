@@ -19,6 +19,7 @@ import Logo from './logo'
 import Loader from './loader'
 import Icon from './icon'
 import RegisterPrompt from './registerPrompt'
+import FormInput from './formInput'
 
 export {
   Button,
@@ -41,5 +42,6 @@ export {
   Logo,
   Loader,
   Icon,
-  RegisterPrompt
+  RegisterPrompt,
+  FormInput
 }
