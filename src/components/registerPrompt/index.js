@@ -14,8 +14,7 @@ class RegisterPrompt extends Component {
       data: null,
       name: null,
       email: null,
-      password: null,
-      redirect: null
+      password: null
     }
 
     this.elId = {}
@@ -23,7 +22,7 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
-
+    const userStore = this.props.store.user
     const payload = {
       name: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
@@ -51,10 +50,13 @@ class RegisterPrompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-        }).then(user => user.data)
-        .then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
-        .then(this.props.store.user.fillUserData(localStorage.getItem('user')))
-        .then(this.setState({ redirect: <Redirect to='/profile' />}))
+        }).then(user => {
+          this.userData = user.data.user
+        })
+        .then(localStorage.setItem('user', JSON.stringify(this.userData)))
+        .then(() => {
+            this.props.store.user.fillUserData(this.userData)
+        })
       }
 
     })
@@ -70,12 +72,12 @@ class RegisterPrompt extends Component {
   }
 
   render() {
-
-    const { name, email, password, redirect } = this.state
+    const { user } = this.props.store
+    const { name, email, password } = this.state
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
-        { redirect }
+      { user.loggedIn && <Redirect to='/profile' /> }
         <div className={styles.logo} />
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>

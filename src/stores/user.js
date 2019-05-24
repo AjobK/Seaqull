@@ -6,7 +6,8 @@ const UserStore = types
     loggedIn: types.optional(types.boolean, localStorage.user == null ? false : true),
     picture: types.optional(types.string, '../src/static/dummy/user/profile.jpg'),
     banner: types.optional(types.string, '../src/static/dummy/user/banner.jpg'),
-    name: types.optional(types.string, localStorage.user == null ? '' : JSON.parse(localStorage.user).name),
+    name: types.optional(types.string, ''),
+    // name: types.optional(types.string, localStorage.user == null ? '' : JSON.parse(localStorage.user).name),
     role: types.optional(types.string, 'Software Engineer'),
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10)
@@ -14,15 +15,15 @@ const UserStore = types
   .actions(self => ({
     logOut() {
       self.loggedIn = false
-      localStorage.clear();
+      self.name = ''
     },
     logIn() {
       self.loggedIn = true
     },
     fillUserData(user = null) {
       if (user) {
-        self.name = user.name || self.name
         self.loggedIn = true
+        self.name = user.name || self.name
       }
     },
   }))

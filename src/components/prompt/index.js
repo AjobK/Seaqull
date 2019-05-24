@@ -13,10 +13,8 @@ class Prompt extends Component {
     this.state = {
       data: null,
       email: null,
-      password: null,
-      redirect: null
+      password: null
     }
-
     this.elId = {}
   }
 
@@ -38,11 +36,13 @@ class Prompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
-        }).then(user => user.data)
-        .then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
-        .then(this.props.store.user.fillUserData(localStorage.user))
-        .then(this.setState({ redirect: <Redirect to='/profile' />}))
-
+        }).then(user => {
+          this.userData = user.data.user
+        })
+        .then(localStorage.setItem('user', JSON.stringify(this.userData)))
+        .then(() => {
+            this.props.store.user.fillUserData(this.userData)
+        })
       } else if (error) {
         this.setState({ email: error, password: error })
       }
@@ -59,11 +59,12 @@ class Prompt extends Component {
   }
   
   render() {
-    const { email, password, redirect } = this.state
+    const { user } = this.props.store
+    const { email, password } = this.state
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
-        { redirect }
+        { user.loggedIn && <Redirect to='/profile' /> }
         <div className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
