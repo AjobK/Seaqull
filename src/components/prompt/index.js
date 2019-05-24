@@ -4,6 +4,7 @@ import styles from './prompt.scss'
 import { Icon, Button } from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { inject, observer } from 'mobx-react'
+
 @inject('store') @observer
 class Prompt extends Component {
   constructor(props) {
@@ -36,7 +37,9 @@ class Prompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
-        }).then(user => user.data).then(userData => localStorage.setItem('user', JSON.stringify(userData.user))).then(this.props.store.user.fillUserData(JSON.parse(localStorage.user)))
+        }).then(user => user.data)
+        .then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
+        .then(this.props.store.user.fillUserData(JSON.parse(localStorage.user)))
       } else if (error) {
         this.setState({ email: error, password: error })
       }
@@ -54,14 +57,12 @@ class Prompt extends Component {
 
     return this.elId[param]
   }
-  handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-      this.auth();
-    }
+  onSubmit = (e) => {
+    e.preventDefault()
+    this.auth()
   }
-  
-  render() {
 
+  render() {
     const { email, password } = this.state
 
     return (
@@ -69,7 +70,7 @@ class Prompt extends Component {
         <div className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
-          <form onKeyPress={this.handleKeyPress} className={styles.form}>
+          <form onSubmit={this.onSubmit} className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('email')} className={styles.label}>
               <Icon
