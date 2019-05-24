@@ -22,7 +22,6 @@ class PassportController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|unique:users',
             'email' => 'required|email|unique:users',
-            // 'password' => 'required|min:6',
             'password' => [
                 'required',
                 'min:6',
@@ -30,13 +29,6 @@ class PassportController extends Controller
                 new Lowercase(),
                 new NumberOrSpecial()
             ],
-            // This includes a check if the password contains three of the following
-            // English uppercase characters (A – Z)
-            // English lowercase characters (a – z)
-            // Base 10 digits (0 – 9)
-            // Non-alphanumeric (For example: !, $, #, or %)
-            // Unicode characters
-            // 'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/',
         ]);
         
         if ($validator->fails()) {
