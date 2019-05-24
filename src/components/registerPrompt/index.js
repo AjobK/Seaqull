@@ -3,6 +3,7 @@ import styles from './registerprompt.scss'
 import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
+import { Redirect } from 'react-router-dom'
 import Axios from 'axios'
 
 @inject('store') @observer
@@ -13,7 +14,8 @@ class RegisterPrompt extends Component {
       data: null,
       name: null,
       email: null,
-      password: null
+      password: null,
+      redirect: null
     }
 
     this.elId = {}
@@ -53,7 +55,10 @@ class RegisterPrompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-        }).then(user => user.data).then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
+        })
+        .then(user => user.data)
+        .then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
+        .then(this.setState({ redirect: <Redirect to='/profile' />}))
       }
     })
   }
@@ -69,10 +74,11 @@ class RegisterPrompt extends Component {
 
   render() {
 
-    const { name, email, password } = this.state
+    const { name, email, password, redirect } = this.state
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
+        { redirect }
         <div className={styles.logo} />
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
