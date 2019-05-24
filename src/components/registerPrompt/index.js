@@ -33,11 +33,6 @@ class RegisterPrompt extends Component {
     return this.elId[param]
   }
 
-  handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-      this.auth();
-    }
-  }
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
 
@@ -73,6 +68,11 @@ class RegisterPrompt extends Component {
     })
   }
 
+  onSubmit = (e) => {
+    e.preventDefault()
+    this.auth()
+  }
+
   render() {
 
     const { name, email, password } = this.state
@@ -82,7 +82,7 @@ class RegisterPrompt extends Component {
         <div className={styles.logo} />
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
-          <form method='POST' className={styles.form}>
+          <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('name')} className={styles.label}>
                 <Icon
@@ -129,7 +129,7 @@ class RegisterPrompt extends Component {
               <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <Button onClick={this.auth} value='Register' className={styles.submit} />
+              <Button value='Register' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />

@@ -1,12 +1,24 @@
 @import '../../styles/index.scss';
 
 .button {
-	padding: 10px 30px;
-	border-radius: 3px;
+	transition: 0.2s;
 	cursor: pointer;
-	background-color: $primary;
+	font-family: $mainfont, $sidefont;
+	font-size: 1rem;
+	letter-spacing: 1px;
+	font-weight: bold;
+	padding: 10px 25px;
+	border: none;
+	border-radius: 48px;
 	color: white;
-	text-align: center;
+	background-color: $primary;
+	display: inline-block;
+	list-style-type: none;
+
+	&:hover {
+		transition: 0.2s;
+		@include pulse();
+	}
 }
 
 .inverted {
