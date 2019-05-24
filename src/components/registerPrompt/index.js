@@ -33,6 +33,11 @@ class RegisterPrompt extends Component {
     return this.elId[param]
   }
 
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      this.auth();
+    }
+  }
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
 
@@ -67,7 +72,7 @@ class RegisterPrompt extends Component {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user))
+        }).then(user => user.data).then(userData => localStorage.setItem('user', JSON.stringify(userData.user)))
       }
     })
   }

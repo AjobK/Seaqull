@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component, KeyboardEvent } from 'react'
+import Axios from 'axios'
 import styles from './prompt.scss'
 import { Icon, Button } from '../../components'
 import ReactTooltip from 'react-tooltip'
@@ -18,7 +18,7 @@ class Prompt extends Component {
     }
   }
 
-  handleClick = () => {
+  auth = () => {
 
     const apiBaseUrl = 'http://localhost:8000/api/';
     const payload={
@@ -26,18 +26,18 @@ class Prompt extends Component {
       password: document.getElementById(this.elId.password).value
     }
 
-    axios.post(apiBaseUrl + 'login', payload)
+    Axios.post(apiBaseUrl + 'login', payload)
     .then(response => {
       const { token, error } = response.data
 
       if (token) {
-        localStorage.setItem('token', token)
         this.setState({ email: [], password: [] })
-        axios.get('http://localhost:8000/api/user', {
+
+        Axios.get('http://localhost:8000/api/user', {
           method:'GET',
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
-        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user))
+        }).then(user => user.data).then(userData => localStorage.setItem('user', JSON.stringify(userData.user))).then(this.props.store.user.fillUserData(JSON.parse(localStorage.user)))
       } else if (error) {
         this.setState({ email: error, password: error })
       }
@@ -55,15 +55,13 @@ class Prompt extends Component {
 
     return this.elId[param]
   }
-
-  render() {
-    if(!(localStorage.token == null)){
-          axios.get('http://localhost:8000/api/user', {
-          method:'GET',
-          mode:'cors',
-          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${localStorage.token}` }
-        }).then(user => user.data).then(userData => this.props.store.user.fillUserData(userData.user))
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      this.auth();
     }
+  }
+  
+  render() {
 
     const { email, password } = this.state
 
@@ -72,7 +70,7 @@ class Prompt extends Component {
         <div className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
-          <form className={styles.form}>
+          <form onKeyPress={this.handleKeyPress} className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor={this.getElId('email')} className={styles.label}>
               <Icon
