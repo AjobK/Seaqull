@@ -9,23 +9,22 @@ import { inject, observer } from 'mobx-react'
 class Prompt extends Component {
   constructor(props) {
     super(props)
-
-    this.elId = {}
-
     this.state = {
       data: null,
       email: null,
       password: null
     }
+
+    this.elId = {}
   }
 
   auth = () => {
     const apiBaseUrl = 'http://localhost:8000/api/';
 
     const payload={
-      email: document.getElementById(this.elId.email).value,
-      password: document.getElementById(this.elId.password).value
-    } 
+      email: document.getElementById(this.elId.Email).value,
+      password: document.getElementById(this.elId.Password).value
+    }
 
     Axios.post(apiBaseUrl + 'login', payload)
     .then(response => {
@@ -46,20 +45,13 @@ class Prompt extends Component {
     })
   }
 
-  // Unique keys to avoid botting
-  setElId(param) {
-    if (!this.elId[param]) {
-      this.elId[param] = param + '-' + (
-        Math.random().toString(36).substring(2, 15) +
-        Math.random().toString(36).substring(2, 15)
-      )
-    }
-
-    return this.elId[param]
-  }
   onSubmit = (e) => {
     e.preventDefault()
     this.auth()
+  }
+
+  setElId = (item, id) => {
+    this.elId[item.props.name] = id
   }
   
   render() {
@@ -71,8 +63,8 @@ class Prompt extends Component {
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} id={getElId('email')}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} id={getElId('password')} password/>
+            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submit_wrapper}>
               <Button onClick={this.auth} value='Log In' className={styles.submit} />
             </div>

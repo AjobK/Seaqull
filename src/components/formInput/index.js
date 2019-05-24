@@ -42,7 +42,6 @@ class FormInput extends Component {
   render() {
     const { name, className, errors, password } = this.props
     const { id, toolTipId } = this
-    console.log(name + ' rendering...')
     const hasErrors = errors && errors.length > 0,
           iconClassName = (errors == null && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
           iconName = (errors == null && 'MinusCircle') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
