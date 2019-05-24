@@ -189,20 +189,8 @@
 }
 
 .submit {
-	transition: 0.2s;
-	cursor: pointer;
-	font-family: $mainfont, $sidefont;
 	font-size: 0.75rem;
-	letter-spacing: 1px;
-	font-weight: bold;
-	padding: 10px 25px;
-	border: none;
-	border-radius: 48px;
-	color: white;
-	background-color: $primary;
 	margin-top: 30px;
-	display: inline-block;
-	list-style-type: none;
 
 	&:hover {
 		transition: 0.2s;
