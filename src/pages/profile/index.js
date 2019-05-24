@@ -82,15 +82,10 @@ class Profile extends App {
       picture: '/src/static/dummy/user/profile.jpg'
     }
 
-    console.log(profile);
-
     this.setState({ user })
   }
 
   render() {
-
-    console.log(this.state.user.isOwner);
-
     return (
       <Standard>
         <UserBanner user={this.state.user}/>

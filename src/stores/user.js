@@ -14,7 +14,7 @@ const UserStore = types
     title: types.optional(types.string, 'Software Engineer'),
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10),
-    posts: types.optional(types.array(Posts), [{ title: 'Testpost' }]),
+    posts: types.optional(types.array(Posts), []),
     path: types.optional(types.string, 'timon')
   })
   .actions(self => ({
