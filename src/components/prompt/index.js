@@ -19,12 +19,12 @@ class Prompt extends Component {
   }
 
   auth = () => {
-
     const apiBaseUrl = 'http://localhost:8000/api/';
+
     const payload={
       email: document.getElementById(this.elId.email).value,
       password: document.getElementById(this.elId.password).value
-    }
+    } 
 
     Axios.post(apiBaseUrl + 'login', payload)
     .then(response => {
@@ -32,7 +32,6 @@ class Prompt extends Component {
 
       if (token) {
         this.setState({ email: [], password: [] })
-
         Axios.get('http://localhost:8000/api/user', {
           method:'GET',
           mode:'cors',
@@ -102,7 +101,7 @@ class Prompt extends Component {
               <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <Button onClick={this.handleClick} value='Log In' className={styles.submit} />
+              <Button onClick={this.auth} value='Log In' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />

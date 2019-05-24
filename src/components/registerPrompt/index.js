@@ -63,10 +63,6 @@ class RegisterPrompt extends Component {
           email: [],
           password: []
         })
-
-        //storing token in local
-        localStorage.setItem('token', res.data.token)
-
         // Put user data in user store
         Axios.get('http://localhost:8000/api/user', {
           method:'GET',

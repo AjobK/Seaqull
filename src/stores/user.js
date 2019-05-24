@@ -15,7 +15,6 @@ const UserStore = types
     logOut() {
       self.loggedIn = false
       localStorage.clear();
-      
     },
     logIn() {
       self.loggedIn = true
