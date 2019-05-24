@@ -63,7 +63,7 @@ class Prompt extends Component {
           <form onSubmit={this.onSubmit} className={styles.form}>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
-            <div to='/' className={styles.submit_wrapper}>
+            <div to='/' className={styles.submitWrapper}>
               <Button value='Log In' className={styles.submit} />
             </div>
           </form>

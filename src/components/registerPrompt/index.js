@@ -80,7 +80,7 @@ class RegisterPrompt extends Component {
             <FormInput name={'Username'} errors={name} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
-            <div to='/' className={styles.submit_wrapper}>
+            <div to='/' className={styles.submitWrapper}>
               <Button value={'Register'} className={styles.submit} />
             </div>
           </form>

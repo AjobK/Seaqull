@@ -189,7 +189,7 @@
 }
 
 .submit {
-	font-size: 0.75rem;
+	font-size: 0.9rem;
 	margin-top: 30px;
 
 	&:hover {
@@ -199,13 +199,13 @@
 
 	@include mobile-all-portrait {
 		font-size: 1rem;
-		border-radius: 30px;
-		padding: 25px 45px;
-		height: 38px;
+		line-height: 1rem;
+		border-radius: 999px;
+		padding: 20px 45px;
 		display: flex;
 		align-items: center;
 		
-		&_wrapper {
+		&Wrapper {
 			display: flex;
 			justify-content: flex-end;
 			width: 100%;
@@ -219,7 +219,8 @@
 
 	@include mobile-xs {
 		font-size: 0.9rem;
-		padding: 25px 40px;
+		line-height: 0.9rem;
+		padding: 20px 40px;
 	}
 }
 
