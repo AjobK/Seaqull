@@ -59,10 +59,11 @@ class Prompt extends Component {
   }
   
   render() {
-    const { email, password } = this.state
+    const { email, password, redirect } = this.state
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
+        { redirect }
         <div className={styles.logo} />
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
