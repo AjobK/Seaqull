@@ -22,7 +22,6 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
-    const userStore = this.props.store.user
     const payload = {
       name: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
@@ -53,7 +52,9 @@ class RegisterPrompt extends Component {
         }).then(user => {
           this.userData = user.data.user
         })
-        .then(localStorage.setItem('user', JSON.stringify(this.userData)))
+        .then(() => {
+          localStorage.setItem('user', JSON.stringify(this.userData))
+        })
         .then(() => {
             this.props.store.user.fillUserData(this.userData)
         })

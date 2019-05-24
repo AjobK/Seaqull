@@ -4,7 +4,7 @@ import { Standard } from '../../layouts'
 import Prompt from '../../components/prompt'
 import styles from './login.scss'
 
-class Home extends App {
+class Login extends App {
   render() {
     return (
       <Standard>
@@ -17,4 +17,4 @@ class Home extends App {
   }
 }
 
-export default Home
+export default Login
