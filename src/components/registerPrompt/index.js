@@ -33,11 +33,6 @@ class RegisterPrompt extends Component {
     return this.elId[param]
   }
 
-  handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-      this.auth();
-    }
-  }
   auth = () => {
     const url = `${this.props.store.defaultData.backendUrl}/api/register`
 
@@ -138,7 +133,7 @@ class RegisterPrompt extends Component {
               <input data-tip data-for={this.getElId('passwordToolTip')} data-event='focus' data-event-off='blur' type='password' id={this.getElId('password')} name={this.getElId('password')} className={styles.input} />
             </div>
             <div to='/' className={styles.submit_wrapper}>
-              <Button onClick={this.auth} value='Register' className={styles.submit} />
+              <Button value='Register' className={styles.submit} />
             </div>
           </form>
           <div className={styles.image} />
