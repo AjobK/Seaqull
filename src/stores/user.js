@@ -20,7 +20,6 @@ const UserStore = types
       self.loggedIn = true
     },
     fillUserData(user = null) {
-      self.loggedIn = !!user
       if (user) {
         self.name = user.name || self.name
         self.loggedIn = true
