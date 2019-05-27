@@ -67,7 +67,7 @@
 		width: 100%;
 		text-align: center;
 		margin-top: 3rem;
-		font-size: 0.75rem;
+		font-size: 0.8rem;
 		letter-spacing: 0;
 		color: #9b9b9b;
 		word-break: break-word;
@@ -83,9 +83,13 @@
 			margin-top: 5px;
 		}
 
-		&_link {
+		&Link {
 			color: #9b9b9b;
 			text-decoration: underline;
+
+			&:hover {
+				color: $primary;
+			}
 
 			@include mobile-all-portrait {
 				color: $primary;

@@ -3,7 +3,7 @@ import styles from './registerPrompt.scss'
 import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 
 @inject('store') @observer
@@ -30,35 +30,34 @@ class RegisterPrompt extends Component {
 
     Axios.post(url, payload)
     .then(res => {
-      this.setState({
-        name: [],
-        email: [],
-        password: []
-      })
-      // Put user data in user store
       Axios.get('http://localhost:8000/api/user', {
         method:'GET',
         mode:'cors',
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-      }).then(user => {
-        this.userData = user.data.user
+      }).then(user => (
+        user.data.user
+      ))
+      .then(user => {
+        localStorage.setItem('user', JSON.stringify(user))
+        return user
       })
-      .then(() => {
-        localStorage.setItem('user', JSON.stringify(this.userData))
-      })
-      .then(() => {
-          this.props.store.user.fillUserData(this.userData)
+      .then(user => {
+          this.props.store.user.fillUserData(user)
+          this.goToProfile()
       })
     })
     .catch(res => {
       const { name, email, password } = res.response.data.errors
-
       this.setState({
         name: name || [],
         email: email || [],
         password: password || []
       })
     })
+  }
+
+  goToProfile = () => {
+    this.props.history.push('/profile')
   }
 
   onSubmit = (e) => {
@@ -81,7 +80,6 @@ class RegisterPrompt extends Component {
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
-      { user.loggedIn && <Redirect to='/profile' /> }
         <div className={styles.logo} />
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
@@ -96,12 +94,11 @@ class RegisterPrompt extends Component {
           <div className={styles.image} />
         </div>
         <p className={styles.textFooter}>
-          <small>By registering I confirm that I have read and agree to the </small>
-          <a className={styles.textFooter_link}href='#'>Terms of service</a>
+          By proceeding I confirm that I have read and agree to the <a className={styles.textFooterLink}href='#'>Terms of service</a>
         </p>
       </div>
     )
   }
 }
 
-export default RegisterPrompt
+export default withRouter(RegisterPrompt)
