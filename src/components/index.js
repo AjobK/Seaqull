@@ -18,6 +18,7 @@ import Statistic from './statistic'
 import Logo from './logo'
 import Loader from './loader'
 import Icon from './icon'
+import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
 import FormInput from './formInput'
 
@@ -42,6 +43,7 @@ export {
   Logo,
   Loader,
   Icon,
+  LoginPrompt,
   RegisterPrompt,
   FormInput
 }

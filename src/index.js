@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import AppRouter from './pages/index.js';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import AppRouter from './pages/index.js'
 
 
-ReactDOM.render(<AppRouter />, document.getElementById('root'));
+ReactDOM.render(<AppRouter />, document.getElementById('root'))

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './registerprompt.scss'
+import styles from './registerPrompt.scss'
 import Button from '../button'
 import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
@@ -30,36 +30,34 @@ class RegisterPrompt extends Component {
 
     Axios.post(url, payload)
     .then(res => {
-      if (res.data.errors) {
-        const { name, email, password } = res.data.errors
+      this.setState({
+        name: [],
+        email: [],
+        password: []
+      })
+      // Put user data in user store
+      Axios.get('http://localhost:8000/api/user', {
+        method:'GET',
+        mode:'cors',
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
+      }).then(user => {
+        this.userData = user.data.user
+      })
+      .then(() => {
+        localStorage.setItem('user', JSON.stringify(this.userData))
+      })
+      .then(() => {
+          this.props.store.user.fillUserData(this.userData)
+      })
+    })
+    .catch(res => {
+      const { name, email, password } = res.response.data.errors
 
-        this.setState({
-          name: name || [],
-          email: email || [],
-          password: password || []
-        })
-      } else {
-        this.setState({
-          name: [],
-          email: [],
-          password: []
-        })
-        // Put user data in user store
-        Axios.get('http://localhost:8000/api/user', {
-          method:'GET',
-          mode:'cors',
-          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-        }).then(user => {
-          this.userData = user.data.user
-        })
-        .then(() => {
-          localStorage.setItem('user', JSON.stringify(this.userData))
-        })
-        .then(() => {
-            this.props.store.user.fillUserData(this.userData)
-        })
-      }
-
+      this.setState({
+        name: name || [],
+        email: email || [],
+        password: password || []
+      })
     })
   }
 
