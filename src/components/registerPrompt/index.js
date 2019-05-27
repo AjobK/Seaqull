@@ -21,16 +21,17 @@ class RegisterPrompt extends Component {
   }
 
   auth = () => {
-    const url = `${this.props.store.defaultData.backendUrl}/api/register`
+    Axios.defaults.baseURL = 'http://localhost:8000/api';
+
     const payload = {
       name: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value
     }
 
-    Axios.post(url, payload)
+    Axios.post('/register', payload)
     .then(res => {
-      Axios.get('http://localhost:8000/api/user', {
+      Axios.get('/user', {
         method:'GET',
         mode:'cors',
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
@@ -62,11 +63,6 @@ class RegisterPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.setState({
-      name: 'loading',
-      email: 'loading',
-      password: 'loading'
-    })
     this.auth()
   }
 

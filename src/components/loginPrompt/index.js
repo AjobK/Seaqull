@@ -19,21 +19,20 @@ class LoginPrompt extends Component {
   }
 
   auth = () => {
-    const apiBaseUrl = 'http://localhost:8000/api/';
+    Axios.defaults.baseURL = 'http://localhost:8000/api';
 
     const payload={
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value
     }
 
-    Axios.post(apiBaseUrl + 'login', payload)
+    Axios.post('/login', payload)
     .then(response => {
       const { token, error } = response.data
 
       if (token) {
         this.setState({ email: [], password: [] })
-        Axios.get('http://localhost:8000/api/user', {
-          method:'GET',
+        Axios.get('/user', {
           mode:'cors',
           headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${token}` }
         }).then(user => {
