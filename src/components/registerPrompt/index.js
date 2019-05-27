@@ -65,6 +65,11 @@ class RegisterPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
+    this.setState({
+      name: 'loading',
+      email: 'loading',
+      password: 'loading'
+    })
     this.auth()
   }
 

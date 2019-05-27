@@ -33,7 +33,7 @@ class FormInput extends Component {
     return (
       <ReactTooltip id={toolTipId} effect={'solid'} place={'right'} className={styles.toolTip}>
         <ul className={styles.toolTipUl}>
-          {errors.map((message, i) => <li key={i} className={styles.toolTipLi}>{message}</li>)}
+          {(errors != 'loading') && errors.map((message, i) => <li key={i} className={styles.toolTipLi}>{message}</li>)}
         </ul>
       </ReactTooltip>
     )
@@ -42,16 +42,16 @@ class FormInput extends Component {
   render() {
     const { name, className, errors, password } = this.props
     const { id, toolTipId } = this
-    const hasErrors = errors && errors.length > 0,
-          iconClassName = (errors == null && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
-          iconName = (errors == null && 'MinusCircle') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
+    const hasErrors = errors != 'loading' && errors && errors.length > 0,
+          iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
+          iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
           inputType = password ? 'password' : 'text'
 
     return (
       <div className={[...className || ''].join(' ')}>
         <label htmlFor={id} className={styles.label}>
           <Icon
-            className={`${styles.icon} ${iconClassName}`}
+            className={`${styles.icon} ${iconClassName} ${errors == 'loading' ? 'fa-spin' : ''}`}
             iconName={iconName}
           />
           <span>{name}</span>

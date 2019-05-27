@@ -51,6 +51,10 @@ class Prompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
+    this.setState({
+      email: 'loading',
+      password: 'loading'
+    })
     this.auth()
   }
 

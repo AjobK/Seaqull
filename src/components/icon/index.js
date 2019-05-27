@@ -6,10 +6,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 class Icon extends Component {
   render() {
-    const classNames = []
+    let classNames = []
     const { className, iconName, onClick, style } = this.props
 
-    if (className) classNames.push(className)
+    if (typeof className == 'string')
+      classNames.push(className)
+    else if (className)
+      classNames = [...className]
 
     let icon = icons[`fa${iconName}`] || brands[`fa${iconName}`] || icons['faBan']
 
