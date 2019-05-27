@@ -19,8 +19,13 @@ class Post extends App {
     ]
     this.state = {
       title: 'Front-End vs. Back-End',
-      renderContent: this.returnComponentsFromJson(true)
+      renderContent: []
     }
+  }
+
+  componentDidMount() {
+    console.log('Mounted!')
+    this.setState({ renderContent: this.returnComponentsFromJson() })
   }
 
   // callBackSaveData = (item) => {
@@ -33,6 +38,14 @@ class Post extends App {
   //     this.sendDataToDB()
   //   })
   // }
+
+  componentWillUnmount() {
+    this._Mounted = false
+  }
+
+  componentDidMount() {
+    this._Mounted = true
+  }
 
   callBackSaveData = (item) => {
     console.log('Saving')
@@ -52,7 +65,7 @@ class Post extends App {
     this.returnComponentsFromJson()
   }
 
-  returnComponentsFromJson = (noSetState = false, noSendDB = false) => {
+  returnComponentsFromJson = (noSetState = false) => {
     let contentArr = []
 
     this.content.forEach((item, counter) => {

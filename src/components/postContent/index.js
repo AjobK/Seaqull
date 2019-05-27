@@ -14,7 +14,7 @@ class PostContent extends Component {
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.state = {
-      editorState: this.props.val ? EditorState.createFromText('HelloWorld') : EditorState.createEmpty()
+      editorState: this.props.value || EditorState.createEmpty()
     }
   }
 
