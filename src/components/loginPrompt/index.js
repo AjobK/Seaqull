@@ -65,7 +65,7 @@ class LoginPrompt extends Component {
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
-  
+
   render() {
     const { email, password } = this.state
 
