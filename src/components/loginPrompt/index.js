@@ -1,13 +1,13 @@
-import React, { Component, KeyboardEvent } from 'react'
+import React, { Component } from 'react'
 import Axios from 'axios'
-import styles from './prompt.scss'
+import styles from './loginPrompt.scss'
 import { Button } from '../../components'
-import { Icon, FormInput } from '../../components'
+import { FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 
 @inject('store') @observer
-class Prompt extends Component {
+class LoginPrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -85,4 +85,4 @@ class Prompt extends Component {
   }
 }
 
-export default Prompt
+export default LoginPrompt

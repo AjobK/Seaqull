@@ -31,7 +31,8 @@
 	align-items: center;
 	display: flex;
 	color: gray;
-	font-size: 0.8rem;
+	font-size: 0.9rem;
+	line-height: 0.9rem;
 	margin-bottom: 5px;
 
 	@include mobile-all-portrait {
@@ -46,7 +47,7 @@
 }
 
 .icon {
-	font-size: 14px;
+	font-size: 0.9rem;
 	margin-right: 5px;
 	background-color: white;
 	border-radius: 100%;
