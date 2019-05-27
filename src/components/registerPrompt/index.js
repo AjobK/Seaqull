@@ -11,7 +11,6 @@ class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: null,
       name: null,
       email: null,
       password: null
@@ -32,15 +31,12 @@ class RegisterPrompt extends Component {
     Axios.post('/register', payload)
     .then(res => {
       Axios.get('/user', {
-        method:'GET',
         mode:'cors',
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-      }).then(user => (
-        user.data.user
-      ))
+      })
       .then(user => {
-        localStorage.setItem('user', JSON.stringify(user))
-        return user
+        localStorage.setItem('user', JSON.stringify(user.data.user))
+        return user.data.user
       })
       .then(user => {
           this.props.store.user.fillUserData(user)
@@ -63,6 +59,11 @@ class RegisterPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
+    this.setState({
+      name: 'loading',
+      email: 'loading',
+      password: 'loading'
+    })
     this.auth()
   }
 
@@ -71,7 +72,6 @@ class RegisterPrompt extends Component {
   }
 
   render() {
-    const { user } = this.props.store
     const { name, email, password } = this.state
 
     return (
