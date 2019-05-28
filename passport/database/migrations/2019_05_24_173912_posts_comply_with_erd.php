@@ -13,7 +13,7 @@ class PostsComplyWithErd extends Migration
      */
     public function up()
     {
-        Schema::create('comment', function (Blueprint $table) {
+        Schema::create('Comment', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->integer('user_id');
@@ -22,6 +22,18 @@ class PostsComplyWithErd extends Migration
             $table->text('comment');
 
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('posts');
+
+            $table->foreign('comment_id')
+            ->references('id')
+            ->on('Comment');
         });
     }
 

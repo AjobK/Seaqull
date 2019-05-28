@@ -17,10 +17,14 @@ class PostsComplyWithErd extends Migration
             $table->bigIncrements('id');
 
             $table->integer('user_id');
-            $table->string('previous_password', 45)->nullable();
+            $table->string('previous_password', 255)->nullable();
             $table->string('type');
             $table->string('ip_address');
             $table->timestamp('created_at');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 
