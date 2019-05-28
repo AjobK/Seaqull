@@ -13,30 +13,34 @@ class CreatingComments extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('Comment')){
+            Schema::drop('Comment');
+        };
         Schema::create('Comment', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
-            $table->integer('user_id');
-            $table->integer('post_id');
-            $table->integer('comment_id')->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->integer('post_id')->unsigned();
+            $table->unsignedBigInteger('comment_id')->nullable();
             $table->text('comment');
 
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('post_id')
                 ->references('id')
-                ->on('posts');
-            
+                ->on('posts')
+                ->onDelete('cascade');
+
             $table->foreign('comment_id')
                 ->references('id')
-                ->on('Comment');
+                ->on('Comment')
+                ->onDelete('cascade');
 
-        });
-        Schema::table('Comment', function (Blueprint $table){
         });
     }
 

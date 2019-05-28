@@ -14,11 +14,12 @@ class CreatingTitleOwnedBy extends Migration
     public function up()
     {
         Schema::create('TitleOwnedBy', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('title_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('title_id');
 
             $table->foreign('user_id')->references('id')->on('User');
             $table->foreign('title_id')->references('id')->on('Title');
+            $table->primary(['user_id', 'title_id']);
         });
     }
 

@@ -13,10 +13,13 @@ class CreatingUserCommentLike extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('UserCommentLike')){
+            Schema::drop('UserCommentLike');
+        };
         Schema::create('UserCommentLike', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('comment_id');
+            $table->unsignedBigInteger('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('comment_id');
             $table->timestamp('liked_at')->nullable();
 
             $table->timestamps();

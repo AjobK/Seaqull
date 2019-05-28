@@ -15,9 +15,9 @@ class ReCreatingAccount extends Migration
     {
         Schema::table('Account', function (Blueprint $table) {
             $table->dropColumn('name');
-            $table->ipAdress('last_ip');
+            $table->ipAddress('last_ip');
             $table->softDeletes();
-            $table->timestamp('changed_pw_at');
+            $table->timestamp('changed_pw_at')->nullable();
         });
     }
 

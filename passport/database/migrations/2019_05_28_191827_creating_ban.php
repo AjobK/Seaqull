@@ -14,9 +14,9 @@ class CreatingBan extends Migration
     public function up()
     {
         Schema::create('Ban', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('staff_id');
-            $table->integer('account_id');
+            $table->bigIncrements('id')->unsigned();
+            $table->integer('staff_id')->unsigned();
+            $table->integer('account_id')->unsigned();
             $table->text('reason');
             $table->text('description')->nullable();
             $table->timestamp('banned_at');

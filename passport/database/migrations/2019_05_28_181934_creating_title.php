@@ -14,7 +14,7 @@ class CreatingTitle extends Migration
     public function up()
     {
         Schema::create('Title', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('title');
             $table->timestamps();
         });

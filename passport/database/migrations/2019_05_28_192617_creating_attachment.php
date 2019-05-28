@@ -14,8 +14,8 @@ class CreatingAttachment extends Migration
     public function up()
     {
         Schema::create('Attachment', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->bigIncrements('id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->string('path');
 
             $table->timestamps();

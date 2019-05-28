@@ -13,10 +13,13 @@ class CreatingUseractivity extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('useractivity')){
+            Schema::drop('useractivity');
+        };
         Schema::create('UserActivity', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
 
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('previous_password', 255)->nullable();
             $table->string('type');
             $table->string('ip_address');

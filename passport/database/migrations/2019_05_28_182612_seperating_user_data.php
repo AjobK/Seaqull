@@ -13,10 +13,13 @@ class SeperatingUserData extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('User')){
+            Schema::drop('User');
+        };
         Schema::create('User', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('account_id');
-            $table->integer('title_id');
+            $table->bigIncrements('id')->unsigned();
+            $table->integer('account_id')->unsigned();
+            $table->unsignedBigInteger('title_id');
             $table->string('user_name');
             $table->string('display_name');
             $table->float('experience', 8, 2)->nullable();
@@ -24,9 +27,9 @@ class SeperatingUserData extends Migration
             $table->string('custom_path')->nullable();
             
             $table->timestamps();
-            $table-softDeletes();
+            $table->softDeletes();
 
-            $table-foreign('account_id')
+            $table->foreign('account_id')
                 ->references('id')
                 ->on('Account');
             $table->foreign('title_id')

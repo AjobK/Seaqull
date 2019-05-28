@@ -13,10 +13,13 @@ class CreatingUserPostActions extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('UserPostActions')){
+            Schema::drop('UserPostActions');
+        };
         Schema::create('UserPostActions', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('post_id');
+            $table->unsignedBigInteger('id');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('post_id')->unsigned();
             $table->integer('like_weight')->nullable();
             $table->timestamp('liked_at')->nullable();
             $table->timestamp('fb_shared_at')->nullable();
