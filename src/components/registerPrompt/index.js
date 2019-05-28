@@ -5,6 +5,8 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
+import { loadReCaptcha } from 'react-recaptcha-google'
+import { ReCaptcha } from 'react-recaptcha-google'
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
@@ -15,8 +17,30 @@ class RegisterPrompt extends Component {
       email: null,
       password: null
     }
-
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
     this.elId = {}
+  }
+  componentDidMount = () => {
+    if (this.captchaDemo) {
+        console.log("started, just a second...")
+        this.captchaDemo.reset();
+        this.captchaDemo.execute();
+    }
+  }
+  onLoadRecaptcha = () => {
+      if (this.captchaDemo) {
+          this.captchaDemo.reset();
+          this.captchaDemo.execute();
+      }
+  }
+  verifyCallback = (recaptchaToken) => {
+    // Here you will get the final recaptchaToken!!!  
+    console.log(recaptchaToken, "<= your recaptcha token")
+  }
+
+  componentDidMount = () => {
+    loadReCaptcha();
   }
 
   auth = () => {
@@ -64,6 +88,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
+
     this.auth()
   }
 
@@ -85,6 +110,15 @@ class RegisterPrompt extends Component {
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={'Register'} className={styles.submit} />
+              <ReCaptcha
+                ref={(el) => {this.captchaDemo = el;}}
+                class="g-recaptcha"
+                size="invisible"
+                render="explicit"
+                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
+                onloadCallback={this.onLoadRecaptcha}
+                verifyCallback={this.verifyCallback}
+              />
             </div>
           </form>
           <div className={styles.image} />
