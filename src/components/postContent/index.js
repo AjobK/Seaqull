@@ -8,14 +8,23 @@ import { EditorState, Editor } from 'draft-js'
 class PostContent extends Component {
   constructor(props) {
     super(props)
-    this.type = this.props.type || 'paragraph'
+    const { type, cbKey, value } = this.props
+
+    this.type = type || 'paragraph'
+    this.cbKey = cbKey || null
     this.maxLength = this.type == 'heading' ? 128 : null
     this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.state = {
-      editorState: this.props.value || EditorState.createEmpty()
+      editorState: value != null
+        ? EditorState.createWithContent(value) 
+        : EditorState.createEmpty()
     }
+  }
+
+  componentDidMount() {
+    console.log(`${this.cbKey} mounted...`)
   }
 
   onChange = (editorState) => {

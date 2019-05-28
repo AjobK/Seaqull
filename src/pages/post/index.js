@@ -11,7 +11,11 @@ import styles from './post.scss'
 class Post extends App {
   constructor(props) {
     super(props)
-    this.content = JSON.parse(window.localStorage.getItem('content')) || [
+    
+    let content = window.localStorage.getItem('content')
+    // let content = false
+
+    this.content = content ? JSON.parse(content) : [
       { type: 'heading', value: null },
       { type: 'paragraph', value: null },
       { type: 'heading', value: null },
@@ -25,37 +29,26 @@ class Post extends App {
 
   componentDidMount() {
     console.log('Mounted!')
-    this.setState({ renderContent: this.returnComponentsFromJson() })
+    this._Mounted = true
+    this.returnComponentsFromJson()
   }
-
-  // callBackSaveData = (item) => {
-  //   this.setState({
-  //     content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
-  //       type: item.type,
-  //       value: convertToRaw(item.state.editorState.getCurrentContent())
-  //     } } })
-  //   }, () => { // Async
-  //     this.sendDataToDB()
-  //   })
-  // }
 
   componentWillUnmount() {
     this._Mounted = false
   }
 
-  componentDidMount() {
-    this._Mounted = true
-  }
-
   callBackSaveData = (item) => {
     console.log('Saving')
-    this.content[item.props.cbKey] = { type: item.type, value: convertToRaw(item.state.editorState.getCurrentContent())}
-    this.returnComponentsFromJson()
+    const { editorState } = item.state
+    this.content[item.cbKey-1] = { type: item.type, value: convertToRaw(editorState.getCurrentContent()) }
+    this.sendDataToDB()
   }
 
   callBackItemRemoval = (item) => {
     console.log('Removal')
-    this.content.splice(item.props.cbKey, 1)
+    const { cbKey } = item.props
+    console.log(cbKey)
+    this.content.splice(cbKey-1, 1)
     this.returnComponentsFromJson()
   }
 
@@ -66,21 +59,39 @@ class Post extends App {
   }
 
   returnComponentsFromJson = (noSetState = false) => {
+    console.log('Component stuff is called')
     let contentArr = []
 
     this.content.forEach((item, counter) => {
       const { type, value } = item
 
-      contentArr.push(<PostContent key={counter} val={counter} type={type} callBackSaveData={this.callBackSaveData} callBackItemRemoval={this.callBackItemRemoval} cbKey={counter} value={value && convertFromRaw(value)} />)
+      contentArr.push(
+        <PostContent
+          key={counter+1}
+          type={type}
+          callBackSaveData={this.callBackSaveData}
+          callBackItemRemoval={this.callBackItemRemoval}
+          cbKey={counter+1}
+          value={value ? convertFromRaw(value) : null}
+        />)
     })
     
-    if (noSetState) return
+    if (!noSetState) {
+      console.log('This will be rendered')
+      console.log(this.content)
 
-    this.setState({
-      renderContent: contentArr
-    }, () => {
+      this.setState({
+        renderContent: []
+      }, () => {
+        this.setState({
+          renderContent: contentArr
+        }, () => {
+          this.sendDataToDB()
+        })
+      })
+    } else {
       this.sendDataToDB()
-    })
+    }
   }
 
   sendDataToDB() {
