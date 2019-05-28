@@ -49,12 +49,6 @@ class FormInput extends Component {
     this.setState({ passwordVisible: !passwordVisible })
   }
 
-  hidePassword = () => {
-    const { passwordVisible } = this.state
-
-    if (passwordVisible) this.setState({ passwordVisible: false })
-  }
-
   render() {
     const { name, className, errors, password } = this.props
     const { id, toolTipId } = this
