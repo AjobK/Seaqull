@@ -1,8 +1,9 @@
 import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
+import { StyleButton } from '../'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor } from 'draft-js'
+import { EditorState, Editor, RichUtils } from 'draft-js'
 
 @inject('store') @observer
 class PostContent extends Component {
@@ -59,6 +60,40 @@ class PostContent extends Component {
     return totalLength > this.maxLength;
   }
 
+  toggleInlineStyle = (inlineStyle) => {
+    this.onChange(
+      RichUtils.toggleInlineStyle(
+        this.state.editorState,
+        inlineStyle
+      )
+    )
+  }
+
+  InlineStyleControls = () => {
+    let INLINE_STYLES = [
+      {label: 'Bold', style: 'BOLD'},
+      {label: 'Italic', style: 'ITALIC'},
+      {label: 'Underline', style: 'UNDERLINE'},
+      {label: 'Monospace', style: 'CODE'},
+    ]
+
+    const currentStyle = this.state.editorState.getCurrentInlineStyle();
+    
+    return (
+      <div className={styles.controls}>
+        {INLINE_STYLES.map((type) =>
+          <StyleButton
+            key={type.label}
+            active={currentStyle.has(type.style)}
+            label={type.label}
+            onToggle={this.toggleInlineStyle}
+            style={type.style}
+          />
+        )}
+      </div>
+    );
+  };
+
   render() {
     const { type, store, callBackItemRemoval, callBackSaveData } = this.props
     const editorState = this.state.editorState;
@@ -69,7 +104,7 @@ class PostContent extends Component {
         heading={type}
         removeItem={() => callBackItemRemoval(this)}
         className={[style]}>
-        <span>{ this.props.cbKey }</span>
+        {this.InlineStyleControls()}
         <Editor
           readOnly={!store.user.loggedIn}
           editorState={editorState}

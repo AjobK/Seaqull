@@ -28,38 +28,32 @@ class Post extends App {
   }
 
   componentDidMount() {
-    console.log('Mounted!')
-    this._Mounted = true
     this.returnComponentsFromJson()
   }
 
-  componentWillUnmount() {
-    this._Mounted = false
-  }
-
   callBackSaveData = (item) => {
-    console.log('Saving')
     const { editorState } = item.state
-    this.content[item.cbKey-1] = { type: item.type, value: convertToRaw(editorState.getCurrentContent()) }
+
+    this.content[item.cbKey-1] = {
+      type: item.type,
+      value: convertToRaw(editorState.getCurrentContent())
+    }
     this.sendDataToDB()
   }
 
   callBackItemRemoval = (item) => {
-    console.log('Removal')
     const { cbKey } = item.props
-    console.log(cbKey)
+
     this.content.splice(cbKey-1, 1)
     this.returnComponentsFromJson()
   }
 
   createContentBlock = (type) => {
-    console.log('Creation')
     this.content.push({ type: type, value: null })
     this.returnComponentsFromJson()
   }
 
   returnComponentsFromJson = (noSetState = false) => {
-    console.log('Component stuff is called')
     let contentArr = []
 
     this.content.forEach((item, counter) => {
@@ -77,9 +71,6 @@ class Post extends App {
     })
     
     if (!noSetState) {
-      console.log('This will be rendered')
-      console.log(this.content)
-
       this.setState({
         renderContent: []
       }, () => {

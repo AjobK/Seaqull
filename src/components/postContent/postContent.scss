@@ -1,29 +1,31 @@
 @import '../../styles/index.scss';
 
-.paragraph {
-	font-family: Sanchez;
-	color: rgba(0,0,0,0.8);
-	font-size: 1.25rem;
-	line-height: 1.9rem;
-	letter-spacing: 0.05rem;
-}
-
-.heading {
-	color: $primary;
-	font-size: 1.5rem;
-	line-height: 1.6rem;
-	letter-spacing: 0.05rem;
-	font-weight: bold;
-	margin-bottom: 1rem;
-}
-
 .postContent {
-	img {
-		max-height: 20vh;
-		max-width: 100%;
-		margin: 0 auto;
+	&Heading {
+		color: $primary;
+		font-size: 1.5rem;
+		line-height: 1.6rem;
+		letter-spacing: 0.05rem;
+		font-weight: bold;
+		margin-bottom: 1rem;
 	}
 	&Paragraph {
-		margin-bottom: 30px;
+		margin-bottom: 2.5rem;
+		font-family: Sanchez;
+		color: rgba(0,0,0,0.8);
+		font-size: 1.25rem;
+		line-height: 1.9rem;
+		letter-spacing: 0.05rem;
 	}
+}
+
+.controls {
+	overflow: hidden;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	background-color: $darker;
+	color: white;
+	font-weight: normal;
+	font-size: 0.8rem;
 }
