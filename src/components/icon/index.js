@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 class Icon extends Component {
   render() {
     let classNames = []
-    const { className, iconName, onClick, style } = this.props
+    const { className, iconName, onClick, onMouseDown, onMouseUp, style } = this.props
 
     if (typeof className == 'string')
       classNames.push(className)
@@ -18,7 +18,7 @@ class Icon extends Component {
 
     library.add(icon)
 
-    return <FontAwesomeIcon className={classNames.join(' ')} icon={icon} onClick={onClick} style={style} />
+    return <FontAwesomeIcon className={classNames.join(' ')} icon={icon} onClick={onClick} onMouseDown={onMouseDown} onMouseUp={onMouseUp} style={style} />
   }
 }
 
