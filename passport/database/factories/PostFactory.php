@@ -7,9 +7,9 @@ use Illuminate\Support\Str;
 
 $factory->define(Post::class, function (Faker $faker) {
     return [
-        'title' => Str::random(25),
-        'content' => Str::random(555),
-        'description' => Str::random(125),
+        'title' => $faker->sentence,
+        'content' => $faker->paragraph(10),
+        'description' => $faker->paragraph(3),
         'path' => Str::random(11),
     ];
 });

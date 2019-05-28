@@ -1,0 +1,30 @@
+@import '../../styles/index.scss';
+
+.paragraph {
+	color: rgba(0,0,0,0.8);
+	font-size: 1.25rem;
+	letter-spacing: 0.05rem;
+	margin-bottom: 3rem;
+	// > * {
+	// 	color: rgba(0,0,0,0.8);
+	// 	font-size: 1.25rem;
+	// 	letter-spacing: 0.05rem;
+	// 	margin-bottom: 3rem;
+	// }
+}
+
+.heading {
+	color: $primary;
+	font-size: 1.5rem;
+	letter-spacing: 0.05rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+.postContent {
+	img {
+		max-height: 20vh;
+		max-width: 100%;
+		margin: 0 auto;
+	}
+}

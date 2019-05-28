@@ -1,0 +1,197 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	position: relative;
+	background-position: center;
+	background-size: cover;
+	height: calc(50vh + #{$header-height});
+	min-height: 450px;
+	background-color: $darker;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: flex-end;
+
+	&Edit {
+		width: fit-content;
+		height: fit-content;
+		background-color: rgba(0,0,0,0.4);
+		color: white;
+		display: flex;
+		bottom: 25%;
+		border-radius: 30px;
+		padding: 10px;
+		font-weight: bolder;
+		justify-content: flex-end;
+		align-items: center;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: all .2s ease-in-out;
+		margin: $header-spacing;
+
+		&Content {
+			padding: 0 15px;
+			font-size: 1.2rem;
+		}
+
+		&Container {
+			pointer-events: none;
+			z-index: 1;
+			margin: 0 auto;
+			display: flex;
+			justify-content: flex-end;
+			max-width: $wrapper-width;
+			width: 100%;
+		}
+
+		@include mobile-xs {
+			display: none;
+		}
+	}
+}
+
+.background {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: center;
+	opacity: 0.5;
+	background-color: white;
+}
+
+.innerWrapper {
+	z-index: 1;
+	background: rgba(0,0,0,0.5);
+	width: 100%;
+	bottom: 0;
+	transition: 0.5s;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.owner .backdrop:hover {
+	transition: 0.3s;
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+.backdrop {
+	transition: 0.3s;
+	position: absolute;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	background-color: rgba(0,0,0,0.6);
+}
+
+.picture {
+	overflow: hidden;
+	border-radius: 100%;
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	background-color: #1f1f1f;
+	display: flex;
+	justify-content: center;
+	min-width: 80px;
+	min-height: 80px;
+	width: 3vw;
+	height: 3vw;
+	@include box-shadow;
+}
+
+.user_info {
+	margin-left: $header-spacing;
+	display: inline-block;
+}
+
+.profileLink {
+	display: inline-block;
+}
+
+.info {
+	width: 100%;
+	max-width: $wrapper-width;
+	overflow: hidden;
+	padding: $header-spacing;
+	&Inner {
+		width: auto;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	@include mobile-xs {
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.achieved {
+	display: inline-flex;
+	overflow: hidden;
+	@include mobile-xs {
+		justify-content: center;
+		display: flex;
+	}
+}
+
+.level {
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	align-self: center;
+	height: 1.2rem;
+	padding: 0.4rem 0.4rem;
+	font-size: 0.75rem;
+	font-weight: bold;
+	letter-spacing: 2px;
+	color: white;
+	background-color: $primary;
+	
+	@include box-shadow;
+	@include mobile-xs {
+		margin-right: 0.2rem;
+	}
+}
+
+.role {
+	align-items: center;
+	font-size: 1rem;
+	margin-left: $header-spacing / 2;
+	font-weight: bolder;
+	color: $primary;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	justify-content: center;
+	
+	@include text-shadow;
+	@include mobile-xs {
+		display: flex;
+		white-space: pre-wrap;
+		font-size: 0.8rem;
+		margin-left: 8px;
+	}
+}
+
+.name {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	letter-spacing: 0.1rem;
+	color: white;
+	width: 100%;
+	font-weight: bold;
+	font-size: 1.5rem;
+
+	@include text-shadow;
+	@include mobile-xs {
+		font-size: 1rem;
+	}
+}

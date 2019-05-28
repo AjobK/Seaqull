@@ -1,6 +1,6 @@
 @import '../../styles/index.scss';
 
-.contact {
+.postItem {
 	display: flex;
 	align-items: flex-end;
 	font-size: 1em;
@@ -19,9 +19,9 @@
 	}
 }
 
-.contacts {
+.article {
 	position: static;
-	min-height: 100vh;
+	min-height: calc(100vh / 3)
 }
 
 .post {
