@@ -14,11 +14,12 @@ class AddedRoleToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('role_id')->default(1)->unsigned();
+            // $table->dropColumn('role_id');
+            // $table->integer('role_id')->unsigned();
 
-            $table->foreign('role_id')
-                    ->references('id')
-                    ->on('roles');
+            // $table->foreign('role_id')
+            //         ->references('id')
+            //         ->on('roles');
         });
     }
 
