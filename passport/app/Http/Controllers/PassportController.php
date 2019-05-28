@@ -30,20 +30,31 @@ class PassportController extends Controller
                 new NumberOrSpecial()
             ],
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        if ($request->name == $request->password) {
+            return response()->json(['errors' => [
+                'password' => ['Username cannot be password.']
+            ]], 422);
+        } elseif ($request->email == $request->password) {
+            return response()->json(['errors' => [
+                'password' => ['Email cannot be password.']
+            ]], 422);
+        }
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => 1,
             'password' => bcrypt($request->password)
-        ]);
-
+            ]);
+            
+            
         $token = $user->createToken('HorseNeedleRabbitLava')->accessToken;
-
+            
         return response()->json(['token' => $token], 200);
     }
 
