@@ -27,9 +27,7 @@ class CreatingUserPostActions extends Migration
                 ->references('id')
                 ->on('User');
 
-            $table->foreign('post_id')
-                ->references('id')
-                ->on('Post');
+            $table->foreign('post_id')->references('id')->on('Post');
 
             $table->primary(['id', 'user_id', 'post_id']);
         });
