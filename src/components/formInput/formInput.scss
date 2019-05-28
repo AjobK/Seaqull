@@ -70,6 +70,7 @@
 	}
 
 	&Password {
+		@include noselect;
 		color: gray;
 		background-color: transparent;
 		margin-right: 0;
