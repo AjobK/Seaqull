@@ -43,16 +43,10 @@ class FormInput extends Component {
     )
   }
 
-  showPassword = () => {
+  togglePasswordVisible = () => {
     const { passwordVisible } = this.state
 
-    if (!passwordVisible) this.setState({ passwordVisible: true })
-  }
-
-  hidePassword = () => {
-    const { passwordVisible } = this.state
-
-    if (passwordVisible) this.setState({ passwordVisible: false })
+    this.setState({ passwordVisible: !passwordVisible })
   }
 
   render() {
@@ -75,9 +69,9 @@ class FormInput extends Component {
           />
           <span>{name}</span>
         </label>
-        <div className={ isPassword && styles.iconPasswordWrapper }>
+        <div className={styles.inputWrapper}>
           <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
-          { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onMouseDown={this.showPassword} onMouseUp={this.hidePassword} />}
+          { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
           {(hasErrors && this.getErrorMessages(errors))}
         </div>
       </div>

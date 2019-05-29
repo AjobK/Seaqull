@@ -37,8 +37,6 @@ class RegisterPrompt extends Component {
       }
   }
   verifyCallback = (recaptchaToken) => {
-    // Here you will get the final recaptchaToken!!!  
-    console.log(recaptchaToken, "<= your recaptcha token")
     this.setState({
       recaptcha: recaptchaToken
     })
@@ -54,7 +52,8 @@ class RegisterPrompt extends Component {
     const payload = {
       name: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
-      password: document.getElementById(this.elId.Password).value
+      password: document.getElementById(this.elId.Password).value,
+      recaptcha: this.state.recaptcha
     }
 
     Axios.post('/register', payload)
@@ -77,7 +76,8 @@ class RegisterPrompt extends Component {
       this.setState({
         name: name || [],
         email: email || [],
-        password: password || []
+        password: password || [],
+        recaptcha: recaptcha || [],
       })
     })
   }
@@ -93,9 +93,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-
     this.state.recaptcha == null ? null : this.auth()
-    
   }
 
   setElId = (item, id) => {

@@ -1,13 +1,12 @@
 @import '../../styles/index.scss';
 
 .input {
-	width: 100%;
+	width: calc(100% - 1.4rem);
 	font-family: Poppins;
 	font-size: 1rem;
 	height: 1.6rem;
 	color: #7f7f7f;
 	border: none;
-	border-bottom: 1px solid gray;
 	cursor: text;
 
 	@include mobile-all-portrait {
@@ -16,15 +15,24 @@
 		display: flex;
 		padding: 0;
 		margin: 0;
-		border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 		height: 40px;
 		font-size: 20px;
-		width: 100%;
 	}
 
 	@include mobile-xs {
 		font-size: 15px;
 		height: 30px;
+	}
+
+	&Wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid gray;
+
+		@include mobile-all-portrait {
+			border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+		}
 	}
 }
 
@@ -70,6 +78,9 @@
 	}
 
 	&Password {
+		@include noselect;
+		border-radius: 0;
+		height: 100%;
 		color: gray;
 		background-color: transparent;
 		margin-right: 0;
@@ -81,13 +92,6 @@
 		&:hover {
 			color: black;
 			transition: 0.2s;
-			transform: scale(1.2, 1.2);
-		}
-
-		&Wrapper {
-			position: relative;
-			display: flex;
-			align-items: center;
 		}
 	}
 }

@@ -8,6 +8,7 @@ use App\Rules\Uppercase;
 use App\Rules\Lowercase;
 use App\Rules\NumberOrSpecial;
 use Illuminate\Http\Request;
+use App\Rules\Captcha;
 
 class PassportController extends Controller
 {
@@ -29,7 +30,7 @@ class PassportController extends Controller
                 new Lowercase(),
                 new NumberOrSpecial()
             ],
-            
+            'recaptcha' => ['required', new Captcha]
         ]);
 
         if ($validator->fails()) {
