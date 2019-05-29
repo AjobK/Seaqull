@@ -12,7 +12,6 @@ class Post extends App {
     super(props)
 
     let content = window.localStorage.getItem('content')
-    // let content = false
 
     this.content = content ? JSON.parse(content) : [
       { type: 'heading', value: null },
@@ -31,6 +30,7 @@ class Post extends App {
   }
 
   callBackSaveData = (item) => {
+    console.log('Saving data :-)')
     const { editorState } = item.state
 
     this.content[item.cbKey-1] = {

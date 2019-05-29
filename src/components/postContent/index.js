@@ -4,6 +4,7 @@ import { StyleButton } from '../'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import { EditorState, Editor, RichUtils } from 'draft-js'
+import ReactTooltip from 'react-tooltip'
 
 @inject('store') @observer
 class PostContent extends Component {
@@ -20,7 +21,8 @@ class PostContent extends Component {
     this.state = {
       editorState: value != null
         ? EditorState.createWithContent(value)
-        : EditorState.createEmpty()
+        : EditorState.createEmpty(),
+      focused: false
     }
   }
 
@@ -45,7 +47,7 @@ class PostContent extends Component {
 
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + chars.length
 
-    return totalLength > this.maxLength;
+    return totalLength > this.maxLength
   }
 
   handlePastedText = (text) => {
@@ -53,10 +55,12 @@ class PostContent extends Component {
 
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + text.length
 
-    return totalLength > this.maxLength;
+    return totalLength > this.maxLength
   }
 
   toggleInlineStyle = (inlineStyle) => {
+    // console.log('Toggled ' + inlineStyle)
+    // console.log(this.state.editorState.getCurrentInlineStyle())
     this.onChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
@@ -73,12 +77,13 @@ class PostContent extends Component {
       { label: 'Monospace', style: 'CODE' }
     ]
 
-    const currentStyle = this.state.editorState.getCurrentInlineStyle();
+    const currentStyle = this.state.editorState.getCurrentInlineStyle()
 
     return (
-      <div className={styles.controls}>
+      <div className={`${styles.controls} ${this.state.focused && styles.controlsOn}`}>
         {INLINE_STYLES.map((type) =>
           <StyleButton
+            className={[styles.controlsButtons]}
             key={type.label}
             active={currentStyle.has(type.style)}
             label={type.label}
@@ -87,12 +92,25 @@ class PostContent extends Component {
           />
         )}
       </div>
-    );
-  };
+    )
+  }
+
+  onFocus = () => {
+    this.setState({
+      focused: true
+    })
+  }
+
+  onBlur = () => {
+    this.setState({
+      focused: false
+    })
+    this.props.callBackSaveData(this)
+  }
 
   render() {
-    const { type, store, callBackItemRemoval, callBackSaveData } = this.props
-    const editorState = this.state.editorState;
+    const { type, store, callBackItemRemoval } = this.props
+    const { editorState, focused } = this.state
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     return (
@@ -105,7 +123,8 @@ class PostContent extends Component {
           readOnly={!store.user.loggedIn}
           editorState={editorState}
           onChange={this.onChange}
-          onBlur={() => { callBackSaveData(this) }}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
           handleBeforeInput={this.handleBeforeInput}
           handlePastedText={this.handlePastedText}
           blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}

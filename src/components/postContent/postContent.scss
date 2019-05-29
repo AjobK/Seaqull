@@ -20,12 +20,34 @@
 }
 
 .controls {
+	border-radius: 3px;
+	transition: 0.2s;
+	height: 0;
 	overflow: hidden;
-	height: 30px;
 	display: flex;
+	padding-right: 10px;
 	align-items: center;
 	background-color: $darker;
 	color: white;
 	font-weight: normal;
 	font-size: 0.8rem;
+	text-transform: uppercase;
+
+	&On {
+		transition: 0.2s;
+		height: 30px;
+	}
+
+	&Buttons {
+		transition: 0.2s;
+		line-height: 0.8rem;
+		margin-bottom: -2px;
+		margin-left: 10px;
+		border-bottom: 2px solid transparent;
+
+		&:hover {
+			transition: 0.2s;
+			border-bottom: 2px solid white;
+		}
+	}
 }

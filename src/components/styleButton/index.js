@@ -11,8 +11,10 @@ class StyleButton extends Component {
   }
 
   render() {
+    const { className } = this.props
+
     return (
-      <span onMouseDown={this.onToggle} className={styles.button}>
+      <span onMouseDown={this.onToggle} className={[styles.button, ...className].join(' ')}>
         { this.props.label }
       </span>
     )
