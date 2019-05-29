@@ -1,5 +1,4 @@
 import React from 'react'
-import update from 'react-addons-update' // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
@@ -11,7 +10,7 @@ import styles from './post.scss'
 class Post extends App {
   constructor(props) {
     super(props)
-    
+
     let content = window.localStorage.getItem('content')
     // let content = false
 
@@ -69,7 +68,7 @@ class Post extends App {
           value={value ? convertFromRaw(value) : null}
         />)
     })
-    
+
     if (!noSetState) {
       this.setState({
         renderContent: []

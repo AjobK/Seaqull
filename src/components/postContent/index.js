@@ -19,13 +19,9 @@ class PostContent extends Component {
 
     this.state = {
       editorState: value != null
-        ? EditorState.createWithContent(value) 
+        ? EditorState.createWithContent(value)
         : EditorState.createEmpty()
     }
-  }
-
-  componentDidMount() {
-    console.log(`${this.cbKey} mounted...`)
   }
 
   onChange = (editorState) => {
@@ -71,14 +67,14 @@ class PostContent extends Component {
 
   InlineStyleControls = () => {
     let INLINE_STYLES = [
-      {label: 'Bold', style: 'BOLD'},
-      {label: 'Italic', style: 'ITALIC'},
-      {label: 'Underline', style: 'UNDERLINE'},
-      {label: 'Monospace', style: 'CODE'},
+      { label: 'Bold', style: 'BOLD' },
+      { label: 'Italic', style: 'ITALIC' },
+      { label: 'Underline', style: 'UNDERLINE' },
+      { label: 'Monospace', style: 'CODE' }
     ]
 
     const currentStyle = this.state.editorState.getCurrentInlineStyle();
-    
+
     return (
       <div className={styles.controls}>
         {INLINE_STYLES.map((type) =>
@@ -109,7 +105,7 @@ class PostContent extends Component {
           readOnly={!store.user.loggedIn}
           editorState={editorState}
           onChange={this.onChange}
-          onBlur={() => {  callBackSaveData(this)}}
+          onBlur={() => { callBackSaveData(this) }}
           handleBeforeInput={this.handleBeforeInput}
           handlePastedText={this.handlePastedText}
           blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
