@@ -12,6 +12,10 @@ class FormInput extends Component {
     this.id = this.getElId(name)
     this.toolTipId = this.getElId(`${name}ToolTip`)
 
+    this.state = {
+      passwordVisible: false
+    }
+
     callBack(this, this.id)
   }
 
@@ -39,25 +43,43 @@ class FormInput extends Component {
     )
   }
 
+  showPassword = () => {
+    const { passwordVisible } = this.state
+
+    if (!passwordVisible) this.setState({ passwordVisible: true })
+  }
+
+  hidePassword = () => {
+    const { passwordVisible } = this.state
+
+    if (passwordVisible) this.setState({ passwordVisible: false })
+  }
+
   render() {
     const { name, className, errors, password } = this.props
     const { id, toolTipId } = this
+    const { passwordVisible } = this.state
     const hasErrors = errors != 'loading' && errors && errors.length > 0,
           iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
           iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
-          inputType = password ? 'password' : 'text'
+          inputType = password && !passwordVisible ? 'password' : 'text',
+          loadingClass = errors == 'loading' ? 'fa-spin' : '',
+          isPassword = password
 
     return (
       <div className={[...className || ''].join(' ')}>
         <label htmlFor={id} className={styles.label}>
           <Icon
-            className={`${styles.icon} ${iconClassName} ${errors == 'loading' ? 'fa-spin' : ''}`}
+            className={`${styles.icon} ${iconClassName} ${loadingClass}`}
             iconName={iconName}
           />
           <span>{name}</span>
         </label>
-        <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
-        {(hasErrors && this.getErrorMessages(errors))}
+        <div className={ isPassword && styles.iconPasswordWrapper }>
+          <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
+          { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onMouseDown={this.showPassword} onMouseUp={this.hidePassword} />}
+          {(hasErrors && this.getErrorMessages(errors))}
+        </div>
       </div>
     )
   }

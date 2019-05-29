@@ -1,6 +1,7 @@
 @import '../../styles/index.scss';
 
 .input {
+	width: 100%;
 	font-family: Poppins;
 	font-size: 1rem;
 	height: 1.6rem;
@@ -63,13 +64,37 @@
 	&Check {
 		color: $success;
 	}
+
 	&Times {
 		color: $failure;
+	}
+
+	&Password {
+		color: gray;
+		background-color: transparent;
+		margin-right: 0;
+		position: absolute;
+		right: 0;
+		font-size: 1.2rem;
+		cursor: pointer;
+
+		&:hover {
+			color: black;
+			transition: 0.2s;
+			transform: scale(1.2, 1.2);
+		}
+
+		&Wrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+		}
 	}
 }
 
 .toolTip {
 	min-width: 200px;
+
 	&Ul {
 		padding: 5px 0;
 		width: 100%;
