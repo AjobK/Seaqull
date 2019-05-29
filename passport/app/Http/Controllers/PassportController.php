@@ -29,6 +29,7 @@ class PassportController extends Controller
                 new Lowercase(),
                 new NumberOrSpecial()
             ],
+            
         ]);
 
         if ($validator->fails()) {

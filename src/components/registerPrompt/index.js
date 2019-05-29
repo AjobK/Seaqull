@@ -15,10 +15,12 @@ class RegisterPrompt extends Component {
     this.state = {
       name: null,
       email: null,
-      password: null
+      password: null,
+      recaptcha: null
     }
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
-    this.verifyCallback = this.verifyCallback.bind(this);
+
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
+    this.verifyCallback = this.verifyCallback.bind(this)
     this.elId = {}
   }
   componentDidMount = () => {
@@ -37,6 +39,9 @@ class RegisterPrompt extends Component {
   verifyCallback = (recaptchaToken) => {
     // Here you will get the final recaptchaToken!!!  
     console.log(recaptchaToken, "<= your recaptcha token")
+    this.setState({
+      recaptcha: recaptchaToken
+    })
   }
 
   componentDidMount = () => {
@@ -89,7 +94,8 @@ class RegisterPrompt extends Component {
       password: 'loading'
     })
 
-    this.auth()
+    this.state.recaptcha == null ? null : this.auth()
+    
   }
 
   setElId = (item, id) => {
@@ -112,7 +118,6 @@ class RegisterPrompt extends Component {
               <Button value={'Register'} className={styles.submit} />
               <ReCaptcha
                 ref={(el) => {this.captchaDemo = el;}}
-                class="g-recaptcha"
                 size="invisible"
                 render="explicit"
                 sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
