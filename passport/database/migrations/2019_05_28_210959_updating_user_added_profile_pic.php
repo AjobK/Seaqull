@@ -14,7 +14,6 @@ class UpdatingUserAddedProfilePic extends Migration
     public function up()
     {
         Schema::table('User', function (Blueprint $table) {
-            $table->dropColumn('email_verified_at');
             $table->unsignedBigInteger('profile_pic')->nullable();
 
             $table->foreign('profile_pic')

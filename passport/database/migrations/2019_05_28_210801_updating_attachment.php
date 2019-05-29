@@ -13,7 +13,9 @@ class UpdatingAttachment extends Migration
      */
     public function up()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::table('Attachment', function (Blueprint $table) {
+            $table->dropForeign('attachment_user_id_foreign');
             $table->dropColumn('user_id');
         });
     }
