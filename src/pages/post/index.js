@@ -19,6 +19,7 @@ class Post extends App {
       { type: 'heading', value: null },
       { type: 'paragraph', value: null }
     ]
+    this.cbKey = 0
     this.state = {
       title: 'Front-End vs. Back-End',
       renderContent: []
@@ -60,7 +61,7 @@ class Post extends App {
 
       contentArr.push(
         <PostContent
-          key={counter+1}
+          key={this.cbKey+counter+1}
           type={type}
           callBackSaveData={this.callBackSaveData}
           callBackItemRemoval={this.callBackItemRemoval}
@@ -68,16 +69,14 @@ class Post extends App {
           value={value ? convertFromRaw(value) : null}
         />)
     })
+    
+    this.cbKey += contentArr.length
 
     if (!noSetState) {
       this.setState({
-        renderContent: []
+        renderContent: contentArr
       }, () => {
-        this.setState({
-          renderContent: contentArr
-        }, () => {
-          this.sendDataToDB()
-        })
+        this.sendDataToDB()
       })
     } else {
       this.sendDataToDB()
