@@ -45,10 +45,10 @@ class PassportController extends Controller
             'role_id' => 1,
             'password' => bcrypt($request->password)
             ]);
-            
-            
+
+
         $token = $user->createToken('HorseNeedleRabbitLava')->accessToken;
-            
+
         return response()->json(['token' => $token], 200);
     }
 
