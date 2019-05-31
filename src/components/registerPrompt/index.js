@@ -5,8 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import { loadReCaptcha } from 'react-recaptcha-google'
-import { ReCaptcha } from 'react-recaptcha-google'
+import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
@@ -25,7 +24,7 @@ class RegisterPrompt extends Component {
   }
   componentDidMount = () => {
     if (this.captchaDemo) {
-        console.log("started, just a second...")
+        console.log('Started, wait a second...')
         this.captchaDemo.reset();
         this.captchaDemo.execute();
     }
@@ -64,6 +63,7 @@ class RegisterPrompt extends Component {
       })
       .then(user => {
         localStorage.setItem('user', JSON.stringify(user.data.user))
+
         return user.data.user
       })
       .then(user => {
@@ -72,12 +72,13 @@ class RegisterPrompt extends Component {
       })
     })
     .catch(res => {
-      const { name, email, password } = res.response.data.errors
+      const { name, email, password, recaptcha } = res.response.data.errors
+
       this.setState({
         name: name || [],
         email: email || [],
         password: password || [],
-        recaptcha: recaptcha || [],
+        recaptcha: recaptcha || []
       })
     })
   }
@@ -116,9 +117,9 @@ class RegisterPrompt extends Component {
               <Button value={'Register'} className={styles.submit} />
               <ReCaptcha
                 ref={(el) => {this.captchaDemo = el;}}
-                size="invisible"
-                render="explicit"
-                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
+                size='invisible'
+                render='explicit'
+                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
                 onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
               />

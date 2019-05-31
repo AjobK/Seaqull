@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
-import { Button } from '../../components'
-import { FormInput } from '../../components'
+import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 
@@ -33,6 +32,7 @@ class LoginPrompt extends Component {
       })
       .then(user => {
         localStorage.setItem('user', JSON.stringify(user.data.user))
+
         return user.data.user
       })
       .then(user => {
@@ -42,6 +42,7 @@ class LoginPrompt extends Component {
     })
     .catch(res => {
       const { error } = res.response.data
+
       this.setState({
         email: error || [],
         password: error || []

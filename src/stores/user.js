@@ -24,7 +24,7 @@ const UserStore = types
         self.loggedIn = true
         self.name = user.name || self.name
       }
-    },
+    }
   }))
 
 export default UserStore
