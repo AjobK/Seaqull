@@ -7,8 +7,9 @@ use Validator;
 use App\Rules\Uppercase;
 use App\Rules\Lowercase;
 use App\Rules\NumberOrSpecial;
-use Illuminate\Http\Request;
 use App\Rules\Captcha;
+use App\Rules\NoUsernameOrEmail;
+use Illuminate\Http\Request;
 
 class PassportController extends Controller
 {
@@ -26,27 +27,19 @@ class PassportController extends Controller
             'password' => [
                 'required',
                 'min:6',
-                new Uppercase(),
-                new Lowercase(),
-                new NumberOrSpecial()
+                new Uppercase,
+                new Lowercase,
+                new NumberOrSpecial,
+                new NoUsernameOrEmail($request->name, $request->email)
             ],
             'recaptcha' => ['required', new Captcha]
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        if ($request->name == $request->password) {
-            return response()->json(['errors' => [
-                'password' => ['Username cannot be password.']
-            ]], 422);
-        } elseif ($request->email == $request->password) {
-            return response()->json(['errors' => [
-                'password' => ['Email cannot be password.']
-            ]], 422);
-        }
-        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
