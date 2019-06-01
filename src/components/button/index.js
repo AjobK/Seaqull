@@ -6,7 +6,7 @@ class Button extends Component {
     const { value, noStyle, inverted, className, onClick, onSubmit, submit } = this.props
 
     return (
-      <button 
+      <button
         className={[
           className,
           !noStyle && styles.button,

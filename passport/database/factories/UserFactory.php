@@ -21,7 +21,7 @@ $factory->define(User::class, function (Faker $faker) {
     $username = $faker->unique()->userName;
 
     return [
-        'name' => $username,
+        'username' => $username,
         'email' => $username.'@'.$faker->safeEmailDomain,
         'email_verified_at' => now(),
         'password' => bcrypt('qwerty'),

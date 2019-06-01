@@ -5,15 +5,14 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import { loadReCaptcha } from 'react-recaptcha-google'
-import { ReCaptcha } from 'react-recaptcha-google'
+import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: null,
+      username: null,
       email: null,
       password: null,
       recaptcha: null
@@ -25,15 +24,15 @@ class RegisterPrompt extends Component {
   }
   componentDidMount = () => {
     if (this.captchaDemo) {
-        console.log("started, just a second...")
-        this.captchaDemo.reset();
-        this.captchaDemo.execute();
+        console.log('Started, wait a second...')
+        this.captchaDemo.reset()
+        this.captchaDemo.execute()
     }
   }
   onLoadRecaptcha = () => {
       if (this.captchaDemo) {
-          this.captchaDemo.reset();
-          this.captchaDemo.execute();
+          this.captchaDemo.reset()
+          this.captchaDemo.execute()
       }
   }
   verifyCallback = (recaptchaToken) => {
@@ -43,14 +42,14 @@ class RegisterPrompt extends Component {
   }
 
   componentDidMount = () => {
-    loadReCaptcha();
+    loadReCaptcha()
   }
 
   auth = () => {
-    Axios.defaults.baseURL = 'http://localhost:8000/api';
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      name: document.getElementById(this.elId.Username).value,
+      username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptcha
@@ -64,6 +63,7 @@ class RegisterPrompt extends Component {
       })
       .then(user => {
         localStorage.setItem('user', JSON.stringify(user.data.user))
+
         return user.data.user
       })
       .then(user => {
@@ -72,12 +72,13 @@ class RegisterPrompt extends Component {
       })
     })
     .catch(res => {
-      const { name, email, password } = res.response.data.errors
+      const { username, email, password, recaptcha } = res.response.data.errors
+
       this.setState({
-        name: name || [],
+        username: username || [],
         email: email || [],
         password: password || [],
-        recaptcha: recaptcha || [],
+        recaptcha: recaptcha || []
       })
     })
   }
@@ -89,7 +90,7 @@ class RegisterPrompt extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     this.setState({
-      name: 'loading',
+      username: 'loading',
       email: 'loading',
       password: 'loading'
     })
@@ -101,7 +102,7 @@ class RegisterPrompt extends Component {
   }
 
   render() {
-    const { name, email, password } = this.state
+    const { username, email, password } = this.state
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
@@ -109,16 +110,16 @@ class RegisterPrompt extends Component {
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput name={'Username'} errors={name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={'Register'} className={styles.submit} />
               <ReCaptcha
-                ref={(el) => {this.captchaDemo = el;}}
-                size="invisible"
-                render="explicit"
-                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
+                ref={(el) => {this.captchaDemo = el}}
+                size='invisible'
+                render='explicit'
+                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
                 onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
               />

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatedRole extends Migration
+class NameToUsername extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreatedRole extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name', 'username');
         });
     }
 
@@ -27,6 +25,8 @@ class CreatedRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('username', 'name');
+        });
     }
 }

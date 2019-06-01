@@ -7,8 +7,9 @@ use Validator;
 use App\Rules\Uppercase;
 use App\Rules\Lowercase;
 use App\Rules\NumberOrSpecial;
-use Illuminate\Http\Request;
 use App\Rules\Captcha;
+use App\Rules\NoUsernameOrEmail;
+use Illuminate\Http\Request;
 
 class PassportController extends Controller
 {
@@ -21,14 +22,15 @@ class PassportController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
+            'username' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => [
                 'required',
                 'min:6',
-                new Uppercase(),
-                new Lowercase(),
-                new NumberOrSpecial()
+                new Uppercase,
+                new Lowercase,
+                new NumberOrSpecial,
+                new NoUsernameOrEmail($request->username, $request->email)
             ],
             'recaptcha' => ['required', new Captcha]
         ]);
@@ -37,26 +39,16 @@ class PassportController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        if ($request->name == $request->password) {
-            return response()->json(['errors' => [
-                'password' => ['Username cannot be password.']
-            ]], 422);
-        } elseif ($request->email == $request->password) {
-            return response()->json(['errors' => [
-                'password' => ['Email cannot be password.']
-            ]], 422);
-        }
-        
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'role_id' => 1,
             'password' => bcrypt($request->password)
-            ]);
-            
-            
+        ]);
+
+
         $token = $user->createToken('HorseNeedleRabbitLava')->accessToken;
-            
+
         return response()->json(['token' => $token], 200);
     }
 
@@ -69,13 +61,13 @@ class PassportController extends Controller
     public function login(Request $request)
     {
         $credentials = [
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => $request->password
         ];
 
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
-            return response()->json(['token' => $token], 200);
+            return response()->json(['user' => auth()->user(), 'token' => $token], 200);
         } else {
             return response()->json(['error' => ['Invalid email or password.']], 422);
         }
