@@ -22,7 +22,7 @@ class PassportController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
+            'username' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => [
                 'required',
@@ -30,9 +30,9 @@ class PassportController extends Controller
                 new Uppercase,
                 new Lowercase,
                 new NumberOrSpecial,
-                new NoUsernameOrEmail($request->name, $request->email)
+                new NoUsernameOrEmail($request->username, $request->email)
             ],
-            'recaptcha' => ['required', new Captcha]
+            // 'recaptcha' => ['required', new Captcha]
         ]);
 
         if ($validator->fails()) {
@@ -40,11 +40,11 @@ class PassportController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'role_id' => 1,
             'password' => bcrypt($request->password)
-            ]);
+        ]);
 
 
         $token = $user->createToken('HorseNeedleRabbitLava')->accessToken;
@@ -61,13 +61,13 @@ class PassportController extends Controller
     public function login(Request $request)
     {
         $credentials = [
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => $request->password
         ];
 
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
-            return response()->json(['token' => $token], 200);
+            return response()->json(['user' => auth()->user(), 'token' => $token], 200);
         } else {
             return response()->json(['error' => ['Invalid email or password.']], 422);
         }

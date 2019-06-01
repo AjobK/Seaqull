@@ -10,11 +10,11 @@ class UserBanner extends Component {
 
     let fontSize = ''
 
-    if (user.name.length >= 22) {
+    if (user.username.length >= 22) {
       fontSize = styles.nameSmall
-    } else if (user.name.length >= 14) {
+    } else if (user.username.length >= 14) {
       fontSize = styles.nameMedium
-    } else if (user.name.length >= 8) {
+    } else if (user.username.length >= 8) {
       fontSize = styles.nameLarge
     }
 
@@ -28,7 +28,7 @@ class UserBanner extends Component {
             </span>}
           </div>
           <div className={styles.info}>
-            <h2 className={[styles.name, fontSize].join(' ')}>{ user.name || ''}</h2>
+            <h2 className={[styles.name, fontSize].join(' ')}>{ user.username || ''}</h2>
             <div className={styles.achieved}>
               <span className={styles.level}>{ user.level || ''}</span>
               <h3 className={styles.role}>{ user.role || ''}</h3>
