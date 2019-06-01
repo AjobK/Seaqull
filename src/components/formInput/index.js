@@ -31,8 +31,9 @@ class FormInput extends Component {
     return this.elId[param]
   }
 
-  getErrorMessages = (errors) => {
+  getErrorMessages = () => {
     const { toolTipId } = this
+    const { errors } = this.props
 
     return (
       <ReactTooltip id={toolTipId} effect={'solid'} place={'right'} className={styles.toolTip}>
@@ -72,7 +73,7 @@ class FormInput extends Component {
         <div className={styles.inputWrapper}>
           <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
           { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
-          {(hasErrors && this.getErrorMessages(errors))}
+          {(hasErrors && this.getErrorMessages())}
         </div>
       </div>
     )
