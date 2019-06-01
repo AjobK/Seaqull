@@ -22,28 +22,6 @@ class RegisterPrompt extends Component {
     this.verifyCallback = this.verifyCallback.bind(this)
     this.elId = {}
   }
-  componentDidMount = () => {
-    if (this.captchaDemo) {
-        console.log('Started, wait a second...')
-        this.captchaDemo.reset()
-        this.captchaDemo.execute()
-    }
-  }
-  onLoadRecaptcha = () => {
-      if (this.captchaDemo) {
-          this.captchaDemo.reset()
-          this.captchaDemo.execute()
-      }
-  }
-  verifyCallback = (recaptchaToken) => {
-    this.setState({
-      recaptcha: recaptchaToken
-    })
-  }
-
-  componentDidMount = () => {
-    loadReCaptcha()
-  }
 
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -94,11 +72,32 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    this.state.recaptcha == null ? null : this.auth()
+    this.state.recaptcha == null ? this.onLoadRecaptcha() : this.auth()
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
+  }
+
+  onLoadRecaptcha = () => {
+    if (this.captcha) {
+      this.captcha.reset()
+      this.captcha.execute()
+    }
+  }
+  
+  verifyCallback = (recaptchaToken) => {
+    this.setState({
+      recaptcha: recaptchaToken
+    })
+  }
+
+  componentDidMount = () => {
+    loadReCaptcha()
+    if (this.captchaDemo) {
+      this.captchaDemo.reset()
+      this.captchaDemo.execute()
+    }
   }
 
   render() {
@@ -116,7 +115,7 @@ class RegisterPrompt extends Component {
             <div to='/' className={styles.submitWrapper}>
               <Button value={'Register'} className={styles.submit} />
               <ReCaptcha
-                ref={(el) => {this.captchaDemo = el}}
+                ref={(el) => {this.captcha = el}}
                 size='invisible'
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
