@@ -94,10 +94,6 @@ class RegisterPrompt extends Component {
 
   componentDidMount = () => {
     loadReCaptcha()
-    if (this.captchaDemo) {
-      this.captchaDemo.reset()
-      this.captchaDemo.execute()
-    }
   }
 
   render() {
