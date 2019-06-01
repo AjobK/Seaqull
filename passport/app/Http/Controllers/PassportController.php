@@ -32,7 +32,7 @@ class PassportController extends Controller
                 new NumberOrSpecial,
                 new NoUsernameOrEmail($request->username, $request->email)
             ],
-            // 'recaptcha' => ['required', new Captcha]
+            'recaptcha' => ['required', new Captcha]
         ]);
 
         if ($validator->fails()) {
