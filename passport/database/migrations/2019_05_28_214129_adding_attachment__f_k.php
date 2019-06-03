@@ -38,7 +38,13 @@ class AddingAttachmentFK extends Migration
     public function down()
     {
         Schema::table('Comment', function (Blueprint $table) {
-            //
+            $table->dropForeign('comment_attachment_id_foreign');
+            $table->dropColumn('attachment_id');
+        });
+
+        Schema::table('Post', function (Blueprint $table) {
+            $table->dropForeign('post_attachment_id_foreign');
+            $table->dropColumn('attachment_id');
         });
     }
 }

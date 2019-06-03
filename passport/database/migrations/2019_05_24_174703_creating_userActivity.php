@@ -38,6 +38,9 @@ class CreatingUseractivity extends Migration
      */
     public function down()
     {
+        Schema::table('UserActivity', function (Blueprint $table) {
+            $table->dropForeign('useractivity_user_id_foreign');
+        });
         Schema::dropIfExists('UserActivity');
     }
 }

@@ -34,6 +34,9 @@ class CreatingSettings extends Migration
      */
     public function down()
     {
+        Schema::table('Setting', function (Blueprint $table) {
+            $table->dropForeign('setting_user_id_foreign');
+        });
         Schema::dropIfExists('Setting');
     }
 }

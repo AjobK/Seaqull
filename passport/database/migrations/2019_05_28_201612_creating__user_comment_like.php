@@ -24,8 +24,14 @@ class CreatingUserCommentLike extends Migration
 
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('User');
-            $table->foreign('comment_id')->references('id')->on('Comment');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('User');
+
+            $table->foreign('comment_id')
+                ->references('id')
+                ->on('Comment');
+
             $table->primary(['id', 'user_id', 'comment_id']);
         });
     }
@@ -37,6 +43,9 @@ class CreatingUserCommentLike extends Migration
      */
     public function down()
     {
+        Schema::table('UserCommentLike', function (Blueprint $table) {
+            dropForeign(['usercommentlike_user_id_foreign', 'usercommentlike_comment_id_foreign']);
+        });
         Schema::dropIfExists('UserCommentLike');
     }
 }

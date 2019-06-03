@@ -29,7 +29,8 @@ class ReCreatingAccount extends Migration
     public function down()
     {
         Schema::table('Account', function (Blueprint $table) {
-            //
+            $table->string('name');
+            $table->dropColumn(['last_ip', 'deleted_at', 'changed_pw_at']);
         });
     }
 }

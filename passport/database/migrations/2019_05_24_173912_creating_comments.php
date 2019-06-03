@@ -13,9 +13,6 @@ class CreatingComments extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('Comment')){
-            Schema::drop('Comment');
-        };
         Schema::create('Comment', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
 
@@ -51,6 +48,9 @@ class CreatingComments extends Migration
      */
     public function down()
     {
+        Schema::table('Comment', function (Blueprint $table) {
+            $table->dropForeign(['comment_user_id_foreign', 'comment_post_id_foreign', 'comment_comment_id_foreign']);
+        });
         Schema::dropIfExists('comment');
     }
 }

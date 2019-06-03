@@ -13,9 +13,6 @@ class CreatingUserPostActions extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('UserPostActions')){
-            Schema::drop('UserPostActions');
-        };
         Schema::create('UserPostActions', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('user_id');
@@ -26,11 +23,14 @@ class CreatingUserPostActions extends Migration
             $table->timestamp('tw_shared_at')->nullable();
 
             $table->timestamps();
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('User');
 
-            $table->foreign('post_id')->references('id')->on('Post');
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('Post');
 
             $table->primary(['id', 'user_id', 'post_id']);
         });
@@ -43,6 +43,9 @@ class CreatingUserPostActions extends Migration
      */
     public function down()
     {
+        Schema::table('UserPostActions', function (Blueprint $table) {
+            $table->dropForeign(['userpostactions_user_id_foreign', 'userpostacctions_post_id_foreign']);
+        });
         Schema::dropIfExists('UserPostActions');
     }
 }

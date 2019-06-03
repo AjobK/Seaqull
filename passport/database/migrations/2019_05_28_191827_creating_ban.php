@@ -42,6 +42,9 @@ class CreatingBan extends Migration
      */
     public function down()
     {
+        Schema::table('Ban', function (Blueprint $table) {
+            $table->dropForeign(['ban_staff_id_foreign', 'ban_account_id_foreign']);
+        });
         Schema::dropIfExists('Ban');
     }
 }

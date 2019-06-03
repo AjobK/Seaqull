@@ -18,6 +18,7 @@ class UpdatingAttachment extends Migration
             $table->dropForeign('attachment_user_id_foreign');
             $table->dropColumn('user_id');
         });
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 
     /**
@@ -28,7 +29,11 @@ class UpdatingAttachment extends Migration
     public function down()
     {
         Schema::table('Attachment', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('User');
         });
     }
 }

@@ -33,6 +33,9 @@ class CreatingAttachment extends Migration
      */
     public function down()
     {
+        Schema::table('Attachment', function (Blueprint $table) {
+            $table->dropForeign('attachment_user_id_foreign');
+        });
         Schema::dropIfExists('Attachment');
     }
 }

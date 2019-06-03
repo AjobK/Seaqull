@@ -34,6 +34,9 @@ class CreatingResetAndVerify extends Migration
      */
     public function down()
     {
+        Schema::table('ResetAndVerify', function (Blueprint $table) {
+            $table->dropForeign('resetandverify_account_id_foreign');
+        });
         Schema::dropIfExists('ResetAndVerify');
     }
 }

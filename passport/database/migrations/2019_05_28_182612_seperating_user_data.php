@@ -13,9 +13,6 @@ class SeperatingUserData extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('User')){
-            Schema::drop('User');
-        };
         Schema::create('User', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->integer('account_id')->unsigned();
@@ -45,6 +42,9 @@ class SeperatingUserData extends Migration
      */
     public function down()
     {
+        Schema::table('User', function (Blueprint $table) {
+            $table->dropForeign(['user_account_id_foreign', 'user_title_id_foreign']);
+        });
         Schema::dropIfExists('User');
     }
 }

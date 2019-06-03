@@ -31,7 +31,8 @@ class UpdatingUserAddedProfilePic extends Migration
     public function down()
     {
         Schema::table('User', function (Blueprint $table) {
-            //
+            $table->dropForeign('user_profile_pic_foreign');
+            $table->dropColumn('profile_pic');
         });
     }
 }

@@ -27,8 +27,8 @@ class UpdatingPost extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->removeColumn('hidden_at');
-            $table->removeColumn('published_at');
+            $table->dropColumn('hidden_at');
+            $table->dropColumn('published_at');
         });
     }
 }

@@ -25,8 +25,8 @@ class RenamingTables extends Migration
      */
     public function down()
     {
-        Schema::table('User', function (Blueprint $table) {
-            //
-        });
+        Schema::rename('Account', 'users');
+        Schema::rename('Post', 'posts');
+        Schema::rename('Role', 'roles');
     }
 }

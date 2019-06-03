@@ -27,8 +27,10 @@ class RenamingTablesToSnakeCase extends Migration
      */
     public function down()
     {
-        Schema::table('snake_case', function (Blueprint $table) {
-            //
-        });
+        Schema::rename('reset_and_verify', 'resetandverify');
+        Schema::rename('title_owned_by', 'titleownedby');
+        Schema::rename('user_activity', 'useractivity');
+        Schema::rename('user_comment_like', 'usercommentlike');
+        Schema::rename('user_post_actions', 'userpostactions');
     }
 }
