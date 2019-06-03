@@ -15,7 +15,8 @@ class RegisterPrompt extends Component {
       username: null,
       email: null,
       password: null,
-      recaptcha: null
+      recaptcha: null,
+      recaptchaToken: null
     }
 
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
@@ -30,7 +31,7 @@ class RegisterPrompt extends Component {
       username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptcha
+      recaptcha: this.state.recaptchaToken
     }
 
     Axios.post('/register', payload)
@@ -89,14 +90,13 @@ class RegisterPrompt extends Component {
   }
   
   verifyCallback = (recaptchaToken) => {
-    this.setState({
-      recaptcha: recaptchaToken
-    })
+    this.setState({ recaptchaToken })
     this.auth()
   }
 
   render() {
-    const { username, email, password } = this.state
+    const { username, email, password, recaptcha } = this.state
+    let buttonClass = typeof recaptcha == 'array' && recaptcha.length > 0 ? 'Try again' : 'Register'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
@@ -108,7 +108,7 @@ class RegisterPrompt extends Component {
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={'Register'} className={styles.submit} />
+              <Button value={buttonClass} className={styles.submit} />
               <ReCaptcha
                 ref={(el) => {this.captcha = el}}
                 size='invisible'
