@@ -73,7 +73,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    this.state.recaptcha == null ? this.onLoadRecaptcha() : this.auth()
+    this.state.recaptchaToken == null ? this.onLoadRecaptcha() : this.auth()
   }
 
   setElId = (item, id) => {
