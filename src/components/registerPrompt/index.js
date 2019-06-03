@@ -73,7 +73,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    this.state.recaptcha == null ? this.onLoadRecaptcha() : this.auth()
+    this.state.recaptchaToken == null ? this.onLoadRecaptcha() : this.auth()
   }
 
   setElId = (item, id) => {
@@ -96,7 +96,7 @@ class RegisterPrompt extends Component {
 
   render() {
     const { username, email, password, recaptcha } = this.state
-    let buttonClass = typeof recaptcha == 'array' && recaptcha.length > 0 ? 'Try again' : 'Register'
+    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
