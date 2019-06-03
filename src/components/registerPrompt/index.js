@@ -80,6 +80,8 @@ class RegisterPrompt extends Component {
   }
 
   onLoadRecaptcha = () => {
+    loadReCaptcha()
+    
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
@@ -90,10 +92,7 @@ class RegisterPrompt extends Component {
     this.setState({
       recaptcha: recaptchaToken
     })
-  }
-
-  componentDidMount = () => {
-    loadReCaptcha()
+    this.auth()
   }
 
   render() {
