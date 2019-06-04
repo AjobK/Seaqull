@@ -1,5 +1,6 @@
 <?php
 namespace App\Rules;
+
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Validation\Rule;
 
