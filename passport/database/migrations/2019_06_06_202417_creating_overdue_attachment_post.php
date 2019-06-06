@@ -40,6 +40,6 @@ class CreatingOverdueAttachmentPost extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Post_Attachments');
+        Schema::dropIfExists('Attachment_Post');
     }
 }
