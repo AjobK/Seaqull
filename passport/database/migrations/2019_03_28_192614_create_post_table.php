@@ -38,7 +38,7 @@ class CreatePostTable extends Migration
     public function down()
     {
         Schema::table('Post', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+            $table->dropForeign('post_user_id_foreign');
         });
         Schema::dropIfExists('Post');
     }
