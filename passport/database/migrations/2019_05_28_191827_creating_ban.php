@@ -15,8 +15,8 @@ class CreatingBan extends Migration
     {
         Schema::create('Ban', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->integer('staff_id')->unsigned();
-            $table->integer('account_id')->unsigned();
+            $table->unsignedBigInteger('staff_id');
+            $table->unsignedBigInteger('account_id');
             $table->text('reason');
             $table->text('description')->nullable();
             $table->timestamp('banned_at');
@@ -30,8 +30,8 @@ class CreatingBan extends Migration
                 ->on('Account');
             
             $table->foreign('account_id')
-            ->references('id')
-            ->on('Account');
+                ->references('id')
+                ->on('Account');
         });
     }
 
@@ -43,7 +43,8 @@ class CreatingBan extends Migration
     public function down()
     {
         Schema::table('Ban', function (Blueprint $table) {
-            $table->dropForeign(['ban_staff_id_foreign', 'ban_account_id_foreign']);
+            $table->dropForeign('ban_staff_id_foreign');
+            $table->dropForeign('ban_account_id_foreign');
         });
         Schema::dropIfExists('Ban');
     }

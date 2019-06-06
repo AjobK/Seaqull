@@ -37,7 +37,8 @@ class CreatingTitleOwnedBy extends Migration
     public function down()
     {
         Schema::table('TitleOwnedBy', function (Blueprint $table) {
-            $table->dropForeign(['titleownedby_user_id_foreign', 'titleownedby_title_id_foreign']);
+            $table->dropForeign('titleownedby_user_id_foreign');
+            $table->dropForeign('titleownedby_title_id_foreign');
         });
         Schema::dropIfExists('TitleOwnedBy');
     }

@@ -15,8 +15,7 @@ class CreatingUserPostActions extends Migration
     {
         Schema::create('UserPostActions', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
-            $table->integer('post_id')->unsigned();
-            $table->integer('like_weight')->nullable();
+            $table->unsignedBigInteger('post_id');
             $table->timestamp('liked_at')->nullable();
             $table->timestamp('fb_shared_at')->nullable();
             $table->timestamp('tw_shared_at')->nullable();
@@ -43,7 +42,8 @@ class CreatingUserPostActions extends Migration
     public function down()
     {
         Schema::table('UserPostActions', function (Blueprint $table) {
-            $table->dropForeign(['userpostactions_user_id_foreign', 'userpostactions_post_id_foreign']);
+            $table->dropForeign('userpostactions_user_id_foreign');
+            $table->dropForeign('userpostactions_post_id_foreign');
         });
         Schema::dropIfExists('UserPostActions');
     }

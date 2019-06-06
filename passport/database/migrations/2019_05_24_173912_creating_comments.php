@@ -15,28 +15,29 @@ class CreatingComments extends Migration
     {
         Schema::create('Comment', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-
-            $table->integer('user_id')->unsigned();
-            $table->integer('post_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('comment_id')->nullable();
+            $table->unsignedBigInteger('attachment_id')->nullable();
             $table->text('comment');
 
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('User');
 
             $table->foreign('post_id')
                 ->references('id')
-                ->on('posts')
-                ->onDelete('cascade');
+                ->on('Post');
 
             $table->foreign('comment_id')
                 ->references('id')
-                ->on('Comment')
-                ->onDelete('cascade');
+                ->on('Comment');
+
+            $table->foreign('attachment_id')
+                ->references('id')
+                ->on('Attachment');
 
         });
     }
@@ -49,7 +50,10 @@ class CreatingComments extends Migration
     public function down()
     {
         Schema::table('Comment', function (Blueprint $table) {
-            $table->dropForeign(['comment_user_id_foreign', 'comment_post_id_foreign', 'comment_comment_id_foreign']);
+            $table->dropForeign('comment_user_id_foreign');
+            $table->dropForeign('comment_post_id_foreign');
+            $table->dropForeign('comment_comment_id_foreign');
+            $table->dropForeign('comment_attachment_id_foreign');
         });
         Schema::dropIfExists('comment');
     }

@@ -13,13 +13,10 @@ class CreatingUseractivity extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('useractivity')){
-            Schema::drop('useractivity');
-        };
-        Schema::create('UserActivity', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+        Schema::create('User_Activity', function (Blueprint $table) {
+            $table->bigIncrements('id');
 
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->string('previous_password', 255)->nullable();
             $table->string('type');
             $table->string('ip_address');
@@ -27,7 +24,7 @@ class CreatingUseractivity extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('User');
         });
     }
 
@@ -39,8 +36,8 @@ class CreatingUseractivity extends Migration
     public function down()
     {
         Schema::table('UserActivity', function (Blueprint $table) {
-            $table->dropForeign('useractivity_user_id_foreign');
+            $table->dropForeign('user_activity_user_id_foreign');
         });
-        Schema::dropIfExists('UserActivity');
+        Schema::dropIfExists('User_Activity');
     }
 }

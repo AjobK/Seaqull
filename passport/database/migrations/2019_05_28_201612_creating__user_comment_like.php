@@ -13,9 +13,6 @@ class CreatingUserCommentLike extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('UserCommentLike')){
-            Schema::drop('UserCommentLike');
-        };
         Schema::create('UserCommentLike', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('user_id');
@@ -44,7 +41,8 @@ class CreatingUserCommentLike extends Migration
     public function down()
     {
         Schema::table('UserCommentLike', function (Blueprint $table) {
-            dropForeign(['usercommentlike_user_id_foreign', 'usercommentlike_comment_id_foreign']);
+            $table->dropForeign('usercommentlike_user_id_foreign');
+            $table->dropForeign('usercommentlike_comment_id_foreign');
         });
         Schema::dropIfExists('UserCommentLike');
     }

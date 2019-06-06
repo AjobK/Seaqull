@@ -13,9 +13,9 @@ class CreatingResetAndVerify extends Migration
      */
     public function up()
     {
-        Schema::create('ResetAndVerify', function (Blueprint $table) {
+        Schema::create('Reset_And_Verify', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('account_id')->unsigned();
+            $table->unsignedBigInteger('account_id');
             $table->string('code');
             $table->boolean('reset')->nullable();
             $table->timestamps();
@@ -34,9 +34,9 @@ class CreatingResetAndVerify extends Migration
      */
     public function down()
     {
-        Schema::table('ResetAndVerify', function (Blueprint $table) {
-            $table->dropForeign('resetandverify_account_id_foreign');
+        Schema::table('Reset_And_Verify', function (Blueprint $table) {
+            $table->dropForeign('reset_and_verify_account_id_foreign');
         });
-        Schema::dropIfExists('ResetAndVerify');
+        Schema::dropIfExists('Reset_And_Verify');
     }
 }
