@@ -40,6 +40,9 @@ class CreateAccountTable extends Migration
      */
     public function down()
     {
+        Schema::table('Account', function (Blueprint $table) {
+            $table->dropForeign('account_role_id_foreign');
+        });
         Schema::dropIfExists('Account');
     }
 }
