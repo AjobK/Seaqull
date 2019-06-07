@@ -19,8 +19,6 @@ class CreatingSettings extends Migration
             $table->string('key');
             $table->longText('value');
 
-            $table->timestamps();
-
             $table->foreign('user_id')
                 ->references('id')
                 ->on('User');
