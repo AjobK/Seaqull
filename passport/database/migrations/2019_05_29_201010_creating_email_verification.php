@@ -19,6 +19,7 @@ class CreatingEmailVerification extends Migration
             $table->string('token');
 
             $table->timestamps();
+            $table->softDeletes();
             $table->timestamp('verified_at')->nullable();
             $table->timestamp('expires_at')->nullable();
 
