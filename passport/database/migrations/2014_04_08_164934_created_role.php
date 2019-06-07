@@ -15,8 +15,8 @@ class CreatedRole extends Migration
     {
         Schema::create('Role', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            
+            $table->string('name')->unique();
+
             $table->timestamps();
             $table->softDeletes();
         });

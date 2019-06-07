@@ -15,7 +15,7 @@ class CreatingTitle extends Migration
     {
         Schema::create('Title', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->unique();
 
             $table->timestamps();
             $table->softDeletes();

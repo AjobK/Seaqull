@@ -16,7 +16,7 @@ class CreatingSettings extends Migration
         Schema::create('Setting', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->unsignedBigInteger('user_id');
-            $table->string('key');
+            $table->string('key')->unique();
             $table->longText('value')->nullable();
             //this has timestamps?
 
