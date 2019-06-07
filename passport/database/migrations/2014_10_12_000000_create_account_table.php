@@ -28,8 +28,7 @@ class CreateAccountTable extends Migration
 
             $table->foreign('role_id')
                 ->references('id')
-                ->on('Role')
-                ->onDelete('cascade');
+                ->on('Role');
         });
     }
 
