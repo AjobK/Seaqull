@@ -13,7 +13,7 @@ class CreatingUserPostActions extends Migration
      */
     public function up()
     {
-        Schema::create('UserPostActions', function (Blueprint $table) {
+        Schema::create('User_Post_Actions', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->timestamp('liked_at')->nullable();
@@ -41,10 +41,10 @@ class CreatingUserPostActions extends Migration
      */
     public function down()
     {
-        Schema::table('UserPostActions', function (Blueprint $table) {
-            $table->dropForeign('userpostactions_user_id_foreign');
-            $table->dropForeign('userpostactions_post_id_foreign');
+        Schema::table('User_Post_Actions', function (Blueprint $table) {
+            $table->dropForeign('user_post_actions_user_id_foreign');
+            $table->dropForeign('user_post_actions_post_id_foreign');
         });
-        Schema::dropIfExists('UserPostActions');
+        Schema::dropIfExists('User_Post_Actions');
     }
 }

@@ -13,7 +13,7 @@ class CreatingUserCommentLike extends Migration
      */
     public function up()
     {
-        Schema::create('UserCommentLike', function (Blueprint $table) {
+        Schema::create('User_Comment_Like', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('comment_id');
@@ -40,10 +40,10 @@ class CreatingUserCommentLike extends Migration
      */
     public function down()
     {
-        Schema::table('UserCommentLike', function (Blueprint $table) {
-            $table->dropForeign('usercommentlike_user_id_foreign');
-            $table->dropForeign('usercommentlike_comment_id_foreign');
+        Schema::table('User_Comment_Like', function (Blueprint $table) {
+            $table->dropForeign('user_comment_like_user_id_foreign');
+            $table->dropForeign('user_comment_like_comment_id_foreign');
         });
-        Schema::dropIfExists('UserCommentLike');
+        Schema::dropIfExists('User_Comment_Like');
     }
 }

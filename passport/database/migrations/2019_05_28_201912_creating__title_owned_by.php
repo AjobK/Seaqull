@@ -13,7 +13,7 @@ class CreatingTitleOwnedBy extends Migration
      */
     public function up()
     {
-        Schema::create('TitleOwnedBy', function (Blueprint $table) {
+        Schema::create('Title_Owned_By', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('title_id');
 
@@ -36,10 +36,10 @@ class CreatingTitleOwnedBy extends Migration
      */
     public function down()
     {
-        Schema::table('TitleOwnedBy', function (Blueprint $table) {
-            $table->dropForeign('titleownedby_user_id_foreign');
-            $table->dropForeign('titleownedby_title_id_foreign');
+        Schema::table('Title_Owned_By', function (Blueprint $table) {
+            $table->dropForeign('title_owned_by_user_id_foreign');
+            $table->dropForeign('title_owned_by_title_id_foreign');
         });
-        Schema::dropIfExists('TitleOwnedBy');
+        Schema::dropIfExists('Title_Owned_By');
     }
 }
