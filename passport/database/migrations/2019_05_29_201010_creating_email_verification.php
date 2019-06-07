@@ -20,7 +20,7 @@ class CreatingEmailVerification extends Migration
 
             $table->timestamps();
             $table->timestamp('verified_at')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
 
             $table->foreign('account_id')
                 ->references('id')
@@ -35,9 +35,9 @@ class CreatingEmailVerification extends Migration
      */
     public function down()
     {
-        Schema::table('Reset_And_Verify', function (Blueprint $table) {
-            $table->dropForeign('reset_and_verify_account_id_foreign');
+        Schema::table('Email_Verification', function (Blueprint $table) {
+            $table->dropForeign('email_verification_account_id_foreign');
         });
-        Schema::dropIfExists('Reset_And_Verify');
+        Schema::dropIfExists('Email_Verification');
     }
 }

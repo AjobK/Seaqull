@@ -17,9 +17,9 @@ class CreatePasswordResetsTable extends Migration
             $table->string('email')->index();
             $table->string('token');
 
-            $table->timestamp('created_at');
-            $table->timestamp('expires_at');
-            $table->softDelets();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->softDeletes();
         });
     }
 

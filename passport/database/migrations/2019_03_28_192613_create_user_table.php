@@ -27,7 +27,7 @@ class CreateUserTable extends Migration
             $table->softDeletes();
 
 
-            $table->foreign('profile_pic')
+            $table->foreign('avatar_attachment')
                 ->references('id')
                 ->on('Attachment');
 
@@ -49,7 +49,7 @@ class CreateUserTable extends Migration
     public function down()
     {
         Schema::table('User', function (Blueprint $table) {
-            $table->dropForeign('user_profile_pic_foreign');
+            $table->dropForeign('user_avatar_attachment_foreign');
             $table->dropForeign('user_account_id_foreign');
             $table->dropForeign('user_title_id_foreign');
         });

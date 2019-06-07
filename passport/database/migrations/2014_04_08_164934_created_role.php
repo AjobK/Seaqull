@@ -18,7 +18,7 @@ class CreatedRole extends Migration
             $table->string('name');
             
             $table->timestamps();
-            $table->sofDeletes();
+            $table->softDeletes();
         });
     }
 
