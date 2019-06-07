@@ -15,7 +15,7 @@ class CreatingAttachment extends Migration
     {
         Schema::create('Attachment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('path');
+            $table->string('path')->unique();
 
             $table->timestamps();
             $table->softDeletes();

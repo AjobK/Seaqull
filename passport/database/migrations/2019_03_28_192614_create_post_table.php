@@ -17,7 +17,7 @@ class CreatePostTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->string('path');
+            $table->string('path')->unique();
             $table->longText('content')->nullable();
             $table->text('description')->nullable();
             
