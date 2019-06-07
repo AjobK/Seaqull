@@ -18,8 +18,8 @@ class CreatePostTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('path');
-            $table->longText('content');
-            $table->text('description');
+            $table->longText('content')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->timestamp('hidden_at')->nullable();
             $table->timestamp('published_at')->nullable();
