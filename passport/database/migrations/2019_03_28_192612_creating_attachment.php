@@ -18,6 +18,7 @@ class CreatingAttachment extends Migration
             $table->string('path');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

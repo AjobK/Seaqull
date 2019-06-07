@@ -20,6 +20,7 @@ class CreatingOverdueAttachmentPost extends Migration
             $table->string('type');
 
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('attachment_id')
                 ->references('id')
