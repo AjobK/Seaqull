@@ -16,12 +16,11 @@ class CreateUserTable extends Migration
         Schema::create('User', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->unsignedBigInteger('account_id');
-            $table->unsignedBigInteger('title_id');
-            $table->unsignedBigInteger('profile_pic')->nullable();
-            $table->string('user_name');
-            $table->string('display_name');
-            $table->float('experience', 8, 2)->nullable();
-            $table->integer('rows_scrolled');
+            $table->unsignedBigInteger('title_id')->nullable();
+            $table->unsignedBigInteger('avatar_attachment')->nullable();
+            $table->string('display_name')->nullable();
+            $table->float('experience', 10, 2)->nullable();
+            $table->integer('rows_scrolled')->nullable();
             $table->string('custom_path')->nullable();
             
             $table->timestamps();

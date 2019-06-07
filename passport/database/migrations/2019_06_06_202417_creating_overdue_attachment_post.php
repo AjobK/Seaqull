@@ -14,7 +14,7 @@ class CreatingOverdueAttachmentPost extends Migration
     public function up()
     {
         Schema::create('Attachment_Post', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('attachment_id');
             $table->unsignedBigInteger('post_id');
             $table->string('type');
@@ -28,8 +28,6 @@ class CreatingOverdueAttachmentPost extends Migration
             $table->foreign('post_id')
                 ->references('id')
                 ->on('Post');
-
-            $table->primary(['id', 'attachment_id', 'post_id']);
         });
     }
 
@@ -40,6 +38,10 @@ class CreatingOverdueAttachmentPost extends Migration
      */
     public function down()
     {
+        Schema::table('Attachment_Post', function (Blueprint $table) {
+            $table->dropForeign('attachment_post_attachment_id_foreign');
+            $table->dropForeign('attachment_post_post_id_foreign');
+        });
         Schema::dropIfExists('Attachment_Post');
     }
 }

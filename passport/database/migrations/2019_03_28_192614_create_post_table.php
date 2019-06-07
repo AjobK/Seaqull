@@ -20,7 +20,9 @@ class CreatePostTable extends Migration
             $table->string('path');
             $table->longText('content')->nullable();
             $table->text('description')->nullable();
+            
             $table->timestamps();
+            $table->softDeletes();
             $table->timestamp('hidden_at')->nullable();
             $table->timestamp('published_at')->nullable();
 

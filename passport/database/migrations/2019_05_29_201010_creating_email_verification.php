@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatingResetAndVerify extends Migration
+class CreatingEmailVerification extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreatingResetAndVerify extends Migration
      */
     public function up()
     {
-        Schema::create('Reset_And_Verify', function (Blueprint $table) {
+        Schema::create('Email_Verification', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('account_id');
-            $table->string('code');
-            $table->boolean('reset')->nullable();
+            $table->string('token');
+
             $table->timestamps();
             $table->timestamp('verified_at')->nullable();
+            $table->timestamp('expires_at');
 
             $table->foreign('account_id')
                 ->references('id')

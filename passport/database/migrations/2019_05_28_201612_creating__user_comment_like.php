@@ -14,7 +14,6 @@ class CreatingUserCommentLike extends Migration
     public function up()
     {
         Schema::create('User_Comment_Like', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('comment_id');
             $table->timestamp('liked_at')->nullable();
@@ -29,7 +28,7 @@ class CreatingUserCommentLike extends Migration
                 ->references('id')
                 ->on('Comment');
 
-            $table->primary(['id', 'user_id', 'comment_id']);
+            $table->primary(['user_id', 'comment_id']);
         });
     }
 

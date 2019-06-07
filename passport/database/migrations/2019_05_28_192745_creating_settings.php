@@ -17,7 +17,8 @@ class CreatingSettings extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->unsignedBigInteger('user_id');
             $table->string('key');
-            $table->longText('value');
+            $table->longText('value')->nullable();
+            //this has timestamps?
 
             $table->foreign('user_id')
                 ->references('id')

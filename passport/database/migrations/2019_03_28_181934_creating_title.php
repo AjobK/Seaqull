@@ -15,9 +15,10 @@ class CreatingTitle extends Migration
     {
         Schema::create('Title', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
+            $table->string('name');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

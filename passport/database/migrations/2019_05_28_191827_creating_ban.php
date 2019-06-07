@@ -24,6 +24,7 @@ class CreatingBan extends Migration
             $table->boolean('ip_ban');
 
             $table->timestamps();
+            $table->sofDeletes();
 
             $table->foreign('staff_id')
                 ->references('id')
