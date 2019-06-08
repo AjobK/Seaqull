@@ -82,11 +82,12 @@ class RegisterPrompt extends Component {
 
   onLoadRecaptcha = () => {
     loadReCaptcha()
-    
+
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
     }
+    console.log(this.captcha)
   }
   
   verifyCallback = (recaptchaToken) => {
