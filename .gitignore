@@ -46,3 +46,6 @@ Homestead.json
 .rocketeer/
 passport/composer.lock
 package-lock.json
+
+#VScode
+/*.code-workspace
