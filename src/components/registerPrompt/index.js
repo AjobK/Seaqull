@@ -25,6 +25,12 @@ class RegisterPrompt extends Component {
   }
 
   auth = () => {
+    this.setState({
+      username: 'loading',
+      email: 'loading',
+      password: 'loading'
+    })
+
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
@@ -41,7 +47,7 @@ class RegisterPrompt extends Component {
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
       })
       .then(user => {
-        localStorage.setItem('user', JSON.stringify(user.data.user))
+        localStorage.setItem('token', res.data.token)
 
         return user.data.user
       })
@@ -52,12 +58,12 @@ class RegisterPrompt extends Component {
     })
     .catch(res => {
       const { username, email, password, recaptcha } = res.response.data.errors
-
+  
       this.setState({
         username: username || [],
         email: email || [],
         password: password || [],
-        recaptcha: recaptcha || []
+        recaptcha: recaptcha || [],
       })
     })
   }
@@ -73,7 +79,8 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    this.state.recaptchaToken == null ? this.onLoadRecaptcha() : this.auth()
+    
+    this.state.recaptchaToken == null ? this.loadReCaptchaOnSubmit() : this.auth()
   }
 
   setElId = (item, id) => {
@@ -81,13 +88,22 @@ class RegisterPrompt extends Component {
   }
 
   onLoadRecaptcha = () => {
-    loadReCaptcha()
-
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
     }
-    console.log(this.captcha)
+    if(this.captcha.state.ready){
+      this.setState({
+        username: null,
+        email: null,
+        password: null,
+        recaptcha: null,
+      })
+    }
+  }
+
+  loadReCaptchaOnSubmit = () =>{
+    loadReCaptcha()
   }
   
   verifyCallback = (recaptchaToken) => {
