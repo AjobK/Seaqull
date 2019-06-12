@@ -92,14 +92,14 @@ class RegisterPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
-    setTimeout(function(){ 
+    setTimeout( () => { 
       this.setState({
         username: null,
         email: null,
         password: null,
         recaptcha: null,
       })
-  }.bind(this), 3000);
+  }, 3000);
   }
   
   verifyCallback = (recaptchaToken) => {
