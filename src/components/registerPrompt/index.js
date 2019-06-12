@@ -64,6 +64,7 @@ class RegisterPrompt extends Component {
         email: email || [],
         password: password || [],
         recaptcha: recaptcha || [],
+        recaptchaToken: null
       })
     })
   }
@@ -79,14 +80,32 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-
-    this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
+    console.log(this.captcha.state.ready)
+    if(!(this.captcha.state.ready)){
+      this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
+    }else{
+      this.loadCaptcha2()
+    }
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
+  loadCaptcha2 = () =>{
+    if (this.captcha) {
+      this.captcha.reset()
+      this.captcha.execute()
+    }
+    setTimeout( () => { 
+      this.setState({
+        username: null,
+        email: null,
+        password: null,
+        recaptcha: null,
+      })
+  }, 3000);
+  }
   onLoadRecaptcha = () => {
     if (this.captcha) {
       this.captcha.reset()
