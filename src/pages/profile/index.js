@@ -3,18 +3,89 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { UserBanner, PostsPreview, Statistics } from '../../components'
+import Axios from 'axios'
 
 @inject('store') @observer
 class Profile extends App {
+
+  constructor(props) {
+    super(props);
+
+    const user = {
+      isOwner: false,
+      name: '',
+      title: '',
+      level: 0,
+      posts: [],
+      banner: '/src/static/dummy/user/banner.jpg',
+      picture: '/src/static/dummy/user/profile.jpg'
+    }
+
+    this.state = {
+      user: user
+    }
+  }
+
+  componentDidMount() {
+    const { path } = this.props.match.params
+    const { user } = this.props.store
+
+    if(user.path === path) {
+      this.updateProfile(user);
+    }
+    else {
+      this.fetchProfileData(path);
+    }
+  }
+
+  fetchProfileData(path) {
+    Axios.get(`${this.props.store.defaultData.backendUrl}/api/profile/${path}`)
+      .then((response) => {
+        this.updateProfile(response.data.profile)
+      })
+  }
+
+  calcLevel(cXp) {
+    let xp = {
+      current: cXp,
+      base: 20,
+      max: 20
+    }
+
+    let level = 1
+
+    for (let i = 1; xp.current > xp.max; i++) {
+      xp.current -= xp.max
+      xp.max = ~~(xp.max * 1.2)
+      level++
+    }
+
+    return level
+  }
+
+  updateProfile(profile) {
+    const user = {
+      isOwner: profile.isOwner,
+      name: profile.name,
+      title: profile.title,
+      level: this.calcLevel(profile.experience),
+      posts: profile.posts,
+      banner: '/src/static/dummy/user/banner.jpg',
+      picture: '/src/static/dummy/user/profile.jpg'
+    }
+
+    this.setState({ user })
+  }
+
   render() {
     return (
       <Standard>
-        <UserBanner />
+        <UserBanner user={this.state.user}/>
         <Section title={'CREATED POSTS'}>
-          <PostsPreview create />
+          <PostsPreview posts={this.state.user.posts} create={this.state.user.isOwner} />
         </Section>
         <Section title={'LIKED POSTS'}>
-          <PostsPreview />
+          <PostsPreview posts={this.state.user.posts} />
         </Section>
         <Section title={'STATISTICS'}>
           <Statistics />

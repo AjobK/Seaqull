@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Title extends Model
 {
-    protected $table = 'Role';
-
     protected $fillable = [
         'name'
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
