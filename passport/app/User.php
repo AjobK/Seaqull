@@ -3,54 +3,26 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Account;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class User
 {
-    use Notifiable, HasApiTokens;
 
-    protected $table = 'Account';
+    protected $table = 'User';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'user_name', 'email', 'password', 'role'
+        'account', 'title', 'avatar', 'display_name', 'experience', 'rows_scrolled', 'custom_path', 'created_at', 'updated_at', 'deleted_at'
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
 
     public function title()
     {
         return $this->belongsTo(Title::class);
     }
-    
-    public function role()
+
+    public function account()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Account::class);
     }
+
 }
