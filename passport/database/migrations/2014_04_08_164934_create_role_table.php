@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatingCommentHasAttachment extends Migration
+class CreateRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatingCommentHasAttachment extends Migration
      */
     public function up()
     {
-        Schema::create('comment_has_attachment', function (Blueprint $table) {
-            $table->unsignedBigInteger('comment_id');
-            $table->unsignedBigInteger('attachment_id');
+        Schema::create('Role', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->unique();
+
             $table->timestamps();
-            $table->softdeletes();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +29,6 @@ class CreatingCommentHasAttachment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comment_has_attachment');
+        Schema::dropIfExists('Role');
     }
 }

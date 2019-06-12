@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatingUserActivity extends Migration
+class CreateSettingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreatingUserActivity extends Migration
      */
     public function up()
     {
-        Schema::create('User_Activity', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
+        Schema::create('Setting', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
             $table->unsignedBigInteger('user_id');
-            $table->string('previous_password', 255)->nullable();
-            $table->string('type');
-            $table->string('ip_address');
-            $table->timestamp('created_at');
+            $table->string('key')->unique();
+            $table->longText('value')->nullable();
+            //this has timestamps?
 
             $table->foreign('user_id')
                 ->references('id')
@@ -35,9 +33,9 @@ class CreatingUserActivity extends Migration
      */
     public function down()
     {
-        Schema::table('User_Activity', function (Blueprint $table) {
-            $table->dropForeign('user_activity_user_id_foreign');
+        Schema::table('Setting', function (Blueprint $table) {
+            $table->dropForeign('setting_user_id_foreign');
         });
-        Schema::dropIfExists('User_Activity');
+        Schema::dropIfExists('Setting');
     }
 }

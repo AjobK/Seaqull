@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTitles extends Migration
+class CreateAttachmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class AddTitles extends Migration
      */
     public function up()
     {
-        Schema::create('titles', function (Blueprint $table) {
+        Schema::create('Attachment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('path')->unique();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +29,6 @@ class AddTitles extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('titles');
+        Schema::dropIfExists('Attachment');
     }
 }
