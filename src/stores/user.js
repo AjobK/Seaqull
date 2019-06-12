@@ -7,7 +7,7 @@ const Posts = types
 
 const UserStore = types
   .model('UserStore', {
-    loggedIn: types.optional(types.boolean, localStorage.user == null ? false : true),
+    loggedIn: types.optional(types.boolean, localStorage.token == null ? false : true),
     username: types.optional(types.string, 'Emily Washington'),
     role: types.optional(types.string, 'Software Engineer'),
     isOwner: types.optional(types.boolean, true),
@@ -22,6 +22,7 @@ const UserStore = types
     logOut() {
       self.loggedIn = false
       self.name = ''
+      localStorage.clear()
     },
     logIn() {
       self.loggedIn = true

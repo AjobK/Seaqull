@@ -25,6 +25,12 @@ class RegisterPrompt extends Component {
   }
 
   auth = () => {
+    this.setState({
+      username: 'loading',
+      email: 'loading',
+      password: 'loading'
+    })
+
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
@@ -41,7 +47,7 @@ class RegisterPrompt extends Component {
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
       })
       .then(user => {
-        localStorage.setItem('user', JSON.stringify(user.data.user))
+        localStorage.setItem('token', res.data.token)
 
         return user.data.user
       })
@@ -52,12 +58,13 @@ class RegisterPrompt extends Component {
     })
     .catch(res => {
       const { username, email, password, recaptcha } = res.response.data.errors
-
+  
       this.setState({
         username: username || [],
         email: email || [],
         password: password || [],
-        recaptcha: recaptcha || []
+        recaptcha: recaptcha || [],
+        recaptchaToken: null
       })
     })
   }
@@ -73,20 +80,45 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    this.state.recaptchaToken == null ? this.onLoadRecaptcha() : this.auth()
+    //checking if recaptcha is already loaded
+    if(!(this.captcha.state.ready)){
+      this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
+    }else{
+      this.loadCaptchaOnSubmit()
+    }
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
-  onLoadRecaptcha = () => {
-    loadReCaptcha()
-    
+  loadCaptchaOnSubmit = () =>{
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
     }
+    setTimeout( () => { 
+      this.setState({
+        username: null,
+        email: null,
+        password: null,
+        recaptcha: null,
+      })
+  }, 3000);
+  }
+  onLoadRecaptcha = () => {
+    if (this.captcha) {
+      this.captcha.reset()
+      this.captcha.execute()
+    }
+    setTimeout( () => { 
+      this.setState({
+        username: null,
+        email: null,
+        password: null,
+        recaptcha: null,
+      })
+  }, 3000);
   }
   
   verifyCallback = (recaptchaToken) => {

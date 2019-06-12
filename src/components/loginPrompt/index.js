@@ -31,7 +31,7 @@ class LoginPrompt extends Component {
         headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
       })
       .then(user => {
-        localStorage.setItem('user', JSON.stringify(user.data.user))
+        localStorage.setItem('token', res.data.token)
 
         return user.data.user
       })
