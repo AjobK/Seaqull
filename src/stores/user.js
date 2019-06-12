@@ -32,6 +32,7 @@ const UserStore = types
         self.loggedIn = true
         self.username = user.username || self.username
       }
+    },
     setPosts(posts) {
       self.posts = posts;
     },
