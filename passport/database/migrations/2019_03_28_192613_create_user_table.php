@@ -18,6 +18,7 @@ class CreateUserTable extends Migration
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('title_id')->nullable();
             $table->unsignedBigInteger('avatar_attachment')->nullable();
+            $table->unsignedBigInteger('banner_attachment')->nullable();
             $table->string('display_name')->nullable();
             $table->float('experience', 10, 2)->nullable();
             $table->integer('rows_scrolled')->nullable();
@@ -28,6 +29,10 @@ class CreateUserTable extends Migration
 
 
             $table->foreign('avatar_attachment')
+                ->references('id')
+                ->on('Attachment');
+
+            $table->foreign('banner_attachment')
                 ->references('id')
                 ->on('Attachment');
 
@@ -50,6 +55,7 @@ class CreateUserTable extends Migration
     {
         Schema::table('User', function (Blueprint $table) {
             $table->dropForeign('user_avatar_attachment_foreign');
+            $table->dropForeign('user_banner_attachment_foreign');
             $table->dropForeign('user_account_id_foreign');
             $table->dropForeign('user_title_id_foreign');
         });
