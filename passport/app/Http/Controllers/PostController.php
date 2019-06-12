@@ -3,19 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    private function pathString ($length = 11) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-
-        $path = Post::where('path', $randomString);
+    private function pathString ($length = 12) {
+        $path = Post::where('path', Str::random($length));
 
         if ($path->first()) {
             $this->pathString();
@@ -23,6 +17,7 @@ class PostController extends Controller
             return $randomString;
         }
     }
+
     public function index () {
         $posts = Post::paginate(15);
 
@@ -31,9 +26,10 @@ class PostController extends Controller
             'data' => $posts
         ]);
     }
+
     public function show ($id) {
         if (auth()->user()) {
-            $post =Post::find($id);
+            $post = Post::find($id);
 
             if (!$post) {
                 return response()->json([
@@ -46,6 +42,11 @@ class PostController extends Controller
                     'data' => $post->toArray()
                 ]);
             }
+        } else {
+            return response()->json([
+                'succes' => false,
+                'message' => 'No authentication for user'
+            ], 400);
         }
     }
 
@@ -89,7 +90,7 @@ class PostController extends Controller
             if ($posts) {
                 return response()->json([
                     'succes' => false,
-                    'message' => 'The user did not make this post!'
+                    'message' => 'User did not create this post'
                 ]);
             }  else {
                 return response()->json([
@@ -103,7 +104,8 @@ class PostController extends Controller
 
         if ($updated)
             return response()->json([
-                'success' => true
+                'success' => true,
+                'post' => $post
             ]);
         else
             return response()->json([
@@ -134,4 +136,57 @@ class PostController extends Controller
             ], 500);
         }
     }
+
+    public function showPath ($path) {
+        if (strlen($path) === 11) {
+            if (auth()->user()) {
+                $post = Post::where('path', $path);
+    
+                if ($post->first()) {
+                    // Return of data
+                    return response()->json([
+                        'succes' => true,
+                        'data' => $post->first()
+                    ], 200);
+                } else {
+                    // If no path is found
+                    return response()->json([
+                        'succes' => false,
+                        'message' => 'Post with path ' . $path . ' cannot be found'
+                    ], 404);
+                }
+            }
+        } else {
+            // If string size is not correct
+            return response()->json([
+                'succes' => false,
+                'message' => 'The path is not correct, it is either to long or to short'
+            ], 412);
+        }
+    }
+
+    public function showUser ($id) {
+        if (auth()->user()) {
+            if (User::find($id)) {
+                $post = Post::where('user_id', $id);
+    
+                if ($post->first()) {
+                    return response()->json([
+                        'succes' => true,
+                        'data' => $post->first()
+                    ]);
+                } else {
+                    return response()->json([
+                        'succes' => false,
+                        'message' => 'There is no post made by this user'
+                    ], 404);
+                }
+            } else {
+                return response()->json([
+                    'succes' => false,
+                    'message' => 'User with id ' . $id . ' cannot be found'
+                ], 404);
+            }
+        }
+    } 
 }

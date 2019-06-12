@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import VisibilitySensor from 'react-visibility-sensor'
 import styles from './section.scss'
-import { Title } from '../../components'
+import { Title, PostContentBlock } from '../../components'
 
 @inject('store') @observer
 class Section extends Component {
@@ -24,12 +24,17 @@ class Section extends Component {
   }
 
   render() {
-    const { title, children } = this.props
+    const { title, children, editable } = this.props
 
     return (
       <VisibilitySensor minTopValue={window.innerHeight * 0.2} partialVisibility onChange={this.onChange} active={this.state.sensorActive}>
         <section className={`${styles.wrapper} ${this.state.visibleClass}`}>
-          <Title value={title} />
+          { editable && (
+            <PostContentBlock heading={'title'}>
+              <Title value={title} />
+            </PostContentBlock>) ||
+          <Title value={title} center />
+          }
           <div className={styles.content}>
             { children }
           </div>
