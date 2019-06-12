@@ -79,8 +79,8 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    
-    this.state.recaptchaToken == null ? this.loadReCaptchaOnSubmit() : this.auth()
+
+    this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
   }
 
   setElId = (item, id) => {
@@ -92,18 +92,14 @@ class RegisterPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
-    if(this.captcha.state.ready){
+    setTimeout(function(){ 
       this.setState({
         username: null,
         email: null,
         password: null,
         recaptcha: null,
       })
-    }
-  }
-
-  loadReCaptchaOnSubmit = () =>{
-    loadReCaptcha()
+  }.bind(this), 3000);
   }
   
   verifyCallback = (recaptchaToken) => {
