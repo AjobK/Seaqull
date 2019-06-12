@@ -80,11 +80,11 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    console.log(this.captcha.state.ready)
+    //checking if recaptcha is already loaded
     if(!(this.captcha.state.ready)){
       this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
     }else{
-      this.loadCaptcha2()
+      this.loadCaptchaOnSubmit()
     }
   }
 
@@ -92,7 +92,7 @@ class RegisterPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
-  loadCaptcha2 = () =>{
+  loadCaptchaOnSubmit = () =>{
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
