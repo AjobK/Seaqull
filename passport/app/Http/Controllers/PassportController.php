@@ -44,7 +44,7 @@ class PassportController extends Controller
             'email' => $request->email,
             'role_id' => 1,
             'password' => bcrypt($request->password),
-            'last_ip' => "9999"
+            'last_ip' => request()->ip()
         ]);
 
 
@@ -66,13 +66,39 @@ class PassportController extends Controller
             'password' => $request->password
         ];
 
+        $targetUser = Account::where('user_name', $request->user_name)->first();
+
+        if ($targetUser && $targetUser->locked_to > now()) {
+            return response()->json([
+                'error' => ['Can not login yet'],
+                'remaining_time' => strtotime($targetUser->locked_to) - strtotime(now())
+            ], 422);
+        }
+
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
-            auth()->user()->update(['last_ip' => request()->ip()]);
+            auth()->user()->update([
+                'last_ip' => request()->ip(),
+                'login_attempts_count' => 0,
+                'locked_to' => null
+            ]);
+
             return response()->json(['user' => auth()->user(), 'token' => $token], 200);
-        } else {
-            return response()->json(['error' => ['Invalid email or password.']], 422);
+        } else if ($targetUser) {
+            if (!$targetUser->login_attempts_count) {
+                $targetUser->login_attempts_count = 1;
+            } else {
+                $targetUser->login_attempts_count++;
+            }
+
+            if ($targetUser->login_attempts_count > 3) {
+                $targetUser->locked_to = date('Y-m-d H:i:s', time() + 30);
+            }
+
+            $targetUser->save();
         }
+
+        return response()->json(['error' => ['Invalid email or password.']], 422);
     }
 
     /**
@@ -92,7 +118,7 @@ class PassportController extends Controller
      */
     public function profile(Request $request, $path)
     {
-        $user = User::where('path', '=', $path)->first();
+        $user = Account::where('path', '=', $path)->first();
 
         if (!$user) {
             return response()->json([
