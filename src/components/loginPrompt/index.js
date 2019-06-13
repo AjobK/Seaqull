@@ -10,7 +10,7 @@ class LoginPrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: null,
+      user_name: null,
       password: null
     }
     this.elId = {}
@@ -20,7 +20,7 @@ class LoginPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      username: document.getElementById(this.elId.Username).value,
+      user_name: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value
     }
 
@@ -44,7 +44,7 @@ class LoginPrompt extends Component {
       const { error } = res.response.data
 
       this.setState({
-        username: error || [],
+        user_name: error || [],
         password: error || []
       })
     })
@@ -57,7 +57,7 @@ class LoginPrompt extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     this.setState({
-      username: 'loading',
+      user_name: 'loading',
       password: 'loading'
     })
     this.auth()
@@ -68,7 +68,7 @@ class LoginPrompt extends Component {
   }
 
   render() {
-    const { username, password } = this.state
+    const { user_name, password } = this.state
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
@@ -76,7 +76,7 @@ class LoginPrompt extends Component {
         <p className={styles.text}> Welcome back! </p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submit_wrapper}>
               <Button onClick={this.auth} value='Log In' className={styles.submit} />

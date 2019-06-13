@@ -76,6 +76,7 @@ class PassportController extends Controller
 
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
+            auth()->user()->update(['last_ip' => request()->ip()]);
             return response()->json(['user' => auth()->user(), 'token' => $token], 200);
         } else {
             return response()->json(['error' => ['Invalid email or password.']], 422);
