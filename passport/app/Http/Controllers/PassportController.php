@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Account;
 use Validator;
 use App\Rules\Uppercase;
 use App\Rules\Lowercase;
@@ -22,7 +22,7 @@ class PassportController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
+            'user_name' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => [
                 'required',
@@ -39,11 +39,12 @@ class PassportController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = User::create([
-            'username' => $request->username,
+        $user = Account::create([
+            'user_name' => $request->user_name,
             'email' => $request->email,
             'role_id' => 1,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'last_ip' => "9999"
         ]);
 
 
