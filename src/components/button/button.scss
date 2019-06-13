@@ -14,11 +14,17 @@
 	background-color: $primary;
 	display: inline-block;
 	list-style-type: none;
+}
 
+.pulse {
 	&:hover {
 		transition: 0.2s;
 		@include pulse();
 	}
+}
+
+.disabled {
+	background-color: gray !important;
 }
 
 .inverted {

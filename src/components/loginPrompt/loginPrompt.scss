@@ -21,6 +21,19 @@
 	}
 }
 
+.counter {
+	margin-left: 10px;
+	font-size: 0.8rem;
+	color: gray;
+	
+	@include mobile-all-portrait {
+		margin-top: 10px;
+	}
+	@include mobile-sm {
+		margin-top: 0;
+	}
+}
+
 .text {
 	word-break: break-word;
 	white-space: normal;
@@ -127,12 +140,6 @@
 
 .submit {
 	font-size: 0.9rem;
-	margin-top: 30px;
-
-	&:hover {
-		transition: 0.2s;
-		@include pulse();
-	}
 
 	@include mobile-all-portrait {
 		font-size: 1rem;
@@ -145,6 +152,7 @@
 		&Wrapper {
 			display: flex;
 			justify-content: flex-end;
+			flex-direction: column;
 			width: 100%;
 			height: 100%;
 		}
@@ -158,5 +166,11 @@
 		font-size: 0.9rem;
 		line-height: 0.9rem;
 		padding: 20px 40px;
+	}
+
+	&Wrapper {
+		margin-top: 30px;
+		display: flex;
+		align-items: center;
 	}
 }

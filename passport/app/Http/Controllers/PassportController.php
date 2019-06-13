@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\User;
 use Validator;
 use App\Rules\Uppercase;
 use App\Rules\Lowercase;
@@ -22,8 +23,8 @@ class PassportController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_name' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
-            'email' => ['required', 'email', 'unique:users'],
+            'user_name' => ['required', 'min:3', 'unique:account', 'alpha_dash'],
+            'email' => ['required', 'email', 'unique:account'],
             'password' => [
                 'required',
                 'min:6',
@@ -39,7 +40,7 @@ class PassportController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = Account::create([
+        $account = Account::create([
             'user_name' => $request->user_name,
             'email' => $request->email,
             'role_id' => 1,
@@ -47,8 +48,7 @@ class PassportController extends Controller
             'last_ip' => request()->ip()
         ]);
 
-
-        $token = $user->createToken('HorseNeedleRabbitLava')->accessToken;
+        $token = $account->createToken('HorseNeedleRabbitLava')->accessToken;
 
         return response()->json(['token' => $token], 200);
     }
@@ -61,6 +61,12 @@ class PassportController extends Controller
      */
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'recaptcha' => ['required', new Captcha]
+        ]);
+
+        if ($validator->fails()) return response()->json(['errors' => $validator->errors()], 422);
+
         $credentials = [
             'user_name' => $request->user_name,
             'password' => $request->password
@@ -68,10 +74,10 @@ class PassportController extends Controller
 
         $targetUser = Account::where('user_name', $request->user_name)->first();
 
-        if ($targetUser && $targetUser->locked_to > now()) {
+        if ($targetUser && now() < $targetUser->locked_to) {
             return response()->json([
-                'error' => ['Can not login yet'],
-                'remaining_time' => strtotime($targetUser->locked_to) - strtotime(now())
+                'error' => ['Cannot login yet'],
+                'remainingTime' => strtotime($targetUser->locked_to) - strtotime(now())
             ], 422);
         }
 
@@ -91,8 +97,15 @@ class PassportController extends Controller
                 $targetUser->login_attempts_count++;
             }
 
-            if ($targetUser->login_attempts_count > 3) {
+            if ($targetUser->login_attempts_count > 2 && $targetUser->login_attempts_count % 3 == 0) {
                 $targetUser->locked_to = date('Y-m-d H:i:s', time() + 30);
+
+                $targetUser->save();
+
+                return response()->json([
+                    'error' => ['Invalid email or password.'],
+                    'remainingTime' => strtotime($targetUser->locked_to) - strtotime(now())
+                ], 422);
             }
 
             $targetUser->save();
