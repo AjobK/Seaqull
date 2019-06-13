@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\User;
 use Validator;
 use App\Rules\Uppercase;
 use App\Rules\Lowercase;
@@ -22,8 +23,8 @@ class PassportController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_name' => ['required', 'min:3', 'unique:users', 'alpha_dash'],
-            'email' => ['required', 'email', 'unique:users'],
+            'user_name' => ['required', 'min:3', 'unique:account', 'alpha_dash'],
+            'email' => ['required', 'email', 'unique:account'],
             'password' => [
                 'required',
                 'min:6',
@@ -39,16 +40,23 @@ class PassportController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = Account::create([
+        $account = Account::create([
             'user_name' => $request->user_name,
             'email' => $request->email,
             'role_id' => 1,
             'password' => bcrypt($request->password),
             'last_ip' => "9999"
         ]);
+        
+        $user = User::create([
+            'account_id' =>  $account->id,
+            'title_id' => 0,
+            'display_name' => $request->user_name,
+            'experience' => 0,
+            'rows_scrolled' => 0
+        ]);
 
-
-        $token = $user->createToken('HorseNeedleRabbitLava')->accessToken;
+        $token = $account->createToken('HorseNeedleRabbitLava')->accessToken;
 
         return response()->json(['token' => $token], 200);
     }
