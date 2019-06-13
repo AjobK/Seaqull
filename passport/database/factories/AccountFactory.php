@@ -1,11 +1,11 @@
 <?php
 
-use App\User;
+use App\Account;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Account::class, function (Faker $faker) {
     $roles = App\Role::pluck('id')->toArray();
     $username = $faker->unique()->userName;
 
