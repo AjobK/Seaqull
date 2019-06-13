@@ -7,7 +7,7 @@ const Posts = types
 
 const UserStore = types
   .model('UserStore', {
-    loggedIn: types.optional(types.boolean, localStorage.token == null ? false : true),
+    loggedIn: types.optional(types.boolean, true),
     username: types.optional(types.string, 'Emily Washington'),
     role: types.optional(types.string, 'Software Engineer'),
     isOwner: types.optional(types.boolean, true),
