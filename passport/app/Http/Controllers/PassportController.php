@@ -69,17 +69,25 @@ class PassportController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = [
-            'user_name' => $request->user_name,
-            'password' => $request->password
-        ];
+        $validator = Validator::make($request->all(), [
+            'recaptcha' => ['required', new Captcha]
+        ]);
+        
+        if (!$validator->fails()) {
+            $credentials = [
+                'user_name' => $request->user_name,
+                'password' => $request->password
+            ];
 
-        if (auth()->attempt($credentials)) {
-            $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
-            auth()->user()->update(['last_ip' => request()->ip()]);
-            return response()->json(['user' => auth()->user(), 'token' => $token], 200);
-        } else {
-            return response()->json(['error' => ['Invalid email or password.']], 422);
+            if (auth()->attempt($credentials)) {
+                $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
+                auth()->user()->update(['last_ip' => request()->ip()]);
+                return response()->json(['user' => auth()->user(), 'token' => $token], 200);
+            } else {
+                return response()->json(['error' => ['Invalid email or password.']], 422);
+            }
+        }else{
+            return response()->json(['errors' => $validator->errors()], 422);
         }
     }
 

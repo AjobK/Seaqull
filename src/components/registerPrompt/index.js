@@ -104,7 +104,7 @@ class RegisterPrompt extends Component {
         password: null,
         recaptcha: null,
       })
-  }, 3000);
+    }, 3000);
   }
   onLoadRecaptcha = () => {
     if (this.captcha) {
@@ -113,7 +113,7 @@ class RegisterPrompt extends Component {
     }
     setTimeout( () => { 
       this.setState({
-        username: null,
+        user_name: null,
         email: null,
         password: null,
         recaptcha: null,
