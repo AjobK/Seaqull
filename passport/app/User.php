@@ -2,11 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use App\Account;
-use Laravel\Passport\HasApiTokens;
 
-class User
+class User extends Model
 {
 
     protected $table = 'User';

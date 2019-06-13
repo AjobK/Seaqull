@@ -61,7 +61,7 @@ class PassportController extends Controller
     public function login(Request $request)
     {
         $credentials = [
-            'username' => $request->username,
+            'user_name' => $request->user_name,
             'password' => $request->password
         ];
 
