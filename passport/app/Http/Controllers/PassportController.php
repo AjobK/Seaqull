@@ -45,7 +45,7 @@ class PassportController extends Controller
             'email' => $request->email,
             'role_id' => 1,
             'password' => bcrypt($request->password),
-            'last_ip' => "9999"
+            'last_ip' => request()->ip()
         ]);
         
         $user = User::create([
