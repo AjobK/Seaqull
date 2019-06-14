@@ -17,13 +17,14 @@ use Illuminate\Support\Facades\Hash;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-    $roles = App\Role::pluck('id')->toArray();
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => Hash::make(Str::random(18)), // password
-        'remember_token' => Str::random(10),
-        'role_id' => $faker->randomElement($roles)
-    ];
+
+    // return [
+    //     'title_id' => ,
+    //     'avatar_attachment' => ,
+    //     'display_name' => ,
+    //     'experience' => 0,
+    //     'rows_scrolled' => 0,
+    //     'custom_path' => ,
+    //     'created_at' => now(),
+    // ];
 });
