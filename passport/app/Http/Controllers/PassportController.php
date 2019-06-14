@@ -41,11 +41,18 @@ class PassportController extends Controller
         }
 
         $account = Account::create([
-            'user_name' => $request->user_name,
-            'email' => $request->email,
-            'role_id' => 1,
-            'password' => bcrypt($request->password),
-            'last_ip' => request()->ip()
+          'user_name' => $request->user_name,
+          'email' => $request->email,
+          'role_id' => 1,
+          'password' => bcrypt($request->password),
+          'last_ip' => request()->ip()
+        ]);
+
+          $user = User::create([
+          'account_id' => $account->id,
+          'title_id' => 0,
+          'display_name' => $request->user_name,
+          'experience' => 0,
         ]);
 
         $token = $account->createToken('HorseNeedleRabbitLava')->accessToken;
