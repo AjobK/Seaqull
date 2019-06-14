@@ -13,8 +13,6 @@ class AccountSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Account::class, 5)->create()->each(function ($account) {
-            $account->account()->save(factory(App\User::class)->make());
-        });
+        factory(App\Account::class, 5)->create();
     }
 }
