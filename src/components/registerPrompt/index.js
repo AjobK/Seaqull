@@ -19,9 +19,12 @@ class RegisterPrompt extends Component {
       recaptchaToken: null
     }
 
+    this.elId = {}
+  }
+
+  componentDidMount() {
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
     this.verifyCallback = this.verifyCallback.bind(this)
-    this.elId = {}
   }
 
   auth = () => {
