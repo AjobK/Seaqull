@@ -19,12 +19,20 @@ class LoginPrompt extends Component {
       remainingTime: null,
     }
 
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
-    this.verifyCallback = this.verifyCallback.bind(this)
     this.elId = {}
   }
 
+  componentDidMount() {
+    this.verifyCallback = this.verifyCallback.bind(this)
+    loadReCaptcha()
+  }
+
   auth = () => {
+    this.setState({
+      user_name: 'loading',
+      password: 'loading'
+    })
+
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
@@ -37,7 +45,7 @@ class LoginPrompt extends Component {
     .then(res => {
       Axios.get('/user', {
         mode:'cors',
-        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}`, 'signal': this.signal }
       })
       .then(user => {
         localStorage.setItem('token', res.data.token)
@@ -92,31 +100,10 @@ class LoginPrompt extends Component {
       user_name: 'loading',
       password: 'loading'
     })
-
-    //checking if recaptcha is already loaded
-    if(!(this.captcha.state.ready)){
-      this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
-    }else{
-      this.loadCaptchaOnSubmit()
-    }
+    this.state.recaptchaToken == null ? loadCaptchaOnSubmit()() : this.auth()
   }
 
   loadCaptchaOnSubmit = () =>{
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
-    }
-    setTimeout( () => { 
-      this.setState({
-        user_name: null,
-        email: null,
-        password: null,
-        recaptcha: null,
-      })
-  }, 3000);
-  }
-
-  onLoadRecaptcha = () => {
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
@@ -160,7 +147,6 @@ class LoginPrompt extends Component {
                 size='invisible'
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
               />
             </div>
