@@ -24,7 +24,6 @@ class LoginPrompt extends Component {
   }
   componentDidMount(){
     loadReCaptcha()
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
     this.verifyCallback = this.verifyCallback.bind(this)
   }
 
@@ -96,13 +95,7 @@ class LoginPrompt extends Component {
       user_name: 'loading',
       password: 'loading'
     })
-
-    //checking if recaptcha is already loaded
-    if(!(this.captcha.state.ready)){
-      this.state.recaptchaToken == null ? this.loadCaptchaOnSubmit() : this.auth()
-    }else{
-      this.loadCaptchaOnSubmit()
-    }
+    this.state.recaptchaToken == null ? this.loadCaptchaOnSubmit() : this.auth()
   }
 
   loadCaptchaOnSubmit = () =>{
@@ -110,19 +103,6 @@ class LoginPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
-    
-    setTimeout( () => { 
-      this.setState({
-        user_name: null,
-        email: null,
-        password: null,
-        recaptcha: null,
-      })
-    }, 3000);
-  }
-
-  onLoadRecaptcha = () => {
-
   }
   
   verifyCallback = (recaptchaToken) => {
@@ -154,7 +134,6 @@ class LoginPrompt extends Component {
                 size='invisible'
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
               />
             </div>

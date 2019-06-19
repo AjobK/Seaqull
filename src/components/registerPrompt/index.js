@@ -21,19 +21,13 @@ class RegisterPrompt extends Component {
   
     this.elId = {}
   }
+
   componentDidMount(){
     loadReCaptcha()
-
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
     this.verifyCallback = this.verifyCallback.bind(this)
   }
-  auth = () => {
-    this.setState({
-      user_name: 'loading',
-      email: 'loading',
-      password: 'loading'
-    })
 
+  auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
@@ -100,16 +94,6 @@ class RegisterPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
-    setTimeout( () => { 
-      this.setState({
-        user_name: null,
-        email: null,
-        password: null
-      })
-    }, 3000);
-  }
-  onLoadRecaptcha = () => {
-    
   }
   
   verifyCallback = (recaptchaToken) => {
@@ -137,7 +121,6 @@ class RegisterPrompt extends Component {
                 size='invisible'
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
               />
             </div>
