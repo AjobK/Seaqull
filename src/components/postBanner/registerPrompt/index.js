@@ -23,8 +23,8 @@ class RegisterPrompt extends Component {
   }
 
   componentDidMount() {
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
     this.verifyCallback = this.verifyCallback.bind(this)
-    loadReCaptcha()
   }
 
   auth = () => {
@@ -85,7 +85,7 @@ class RegisterPrompt extends Component {
     })
     //checking if recaptcha is already loaded
     if(!(this.captcha.state.ready)){
-      this.state.recaptchaToken == null ? loadCaptchaOnSubmit() : this.auth()
+      this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
     }else{
       this.loadCaptchaOnSubmit()
     }
@@ -108,6 +108,20 @@ class RegisterPrompt extends Component {
         recaptcha: null,
       })
     }, 3000);
+  }
+  onLoadRecaptcha = () => {
+    if (this.captcha) {
+      this.captcha.reset()
+      this.captcha.execute()
+    }
+    setTimeout( () => { 
+      this.setState({
+        user_name: null,
+        email: null,
+        password: null,
+        recaptcha: null,
+      })
+  }, 3000);
   }
   
   verifyCallback = (recaptchaToken) => {
