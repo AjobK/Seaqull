@@ -1,41 +1,50 @@
 import React, { Component } from 'react'
-import Axios from 'axios'
-import styles from './loginPrompt.scss'
-import { Button, FormInput } from '../../components'
+import styles from './registerPrompt.scss'
+import Button from '../button'
 import { inject, observer } from 'mobx-react'
+import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
+import Axios from 'axios'
 import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
 
 @inject('store') @observer
-class LoginPrompt extends Component {
+class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
       user_name: null,
+      email: null,
       password: null,
       recaptcha: null,
-      recaptchaToken: null,
-      remainingTimeInterval: null,
-      remainingTime: null,
+      recaptchaToken: null
     }
-
+    
     this.elId = {}
   }
-  componentDidMount(){
+
+  componentDidMount() {
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
     this.verifyCallback = this.verifyCallback.bind(this)
     loadReCaptcha()
   }
+
   auth = () => {
+    this.setState({
+      user_name: 'loading',
+      email: 'loading',
+      password: 'loading'
+    })
+
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      user_name: document.getElementById(this.elId.Username).value,
+      user_name: document.getElementById(this.elId.user_name).value,
+      email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
 
-    Axios.post('/login', payload)
+    Axios.post('/register', payload)
     .then(res => {
       Axios.get('/user', {
         mode:'cors',
@@ -52,34 +61,16 @@ class LoginPrompt extends Component {
       })
     })
     .catch(res => {
-      const { error, remainingTime } = res.response.data
-
-      if (remainingTime) this.setRemainingTimeInterval(remainingTime)
-
+      const { user_name, email, password, recaptcha } = res.response.data.errors
+  
       this.setState({
-        user_name: error || [],
-        password: error || [],
+        user_name: user_name || [],
+        email: email || [],
+        password: password || [],
         recaptcha: recaptcha || [],
         recaptchaToken: null
       })
     })
-  }
-
-  setRemainingTimeInterval = (remainingTime) => {
-    if (this.remainingTimeInterval) clearInterval(this.remainingTimeInterval)
-
-    this.setState({ remainingTime })
-
-    this.remainingTimeInterval = setInterval(() => {
-      let nextTime = this.state.remainingTime-1
-      if (this.state.remainingTime <= 1) {
-        clearInterval(this.remainingTimeInterval)
-        nextTime = null
-      }
-      this.setState({
-        remainingTime: nextTime
-      })
-    }, 1000);
   }
 
   goToProfile = () => {
@@ -88,19 +79,21 @@ class LoginPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    if (this.state.remainingTime && this.remainingTimeInterval) return
-
     this.setState({
       user_name: 'loading',
+      email: 'loading',
       password: 'loading'
     })
-
     //checking if recaptcha is already loaded
     if(!(this.captcha.state.ready)){
       this.state.recaptchaToken == null ? this.loadCaptchaOnSubmit() : this.auth()
     }else{
       this.loadCaptchaOnSubmit()
     }
+  }
+
+  setElId = (item, id) => {
+    this.elId[item.props.name] = id
   }
 
   loadCaptchaOnSubmit = () =>{
@@ -117,7 +110,6 @@ class LoginPrompt extends Component {
       })
     }, 3000);
   }
-
   onLoadRecaptcha = () => {
 
   }
@@ -127,25 +119,21 @@ class LoginPrompt extends Component {
     this.auth()
   }
 
-  setElId = (item, id) => {
-    this.elId[item.props.name] = id
-  }
-
   render() {
-    const { user_name, password, recaptcha, remainingTime } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
+    const { user_name, email, password, recaptcha } = this.state
+    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
-        <p className={styles.text}> Welcome back!</p>
+        <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
-          <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+          <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
+            <FormInput name={'user_name'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime} />
-              { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
+              <Button value={buttonClass} className={styles.submit} />
               <ReCaptcha
                 ref={(el) => {this.captcha = el}}
                 size='invisible'
@@ -158,9 +146,12 @@ class LoginPrompt extends Component {
           </form>
           <div className={styles.image} />
         </div>
+        <p className={styles.textFooter}>
+          By proceeding I confirm that I have read and agree to the <a className={styles.textFooterLink}href='#'>Terms of service</a>
+        </p>
       </div>
     )
   }
 }
 
-export default withRouter(LoginPrompt)
+export default withRouter(RegisterPrompt)
