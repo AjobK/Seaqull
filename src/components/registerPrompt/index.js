@@ -18,11 +18,15 @@ class RegisterPrompt extends Component {
       recaptcha: null,
       recaptchaToken: null
     }
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
-    this.verifyCallback = this.verifyCallback.bind(this)
+  
     this.elId = {}
   }
+  componentDidMount(){
+    loadReCaptcha()
 
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
+    this.verifyCallback = this.verifyCallback.bind(this)
+  }
   auth = () => {
     this.setState({
       user_name: 'loading',
