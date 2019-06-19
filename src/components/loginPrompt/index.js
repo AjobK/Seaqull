@@ -10,6 +10,7 @@ import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
 class LoginPrompt extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       user_name: null,
       password: null,
@@ -22,10 +23,11 @@ class LoginPrompt extends Component {
     this.elId = {}
   }
   componentDidMount(){
+    loadReCaptcha()
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
     this.verifyCallback = this.verifyCallback.bind(this)
-    loadReCaptcha()
   }
+
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
@@ -55,7 +57,7 @@ class LoginPrompt extends Component {
       const { error, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
-
+      
       this.setState({
         user_name: error || [],
         password: error || [],
@@ -108,6 +110,7 @@ class LoginPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
+    
     setTimeout( () => { 
       this.setState({
         user_name: null,
