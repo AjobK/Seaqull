@@ -19,12 +19,18 @@ class LoginPrompt extends Component {
       remainingTimeInterval: null,
       remainingTime: null,
     }
-
+    this.verifyCallback = this.verifyCallback.bind(this)
     this.elId = {}
   }
   componentDidMount(){
-    loadReCaptcha()
-    this.verifyCallback = this.verifyCallback.bind(this)
+    if(!(this.captcha.state.ready)){
+      loadReCaptcha()
+    }
+  }
+
+  componentWillUnmount = () => {
+    this.captcha.render()
+    this.captcha.reset(1)
   }
 
   auth = () => {
@@ -95,7 +101,7 @@ class LoginPrompt extends Component {
       user_name: 'loading',
       password: 'loading'
     })
-    this.state.recaptchaToken == null ? this.loadCaptchaOnSubmit() : this.auth()
+    this.loadCaptchaOnSubmit()
   }
 
   loadCaptchaOnSubmit = () =>{
@@ -103,6 +109,9 @@ class LoginPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
+  }
+  onLoadRecaptcha() {
+
   }
   
   verifyCallback = (recaptchaToken) => {
@@ -135,6 +144,7 @@ class LoginPrompt extends Component {
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
                 verifyCallback={this.verifyCallback}
+                onloadCallback={this.onLoadRecaptcha}
               />
             </div>
           </form>

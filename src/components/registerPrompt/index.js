@@ -18,13 +18,19 @@ class RegisterPrompt extends Component {
       recaptcha: null,
       recaptchaToken: null
     }
-  
+    this.verifyCallback = this.verifyCallback.bind(this)
     this.elId = {}
   }
 
-  componentDidMount(){
-    loadReCaptcha()
-    this.verifyCallback = this.verifyCallback.bind(this)
+  componentDidMount = () => {
+    if(!(this.captcha.state.ready)){
+      loadReCaptcha()
+    }
+  }
+
+  componentWillUnmount = () => {
+    this.captcha.render()
+    this.captcha.reset(1)
   }
 
   auth = () => {
@@ -55,7 +61,6 @@ class RegisterPrompt extends Component {
     })
     .catch(res => {
       const { user_name, email, password, recaptcha } = res.response.data.errors
-  
       this.setState({
         user_name: user_name || [],
         email: email || [],
@@ -77,12 +82,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
-    //checking if recaptcha is already loaded
-    if(!(this.captcha.state.ready)){
-      this.state.recaptchaToken == null ? this.loadCaptchaOnSubmit() : this.auth()
-    }else{
-      this.loadCaptchaOnSubmit()
-    }
+    this.loadCaptchaOnSubmit()
   }
 
   setElId = (item, id) => {
@@ -94,6 +94,10 @@ class RegisterPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
+  }
+
+  onLoadRecaptcha() {
+
   }
   
   verifyCallback = (recaptchaToken) => {
@@ -121,7 +125,9 @@ class RegisterPrompt extends Component {
                 size='invisible'
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
+                onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
+                
               />
             </div>
           </form>
