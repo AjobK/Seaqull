@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatingComments extends Migration
+class CreateUserPostActionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreatingComments extends Migration
      */
     public function up()
     {
-        Schema::create('Comment', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+        Schema::create('User_Post_Action', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('comment_id')->nullable();
-            $table->text('comment');
+            $table->timestamp('liked_at')->nullable();
+            $table->timestamp('fb_shared_at')->nullable();
+            $table->timestamp('tw_shared_at')->nullable();
 
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('user_id')
                 ->references('id')
@@ -31,9 +30,7 @@ class CreatingComments extends Migration
                 ->references('id')
                 ->on('Post');
 
-            $table->foreign('comment_id')
-                ->references('id')
-                ->on('Comment');
+            $table->primary(['user_id', 'post_id']);
         });
     }
 
@@ -44,11 +41,10 @@ class CreatingComments extends Migration
      */
     public function down()
     {
-        Schema::table('Comment', function (Blueprint $table) {
-            $table->dropForeign('comment_user_id_foreign');
-            $table->dropForeign('comment_post_id_foreign');
-            $table->dropForeign('comment_comment_id_foreign');
+        Schema::table('User_Post_Action', function (Blueprint $table) {
+            $table->dropForeign('user_post_action_user_id_foreign');
+            $table->dropForeign('user_post_action_post_id_foreign');
         });
-        Schema::dropIfExists('comment');
+        Schema::dropIfExists('User_Post_Action');
     }
 }
