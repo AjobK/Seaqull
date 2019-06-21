@@ -61,6 +61,7 @@ class RegisterPrompt extends Component {
     })
     .catch(res => {
       const { user_name, email, password, recaptcha } = res.response.data.errors
+      
       this.setState({
         user_name: user_name || [],
         email: email || [],
@@ -115,7 +116,7 @@ class RegisterPrompt extends Component {
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput name={'user_name'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
@@ -127,7 +128,6 @@ class RegisterPrompt extends Component {
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
                 onloadCallback={this.onLoadRecaptcha}
                 verifyCallback={this.verifyCallback}
-                
               />
             </div>
           </form>
