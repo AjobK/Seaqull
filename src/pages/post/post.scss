@@ -6,15 +6,19 @@
 
 .container {
 	align-items: center;
-	padding: $header-spacing;
-	border: 4px dotted $background-darker;
-	background-color: rgba($background, 0.4);
-	margin: $header-spacing auto 0 auto;
+	padding: $header-spacing 0;
+	margin-top: $header-spacing * 2;
+	border-top: 2px solid $background-darker;
 	width: 100%;
 	display: flex;
-	justify-content: space-around;
 	flex-wrap: wrap;
 	flex-direction: row;
+	
+	&Text {
+		margin-right: $header-spacing;
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
 }
 
 .title {
@@ -31,21 +35,25 @@
 			content: '+';
 			margin-right: 3px;
 		}
+		letter-spacing: 1px;
+		border-radius: 999px;
+		background-color: $color;
 		transition: 0.2s;
-		opacity: 0.7;
-		border-bottom: 2px solid transparent;
 		font-weight: bold;
 		display: flex;
-		color: $color;
+		color: white;
 		justify-content: center;
 		align-items: center;
+		font-size: 1rem;
+		line-height: 1rem;
+		padding: ($header-spacing * 0.6) $header-spacing;
 		margin: 0 calc(#{$header-spacing} / 2) -2px;
 		cursor: pointer;
 		&:hover {
 			transition: 0.2s;
-			opacity: 1;
-			border-bottom: 2px solid $color;
+			transform: scale(1.05, 1.05);
 		}
+		@include noselect;
 	}
 	
 	&Heading {
@@ -54,26 +62,6 @@
 
 	&Paragraph {
 		@include insertbutton(#4D4D4D);
-	}
-
-	&Code {
-		@include insertbutton(#9c1ec4);
-	}
-
-	&Img {
-		@include insertbutton(#1EB5C4);
-	}
-
-	&Eye {
-		@include insertbutton(#FFF);
-		width: 46px;
-		height: 46px;
-		margin-left: 15px;
-		color: $primary;
-		font-size: 1.6rem;
-		position: absolute;
-		right: 0;
-		top: 0;
 	}
 }
 

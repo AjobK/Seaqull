@@ -95,16 +95,14 @@ class Post extends App {
         <Section title={this.state.title} editable>
           { this.state.renderContent }
           <div className={styles.container}>
+            <p className={styles.containerText}>INSERT CONTENT </p>
             <Button className={styles.insertButtonHeading} noStyle value='HEADING' onClick={() => this.createContentBlock('heading')}/>
             <Button className={styles.insertButtonParagraph} noStyle value='PARAGRAPH' onClick={() => this.createContentBlock('paragraph')} />
-            <Button className={styles.insertButtonCode} noStyle value='CODE' onClick={() => this.createContentBlock('code')} />
-            <Button className={styles.insertButtonImg} noStyle value='IMAGE' onClick={() => this.createContentBlock('image')} />
           </div>
         </Section>
         <div className={styles.saveContainer} onClick={this.onClick2}>
           <div className={styles.save}>
             <Button className={styles.saveButton} value='Save Changes'/>
-            <div className={styles.insertButtonEye}><Icon iconName={'Eye'}/></div>
           </div>
         </div>
       </Standard>
