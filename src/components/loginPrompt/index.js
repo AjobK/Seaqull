@@ -20,6 +20,7 @@ class LoginPrompt extends Component {
       remainingTime: null,
     }
     this.verifyCallback = this.verifyCallback.bind(this)
+    this.onloadCallback = this.onloadCallback.bind(this)
     this.elId = {}
   }
   componentDidMount(){
@@ -29,8 +30,8 @@ class LoginPrompt extends Component {
   }
 
   componentWillUnmount = () => {
-    this.captcha.render()
-    this.captcha.reset(1)
+    var x = this.captcha.render()
+    this.captcha.reset(x)
   }
 
   auth = () => {
@@ -110,7 +111,7 @@ class LoginPrompt extends Component {
       this.captcha.execute()
     }
   }
-  onLoadRecaptcha() {
+  onloadCallback() {
 
   }
   
@@ -144,7 +145,7 @@ class LoginPrompt extends Component {
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
                 verifyCallback={this.verifyCallback}
-                onloadCallback={this.onLoadRecaptcha}
+                onloadCallback={this.onloadCallback}
               />
             </div>
           </form>

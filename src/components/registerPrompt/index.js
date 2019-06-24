@@ -16,9 +16,11 @@ class RegisterPrompt extends Component {
       email: null,
       password: null,
       recaptcha: null,
-      recaptchaToken: null
+      recaptchaToken: null,
+      loadingTimeout: false
     }
     this.verifyCallback = this.verifyCallback.bind(this)
+    this.onloadCallback = this.onloadCallback.bind(this)
     this.elId = {}
   }
 
@@ -29,15 +31,15 @@ class RegisterPrompt extends Component {
   }
 
   componentWillUnmount = () => {
-    this.captcha.render()
-    this.captcha.reset(1)
+    var x = this.captcha.render()
+    this.captcha.reset(x)
   }
 
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      user_name: document.getElementById(this.elId.user_name).value,
+      user_name: document.getElementById(this.elId.username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
@@ -67,7 +69,8 @@ class RegisterPrompt extends Component {
         email: email || [],
         password: password || [],
         recaptcha: recaptcha || [],
-        recaptchaToken: null
+        recaptchaToken: null,
+        loadingTimeout:false
       })
     })
   }
@@ -81,9 +84,12 @@ class RegisterPrompt extends Component {
     this.setState({
       user_name: 'loading',
       email: 'loading',
-      password: 'loading'
+      password: 'loading',
+      loadingTimeout: true
     })
-    this.loadCaptchaOnSubmit()
+    if(!(this.state.loadingTimeout)){
+      this.loadCaptchaOnSubmit()
+    }
   }
 
   setElId = (item, id) => {
@@ -97,7 +103,7 @@ class RegisterPrompt extends Component {
     }
   }
 
-  onLoadRecaptcha() {
+  onloadCallback() {
 
   }
   
@@ -107,7 +113,7 @@ class RegisterPrompt extends Component {
   }
 
   render() {
-    const { user_name, email, password, recaptcha } = this.state
+    const { user_name, email, password, recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
     return (
@@ -120,13 +126,13 @@ class RegisterPrompt extends Component {
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} />
+              <Button value={buttonClass} className={styles.submit} disabled={loadingTimeout} />
               <ReCaptcha
                 ref={(el) => {this.captcha = el}}
                 size='invisible'
                 render='explicit'
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                onloadCallback={this.onLoadRecaptcha}
+                onloadCallback={this.onloadCallback}
                 verifyCallback={this.verifyCallback}
               />
             </div>
