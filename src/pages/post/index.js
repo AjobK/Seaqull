@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon } from '../../components'
+import { PostBanner, PostContent, Button } from '../../components'
 import { convertToRaw, convertFromRaw } from 'draft-js'
 import styles from './post.scss'
 
@@ -13,15 +13,17 @@ class Post extends App {
 
     let content = window.localStorage.getItem('content')
 
-    this.content = content ? JSON.parse(content) : [
-      { type: 'heading', value: null },
-      { type: 'paragraph', value: null },
-      { type: 'heading', value: null },
-      { type: 'paragraph', value: null }
-    ]
+    if (!content) {
+      window.localStorage.setItem('content', JSON.stringify([
+        { type: 'title', value: null },
+        { type: 'story', value: null }
+      ]))
+    }
+
+    this.content = JSON.parse(content)
     this.cbKey = 0
     this.state = {
-      title: 'Front-End vs. Back-End',
+      isPublished: true,
       renderContent: []
     }
   }
@@ -31,7 +33,6 @@ class Post extends App {
   }
 
   callBackSaveData = (item) => {
-    console.log('Saving data :-)')
     const { editorState } = item.state
 
     this.content[item.cbKey-1] = {
@@ -89,22 +90,20 @@ class Post extends App {
   }
 
   render() {
+    const { isPublished } = this.state
+
     return (
       <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
-        <Section title={this.state.title} editable>
-          { this.state.renderContent }
-          <div className={styles.container}>
-            <p className={styles.containerText}>INSERT CONTENT </p>
-            <Button className={styles.insertButtonHeading} noStyle value='HEADING' onClick={() => this.createContentBlock('heading')}/>
-            <Button className={styles.insertButtonParagraph} noStyle value='PARAGRAPH' onClick={() => this.createContentBlock('paragraph')} />
+        <Section noTitle>
+          <div className={styles.renderWrapper}>
+            { this.state.renderContent }
           </div>
+          <Button
+            className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
+            value={isPublished ? 'UNPUBLISH STORY': 'PUBLISH STORY'}
+          />
         </Section>
-        <div className={styles.saveContainer} onClick={this.onClick2}>
-          <div className={styles.save}>
-            <Button className={styles.saveButton} value='Save Changes'/>
-          </div>
-        </div>
       </Standard>
     )
   }

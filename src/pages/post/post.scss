@@ -4,6 +4,10 @@
 	background-color: white;
 }
 
+.renderWrapper {
+	min-height: 50vh;
+}
+
 .container {
 	align-items: center;
 	padding: $header-spacing 0;
@@ -81,16 +85,22 @@
 	padding: 0 60px;
 }
 
-.saveButton {
-	width: fit-content;
-	height: fit-content;
-	background-color: #262626;
-	color: white;
-	border-radius: 30px;
-	padding: 10px 40px;
-	font-weight: bold;
-	font-size: 1rem;
-	transition: all .2s ease-in-out;
-	cursor: pointer;
-	list-style-type: none;
+.publish {
+	&Button {
+		width: fit-content;
+		height: fit-content;
+		color: white;
+		border-radius: 30px;
+		padding: 10px 40px;
+		margin-bottom: $header-spacing * 2;
+		font-weight: bold;
+		font-size: 1rem;
+		letter-spacing: 1px;
+		transition: all .2s ease-in-out;
+		cursor: pointer;
+		list-style-type: none;
+	}
+	&ed {
+		background-color: rgba(0,0,0,0.25);
+	}
 }

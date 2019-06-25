@@ -24,7 +24,7 @@ class Section extends Component {
   }
 
   render() {
-    const { title, children, editable } = this.props
+    const { title, children, editable, noTitle } = this.props
 
     return (
       <VisibilitySensor minTopValue={window.innerHeight * 0.2} partialVisibility onChange={this.onChange} active={this.state.sensorActive}>
@@ -32,9 +32,9 @@ class Section extends Component {
           { editable && (
             <PostContentBlock heading={'title'}>
               <Title value={title} />
-            </PostContentBlock>) ||
-          <Title value={title} center />
+            </PostContentBlock>)
           }
+          {!noTitle && <Title value={title} center />}
           <div className={styles.content}>
             { children }
           </div>

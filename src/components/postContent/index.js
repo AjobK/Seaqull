@@ -4,6 +4,7 @@ import { StyleButton } from '../'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import { EditorState, Editor, RichUtils } from 'draft-js'
+import '../../DraftFallback.css'
 import ReactTooltip from 'react-tooltip'
 
 @inject('store') @observer
@@ -12,11 +13,15 @@ class PostContent extends Component {
     super(props)
     const { type, cbKey, value } = this.props
 
-    this.type = type || 'paragraph'
+    this.type = type || 'story'
     this.cbKey = cbKey || null
-    this.maxLength = this.type == 'heading' ? 128 : null
+
+    this.maxLength = this.type == 'title' ? 128 : null
+
     this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
+
+    this.editorInput = React.createRef()
 
     this.state = {
       editorState: value != null
@@ -59,8 +64,6 @@ class PostContent extends Component {
   }
 
   toggleInlineStyle = (inlineStyle) => {
-    // console.log('Toggled ' + inlineStyle)
-    // console.log(this.state.editorState.getCurrentInlineStyle())
     this.onChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
@@ -108,6 +111,11 @@ class PostContent extends Component {
     this.props.callBackSaveData(this)
   }
 
+  focusOnEditor = () => {
+    console.log('Focussing')
+    this.editorInput.focus()
+  }
+
   render() {
     const { type, store, callBackItemRemoval } = this.props
     const { editorState, focused } = this.state
@@ -115,16 +123,20 @@ class PostContent extends Component {
 
     return (
       <PostContentBlock
-        heading={type}
+        heading={`${type == 'story' ? 'Your' : ''} ${type}`}
         removeItem={() => callBackItemRemoval(this)}
+        onClick={this.focusOnEditor}
         className={[style]}>
         {this.InlineStyleControls()}
         <Editor
           readOnly={!store.user.loggedIn}
           editorState={editorState}
+          ref={this.editorInput}
           onChange={this.onChange}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
+          spellCheck={true}
+          placeholder={type == 'title' ? 'Title' : 'Write your story...'}
           handleBeforeInput={this.handleBeforeInput}
           handlePastedText={this.handlePastedText}
           blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}

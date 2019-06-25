@@ -1,6 +1,14 @@
 @import '../../styles/index.scss';
 
 .postContent {
+	&Title {
+		color: #4D4D4D;
+		width: 100%;
+		text-align: center;
+		font-weight: bold;
+		font-size: 2rem;
+		margin-bottom: $header-spacing;
+	}
 	&Heading {
 		color: $primary;
 		font-size: 1.5rem;
@@ -9,7 +17,7 @@
 		font-weight: bold;
 		margin-bottom: 1rem;
 	}
-	&Paragraph {
+	&Story {
 		margin-bottom: 2.5rem;
 		font-family: Sanchez;
 		color: rgba(0,0,0,0.8);
