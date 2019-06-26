@@ -6,14 +6,14 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
 
 $factory->define(Account::class, function (Faker $faker) {
-    $role = App\Role::pluck('id')->toArray();
+    $roles = App\Role::pluck('id')->toArray();
+    $username = $faker->unique()->userName;
+
     return [
-        'role' => $faker->randomElement($role),
-        'user_name' => $faker->firstName(),
-        'email' => $faker->safeEmail(),
-        'email_verified_at' => dateTime(),
-        'password' => bcrypt('secret'),
+        'role_id' => $faker->randomElement($roles),
+        'user_name' => $username,
+        'email' => $username . '@' . $faker->safeEmailDomain,
+        'password' => bcrypt('Qwerty123'),
         'last_ip' => $faker->ipv4(),
-        'changed_pw_at' => '',
     ];
 });
