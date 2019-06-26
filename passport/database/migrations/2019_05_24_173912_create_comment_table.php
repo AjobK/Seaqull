@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatingUserPostActions extends Migration
+class CreateCommentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreatingUserPostActions extends Migration
      */
     public function up()
     {
-        Schema::create('User_Post_Actions', function (Blueprint $table) {
+        Schema::create('Comment', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
-            $table->timestamp('liked_at')->nullable();
-            $table->timestamp('fb_shared_at')->nullable();
-            $table->timestamp('tw_shared_at')->nullable();
+            $table->unsignedBigInteger('comment_id')->nullable();
+            $table->text('comment');
 
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')
                 ->references('id')
@@ -30,7 +31,9 @@ class CreatingUserPostActions extends Migration
                 ->references('id')
                 ->on('Post');
 
-            $table->primary(['user_id', 'post_id']);
+            $table->foreign('comment_id')
+                ->references('id')
+                ->on('Comment');
         });
     }
 
@@ -41,10 +44,11 @@ class CreatingUserPostActions extends Migration
      */
     public function down()
     {
-        Schema::table('User_Post_Actions', function (Blueprint $table) {
-            $table->dropForeign('user_post_actions_user_id_foreign');
-            $table->dropForeign('user_post_actions_post_id_foreign');
+        Schema::table('Comment', function (Blueprint $table) {
+            $table->dropForeign('comment_user_id_foreign');
+            $table->dropForeign('comment_post_id_foreign');
+            $table->dropForeign('comment_comment_id_foreign');
         });
-        Schema::dropIfExists('User_Post_Actions');
+        Schema::dropIfExists('comment');
     }
 }
