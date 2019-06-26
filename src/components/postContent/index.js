@@ -14,7 +14,6 @@ class PostContent extends Component {
     const { type, cbKey, value } = this.props
 
     this.type = type || 'story'
-    this.cbKey = cbKey || null
 
     this.maxLength = this.type == 'title' ? 128 : null
 
@@ -83,18 +82,20 @@ class PostContent extends Component {
     const currentStyle = this.state.editorState.getCurrentInlineStyle()
 
     return (
-      <div className={`${styles.controls} ${this.state.focused && styles.controlsOn}`}>
-        {INLINE_STYLES.map((type) =>
-          <StyleButton
-            className={[styles.controlsButtons]}
-            key={type.label}
-            active={currentStyle.has(type.style)}
-            label={type.label}
-            onToggle={this.toggleInlineStyle}
-            style={type.style}
-          />
-        )}
-      </div>
+      // <ReactTooltip>
+          <div className={`${styles.controls} ${this.state.focused && styles.controlsOn}`}>
+          {INLINE_STYLES.map((type) =>
+            <StyleButton
+              className={[styles.controlsButtons]}
+              key={type.label}
+              active={currentStyle.has(type.style)}
+              label={type.label}
+              onToggle={this.toggleInlineStyle}
+              style={type.style}
+            />
+          )}
+        </div>
+      // </ReactTooltip>
     )
   }
 
@@ -117,14 +118,13 @@ class PostContent extends Component {
   }
 
   render() {
-    const { type, store, callBackItemRemoval } = this.props
+    const { type, store } = this.props
     const { editorState, focused } = this.state
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     return (
       <PostContentBlock
         heading={`${type == 'story' ? 'Your' : ''} ${type}`}
-        removeItem={() => callBackItemRemoval(this)}
         onClick={this.focusOnEditor}
         className={[style]}>
         {this.InlineStyleControls()}

@@ -13,14 +13,20 @@ class Post extends App {
 
     let content = window.localStorage.getItem('content')
 
-    if (!content) {
-      window.localStorage.setItem('content', JSON.stringify([
-        { type: 'title', value: null },
-        { type: 'story', value: null }
-      ]))
+    if (!content || !JSON.parse(content)) {
+      console.log('I am actually here')
+      content = JSON.stringify({
+        title: null,
+        story: null
+      })
+      window.localStorage.setItem('content', content)
+      console.log(window.localStorage.getItem('content'))
     }
-
+    console.log(window.localStorage.getItem('content'))
+    console.log('The content:')
     this.content = JSON.parse(content)
+
+    console.log(this.content)
     this.cbKey = 0
     this.state = {
       isPublished: true,
@@ -34,44 +40,30 @@ class Post extends App {
 
   callBackSaveData = (item) => {
     const { editorState } = item.state
+    const { type } = item.props
 
-    this.content[item.cbKey-1] = {
-      type: item.type,
-      value: convertToRaw(editorState.getCurrentContent())
-    }
+    console.log(editorState)
+
+    this.content[type] = convertToRaw(editorState.getCurrentContent())
     this.sendDataToDB()
   }
 
-  callBackItemRemoval = (item) => {
-    const { cbKey } = item.props
-
-    this.content.splice(cbKey-1, 1)
-    this.returnComponentsFromJson()
-  }
-
-  createContentBlock = (type) => {
-    this.content.push({ type: type, value: null })
-    this.returnComponentsFromJson()
-  }
-
   returnComponentsFromJson = (noSetState = false) => {
+    let typeArr = ['title', 'story']
     let contentArr = []
 
-    this.content.forEach((item, counter) => {
-      const { type, value } = item
-
+    typeArr.forEach((type, i) => {
       contentArr.push(
         <PostContent
-          key={this.cbKey+counter+1}
+          key={i}
           type={type}
           callBackSaveData={this.callBackSaveData}
-          callBackItemRemoval={this.callBackItemRemoval}
-          cbKey={counter+1}
-          value={value ? convertFromRaw(value) : null}
-        />)
+          value={this.content[type] ? convertFromRaw(this.content[type]) : null}
+        />
+      )
     })
     
-    this.cbKey += contentArr.length
+    console.log(contentArr)
 
     if (!noSetState) {
       this.setState({

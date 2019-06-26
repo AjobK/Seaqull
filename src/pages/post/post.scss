@@ -33,42 +33,6 @@
 	font-size: 2rem;
 }
 
-.insertButton {
-	@mixin insertbutton($color) {
-		&::before {
-			content: '+';
-			margin-right: 3px;
-		}
-		letter-spacing: 1px;
-		border-radius: 999px;
-		background-color: $color;
-		transition: 0.2s;
-		font-weight: bold;
-		display: flex;
-		color: white;
-		justify-content: center;
-		align-items: center;
-		font-size: 1rem;
-		line-height: 1rem;
-		padding: ($header-spacing * 0.6) $header-spacing;
-		margin: 0 calc(#{$header-spacing} / 2) -2px;
-		cursor: pointer;
-		&:hover {
-			transition: 0.2s;
-			transform: scale(1.05, 1.05);
-		}
-		@include noselect;
-	}
-	
-	&Heading {
-		@include insertbutton($primary);
-	}
-
-	&Paragraph {
-		@include insertbutton(#4D4D4D);
-	}
-}
-
 .saveContainer {
 	background: $primary;
 	min-height: 10vh;
@@ -87,6 +51,7 @@
 
 .publish {
 	&Button {
+		@include noselect;
 		width: fit-content;
 		height: fit-content;
 		color: white;
