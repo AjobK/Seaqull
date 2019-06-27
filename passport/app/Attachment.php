@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attachment extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'Attachment';
 
     /**
@@ -16,4 +19,20 @@ class Attachment extends Model
     protected $fillable = [
         'path', 'deleted_at',
     ];
+
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Comment', 'CommentHasAttachment');
+    }
+
+    public function post()
+    {
+        return $this->belongsToMany('App\Post', 'PostHasAttachment');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'avatar_attachment');
+    }
 }
