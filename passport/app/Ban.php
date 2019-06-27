@@ -37,4 +37,14 @@ class Ban extends Model
         'account_id' => 'int',
         'ip_ban' => 'boolean',
     ];
+
+    public function staff()
+    {
+        return $this->belongsTo('App\Account', 'staff_id');
+    }
+
+    public function account()
+    {
+        return $this->belongsTo('App\Account');
+    }
 }
