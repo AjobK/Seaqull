@@ -1,6 +1,7 @@
 <?php
 
 use App\Ban;
+use App\Account;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
