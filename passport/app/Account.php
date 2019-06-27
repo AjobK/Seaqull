@@ -54,12 +54,26 @@ class Account extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'changed_pw_at' => 'datetime',
+        'role_id' => 'int',
     ];
     
-    public function role()
+    public function ban_staff()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasMany('App\Ban', 'staff_id');
+    }
+
+    public function ban_account()
+    {
+        return $this->hasMany('App\Ban', 'account_id');
+    }
+
+    public function user()
+    {
+        return $this->hasMany('App\User');
+    }
+
+    public function email_verification()
+    {
+        return $this->hasMany('App\EmailVerification');
     }
 }
