@@ -1,22 +1,19 @@
 import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
-import { StyleButton } from '../'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, RichUtils } from 'draft-js'
+import { EditorState, Editor } from 'draft-js'
 import '../../DraftFallback.css'
-import ReactTooltip from 'react-tooltip'
 
 @inject('store') @observer
 class PostContent extends Component {
   constructor(props) {
     super(props)
-    const { type, cbKey, value } = this.props
+    const { type, value } = this.props
 
     this.type = type || 'story'
-
+    this.selected = false
     this.maxLength = this.type == 'title' ? 128 : null
-
     this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
@@ -31,6 +28,20 @@ class PostContent extends Component {
   }
 
   onChange = (editorState) => {
+    if (this.focused) {
+      let selectedText = window.getSelection().toString()
+
+      if (selectedText.trim().length) {
+        this.selected = true
+        this.props.showSelectToolbox(this)
+      } else if (this.selected) {
+        this.props.hideSelectToolbox()
+        this.selected = false
+      }
+      console.log(selectedText)
+      console.log(selectedText.trim().length)
+    }
+
     const contentState = editorState.getCurrentContent()
     const oldContent = this.state.editorState.getCurrentContent()
 
@@ -62,86 +73,54 @@ class PostContent extends Component {
     return totalLength > this.maxLength
   }
 
-  toggleInlineStyle = (inlineStyle) => {
-    this.onChange(
-      RichUtils.toggleInlineStyle(
-        this.state.editorState,
-        inlineStyle
-      )
-    )
-  }
-
-  InlineStyleControls = () => {
-    let INLINE_STYLES = [
-      { label: 'Bold', style: 'BOLD' },
-      { label: 'Italic', style: 'ITALIC' },
-      { label: 'Underline', style: 'UNDERLINE' },
-      { label: 'Monospace', style: 'CODE' }
-    ]
-
-    const currentStyle = this.state.editorState.getCurrentInlineStyle()
-
-    return (
-      // <ReactTooltip>
-          <div className={`${styles.controls} ${this.state.focused && styles.controlsOn}`}>
-          {INLINE_STYLES.map((type) =>
-            <StyleButton
-              className={[styles.controlsButtons]}
-              key={type.label}
-              active={currentStyle.has(type.style)}
-              label={type.label}
-              onToggle={this.toggleInlineStyle}
-              style={type.style}
-            />
-          )}
-        </div>
-      // </ReactTooltip>
-    )
-  }
-
   onFocus = () => {
+    this.focused = true
     this.setState({
       focused: true
     })
   }
 
   onBlur = () => {
+    this.focused = false
     this.setState({
       focused: false
     })
+
+    this.selected = false
+    this.props.hideSelectToolbox()
     this.props.callBackSaveData(this)
   }
 
   focusOnEditor = () => {
-    console.log('Focussing')
-    this.editorInput.focus()
+    this.editorInput.current.focus()
   }
 
   render() {
     const { type, store } = this.props
-    const { editorState, focused } = this.state
+    const { editorState } = this.state
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     return (
-      <PostContentBlock
-        heading={`${type == 'story' ? 'Your' : ''} ${type}`}
-        onClick={this.focusOnEditor}
-        className={[style]}>
-        {this.InlineStyleControls()}
-        <Editor
-          readOnly={!store.user.loggedIn}
-          editorState={editorState}
-          ref={this.editorInput}
-          onChange={this.onChange}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          spellCheck={true}
-          placeholder={type == 'title' ? 'Title' : 'Write your story...'}
-          handleBeforeInput={this.handleBeforeInput}
-          handlePastedText={this.handlePastedText}
-          blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
-        />
-      </PostContentBlock>
+      <div>
+        <PostContentBlock
+          heading={`${type == 'story' ? 'Your' : ''} ${type}`}
+          onClick={this.focusOnEditor}
+          className={[style]}>
+          <Editor
+            readOnly={!store.user.loggedIn}
+            editorState={editorState}
+            ref={this.editorInput}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            spellCheck={true}
+            placeholder={type == 'title' ? 'Title' : 'Write your story...'}
+            handleBeforeInput={this.handleBeforeInput}
+            handlePastedText={this.handlePastedText}
+            blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
+          />
+        </PostContentBlock>
+      </div>
     )
   }
 }

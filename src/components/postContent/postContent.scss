@@ -28,25 +28,6 @@
 }
 
 .controls {
-	position: fixed;
-	border-radius: 3px;
-	transition: 0.2s;
-	height: 0;
-	overflow: hidden;
-	display: flex;
-	padding-right: 10px;
-	align-items: center;
-	background-color: $darker;
-	color: white;
-	font-weight: normal;
-	font-size: 0.8rem;
-	text-transform: uppercase;
-
-	&On {
-		transition: 0.2s;
-		height: 30px;
-	}
-
 	&Buttons {
 		transition: 0.2s;
 		line-height: 0.8rem;
