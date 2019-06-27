@@ -5,7 +5,7 @@ use App\Attachent;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
-$factory->define(Comment::class, function (Faker $faker) {
+$factory->define(CommentHasAttachment::class, function (Faker $faker) {
     $comment = App\Comment::pluck('id')->toArray();
     $attachment = App\Attachment::pluck('id')->toArray();
 
