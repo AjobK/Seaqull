@@ -19,22 +19,29 @@ class RegisterPrompt extends Component {
       recaptcha: null,
       loadingTimeout: false
     }
+
     window.recaptchaOptions = {
       lang: 'en',
       useRecaptchaNet: true,
       removeOnUnmount: true,
-    };
+    }
 
     this.recaptchaRef = React.createRef();
     this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
-  componentWillUnmount() {
+  
+  componentDidMount () {
+    var widget = this.recaptchaRef.current.render()
+    this.recaptchaRef.current.reset(widget)
+  }
+
+  componentWillUnmount() { 
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element);
+        element.parentNode.removeChild(element)
       }
-    });
+    })
   }
 
   auth = () => {
