@@ -18,7 +18,15 @@ class Account extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name', 'email', 'password', 'role_id', 'last_ip', 'login_attempts_count', 'locked_to'
+        'role_id', 
+        'user_name', 
+        'email', 
+        'email_verified_at', 
+        'password', 
+        'last_ip', 
+        'login_attempts_count', 
+        'locked_to', 
+        'changed_pw_at',
     ];
 
     /**
@@ -31,12 +39,23 @@ class Account extends Authenticatable
     ];
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'deleted_at' => null,
+        'changed_pw_at' => null,
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'changed_pw_at' => 'datetime',
     ];
     
     public function role()
