@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
+import ReCAPTCHA from "react-google-recaptcha";
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
@@ -15,24 +15,26 @@ class RegisterPrompt extends Component {
       user_name: null,
       email: null,
       password: null,
-      recaptcha: null,
       recaptchaToken: null,
+      recaptcha: null,
       loadingTimeout: false
     }
-    this.verifyCallback = this.verifyCallback.bind(this)
-    this.onloadCallback = this.onloadCallback.bind(this)
+    window.recaptchaOptions = {
+      lang: 'en',
+      useRecaptchaNet: true,
+      removeOnUnmount: true,
+    };
+
+    this.recaptchaRef = React.createRef();
+    this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
-
-  componentDidMount = () => {
-    if(!(this.captcha.state.ready)){
-      loadReCaptcha()
-    }
-  }
-
-  componentWillUnmount = () => {
-    var x = this.captcha.render()
-    this.captcha.reset(x)
+  componentWillUnmount() {
+    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
+      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
+        element.parentNode.removeChild(element);
+      }
+    });
   }
 
   auth = () => {
@@ -62,15 +64,13 @@ class RegisterPrompt extends Component {
       })
     })
     .catch(res => {
-      const { user_name, email, password, recaptcha } = res.response.data.errors
+      const { user_name, email, password } = res.response.data.errors
       
       this.setState({
         user_name: user_name || [],
         email: email || [],
         password: password || [],
-        recaptcha: recaptcha || [],
-        recaptchaToken: null,
-        loadingTimeout:false
+        loadingTimeout: false
       })
     })
   }
@@ -88,7 +88,8 @@ class RegisterPrompt extends Component {
       loadingTimeout: true
     })
     if(!(this.state.loadingTimeout)){
-      this.loadCaptchaOnSubmit()
+      this.recaptchaRef.current.reset()
+      this.recaptchaRef.current.execute();
     }
   }
 
@@ -96,19 +97,8 @@ class RegisterPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
-  loadCaptchaOnSubmit = () =>{
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
-    }
-  }
-
-  onloadCallback() {
-
-  }
-  
-  verifyCallback = (recaptchaToken) => {
-    this.setState({ recaptchaToken })
+  onChange = (recaptchaToken) => {
+    this.setState({recaptchaToken})
     this.auth()
   }
 
@@ -126,15 +116,13 @@ class RegisterPrompt extends Component {
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} disabled={loadingTimeout} />
-              <ReCaptcha
-                ref={(el) => {this.captcha = el}}
-                size='invisible'
-                render='explicit'
-                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                onloadCallback={this.onloadCallback}
-                verifyCallback={this.verifyCallback}
-              />
+              <Button value={buttonClass} className={styles.submit}  disabled={loadingTimeout} />
+              <ReCAPTCHA
+                ref={this.recaptchaRef}
+                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
+                size="invisible"
+                onChange={this.onChange}
+              />,
             </div>
           </form>
           <div className={styles.image} />

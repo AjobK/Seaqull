@@ -4,7 +4,7 @@ import styles from './loginPrompt.scss'
 import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
-import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
+import ReCAPTCHA from "react-google-recaptcha";
 
 @inject('store') @observer
 class LoginPrompt extends Component {
@@ -14,24 +14,29 @@ class LoginPrompt extends Component {
     this.state = {
       user_name: null,
       password: null,
-      recaptcha: null,
-      recaptchaToken: null,
       remainingTimeInterval: null,
       remainingTime: null,
+      recaptchaToken: null,
+      recaptcha: null,
+      loadingTimeout:false
     }
-    this.verifyCallback = this.verifyCallback.bind(this)
-    this.onloadCallback = this.onloadCallback.bind(this)
+    window.recaptchaOptions = {
+      lang: 'en',
+      useRecaptchaNet: true,
+      removeOnUnmount: true,
+    };
+
+    this.recaptchaRef = React.createRef();
+    this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
-  componentDidMount(){
-    if(!(this.captcha.state.ready)){
-      loadReCaptcha()
-    }
-  }
 
-  componentWillUnmount = () => {
-    var x = this.captcha.render()
-    this.captcha.reset(x)
+  componentWillUnmount() {
+    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
+      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
+        element.parentNode.removeChild(element);
+      }
+    });
   }
 
   auth = () => {
@@ -42,7 +47,6 @@ class LoginPrompt extends Component {
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
-
     Axios.post('/login', payload)
     .then(res => {
       Axios.get('/user', {
@@ -67,8 +71,7 @@ class LoginPrompt extends Component {
       this.setState({
         user_name: error || [],
         password: error || [],
-        recaptcha: recaptcha || [],
-        recaptchaToken: null
+        loadingTimeout: false
       })
     })
   }
@@ -95,39 +98,32 @@ class LoginPrompt extends Component {
   }
 
   onSubmit = (e) => {
-    e.preventDefault()
-    if (this.state.remainingTime && this.remainingTimeInterval) return
+      e.preventDefault()
+      if (this.state.remainingTime && this.remainingTimeInterval) return
 
-    this.setState({
-      user_name: 'loading',
-      password: 'loading'
-    })
-    this.loadCaptchaOnSubmit()
-  }
-
-  loadCaptchaOnSubmit = () =>{
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
+      this.setState({
+        user_name: 'loading',
+        password: 'loading',
+        loadingTimeout: true
+      })
+    if(!(this.state.loadingTimeout)){
+      this.recaptchaRef.current.reset()
+      this.recaptchaRef.current.execute();
     }
-  }
-  onloadCallback() {
-
-  }
-  
-  verifyCallback = (recaptchaToken) => {
-    this.setState({ recaptchaToken })
-    this.auth()
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
+  onChange = (recaptchaToken) => {
+    this.setState({recaptchaToken})
+    this.auth()
+  }
   render() {
-    const { user_name, password, recaptcha, remainingTime } = this.state
+    const { user_name, password, remainingTime,recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
-
+    
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
@@ -137,16 +133,14 @@ class LoginPrompt extends Component {
             <FormInput name={'Username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime} />
+              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
-              <ReCaptcha
-                ref={(el) => {this.captcha = el}}
-                size='invisible'
-                render='explicit'
-                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                verifyCallback={this.verifyCallback}
-                onloadCallback={this.onloadCallback}
-              />
+              <ReCAPTCHA
+                ref={this.recaptchaRef}
+                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
+                size="invisible"
+                onChange={this.onChange}
+              />,
             </div>
           </form>
           <div className={styles.image} />
