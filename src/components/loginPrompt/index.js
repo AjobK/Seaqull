@@ -4,7 +4,7 @@ import styles from './loginPrompt.scss'
 import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
-import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha"
 
 @inject('store') @observer
 class LoginPrompt extends Component {
@@ -18,7 +18,7 @@ class LoginPrompt extends Component {
       remainingTime: null,
       recaptchaToken: null,
       recaptcha: null,
-      loadingTimeout:false
+      loadingTimeout: false
     }
 
     window.recaptchaOptions = {
@@ -27,17 +27,12 @@ class LoginPrompt extends Component {
       removeOnUnmount: true,
     }
     
-    this.recaptchaRef = React.createRef();
+    this.recaptchaRef = React.createRef()
     this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
 
-  componentDidMount () {
-    var widget = this.recaptchaRef.current.render()
-    this.recaptchaRef.current.reset(widget)
-  }
-
-  componentWillUnmount() { 
+  componentDidMount = () => { 
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)
@@ -96,7 +91,7 @@ class LoginPrompt extends Component {
       this.setState({
         remainingTime: nextTime
       })
-    }, 1000);
+    }, 1000)
   }
 
   goToProfile = () => {
@@ -104,17 +99,18 @@ class LoginPrompt extends Component {
   }
 
   onSubmit = (e) => {
-      e.preventDefault()
-      if (this.state.remainingTime && this.remainingTimeInterval) return
+    e.preventDefault()
 
-      this.setState({
-        user_name: 'loading',
-        password: 'loading',
-        loadingTimeout: true
-      })
+    if (this.state.remainingTime && this.remainingTimeInterval) return
+
+    this.setState({
+      user_name: 'loading',
+      password: 'loading',
+      loadingTimeout: true
+    })
     if(!(this.state.loadingTimeout)){
       this.recaptchaRef.current.reset()
-      this.recaptchaRef.current.execute();
+      this.recaptchaRef.current.execute()
     }
   }
 
@@ -126,6 +122,7 @@ class LoginPrompt extends Component {
     this.setState({recaptchaToken})
     this.auth()
   }
+
   render() {
     const { user_name, password, remainingTime,recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
@@ -141,12 +138,7 @@ class LoginPrompt extends Component {
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
-              <ReCAPTCHA
-                ref={this.recaptchaRef}
-                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
-                size="invisible"
-                onChange={this.onChange}
-              />,
+              <ReCAPTCHA ref={this.recaptchaRef} sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S" size="invisible" onChange={this.onChange}/>
             </div>
           </form>
           <div className={styles.image} />

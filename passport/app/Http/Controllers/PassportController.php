@@ -110,7 +110,7 @@ class PassportController extends Controller
                 $targetUser->save();
 
                 return response()->json([
-                    'error' => ['Invalid email or password.'],
+                    'error' => ['Invalid username or password.'],
                     'remainingTime' => strtotime($targetUser->locked_to) - strtotime(now())
                 ], 422);
             }
@@ -118,7 +118,7 @@ class PassportController extends Controller
             $targetUser->save();
         }
 
-        return response()->json(['error' => ['Invalid email or password.']], 422);
+        return response()->json(['error' => ['Invalid username or password.']], 422);
     }
 
     /**
