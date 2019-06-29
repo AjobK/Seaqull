@@ -41,9 +41,10 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    console.log(document.getElementById(this.elId.Username).value)
 
     const payload = {
-      user_name: document.getElementById(this.elId.username).value,
+      user_name: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
@@ -93,7 +94,7 @@ class RegisterPrompt extends Component {
     if(!(this.state.loadingTimeout)){
       this.recaptchaRef.current.reset()
       this.recaptchaRef.current.execute()
-    }
+    }  
   }
 
   setElId = (item, id) => {
