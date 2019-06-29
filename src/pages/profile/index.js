@@ -41,7 +41,7 @@ class Profile extends App {
   }
 
   fetchProfileData(path) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/api/profile/${path}`)
+    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`)
       .then((response) => {
         this.updateProfile(response.data.profile)
       })
@@ -76,8 +76,8 @@ class Profile extends App {
       title: profile.title,
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
-      banner: '/src/static/dummy/user/banner.jpg',
-      picture: '/src/static/dummy/user/profile.jpg'
+      banner: profile.banner,
+      picture: profile.avatar
     }
 
     this.setState({ user })

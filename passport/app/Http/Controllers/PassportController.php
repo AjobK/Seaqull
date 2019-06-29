@@ -151,6 +151,8 @@ class PassportController extends Controller
         $name = $user->display_name;
         $exp = $user->experience;
         $title = $user->title ? $user->title->name : "";
+        $banner = $user->banner->path;
+        $avatar = $user->avatar->path;
         $posts = $user
             ->posts()
             ->orderBy('created_at')
@@ -164,7 +166,9 @@ class PassportController extends Controller
             'title' => $title,
             'experience' => $exp,
             'isOwner' => $isOwner,
-            'posts' => $posts
+            'posts' => $posts,
+            'banner' => $banner,
+            'avatar' => $avatar
         ];
 
         return response()->json(['profile' => $profile], 200);
