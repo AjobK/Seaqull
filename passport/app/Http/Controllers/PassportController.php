@@ -138,7 +138,7 @@ class PassportController extends Controller
      */
     public function profile(Request $request, $path)
     {
-        $user = Account::where('path', '=', $path)->first();
+        $user = User::where('custom_path', '=', $path)->first();
 
         if (!$user) {
             return response()->json([
@@ -148,7 +148,7 @@ class PassportController extends Controller
         }
 
         $isOwner = $user->is(auth()->guard('api')->user());
-        $name = $user->name;
+        $name = $user->display_name;
         $exp = $user->experience;
         $title = $user->title ? $user->title->name : "";
         $posts = $user
@@ -160,7 +160,7 @@ class PassportController extends Controller
         ;
 
         $profile = [
-            'name' => $name,
+            'username' => $name,
             'title' => $title,
             'experience' => $exp,
             'isOwner' => $isOwner,

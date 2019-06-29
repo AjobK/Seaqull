@@ -4,6 +4,7 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { UserBanner, PostsPreview, Statistics } from '../../components'
 import Axios from 'axios'
+import Error from "../error";
 
 @inject('store') @observer
 class Profile extends App {
@@ -13,7 +14,7 @@ class Profile extends App {
 
     const user = {
       isOwner: false,
-      name: '',
+      username: '',
       title: '',
       level: 0,
       posts: [],
@@ -22,7 +23,8 @@ class Profile extends App {
     }
 
     this.state = {
-      user: user
+      user: user,
+      error: false
     }
   }
 
@@ -42,6 +44,10 @@ class Profile extends App {
     Axios.get(`${this.props.store.defaultData.backendUrl}/api/profile/${path}`)
       .then((response) => {
         this.updateProfile(response.data.profile)
+      })
+      .catch((err) => {
+          console.log(err);
+          this.setState({ error: true })
       })
   }
 
@@ -66,7 +72,7 @@ class Profile extends App {
   updateProfile(profile) {
     const user = {
       isOwner: profile.isOwner,
-      name: profile.name,
+      username: profile.username,
       title: profile.title,
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
@@ -78,6 +84,12 @@ class Profile extends App {
   }
 
   render() {
+    if(this.state.error) {
+        return (
+            <Error></Error>
+        )
+    }
+
     return (
       <Standard>
         <UserBanner user={this.state.user}/>

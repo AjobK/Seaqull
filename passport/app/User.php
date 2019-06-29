@@ -24,4 +24,9 @@ class User extends Model
         return $this->belongsTo(Account::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }
