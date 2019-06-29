@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha"
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
@@ -26,17 +26,12 @@ class RegisterPrompt extends Component {
       removeOnUnmount: true,
     }
 
-    this.recaptchaRef = React.createRef();
+    this.recaptchaRef = React.createRef()
     this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
-  
-  componentDidMount () {
-    var widget = this.recaptchaRef.current.render()
-    this.recaptchaRef.current.reset(widget)
-  }
 
-  componentWillUnmount() { 
+  componentDidMount = () => { 
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)
@@ -62,12 +57,11 @@ class RegisterPrompt extends Component {
       })
       .then(user => {
         localStorage.setItem('token', res.data.token)
-
         return user.data.user
       })
       .then(user => {
-          this.props.store.user.fillUserData(user)
-          this.goToProfile()
+        this.props.store.user.fillUserData(user)
+        this.goToProfile()
       })
     })
     .catch(res => {
@@ -88,15 +82,17 @@ class RegisterPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
+
     this.setState({
       user_name: 'loading',
       email: 'loading',
       password: 'loading',
       loadingTimeout: true
     })
+    
     if(!(this.state.loadingTimeout)){
       this.recaptchaRef.current.reset()
-      this.recaptchaRef.current.execute();
+      this.recaptchaRef.current.execute()
     }
   }
 
@@ -119,17 +115,12 @@ class RegisterPrompt extends Component {
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput name={'username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit}  disabled={loadingTimeout} />
-              <ReCAPTCHA
-                ref={this.recaptchaRef}
-                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
-                size="invisible"
-                onChange={this.onChange}
-              />,
+              <ReCAPTCHA ref={this.recaptchaRef} sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S" size="invisible" onChange={this.onChange}/>
             </div>
           </form>
           <div className={styles.image} />
