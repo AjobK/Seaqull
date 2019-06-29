@@ -4,6 +4,7 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import { UserBanner, PostsPreview, Statistics } from '../../components'
 import Axios from 'axios'
+import Error from "../error";
 
 @inject('store') @observer
 class Profile extends App {
@@ -13,7 +14,7 @@ class Profile extends App {
 
     const user = {
       isOwner: false,
-      name: '',
+      username: '',
       title: '',
       level: 0,
       posts: [],
@@ -22,26 +23,32 @@ class Profile extends App {
     }
 
     this.state = {
-      user: user
+      user: user,
+      error: false
     }
+
+    this.loadDataFromBackend();
   }
 
-  componentDidMount() {
+  loadDataFromBackend() {
     const { path } = this.props.match.params
     const { user } = this.props.store
 
-    if(user.path === path) {
+    if (user.path === path) {
       this.updateProfile(user);
     }
     else {
-      this.fetchProfileData(path);
+      this.fetchProfileData(path || "");
     }
   }
 
   fetchProfileData(path) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/api/profile/${path}`)
+    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`)
       .then((response) => {
         this.updateProfile(response.data.profile)
+      })
+      .catch((err) => {
+        this.setState({ error: true })
       })
   }
 
@@ -66,21 +73,27 @@ class Profile extends App {
   updateProfile(profile) {
     const user = {
       isOwner: profile.isOwner,
-      name: profile.name,
+      username: profile.username,
       title: profile.title,
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
-      banner: '/src/static/dummy/user/banner.jpg',
-      picture: '/src/static/dummy/user/profile.jpg'
+      banner: profile.banner,
+      picture: profile.avatar
     }
 
     this.setState({ user })
   }
 
   render() {
+    if (this.state.error) {
+      return (
+        <Error></Error>
+      )
+    }
+
     return (
       <Standard>
-        <UserBanner user={this.state.user}/>
+        <UserBanner user={this.state.user} />
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.user.posts} create={this.state.user.isOwner} />
         </Section>
