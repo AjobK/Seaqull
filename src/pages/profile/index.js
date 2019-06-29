@@ -26,17 +26,19 @@ class Profile extends App {
       user: user,
       error: false
     }
+
+    this.loadDataFromBackend();
   }
 
-  componentDidMount() {
+  loadDataFromBackend() {
     const { path } = this.props.match.params
     const { user } = this.props.store
 
-    if(user.path === path) {
+    if (user.path === path) {
       this.updateProfile(user);
     }
     else {
-      this.fetchProfileData(path);
+      this.fetchProfileData(path || "");
     }
   }
 
@@ -46,8 +48,7 @@ class Profile extends App {
         this.updateProfile(response.data.profile)
       })
       .catch((err) => {
-          console.log(err);
-          this.setState({ error: true })
+        this.setState({ error: true })
       })
   }
 
@@ -84,15 +85,15 @@ class Profile extends App {
   }
 
   render() {
-    if(this.state.error) {
-        return (
-            <Error></Error>
-        )
+    if (this.state.error) {
+      return (
+        <Error></Error>
+      )
     }
 
     return (
       <Standard>
-        <UserBanner user={this.state.user}/>
+        <UserBanner user={this.state.user} />
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.user.posts} create={this.state.user.isOwner} />
         </Section>
