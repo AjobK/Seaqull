@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import ReCAPTCHA from "react-google-recaptcha"
+import ReCAPTCHA from 'react-google-recaptcha'
 
 @inject('store') @observer
 class RegisterPrompt extends Component {
@@ -23,7 +23,7 @@ class RegisterPrompt extends Component {
     window.recaptchaOptions = {
       lang: 'en',
       useRecaptchaNet: true,
-      removeOnUnmount: true,
+      removeOnUnmount: true
     }
 
     this.recaptchaRef = React.createRef()
@@ -31,7 +31,7 @@ class RegisterPrompt extends Component {
     this.elId = {}
   }
 
-  componentDidMount = () => { 
+  componentDidMount = () => {
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)
@@ -41,7 +41,6 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
-    console.log(document.getElementById(this.elId.Username).value)
 
     const payload = {
       user_name: document.getElementById(this.elId.Username).value,
@@ -58,6 +57,7 @@ class RegisterPrompt extends Component {
       })
       .then(user => {
         localStorage.setItem('token', res.data.token)
+
         return user.data.user
       })
       .then(user => {
@@ -67,7 +67,7 @@ class RegisterPrompt extends Component {
     })
     .catch(res => {
       const { user_name, email, password } = res.response.data.errors
-      
+
       this.setState({
         user_name: user_name || [],
         email: email || [],
@@ -90,11 +90,11 @@ class RegisterPrompt extends Component {
       password: 'loading',
       loadingTimeout: true
     })
-    
+
     if(!(this.state.loadingTimeout)){
       this.recaptchaRef.current.reset()
       this.recaptchaRef.current.execute()
-    }  
+    }
   }
 
   setElId = (item, id) => {
@@ -102,7 +102,7 @@ class RegisterPrompt extends Component {
   }
 
   onChange = (recaptchaToken) => {
-    this.setState({recaptchaToken})
+    this.setState( { recaptchaToken } )
     this.auth()
   }
 
@@ -120,8 +120,8 @@ class RegisterPrompt extends Component {
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit}  disabled={loadingTimeout} />
-              <ReCAPTCHA ref={this.recaptchaRef} sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S" size="invisible" onChange={this.onChange}/>
+              <Button value={buttonClass} className={styles.submit} disabled={loadingTimeout} />
+              <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange}/>
             </div>
           </form>
           <div className={styles.image} />

@@ -4,7 +4,7 @@ import styles from './loginPrompt.scss'
 import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
-import ReCAPTCHA from "react-google-recaptcha"
+import ReCAPTCHA from 'react-google-recaptcha'
 
 @inject('store') @observer
 class LoginPrompt extends Component {
@@ -24,15 +24,15 @@ class LoginPrompt extends Component {
     window.recaptchaOptions = {
       lang: 'en',
       useRecaptchaNet: true,
-      removeOnUnmount: true,
+      removeOnUnmount: true
     }
-    
+
     this.recaptchaRef = React.createRef()
     this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
 
-  componentDidMount = () => { 
+  componentDidMount = () => {
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)
@@ -48,6 +48,7 @@ class LoginPrompt extends Component {
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
+
     Axios.post('/login', payload)
     .then(res => {
       Axios.get('/user', {
@@ -68,7 +69,7 @@ class LoginPrompt extends Component {
       const { error, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
-      
+
       this.setState({
         user_name: error || [],
         password: error || [],
@@ -84,6 +85,7 @@ class LoginPrompt extends Component {
 
     this.remainingTimeInterval = setInterval(() => {
       let nextTime = this.state.remainingTime-1
+
       if (this.state.remainingTime <= 1) {
         clearInterval(this.remainingTimeInterval)
         nextTime = null
@@ -119,14 +121,14 @@ class LoginPrompt extends Component {
   }
 
   onChange = (recaptchaToken) => {
-    this.setState({recaptchaToken})
+    this.setState( { recaptchaToken } )
     this.auth()
   }
 
   render() {
     const { user_name, password, remainingTime,recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
-    
+
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
@@ -138,7 +140,7 @@ class LoginPrompt extends Component {
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
-              <ReCAPTCHA ref={this.recaptchaRef} sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S" size="invisible" onChange={this.onChange}/>
+              <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange}/>
             </div>
           </form>
           <div className={styles.image} />
