@@ -28,6 +28,7 @@ class Post extends App {
       isPublished: true,
       renderContent: [],
       currentEditorState: null,
+      saving: false
     }
   }
 
@@ -75,7 +76,7 @@ class Post extends App {
   }
 
   render() {
-    const { isPublished } = this.state
+    const { isPublished, saving } = this.state
 
     return (
       <Standard className={[styles.stdBgWhite]}>
@@ -84,10 +85,13 @@ class Post extends App {
           <div className={styles.renderWrapper}>
             { this.state.renderContent }
           </div>
-          <Button
-            className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
-            value={isPublished ? 'UNPUBLISH STORY': 'PUBLISH STORY'}
-          />
+          <div className={styles.info}>
+            <Button
+              className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
+              value={isPublished ? 'UNPUBLISH STORY': 'PUBLISH STORY'}
+            />
+            { saving && <p className={styles.infoSaving}> Saving... </p> }
+          </div>
         </Section>
       </Standard>
     )
