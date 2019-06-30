@@ -2,8 +2,9 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor } from 'draft-js'
+import { EditorState, Editor, RichUtils } from 'draft-js'
 import '../../DraftFallback.css'
+import { StyleButton } from '../../components'
 
 @inject('store') @observer
 class PostContent extends Component {
@@ -23,7 +24,14 @@ class PostContent extends Component {
       editorState: value != null
         ? EditorState.createWithContent(value)
         : EditorState.createEmpty(),
-      focused: false
+      focused: false,
+      toolTipPosition: {
+        top: -9999,
+        bottom: -9999,
+        left: -9999,
+        right: -9999,
+        display: 'none'
+      }
     }
   }
 
@@ -33,9 +41,9 @@ class PostContent extends Component {
 
       if (selectedText.trim().length) {
         this.selected = true
-        this.props.showSelectToolbox(this)
+        this.showSelectToolbox()
       } else if (this.selected) {
-        this.props.hideSelectToolbox()
+        this.hideSelectToolbox()
         this.selected = false
       }
       console.log(selectedText)
@@ -73,6 +81,98 @@ class PostContent extends Component {
     return totalLength > this.maxLength
   }
 
+  inlineStyleControls = () => {
+    const { focused, toolTipPosition, editorState } = this.state
+    let { top, left, right } = toolTipPosition
+
+    if (!focused) return null
+
+    let INLINE_STYLES = [
+      { label: 'Bold', style: 'BOLD' },
+      { label: 'Italic', style: 'ITALIC' },
+      { label: 'Underline', style: 'UNDERLINE' },
+      { label: 'Code', style: 'CODE' }
+    ]
+
+    const currentStyle = editorState.getCurrentInlineStyle()
+
+
+    let centeredPosition = ((left + right) / 2 - (125/2))
+    // centeredPosition = ((left + window.innerWidth) / 2 - (125/2)) - 20
+    // console.log((centeredPosition + 63) + ' ' + window.innerWidth)
+
+    console.log('-----------')
+    console.log((centeredPosition + 125))
+    console.log(window.innerWidth)
+    console.log('-----------')
+    if ((centeredPosition + (125/2) + 20) > window.innerWidth) {
+      console.log('UIT SCHERM! (RECHTS)')
+    } else {
+      console.log('IN SCHERM')
+    }
+    // console.log((right + (125/2) + 20) + ' ' + window.innerWidth)
+    // if (centeredPosition + 20 > window.innerWidth)
+    //   console.log('WRONGGG')
+    // else
+    //   centeredPosition = ((left + right) / 2 - (125/2))
+      
+    // centeredPosition = ((left + right) / 2 - (125/2))
+
+    return (
+      <div
+        className={`${styles.controls}`}
+        style={{
+          top: top - 50,
+          left: centeredPosition
+        }}
+      >
+        <div className={styles.controlsChoices}>
+          {INLINE_STYLES.map((type) =>
+            <StyleButton
+              className={[styles.controlsButtons]}
+              key={type.label}
+              active={currentStyle.has(type.style)}
+              label={type.label}
+              onToggle={() => {this.toggleInlineStyle(editorState, type.style)}}
+              style={type.style}
+              iconName={type.label}
+            />
+          )}
+        </div>
+        <div className={styles.controlsArrow} />
+      </div>
+    )
+  }
+  
+  toggleInlineStyle = (editorState, inlineStyle) => {
+      console.log(editorState)
+      RichUtils.toggleInlineStyle(
+        editorState,
+        inlineStyle
+      )
+  }
+
+  showSelectToolbox = () => {
+    let selection = window.getSelection()
+
+    if (selection.anchorNode) {
+      const { top, bottom, left, right } = selection.getRangeAt(0).getBoundingClientRect()
+
+      this.setState({ toolTipPosition: { top, bottom, left, right } })
+    }
+  }
+
+  hideSelectToolbox = () => {
+    this.setState({ toolTipPosition: {
+      top: -9999,
+      bottom: -9999,
+      left: -9999,
+      right: -9999,
+      display: 'none'
+    } })
+    console.log('Hiding')
+  }
+
   onFocus = () => {
     this.focused = true
     this.setState({
@@ -87,7 +187,6 @@ class PostContent extends Component {
     })
 
     this.selected = false
-    this.props.hideSelectToolbox()
     this.props.callBackSaveData(this)
   }
 
@@ -119,6 +218,7 @@ class PostContent extends Component {
             handlePastedText={this.handlePastedText}
             blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
           />
+          { type != 'title' && this.inlineStyleControls()}
         </PostContentBlock>
       </div>
     )

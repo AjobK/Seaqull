@@ -28,16 +28,37 @@
 }
 
 .controls {
+	z-index: 105;
+	position: fixed;
+	font-size: 1rem;
+
+	&Arrow {
+		display: block;
+		max-width: 10px;
+		height: 10px;
+		background-color: black;
+		margin: 0 auto;
+		margin-top: -5px;
+		transform: rotate(45deg);
+	}
+
+	&Choices {
+		display: flex;
+		justify-content: space-between;
+		background-color: black;
+		border-radius: 3px;
+		padding: 10px;
+		min-width: 125px;
+	}
+
 	&Buttons {
+		color: white;
 		transition: 0.2s;
 		line-height: 0.8rem;
-		margin-bottom: -2px;
-		margin-left: 10px;
-		border-bottom: 2px solid transparent;
 
 		&:hover {
 			transition: 0.2s;
-			border-bottom: 2px solid white;
+			color: lighten($primary, 15%);
 		}
 	}
 }

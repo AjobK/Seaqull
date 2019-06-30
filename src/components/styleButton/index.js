@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Icon } from '..';
 import styles from './StyleButton.scss'
 
 class StyleButton extends Component {
@@ -11,7 +12,17 @@ class StyleButton extends Component {
   }
 
   render() {
-    const { className, label } = this.props
+    const { className, label, iconName } = this.props
+
+    if (iconName) {
+      return (
+        <Icon
+          iconName={iconName}
+          onMouseDown={this.onToggle}
+          className={[styles.button, ...className].join(' ')}
+        />
+      )
+    }
 
     return (
       <span onMouseDown={this.onToggle} className={[styles.button, ...className].join(' ')}>

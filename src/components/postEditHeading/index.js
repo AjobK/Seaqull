@@ -28,20 +28,13 @@ class PostEditHeading extends Component {
   }
 
   render() {
-    const { heading, editing, removeItem } = this.props
+    const { heading, editing } = this.props
     const { manualEditing } = this.state
-    const { setManualEditingTrue, setManualEditingFalse } = this
     let editingClass = [styles.edit, (manualEditing || editing) ? styles.editing : ''].join(' ')
 
     return (
       <label className={editingClass}>
         <span><Icon iconName={'Pen'} className={styles.icon} /> {heading || 'Text'} { (manualEditing || editing) && '- Editing'}</span>
-        <span
-          className={styles.remove}
-          onMouseOver={setManualEditingTrue}
-          onMouseLeave={setManualEditingFalse}
-          onClick={removeItem}
-        >Delete</span>
       </label>
     )
   }
