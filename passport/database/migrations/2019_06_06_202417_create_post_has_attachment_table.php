@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttachmentPostTable extends Migration
+class CreatePostHasAttachmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAttachmentPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('Attachment_Post', function (Blueprint $table) {
+        Schema::create('Post_Has_Attachment', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('attachment_id');
             $table->unsignedBigInteger('post_id');
@@ -39,10 +39,10 @@ class CreateAttachmentPostTable extends Migration
      */
     public function down()
     {
-        Schema::table('Attachment_Post', function (Blueprint $table) {
-            $table->dropForeign('attachment_post_attachment_id_foreign');
-            $table->dropForeign('attachment_post_post_id_foreign');
+        Schema::table('Post_Has_Attachment', function (Blueprint $table) {
+            $table->dropForeign('post_has_attachment_attachment_id_foreign');
+            $table->dropForeign('post_has_attachment_post_id_foreign');
         });
-        Schema::dropIfExists('Attachment_Post');
+        Schema::dropIfExists('Post_Has_Attachment');
     }
 }

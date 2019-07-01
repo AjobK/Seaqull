@@ -13,6 +13,5 @@ $factory->define(PostHasAttachment::class, function (Faker $faker) {
     return [
         'post_id' => $faker->randomElement($post),
         'attachment_id' => $faker->randomElement($attachment),
-        'type_id' => $faker->randomElement($type),
     ];
 });
