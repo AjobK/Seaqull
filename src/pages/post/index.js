@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button } from '../../components'
+import { PostBanner, PostContent, Button, Icon } from '../../components'
 import { convertToRaw, convertFromRaw } from 'draft-js'
 import styles from './post.scss'
 
@@ -28,7 +28,9 @@ class Post extends App {
       isPublished: true,
       renderContent: [],
       currentEditorState: null,
-      saving: false
+      saving: false,
+      date: '12 mar 2019',
+      editing: true
     }
   }
 
@@ -76,12 +78,17 @@ class Post extends App {
   }
 
   render() {
-    const { isPublished, saving } = this.state
+    const { isPublished, saving, editing } = this.state
 
     return (
       <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
         <Section noTitle>
+          { !editing &&
+            <div className={styles.date}>
+              <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
+            </div>
+          }
           <div className={styles.renderWrapper}>
             { this.state.renderContent }
           </div>

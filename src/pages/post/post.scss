@@ -80,3 +80,18 @@
 		text-transform: uppercase;
 	}
 }
+
+.date {
+	@include noselect;
+	display: flex;
+	align-items: center;
+	text-transform: uppercase;
+	color: gray;
+	opacity: 0.35;
+	font-size: 0.8rem;
+	font-weight: bold;
+
+	&Icon {
+		margin-right: 10px;
+	}
+}
