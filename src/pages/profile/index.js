@@ -6,6 +6,9 @@ import { UserBanner, PostsPreview, Statistics } from '../../components'
 import Axios from 'axios'
 import Error from "../error";
 
+let token = localStorage.getItem("token");
+Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
 @inject('store') @observer
 class Profile extends App {
 
