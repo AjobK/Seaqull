@@ -41,18 +41,18 @@ class PassportController extends Controller
         }
 
         $account = Account::create([
-          'user_name' => $request->user_name,
-          'email' => $request->email,
-          'role_id' => 1,
-          'password' => bcrypt($request->password),
-          'last_ip' => request()->ip()
+            'user_name' => $request->user_name,
+            'email' => $request->email,
+            'role_id' => 1,
+            'password' => bcrypt($request->password),
+            'last_ip' => request()->ip()
         ]);
 
-          $user = User::create([
-          'account_id' => $account->id,
-          'title_id' => 0,
-          'display_name' => $request->user_name,
-          'experience' => 0,
+        $user = User::create([
+            'account_id' => $account->id,
+            'title_id' => 0,
+            'display_name' => $request->user_name,
+            'experience' => 0,
         ]);
 
         $token = $account->createToken('HorseNeedleRabbitLava')->accessToken;
@@ -138,10 +138,9 @@ class PassportController extends Controller
      */
     public function profile(Request $request, $path = null)
     {
-        if($path == null) {
+        if ($path == null) {
             $user = auth()->guard('api')->user();
-        }
-        else {
+        } else {
             $user = User::where('custom_path', '=', $path)->first();
         }
 
@@ -163,8 +162,7 @@ class PassportController extends Controller
             ->orderBy('created_at')
             ->take($isOwner ? 7 : 8)
             ->get(['title'])
-            ->toArray()
-        ;
+            ->toArray();
 
         $profile = [
             'username' => $name,
