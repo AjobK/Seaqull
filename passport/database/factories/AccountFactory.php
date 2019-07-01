@@ -15,6 +15,5 @@ $factory->define(Account::class, function (Faker $faker) {
         'email' => $username . '@' . $faker->safeEmailDomain,
         'password' => bcrypt('Qwerty123'),
         'last_ip' => $faker->ipv4(),
-        'created_at' => now()
     ];
 });
