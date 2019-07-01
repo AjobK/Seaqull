@@ -156,7 +156,7 @@ class PassportController extends Controller
             ], 400);
         }
 
-        $isOwner = $user->is(auth()->guard('api')->user());
+        $isOwner = $user->account->is(auth()->guard('api')->user());
         $name = $user->display_name;
         $exp = $user->experience;
         $title = $user->title ? $user->title->name : "";
