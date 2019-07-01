@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PostHasAttachment extends Seeder
+class PostHasAttachmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -25,7 +25,7 @@ $factory->define(User::class, function (Faker $faker) {
         'account_id' => $faker->randomElement($account),
         'title_id' => $faker->randomElement($title),
         'display_name' => $faker->name,
-        'experience' => $faker->randomFloat(2),
+        'experience' => $faker->randomFloat(2, 0, 1000),
         'rows_scrolled' => $faker->randomDigit(),
         'custom_path' => $faker->imageUrl(),
     ];

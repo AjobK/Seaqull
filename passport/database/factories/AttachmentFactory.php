@@ -6,6 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Attachment::class, function (Faker $faker) {
     return [
-        'path' => $faker->image('/image'),
+        'path' => $faker->image('../src/static/images'),
+        // 'path' => $faker->sentence(4),
     ];
 });

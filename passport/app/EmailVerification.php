@@ -2,15 +2,15 @@
 
 namespace App;
 
-use App\Account;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ban extends Model
+
+class EmailVerification extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'Ban';
+    protected $table = 'Email_Verification';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,16 @@ class Ban extends Model
      * @var array
      */
     protected $fillable = [
-        'staff_id', 'account_id', 'reason', 'description', 'banned_at', 'banned_to', 'ip_ban',
+        'account_id', 'token', 'verified_at', 'expires_at',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'token'
     ];
 
     /**
@@ -27,18 +36,6 @@ class Ban extends Model
      * @var array
      */
     protected $casts = [
-        'staff_id' => 'int',
         'account_id' => 'int',
-        'ip_ban' => 'boolean',
     ];
-
-    public function staff()
-    {
-        return $this->belongsTo('App\Account', 'staff_id');
-    }
-
-    public function account()
-    {
-        return $this->belongsTo('App\Account');
-    }
 }

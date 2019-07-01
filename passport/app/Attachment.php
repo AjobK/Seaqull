@@ -17,7 +17,7 @@ class Attachment extends Model
      * @var array
      */
     protected $fillable = [
-        'path', 'deleted_at',
+        'path',
     ];
 
 

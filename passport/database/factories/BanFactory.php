@@ -12,8 +12,8 @@ $factory->define(Ban::class, function (Faker $faker) {
         'staff_id' => $faker->randomElement($account),
         'account_id' => $faker->randomElement($account),
         'reason' => $faker->sentence(4),
-        'banned_at' => $faker->dateTime(now),
+        'banned_at' => $faker->dateTime(),
         'banned_to' => $faker->dateTime(),
-        'ip_ban' => $faker->ipv4(), 
+        'ip_ban' => $faker->boolean(), 
     ];
 });

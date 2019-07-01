@@ -12,6 +12,6 @@ $factory->define(UserActivity::class, function (Faker $faker) {
         'user_id' => $faker->randomElement($user),
         'previous_password' => $faker->password(),
         'type' => Str::random(10),
-        'ip_adress' => $faker->ipv4(),
+        'ip_addres' => $faker->ipv4(),
     ];
 });

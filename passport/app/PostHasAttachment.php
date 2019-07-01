@@ -3,13 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CommentHasAttachment extends Model
+class PostHasAttachment extends Model
 {
-    use SoftDeletes;
-
-    protected $table = 'Comment_has_Attachment';
+    protected $table = 'Post_Has_Attachment';
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +14,7 @@ class CommentHasAttachment extends Model
      * @var array
      */
     protected $fillable = [
-        'comment_id', 'attachment_id',
+        'post_id', 'attachment_id',
     ];
 
     /**
@@ -26,13 +23,13 @@ class CommentHasAttachment extends Model
      * @var array
      */
     protected $casts = [
-        'comment_id' => 'int',
+        'post_id' => 'int',
         'attachment_id' => 'int',
     ];
 
-    public function comment()
+    public function post()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Post');
     }
 
     public function attachment()
