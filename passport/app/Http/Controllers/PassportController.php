@@ -156,8 +156,8 @@ class PassportController extends Controller
         $name = $user->display_name;
         $exp = $user->experience;
         $title = $user->title ? $user->title->name : "";
-        $banner = $user->banner->path;
-        $avatar = $user->avatar->path;
+        $banner = $user->banner ? $user->banner->path : "/src/static/dummy/user/banner.jpg";
+        $avatar = $user->avatar ? $user->avatar->path : "/src/static/dummy/user/profile.jpg";
         $posts = $user
             ->posts()
             ->orderBy('created_at')
