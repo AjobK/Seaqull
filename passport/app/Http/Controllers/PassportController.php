@@ -139,7 +139,8 @@ class PassportController extends Controller
     public function profile(Request $request, $path = null)
     {
         if ($path == null) {
-            $user = auth()->guard('api')->user();
+            $account = auth()->guard('api')->user();
+            $user = User::where('account_id', '=', $account->id)->first();
         } else {
             $user = User::where('custom_path', '=', $path)->first();
         }
