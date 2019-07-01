@@ -1,6 +1,8 @@
 <?php
 
 use App\User;
+use App\Account;
+use App\Title;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
@@ -17,14 +19,14 @@ use Illuminate\Support\Facades\Hash;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-
-    // return [
-    //     'title_id' => ,
-    //     'avatar_attachment' => ,
-    //     'display_name' => ,
-    //     'experience' => 0,
-    //     'rows_scrolled' => 0,
-    //     'custom_path' => ,
-    //     'created_at' => now(),
-    // ];
+    $account = App\Account::pluck('id')->toArray();
+    $title = App\Title::pluck('id')->toArray();
+    return [
+        'account_id' => $faker->randomElement($account),
+        'title_id' => $faker->randomElement($title),
+        'display_name' => $faker->name,
+        'experience' => $faker->randomFloat(2),
+        'rows_scrolled' => $faker->randomDigit(),
+        'custom_path' => $faker->imageUrl(),
+    ];
 });
