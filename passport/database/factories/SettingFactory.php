@@ -10,7 +10,7 @@ $factory->define(Setting::class, function (Faker $faker) {
 
     return [
         'user_id' => $faker->randomElement($user),
-        'key' => $faker->word(),
+        'key' => $faker->unique()->word(),
         'value' => $faker->sentence(6),
     ];
 });
