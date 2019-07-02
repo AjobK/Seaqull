@@ -59,24 +59,30 @@ class PostController extends Controller
         ]);
 
         $path = $this->pathString();
-
-        $post = new Post();
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->content = $request->Content;
-        $post->path = $path;
         
-        if (auth()->user()->posts()->save($post)) {
-            return response()->json([
-                'success' => true,
-                'data' => $post->toArray()
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }else {
+            $post = Post::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'content' => $request->Content,
+                'user_id' => $account->id,
+                'path' => $path
             ]);
-        }
-        else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post could not be added'
-            ], 500);
+
+            if (auth()->user()->posts()->save($post)) {
+                return response()->json([
+                    'success' => true,
+                    'data' => $post->toArray()
+                ]);
+            }
+            else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post could not be added'
+                ], 500);
+            }
         }
     }
 
