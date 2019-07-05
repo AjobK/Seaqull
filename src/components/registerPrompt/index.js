@@ -31,7 +31,15 @@ class RegisterPrompt extends Component {
     this.elId = {}
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
+    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
+      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  }
+  
+  componentWillUnmount = () => {
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)
@@ -66,7 +74,7 @@ class RegisterPrompt extends Component {
       })
     })
     .catch(res => {
-      const { user_name, email, password } = res.response.data.errors
+      const { email, password , gituser_name } = res.response.data.errors
 
       this.setState({
         user_name: user_name || [],

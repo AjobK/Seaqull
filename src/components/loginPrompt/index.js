@@ -40,6 +40,14 @@ class LoginPrompt extends Component {
     })
   }
 
+  componentWillUnmount = () => {
+    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
+      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  }
+  
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 

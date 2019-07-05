@@ -2,18 +2,18 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import { UserBanner, PostsPreview, Statistics } from '../../components'
+import { UserBanner, PostsPreview, Statistics, Loader } from '../../components'
 import Axios from 'axios'
-import Error from "../error";
+import Error from '../error'
 
-let token = localStorage.getItem("token");
-Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+let token = localStorage.getItem('token')
+Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 @inject('store') @observer
 class Profile extends App {
 
   constructor(props) {
-    super(props);
+    super(props)
 
     const user = {
       isOwner: false,
@@ -26,11 +26,11 @@ class Profile extends App {
     }
 
     this.state = {
-      user: user,
-      error: false
+      user: null,
+      error: false,
     }
 
-    this.loadDataFromBackend();
+    this.loadDataFromBackend()
   }
 
   loadDataFromBackend() {
@@ -38,10 +38,10 @@ class Profile extends App {
     const { user } = this.props.store
 
     if (user.path === path) {
-      this.updateProfile(user);
+      this.updateProfile(user)
     }
     else {
-      this.fetchProfileData(path || "");
+      this.fetchProfileData(path || '')
     }
   }
 
@@ -88,7 +88,13 @@ class Profile extends App {
   }
 
   render() {
-    if (this.state.error) {
+    const { user, error } = this.state
+
+    if (!user && !error) {
+      return <Standard> <Loader/> </Standard>
+    }
+
+    if (error) {
       return (
         <Error></Error>
       )
