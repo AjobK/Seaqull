@@ -14,7 +14,7 @@ class PostHasAttachment extends Model
      * @var array
      */
     protected $fillable = [
-        'post_id', 'attachment_id',
+        'post_id', 'attachment_id', 'type',
     ];
 
     /**
@@ -25,6 +25,10 @@ class PostHasAttachment extends Model
     protected $casts = [
         'post_id' => 'int',
         'attachment_id' => 'int',
+    ];
+
+    protected $attributes = [
+        'type' => null,
     ];
 
     public function post()

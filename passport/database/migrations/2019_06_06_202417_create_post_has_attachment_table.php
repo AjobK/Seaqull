@@ -17,7 +17,7 @@ class CreatePostHasAttachmentTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('attachment_id');
             $table->unsignedBigInteger('post_id');
-            $table->string('type');
+            $table->string('type')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
