@@ -50,40 +50,16 @@ class PostController extends Controller
         }
     }
 
-    public function store(Request $request)
+		public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'Content' => 'required'
-        ]);
-
-        $path = $this->pathString();
+      $path = "a";
         
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }else {
-            $post = Post::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'content' => $request->Content,
-                'user_id' => $account->id,
-                'path' => $path
-            ]);
-
-            if (auth()->user()->posts()->save($post)) {
-                return response()->json([
-                    'success' => true,
-                    'data' => $post->toArray()
-                ]);
-            }
-            else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Post could not be added'
-                ], 500);
-            }
-        }
+      $post = Post::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'content' => $request->Content,
+        'path' => $path
+      ]);
     }
 
     public function update(Request $request, $id)
