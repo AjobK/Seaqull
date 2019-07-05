@@ -53,6 +53,7 @@ class PassportController extends Controller
             'title_id' => 0,
             'display_name' => $request->user_name,
             'experience' => 0,
+            'custom_path' => $request->user_name
         ]);
 
         $token = $account->createToken('HorseNeedleRabbitLava')->accessToken;
