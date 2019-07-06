@@ -102,12 +102,12 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner user={this.state.user} />
+        <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={this.state.user.posts} create={this.state.user.isOwner} />
+          <PostsPreview posts={user.posts} create={user.isOwner} />
         </Section>
         <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={this.state.user.posts} />
+          <PostsPreview posts={user.posts} />
         </Section>
         <Section title={'STATISTICS'}>
           <Statistics />

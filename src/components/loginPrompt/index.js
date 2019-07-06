@@ -33,14 +33,14 @@ class LoginPrompt extends Component {
   }
 
   componentDidMount = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
+    this.clearCaptcha()
   }
-
+  
   componentWillUnmount = () => {
+    this.clearCaptcha()
+  }
+  
+  clearCaptcha = () => {
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)

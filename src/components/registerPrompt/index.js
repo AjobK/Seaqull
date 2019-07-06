@@ -31,15 +31,15 @@ class RegisterPrompt extends Component {
     this.elId = {}
   }
 
-  componentWillMount = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
+  componentDidMount = () => {
+    this.clearCaptcha()
   }
   
   componentWillUnmount = () => {
+    this.clearCaptcha()
+  }
+
+  clearCaptcha = () => {
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
         element.parentNode.removeChild(element)
@@ -74,7 +74,7 @@ class RegisterPrompt extends Component {
       })
     })
     .catch(res => {
-      const { email, password , gituser_name } = res.response.data.errors
+      const { email, password , user_name } = res.response.data.errors
 
       this.setState({
         user_name: user_name || [],
@@ -99,7 +99,7 @@ class RegisterPrompt extends Component {
       loadingTimeout: true
     })
 
-    if(!(this.state.loadingTimeout)){
+    if(!this.state.loadingTimeout){
       this.recaptchaRef.current.reset()
       this.recaptchaRef.current.execute()
     }
@@ -129,7 +129,7 @@ class RegisterPrompt extends Component {
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={loadingTimeout} />
-              <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange}/>
+              <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange} />
             </div>
           </form>
           <div className={styles.image} />
