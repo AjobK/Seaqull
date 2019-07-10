@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\User;
+use Validator;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -50,17 +51,35 @@ class PostController extends Controller
         }
     }
 
-		public function store(Request $request)
-    {
-      $path = "a";
-        
+	public function store(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'title' => 'required',
+      'description' => 'required',
+      'Content' => 'required'
+    ]);
+
+    if ($validator->fails()) {
+      return response()->json(['errors' => $validator->errors()], 422);
+    } else { 
+      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $charactersLength = strlen($characters);
+      $path = '';
+
+      for ($i = 0; $i < 10; $i++) {
+          $path = $characters[rand(0, $charactersLength - 1)];
+      }
+          
       $post = Post::create([
         'title' => $request->title,
         'description' => $request->description,
         'content' => $request->Content,
-        'path' => $path
+        'path' => $path,
+        'user_id' => $request->user_id
       ]);
     }
+  }
+
 
     public function update(Request $request, $id)
     {
@@ -98,25 +117,13 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        $post = auth()->user()->posts()->find($id);
-
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Product with id ' . $id . ' not found'
-            ], 400);
-        }
-
-        if ($post->delete()) {
-            return response()->json([
-                'success' => true
-            ]);
+        $post = Post::find($id);
+        if(!!$post){
+					$post->delete();
+					return "succes";
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Product could not be deleted'
-            ], 500);
-        }
+					return "post not found";
+				}
     }
 
     public function showPath ($path) {

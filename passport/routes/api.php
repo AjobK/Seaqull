@@ -18,6 +18,7 @@ Route::post('register', 'PassportController@register');
 Route::get('post', 'PostController@index');
 Route::get('post/{id}', 'PostController@show');
 Route::post('post', 'PostController@store');
+Route::get('post/delete/{id}', 'PostController@destroy');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'PassportController@details');
