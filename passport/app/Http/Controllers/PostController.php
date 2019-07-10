@@ -9,16 +9,6 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    private function pathString ($length = 12) {
-        $path = Post::where('path', Str::random($length));
-
-        if ($path->first()) {
-            $this->pathString();
-        } else {
-            return $randomString;
-        }
-    }
-
     public function index () {
         $posts = Post::paginate(15);
 
@@ -29,27 +19,19 @@ class PostController extends Controller
     }
 
     public function show ($id) {
-        if (auth()->user()) {
-            $post = Post::find($id);
-
-            if (!$post) {
-                return response()->json([
-                    'succes' => false,
-                    'message' => 'Post with ID: ' . $id . ' cannot be found'
-                ], 400);
-            } else {
-                return response()->json([
-                    'succes' => true,
-                    'data' => $post->toArray()
-                ]);
-            }
-        } else {
-            return response()->json([
-                'succes' => false,
-                'message' => 'No authentication for user'
-            ], 400);
-        }
-    }
+      $post = Post::find($id);
+      if (!$post) {
+        return response()->json([
+          'succes' => false,
+          'message' => 'Post with ID: ' . $id . ' cannot be found'
+              ], 400);
+      } else {
+          return response()->json([
+            'succes' => true,
+            'data' => $post->toArray()
+        ]);
+      }
+  }
 
 	public function store(Request $request)
   {
@@ -83,36 +65,22 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $post = auth()->user()->posts()->find($id);
+			$posts = Post::find($id);
 
-        if (!$post) {
-            $posts = Post::find($id);
+      $updated = $post->fill($request->all())->save();
 
-            if ($posts) {
-                return response()->json([
-                    'succes' => false,
-                    'message' => 'User did not create this post'
-                ]);
-            }  else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Post with id ' . $id . ' not found'
-                ], 400);
-            }
-        }
-
-        $updated = $post->fill($request->all())->save();
-
-        if ($updated)
-            return response()->json([
-                'success' => true,
-                'post' => $post
-            ]);
-        else
-            return response()->json([
-                'success' => false,
-                'message' => 'Post could not be updated'
-            ], 500);
+      if ($updated){
+        return response()->json([
+          'success' => true,
+          'post' => $post
+				]);
+			}
+      else{
+        return response()->json([
+          'success' => false,
+          'message' => 'Post could not be updated'
+				], 500);
+			}
     }
 
     public function destroy($id)
