@@ -44,12 +44,11 @@ class PostController extends Controller
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()], 422);
     } else { 
-      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $charactersLength = strlen($characters);
       $path = '';
-
       for ($i = 0; $i < 10; $i++) {
-          $path = $characters[rand(0, $charactersLength - 1)];
+          $path .= $characters[rand(0, $charactersLength - 1)];
       }
           
       $post = Post::create([
