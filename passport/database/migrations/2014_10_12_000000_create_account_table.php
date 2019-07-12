@@ -21,6 +21,8 @@ class CreateAccountTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->ipAddress('last_ip');
+            $table->integer('login_attempts_count')->nullable();
+            $table->timestamp('locked_to')->nullable();
             $table->rememberToken();
             
             $table->timestamps();
