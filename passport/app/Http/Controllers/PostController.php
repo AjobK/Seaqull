@@ -64,7 +64,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-			$posts = Post::find($id);
+	    $post = Post::find($id);
 
       $updated = $post->fill($request->all())->save();
 
@@ -85,12 +85,13 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
         if(!!$post){
 					$post->delete();
 					return "succes";
         } else {
 					return "post not found";
-				}
+        }
     }
 
     public function showPath ($path) {
