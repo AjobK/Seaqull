@@ -12,7 +12,7 @@ class User extends Model
     protected $table = 'User';
 
     protected $fillable = [
-        'account_id', 'title_id', 'avatar', 'display_name', 'experience', 'avatar', 'banner', 'rows_scrolled', 'custom_path', 'created_at', 'updated_at', 'deleted_at'
+        'account_id', 'title_id', 'avatar', 'display_name', 'experience', 'banner', 'rows_scrolled', 'custom_path', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     public function title()
