@@ -160,11 +160,11 @@ class PassportController extends Controller
         $isOwner = $user->account->is(auth()->guard('api')->user());
         $name = $user->display_name;
         $exp = $user->experience;
-        $title = $user->title ? $user->title->name : "";
-        $banner = $user->banner ? $user->banner->path : "/src/static/dummy/user/banner.jpg";
-        $avatar = $user->avatar ? $user->avatar->path : "/src/static/dummy/user/profile.jpg";
+        $title = $user->title ? $user->title->name : null;
+        $banner = $user->banner ? $user->banner->path : null;
+        $avatar = $user->avatar ? $user->avatar->path : null;
         $posts = $user
-            ->posts()
+            ->post()
             ->orderBy('created_at')
             ->take($isOwner ? 7 : 8)
             ->get(['title'])
