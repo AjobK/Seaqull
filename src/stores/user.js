@@ -31,6 +31,7 @@ const UserStore = types
       if (user) {
         self.loggedIn = true
         self.username = user.username || self.username
+        self.path = user.path || `profile/${self.username}`
       }
     },
     setPosts(posts) {

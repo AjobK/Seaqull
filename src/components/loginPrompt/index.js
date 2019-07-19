@@ -105,7 +105,8 @@ class LoginPrompt extends Component {
   }
 
   goToProfile = () => {
-    this.props.history.push('/profile')
+    const { user } = this.props.store
+    this.props.history.push(`/profile`)
   }
 
   onSubmit = (e) => {
