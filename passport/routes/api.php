@@ -13,14 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::group([
-//     'middleware' => ['api', 'cors']
-// ], function ($router) {
-//      //Add you routes here, for example:
-//      Route::post('login', 'PassportController@login');
-//      Route::post('register', 'PassportController@register');
-// });
-
 Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
 

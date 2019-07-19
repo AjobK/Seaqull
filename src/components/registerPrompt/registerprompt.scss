@@ -48,7 +48,7 @@
 	@include mobile-all-portrait {
 		word-break: break-word;
 		font-size: 1.8rem;
-		color: black;
+		color: $raw-text-color;
 		font-weight: bold;
 	}
 
@@ -105,7 +105,7 @@
 }
 
 .input {
-	font-family: Poppins;
+	font-family: $mainfont;
 	font-size: 1rem;
 	height: 1.6rem;
 	color: #7f7f7f;
