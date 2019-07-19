@@ -91,7 +91,11 @@ class Profile extends App {
     const { user, error } = this.state
 
     if (!user && !error) {
-      return <Standard> <Loader/> </Standard>
+      return (
+        <Standard>
+          <Loader/>
+        </Standard>
+      )
     }
 
     if (error) {
@@ -104,7 +108,7 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={user.posts} create={user.isOwner} />
+          <PostsPreview posts={user.posts} create={user.isOwner && this.props.store.user.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
           <PostsPreview posts={user.posts} />
