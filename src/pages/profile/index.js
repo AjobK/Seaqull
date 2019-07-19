@@ -15,16 +15,6 @@ class Profile extends App {
   constructor(props) {
     super(props)
 
-    const user = {
-      isOwner: false,
-      username: '',
-      title: '',
-      level: 0,
-      posts: [],
-      banner: '/src/static/dummy/user/banner.jpg',
-      picture: '/src/static/dummy/user/profile.jpg'
-    }
-
     this.state = {
       user: null,
       error: false,
@@ -80,8 +70,8 @@ class Profile extends App {
       title: profile.title,
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
-      banner: profile.banner,
-      picture: profile.avatar
+      banner: profile.banner || "/src/static/dummy/user/banner.jpg",
+      picture: profile.avatar || "/src/static/dummy/user/profile.jpg"
     }
 
     this.setState({ user })
@@ -91,7 +81,11 @@ class Profile extends App {
     const { user, error } = this.state
 
     if (!user && !error) {
-      return <Standard> <Loader/> </Standard>
+      return (
+        <Standard>
+          <Loader />
+        </Standard>
+      )
     }
 
     if (error) {
@@ -104,7 +98,7 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={user.posts} create={user.isOwner} />
+          <PostsPreview posts={user.posts} create={user.isOwner && this.props.store.user.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
           <PostsPreview posts={user.posts} />
