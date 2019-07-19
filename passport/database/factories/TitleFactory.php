@@ -1,10 +1,10 @@
 <?php
 
-use App\Role;
+use App\Title;
 use Faker\Generator as Faker;
 
-$factory->define(Role::class, function (Faker $faker) {
+$factory->define(Title::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-    ];
+        ];
 });

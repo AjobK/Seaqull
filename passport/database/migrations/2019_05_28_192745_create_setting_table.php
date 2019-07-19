@@ -18,7 +18,7 @@ class CreateSettingTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('key')->unique();
             $table->longText('value')->nullable();
-            //this has timestamps?
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')

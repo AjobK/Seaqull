@@ -18,7 +18,7 @@ class Account extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name', 'email', 'password', 'role_id', 'last_ip', 'login_attempts_count', 'locked_to'
+        'role_id', 'user_name', 'email', 'email_verified_at', 'password', 'last_ip', 'login_attempts_count', 'locked_to', 'changed_pw_at',
     ];
 
     /**
@@ -31,16 +31,41 @@ class Account extends Authenticatable
     ];
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'deleted_at' => null,
+        'changed_pw_at' => null,
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'role_id' => 'int',
     ];
     
-    public function role()
+    public function ban_staff()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasMany('App\Ban', 'staff_id');
+    }
+
+    public function ban_account()
+    {
+        return $this->hasMany('App\Ban', 'account_id');
+    }
+
+    public function user()
+    {
+        return $this->hasMany('App\User');
+    }
+
+    public function email_verification()
+    {
+        return $this->hasMany('App\EmailVerification');
     }
 }

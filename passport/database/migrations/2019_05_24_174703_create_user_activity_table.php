@@ -19,8 +19,8 @@ class CreateUserActivityTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('previous_password', 255)->nullable();
             $table->string('type');
-            $table->string('ip_address');
-            $table->timestamp('created_at');
+            $table->string('ip_addres');
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')

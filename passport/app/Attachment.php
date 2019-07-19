@@ -3,23 +3,36 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attachment extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'Attachment';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'path'
+        'path',
     ];
 
-    public function bannerUsers()
+
+    public function comments()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany('App\Comment', 'CommentHasAttachment');
     }
 
-    public function avatarUsers()
+    public function post()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany('App\Post', 'PostHasAttachment');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'avatar_attachment');
     }
 }
