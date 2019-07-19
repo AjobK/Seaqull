@@ -20,9 +20,6 @@ Route::get('posts/', 'PostController@index');
 Route::post('post/update/{id}', 'PostController@update');
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('post', 'PostController@store');
-    Route::get('post/delete/{id}', 'PostController@destroy');
-
     Route::get('post/path/{path}', 'PostController@showPath');
     Route::get('post/user/{id}', 'PostController@showUser');
     Route::get('user', 'PassportController@details');

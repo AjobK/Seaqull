@@ -65,7 +65,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-			$posts = Post::find($id);
+			$post = Post::find($id);
 
       $updated = $post->fill($request->all())->save();
 
