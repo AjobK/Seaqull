@@ -17,9 +17,12 @@ Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
 Route::get('post/{id}', 'PostController@show');
 Route::get('posts/', 'PostController@index');
-Route::post('post/update/{id}', 'PostController@update');
+Route::post('post/', 'PostController@store');
+Route::get('post/path/{path}', 'PostController@showPath');
+Route::get('post/user/{id}', 'PostController@showUser');
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('user', 'PassportController@details');
     Route::get('post/path/{path}', 'PostController@showPath');
     Route::get('post/user/{id}', 'PostController@showUser');
     Route::get('user', 'PassportController@details');

@@ -44,12 +44,11 @@ class PostController extends Controller
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()], 422);
     } else { 
-      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $charactersLength = strlen($characters);
       $path = '';
-
       for ($i = 0; $i < 10; $i++) {
-          $path = $characters[rand(0, $charactersLength - 1)];
+          $path .= $characters[rand(0, $charactersLength - 1)];
       }
           
       $post = Post::create([
@@ -65,7 +64,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-			$post = Post::find($id);
+	    $post = Post::find($id);
 
       $updated = $post->fill($request->all())->save();
 
@@ -86,12 +85,13 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
         if(!!$post){
 					$post->delete();
 					return "succes";
         } else {
 					return "post not found";
-				}
+        }
     }
 
     public function showPath ($path) {
