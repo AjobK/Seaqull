@@ -41,13 +41,11 @@ class PostContent extends Component {
 
       if (selectedText.trim().length) {
         this.selected = true
-        this.showSelectToolbox()
+        // this.showSelectToolbox()
       } else if (this.selected) {
-        this.hideSelectToolbox()
+        // this.hideSelectToolbox()
         this.selected = false
       }
-      console.log(selectedText)
-      console.log(selectedText.trim().length)
     }
 
     const contentState = editorState.getCurrentContent()
@@ -81,97 +79,92 @@ class PostContent extends Component {
     return totalLength > this.maxLength
   }
 
-  inlineStyleControls = () => {
-    const { focused, toolTipPosition, editorState } = this.state
-    let { top, left, right } = toolTipPosition
+  // turnEditingOn = () => {
+  //   const { setEditingElement } = this.props.store.post
 
-    if (!focused) return null
+  //   setEditingElement(this.type)
+  // }
 
-    let INLINE_STYLES = [
-      { label: 'Bold', style: 'BOLD' },
-      { label: 'Italic', style: 'ITALIC' },
-      { label: 'Underline', style: 'UNDERLINE' },
-      { label: 'Code', style: 'CODE' }
-    ]
+  // turnEditingOff = () => {
+  //   const { setEditingElement } = this.props.store.post
 
-    const currentStyle = editorState.getCurrentInlineStyle()
+  //   setEditingElement('')
+  // }
 
+  // inlineStyleControls = () => {
+  //   const { focused, toolTipPosition, editorState } = this.state
+  //   const { editingElement } = this.props.store.post
+  //   let { top, left, right } = toolTipPosition
 
-    let centeredPosition = ((left + right) / 2 - (125/2))
-    // centeredPosition = ((left + window.innerWidth) / 2 - (125/2)) - 20
-    // console.log((centeredPosition + 63) + ' ' + window.innerWidth)
+  //   if (!focused && !editingElement) return null
 
-    console.log('-----------')
-    console.log((centeredPosition + 125))
-    console.log(window.innerWidth)
-    console.log('-----------')
-    if ((centeredPosition + (125/2) + 20) > window.innerWidth) {
-      console.log('UIT SCHERM! (RECHTS)')
-    } else {
-      console.log('IN SCHERM')
-    }
-    // console.log((right + (125/2) + 20) + ' ' + window.innerWidth)
-    // if (centeredPosition + 20 > window.innerWidth)
-    //   console.log('WRONGGG')
-    // else
-    //   centeredPosition = ((left + right) / 2 - (125/2))
-      
-    // centeredPosition = ((left + right) / 2 - (125/2))
+  //   let INLINE_STYLES = [
+  //     { label: 'Bold', style: 'BOLD' },
+  //     { label: 'Italic', style: 'ITALIC' },
+  //     { label: 'Underline', style: 'UNDERLINE' },
+  //     { label: 'Code', style: 'CODE' }
+  //   ]
 
-    return (
-      <div
-        className={`${styles.controls}`}
-        style={{
-          top: top - 50,
-          left: centeredPosition
-        }}
-      >
-        <div className={styles.controlsChoices}>
-          {INLINE_STYLES.map((type) =>
-            <StyleButton
-              className={[styles.controlsButtons]}
-              key={type.label}
-              active={currentStyle.has(type.style)}
-              label={type.label}
-              onToggle={() => {this.toggleInlineStyle(editorState, type.style)}}
-              style={type.style}
-              iconName={type.label}
-            />
-          )}
-        </div>
-        <div className={styles.controlsArrow} />
-      </div>
-    )
-  }
-  
-  toggleInlineStyle = (editorState, inlineStyle) => {
-      console.log(editorState)
-      RichUtils.toggleInlineStyle(
-        editorState,
-        inlineStyle
-      )
-  }
+  //   const currentStyle = editorState.getCurrentInlineStyle()
 
-  showSelectToolbox = () => {
-    let selection = window.getSelection()
+  //   let centeredPosition = ((left + right) / 2 - (125/2))
 
-    if (selection.anchorNode) {
-      const { top, bottom, left, right } = selection.getRangeAt(0).getBoundingClientRect()
+  //   return (
+  //     <div
+  //       className={`${styles.controls}`}
+  //       style={{
+  //         top: top - 50,
+  //         left: centeredPosition
+  //       }}
+  //     >
+  //       <div className={styles.controlsChoices} onMouseEnter={this.turnEditingOn} onMouseLeave={this.turnEditingOff} onClick={this.turnEditingOn}>
+  //         {INLINE_STYLES.map((type) =>
+  //           <StyleButton
+  //             className={[styles.controlsButtons]}
+  //             key={type.label}
+  //             active={currentStyle.has(type.style)}
+  //             label={type.label}
+  //             onToggle={() => {this.toggleInlineStyle(editorState, type.style)}}
+  //             style={type.style}
+  //             iconName={type.label}
+  //           />
+  //         )}
+  //       </div>
+  //       <div className={styles.controlsArrow} />
+  //     </div>
+  //   )
+  // }
 
-      this.setState({ toolTipPosition: { top, bottom, left, right } })
-    }
-  }
+  // toggleInlineStyle = (editorState, inlineStyle) => {
+  //     RichUtils.toggleInlineStyle(
+  //       editorState,
+  //       inlineStyle
+  //     )
+  // }
 
-  hideSelectToolbox = () => {
-    this.setState({ toolTipPosition: {
-      top: -9999,
-      bottom: -9999,
-      left: -9999,
-      right: -9999,
-      display: 'none'
-    } })
-    console.log('Hiding')
-  }
+  // showSelectToolbox = () => {
+  //   let selection = window.getSelection()
+
+  //   if (selection.anchorNode) {
+  //     const { top, bottom, left, right } = selection.getRangeAt(0).getBoundingClientRect()
+
+  //     this.setState({ toolTipPosition: { top, bottom, left, right } })
+  //   }
+  // }
+
+  // hideSelectToolbox = () => {
+  //   const { editingElement } = this.props.store.post
+
+  //   if (editingElement == this.type) return
+
+  //   this.setState({ toolTipPosition: {
+  //     top: -9999,
+  //     bottom: -9999,
+  //     left: -9999,
+  //     right: -9999,
+  //     display: 'none'
+  //   } })
+  // }
 
   onFocus = () => {
     this.focused = true
@@ -218,7 +211,7 @@ class PostContent extends Component {
             handlePastedText={this.handlePastedText}
             blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
           />
-          { type != 'title' && this.inlineStyleControls()}
+          {/* { type != 'title' && this.inlineStyleControls()} */}
         </PostContentBlock>
       </div>
     )

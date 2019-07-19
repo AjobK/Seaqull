@@ -74,6 +74,7 @@ class Post extends App {
 
   sendDataToDB() {
     // Send this data
+    // Replace this with API call
     window.localStorage.setItem('content', JSON.stringify(this.content));
   }
 
@@ -96,6 +97,10 @@ class Post extends App {
             <Button
               className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
               value={isPublished ? 'UNPUBLISH STORY': 'PUBLISH STORY'}
+            />
+            <Button
+              className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
+              value={isEditing ? 'PREVIEW': 'PUBLISH STORY'}
             />
             { saving && <p className={styles.infoSaving}> Saving... </p> }
           </div>

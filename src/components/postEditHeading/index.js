@@ -28,7 +28,7 @@ class PostEditHeading extends Component {
   }
 
   render() {
-    const { heading, editing } = this.props
+    const { heading, editing, store } = this.props
     const { manualEditing } = this.state
     let editingClass = [styles.edit, (manualEditing || editing) ? styles.editing : ''].join(' ')
 
