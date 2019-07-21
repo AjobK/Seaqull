@@ -79,5 +79,4 @@ class FormInput extends Component {
     )
   }
 }
-
 export default FormInput
