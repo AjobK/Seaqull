@@ -158,5 +158,4 @@ class LoginPrompt extends Component {
     )
   }
 }
-
 export default withRouter(LoginPrompt)
