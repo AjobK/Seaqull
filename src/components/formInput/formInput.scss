@@ -28,7 +28,7 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid gray;
+		border-bottom: 1px solid $gray;
 
 		@include mobile-all-portrait {
 			border-bottom: 2px solid rgba(0, 0, 0, 0.4);
@@ -39,7 +39,7 @@
 .label {
 	align-items: center;
 	display: flex;
-	color: gray;
+	color: $gray;
 	font-size: 0.9rem;
 	line-height: 0.9rem;
 	margin-bottom: 5px;
@@ -81,7 +81,7 @@
 		@include noselect;
 		border-radius: 0;
 		height: 100%;
-		color: gray;
+		color: $gray;
 		background-color: transparent;
 		margin-right: 0;
 		position: absolute;
