@@ -1,8 +1,8 @@
 @import '../../styles/index.scss';
 
 .prompt {
-	background-color: white;
-	border: 1px solid whitesmoke;
+	background-color: $prompt-background;
+	border: 1px solid $prompt-border-color;
 	border-radius: 13px;
 	padding: 50px 60px;
 	
@@ -48,7 +48,7 @@
 	@include mobile-all-portrait {
 		word-break: break-all;
 		font-size: 2rem;
-		color: #fff;
+		color: $mobile-text-login;
 		font-weight: bold;
 	}
 
@@ -70,7 +70,7 @@
 		margin-bottom: 0;
 		word-break: break-word;
 		font-size: 1.8rem;
-		color: black;
+		color: $raw-text-colo;
 		font-weight: bold;
 	}
 
