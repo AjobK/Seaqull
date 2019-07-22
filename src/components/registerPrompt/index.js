@@ -34,7 +34,7 @@ class RegisterPrompt extends Component {
   componentDidMount = () => {
     this.clearCaptcha()
   }
-  
+
   componentWillUnmount = () => {
     this.clearCaptcha()
   }

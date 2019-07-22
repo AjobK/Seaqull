@@ -7,6 +7,7 @@ import Axios from 'axios'
 import Error from '../error'
 
 let token = localStorage.getItem('token')
+
 Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 @inject('store') @observer
@@ -17,7 +18,7 @@ class Profile extends App {
 
     this.state = {
       user: null,
-      error: false,
+      error: false
     }
 
     this.loadDataFromBackend()
@@ -40,7 +41,7 @@ class Profile extends App {
       .then((response) => {
         this.updateProfile(response.data.profile)
       })
-      .catch((err) => {
+      .catch(() => {
         this.setState({ error: true })
       })
   }
@@ -70,8 +71,8 @@ class Profile extends App {
       title: profile.title,
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
-      banner: profile.banner || "/src/static/dummy/user/banner.jpg",
-      picture: profile.avatar || "/src/static/dummy/user/profile.jpg"
+      banner: profile.banner || '/src/static/dummy/user/banner.jpg',
+      picture: profile.avatar || '/src/static/dummy/user/profile.jpg'
     }
 
     this.setState({ user })

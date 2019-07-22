@@ -35,11 +35,11 @@ class LoginPrompt extends Component {
   componentDidMount = () => {
     this.clearCaptcha()
   }
-  
+
   componentWillUnmount = () => {
     this.clearCaptcha()
   }
-  
+
   clearCaptcha = () => {
     Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
       if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
@@ -47,7 +47,7 @@ class LoginPrompt extends Component {
       }
     })
   }
-  
+
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
@@ -106,7 +106,8 @@ class LoginPrompt extends Component {
 
   goToProfile = () => {
     const { user } = this.props.store
-    this.props.history.push(`/profile`)
+
+    this.props.history.push('/profile')
   }
 
   onSubmit = (e) => {
