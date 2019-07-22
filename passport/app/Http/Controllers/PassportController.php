@@ -22,7 +22,6 @@ class PassportController extends Controller
    */
   public function register(Request $request)
   {
-    dd($request);
     $validator = Validator::make($request->all(), [
       'user_name' => ['required', 'min:3', 'unique:account', 'alpha_dash'],
       'email' => ['required', 'email', 'unique:account'],
@@ -36,7 +35,6 @@ class PassportController extends Controller
       ],
       'recaptcha' => ['required', new Captcha]
     ]);
-
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()], 422);
     }
