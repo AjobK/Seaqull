@@ -28,7 +28,6 @@ class Captcha implements Rule
     $body = json_decode((string)$response->getBody());
     return $body->success;
   }
-
   /**
    * Get the validation error message.
    *

@@ -33,27 +33,28 @@ class PassportController extends Controller
         new NumberOrSpecial,
         new NoUsernameOrEmail($request->username, $request->email)
       ],
-      'recaptcha' => ['required', new Captcha]
+      'recaptcha' =>  new Captcha
     ]);
+
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()], 422);
+    }else{
+      $account = Account::create([
+        'user_name' => $request->user_name,
+        'email' => $request->email,
+        'role_id' => 1,
+        'password' => bcrypt($request->password),
+        'last_ip' => request()->ip()
+      ]);
+
+      $user = User::create([
+        'account_id' => $account->id,
+        'title_id' => 0,
+        'display_name' => $request->user_name,
+        'experience' => 0,
+        'custom_path' => $request->user_name
+      ]);
     }
-
-    $account = Account::create([
-      'user_name' => $request->user_name,
-      'email' => $request->email,
-      'role_id' => 1,
-      'password' => bcrypt($request->password),
-      'last_ip' => request()->ip()
-    ]);
-
-    $user = User::create([
-      'account_id' => $account->id,
-      'title_id' => 0,
-      'display_name' => $request->user_name,
-      'experience' => 0,
-      'custom_path' => $request->user_name
-    ]);
 
     $token = $account->createToken('HorseNeedleRabbitLava')->accessToken;
 
@@ -72,50 +73,52 @@ class PassportController extends Controller
       'recaptcha' => ['required', new Captcha]
     ]);
 
-    if ($validator->fails()) return response()->json(['errors' => $validator->errors()], 422);
+    if ($validator->fails()) {
+      return response()->json(['errors' => $validator->errors()], 422);
+    }else{
+      $credentials = [
+        'user_name' => $request->user_name,
+        'password' => $request->password
+      ];
 
-    $credentials = [
-      'user_name' => $request->user_name,
-      'password' => $request->password
-    ];
+      $targetUser = Account::where('user_name', $request->user_name)->first();
 
-    $targetUser = Account::where('user_name', $request->user_name)->first();
-
-    if ($targetUser && now() < $targetUser->locked_to) {
-      return response()->json([
-        'error' => ['Cannot login yet'],
-        'remainingTime' => strtotime($targetUser->locked_to) - strtotime(now())
-      ], 422);
-    }
-
-    if (auth()->attempt($credentials)) {
-      $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
-      auth()->user()->update([
-        'last_ip' => request()->ip(),
-        'login_attempts_count' => 0,
-        'locked_to' => null
-      ]);
-
-      return response()->json(['user' => auth()->user(), 'token' => $token], 200);
-    } else if ($targetUser) {
-      if (!$targetUser->login_attempts_count) {
-        $targetUser->login_attempts_count = 1;
-      } else {
-        $targetUser->login_attempts_count++;
-      }
-
-      if ($targetUser->login_attempts_count > 2 && $targetUser->login_attempts_count % 3 == 0) {
-        $targetUser->locked_to = date('Y-m-d H:i:s', time() + 30);
-
-        $targetUser->save();
-
+      if ($targetUser && now() < $targetUser->locked_to) {
         return response()->json([
-          'error' => ['Invalid username or password.'],
+          'error' => ['Cannot login yet'],
           'remainingTime' => strtotime($targetUser->locked_to) - strtotime(now())
         ], 422);
       }
 
-      $targetUser->save();
+      if (auth()->attempt($credentials)) {
+        $token = auth()->user()->createToken('HorseNeedleRabbitLava')->accessToken;
+        auth()->user()->update([
+          'last_ip' => request()->ip(),
+          'login_attempts_count' => 0,
+          'locked_to' => null
+        ]);
+
+        return response()->json(['user' => auth()->user(), 'token' => $token], 200);
+      } else if ($targetUser) {
+        if (!$targetUser->login_attempts_count) {
+          $targetUser->login_attempts_count = 1;
+        } else {
+          $targetUser->login_attempts_count++;
+        }
+
+        if ($targetUser->login_attempts_count > 2 && $targetUser->login_attempts_count % 3 == 0) {
+          $targetUser->locked_to = date('Y-m-d H:i:s', time() + 30);
+
+          $targetUser->save();
+
+          return response()->json([
+            'error' => ['Invalid username or password.'],
+            'remainingTime' => strtotime($targetUser->locked_to) - strtotime(now())
+          ], 422);
+        }
+
+        $targetUser->save();
+      }
     }
 
     return response()->json(['error' => ['Invalid username or password.']], 422);
