@@ -70,7 +70,7 @@ class RegisterPrompt extends Component {
       })
       .then(user => {
         this.props.store.user.fillUserData(user)
-        this.goToProfile()
+        this.goToProfile(user.user_name)
       })
     })
     .catch(res => {
@@ -85,8 +85,8 @@ class RegisterPrompt extends Component {
     })
   }
 
-  goToProfile = () => {
-    this.props.history.push('/profile')
+  goToProfile = (username) => {
+    this.props.history.push('/profile/' + username)
   }
 
   onSubmit = (e) => {

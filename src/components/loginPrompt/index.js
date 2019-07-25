@@ -70,7 +70,7 @@ class LoginPrompt extends Component {
       })
       .then(user => {
           this.props.store.user.fillUserData(user)
-          this.goToProfile()
+          this.goToProfile(user.user_name)
       })
     })
     .catch(res => {
@@ -104,10 +104,8 @@ class LoginPrompt extends Component {
     }, 1000)
   }
 
-  goToProfile = () => {
-    const { user } = this.props.store
-
-    this.props.history.push('/profile')
+  goToProfile = (username) => {
+    this.props.history.push('/profile/' + username)
   }
 
   onSubmit = (e) => {
