@@ -6,10 +6,6 @@ import { UserBanner, PostsPreview, Statistics, Loader } from '../../components'
 import Axios from 'axios'
 import Error from '../error'
 
-let token = localStorage.getItem('token')
-
-Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
 @inject('store') @observer
 class Profile extends App {
 
@@ -26,18 +22,14 @@ class Profile extends App {
 
   loadDataFromBackend() {
     const { path } = this.props.match.params
-    const { user } = this.props.store
 
-    if (user.path === path) {
-      this.updateProfile(user)
-    }
-    else {
-      this.fetchProfileData(path || '')
-    }
+    this.fetchProfileData(path || '')
   }
 
   fetchProfileData(path) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`)
+    let token = localStorage.getItem('token')
+
+    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`, {headers: {Authorization: `Bearer ${token}`}})
       .then((response) => {
         this.updateProfile(response.data.profile)
       })
