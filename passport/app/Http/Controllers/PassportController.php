@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\User;
+use App\TitleOwnedBy;
 use Validator;
 use App\Rules\Uppercase;
 use App\Rules\Lowercase;
 use App\Rules\NumberOrSpecial;
-use App\Rules\Captcha;
+// use App\Rules\Captcha;
 use App\Rules\NoUsernameOrEmail;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,7 @@ class PassportController extends Controller
         new NumberOrSpecial,
         new NoUsernameOrEmail($request->username, $request->email)
       ],
-      'recaptcha' =>  new Captcha
+      // 'recaptcha' =>  new Captcha
     ]);
 
     if ($validator->fails()) {
@@ -49,10 +50,16 @@ class PassportController extends Controller
 
       $user = User::create([
         'account_id' => $account->id,
-        'title_id' => 0,
+        'title_id' => 1,
         'display_name' => $request->user_name,
+        
         'experience' => 0,
         'custom_path' => $request->user_name
+      ]);
+
+      TitleOwnedBy::create([
+        'user_id' => $user->id,
+        'title_id' => 1
       ]);
     }
 
@@ -70,7 +77,7 @@ class PassportController extends Controller
   public function login(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'recaptcha' => ['required', new Captcha]
+      // 'recaptcha' => ['required', new Captcha]
     ]);
 
     if ($validator->fails()) {

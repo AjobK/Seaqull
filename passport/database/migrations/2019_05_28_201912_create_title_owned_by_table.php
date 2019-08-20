@@ -26,6 +26,8 @@ class CreateTitleOwnedByTable extends Migration
                 ->on('Title');
 
             $table->primary(['user_id', 'title_id']);
+
+            $table->timestamps();
         });
     }
 
