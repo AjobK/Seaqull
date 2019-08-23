@@ -29,8 +29,7 @@ class Post extends App {
       renderContent: [],
       currentEditorState: null,
       saving: false,
-      date: '12 mar 2019',
-      editing: true
+      date: '12 mar 2019'
     }
   }
 
@@ -79,13 +78,14 @@ class Post extends App {
   }
 
   render() {
-    const { isPublished, saving, editing } = this.state
+    const { isPublished, saving } = this.state
+    const { store } = this.props
 
     return (
       <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
         <Section noTitle>
-          { !editing &&
+          { !store.user.isEditing &&
             <div className={styles.date}>
               <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
             </div>
@@ -93,17 +93,21 @@ class Post extends App {
           <div className={styles.renderWrapper}>
             { this.state.renderContent }
           </div>
+          { (store.user.isEditing && store.post.isOwner) &&
           <div className={styles.info}>
             <Button
-              className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
-              value={isPublished ? 'UNPUBLISH STORY': 'PUBLISH STORY'}
+              className={[styles.publishButton, isPublished ? styles.published : styles.unpublishable].join(' ')}
+              value={isPublished ? 'UNPUBLISH': 'PUBLISH'}
             />
             <Button
               className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
-              value={isEditing ? 'PREVIEW': 'PUBLISH STORY'}
+              value={
+                store.user.isEditing ? 'QUIT EDIT' : 'EDIT'
+              }
             />
             { saving && <p className={styles.infoSaving}> Saving... </p> }
           </div>
+          }
         </Section>
       </Standard>
     )

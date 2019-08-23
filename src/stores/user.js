@@ -8,7 +8,8 @@ const UserStore = types
     name: types.optional(types.string, 'Emily Washington'),
     role: types.optional(types.string, 'Software Engineer'),
     level: types.optional(types.integer, 12),
-    percentage: types.optional(types.number, 10)
+    percentage: types.optional(types.number, 10),
+    isEditing: true
   })
   .actions(self => ({
     logOut() {

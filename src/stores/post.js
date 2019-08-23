@@ -11,6 +11,7 @@ const PostStore = types
     role: types.optional(types.string, 'Software Engineer'),
     level: types.optional(types.integer, 23),
     percentage: types.optional(types.number, 8),
+    isOwner: false // This singular line will be used in production. It tells us if the currently viewed post is owned by the user
   })
   .actions(self => ({
     setEditingElement(element) {

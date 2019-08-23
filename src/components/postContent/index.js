@@ -192,6 +192,23 @@ class PostContent extends Component {
     const { editorState } = this.state
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
+    if (!store.user.editing || !store.post.isOwner) {
+      return (
+        <div>
+          <PostContentBlock
+            className={[style]}>
+            <Editor
+              readOnly={true}
+              editorState={editorState}
+              ref={this.editorInput}
+              placeholder={type == 'title' ? 'Title' : 'Write your story...'}
+              blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
+            />
+          </PostContentBlock>
+        </div>
+      )
+    }
+
     return (
       <div>
         <PostContentBlock
@@ -199,7 +216,6 @@ class PostContent extends Component {
           onClick={this.focusOnEditor}
           className={[style]}>
           <Editor
-            readOnly={!store.user.loggedIn}
             editorState={editorState}
             ref={this.editorInput}
             onChange={this.onChange}
