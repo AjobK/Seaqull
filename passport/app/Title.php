@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Title extends Model
 {
-
     protected $table = 'Title';
 
     protected $fillable = [
@@ -15,6 +14,6 @@ class Title extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'title_id');
     }
 }

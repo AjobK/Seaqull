@@ -1,73 +1,145 @@
 import React, { Component } from 'react'
-import styles from './registerprompt.scss'
+import styles from './registerPrompt.scss'
 import Button from '../button'
+import { inject, observer } from 'mobx-react'
+import { Icon, FormInput } from '../../components'
+import { withRouter } from 'react-router-dom'
+import Axios from 'axios'
+import ReCAPTCHA from 'react-google-recaptcha'
 
+@inject('store') @observer
 class RegisterPrompt extends Component {
-  auth = () => {
-    const url = 'http://localhost:8000/api/register'
-    const email = document.querySelector('#email').value
-    const user = document.querySelector('#username').value
-    const pass = document.querySelector('#password').value
-    const data = {
-      name: '' + user + '',
-      email: '' + email + '',
-      password: '' + pass + ''
-    }
-    const formData = new FormData()
-
-    for (let k in data) {
-      formData.append(k, data[k]);
+  constructor(props) {
+    super(props)
+    this.state = {
+      user_name: null,
+      email: null,
+      password: null,
+      recaptchaToken: null,
+      recaptcha: null,
+      loadingTimeout: false
     }
 
-    const request = {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: data
+    window.recaptchaOptions = {
+      lang: 'en',
+      useRecaptchaNet: true,
+      removeOnUnmount: true
     }
 
-    fetch(url,request)
-      .then(response => {
-        if(!response.ok){
-          throw new Error('something went wrong, please try again')
-        }
-
-        return response
-      })
+    this.recaptchaRef = React.createRef()
+    this.onChange = this.onChange.bind(this)
+    this.elId = {}
   }
+
+  componentDidMount = () => {
+    this.clearCaptcha()
+  }
+
+  componentWillUnmount = () => {
+    this.clearCaptcha()
+  }
+
+  clearCaptcha = () => {
+    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
+      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  }
+
+  auth = () => {
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
+    const payload = {
+      user_name: document.getElementById(this.elId.Username).value,
+      email: document.getElementById(this.elId.Email).value,
+      password: document.getElementById(this.elId.Password).value,
+      recaptcha: this.state.recaptchaToken
+    }
+
+    Axios.post('/register', payload)
+    .then(res => {
+      Axios.get('/user', {
+        mode:'cors',
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
+      })
+      .then(user => {
+        localStorage.setItem('token', res.data.token)
+
+        return user.data.user
+      })
+      .then(user => {
+        this.props.store.user.fillUserData(user)
+        this.goToProfile(user.user_name)
+      })
+    })
+    .catch(res => {
+      const { email, password , user_name } = res.response.data.errors
+
+      this.setState({
+        user_name: user_name || [],
+        email: email || [],
+        password: password || [],
+        loadingTimeout: false
+      })
+    })
+  }
+
+  goToProfile = (username) => {
+    this.props.history.push('/profile/' + username)
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+
+    this.setState({
+      user_name: 'loading',
+      email: 'loading',
+      password: 'loading',
+      loadingTimeout: true
+    })
+
+    if(!this.state.loadingTimeout){
+      this.recaptchaRef.current.reset()
+      this.recaptchaRef.current.execute()
+    }
+  }
+
+  setElId = (item, id) => {
+    this.elId[item.props.name] = id
+  }
+
+  onChange = (recaptchaToken) => {
+    this.setState( { recaptchaToken } )
+    this.auth()
+  }
+
   render() {
+    const { user_name, email, password, recaptcha, loadingTimeout } = this.state
+    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
-        <p className={styles.text}>Join our community</p>
+        <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
-          <form method='POST' className={styles.form}>
-            <div className={styles.formGroup}>
-              <label htmlFor='username' className={styles.label}>Username</label>
-              <input type='text' id='username' name='username' className={styles.input} />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor='email' className={styles.label}>Email</label>
-              <input type='text' id='email' name='email' className={styles.input} />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor='password' className={styles.label}>Password</label>
-              <input type='password' id='password' name='password' className={styles.input} />
-            </div>
-            <div to='/' className={styles.submit_wrapper}>
-              <Button onClick={this.auth} type='submit' name='submit' value='Register' className={styles.submit} />
+          <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
+            <FormInput name={'Username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
+            <div to='/' className={styles.submitWrapper}>
+              <Button value={buttonClass} className={styles.submit} disabled={loadingTimeout} />
+              <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange} />
             </div>
           </form>
           <div className={styles.image} />
         </div>
-        <p className={styles.textFooter}><small>By registering I confirm that I have read and agree to the </small><a className={styles.textFooter_link}href='#'>Terms of service</a></p>
+        <p className={styles.textFooter}>
+          By proceeding I confirm that I have read and agree to the <a className={styles.textFooterLink}href='#'>Terms of service</a>
+        </p>
       </div>
     )
   }
 }
 
-export default RegisterPrompt
+export default withRouter(RegisterPrompt)

@@ -11,6 +11,7 @@ class TitleSeeder extends Seeder
      */
     public function run()
     {
+        factory(App\Title::class, 1)->create(['name' => 'Hatchling']);
         factory(App\Title::class, 5)->create();
     }
 }

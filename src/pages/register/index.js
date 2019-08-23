@@ -4,7 +4,7 @@ import { Standard } from '../../layouts'
 import RegisterPrompt from '../../components/registerPrompt'
 import styles from './register.scss'
 
-class Home extends App {
+class Register extends App {
   render() {
     return (
       <Standard>
@@ -17,4 +17,4 @@ class Home extends App {
   }
 }
 
-export default Home
+export default Register

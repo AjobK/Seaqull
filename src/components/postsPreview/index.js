@@ -7,18 +7,25 @@ import { inject, observer } from 'mobx-react';
 @inject('store') @observer
 class PostsPreview extends Component {
   render() {
-    const { user } = this.props.store
+    const posts = this.props.posts
+
     let arr = []
 
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 0; i < posts.length; i++) {
       arr.push(
-        <PreviewPost key={i} likes={Math.floor(Math.random() * 10)} />
+        <PreviewPost title={posts[i].title} key={i} likes={Math.floor(Math.random() * 10)} />
+      )
+    }
+
+    for (let i = 0; i < 8 - posts.length; i++) {
+      arr.push(
+        <PreviewPost filler key={'filler_' + i}></PreviewPost>
       )
     }
 
     return (
       <section className={styles.wrapper}>
-        {user.loggedIn && this.props.create &&
+        {this.props.create &&
           (<div className={styles.add}>
             <img className={styles.addIcon} src={Plus} draggable={false} />
           </div>)

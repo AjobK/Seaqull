@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Account;
+use App\Attachment;
 
 class User extends Model
 {
@@ -13,7 +14,7 @@ class User extends Model
     protected $table = 'User';
 
     protected $fillable = [
-        'account_id', 'title_id', 'avatar_attachment', 'display_name', 'experience', 'rows_scrolled', 'custom_path',
+        'account_id', 'title_id', 'avatar_attachment', 'banner_attachment', 'display_name', 'experience', 'rows_scrolled', 'custom_path',
     ];
 
     public function title()
@@ -28,8 +29,12 @@ class User extends Model
     
     public function avatar()
     {
-
         return $this->belongsTo('App\Attachment', 'avatar_attachment');
+    }
+    
+    public function banner()
+    {
+        return $this->belongsTo('App\Attachment', 'banner_attachment');
     }
 
     public function like()
@@ -51,5 +56,4 @@ class User extends Model
     {
         return $this->hasMany('App\Post');
     }
-
 }

@@ -20,10 +20,11 @@ use Illuminate\Support\Facades\Hash;
 
 $factory->define(User::class, function (Faker $faker) {
     $account = App\Account::pluck('id')->toArray();
-    $title = App\Title::pluck('id')->toArray();
+    $title = App\Title::find(1);
+
     return [
         'account_id' => $faker->randomElement($account),
-        'title_id' => $faker->randomElement($title),
+        'title_id' => $title,
         'display_name' => $faker->name,
         'experience' => $faker->randomFloat(2, 0, 1000),
         'rows_scrolled' => $faker->randomDigit(),

@@ -31,3 +31,43 @@
 @mixin text-shadow () {
 	text-shadow: 0 0 ($header-spacing / 2) rgba(0,0,0,0.5);
 }
+
+@mixin load () {
+	@keyframes load {
+		0% {
+			transform: rotate(0);
+			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+			box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+		}
+		70% {
+			-moz-box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+			box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+		}
+		100% {
+			transform: rotate(360deg);
+			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+			box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+		}
+	}
+
+	animation: load 1.5s infinite;
+}
+
+@mixin pulse () {
+	@keyframes pulse {
+		0% {
+			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+			box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+		}
+		70% {
+			-moz-box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+			box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+		}
+		100% {
+			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+			box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+		}
+	}
+
+	animation: pulse 1s;
+}

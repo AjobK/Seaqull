@@ -3,16 +3,21 @@ import styles from './button.scss'
 
 class Button extends Component {
   render() {
-    const { value, noStyle, inverted, className } = this.props
+    const { value, noStyle, inverted, className, onClick, onSubmit, submit, disabled } = this.props
 
     return (
-      <li className={[
-        className,
-        !noStyle && styles.button,
-        !noStyle && inverted && styles.inverted
-      ].join(' ')} onClick={this.props.onClick}>
+      <button
+        className={[
+          className,
+          disabled ? styles.disabled : styles.pulse,
+          !noStyle && styles.button,
+          !noStyle && inverted && styles.inverted
+        ].join(' ')}
+        onClick={onClick}
+        onSubmit={onSubmit}
+        type={submit && 'submit'}>
         {value || 'Button'}
-      </li>
+      </button>
     )
   }
 }
