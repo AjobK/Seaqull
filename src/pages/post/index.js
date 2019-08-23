@@ -85,7 +85,7 @@ class Post extends App {
       <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
         <Section noTitle>
-          { !store.user.isEditing &&
+          { (!store.user.isEditing || !store.post.isOwner) &&
             <div className={styles.date}>
               <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
             </div>
@@ -93,7 +93,7 @@ class Post extends App {
           <div className={styles.renderWrapper}>
             { this.state.renderContent }
           </div>
-          { (store.user.isEditing && store.post.isOwner) &&
+          { store.post.isOwner &&
           <div className={styles.info}>
             <Button
               className={[styles.publishButton, isPublished ? styles.published : styles.unpublishable].join(' ')}
@@ -105,7 +105,7 @@ class Post extends App {
                 store.user.isEditing ? 'QUIT EDIT' : 'EDIT'
               }
             />
-            { saving && <p className={styles.infoSaving}> Saving... </p> }
+            { (saving && store.user.isEditing) && <p className={styles.infoSaving}> Saving... </p> }
           </div>
           }
         </Section>

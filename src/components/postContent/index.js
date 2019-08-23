@@ -192,11 +192,12 @@ class PostContent extends Component {
     const { editorState } = this.state
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
-    if (!store.user.editing || !store.post.isOwner) {
+    if (!store.user.isEditing || !store.post.isOwner) {
       return (
         <div>
           <PostContentBlock
-            className={[style]}>
+            className={[style]}
+            noHeading={true}>
             <Editor
               readOnly={true}
               editorState={editorState}

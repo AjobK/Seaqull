@@ -17,6 +17,9 @@ const UserStore = types
     },
     logIn() {
       self.loggedIn = true
+    },
+    toggleEditing() {
+      self.isEditing = !self.isEditing
     }
   }))
 
