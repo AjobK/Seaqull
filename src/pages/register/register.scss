@@ -9,17 +9,25 @@
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
+	overflow: hidden;
 }
 
 .background {
-	background-color: #ff6060;
+	background-color: $background;
 	width: 100%;
 	opacity: 0.7;
 	height: calc(100vh - #{$header-height});
+
+	@include mobile-all-portrait {
+		background-color: transparent;
+		background-image: linear-gradient($background 25%, $background-trans-less 100%);
+		opacity: 1;
+	}
 }
 
 .prompt {
 	position: absolute;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	
 	@include mobile-all {
 		border-radius: 0;

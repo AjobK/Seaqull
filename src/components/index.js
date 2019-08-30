@@ -18,8 +18,10 @@ import Statistic from './statistic'
 import Logo from './logo'
 import Loader from './loader'
 import Icon from './icon'
+import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
 import StyleButton from './styleButton'
+import FormInput from './formInput'
 
 export {
   Button,
@@ -42,6 +44,8 @@ export {
   Logo,
   Loader,
   Icon,
+  StyleButton,
+  LoginPrompt,
   RegisterPrompt,
-  StyleButton
+  FormInput
 }

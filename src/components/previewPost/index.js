@@ -16,6 +16,10 @@ class previewPost extends Component {
 
     let randomNumber = Math.floor(Math.random() * 1085)
 
+    if(this.props.filler) {
+      return <article className={[styles.article, styles.filler].join(' ')}></article>
+    }
+
     return (
       <article className={[styles.article, ...className || ''].join(' ')} style={{
         backgroundColor: rgb,
