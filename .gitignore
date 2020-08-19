@@ -10,7 +10,7 @@
 # PHP storm files
 /.idea
 
-# Envoirement file
+# Environment file
 .env
 
 /node_modules
@@ -46,6 +46,7 @@ Homestead.json
 .rocketeer/
 passport/composer.lock
 package-lock.json
+/package-lock.json
 
 #VScode
 /*.code-workspace

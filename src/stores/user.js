@@ -7,7 +7,7 @@ const Posts = types
 
 const UserStore = types
   .model('UserStore', {
-    loggedIn: types.optional(types.boolean, !!localStorage.getItem('token')),
+    // loggedIn: types.optional(types.boolean, !!localStorage.getItem('token')),
     username: types.optional(types.string, 'Emily Washington'),
     role: types.optional(types.string, 'Software Engineer'),
     isOwner: types.optional(types.boolean, true),
@@ -15,6 +15,7 @@ const UserStore = types
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10),
+    isEditing: true,
     posts: types.optional(types.array(Posts), []),
     path: types.optional(types.string, '')
   })
@@ -26,6 +27,9 @@ const UserStore = types
     },
     logIn() {
       self.loggedIn = true
+    },
+    toggleEditing() {
+      self.isEditing = !self.isEditing
     },
     fillUserData(user = null) {
       if (user) {

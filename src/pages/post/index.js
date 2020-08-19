@@ -1,78 +1,114 @@
 import React from 'react'
-import update from 'react-addons-update' // ES6
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Title, Icon } from '../../components'
+import { PostBanner, PostContent, Button, Icon } from '../../components'
+import { convertToRaw, convertFromRaw } from 'draft-js'
 import styles from './post.scss'
 
 @inject('store') @observer
 class Post extends App {
   constructor(props) {
     super(props)
-    this.state = {
-      title: 'Front-End vs. Back-End',
-      content: [
-        { type: 'heading', value: 'Welcome to the world' },
-        { type: 'paragraph', value: 'This is an awesome paragraph!' },
-        { type: 'heading', value: 'Hello and greetings from the earth human' },
-        { type: 'paragraph', value: 'Well well, is this a piece of text?' }
-      ]
+
+    let content = window.localStorage.getItem('content')
+
+    if (!content || !JSON.parse(content)) {
+      content = JSON.stringify({
+        title: null,
+        story: null
+      })
+      window.localStorage.setItem('content', content)
     }
+
+    this.content = JSON.parse(content)
+
     this.cbKey = 0
+    this.state = {
+      isPublished: true,
+      renderContent: [],
+      currentEditorState: null,
+      saving: false,
+      date: '12 mar 2019'
+    }
   }
 
-  theCallBackFunc = (item) => {
-    this.setState({
-      content: update(this.state.content, { [item.props.cbKey]: { $set: { // Cost efficient
-        type: item.type,
-        value: item.state.value
-      } } })
-    }, () => { // Async
-      this.sendDataToDB()
+  componentDidMount() {
+    this.returnComponentsFromJson()
+  }
+
+  callBackSaveData = (item) => {
+    const { editorState } = item.state
+    const { type } = item.props
+
+    this.content[type] = convertToRaw(editorState.getCurrentContent())
+    this.sendDataToDB()
+  }
+
+  returnComponentsFromJson = (noSetState = false) => {
+    let typeArr = ['title', 'story']
+    let contentArr = []
+
+    typeArr.forEach((type, i) => {
+      contentArr.push(
+        <PostContent
+          key={i}
+          type={type}
+          callBackSaveData={this.callBackSaveData}
+          value={this.content[type] ? convertFromRaw(this.content[type]) : null}
+        />
+      )
     })
+    
+    if (!noSetState) {
+      this.setState({
+        renderContent: contentArr
+      }, () => {
+        this.sendDataToDB()
+      })
+    } else {
+      this.sendDataToDB()
+    }
   }
 
   sendDataToDB() {
     // Send this data
-  }
-
-  returnComponentsFromJson(data = null) {
-    this.cbKey = 0
-
-    let arr = []
-    const content = JSON.parse(data) || this.state.content
-
-    content.forEach((item, counter) => {
-      const { type, value } = item
-
-      arr.push(<PostContent cbKey={this.cbKey} key={counter} theCB={this.theCallBackFunc} value={value} type={type} />)
-
-      this.cbKey++
-    })
-
-    return arr
+    // Replace this with API call
+    window.localStorage.setItem('content', JSON.stringify(this.content));
   }
 
   render() {
+    const { isPublished, saving } = this.state
+    const { store } = this.props
+
     return (
-      <Standard>
+      <Standard className={[styles.stdBgWhite]}>
         <PostBanner />
-        <Section title={this.state.title} editable>
-          {this.returnComponentsFromJson()}
-        </Section>
-        <Title classname={styles.title} center value='INSERT CONTENT'/>
-        <div className={styles.container}>
-          <Button className={styles.insertButtonTitle} value='TITLE'/>
-          <Button className={styles.insertButtonText} value='TEXT' />
-          <Button className={styles.insertButtonImg} value='IMG' />
-        </div>
-        <div className={styles.saveContainer}>
-          <div className={styles.save}>
-            <Button className={styles.saveButton} value='Save Changes'/>
-            <div className={styles.insertButtonEye}><Icon iconName={'Eye'}/></div>
+        <Section noTitle>
+          { (!store.user.isEditing || !store.post.isOwner) &&
+            <div className={styles.date}>
+              <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
+            </div>
+          }
+          <div className={styles.renderWrapper}>
+            { this.state.renderContent }
           </div>
-        </div>
+          { store.post.isOwner &&
+          <div className={styles.info}>
+            <Button
+              className={[styles.publishButton, isPublished ? styles.published : styles.unpublishable].join(' ')}
+              value={isPublished ? 'UNPUBLISH': 'PUBLISH'}
+            />
+            <Button
+              className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
+              value={
+                store.user.isEditing ? 'QUIT EDIT' : 'EDIT'
+              }
+            />
+            { (saving && store.user.isEditing) && <p className={styles.infoSaving}> Saving... </p> }
+          </div>
+          }
+        </Section>
       </Standard>
     )
   }
