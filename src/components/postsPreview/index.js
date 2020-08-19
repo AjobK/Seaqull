@@ -27,7 +27,7 @@ class PostsPreview extends Component {
 
     return (
       <section className={styles.wrapper}>
-        {user.loggedIn && this.props.create && (
+        {user.user.loggedIn && this.props.create && (
           <Link to='/new-post' className={styles.add}>
             <img className={styles.addIcon} src={Plus} draggable={false} />
           </Link>
