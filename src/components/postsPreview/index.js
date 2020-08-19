@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import styles from './postsPreview.scss'
 import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
 
 @inject('store') @observer
 class PostsPreview extends Component {
   render() {
     const posts = this.props.posts
+    const user = this.props.store
 
     let arr = []
 
@@ -25,11 +27,11 @@ class PostsPreview extends Component {
 
     return (
       <section className={styles.wrapper}>
-        {this.props.create &&
-          (<div className={styles.add}>
+        {user.loggedIn && this.props.create && (
+          <Link to='/new-post' className={styles.add}>
             <img className={styles.addIcon} src={Plus} draggable={false} />
-          </div>)
-        }
+          </Link>
+        )}
         {arr}
         <div className={`${styles.article} ${styles.fillerMobile}`} />
       </section>
