@@ -11,6 +11,8 @@ class UserCommentLike extends Model
     use SoftDeletes;
 
     protected $table = 'User_Comment_Like';
+    protected $primaryKey = null;
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +35,7 @@ class UserCommentLike extends Model
 
     public function user()
     {
-        return $this->hasMany('App\User');
+         return $this->hasMany('App\User');
     }
 
     public function comment()

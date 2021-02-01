@@ -11,6 +11,6 @@ class PostHasAttachmentSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\PostHasAttachment::class, 5)->create();
+        factory(App\PostHasAttachment::class, 0)->create();
     }
 }

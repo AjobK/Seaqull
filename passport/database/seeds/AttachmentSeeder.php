@@ -11,6 +11,6 @@ class AttachmentSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Attachment::class, 5)->create();
+        factory(App\Attachment::class, 0)->create();
     }
 }
