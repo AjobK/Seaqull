@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserActivity extends Model
 {
-    protected $table = 'user_activity';
+    protected $table = 'User_Activity';
 
     /**
      * The attributes that are mass assignable.

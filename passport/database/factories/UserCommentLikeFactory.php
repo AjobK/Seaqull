@@ -13,6 +13,6 @@ $factory->define(UserCommentLike::class, function (Faker $faker) {
     return [
         'user_id' => $faker->randomElement($user),
         'comment_id' => $faker->randomElement($comment),
-        'liked_at' => $faker->dateTime(),
+        'liked_at' => $faker->dateTime()
     ];
 });
