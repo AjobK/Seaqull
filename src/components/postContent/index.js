@@ -104,7 +104,7 @@ class PostContent extends Component {
   }
 
   render() {
-    const { type } = this.props
+    const { type, readOnly } = this.props
     const { editorState } = this.state
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
@@ -130,12 +130,14 @@ class PostContent extends Component {
       <div>
         <PostContentBlock
           heading={`${type == 'content' ? 'Your' : ''} ${type}`}
+          noHeading={readOnly}
           onClick={this.focusOnEditor}
           className={[style]}>
           <Editor
             editorState={editorState}
             ref={this.editorInput}
             onChange={this.onChange}
+            readOnly={readOnly != undefined ? readOnly : false}
             // onFocus={this.onFocus}
             // onBlur={this.onBlur}
             // spellCheck={true}

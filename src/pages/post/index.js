@@ -2,64 +2,81 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Icon } from '../../components'
-import { convertFromRaw } from 'draft-js'
+import { PostBanner, PostContent, Button, Icon } from '../../components'
+import { withRouter } from 'react-router-dom'
 import styles from './post.scss'
-import Axios from 'axios'
 
 @inject('store') @observer
 class Post extends App {
   constructor(props) {
     super(props)
 
-    this.state = {
-      renderContent: '',
-      title: ''
+    this.post = {
+      title: null,
+      description: null,
+      content: null,
+      path: null
     }
+
+    this.state = {
+      isOwner: true,
+      isEditing: false
+    }
+    
+    // TODO: API Call for initial data
   }
 
-  componentWillMount() {
-    const { params } = this.props.match
+  sendToDB() {
+    console.log('Saving');
+    console.log(this.post.title != null ? this.post.title.blocks[0].text : null)
 
-    console.log(params)
-
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/${params['postUrl']}`, {
-      mode:'cors',
-      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json' }
-    })
-    .then((response) => {
-      this.setState({ renderContent: response.data.data.content })
-      this.setState({ title: response.data.data.title })
-    })
+    return;
   }
 
   render() {
-    console.log('renderoo')
-    console.log(this.state.title)
-    console.log(this.state.renderContent)
+    const { store } = this.props
+
+    // Values change based on initial response from server
+    const { isEditing, isOwner } = this.state
+
     return (
       <Standard className={[styles.stdBgWhite]}>
-        <PostBanner userData={[]} />
+        <PostBanner userData={store.user} isOwner={isOwner} />
         <Section noTitle>
-          <div className={styles.date}>
-            <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
-          </div>
           <div className={styles.renderWrapper}>
-            <PostContent
-              noEdit
-              type={'title'}
-              value={convertFromRaw({"blocks":[{"key":"2irpb","text":this.state.title,"type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}})}
-            />
-            <PostContent
-              noEdit
-              type={'story'}
-              value={convertFromRaw({"blocks":[{"key":"2irpx","text":this.state.renderContent,"type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}})}
-            />
+          <PostContent
+            key={Math.random()}
+            type={'title'}
+            // Saves post title with draftJS content
+            callBackSaveData={(data) => {
+              this.post.title = data;
+            }}
+            readOnly={!isOwner || !isEditing}
+            value={null} // Initial no content, should be prefilled by API
+          />
+          <PostContent
+            key={Math.random()}
+            type={'content'}
+            // Saves post content with draftJS content
+            callBackSaveData={(data) => {
+              this.post.content = data;
+            }}
+            readOnly={!isOwner || !isEditing}
+            value={null} // Initial no content, should be prefilled by API
+          />
           </div>
+          {
+            isOwner && isEditing &&
+            <Button
+              className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+              value={'Create'}
+              onClick={() => this.sendToDB()}
+            />
+          }
         </Section>
       </Standard>
     )
   }
 }
 
-export default Post
+export default withRouter(Post)
