@@ -10,14 +10,10 @@ const UserStore = types
     loggedIn: types.optional(types.boolean, !!localStorage.getItem('token')),
     username: types.optional(types.string, 'Emily Washington'),
     role: types.optional(types.string, 'Software Engineer'),
-    isOwner: types.optional(types.boolean, true),
     picture: types.optional(types.string, '/src/static/dummy/user/profile.jpg'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10),
-    isEditing: true,
-    posts: types.optional(types.array(Posts), []),
-    path: types.optional(types.string, '')
   })
   .actions(self => ({
     logOut() {

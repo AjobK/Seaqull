@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 @inject('store') @observer
 class PostBanner extends Component {
   render() {
-    const { userData } = this.props
+    const { author, isOwner } = this.props
 
     return (
-      <section className={`${styles.wrapper} ${userData.loggedIn ? styles.owner : ''}`}>
-        <div className={styles.background} style={{ backgroundImage: `url(${userData.banner || ''})` }} />
+      <section className={`${styles.wrapper} ${isOwner ? styles.owner : ''}`}>
+        <div className={styles.background} style={{ backgroundImage: `url(${author.bannerURL || ''})` }} />
         {this.props.isOwner &&
           <div className={styles.wrapperEditContainer}>
             <span className={styles.wrapperEdit}>
@@ -22,14 +22,14 @@ class PostBanner extends Component {
         <div className={styles.backdrop}/>
         <div className={styles.innerWrapper}>
           <div className={styles.info}>
-            <Link to='/profile' className={styles.profileLink}>
+            <Link to={`/profile/${author.path}`} className={styles.profileLink}>
               <div className={styles.infoInner}>
-                <div className={styles.picture} style={{ backgroundImage: `url(${userData.picture || ''})` }} />
+                <div className={styles.picture} style={{ backgroundImage: `url(${author.avatarURL || ''})` }} />
                 <div className={styles.user_info}>
-                  <h2 className={[styles.name].join(' ')}>{ userData.name || ''}</h2>
+                  <h2 className={[styles.name].join(' ')}>{ author.name || ''}</h2>
                   <div className={styles.achieved}>
-                    <span className={styles.level}>{ userData.level || ''}</span>
-                    <h3 className={styles.role}>{ userData.role || ''}</h3>
+                    <span className={styles.level}>{ Number.isSafeInteger(author.level) ?  author.level : '-1'}</span>
+                    <h3 className={styles.role}>{ author.title || ''}</h3>
                   </div>
                 </div>
               </div>

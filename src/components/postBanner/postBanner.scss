@@ -88,6 +88,7 @@
 }
 
 .picture {
+	transition: 0.2s;
 	overflow: hidden;
 	border-radius: 100%;
 	position: relative;
@@ -96,15 +97,25 @@
 	background-color: #1f1f1f;
 	display: flex;
 	justify-content: center;
-	min-width: 80px;
-	min-height: 80px;
-	width: 3vw;
-	height: 3vw;
+	min-width: 100px;
+	min-height: 100px;
 	@include box-shadow;
+
+	+ * {
+		transition: 0.2s;
+	}
+
+	&:hover {
+		transform: scale(1.1);
+
+		+ * {
+			opacity: 0.2;
+		}
+	}
 }
 
 .user_info {
-	margin-left: $header-spacing;
+	margin-left: $header-spacing * 2;
 	display: inline-block;
 }
 
@@ -115,8 +126,9 @@
 .info {
 	width: 100%;
 	max-width: $wrapper-width;
-	overflow: hidden;
 	padding: $header-spacing;
+	display: flex;
+
 	&Inner {
 		width: auto;
 		display: flex;

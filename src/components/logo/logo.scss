@@ -6,17 +6,17 @@
 	margin-right: auto;
 
 	&Image {
-		width: $header-height * 0.5;
-		height: $header-height * 0.5;
+		width: $header-height * 0.6;
+		height: $header-height * 0.6;
 	}
 
 	&Text {		
 		display: inline-block;
-		font-size: $logo-font-size * 0.7;
+		font-size: $logo-font-size * 0.8;
 		margin-left: $header-spacing * 0.6;
-		font-weight: bold;
+		font-weight: normal;
 		color: $primary;
-		text-transform: uppercase;
+		text-transform: lowercase;
 	}
 
 	@include mobile-sm {
