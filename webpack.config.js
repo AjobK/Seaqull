@@ -63,5 +63,8 @@ module.exports = {
       failOnError: false,
       quiet: false
     })
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 };

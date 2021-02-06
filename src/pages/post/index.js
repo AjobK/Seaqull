@@ -2,112 +2,60 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon } from '../../components'
-import { convertToRaw, convertFromRaw } from 'draft-js'
+import { PostBanner, PostContent, Icon } from '../../components'
+import { convertFromRaw } from 'draft-js'
 import styles from './post.scss'
+import Axios from 'axios'
 
 @inject('store') @observer
 class Post extends App {
   constructor(props) {
     super(props)
 
-    let content = window.localStorage.getItem('content')
-
-    if (!content || !JSON.parse(content)) {
-      content = JSON.stringify({
-        title: null,
-        story: null
-      })
-      window.localStorage.setItem('content', content)
-    }
-
-    this.content = JSON.parse(content)
-
-    this.cbKey = 0
     this.state = {
-      isPublished: true,
-      renderContent: [],
-      currentEditorState: null,
-      saving: false,
-      date: '12 mar 2019'
+      renderContent: '',
+      title: ''
     }
   }
 
-  componentDidMount() {
-    this.returnComponentsFromJson()
-  }
+  componentWillMount() {
+    const { params } = this.props.match
 
-  callBackSaveData = (item) => {
-    const { editorState } = item.state
-    const { type } = item.props
+    console.log(params)
 
-    this.content[type] = convertToRaw(editorState.getCurrentContent())
-    this.sendDataToDB()
-  }
-
-  returnComponentsFromJson = (noSetState = false) => {
-    let typeArr = ['title', 'story']
-    let contentArr = []
-
-    typeArr.forEach((type, i) => {
-      contentArr.push(
-        <PostContent
-          key={i}
-          type={type}
-          callBackSaveData={this.callBackSaveData}
-          value={this.content[type] ? convertFromRaw(this.content[type]) : null}
-        />
-      )
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/${params['postUrl']}`, {
+      mode:'cors',
+      headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json' }
     })
-    
-    if (!noSetState) {
-      this.setState({
-        renderContent: contentArr
-      }, () => {
-        this.sendDataToDB()
-      })
-    } else {
-      this.sendDataToDB()
-    }
-  }
-
-  sendDataToDB() {
-    // Send this data
-    // Replace this with API call
-    window.localStorage.setItem('content', JSON.stringify(this.content));
+    .then((response) => {
+      this.setState({ renderContent: response.data.data.content })
+      this.setState({ title: response.data.data.title })
+    })
   }
 
   render() {
-    const { isPublished, saving } = this.state
-    const { store } = this.props
-
+    console.log('renderoo')
+    console.log(this.state.title)
+    console.log(this.state.renderContent)
     return (
       <Standard className={[styles.stdBgWhite]}>
-        <PostBanner />
+        <PostBanner userData={[]} />
         <Section noTitle>
-          { (!store.user.isEditing || !store.post.isOwner) &&
-            <div className={styles.date}>
-              <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
-            </div>
-          }
+          <div className={styles.date}>
+            <Icon iconName={'Clock'} className={styles.dateIcon} /> 12 mar 2019
+          </div>
           <div className={styles.renderWrapper}>
-            { this.state.renderContent }
-          </div>
-          { store.post.isOwner &&
-          <div className={styles.info}>
-            <Button
-              className={[styles.publishButton, isPublished ? styles.published : styles.unpublishable].join(' ')}
-              value={isPublished ? 'UNPUBLISH': 'PUBLISH'}
+            <PostContent
+              noEdit
+              type={'title'}
+              value={convertFromRaw({"blocks":[{"key":"2irpb","text":this.state.title,"type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}})}
             />
-            <Button
-              className={[styles.publishButton, isPublished ? styles.published : ''].join(' ')}
-              value={
-                store.user.isEditing ? 'QUIT EDIT' : 'EDIT'
-              }
+            <PostContent
+              noEdit
+              type={'story'}
+              value={convertFromRaw({"blocks":[{"key":"2irpx","text":this.state.renderContent,"type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}})}
             />
-            { (saving && store.user.isEditing) && <p className={styles.infoSaving}> Saving... </p> }
           </div>
-          }
         </Section>
       </Standard>
     )

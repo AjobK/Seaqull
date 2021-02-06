@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 @inject('store') @observer
 class PostBanner extends Component {
   render() {
-    const { post, user } = this.props.store
+    const { userData } = this.props
 
     return (
-      <section className={`${styles.wrapper} ${user.loggedIn ? styles.owner : ''}`}>
-        <div className={styles.background} style={{ backgroundImage: `url(${post.banner})` }} />
-        {user.loggedIn &&
+      <section className={`${styles.wrapper} ${userData.loggedIn ? styles.owner : ''}`}>
+        <div className={styles.background} style={{ backgroundImage: `url(${userData.banner || ''})` }} />
+        {this.props.isOwner &&
           <div className={styles.wrapperEditContainer}>
             <span className={styles.wrapperEdit}>
               <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
@@ -24,12 +24,12 @@ class PostBanner extends Component {
           <div className={styles.info}>
             <Link to='/profile' className={styles.profileLink}>
               <div className={styles.infoInner}>
-                <div className={styles.picture} style={{ backgroundImage: `url(${post.picture})` }} />
+                <div className={styles.picture} style={{ backgroundImage: `url(${userData.picture || ''})` }} />
                 <div className={styles.user_info}>
-                  <h2 className={[styles.name].join(' ')}>{ post.name || ''}</h2>
+                  <h2 className={[styles.name].join(' ')}>{ userData.name || ''}</h2>
                   <div className={styles.achieved}>
-                    <span className={styles.level}>{ post.level || ''}</span>
-                    <h3 className={styles.role}>{ post.role || ''}</h3>
+                    <span className={styles.level}>{ userData.level || ''}</span>
+                    <h3 className={styles.role}>{ userData.role || ''}</h3>
                   </div>
                 </div>
               </div>

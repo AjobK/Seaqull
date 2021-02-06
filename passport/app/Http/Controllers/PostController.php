@@ -5,18 +5,19 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
   private function pathString ($length = 12) {
-      $path = Post::where('path', Str::random($length));
+      $path = Post::where('path', Str::uuid());
 
       if ($path->first()) {
           $this->pathString();
       } else {
-          return $randomString;
+          return $path;
       }
-  }
+  } 
 
   public function index () {
       $posts = Post::paginate(15);
@@ -27,27 +28,25 @@ class PostController extends Controller
       ]);
   }
 
-  public function show ($id) {
-      if (auth()->user()) {
-          $post = Post::find($id);
+  public function show ($path) {
+    //   print('SHOWING WITH ID ' + str($id));
+        $post = Post::query()->where('path', '=', $path);
 
-          if (!$post) {
-              return response()->json([
-                  'succes' => false,
-                  'message' => 'Post with ID: ' . $id . ' cannot be found'
-              ], 400);
-          } else {
-              return response()->json([
-                  'succes' => true,
-                  'data' => $post->toArray()
-              ]);
-          }
-      } else {
-          return response()->json([
-              'succes' => false,
-              'message' => 'No authentication for user'
-          ], 400);
-      }
+        return response()->json([
+            'succes' => false,
+            'message' => $post
+        ], 400);
+        if (!$post) {
+            return response()->json([
+                'succes' => false,
+                'message' => 'Post with path: ' . $path . ' cannot be found'
+            ], 400);
+        } else {
+            return response()->json([
+                'succes' => true,
+                'data' => $post->toArray()
+            ]);
+        }
   }
 
   public function store(Request $request)
@@ -55,26 +54,25 @@ class PostController extends Controller
       $this->validate($request, [
           'title' => 'required',
           'description' => 'required',
-          'Content' => 'required'
+          'content' => 'required'
       ]);
 
-      $path = $this->pathString();
+      $path = Str::uuid();
+
+      $user = User::find(auth()->user()->id);
 
       $post = new Post();
       $post->title = $request->title;
       $post->description = $request->description;
-      $post->content = $request->Content;
+      $post->content = $request->content;
       $post->path = $path;
-      
-      if (auth()->user()->posts()->save($post)) {
+
+      if ($user->post()->save($post)) {
           return response()->json([
-              'success' => true,
-              'data' => $post->toArray()
+              'data' => $user->post
           ]);
-      }
-      else {
+      } else {
           return response()->json([
-              'success' => false,
               'message' => 'Post could not be added'
           ], 500);
       }

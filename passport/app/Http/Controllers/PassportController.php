@@ -24,8 +24,8 @@ class PassportController extends Controller
   public function register(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'user_name' => ['required', 'min:3', 'unique:account', 'alpha_dash'],
-      'email' => ['required', 'email', 'unique:account'],
+      'user_name' => ['required', 'min:3', 'unique:Account', 'alpha_dash'],
+      'email' => ['required', 'email', 'unique:Account'],
       'password' => [
         'required',
         'min:6',
@@ -39,7 +39,7 @@ class PassportController extends Controller
 
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()], 422);
-    }else{
+    } else {
       $account = Account::create([
         'user_name' => $request->user_name,
         'email' => $request->email,

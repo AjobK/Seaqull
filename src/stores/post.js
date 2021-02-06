@@ -16,6 +16,9 @@ const PostStore = types
   .actions(self => ({
     setEditingElement(element) {
       this.editingElement = element
+    },
+    getPostByPath(path) {
+    
     }
   }))
 

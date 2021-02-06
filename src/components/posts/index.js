@@ -7,7 +7,7 @@ class Posts extends Component {
   constructor(props) {
     super(props)
     this.data = []
-    this.page = 1
+    this.page = 2
     this.totalPages = null
     this.scrolling = false
   }
@@ -38,8 +38,9 @@ class Posts extends Component {
       let { red, green, blue } = randomRGB
       let rgb = `rgb(${red},${green},${blue})`
 
-      let article = document.createElement('article')
+      let article = document.createElement('a')
 
+      article.href = `posts/${this.data[i].path}`;
       article.style.backgroundColor = rgb
       article.classList.add(styles.postItem)
       let postItem = document.createElement('div')
