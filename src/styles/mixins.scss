@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 @mixin noselect {
 	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none; /* Safari */
@@ -15,13 +17,13 @@
 }
 
 @mixin primary-gradient () {
-	background: rgba(255,64,64,1);
-	background: -moz-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
-	background: -webkit-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
-	background: -o-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
-	background: -ms-linear-gradient(left, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
-	background: linear-gradient(to right, rgba(255,64,64,1) 0%, rgba(191,49,49,1) 27%, rgba(191,49,49,1) 52%, rgba(227,59,59,1) 73%, rgba(255,64,64,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4040', endColorstr='#ff4040', GradientType=1 );
+	background: rgba($primary,1);
+	background: -moz-linear-gradient(left, rgba($primary,1) 0%, rgba($primary,1) 27%, rgba($primary,1) 52%, rgba($primary,1) 73%, rgba($primary,1) 100%);
+	background: -webkit-linear-gradient(left, rgba($primary,1) 0%, rgba($primary,1) 27%, rgba($primary,1) 52%, rgba($primary,1) 73%, rgba($primary,1) 100%);
+	background: -o-linear-gradient(left, rgba($primary,1) 0%, rgba($primary,1) 27%, rgba($primary,1) 52%, rgba($primary,1) 73%, rgba($primary,1) 100%);
+	background: -ms-linear-gradient(left, rgba($primary,1) 0%, rgba($primary,1) 27%, rgba($primary,1) 52%, rgba($primary,1) 73%, rgba($primary,1) 100%);
+	background: linear-gradient(to right, rgba($primary,1) 0%, rgba($primary,1) 27%, rgba($primary,1) 52%, rgba($primary,1) 73%, rgba($primary,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$primary, endColorstr=$primary, GradientType=1 );
 }
 
 @mixin box-shadow () {
@@ -36,17 +38,17 @@
 	@keyframes load {
 		0% {
 			transform: rotate(0);
-			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
-			box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+			-moz-box-shadow: 0 0 0 0 rgba($primary, 0.5);
+			box-shadow: 0 0 0 0 rgba($primary, 0.5);
 		}
 		70% {
-			-moz-box-shadow: 0 0 0 10px rgba(255,64,64, 0);
-			box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+			-moz-box-shadow: 0 0 0 10px rgba($primary, 0);
+			box-shadow: 0 0 0 10px rgba($primary, 0);
 		}
 		100% {
 			transform: rotate(360deg);
-			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0);
-			box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+			-moz-box-shadow: 0 0 0 0 rgba($primary, 0);
+			box-shadow: 0 0 0 0 rgba($primary, 0);
 		}
 	}
 
@@ -56,16 +58,16 @@
 @mixin pulse () {
 	@keyframes pulse {
 		0% {
-			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
-			box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+			-moz-box-shadow: 0 0 0 0 rgba($primary, 0.5);
+			box-shadow: 0 0 0 0 rgba($primary, 0.5);
 		}
 		70% {
-			-moz-box-shadow: 0 0 0 10px rgba(255,64,64, 0);
-			box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+			-moz-box-shadow: 0 0 0 10px rgba($primary, 0);
+			box-shadow: 0 0 0 10px rgba($primary, 0);
 		}
 		100% {
-			-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0);
-			box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+			-moz-box-shadow: 0 0 0 0 rgba($primary, 0);
+			box-shadow: 0 0 0 0 rgba($primary, 0);
 		}
 	}
 

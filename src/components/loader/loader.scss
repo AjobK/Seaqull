@@ -3,17 +3,21 @@
 @keyframes load {
 	0% {
 		transform: rotate(0);
-		-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
-		box-shadow: 0 0 0 0 rgba(255,64,64, 0.5);
+		transform: rotate(0);
+		-moz-box-shadow: 0 0 0 0 rgba($primary, 0.5);
+		-moz-box-shadow: 0 0 0 0 rgba($primary, 0.5);
+		box-shadow: 0 0 0 0 rgba($primary, 0.5);
 	}
 	70% {
-		-moz-box-shadow: 0 0 0 10px rgba(255,64,64, 0);
-		box-shadow: 0 0 0 10px rgba(255,64,64, 0);
+		-moz-box-shadow: 0 0 0 10px rgba($primary, 0);
+		-moz-box-shadow: 0 0 0 10px rgba($primary, 0);
+		box-shadow: 0 0 0 10px rgba($primary, 0);
+		box-shadow: 0 0 0 10px rgba($primary, 0);
 	}
 	100% {
 		transform: rotate(360deg);
-		-moz-box-shadow: 0 0 0 0 rgba(255,64,64, 0);
-		box-shadow: 0 0 0 0 rgba(255,64,64, 0);
+		-moz-box-shadow: 0 0 0 0 rgba($primary, 0);
+		box-shadow: 0 0 0 0 rgba($primary, 0);
 	}
 }
 

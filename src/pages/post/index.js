@@ -20,7 +20,7 @@ class Post extends App {
 
         this.state = {
             isOwner: true,
-            isEditing: false,
+            isEditing: true,
             author: {
                 name: 'Emily Washington',                                   // Display name
                 bannerURL: '/src/static/dummy/user/banner.jpg',     // Banner URL from ID
