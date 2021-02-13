@@ -1,16 +1,17 @@
 # Seaqull
 
-#### Commands 
+#### Commands front end
 
 `- npm i` 
 
 `- npm run dev`
+#### Commands back end
 
-`- php artisan serve`
+`- npm i`
 
-`- php artisan migrate:reset`
+`- npm run seed:config`
 
-`- php artisan migrate:fresh --seed`
+`- npm run seed:run`
 
 ## WORKFLOW
 
