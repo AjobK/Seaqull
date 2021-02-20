@@ -14,7 +14,6 @@ class AuthorizationController implements ControllerBase{
     }
 
     public initRoutes(): void {
-        this.router.post('/login2', this.authService.login);
         this.router.post(this.login, this.authService.login);
         this.router.get(this.logout, this.authService.logout);
     }
