@@ -13,7 +13,7 @@ class Posts extends Component {
   }
 
   loadArticle = () => {
-    const url = `http://localhost:8000/api/post?page=${this.page}`
+    const url = `http://localhost:8000/api/post` // ?page=${this.page}`
 
     fetch(url)
       .then(response => response.json())

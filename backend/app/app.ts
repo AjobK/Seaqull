@@ -19,7 +19,7 @@ const backend = new serverConstructor({
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
         cors({
-            origin: [FRONTEND_URL, 'http://localhost:4200'],
+            origin: [FRONTEND_URL, 'http://localhost:8080'],
             credentials: true
         }),
     ]

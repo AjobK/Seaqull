@@ -6,9 +6,10 @@
    "scripts": {
       "start": "nodemon app/app.ts",
       "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-      "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+      "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+      "seed:revert": "ts-node typeorm migration:revert -c seed"
    },
-   "author": "ryan kroon",
+   "author": "Seaqull",
    "license": "ISC",
    "devDependencies": {
       "@babel/cli": "^7.12.10",

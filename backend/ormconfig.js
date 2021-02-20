@@ -1,10 +1,10 @@
 module.exports = {
     'type': 'postgres',
     'host': 'localhost',
-    'port': 5433,
+    'port': 5432,
     'username': 'postgres',
     'password': 'root',
-    'database': 'seaqull2',
+    'database': 'seaqull',
     'synchronize': true,
     'logging': false,
     'entities': [

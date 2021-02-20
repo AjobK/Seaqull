@@ -52,7 +52,7 @@ class LoginPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      user_name: document.getElementById(this.elId.Username).value,
+      username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
@@ -61,7 +61,7 @@ class LoginPrompt extends Component {
     .then(res => {
       Axios.get('/user', {
         mode:'cors',
-        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json' }
       })
       .then(user => {
         localStorage.setItem('token', res.data.token)
