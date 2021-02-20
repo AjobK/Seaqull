@@ -24,20 +24,17 @@ class PostService {
             if (username === account.user_name) {
                 if (!bcrypt.compareSync(password, account.password)){
                     res.status(400);
-                    res.json({
+                    return res.json({
                         error: 'Incorrect username or password'
                     });
-                    return res;
                 }
             } else {
-                res.status(400).json({
+                return res.status(400).json({
                     error: 'Incorrect username or password'
                 });
-                return res;
             }
         } catch (error) {
-            res.status(500).json({ error });
-            return res;
+            return res.status(500).json({ error });
         }
 
         const payload = {
