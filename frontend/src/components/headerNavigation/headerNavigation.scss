@@ -1,0 +1,41 @@
+@import '../../styles/index.scss';
+
+.menu {
+	float: right;
+	@include mobile-sm {
+		display: none;
+	}
+	
+	&Ul {
+		display: flex;
+		list-style-type: none;
+		font-size: $nr-sm-fontsize;
+		text-transform: capitalize;
+		align-items: center;
+		letter-spacing: 1px;
+		font-weight: bold;
+	}
+
+	&Item {
+		text-decoration: none;
+		color: rgba(0,0,0,0.6);
+		cursor: pointer;
+
+		&:not(:last-child) {
+			margin: 0 $nr-sm-fontsize;
+		}
+
+		&:last-child {
+			margin-left: $nr-sm-fontsize;
+		}
+
+		&:hover {
+			transition: 0.2s;
+			color: rgba(0,0,0,1);
+		}
+	}
+}
+
+.button {
+	border-radius: 30px;
+}

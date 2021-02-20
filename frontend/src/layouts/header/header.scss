@@ -1,0 +1,69 @@
+@import '../../styles/index.scss';
+
+.header {
+	display: flex;
+	flex-direction: row;
+	@include noselect;
+	top: 0;
+	background: $background-trans;
+	height: $header-height;
+	pointer-events: auto;
+	width: 100%;
+
+	@include mobile-all-portrait {
+		position: fixed;
+		z-index: 2;
+	}
+
+	&Content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: $header-spacing;
+		width: 100%;
+		margin: 0 auto;
+		width: $wrapper-width;
+
+		@include mobile-all-portrait {
+			width: 100%;
+		}
+
+		@include mobile-sm {
+			justify-content: center;
+		}
+	}
+
+	&Wrap {
+		@include desktop-tablet-sm {
+			transition: 1s;
+			left: $navigation-width;
+			top: 0;
+			width: calc(100% - #{$navigation-width});
+			position: fixed;
+			z-index: 100;
+		}
+	}
+}
+
+.sNavOpen {
+	transition: 1s;
+	left: $navigation-width-expanded;
+}
+
+.button {
+	margin: 0 $nr-sm-fontsize;
+	margin-right: 0;
+}
+
+.hamburger {
+	margin-right: $header-spacing;
+	display: none;
+
+	@include mobile-all-portrait {
+		display: block;
+	}
+	@include mobile-sm {
+		position: absolute;
+		left: $header-spacing;
+	}
+}
