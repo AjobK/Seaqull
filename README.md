@@ -13,6 +13,8 @@
 
 `- npm run seed:run`
 
+`- npm start`
+
 ## WORKFLOW
 
 #### ISSUES
