@@ -13,6 +13,8 @@
 
 `- npm run seed:run`
 
+`- npm run schema:drop`
+
 `- npm start`
 
 ## WORKFLOW
