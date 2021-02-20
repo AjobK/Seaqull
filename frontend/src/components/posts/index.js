@@ -18,8 +18,8 @@ class Posts extends Component {
     fetch(url)
       .then(response => response.json())
       .then(json => {
-        if (!this.totalPages) this.totalPages = json.data.last_page
-        this.data = json.data.data
+        // if (!this.totalPages) this.totalPages = json.data.last_page
+        this.data = json
         this.setNewPosts()
       })
   }

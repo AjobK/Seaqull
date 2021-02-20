@@ -1,17 +1,22 @@
 import { Request, Response } from 'express';
-import PostDao from '../dao/postDao';
+import PostDAO from '../dao/postDAO';
 
 class PostService {
-    private dao: PostDao;
+    private dao: PostDAO;
 
     constructor() {
-        this.dao = new PostDao();
+        this.dao = new PostDAO();
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
         const posts = await this.dao.getPosts();
-        res.status(200);
-        res.json(posts);
+
+        return res.status(200).json(posts);
+    }
+
+    public createPost = async (req: Request, res: Response): Promise<Response> => {
+        await this.dao.createPost();
+
         return res;
     }
 }
