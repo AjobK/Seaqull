@@ -36,6 +36,5 @@ export class post extends BaseEntity {
 
     @Column()
     published_at: Date;
-
 }
 export default post;
