@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from '..';
-import styles from './StyleButton.scss'
+import styles from './styleButton.scss'
 
 class StyleButton extends Component {
   constructor() {

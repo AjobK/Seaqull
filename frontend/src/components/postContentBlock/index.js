@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './PostContentBlock.scss'
+import styles from './postContentBlock.scss'
 import { PostEditHeading } from '..';
 import { inject, observer } from 'mobx-react'
 

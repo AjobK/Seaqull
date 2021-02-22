@@ -50,3 +50,6 @@ package-lock.json
 
 #VScode
 /*.code-workspace
+
+# nodejs
+backend/node_modules

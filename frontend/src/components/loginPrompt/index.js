@@ -12,7 +12,7 @@ class LoginPrompt extends Component {
     super(props)
 
     this.state = {
-      user_name: null,
+      username: null,
       password: null,
       remainingTimeInterval: null,
       remainingTime: null,
@@ -52,34 +52,24 @@ class LoginPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      user_name: document.getElementById(this.elId.Username).value,
+      username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
 
-    Axios.post('/login', payload)
+    Axios.post('/login', payload, {withCredentials: true})
     .then(res => {
-      Axios.get('/user', {
-        mode:'cors',
-        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-      })
-      .then(user => {
-        localStorage.setItem('token', res.data.token)
-
-        return user.data.user
-      })
-      .then(user => {
-          this.props.store.user.fillUserData(user)
-          this.goToProfile(user.user_name)
-      })
+      this.props.store.user.fillUserData(res.data.user);
+      this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
+      console.log( res.response.data.error )
       const { error, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
       this.setState({
-        user_name: error || [],
+        username: error || [],
         password: error || [],
         loadingTimeout: false
       })
@@ -114,7 +104,7 @@ class LoginPrompt extends Component {
     if (this.state.remainingTime && this.remainingTimeInterval) return
 
     this.setState({
-      user_name: 'loading',
+      username: 'loading',
       password: 'loading',
       loadingTimeout: true
     })
@@ -134,7 +124,7 @@ class LoginPrompt extends Component {
   }
 
   render() {
-    const { user_name, password, remainingTime,recaptcha, loadingTimeout } = this.state
+    const { username, password, remainingTime,recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
@@ -143,7 +133,7 @@ class LoginPrompt extends Component {
         <p className={styles.text}> Welcome back!</p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
