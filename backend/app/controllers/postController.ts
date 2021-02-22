@@ -17,7 +17,6 @@ class PostController implements ControllerBase{
 
     public initRoutes(): void {
         this.router.get (this.post,
-            passport.authenticate('jwt', { session: false }),
             this.postService.getPosts);
     }
 }

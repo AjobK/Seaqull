@@ -25,11 +25,11 @@ export class account extends BaseEntity {
     @Column()
     last_ip: string;
 
-    @Column()
+    @Column({ nullable: true })
     login_attempts_counts: number;
 
-    @Column({ nullable: true })
-    locked_to: Date;
+    @Column({ nullable: true, type: 'bigint' })
+    locked_to: number;
 
     @Column()
     changed_pw_at: Date;
