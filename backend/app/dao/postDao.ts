@@ -9,7 +9,7 @@ class PostDAO {
 
     public async createPost(): Promise<any> {
         const repository = await DatabaseConnector.getRepositoryPost();
-        
+
     }
 }
 export default PostDAO;
