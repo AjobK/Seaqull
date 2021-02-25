@@ -3,13 +3,11 @@ const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 require('dotenv').config();
 
-module.exports = () => {
-    const cookieExtractor = req => {
-        let jwt = null;
-        if (req && req.cookies) {
-            jwt = req.cookies['jwt'];
-        }
-        return jwt;
+module.exports = (res) => {
+    const cookieExtractor = (req) => {
+
+        const { token } = req.cookies;
+        return token;
     };
 
     passport.use('jwt', new JWTStrategy({
@@ -17,11 +15,9 @@ module.exports = () => {
         secretOrKey: process.env.JWT_SECRET
     }, (jwtPayload, done) => {
         const { expiration } = jwtPayload;
-
         if (Date.now() > expiration) {
-            done('Unauthorized', false);
+            return res.status(422).send('Token invalid');
         }
-
         done(null, jwtPayload);
     }));
 };

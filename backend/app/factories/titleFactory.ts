@@ -4,6 +4,7 @@ import { title } from '../entity/title';
 define(title, () => {
     const titleFake = new title();
 
+    titleFake.id = 1;
     titleFake.created_at = new Date();
     titleFake.name = 'hachling';
     return titleFake;

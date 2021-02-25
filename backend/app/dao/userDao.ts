@@ -1,8 +1,8 @@
 import DatabaseConnector from '../util/databaseConnector';
-import { post } from '../entity/post';
+import { user } from '../entity/user';
 
 class UserDao {
-    public async getUserByUsername(username: string): Promise<post[]> {
+    public async getUserByUsername(username: string): Promise<user> {
         const repositoryAccount = await DatabaseConnector.getRepositoryAccount();
         const account = await repositoryAccount.findOne({ user_name: username });
 
