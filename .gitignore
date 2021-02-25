@@ -54,3 +54,4 @@ package-lock.json
 # nodejs
 backend/node_modules
 backend/ormconfig.js
+backend/ormconfig.json
