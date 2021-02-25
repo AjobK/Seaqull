@@ -26,7 +26,6 @@ class UserService {
         // check if username is precent in the paramenters
         if(!username){
             // check if a username is present in payload
-            console.log(!decodedToken.username);
             if(decodedToken.username){
                 // if there is no username in params then use one in the jwt
                 username = decodedToken.username;
