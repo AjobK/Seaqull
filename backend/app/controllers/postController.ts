@@ -16,8 +16,7 @@ class PostController implements ControllerBase{
     }
 
     public initRoutes(): void {
-        this.router.get(this.post,
-            this.postService.getPosts);
+        this.router.get(this.post, this.postService.getPosts);
         this.router.post(this.post, this.postService.createPost);
     }
 }
