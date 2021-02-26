@@ -19,7 +19,8 @@ const UserStore = types
     logOut() {
       self.loggedIn = false
       self.name = ''
-      localStorage.clear()
+      Axios.get('/logout', payload, {withCredentials: true})
+
     },
     logIn() {
       self.loggedIn = true

@@ -27,6 +27,10 @@ class PostService {
         // getting account from database
         let account = await this.accountDao.getUserByUsername(username);
 
+        if(account == null) {
+            return res.status(400).json({ error: ['Incorrect username or password'] });
+        }
+
         // check if account is locked if so return remaining wait time
         if(account.locked_to - Date.now() > 0){
             return res.status(400).send({

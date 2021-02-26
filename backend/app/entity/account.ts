@@ -31,7 +31,7 @@ export class account extends BaseEntity {
     @Column({ nullable: true, type: 'bigint' })
     locked_to: number;
 
-    @Column()
+    @Column({ nullable: true })
     changed_pw_at: Date;
 }
-export default Account;
+export default account;
