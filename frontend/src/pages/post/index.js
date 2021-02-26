@@ -28,15 +28,40 @@ class Post extends App {
                 path: '/profile',                                   // Custom path
                 level: 0,                                           // Level of user
                 title: 'Software Engineer'                          // Currently selected title by ID
-            }
+            },
+            post: this.post
         }
         
         // TODO: API Call for initial data
+        this.loadArticle();
+    }
+    
+    loadArticle = () => {
+        let path = window.location.pathname.split('/').filter(i => i != '').pop();
+        const url = `http://localhost:8000/api/post/${path}`
+
+        fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            // if (!this.totalPages) this.totalPages = json.data.last_page
+            console.log('POST FOUND')
+            console.log(json)
+            this.post = {
+                title: json.title,
+                content: json.content,
+                description: json.description,
+                path: path
+            }
+
+            this.setState({
+                post: this.post
+            })
+        })
     }
 
     sendToDB() {
         console.log('Saving');
-        console.log(this.post.title != null ? this.post.title.blocks[0].text : null)
+        console.log(this.state.post.title != null ? this.state.post.title.blocks[0].text : null)
 
         return;
     }
@@ -44,6 +69,9 @@ class Post extends App {
     render() {
         // Values change based on initial response from server
         const { isEditing, isOwner } = this.state
+
+        console.log('RERENDERED')
+        console.log(this.state.post)
 
         return (
             <Standard className={[styles.stdBgWhite]}>
@@ -55,20 +83,24 @@ class Post extends App {
                     type={'title'}
                     // Saves post title with draftJS content
                     callBackSaveData={(data) => {
-                    this.post.title = data;
+                        this.post.title = data;
+
+                        this.setState({ post: this.post })
                     }}
                     readOnly={!isOwner || !isEditing}
-                    value={null} // Initial no content, should be prefilled by API
+                    value={this.state.post.title} // Initial no content, should be prefilled by API
                 />
                 <PostContent
                     key={2}
                     type={'content'}
                     // Saves post content with draftJS content
                     callBackSaveData={(data) => {
-                    this.post.content = data;
+                        this.post.content = data;
+
+                        this.setState({ post: this.post })
                     }}
                     readOnly={!isOwner || !isEditing}
-                    value={null} // Initial no content, should be prefilled by API
+                    value={this.state.post.content} // Initial no content, should be prefilled by API
                 />
                 </div>
                 {
