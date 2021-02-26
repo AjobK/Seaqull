@@ -50,7 +50,7 @@ class RegisterPrompt extends Component {
     })
     .catch(res => {
       const { user_name, email, password, recaptcha } = res.response.data.errors
-      
+
       this.setState({
         user_name: user_name || [],
         email: email || [],
@@ -89,28 +89,28 @@ class RegisterPrompt extends Component {
       this.captcha.reset()
       this.captcha.execute()
     }
-    setTimeout( () => { 
-      this.setState({
-        user_name: null,
-        email: null,
-        password: null,
-        recaptcha: null,
-      })
-    }, 3000);
+    // setTimeout( () => { 
+    //   this.setState({
+    //     user_name: null,
+    //     email: null,
+    //     password: null,
+    //     recaptcha: null,
+    //   })
+    // }, 3000);
   }
   onLoadRecaptcha = () => {
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
     }
-    setTimeout( () => { 
-      this.setState({
-        user_name: null,
-        email: null,
-        password: null,
-        recaptcha: null,
-      })
-  }, 3000);
+  //   setTimeout( () => { 
+  //     this.setState({
+  //       user_name: null,
+  //       email: null,
+  //       password: null,
+  //       recaptcha: null,
+  //     })
+  // }, 3000);
   }
   
   verifyCallback = (recaptchaToken) => {
@@ -119,6 +119,9 @@ class RegisterPrompt extends Component {
   }
 
   render() {
+    console.log('RENDERING AGAIN')
+    console.log(this.state)
+    console.log('-------------')
     const { user_name, email, password, recaptcha } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
