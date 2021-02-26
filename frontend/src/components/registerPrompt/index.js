@@ -41,26 +41,16 @@ class RegisterPrompt extends Component {
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
-
-    Axios.post('/register', payload)
-    .then(res => {
-      Axios.get('/user', {
-        mode:'cors',
-        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type':'application/json', 'Authorization': `Bearer ${res.data.token}` }
-      })
-      .then(user => {
-        localStorage.setItem('token', res.data.token)
-
-        return user.data.user
-      })
-      .then(user => {
-          this.props.store.user.fillUserData(user)
-          this.goToProfile()
-      })
+    console.log(payload)
+    Axios.post('/profile/register', payload, {withCredentials: true})
+    .then(res => {  
+      console.log(res);   
+      this.props.store.user.fillUserData(res.data.user);     
+      this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
       const { user_name, email, password, recaptcha } = res.response.data.errors
-  
+      
       this.setState({
         user_name: user_name || [],
         email: email || [],
@@ -71,8 +61,8 @@ class RegisterPrompt extends Component {
     })
   }
 
-  goToProfile = () => {
-    this.props.history.push('/profile')
+  goToProfile = (username) => {
+    this.props.history.push('/profile/' + username)
   }
 
   onSubmit = (e) => {
