@@ -29,13 +29,11 @@ class Post extends App {
                 level: 0,                                           // Level of user
                 title: 'Software Engineer'                          // Currently selected title by ID
             },
+            loaded: false,
             post: this.post
         }
-        
-        // TODO: API Call for initial data
-        this.loadArticle();
     }
-    
+
     loadArticle = () => {
         let path = window.location.pathname.split('/').filter(i => i != '').pop();
         const url = `http://localhost:8000/api/post/${path}`
@@ -44,8 +42,6 @@ class Post extends App {
         .then(response => response.json())
         .then(json => {
             // if (!this.totalPages) this.totalPages = json.data.last_page
-            console.log('POST FOUND')
-            console.log(json)
             this.post = {
                 title: json.title,
                 content: json.content,
@@ -53,10 +49,18 @@ class Post extends App {
                 path: path
             }
 
+            console.log('SET STATE HERE')
             this.setState({
-                post: this.post
+                post: this.post,
+                loaded: true
             })
+
         })
+    }
+
+    componentDidMount() {
+        // TODO: API Call for initial data
+        this.loadArticle();
     }
 
     sendToDB() {
@@ -70,8 +74,7 @@ class Post extends App {
         // Values change based on initial response from server
         const { isEditing, isOwner } = this.state
 
-        console.log('RERENDERED')
-        console.log(this.state.post)
+        if (!this.state.loaded) return (<h1>Not loaded</h1>) 
 
         return (
             <Standard className={[styles.stdBgWhite]}>
@@ -79,7 +82,6 @@ class Post extends App {
                 <Section noTitle>
                 <div className={styles.renderWrapper}>
                 <PostContent
-                    key={1}
                     type={'title'}
                     // Saves post title with draftJS content
                     callBackSaveData={(data) => {
@@ -91,7 +93,6 @@ class Post extends App {
                     value={this.state.post.title} // Initial no content, should be prefilled by API
                 />
                 <PostContent
-                    key={2}
                     type={'content'}
                     // Saves post content with draftJS content
                     callBackSaveData={(data) => {
