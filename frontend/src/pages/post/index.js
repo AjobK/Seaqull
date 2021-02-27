@@ -49,10 +49,10 @@ class Post extends App {
                 path: path
             }
 
-            console.log('SET STATE HERE')
             this.setState({
                 post: this.post,
-                loaded: true
+                loaded: true,
+                isOwner: json.isOwner
             })
 
         })

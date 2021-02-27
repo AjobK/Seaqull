@@ -2,6 +2,11 @@ import { Request, Response } from 'express'
 import PostDAO from '../dao/postDao'
 import post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
+import { decode } from 'jsonwebtoken';
+import UserDAO from '../dao/userDao'
+import UserDao from '../dao/userDao';
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 class PostService {
     private dao: PostDAO
@@ -18,9 +23,19 @@ class PostService {
 
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.params.path)
+        const { JWT_SECRET } = process.env
+
+        let decodedId = -1;
+
+        try {
+            let decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
+            let user = await new UserDao().getUserByUsername(decodedToken.username);
+            decodedId = user.id;
+        } catch (e) {}
+
 
         if (req.params.path && foundPost)
-            return res.status(200).json(foundPost)
+            return res.status(200).json({ isOwner: foundPost.user_id == decodedId, ...foundPost})
         else
             return res.status(404).json({ 'message': 'No post found on that path' })
     }

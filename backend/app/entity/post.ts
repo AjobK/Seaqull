@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import user from './user'
 
 @Entity()
@@ -6,7 +6,10 @@ export class post extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @OneToOne(() => user, user => user.id)
+    @Column({
+        nullable: true
+    })
+    @ManyToOne(() => user, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
     user_id: number
 

@@ -94,7 +94,7 @@ class PostContent extends Component {
   }
 
   render() {
-    const { type, readOnly, value } = this.props
+    const { type, readOnly } = this.props
 
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
