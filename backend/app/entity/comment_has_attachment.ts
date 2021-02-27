@@ -9,11 +9,11 @@ export class comment_has_attachment extends BaseEntity {
 
     @OneToOne(() => comment)
     @JoinColumn({ name: 'comment_id', referencedColumnName: 'id' })
-    comment_id: number
+    comment: comment
 
     @OneToOne(() => attachment)
     @JoinColumn({ name: 'attachment_id', referencedColumnName: 'id' })
-    attachment_id: number
+    attachment: attachment
 
     @CreateDateColumn()
     created_at: Date

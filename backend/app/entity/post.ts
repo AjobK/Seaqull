@@ -8,7 +8,7 @@ export class post extends BaseEntity {
 
     @OneToOne(() => user, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number
+    user: user
 
     @Column()
     title: string

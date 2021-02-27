@@ -1,7 +1,7 @@
 import { define } from 'typeorm-seeding'
 import { role } from '../entity/role'
 
-define(role, () => {
+define(role, ():role => {
     const roleFake = new role()
 
     roleFake.id = 1

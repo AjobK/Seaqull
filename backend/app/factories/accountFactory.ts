@@ -6,7 +6,7 @@ define(account, () => {
     const acc = new account()
 
     const createRole = factory(role)() as any
-    acc.role_id = createRole.id
+    acc.role = createRole
     acc.user_name = 'user'
     acc.email = 'user@gmail.com'
     acc.last_ip = '127.0.0.1'

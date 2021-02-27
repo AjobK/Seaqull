@@ -8,7 +8,7 @@ export class account extends BaseEntity {
 
     @ManyToOne(() => role, role => role.id)
     @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
-    role_id: number
+    role: role
 
     @Column({ unique: true })
     user_name: string

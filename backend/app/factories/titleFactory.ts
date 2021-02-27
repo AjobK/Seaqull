@@ -1,7 +1,7 @@
 import { define } from 'typeorm-seeding'
 import { title } from '../entity/title'
 
-define(title, () => {
+define(title, ():title => {
     const titleFake = new title()
 
     titleFake.id = 1

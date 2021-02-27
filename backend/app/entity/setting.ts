@@ -8,7 +8,7 @@ export class setting extends BaseEntity {
 
     @ManyToOne(() => user, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number
+    user: user
 
     @Column()
     key: string
