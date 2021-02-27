@@ -109,7 +109,7 @@ class UserService {
         // creating token
         const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
-        res.setHeader('Set-Cookie', `token=${token} HttpOnly ${ SECURE == 'true' ? 'Secure' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()} path=/`)
+        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`);
         res.status(200).json({
             user: createAccount
         })

@@ -23,7 +23,6 @@ class UserDao {
     public async saveUser(u: user): Promise<user>{
         const repositoryUser = await DatabaseConnector.getRepositoryUser()
         const user = await repositoryUser.save(u)
-        console.log(user)
         return user
     }
 }
