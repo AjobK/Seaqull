@@ -1,23 +1,25 @@
-const passport = require('passport')
-const passportJWT = require('passport-jwt')
-const JWTStrategy = passportJWT.Strategy
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
-module.exports = (res) => {
-    const cookieExtractor = (req) => {
+const { JWT_SECRET } = process.env;
 
-        const { token } = req.cookies
-        return token
+module.exports = async (req, res, next) => {
+
+    if (!req.cookies) return res.status(401).send('Not authorized');
+
+    const { token } = req.cookies;
+
+    if (!token) return res.status(401).send('Not authorized');
+
+    let decodedToken = '';
+
+    try{
+        decodedToken = jwt.verify(token, JWT_SECRET);
+    } catch (error) {
+        return res.status(422).send('Token invalid');
     }
 
-    passport.use('jwt', new JWTStrategy({
-        jwtFromRequest: cookieExtractor,
-        secretOrKey: process.env.JWT_SECRET
-    }, (jwtPayload, done) => {
-        const { expiration } = jwtPayload
-        if (Date.now() > expiration) {
-            return res.status(422).send('Token invalid')
-        }
-        done(null, jwtPayload)
-    }))
+    req.decoded = decodedToken;
+
+    next();
 }
