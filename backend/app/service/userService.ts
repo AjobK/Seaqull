@@ -3,7 +3,6 @@ import TitleDAO from '../dao/titleDao'
 import UserDao from '../dao/userDao'
 import isEmail from 'validator/lib/isEmail'
 const jwt = require('jsonwebtoken')
-const passport = require('passport')
 const matches = require('validator/lib/matches')
 const isStrongPassword = require('validator/lib/isStrongPassword')
 import { ReCAPTCHA } from 'node-grecaptcha-verify'
@@ -14,8 +13,6 @@ import { v4 as uuidv4 } from 'uuid'
 import user from '../entity/user'
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
-
-require('../util/passport')(passport)
 
 class UserService {
     private dao: UserDao
@@ -55,23 +52,16 @@ class UserService {
 
         // creating payload
         const payload = {
-            isOwner: false,
+            isOwner: decodedToken ? true : false,
             username: username,
             experience: user.experience,
             title: title.name,
             posts: ''
         }
 
-        // check if user is the owner
-        if(decodedToken.username == username) {
-            // check if jwt is valid
-            passport.authenticate('jwt', { session: false })
-            // set owner in payload
-            payload.isOwner = true
-        }
-
         res.status(200)
         res.json({ 'profile': payload })
+
         return res
     }
 

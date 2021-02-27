@@ -1,9 +1,6 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import UserService from '../service/userService'
-const passport = require('passport')
-
-require('../util/passport')(passport)
 
 class UserController implements ControllerBase{
     public profile = '/profile/:username?'
