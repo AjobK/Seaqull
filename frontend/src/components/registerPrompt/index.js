@@ -11,7 +11,7 @@ class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      user_name: null,
+      username: null,
       email: null,
       password: null,
       recaptcha: null,
@@ -28,7 +28,7 @@ class RegisterPrompt extends Component {
 
   auth = () => {
     this.setState({
-      user_name: 'loading',
+      username: 'loading',
       email: 'loading',
       password: 'loading'
     })
@@ -36,7 +36,7 @@ class RegisterPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      user_name: document.getElementById(this.elId.user_name).value,
+      username: document.getElementById(this.elId.username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
@@ -49,10 +49,10 @@ class RegisterPrompt extends Component {
       this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
-      const { user_name, email, password, recaptcha } = res.response.data.errors
+      const { username, email, password, recaptcha } = res.response.data.errors
 
       this.setState({
-        user_name: user_name || [],
+        username: username || [],
         email: email || [],
         password: password || [],
         recaptcha: recaptcha || [],
@@ -68,7 +68,7 @@ class RegisterPrompt extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     this.setState({
-      user_name: 'loading',
+      username: 'loading',
       email: 'loading',
       password: 'loading'
     })
@@ -122,7 +122,7 @@ class RegisterPrompt extends Component {
     console.log('RENDERING AGAIN')
     console.log(this.state)
     console.log('-------------')
-    const { user_name, email, password, recaptcha } = this.state
+    const { username, email, password, recaptcha } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
     return (
@@ -131,7 +131,7 @@ class RegisterPrompt extends Component {
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput name={'user_name'} errors={user_name} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
