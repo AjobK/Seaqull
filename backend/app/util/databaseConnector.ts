@@ -3,6 +3,7 @@ import { account } from '../entity/account'
 import post from '../entity/post'
 import title from '../entity/title'
 import user from '../entity/user'
+import comment from '../entity/comment'
 
 class DatabaseConnector{
     private static connection: Connection
@@ -32,6 +33,13 @@ class DatabaseConnector{
     public static getRepositoryTitle = async (): Promise<any> => {
         await DatabaseConnector.checkConnection()
         const repository = DatabaseConnector.connection.getRepository(title)
+        return repository
+    }
+
+    // returns the comment repository
+    public static getRepositoryComment = async (): Promise<any> => {
+        await DatabaseConnector.checkConnection()
+        const repository = DatabaseConnector.connection.getRepository(comment)
         return repository
     }
 
