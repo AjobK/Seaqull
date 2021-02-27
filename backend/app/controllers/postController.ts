@@ -1,9 +1,6 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import PostService from '../service/postService'
-const passport = require('passport')
-
-require('../util/passport')(passport)
 
 class PostController implements ControllerBase{
     public post = '/post'

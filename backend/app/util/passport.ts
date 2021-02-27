@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const { JWT_SECRET } = process.env;
 
-module.exports = async (req, res, next) => {
+module.exports = (req, res, next) => {
 
     if (!req.cookies) return res.status(401).send('Not authorized');
 
