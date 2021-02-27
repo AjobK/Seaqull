@@ -6,6 +6,6 @@ define(title, () => {
 
     titleFake.id = 1
     titleFake.created_at = new Date()
-    titleFake.name = 'hachling'
+    titleFake.name = 'hatchling'
     return titleFake
 })
