@@ -1,23 +1,23 @@
-import ControllerBase from '../interfaces/ControllerBase';
-import * as express from 'express';
-import authorizationService from '../service/authorizationService';
+import ControllerBase from '../interfaces/ControllerBase'
+import * as express from 'express'
+import authorizationService from '../service/authorizationService'
 
 class AuthorizationController implements ControllerBase{
-    public login = '/login';
-    public logout = '/logout';
-    public register = '/register';
-    public router = express.Router();
-    private authService: authorizationService;
+    public login = '/login'
+    public logout = '/logout'
+    public register = '/register'
+    public router = express.Router()
+    private authService: authorizationService
 
     constructor(){
-        this.authService = new authorizationService();
-        this.initRoutes();
+        this.authService = new authorizationService()
+        this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.post(this.login, this.authService.login);
-        this.router.post(this.register, this.authService.login);
-        this.router.get(this.logout, this.authService.logout);
+        this.router.post(this.login, this.authService.login)
+        this.router.post(this.register, this.authService.login)
+        this.router.get(this.logout, this.authService.logout)
     }
 }
-export default AuthorizationController;
+export default AuthorizationController

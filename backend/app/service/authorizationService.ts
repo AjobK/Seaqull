@@ -36,25 +36,25 @@ class PostService {
             return res.status(400).send({
                 error: ['cannot login yet'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
-            });
+            })
         }else {
             // check if username and password are correct if not return error
-            const validation = this.validateAccountRequest(account,username,password);
+            const validation = this.validateAccountRequest(account,username,password)
             if(validation != null){
-                return res.status(400).send(validation);
+                return res.status(400).send(validation)
             }
 
             // creating payload for token
             const payload = {
                 username: username,
                 expiration: Date.now() + parseInt(expirationtimeInMs)
-            };
+            }
 
             // creating token
-            const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
+            const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
             // remove unnecessary data
-            account = this.cleanAccount(account);
+            account = this.cleanAccount(account)
 
             // set cookie header
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`);
@@ -73,37 +73,37 @@ class PostService {
                 if (!bcrypt.compareSync(password, account.password)){
                     // check if the user attempted more then 3 logins
                     if(account.login_attempts_counts != 2){
-                        account.login_attempts_counts++;
-                        this.accountDao.updateAccount(account);
-                        return { error: ['Incorrect username or password'] };
+                        account.login_attempts_counts++
+                        this.accountDao.updateAccount(account)
+                        return { error: ['Incorrect username or password'] }
                     } else {
                         // lock account for 30 seconds
-                        account.login_attempts_counts = null;
-                        account.locked_to = Date.now()+30000;
-                        this.accountDao.updateAccount(account);
-                        return { error: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 };
+                        account.login_attempts_counts = null
+                        account.locked_to = Date.now()+30000
+                        this.accountDao.updateAccount(account)
+                        return { error: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
                     }
                 } else {
                     // if login is successful we return null
-                    return null;
+                    return null
                 }
             } else {
-                return { error: ['Incorrect username or password'] };
+                return { error: ['Incorrect username or password'] }
             }
         } catch (error) {
-            return { error: ['Incorrect username or password'] };
+            return { error: ['Incorrect username or password'] }
         }
     }
 
     // function removes all unnecessary data
     private cleanAccount = (account: account): account => {
-        delete account.password;
-        delete account.changed_pw_at;
-        delete account.login_attempts_counts;
-        delete account.last_ip;
-        delete account.locked_to;
+        delete account.password
+        delete account.changed_pw_at
+        delete account.login_attempts_counts
+        delete account.last_ip
+        delete account.locked_to
 
-        return account;
+        return account
     }
 
     // function user for logout
@@ -115,11 +115,11 @@ class PostService {
             .status(200)
             .json({
                 message: 'You have logged out'
-            });
+            })
         } else {
             res.status(401).json({
                 error: 'Invalid jwt'
-            });
+            })
         }
     }
 }

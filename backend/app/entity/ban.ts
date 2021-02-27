@@ -1,31 +1,31 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { account } from './account';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { account } from './account'
 
 @Entity()
 export class ban extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @ManyToOne(() => account, account => account.id)
     @JoinColumn({ name: 'staff_account_id', referencedColumnName: 'id' })
-    staff_account_id: number;
+    staff_account_id: number
 
     @OneToOne(() => account)
-    user_account_id: number;
+    user_account_id: number
 
     @Column()
-    reason: string;
+    reason: string
 
     @Column()
-    description: string;
+    description: string
 
     @Column()
-    banned_at: Date;
+    banned_at: Date
 
     @Column()
-    banned_to: Date;
+    banned_to: Date
 
     @Column()
-    ip_ban: number;
+    ip_ban: number
 }
-export default ban;
+export default ban

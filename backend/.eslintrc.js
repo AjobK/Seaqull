@@ -19,7 +19,6 @@ module.exports = {
     'rules': {
         'quotes': [2, 'single', { 'avoidEscape': false }],
         '@typescript-eslint/no-explicit-any': 'off',
-        'semi': 'error',
         'no-trailing-spaces': 'error',
         'object-curly-spacing': ['error', 'always'],
         'array-bracket-spacing': ['error', 'never'],

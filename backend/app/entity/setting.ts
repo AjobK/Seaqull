@@ -1,19 +1,19 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import user from './user';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import user from './user'
 
 @Entity()
 export class setting extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @ManyToOne(() => user, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number;
+    user_id: number
 
     @Column()
-    key: string;
+    key: string
 
     @Column()
-    value: string;
+    value: string
 }
-export default setting;
+export default setting

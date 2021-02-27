@@ -2,4 +2,4 @@ interface ControllerBase {
     initRoutes(): void
 }
 
-export default ControllerBase;
+export default ControllerBase

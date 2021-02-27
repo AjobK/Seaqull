@@ -1,11 +1,11 @@
-import { define } from 'typeorm-seeding';
-import { role } from '../entity/role';
+import { define } from 'typeorm-seeding'
+import { role } from '../entity/role'
 
 define(role, () => {
-    const roleFake = new role();
+    const roleFake = new role()
 
-    roleFake.id = 1;
-    roleFake.name = 'gebruiker';
-    roleFake.created_at = new Date();
-    return roleFake;
-});
+    roleFake.id = 1
+    roleFake.name = 'gebruiker'
+    roleFake.created_at = new Date()
+    return roleFake
+})

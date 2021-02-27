@@ -1,13 +1,13 @@
-import * as cors from 'cors';
-import * as bodyParser from 'body-parser';
+import * as cors from 'cors'
+import * as bodyParser from 'body-parser'
 
-import PostController from './controllers/postController';
-import serverConstructor from './serverConstructor';
-import AuthorizationController from './controllers/authorizationController';
-import UserController from './controllers/userController';
-const cookieParser = require('cookie-parser');
+import PostController from './controllers/postController'
+import serverConstructor from './serverConstructor'
+import AuthorizationController from './controllers/authorizationController'
+import UserController from './controllers/userController'
+const cookieParser = require('cookie-parser')
 
-const { FRONTEND_URL } = process.env;
+const { FRONTEND_URL } = process.env
 
 const backend = new serverConstructor({
     port: 8000,
@@ -25,6 +25,6 @@ const backend = new serverConstructor({
             credentials: true
         }),
     ]
-});
+})
 
-export default backend;
+export default backend

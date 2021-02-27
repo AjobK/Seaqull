@@ -1,9 +1,9 @@
-import ControllerBase from '../interfaces/ControllerBase';
-import * as express from 'express';
-import UserService from '../service/userService';
-const passport = require('passport');
+import ControllerBase from '../interfaces/ControllerBase'
+import * as express from 'express'
+import UserService from '../service/userService'
+const passport = require('passport')
 
-require('../util/passport')(passport);
+require('../util/passport')(passport)
 
 class UserController implements ControllerBase{
     public profile = '/profile/:username?'
@@ -12,13 +12,13 @@ class UserController implements ControllerBase{
     private profileService: UserService
 
     constructor(){
-        this.profileService = new UserService();
-        this.initRoutes();
+        this.profileService = new UserService()
+        this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.post(this.register, this.profileService.register);
-        this.router.get (this.profile, this.profileService.getProfile);
+        this.router.post(this.register, this.profileService.register)
+        this.router.get (this.profile, this.profileService.getProfile)
     }
 }
-export default UserController;
+export default UserController
