@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import PostDAO from '../dao/postDao';
+import PostDAO from '../dao/postDAO';
+import post from '../entity/post';
+import { v4 as uuidv4 } from 'uuid';
 
 class PostService {
     private dao: PostDAO;
@@ -14,10 +16,29 @@ class PostService {
         return res.status(200).json(posts);
     }
 
-    public createPost = async (req: Request, res: Response): Promise<Response> => {
-        await this.dao.createPost();
+    public getPostByPath = async (req: Request, res: Response): Promise<any> => {
+        let foundPost = await this.dao.getPostByPath(req.params.path);
 
-        return res;
+        if (req.params.path && foundPost)
+            return res.status(200).json(foundPost);
+        else
+            return res.status(404).json({ "message": "No post found on that path" });
+    }
+
+    public createPost = async (req: Request, res: Response): Promise<Response> => {
+        const newPost = new post();
+        const { title, description, content } = req.body
+
+        newPost.title = title;
+        newPost.description = description;
+        newPost.content = content;
+        newPost.path = uuidv4();
+        newPost.published_at = new Date();
+        newPost.created_at = new Date();
+
+        await this.dao.createPost(newPost);
+
+        return res.status(200).json({ message: 'Post added!' });
     }
 }
 export default PostService;

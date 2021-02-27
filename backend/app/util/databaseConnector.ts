@@ -1,6 +1,7 @@
 import { Connection, createConnection } from 'typeorm';
 import { account } from '../entity/account';
 import post from '../entity/post';
+import title from '../entity/title';
 import user from '../entity/user';
 
 class DatabaseConnector{
@@ -24,6 +25,13 @@ class DatabaseConnector{
     public static getRepositoryUser = async (): Promise<any> => {
         await DatabaseConnector.checkConnection();
         const repository = DatabaseConnector.connection.getRepository(user);
+        return repository;
+    }
+
+    // returns the post repository
+    public static getRepositoryTitle = async (): Promise<any> => {
+        await DatabaseConnector.checkConnection();
+        const repository = DatabaseConnector.connection.getRepository(title);
         return repository;
     }
 

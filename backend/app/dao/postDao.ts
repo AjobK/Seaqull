@@ -7,9 +7,17 @@ class PostDAO {
         return postList;
     }
 
-    public async createPost(): Promise<any> {
+    public async getPostByPath(path: string): Promise<post> {
+        const repository = await DatabaseConnector.getRepositoryPost();
+        const foundPost =  await repository.findOne({ path: path });
+
+        return foundPost;
+    }
+
+    public async createPost(newPost: post): Promise<any> {
         const repository = await DatabaseConnector.getRepositoryPost();
 
+        return repository.save(newPost)
     }
 }
 export default PostDAO;

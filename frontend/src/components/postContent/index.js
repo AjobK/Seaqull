@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw } from 'draft-js'
+import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
 import '../../DraftFallback.css'
 import { StyleButton } from '../../components'
 
@@ -21,8 +21,11 @@ class PostContent extends Component {
     this.editorInput = React.createRef()
 
     this.state = {
+      // editorState: value != null
+      //   ? EditorState.createWithContent(convertFromRaw(value))
+      //   : EditorState.createEmpty(),
       editorState: value != null
-        ? EditorState.createWithContent(convertFromRaw(value))
+        ? EditorState.createWithContent(ContentState.createFromText(value))
         : EditorState.createEmpty(),
       focused: false,
       toolTipPosition: {
@@ -59,7 +62,8 @@ class PostContent extends Component {
       const currentUnix = ~~(Date.now() / 1000)
 
       // if (currentUnix >= this.nextCallBackTime) {
-        this.props.callBackSaveData(convertToRaw(contentState))
+        if (this.props.callBackSaveData)
+          this.props.callBackSaveData(convertToRaw(contentState))
         this.nextCallBackTime = currentUnix + 10 // Adding delay for next callback
       // }
     })
@@ -104,8 +108,7 @@ class PostContent extends Component {
   }
 
   render() {
-    const { type, readOnly } = this.props
-    const { editorState } = this.state
+    const { type, readOnly, value } = this.props
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     // if (!store.user.isEditing || !store.post.isOwner || noEdit) {
@@ -125,6 +128,10 @@ class PostContent extends Component {
     //     </div>
     //   )
     // }
+
+    let editorState = value != null
+        ? EditorState.createWithContent(ContentState.createFromText(value))
+        : EditorState.createEmpty()
 
     return (
       <div>

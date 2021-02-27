@@ -63,7 +63,6 @@ class LoginPrompt extends Component {
       this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
-      console.log( res.response.data.error )
       const { error, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
