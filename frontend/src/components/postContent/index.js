@@ -89,6 +89,10 @@ class PostContent extends Component {
     return editorState;
   }
 
+  componentDidMount() {
+    this.setState({ editorState: this.getEditorStateByContent(this.props.value) })
+  }
+
   render() {
     const { type, readOnly, value } = this.props
 
