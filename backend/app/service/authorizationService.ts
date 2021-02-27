@@ -25,7 +25,7 @@ class PostService {
         if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false });
 
         // getting account from database
-        let account = await this.accountDao.getUserByUsername(username);
+        let account = await this.accountDao.getAccountByUsername(username);
 
         if(account == null) {
             return res.status(400).json({ error: ['Incorrect username or password'] });

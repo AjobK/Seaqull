@@ -50,7 +50,7 @@ class UserService {
 
         // get user with username
         const user = await this.dao.getUserByUsername(decodedToken.username)
-        // get users title
+
         const title = await this.titleDAO.getTitleById(user.title_id)
 
         // creating payload
@@ -58,7 +58,7 @@ class UserService {
             isOwner: false,
             username: username,
             experience: user.experience,
-            title: title,
+            title: title.name,
             posts: ''
         }
 

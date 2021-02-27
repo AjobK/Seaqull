@@ -19,6 +19,7 @@ class UserDao {
         const user = await repositoryUser.findOne({ account_id: account })
         return user
     }
+
     public async saveUser(u: user): Promise<user>{
         const repositoryUser = await DatabaseConnector.getRepositoryUser()
         const user = await repositoryUser.save(u)

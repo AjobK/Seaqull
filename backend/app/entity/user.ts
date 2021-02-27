@@ -7,10 +7,12 @@ export class user extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Column()
     @OneToOne(() => account)
     @JoinColumn({ name: 'account_id', referencedColumnName: 'id' })
     account_id: number
 
+    @Column()
     @ManyToOne(() => title, title => title.id)
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title_id: number
