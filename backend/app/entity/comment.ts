@@ -8,12 +8,12 @@ export class comment extends BaseEntity {
 
     @OneToOne(() => user, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number
+    user: number
 
     @Column()
     path: string
 
-    @Column('longtext')
+    @Column()
     content: string
 
     @CreateDateColumn({ nullable: true })

@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon } from '../../components'
+import { PostBanner, PostContent, Button, Icon, CommentSection } from '../../components'
 import { withRouter } from 'react-router-dom'
 import styles from './post.scss'
 

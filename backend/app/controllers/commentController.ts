@@ -1,6 +1,7 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import CommentService from '../service/commentService'
+const isAuth = require('../middleware/isAuth');
 
 class CommentController implements ControllerBase{
     public comment = '/comment'
@@ -14,7 +15,7 @@ class CommentController implements ControllerBase{
 
     public initRoutes(): void {
         this.router.get(this.comment + '/:path', this.commentService.getComments)
-        this.router.post(this.comment, this.commentService.createComment)
+        this.router.post(this.comment, isAuth, this.commentService.createComment)
     }
 }
 
