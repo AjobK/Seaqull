@@ -7,12 +7,12 @@ export class user extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({ nullable: true })
     @OneToOne(() => account)
     @JoinColumn({ name: 'account_id', referencedColumnName: 'id' })
     account_id: number
 
-    @Column()
+    @Column({ nullable: true })
     @ManyToOne(() => title, title => title.id)
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title_id: number

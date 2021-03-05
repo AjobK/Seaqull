@@ -31,14 +31,14 @@ class UserService {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
 
         // getting username from parameters
-        let username = req.params.username
+        let recievedUsername = req.params.username
 
         // check if username is precent in the paramenters
-        if(!username){
+        if(!recievedUsername){
             // check if a username is present in payload
             if(decodedToken.username){
                 // if there is no username in params then use one in the jwt
-                username = decodedToken.username
+                recievedUsername = decodedToken.username
             } else {
                 // no username was found in payload nor was it found in the params
                 return res.status(404).json({ error: 'No username was given' })
@@ -53,7 +53,7 @@ class UserService {
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
-            username: username,
+            username: recievedUsername,
             experience: user.experience,
             title: title.name,
             posts: ''
@@ -68,15 +68,14 @@ class UserService {
     public register = async (req: Request, res: Response): Promise<Response> => {
         const userRequested = req.body
         const errors = {
-            user_name: [],
+            username: [],
             email: [],
             password: [],
             recaptcha: []
         }
-
-        const isUsernamNotValid = await this.checkValidUsername(userRequested.user_name)
+        const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
         if(isUsernamNotValid){
-            errors.user_name = [isUsernamNotValid]
+            errors.username = [isUsernamNotValid]
         }
 
         const isEmailNotValid = await this.checkValidEmail(userRequested.email)
@@ -99,7 +98,7 @@ class UserService {
         }
         const createAccount = await this.saveUser(req)
 
-
+        const newAccount = this.cleanAccount(createAccount);
         // creating payload for token
         const payload = {
             username: createAccount.user_name,
@@ -109,9 +108,9 @@ class UserService {
         // creating token
         const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
-        res.setHeader('Set-Cookie', `token=${token} HttpOnly ${ SECURE == 'true' ? 'Secure' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()} path=/`)
+        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`);
         res.status(200).json({
-            user: createAccount
+            user: newAccount
         })
         res.send()
     }
@@ -166,14 +165,14 @@ class UserService {
         acc.last_ip = req.ip
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
-        acc.user_name = u.user_name
+        acc.user_name = u.username
         acc.role_id = 1
         const createdAccount = await this.accountDAO.saveAccount(acc)
 
         const newUser = new user()
         newUser.account_id = createdAccount.id
         newUser.title_id = 1
-        newUser.display_name = u.user_name
+        newUser.display_name = u.username
         newUser.experience = 0
         newUser.custom_path = uuidv4()
         newUser.rows_scrolled = 0
