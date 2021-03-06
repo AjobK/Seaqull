@@ -1,11 +1,10 @@
 import { define } from 'typeorm-seeding'
-import { title } from '../entity/title'
+import { Title } from '../entity/title'
+import * as Faker from 'faker'
 
-define(title, () => {
-    const titleFake = new title()
-
-    titleFake.id = 1
+define(Title, (faker: typeof Faker):Title => {
+    const titleFake = new Title()
     titleFake.created_at = new Date()
-    titleFake.name = 'hatchling'
+    titleFake.name = faker.name.jobTitle()
     return titleFake
 })

@@ -2,18 +2,18 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, Pri
 import attachment from './attachment'
 import comment from './comment'
 
-@Entity()
-export class comment_has_attachment extends BaseEntity {
+@Entity('comment_has_attatchment')
+export class CommentHasAttachment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
     @OneToOne(() => comment)
     @JoinColumn({ name: 'comment_id', referencedColumnName: 'id' })
-    comment_id: number
+    comment: comment
 
     @OneToOne(() => attachment)
     @JoinColumn({ name: 'attachment_id', referencedColumnName: 'id' })
-    attachment_id: number
+    attachment: attachment
 
     @CreateDateColumn()
     created_at: Date
@@ -24,4 +24,4 @@ export class comment_has_attachment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default comment_has_attachment
+export default CommentHasAttachment

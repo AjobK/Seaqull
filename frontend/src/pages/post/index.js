@@ -45,7 +45,6 @@ class Post extends App {
         .then(json => {
             // if (!this.totalPages) this.totalPages = json.data.last_page
             console.log('POST FOUND')
-            console.log(json)
             this.post = {
                 title: json.title,
                 content: json.content,

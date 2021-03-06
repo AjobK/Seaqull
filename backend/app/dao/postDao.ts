@@ -1,22 +1,22 @@
 import DatabaseConnector from '../util/databaseConnector'
-import { post } from '../entity/post'
+import { Post } from '../entity/post'
+
 class PostDAO {
-    public async getPosts(): Promise<post[]> {
-        const repository = await DatabaseConnector.getRepositoryPost()
+    public async getPosts(): Promise<Post[]> {
+        const repository = await DatabaseConnector.getRepository('Post')
         const postList = await repository.find()
         return postList
     }
 
-    public async getPostByPath(path: string): Promise<post> {
-        const repository = await DatabaseConnector.getRepositoryPost()
+    public async getPostByPath(path: string): Promise<Post> {
+        const repository = await DatabaseConnector.getRepository('Post')
         const foundPost = await repository.findOne({ path: path })
 
         return foundPost
     }
 
-    public async createPost(newPost: post): Promise<any> {
-        const repository = await DatabaseConnector.getRepositoryPost()
-
+    public async createPost(newPost: Post): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('Post')
         return repository.save(newPost)
     }
 }

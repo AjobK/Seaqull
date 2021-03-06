@@ -41,10 +41,9 @@ class RegisterPrompt extends Component {
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
-    console.log(payload)
+
     Axios.post('/profile/register', payload, {withCredentials: true})
     .then(res => {  
-      console.log(res);   
       this.props.store.user.fillUserData(res.data.user);     
       this.goToProfile(res.data.user.user_name)
     })

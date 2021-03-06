@@ -1,8 +1,8 @@
 import { Factory, Seeder } from 'typeorm-seeding'
-import post from '../entity/post'
+import Post from '../entity/post'
 
 export default class CreatePost implements Seeder {
     public async run(factory: Factory): Promise<any> {
-        await factory(post)().createMany(10)
+        await factory(Post)().createMany(10)
     }
 }

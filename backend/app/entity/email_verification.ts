@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class email_verification extends BaseEntity {
+export class EmailVerification extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -17,4 +17,4 @@ export class email_verification extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default email_verification
+export default EmailVerification

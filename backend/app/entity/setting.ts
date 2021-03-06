@@ -1,14 +1,14 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import user from './user'
 
-@Entity()
-export class setting extends BaseEntity {
+@Entity('setting')
+export class Setting extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
     @ManyToOne(() => user, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number
+    user: user
 
     @Column()
     key: string
@@ -16,4 +16,4 @@ export class setting extends BaseEntity {
     @Column()
     value: string
 }
-export default setting
+export default Setting

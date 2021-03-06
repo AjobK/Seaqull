@@ -1,27 +1,28 @@
 import DatabaseConnector from '../util/databaseConnector';
-import { user } from '../entity/user';
+import { User } from '../entity/user';
 
 class UserDao {
-    public async getUserByUsername(username: string): Promise<user> {
-        const repositoryAccount = await DatabaseConnector.getRepositoryAccount()
+    public async getUserByUsername(username: string): Promise<User> {
+        const repositoryAccount = await DatabaseConnector.getRepository('Account')
         const account = await repositoryAccount.findOne({ user_name: username })
 
-        const repositoryUser = await DatabaseConnector.getRepositoryUser()
-        const user = await repositoryUser.findOne({ account_id: account })
+        const repositoryUser = await DatabaseConnector.getRepository('User')
+
+        const user = await repositoryUser.findOne({ where: { account: account }, relations: ['title'] })
         return user
     }
 
-    public async getUserByEmail(email: string): Promise<user> {
-        const repositoryAccount = await DatabaseConnector.getRepositoryAccount()
+    public async getUserByEmail(email: string): Promise<User> {
+        const repositoryAccount = await DatabaseConnector.getRepository('Account')
         const account = await repositoryAccount.findOne({ email: email })
 
-        const repositoryUser = await DatabaseConnector.getRepositoryUser()
-        const user = await repositoryUser.findOne({ account_id: account })
+        const repositoryUser = await DatabaseConnector.getRepository('User')
+        const user = await repositoryUser.findOne({ account: account })
         return user
     }
 
-    public async saveUser(u: user): Promise<user>{
-        const repositoryUser = await DatabaseConnector.getRepositoryUser()
+    public async saveUser(u: User): Promise<User>{
+        const repositoryUser = await DatabaseConnector.getRepository('User')
         const user = await repositoryUser.save(u)
         return user
     }

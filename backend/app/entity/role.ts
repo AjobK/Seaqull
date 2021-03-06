@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity()
-export class role extends BaseEntity {
+@Entity('role')
+export class Role extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -17,4 +17,4 @@ export class role extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default role
+export default Role

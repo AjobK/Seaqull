@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity()
-export class post_has_attachment extends BaseEntity {
+@Entity('post_has_attatchment')
+export class PostHasAttachment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -17,4 +17,4 @@ export class post_has_attachment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default post_has_attachment
+export default PostHasAttachment

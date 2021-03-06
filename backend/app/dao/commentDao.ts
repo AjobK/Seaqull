@@ -1,24 +1,19 @@
 import DatabaseConnector from '../util/databaseConnector'
-import { comment } from '../entity/comment'
+import { Comment } from '../entity/comment'
 
 class CommentDAO {
-    public async getComments(path: string): Promise<comment[]> {
-        const repository = await DatabaseConnector.getRepositoryComment()
-        // const commentList = await repository.find({ path: path })
-        console.log(path)
-        const commentList = await repository
-            .createQueryBuilder('comment')
-            .select(['comment', 'user.display_name'])
-            .leftJoin('comment.user', 'user')
-            .where('comment.path = :path', { path: path })
-            .getMany()
+    private repo = 'Comment'
+
+    public async getComments(path: string): Promise<Comment[]> {
+        const repository = await DatabaseConnector.getRepository(this.repo)
+
+        const commentList = await repository.find({ where: { path: path }, relations: ['user'] })
 
         return commentList
     }
 
-    public async createComment(newComment: comment): Promise<any> {
-        console.log(newComment)
-        const repository = await DatabaseConnector.getRepositoryComment()
+    public async createComment(newComment: Comment): Promise<any> {
+        const repository = await DatabaseConnector.getRepository(this.repo)
 
         return repository.save(newComment)
     }

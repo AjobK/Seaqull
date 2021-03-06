@@ -1,8 +1,8 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm'
 import user from './user'
 
-@Entity()
-export class user_activity extends BaseEntity {
+@Entity('user_activity')
+export class UserActivity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -22,4 +22,4 @@ export class user_activity extends BaseEntity {
     @CreateDateColumn()
     created_at: Date
 }
-export default user_activity
+export default UserActivity

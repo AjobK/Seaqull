@@ -1,14 +1,14 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import user from './user'
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import User from './user'
 
-@Entity()
-export class comment extends BaseEntity {
+@Entity('comment')
+export class Comment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @OneToOne(() => user, user => user.id)
+    @ManyToOne(() => User, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user: number
+    user: User
 
     @Column()
     path: string
@@ -25,4 +25,4 @@ export class comment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default comment
+export default Comment

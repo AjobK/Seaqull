@@ -1,52 +1,14 @@
 import { Connection, createConnection } from 'typeorm'
-import { account } from '../entity/account'
-import post from '../entity/post'
-import title from '../entity/title'
-import user from '../entity/user'
-import comment from '../entity/comment'
 
 class DatabaseConnector{
     private static connection: Connection
 
-    // returns the post repository
-    public static getRepositoryPost = async (): Promise<any> => {
-        await DatabaseConnector.checkConnection()
-        const repository = DatabaseConnector.connection.getRepository(post)
-        return repository
-    }
-
-    // returns the account repository
-    public static getRepositoryAccount = async (): Promise<any> => {
-        await DatabaseConnector.checkConnection()
-        const repository = DatabaseConnector.connection.getRepository(account)
-        return repository
-    }
-
-    // returns the account repository
-    public static getRepositoryUser = async (): Promise<any> => {
-        await DatabaseConnector.checkConnection()
-        const repository = DatabaseConnector.connection.getRepository(user)
-        return repository
-    }
-
-    // returns the post repository
-    public static getRepositoryTitle = async (): Promise<any> => {
-        await DatabaseConnector.checkConnection()
-        const repository = DatabaseConnector.connection.getRepository(title)
-        return repository
-    }
-
-    // returns the comment repository
-    public static getRepositoryComment = async (): Promise<any> => {
-        await DatabaseConnector.checkConnection()
-        const repository = DatabaseConnector.connection.getRepository(comment)
-        return repository
-    }
-
-    private static checkConnection = async (): Promise<void> => {
+    public static getRepository = async (entityName: string): Promise<any> => {
         if(DatabaseConnector.connection == null){
             DatabaseConnector.connection = await createConnection()
         }
+        const repository = DatabaseConnector.connection.getRepository(entityName)
+        return repository
     }
 }
 

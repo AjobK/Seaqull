@@ -26,7 +26,7 @@ class CommentService {
         const { path, content } = req.body
         const user = await this.userDAO.getUserByUsername(req.decoded.username)
 
-        newComment.user = user.account_id
+        newComment.user = user
         newComment.path = path
         newComment.content = content
         newComment.created_at = new Date()
