@@ -1,19 +1,19 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { User } from './user'
-import post from './post'
+import { Post } from './post'
 
 @Entity('post_like')
 export class PostLike extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @ManyToOne(() => User, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user: number
+    user: User
 
-    @ManyToOne(() => post, post => post.id)
+    @ManyToOne(() => Post, post => post.id)
     @JoinColumn({ name: 'post_id', referencedColumnName: 'id' })
-    post: post
+    post: Post
 
     @Column()
     liked_at: Date
