@@ -1,20 +1,21 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
 import comment from './comment'
-import { user } from './user'
+import { User } from './user'
 
-@Entity()
-export class user_comment_like extends BaseEntity {
-    @ManyToOne(() => user, user => user.id)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+@Entity('user_comment_like')
+export class UserCommentLike extends BaseEntity {
     @PrimaryColumn()
-    user_id: number
+    id: number;
+
+    @ManyToOne(() => User, user => user.id)
+    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    user: number
 
     @ManyToOne(() => comment, comment => comment.id)
     @JoinColumn({ name: 'comment_id', referencedColumnName: 'id' })
-    @PrimaryColumn()
-    comment_id: number
+    comment: comment
 
     @Column()
     liked_at: Date
 }
-export default user_comment_like
+export default UserCommentLike

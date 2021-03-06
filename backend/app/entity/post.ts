@@ -1,17 +1,14 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import user from './user'
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import User from './user'
 
-@Entity()
-export class post extends BaseEntity {
+@Entity('post')
+export class Post extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({
-        nullable: true
-    })
-    @ManyToOne(() => user, user => user.id)
+    @OneToOne(() => User, user => user.id)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number
+    user: User
 
     @Column()
     title: string
@@ -40,4 +37,4 @@ export class post extends BaseEntity {
     @Column()
     published_at: Date
 }
-export default post
+export default Post

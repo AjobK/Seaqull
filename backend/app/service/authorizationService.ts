@@ -4,7 +4,7 @@ import accountDao from '../dao/accountDao';
 const jwt = require('jsonwebtoken');
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME;
 import * as bcrypt from 'bcrypt';
-import { account } from '../entity/account';
+import { Account } from '../entity/account';
 
 require('dotenv').config();
 const { SECURE } = process.env;
@@ -65,7 +65,7 @@ class PostService {
         }
     }
 
-    private validateAccountRequest = (account: account, username, password): any => {
+    private validateAccountRequest = (account: Account, username, password): any => {
         try {
             // check username
             if (username === account.user_name) {
@@ -96,7 +96,7 @@ class PostService {
     }
 
     // function removes all unnecessary data
-    private cleanAccount = (account: account): account => {
+    private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at
         delete account.login_attempts_counts

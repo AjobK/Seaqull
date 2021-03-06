@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import PostDAO from '../dao/postDao'
-import post from '../entity/post'
+import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
 import { decode } from 'jsonwebtoken';
 import UserDAO from '../dao/userDao'
@@ -41,7 +41,7 @@ class PostService {
     }
 
     public createPost = async (req: Request, res: Response): Promise<Response> => {
-        const newPost = new post()
+        const newPost = new Post()
         const { title, description, content } = req.body
 
         newPost.title = title

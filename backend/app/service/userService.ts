@@ -6,11 +6,12 @@ const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
 const isStrongPassword = require('validator/lib/isStrongPassword')
 import { ReCAPTCHA } from 'node-grecaptcha-verify'
-import account from '../entity/account'
+import Account from '../entity/account'
 import * as bcrypt from 'bcrypt'
 import AccountDAO from '../dao/accountDao'
 import { v4 as uuidv4 } from 'uuid'
-import user from '../entity/user'
+import User from '../entity/user'
+import RoleDao from '../dao/roleDao'
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
@@ -18,11 +19,13 @@ class UserService {
     private dao: UserDao
     private titleDAO: TitleDAO
     private accountDAO: AccountDAO
+    private roleDAO: RoleDao
 
     constructor() {
         this.dao = new UserDao()
         this.titleDAO = new TitleDAO()
         this.accountDAO = new AccountDAO()
+        this.roleDAO = new RoleDao()
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -48,14 +51,12 @@ class UserService {
         // get user with username
         const user = await this.dao.getUserByUsername(decodedToken.username)
 
-        const title = await this.titleDAO.getTitleById(user.title_id)
-
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
             username: recievedUsername,
             experience: user.experience,
-            title: title.name,
+            title: user.title.name,
             posts: ''
         }
 
@@ -159,19 +160,20 @@ class UserService {
         return null
     }
 
-    private async saveUser(req: Request):Promise<account> {
+    private async saveUser(req: Request):Promise<Account> {
         const u = req.body
-        const acc = new account()
+        const acc = new Account()
+
         acc.last_ip = req.ip
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
-        acc.role_id = 1
+        acc.role = await this.roleDAO.getRoleById(1)
         const createdAccount = await this.accountDAO.saveAccount(acc)
 
-        const newUser = new user()
-        newUser.account_id = createdAccount.id
-        newUser.title_id = 1
+        const newUser = new User()
+        newUser.account = createdAccount
+        newUser.title = await this.titleDAO.getTitleById(1);
         newUser.display_name = u.username
         newUser.experience = 0
         newUser.custom_path = uuidv4()
@@ -181,7 +183,7 @@ class UserService {
     }
 
     // function removes all unnecessary data
-    private cleanAccount = (account: account): account => {
+    private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at
         delete account.login_attempts_counts

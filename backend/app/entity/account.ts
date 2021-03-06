@@ -1,14 +1,14 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm'
-import role from './role'
+import Role from './role'
 
-@Entity()
-export class account extends BaseEntity {
+@Entity('account')
+export class Account extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => role, role => role.id)
+    @ManyToOne(() => Role, role => role.id)
     @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
-    role_id: number
+    role: Role
 
     @Column({ unique: true })
     user_name: string
@@ -34,4 +34,4 @@ export class account extends BaseEntity {
     @Column({ nullable: true })
     changed_pw_at: Date
 }
-export default account
+export default Account

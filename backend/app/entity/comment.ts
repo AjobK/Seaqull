@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity()
-export class comment extends BaseEntity {
+@Entity('comment')
+export class Comment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -17,4 +17,4 @@ export class comment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default comment
+export default Comment
