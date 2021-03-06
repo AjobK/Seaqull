@@ -4,6 +4,7 @@ import styles from './commentSection.scss'
 
 import { Comment } from '../'
 import { CommentForm } from '../'
+import { Section } from '../../layouts'
 
 class CommentSection extends Component {
     constructor(props) {
@@ -44,9 +45,11 @@ class CommentSection extends Component {
 
     render() {
         return (
-            <div>
-                <CommentForm />
-                { this.displayComments() }
+            <div className={styles.commentSection}>
+                <Section noTitle>
+                    <CommentForm />
+                    { this.displayComments() }
+                </Section>
             </div>
         )
     }

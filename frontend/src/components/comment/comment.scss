@@ -1,0 +1,71 @@
+@import '../../styles/index.scss';
+
+.comment {
+	margin-bottom: 20px;
+
+	&__body {
+		display: flex;
+		border-radius: 8px;
+		box-shadow: 0 5px 10px -2px rgba(0, 0, 0, .1);
+		width: 100%;
+		background-color: white;
+		max-width: $wrapper-width;
+	}
+
+	&__avatar {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		padding: 30px;
+
+		&Picture {
+			border-radius: 100%;
+			background-size: cover;
+			background-position: center;
+			width: 85px;
+			height: 85px;
+			position: relative;
+			cursor: pointer;
+		}
+
+		&Badge {
+			position: relative;
+			display: inline-block;
+			font-size: 0.8rem;
+			line-height: 0.8rem;
+			font-weight: bold;
+			padding: 0.25rem 1rem;
+			background-color: $primary;
+			color: $secondary;
+			border-radius: 100vh;
+			text-align: center;
+			transform: translateY(-50%);
+
+			border: 4px solid white;
+		}
+	}
+
+	&__main {
+		padding: 30px 30px 30px 0;
+		width: 100%;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		margin-bottom: 10px;
+
+		&Author {
+			font-size: 1.5rem;
+			font-weight: 600;
+		}
+
+		&PublishedTime {
+			display: flex;
+			color: $gray;
+			align-items: center;
+		}
+	}
+}
