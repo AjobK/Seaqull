@@ -1,8 +1,8 @@
 import DatabaseConnector from '../util/databaseConnector'
-import { title } from '../entity/title'
+import { Title } from '../entity/title'
 
 class TitleDAO {
-    public async getTitleById(id: number): Promise<title> {
+    public async getTitleById(id: number): Promise<Title> {
         const repository = await DatabaseConnector.getRepositoryTitle();
         const title = await repository.findOne({ id: id })
         return title

@@ -1,21 +1,19 @@
 import { OneToOne, BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm'
-import { account } from './account'
-import { title } from './title'
+import { Account } from './account'
+import { Title } from './title'
 
-@Entity()
-export class user extends BaseEntity {
+@Entity('user')
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ nullable: true })
-    @OneToOne(() => account)
+    @OneToOne(() => Account)
     @JoinColumn({ name: 'account_id', referencedColumnName: 'id' })
-    account_id: number
+    account: Account
 
-    @Column({ nullable: true })
-    @ManyToOne(() => title, title => title.id)
+    @ManyToOne(() => Title, title => title.id)
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
-    title_id: number
+    title: Title
 
     @Column({ nullable: true })
     avatar_attachment: number
@@ -41,4 +39,4 @@ export class user extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default user
+export default User

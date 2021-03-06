@@ -1,11 +1,10 @@
 import { define } from 'typeorm-seeding'
-import { role } from '../entity/role'
+import { Role } from '../entity/role'
+import * as Faker from 'faker'
 
-define(role, ():role => {
-    const roleFake = new role()
-
-    roleFake.id = 1
-    roleFake.name = 'gebruiker'
+define(Role, (faker: typeof Faker):Role => {
+    const roleFake = new Role()
+    roleFake.name = faker.random.word()
     roleFake.created_at = new Date()
     return roleFake
 })

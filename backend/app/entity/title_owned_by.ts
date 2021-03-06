@@ -2,8 +2,8 @@ import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeor
 import title from './title'
 import user from './user'
 
-@Entity()
-export class title_owned_by extends BaseEntity {
+@Entity('title_owned_by')
+export class TitleOwnedBy extends BaseEntity {
     @PrimaryColumn()
     id: number;
 
@@ -15,4 +15,4 @@ export class title_owned_by extends BaseEntity {
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title: title
 }
-export default title_owned_by
+export default TitleOwnedBy

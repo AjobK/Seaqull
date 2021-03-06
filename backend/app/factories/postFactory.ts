@@ -1,10 +1,10 @@
 import { define, factory } from 'typeorm-seeding'
-import { post } from '../entity/post'
+import { Post } from '../entity/post'
 import * as Faker from 'faker'
 import user from '../entity/user'
 
-define(post, (faker: typeof Faker):post => {
-    const postFake = new post()
+define(Post, (faker: typeof Faker):Post => {
+    const postFake = new Post()
 
     const createdAccount = factory(user)() as any
 

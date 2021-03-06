@@ -1,14 +1,16 @@
 import { define, factory } from 'typeorm-seeding'
-import { account } from '../entity/account'
+import { Account } from '../entity/account'
 import role from '../entity/role'
+import * as Faker from 'faker'
 
-define(account, () => {
-    const acc = new account()
+define(Account, (faker: typeof Faker) => {
+    const acc = new Account()
 
     const createRole = factory(role)() as any
+    const name = faker.name.firstName()
     acc.role = createRole
-    acc.user_name = 'user'
-    acc.email = 'user@gmail.com'
+    acc.user_name = name
+    acc.email = name + '@gmail.com'
     acc.last_ip = '127.0.0.1'
     acc.login_attempts_counts = 0
     acc.locked_to = null

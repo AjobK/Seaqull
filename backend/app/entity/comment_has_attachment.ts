@@ -2,8 +2,8 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, Pri
 import attachment from './attachment'
 import comment from './comment'
 
-@Entity()
-export class comment_has_attachment extends BaseEntity {
+@Entity('comment_has_attatchment')
+export class CommentHasAttachment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -24,4 +24,4 @@ export class comment_has_attachment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default comment_has_attachment
+export default CommentHasAttachment
