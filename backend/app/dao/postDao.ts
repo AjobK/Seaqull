@@ -11,7 +11,6 @@ class PostDAO {
     public async getPostByPath(path: string): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
         const foundPost = await repository.findOne({ where: { path: path }, relations: ['user'] })
-
         return foundPost
     }
 
@@ -22,7 +21,7 @@ class PostDAO {
 
     public async updatePost(post: Post): Promise<any> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const newPost = await repository.update(post)
+        const newPost = await repository.save(post)
         return newPost;
     }
 }

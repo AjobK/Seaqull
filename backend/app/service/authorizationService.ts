@@ -109,9 +109,9 @@ class PostService {
     // function user for logout
     public logout = (req: Request, res: Response): void => {
         // if cookie is there remove it
-        if (req.cookies['jwt']) {
+        if (req.cookies['token']) {
             res
-            .clearCookie('jwt')
+            .clearCookie('token')
             .status(200)
             .json({
                 message: 'You have logged out'

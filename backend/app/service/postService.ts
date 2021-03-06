@@ -8,9 +8,11 @@ require('dotenv').config()
 
 class PostService {
     private dao: PostDAO
+    private userDAO: UserDAO;
 
     constructor() {
         this.dao = new PostDAO()
+        this.userDAO = new UserDAO()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -22,7 +24,6 @@ class PostService {
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.params.path)
         const { JWT_SECRET } = process.env
-
         let decodedId = -1;
 
         try {
@@ -41,6 +42,7 @@ class PostService {
     }
 
     public createPost = async (req: Request, res: Response): Promise<Response> => {
+        const { JWT_SECRET } = process.env
         const newPost = new Post()
         const { title, description, content } = req.body
 
@@ -51,13 +53,30 @@ class PostService {
         newPost.published_at = new Date()
         newPost.created_at = new Date()
 
-        await this.dao.createPost(newPost)
+        const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
+        if(decodedToken.username != null){
+            const user = await this.userDAO.getUserByUsername(decodedToken.username)
+            console.log(user)
+            newPost.user = user;
+            await this.dao.createPost(newPost)
+        } else {
+            return res.status(200).json({ message: 'Invalid jwt' })
+        }
 
         return res.status(200).json({ message: 'Post added!' })
     }
 
     public updatePost = async (req: Request, res: Response): Promise<any> => {
         const post = await this.dao.getPostByPath(req.params.path)
+        const { JWT_SECRET } = process.env
+
+        post.title = req.body.title
+        post.description = req.body.description
+        post.content = req.body.content
+        console.log(post)
+
+        const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
+        if(post.user.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })
 
         if(!post) return res.status(404).json({ 'message': 'post not found' });
         const updatedPost = await this.dao.updatePost(post)

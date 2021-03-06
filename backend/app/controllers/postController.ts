@@ -1,7 +1,7 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import PostService from '../service/postService'
-const auth = require('../middleware/isAuth')
+const auth = require('../middleware/isAuth.ts')
 
 class PostController implements ControllerBase{
     public post = '/post'
