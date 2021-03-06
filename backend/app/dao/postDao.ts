@@ -19,5 +19,10 @@ class PostDAO {
         const repository = await DatabaseConnector.getRepository('Post')
         return repository.save(newPost)
     }
+
+    public async likePost(postId, userId): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('Post')
+        repository.save()
+    }
 }
 export default PostDAO
