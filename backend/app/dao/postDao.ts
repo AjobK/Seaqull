@@ -19,5 +19,11 @@ class PostDAO {
         const repository = await DatabaseConnector.getRepository('Post')
         return repository.save(newPost)
     }
+
+    public async updatePost(post: Post): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('Post')
+        const newPost = await repository.update(post)
+        return newPost;
+    }
 }
 export default PostDAO

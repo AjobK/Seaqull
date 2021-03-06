@@ -55,5 +55,16 @@ class PostService {
 
         return res.status(200).json({ message: 'Post added!' })
     }
+
+    public updatePost = async (req: Request, res: Response): Promise<any> => {
+        const post = await this.dao.getPostByPath(req.params.path)
+
+        if(!post) return res.status(404).json({ 'message': 'post not found' });
+        const updatedPost = await this.dao.updatePost(post)
+
+        if(!updatedPost) return res.status(404).json({ 'message': 'post not updated' });
+
+        return res.status(200).json({ 'message': 'post was updated' })
+    }
 }
 export default PostService
