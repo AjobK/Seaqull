@@ -24,6 +24,8 @@ import StyleButton from './styleButton'
 import FormInput from './formInput'
 import CommentSection from './commentSection'
 import Comment from './comment'
+import CommentForm from './commentForm'
+import CommentEditor from './commentEditor'
 
 export {
   Button,
@@ -51,5 +53,7 @@ export {
   RegisterPrompt,
   FormInput,
   CommentSection,
-  Comment
+  Comment,
+  CommentForm,
+  CommentEditor
 }

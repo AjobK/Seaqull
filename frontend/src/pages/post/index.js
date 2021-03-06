@@ -111,6 +111,7 @@ class Post extends App {
                         onClick={() => this.sendToDB()}
                     />
                 }
+                <CommentSection />
                 </Section>
             </Standard>
         )

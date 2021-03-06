@@ -3,6 +3,7 @@ import Axios from 'axios'
 import styles from './commentSection.scss'
 
 import { Comment } from '../'
+import { CommentForm } from '../'
 
 class CommentSection extends Component {
     constructor(props) {
@@ -26,6 +27,14 @@ class CommentSection extends Component {
     }
 
     displayComments() {
+        if(!this.data) {
+            return <p>Loading...</p>
+        } 
+        
+        if (this.data.length <= 0) {
+            return <p>No comments have been added yet.</p>
+        }
+
         return this.data.map((comment) => {
             return (
                 <Comment key={comment.id} comment={comment} />
@@ -34,13 +43,12 @@ class CommentSection extends Component {
     }
 
     render() {
-        if(this.data.length <= 0) {
-            return <p>Loading...</p>
-        } else {
-            return (
-                this.displayComments()
-            )
-        }
+        return (
+            <div>
+                <CommentForm />
+                { this.displayComments() }
+            </div>
+        )
     }
 }
 

@@ -13,12 +13,11 @@ class CommentDAO {
             .where('comment.path = :path', { path: path })
             .getMany()
 
-        console.log('COMMENT LIST')
-        console.log(commentList)
         return commentList
     }
 
     public async createComment(newComment: comment): Promise<any> {
+        console.log(newComment)
         const repository = await DatabaseConnector.getRepositoryComment()
 
         return repository.save(newComment)
