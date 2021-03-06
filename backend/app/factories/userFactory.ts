@@ -18,7 +18,7 @@ define(User, (faker: typeof Faker): User => {
     userFake.avatar_attachment = null
     userFake.created_at = new Date()
     userFake.custom_path = faker.random.uuid()
-    userFake.display_name = 'root'
+    userFake.display_name = faker.name.firstName()
     userFake.experience = 0
     userFake.rows_scrolled = 0
 

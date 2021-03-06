@@ -1,7 +1,7 @@
 import DatabaseConnector from '../util/databaseConnector';
 import { User } from '../entity/user';
 
-class UserDao {
+class UserDAO {
     public async getUserByUsername(username: string): Promise<User> {
         const repositoryAccount = await DatabaseConnector.getRepository('Account')
         const account = await repositoryAccount.findOne({ user_name: username })
@@ -27,4 +27,4 @@ class UserDao {
         return user
     }
 }
-export default UserDao
+export default UserDAO
