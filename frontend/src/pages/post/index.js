@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon } from '../../components'
+import { PostBanner, PostContent, Button, Icon, PostLike } from '../../components'
 import { withRouter } from 'react-router-dom'
 import styles from './post.scss'
 
@@ -15,6 +15,7 @@ class Post extends App {
             title: null,
             description: null,
             content: null,
+            likes: null,
             path: null
         }
 
@@ -31,11 +32,11 @@ class Post extends App {
             },
             post: this.post
         }
-        
+
         // TODO: API Call for initial data
         this.loadArticle();
     }
-    
+
     loadArticle = () => {
         let path = window.location.pathname.split('/').filter(i => i != '').pop();
         const url = `http://localhost:8000/api/post/${path}`
@@ -52,9 +53,25 @@ class Post extends App {
                 path: path
             }
 
+            this.fetchLikesAmount(json.id)
+        })
+    }
+
+    fetchLikesAmount = (postId) => {
+        const url = `http://localhost:8000/api/post/like/amount/${postId}`
+
+        fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            this.post.likes = {
+                amount: json.likes_amount
+            }
+
+            // TODO needs to be in loadArticle()
             this.setState({
                 post: this.post
             })
+            console.log(this.state)
         })
     }
 
@@ -76,6 +93,11 @@ class Post extends App {
             <Standard className={[styles.stdBgWhite]}>
                 <PostBanner author={this.state.author} isOwner={isOwner} />
                 <Section noTitle>
+                <div className={styles.likePostWrapper}>
+                    <PostLike
+                        // likesAmount={this.state.post.likes.amount}
+                    />
+                </div>
                 <div className={styles.renderWrapper}>
                 <PostContent
                     key={1}
