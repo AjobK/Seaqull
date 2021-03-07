@@ -62,9 +62,28 @@ class PostService {
         postLike.post = post
         postLike.liked_at = new Date()
 
-        await this.postDao.likePost(postLike)
+        const newLike = await this.postDao.likePost(postLike)
 
-        return res.status(200).json({ message: '' })
+        return res.status(200).json({ message: newLike })
+    }
+
+    public getPostLikes = async (req: Request, res: Response): Promise<any> => {
+        const foundPosts = await this.postDao.getPostLikesById(+req.params.postId)
+
+        if (req.params.postId && foundPosts)
+            return res.status(200).json(foundPosts)
+        else
+            return res.status(404).json({ 'message': 'No likes found for that post id' })
+    }
+
+    public getPostLikesAmount = async (req: Request, res: Response): Promise<any> => {
+        const foundPosts = await this.postDao.getPostLikesById(+req.params.postId)
+        const postLikesAmount = foundPosts.length
+
+        if (req.params.postId && foundPosts)
+            return res.status(200).json({'likes_amount': postLikesAmount})
+        else
+            return res.status(404).json({ 'message': 'No likes found for that post id' })
     }
 }
 export default PostService
