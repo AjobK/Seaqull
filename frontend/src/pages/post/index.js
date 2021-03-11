@@ -12,11 +12,11 @@ class Post extends App {
         super(props)
 
         this.post = {
-            title: null,
-            description: null,
-            content: null,
-            likes: null,
-            path: null
+            title: 'Loading..',
+            description: 'Loading..',
+            content: 'Loading..',
+            likes: -1,
+            path: 'Loading..'
         }
 
         this.state = {
@@ -71,7 +71,6 @@ class Post extends App {
             this.setState({
                 post: this.post
             })
-            console.log(this.state)
         })
     }
 
@@ -95,7 +94,7 @@ class Post extends App {
                 <Section noTitle>
                 <div className={styles.likePostWrapper}>
                     <PostLike
-                        // likesAmount={this.state.post.likes.amount}
+                        likesAmount={this.state.post.likes.amount || 0}
                     />
                 </div>
                 <div className={styles.renderWrapper}>
