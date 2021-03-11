@@ -8,17 +8,15 @@ class PostLike extends Component {
         super(props)
     }
 
-    likePost() {
-
-    }
-
     render() {
         const { likesAmount } = this.props
 
         return (
-            <div className={styles.postLike}>
-                <p>{likesAmount} feathers</p>
-                <button onClick={this.likePost}>&#10084;</button>
+            <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
+            <p>{likesAmount} feathers</p>
+                <button onClick={this.props.toggleLike.bind(this)}>
+                    &#10084;
+                </button>
             </div>
         )
     }

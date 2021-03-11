@@ -22,6 +22,7 @@ class Post extends App {
         this.state = {
             isOwner: true,
             isEditing: true,
+            liked: false,
             author: {
                 name: 'Emily Washington',                                   // Display name
                 bannerURL: '/src/static/dummy/user/banner.jpg',     // Banner URL from ID
@@ -74,6 +75,24 @@ class Post extends App {
         })
     }
 
+    toggleLike = () => {
+        console.log('LIKE TOGGLED')
+        let newState = this.state
+
+        // Update likes amount locally
+        let newLikesAmount
+        if (this.state.liked && newState.post.likes.amount > 0) {
+            newLikesAmount = this.state.post.likes.amount - 1
+        } else {
+            newLikesAmount = this.state.post.likes.amount + 1
+        }
+        newState.post.likes.amount = newLikesAmount
+
+        this.state.liked = !this.state.liked
+
+        this.setState(newState)
+    }
+
     sendToDB() {
         console.log('Saving');
         console.log(this.state.post.title != null ? this.state.post.title.blocks[0].text : null)
@@ -95,6 +114,13 @@ class Post extends App {
                 <div className={styles.likePostWrapper}>
                     <PostLike
                         likesAmount={this.state.post.likes.amount || 0}
+                        liked={this.state.liked}
+                        toggleLike={this.toggleLike}
+                    />
+                    <PostLike
+                        likesAmount={this.state.post.likes.amount || 0}
+                        liked={this.state.liked}
+                        toggleLike={this.toggleLike}
                     />
                 </div>
                 <div className={styles.renderWrapper}>
