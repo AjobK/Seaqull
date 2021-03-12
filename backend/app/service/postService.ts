@@ -52,7 +52,6 @@ class PostService {
         // const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
 
         const foundPost = await this.postDao.getPostByPath(req.params.path)
-
         // TODO retrieve username
         const user = await this.userDao.getUserByUsername('Curtis')
 
@@ -62,9 +61,23 @@ class PostService {
         postLike.liked_at = new Date()
 
         const newLike = await this.postDao.likePost(postLike)
-        // const newLike = null
 
         return res.status(200).json({ 'message': 'Post liked!' })
+    }
+
+    public unlikePost = async (req: Request, res: Response): Promise<Response> => {
+        const foundPost = await this.postDao.getPostByPath(req.params.path)
+        // TODO retrieve username
+        const user = await this.userDao.getUserByUsername('Curtis')
+
+        const foundLike = await this.postDao.findLikeByPostAndUser(foundPost, user)
+        const removedLike = await this.postDao.unlikePost(foundLike)
+
+        if (removedLike && removedLike.affected > 0) {
+            return res.status(200).json({ 'message': 'Like removed!' })
+        } else {
+            return res.status(404).json({ 'message': 'Like to remove could not be found' })
+        }
     }
 
     public getPostLikes = async (req: Request, res: Response): Promise<any> => {

@@ -79,30 +79,17 @@ class Post extends App {
         })
     }
 
-    postLike = () => {
-        const path = window.location.pathname.split('/').filter(i => i != '').pop()
-
-        Axios.post(`/post/like/${path}`, {}, {withCredentials: true})
-            .then(res => {
-                console.log(res)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-    }
-
     toggleLike = () => {
+        // Toggles liked state for all like components
         console.log('LIKE TOGGLED')
         let newState = this.state
 
-        // Update likes amount locally
+        // Increment/decrement likes locally
         let newLikesAmount
         if (this.state.liked && newState.post.likes.amount > 0) {
             newLikesAmount = this.state.post.likes.amount - 1
         } else {
             newLikesAmount = this.state.post.likes.amount + 1
-            this.postLike()
         }
         newState.post.likes.amount = newLikesAmount
         this.state.liked = !this.state.liked

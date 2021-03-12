@@ -1,6 +1,7 @@
 import DatabaseConnector from '../util/databaseConnector'
 import {Post} from '../entity/post'
 import {PostLike} from '../entity/post_like'
+import User from "../entity/user";
 
 class PostDAO {
     public async getPosts(): Promise<Post[]> {
@@ -26,9 +27,19 @@ class PostDAO {
         return repository.save(like)
     }
 
+    public async unlikePost(like: PostLike): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('PostLike')
+        return await repository.delete(like)
+    }
+
     public async getPostLikesById(id: number): Promise<any> {
         const repository = await DatabaseConnector.getRepository('PostLike')
         return await repository.find({ where: {post: id}, relations: ['post', 'user'] })
+    }
+
+    public async findLikeByPostAndUser(post: Post, user: User): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('PostLike')
+        return await repository.findOne({ where: {post: post.id, user: user.id}, relations: ['post', 'user'] })
     }
 }
 export default PostDAO
