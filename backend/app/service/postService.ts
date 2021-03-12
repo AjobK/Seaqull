@@ -51,39 +51,42 @@ class PostService {
         // const { token } = req.cookies
         // const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
 
-        const post = await this.postDao.getPostByPath(req.params.path)
+        const foundPost = await this.postDao.getPostByPath(req.params.path)
 
         // TODO retrieve username
         const user = await this.userDao.getUserByUsername('Curtis')
 
         const postLike = new PostLike()
-
         postLike.user = user
-        postLike.post = post
+        postLike.post = foundPost
         postLike.liked_at = new Date()
 
         const newLike = await this.postDao.likePost(postLike)
+        // const newLike = null
 
-        return res.status(200).json({ message: newLike })
+        return res.status(200).json({ 'message': 'Post liked!' })
     }
 
     public getPostLikes = async (req: Request, res: Response): Promise<any> => {
-        const foundPosts = await this.postDao.getPostLikesById(+req.params.postId)
+        const foundPost = await this.postDao.getPostByPath(req.params.path)
+        const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
 
-        if (req.params.postId && foundPosts)
-            return res.status(200).json(foundPosts)
+        if (req.params.path && foundLikes)
+            return res.status(200).json(foundLikes)
         else
             return res.status(404).json({ 'message': 'No likes found for that post id' })
     }
 
     public getPostLikesAmount = async (req: Request, res: Response): Promise<any> => {
-        const foundPosts = await this.postDao.getPostLikesById(+req.params.postId)
-        const postLikesAmount = foundPosts.length
+        const foundPost = await this.postDao.getPostByPath(req.params.path)
+        const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
+        const postLikesAmount = foundLikes.length
 
-        if (req.params.postId && foundPosts)
+        if (req.params.path && foundLikes)
             return res.status(200).json({'likes_amount': postLikesAmount})
-        else
+        else {
             return res.status(404).json({ 'message': 'No likes found for that post id' })
+        }
     }
 }
 export default PostService

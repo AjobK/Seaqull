@@ -5,6 +5,7 @@ import { Standard, Section } from '../../layouts'
 import { PostBanner, PostContent, Button, Icon, PostLike } from '../../components'
 import { withRouter } from 'react-router-dom'
 import styles from './post.scss'
+import Axios from 'axios'
 
 @inject('store') @observer
 class Post extends App {
@@ -34,12 +35,14 @@ class Post extends App {
             post: this.post
         }
 
+        Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
         // TODO: API Call for initial data
         this.loadArticle();
     }
 
     loadArticle = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop();
+        const path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/post/${path}`
 
         fetch(url)
@@ -54,12 +57,13 @@ class Post extends App {
                 path: path
             }
 
-            this.fetchLikesAmount(json.id)
+            this.fetchLikesAmount()
         })
     }
 
-    fetchLikesAmount = (postId) => {
-        const url = `http://localhost:8000/api/post/like/amount/${postId}`
+    fetchLikesAmount = () => {
+        const path = window.location.pathname.split('/').filter(i => i != '').pop()
+        const url = `http://localhost:8000/api/post/like/amount/${path}`
 
         fetch(url)
         .then(response => response.json())
@@ -75,6 +79,19 @@ class Post extends App {
         })
     }
 
+    postLike = () => {
+        const path = window.location.pathname.split('/').filter(i => i != '').pop()
+
+        Axios.post(`/post/like/${path}`, {}, {withCredentials: true})
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
+
     toggleLike = () => {
         console.log('LIKE TOGGLED')
         let newState = this.state
@@ -85,9 +102,9 @@ class Post extends App {
             newLikesAmount = this.state.post.likes.amount - 1
         } else {
             newLikesAmount = this.state.post.likes.amount + 1
+            this.postLike()
         }
         newState.post.likes.amount = newLikesAmount
-
         this.state.liked = !this.state.liked
 
         this.setState(newState)
