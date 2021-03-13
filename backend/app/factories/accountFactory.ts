@@ -3,7 +3,6 @@ import { Account } from '../entity/account'
 import role from '../entity/role'
 import * as Faker from 'faker'
 import User from '../entity/user';
-import { FactoryFunction } from 'typeorm-seeding/dist/types';
 
 define(Account, (faker: typeof Faker) => {
     const acc = new Account()

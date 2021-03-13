@@ -10,7 +10,7 @@ export class Account extends BaseEntity {
     @ManyToOne(() => Role, role => role.id)
     @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
     role: Role
-    
+
     @OneToOne(() => User)
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
     user: User

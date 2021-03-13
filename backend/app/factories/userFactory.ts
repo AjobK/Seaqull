@@ -1,9 +1,7 @@
 import * as Faker from 'faker'
 import { define, factory } from 'typeorm-seeding'
-import { Account } from '../entity/account'
 import title from '../entity/title'
 import { User } from '../entity/user'
-import Post from '../entity/post';
 
 define(User, (faker: typeof Faker, settings: { display_name: string }): User => {
     const userFake = new User()
