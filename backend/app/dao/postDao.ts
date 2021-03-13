@@ -2,10 +2,16 @@ import DatabaseConnector from '../util/databaseConnector'
 import { Post } from '../entity/post'
 
 class PostDAO {
-    public async getPosts(): Promise<Post[]> {
+    public async getPosts(skipSize: string): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const postList = await repository.find()
+        const skipAmount = parseInt(skipSize) * 7;
+        const postList = repository.find({ take : 7, skip: skipAmount })
         return postList
+    }
+
+    public async getAmountPosts(): Promise<number>{
+        const repository = await DatabaseConnector.getRepository('Post')
+        return await repository.count()
     }
 
     public async getPostByPath(path: string): Promise<Post> {

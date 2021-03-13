@@ -11,8 +11,19 @@ class PostService {
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
-        const posts = await this.dao.getPosts()
+        let posts
 
+        if(req.query.page == null) {
+            posts = await this.dao.getPosts('0')
+        } else {
+            posts = await this.dao.getPosts(String(req.query.page))
+            if(posts.length == 0 ){
+                posts = await this.dao.getPosts('0')
+                return res.status(200).json({ 'message': 'You`ve reached the last post' })
+            }
+        }
+        const count = await this.dao.getAmountPosts();
+        console.log(count)
         return res.status(200).json(posts)
     }
 
