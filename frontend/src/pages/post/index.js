@@ -6,6 +6,7 @@ import { PostBanner, PostContent, Button, Icon } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
+import { convertFromRaw } from 'draft-js'
 
 @inject('store') @observer
 class Post extends App {
@@ -13,10 +14,10 @@ class Post extends App {
         super(props)
 
         this.post = {
-            title: null,
-            description: null,
-            content: null,
-            path: null
+            title: '',
+            description: '',
+            content: '',
+            path: ''
         }
 
         this.state = {
@@ -51,7 +52,7 @@ class Post extends App {
             }
 
             try {
-                postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
+                // postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
                 this.post = {
                     title: convertFromRaw(JSON.parse(json.title)),
                     content: convertFromRaw(JSON.parse(json.content)),
@@ -72,7 +73,6 @@ class Post extends App {
                 loaded: true,
                 isOwner: json.isOwner
             })
-
         })
     }
 
@@ -90,26 +90,21 @@ class Post extends App {
             content: this.state.post.content
         }
 
-        Axios.post('/post', payload, {withCredentials: true})
+        Axios.post('/post', payload, { withCredentials: true })
         .then(res => {
-            console.log('IT WORKED!')
-            console.log(res)
-        })
-        .catch(res => {
-            alert('DIDN\'T WORK...')
-            console.log(res)
+            this.props.history.push('/')
         })
     }
 
     render() {
         // Values change based on initial response from server
-        const { isEditing, isOwner } = this.state
+        const { isEditing, isOwner, post, loaded, author } = this.state
 
-        if (!this.state.loaded && !this.props.new) return (<h1>Not loaded</h1>) 
+        if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner author={this.state.author} isOwner={isOwner} />
+                <PostBanner author={author} isOwner={isOwner} />
                 <Section noTitle>
                 <div className={styles.renderWrapper}>
                 <PostContent
@@ -123,7 +118,7 @@ class Post extends App {
                         this.setState({ post: this.post })
                     }}
                     readOnly={!isOwner || !isEditing}
-                    value={this.state.post.title} // Initial no content, should be prefilled by API
+                    value={post.title} // Initial no content, should be prefilled by API
                 />
                 <PostContent
                     type={'content'}
@@ -136,7 +131,7 @@ class Post extends App {
                         this.setState({ post: this.post })
                     }}
                     readOnly={!isOwner || !isEditing}
-                    value={this.state.post.content} // Initial no content, should be prefilled by API
+                    value={post.content} // Initial no content, should be prefilled by API
                 />
                 </div>
                 {

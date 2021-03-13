@@ -20,9 +20,6 @@ class PostContent extends Component {
 
     this.editorInput = React.createRef()
 
-    console.log('value is')
-    console.log(value)
-
     this.state = {
       editorState: EditorState.createEmpty(),
       focused: false,
@@ -77,20 +74,16 @@ class PostContent extends Component {
     this.editorInput.current.focus()
   }
 
-  getEditorStateByContent = (content) => {
-    let editorState = EditorState.createEmpty();
-
-    if (content && typeof content == 'object') {
-      editorState = EditorState.createWithContent(convertFromRaw(content))
-    } else if (content && typeof content == 'string') {
-      editorState = EditorState.createWithContent(ContentState.createFromText(content))
-    }
-
-    return editorState;
-  }
-
   componentDidMount() {
-    this.setState({ editorState: this.getEditorStateByContent(this.props.value) })
+    let eState = typeof this.props.value == 'string'
+      ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
+      : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+
+    try {
+      eState = EditorState.createWithContent(this.props.value)
+    } catch (e) {}
+
+    this.setState({ editorState: eState })
   }
 
   render() {
