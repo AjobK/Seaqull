@@ -3,6 +3,6 @@ import Post from '../entity/post'
 
 export default class CreatePost implements Seeder {
     public async run(factory: Factory): Promise<any> {
-        await factory(Post)().createMany(10)
+        // await factory(Post)().createMany(10)
     }
 }

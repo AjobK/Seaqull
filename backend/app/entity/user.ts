@@ -7,10 +7,6 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @OneToOne(() => Account)
-    @JoinColumn({ name: 'account_id', referencedColumnName: 'id' })
-    account: Account
-
     @ManyToOne(() => Title, title => title.id)
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title: Title

@@ -1,14 +1,15 @@
 import { define, factory } from 'typeorm-seeding'
 import { Post } from '../entity/post'
 import * as Faker from 'faker'
-import user from '../entity/user'
+import user, { User } from '../entity/user'
 
-define(Post, (faker: typeof Faker):Post => {
+define(Post, (faker: typeof Faker, settings: { user: User }): Post => {
     const postFake = new Post()
 
-    const createdAccount = factory(user)() as any
+    console.log('- USERRRR -')
+    console.log("(" + settings.user.id + ") " + settings.user.display_name)
 
-    postFake.user = createdAccount
+    postFake.user = settings.user
     postFake.content = faker.lorem.paragraphs(3)
     postFake.description = faker.lorem.sentence(~~(Math.random() * 7) + 3)
     postFake.title = faker.lorem.sentence(~~(Math.random() * 4) + 2)
