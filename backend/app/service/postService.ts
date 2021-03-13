@@ -88,6 +88,11 @@ class PostService {
         // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
+        // Check whether post has been liked before
+        const foundLike = await this.dao.findLikeByPostAndUser(foundPost, user)
+        if (foundLike)
+            return res.status(400).json({ 'error': 'Post has already been liked.' })
+
         const postLike = new PostLike()
         postLike.user = user
         postLike.post = foundPost
