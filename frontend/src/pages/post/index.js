@@ -113,11 +113,6 @@ class Post extends App {
                         liked={this.state.post.likes.user_liked}
                         toggleLike={this.toggleLike}
                     />
-                    <PostLike
-                        likesAmount={this.state.post.likes.amount || 0}
-                        liked={this.state.post.likes.user_liked}
-                        toggleLike={this.toggleLike}
-                    />
                 </div>
                 <div className={styles.renderWrapper}>
                 <PostContent
