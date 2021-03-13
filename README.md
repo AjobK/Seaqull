@@ -1,8 +1,8 @@
-# Seaqull
+# [Seaqull](http://www.seaqull.com/) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]
 
 #### Commands front end
 
-`- npm i` 
+[Read more on our wiki!](https://github.com/AjobK/Seaqull/wiki).
 
 `- npm run dev`
 #### Commands back end
@@ -17,15 +17,14 @@
 
 `- npm start`
 
-## WORKFLOW
+* Install the latest [LTS version of Node](https://nodejs.org/en/).
+* Clone the seaqull [project](https://github.com/AjobK/Seaqull).
+* Download all our dependencies ```npm ci```
+* Start the server ```npm run dev```
 
-#### ISSUES
-___________
+## Documentation
 
-We will be making issue templates:
-* idea
-* hotfix / improvement
-* question  
+You can find the Seaqull documentation [on our github](https://github.com/AjobK/Seaqull/wiki).  
 
 > You are always allowed to make a new issue with a new idea / bug / improvement / question, however, add the awaiting approval label to the issue.
 

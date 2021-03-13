@@ -1,0 +1,16 @@
+@import '../../styles/index.scss';
+
+.title {
+	color: $dark;
+	font-size: 2rem;
+	letter-spacing: 0.15rem;
+
+	@include mobile-all-portrait {
+		letter-spacing: 0.1rem;
+		font-size: 1.5rem;
+	}
+}
+
+.center {
+	text-align: center;
+}
