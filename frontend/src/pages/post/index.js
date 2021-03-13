@@ -16,14 +16,16 @@ class Post extends App {
             title: 'Loading..',
             description: 'Loading..',
             content: 'Loading..',
-            likes: -1,
-            path: 'Loading..'
+            path: 'Loading..',
+            likes: {
+                amount: 0,
+                user_liked: false
+            }
         }
 
         this.state = {
             isOwner: true,
             isEditing: true,
-            liked: false,
             author: {
                 name: 'Emily Washington',                                   // Display name
                 bannerURL: '/src/static/dummy/user/banner.jpg',     // Banner URL from ID
@@ -45,25 +47,27 @@ class Post extends App {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/post/${path}`
 
-        fetch(url)
-        .then(response => response.json())
-        .then(json => {
+        Axios.get(`/post/${path}`, {withCredentials: true})
+        .then(res => {
             // if (!this.totalPages) this.totalPages = json.data.last_page
             console.log('POST FOUND')
             this.post = {
-                title: json.post.title,
-                content: json.post.content,
-                description: json.post.description,
+                title: res.data.post.title,
+                content: res.data.post.content,
+                description: res.data.post.description,
                 path: path,
                 likes: {
-                    amount: json.likes.amount,
-                    user_liked: json.likes.user_liked
+                    amount: res.data.likes.amount,
+                    user_liked: res.data.likes.user_liked
                 }
             }
 
             this.setState({
                 post: this.post
             })
+        })
+        .catch(err => {
+            console.log('Error occurred while fetching post')
         })
     }
 
@@ -74,13 +78,13 @@ class Post extends App {
 
         // Increment/decrement likes locally
         let newLikesAmount
-        if (this.state.liked && newState.post.likes.amount > 0) {
+        if (this.state.post.likes.user_liked && newState.post.likes.amount > 0) {
             newLikesAmount = this.state.post.likes.amount - 1
         } else {
             newLikesAmount = this.state.post.likes.amount + 1
         }
         newState.post.likes.amount = newLikesAmount
-        this.state.liked = !this.state.liked
+        this.state.post.likes.user_liked = !this.state.post.likes.user_liked
 
         this.setState(newState)
     }
@@ -106,12 +110,12 @@ class Post extends App {
                 <div className={styles.likePostWrapper}>
                     <PostLike
                         likesAmount={this.state.post.likes.amount || 0}
-                        liked={this.state.liked}
+                        liked={this.state.post.likes.user_liked}
                         toggleLike={this.toggleLike}
                     />
                     <PostLike
                         likesAmount={this.state.post.likes.amount || 0}
-                        liked={this.state.liked}
+                        liked={this.state.post.likes.user_liked}
                         toggleLike={this.toggleLike}
                     />
                 </div>
