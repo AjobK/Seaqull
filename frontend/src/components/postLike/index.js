@@ -21,9 +21,12 @@ class PostLike extends Component {
         Axios.post(`/post/like/${path}`, {}, {withCredentials: true})
             .then(res => {
                 console.log(res.data.message)
+                this.toggleLike()
             })
             .catch(err => {
-                console.log(err)
+                if (err.response.status === 401) {
+                    alert('Not signed in!')
+                }
             })
 
     }
@@ -34,6 +37,7 @@ class PostLike extends Component {
         Axios.delete(`/post/like/${path}`, {withCredentials: true})
             .then(res => {
                 console.log(res.data.message)
+                this.toggleLike()
             })
             .catch(err => {
                 console.log(err)
@@ -47,8 +51,6 @@ class PostLike extends Component {
         } else {
             this.postLike()
         }
-
-        this.toggleLike()
     }
 
     render() {

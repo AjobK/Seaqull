@@ -9,7 +9,7 @@ class UserDao {
         const repositoryUser = await DatabaseConnector.getRepository('User')
 
         const user = await repositoryUser.findOne({ where: { account: account }, relations: ['title'] })
-        return account // TODO ^ user returns null
+        return user
     }
 
     public async getUserByEmail(email: string): Promise<User> {

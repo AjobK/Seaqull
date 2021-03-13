@@ -63,19 +63,22 @@ class Post extends App {
 
     fetchLikesAmount = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
-        const url = `http://localhost:8000/api/post/like/amount/${path}`
 
-        fetch(url)
-        .then(response => response.json())
-        .then(json => {
+        Axios.get(`/post/like/amount/${path}`, {withCredentials: true})
+        .then(res => {
+            console.log(res.data)
+
             this.post.likes = {
-                amount: json.likes_amount
+                amount: res.data.likes_amount
             }
 
             // TODO needs to be in loadArticle()
             this.setState({
                 post: this.post
             })
+        })
+        .catch(err => {
+
         })
     }
 

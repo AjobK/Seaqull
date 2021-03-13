@@ -38,6 +38,9 @@ class PostDAO {
     }
 
     public async findLikeByPostAndUser(post: Post, user: User): Promise<any> {
+        if (!user) {
+            return false
+        }
         const repository = await DatabaseConnector.getRepository('PostLike')
         return await repository.findOne({ where: {post: post.id, user: user.id}, relations: ['post', 'user'] })
     }

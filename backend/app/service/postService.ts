@@ -1,9 +1,11 @@
-import { Request, Response } from 'express'
+import {Request, Response} from 'express'
 import PostDAO from '../dao/postDao'
 import UserDao from '../dao/userDao'
 import Post from '../entity/post'
 import PostLike from '../entity/post_like'
-import { v4 as uuidv4 } from 'uuid'
+import {v4 as uuidv4} from 'uuid'
+import User from "../entity/user";
+
 const jwt = require('jsonwebtoken')
 
 class PostService {
@@ -48,10 +50,7 @@ class PostService {
 
     public likePost = async (req: Request, res: Response): Promise<Response> => {
         // Retrieve user
-        const { token } = req.cookies
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await this.userDao.getUserByUsername(decodedToken.username)
-
+        const user = await this.fetchUser(req)
         // Retrieve post
         const foundPost = await this.postDao.getPostByPath(req.params.path)
 
@@ -71,10 +70,7 @@ class PostService {
 
     public unlikePost = async (req: Request, res: Response): Promise<Response> => {
         // Retrieve user
-        const { token } = req.cookies
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await this.userDao.getUserByUsername(decodedToken.username)
-
+        const user = await this.fetchUser(req)
         // Retrieve post
         const foundPost = await this.postDao.getPostByPath(req.params.path)
 
@@ -108,7 +104,22 @@ class PostService {
             postLikesAmount = 0
         }
 
-        return res.status(200).json({'likes_amount': postLikesAmount})
+        const user = await this.fetchUser(req)
+        console.log(await this.postDao.findLikeByPostAndUser(foundPost, user || null))
+        let userLiked = !!(await this.postDao.findLikeByPostAndUser(foundPost, user || null))
+
+        return res.status(200).json({'likes_amount': postLikesAmount, 'user_liked': userLiked})
+    }
+
+    // TODO Move to another file?
+    private fetchUser = async (req: Request): Promise<User> => {
+        try {
+            const {token} = req.cookies
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+            return await this.userDao.getUserByUsername(decodedToken.username)
+        } catch(err) {
+            return null
+        }
     }
 }
 export default PostService
