@@ -51,34 +51,19 @@ class Post extends App {
             // if (!this.totalPages) this.totalPages = json.data.last_page
             console.log('POST FOUND')
             this.post = {
-                title: json.title,
-                content: json.content,
-                description: json.description,
-                path: path
+                title: json.post.title,
+                content: json.post.content,
+                description: json.post.description,
+                path: path,
+                likes: {
+                    amount: json.likes.amount,
+                    user_liked: json.likes.user_liked
+                }
             }
 
-            this.fetchLikesAmount()
-        })
-    }
-
-    fetchLikesAmount = () => {
-        const path = window.location.pathname.split('/').filter(i => i != '').pop()
-
-        Axios.get(`/post/like/amount/${path}`, {withCredentials: true})
-        .then(res => {
-            console.log(res.data)
-
-            this.post.likes = {
-                amount: res.data.likes_amount
-            }
-
-            // TODO needs to be in loadArticle()
             this.setState({
                 post: this.post
             })
-        })
-        .catch(err => {
-
         })
     }
 

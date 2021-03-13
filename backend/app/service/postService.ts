@@ -24,12 +24,34 @@ class PostService {
     }
 
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {
+        const response = {
+            post: null,
+            likes: {
+                amount: 0,
+                user_liked: false
+            }
+        }
+
         const foundPost = await this.postDao.getPostByPath(req.params.path)
 
-        if (req.params.path && foundPost)
-            return res.status(200).json(foundPost)
-        else
+        if (!foundPost)
             return res.status(404).json({ 'message': 'No post found on that path' })
+
+        // Fetch amount of likes on post
+        const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
+        let postLikesAmount = foundLikes ? foundLikes.length : 0
+
+        // Fetch whether user liked the post
+        const user = await this.fetchUser(req)
+        let userLiked = !!(await this.postDao.findLikeByPostAndUser(foundPost, user || null))
+
+        response.post = foundPost
+        response.likes = {
+            amount: postLikesAmount,
+            user_liked: userLiked
+        }
+
+        return res.status(200).json(response)
     }
 
     public createPost = async (req: Request, res: Response): Promise<Response> => {
@@ -94,32 +116,18 @@ class PostService {
             return res.status(404).json({ 'message': 'No likes found for that post id' })
     }
 
-    public getPostLikesAmount = async (req: Request, res: Response): Promise<any> => {
-        const foundPost = await this.postDao.getPostByPath(req.params.path)
-        let postLikesAmount
-        try {
-            const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
-            postLikesAmount = foundLikes.length
-        } catch(err) {
-            postLikesAmount = 0
-        }
-
-        const user = await this.fetchUser(req)
-        console.log(await this.postDao.findLikeByPostAndUser(foundPost, user || null))
-        let userLiked = !!(await this.postDao.findLikeByPostAndUser(foundPost, user || null))
-
-        return res.status(200).json({'likes_amount': postLikesAmount, 'user_liked': userLiked})
-    }
-
     // TODO Move to another file?
     private fetchUser = async (req: Request): Promise<User> => {
-        try {
-            const {token} = req.cookies
-            const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-            return await this.userDao.getUserByUsername(decodedToken.username)
-        } catch(err) {
-            return null
+        const {token} = req.cookies
+        if (token) {
+            try {
+                const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+                return await this.userDao.getUserByUsername(decodedToken.username)
+            } catch(err) {
+                return null
+            }
         }
+        return null
     }
 }
 export default PostService

@@ -20,7 +20,6 @@ class PostController implements ControllerBase{
         this.router.post(this.post + '/like/:path', isAuth, this.postService.likePost)
         this.router.delete(this.post + '/like/:path', isAuth, this.postService.unlikePost)
         this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
-        this.router.get(this.post + '/like/amount/:path', this.postService.getPostLikesAmount)
     }
 }
 export default PostController
