@@ -50,13 +50,13 @@ class UserService {
 
         // get user with username
         const user = await this.dao.getUserByUsername(decodedToken.username)
-
+        const title = await this.titleDAO.getTitleByUserId(user.id)
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
             username: recievedUsername,
             experience: user.experience,
-            title: user.title.name,
+            title: title.name,
             posts: ''
         }
 
@@ -74,6 +74,7 @@ class UserService {
             password: [],
             recaptcha: []
         }
+
         const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
         if(isUsernamNotValid){
             errors.username = [isUsernamNotValid]
@@ -162,23 +163,24 @@ class UserService {
 
     private async saveUser(req: Request):Promise<Account> {
         const u = req.body
+        let newUser = new User()
+        newUser.title = await this.titleDAO.getTitleByTitleId(1);
+        newUser.display_name = u.username
+        newUser.experience = 0
+        newUser.custom_path = uuidv4()
+        newUser.rows_scrolled = 0
+        newUser = await this.dao.saveUser(newUser)
+
         const acc = new Account()
 
         acc.last_ip = req.ip
+        acc.user = newUser;
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
         acc.role = await this.roleDAO.getRoleById(1)
         const createdAccount = await this.accountDAO.saveAccount(acc)
 
-        const newUser = new User()
-        newUser.account = createdAccount
-        newUser.title = await this.titleDAO.getTitleById(1);
-        newUser.display_name = u.username
-        newUser.experience = 0
-        newUser.custom_path = uuidv4()
-        newUser.rows_scrolled = 0
-        await this.dao.saveUser(newUser)
         return createdAccount
     }
 
