@@ -24,7 +24,7 @@ class PostDAO {
 
     public async likePost(like: PostLike): Promise<any> {
         const repository = await DatabaseConnector.getRepository('PostLike')
-        return repository.save(like)
+        return await repository.save(like)
     }
 
     public async unlikePost(like: PostLike): Promise<any> {

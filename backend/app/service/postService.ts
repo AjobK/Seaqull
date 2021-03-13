@@ -47,13 +47,13 @@ class PostService {
     }
 
     public likePost = async (req: Request, res: Response): Promise<Response> => {
-        // extracting token
-        // const { token } = req.cookies
-        // const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        // Retrieve user
+        const { token } = req.cookies
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        const user = await this.userDao.getUserByUsername(decodedToken.username)
 
+        // Retrieve post
         const foundPost = await this.postDao.getPostByPath(req.params.path)
-        // TODO retrieve username
-        const user = await this.userDao.getUserByUsername('Curtis')
 
         const postLike = new PostLike()
         postLike.user = user
@@ -62,13 +62,21 @@ class PostService {
 
         const newLike = await this.postDao.likePost(postLike)
 
-        return res.status(200).json({ 'message': 'Post liked!' })
+        if (newLike)
+            return res.status(200).json({ 'message': 'Post liked!' })
+        else
+            return res.status(400).json({ 'error': 'Post could not be liked.' })
     }
 
+
     public unlikePost = async (req: Request, res: Response): Promise<Response> => {
+        // Retrieve user
+        const { token } = req.cookies
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        const user = await this.userDao.getUserByUsername(decodedToken.username)
+
+        // Retrieve post
         const foundPost = await this.postDao.getPostByPath(req.params.path)
-        // TODO retrieve username
-        const user = await this.userDao.getUserByUsername('Curtis')
 
         const foundLike = await this.postDao.findLikeByPostAndUser(foundPost, user)
         const removedLike = await this.postDao.unlikePost(foundLike)
@@ -92,14 +100,15 @@ class PostService {
 
     public getPostLikesAmount = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.postDao.getPostByPath(req.params.path)
-        const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
-        const postLikesAmount = foundLikes.length
-
-        if (req.params.path && foundLikes)
-            return res.status(200).json({'likes_amount': postLikesAmount})
-        else {
-            return res.status(404).json({ 'message': 'No likes found for that post id' })
+        let postLikesAmount
+        try {
+            const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
+            postLikesAmount = foundLikes.length
+        } catch(err) {
+            postLikesAmount = 0
         }
+
+        return res.status(200).json({'likes_amount': postLikesAmount})
     }
 }
 export default PostService

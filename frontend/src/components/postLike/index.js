@@ -3,6 +3,11 @@ import styles from './postLike.scss'
 import { inject, observer } from 'mobx-react'
 import Axios from "axios";
 
+// TODO
+// - Replace dummy user by user data from cookies (backend)
+// - Read whether user has liked the post already to enable it accordingly (at page init)
+// - Validation in backend (user can only like a post once)
+
 @inject('store') @observer
 class PostLike extends Component {
     constructor(props) {

@@ -1,6 +1,7 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import PostService from '../service/postService'
+const isAuth = require('../middleware/isAuth')
 
 class PostController implements ControllerBase{
     public post = '/post'
@@ -16,8 +17,8 @@ class PostController implements ControllerBase{
         this.router.get(this.post, this.postService.getPosts)
         this.router.get(this.post + '/:path', this.postService.getPostByPath)
         this.router.post(this.post, this.postService.createPost)
-        this.router.post(this.post + '/like/:path', this.postService.likePost)
-        this.router.delete(this.post + '/like/:path', this.postService.unlikePost)
+        this.router.post(this.post + '/like/:path', isAuth, this.postService.likePost)
+        this.router.delete(this.post + '/like/:path', isAuth, this.postService.unlikePost)
         this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
         this.router.get(this.post + '/like/amount/:path', this.postService.getPostLikesAmount)
     }
