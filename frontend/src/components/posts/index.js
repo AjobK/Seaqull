@@ -24,7 +24,7 @@ class Posts extends Component {
           this.page = 0;
           this.loadArticle()
         }
-        this.data = json
+        this.data = json.posts
         this.setNewPosts()
       })
   }
