@@ -9,18 +9,30 @@ import User from "../entity/user";
 const jwt = require('jsonwebtoken')
 
 class PostService {
-    private postDao: PostDAO
+    private dao: PostDAO
     private userDao: UserDao
 
     constructor() {
-        this.postDao = new PostDAO()
+        this.dao = new PostDAO()
         this.userDao = new UserDao()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
-        const posts = await this.postDao.getPosts()
+        let posts
+        const amount = 7;
 
-        return res.status(200).json(posts)
+        if(req.query.page == null) {
+            posts = await this.dao.getPosts('0', amount)
+        } else {
+            posts = await this.dao.getPosts(String(req.query.page), amount)
+            if(posts.length == 0 ){
+                posts = await this.dao.getPosts('0', amount)
+                return res.status(200).json({ 'message': 'You`ve reached the last post' })
+            }
+        }
+        const count = await this.dao.getAmountPosts();
+        const message = { posts, totalPosts: count, per_page: amount }
+        return res.status(200).json(message)
     }
 
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {
@@ -32,18 +44,18 @@ class PostService {
             }
         }
 
-        const foundPost = await this.postDao.getPostByPath(req.params.path)
+        const foundPost = await this.dao.getPostByPath(req.params.path)
 
         if (!foundPost)
             return res.status(404).json({ 'message': 'No post found on that path' })
 
         // Fetch amount of likes on post
-        const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
+        const foundLikes = await this.dao.getPostLikesById(foundPost.id)
         let postLikesAmount = foundLikes ? foundLikes.length : 0
 
         // Fetch whether user liked the post
         const user = await this.fetchUser(req)
-        let userLiked = !!(await this.postDao.findLikeByPostAndUser(foundPost, user || null))
+        let userLiked = !!(await this.dao.findLikeByPostAndUser(foundPost, user || null))
 
         response.post = foundPost
         response.likes = {
@@ -65,7 +77,7 @@ class PostService {
         newPost.published_at = new Date()
         newPost.created_at = new Date()
 
-        await this.postDao.createPost(newPost)
+        await this.dao.createPost(newPost)
 
         return res.status(200).json({ message: 'Post added!' })
     }
@@ -74,14 +86,14 @@ class PostService {
         // Retrieve user
         const user = await this.fetchUser(req)
         // Retrieve post
-        const foundPost = await this.postDao.getPostByPath(req.params.path)
+        const foundPost = await this.dao.getPostByPath(req.params.path)
 
         const postLike = new PostLike()
         postLike.user = user
         postLike.post = foundPost
         postLike.liked_at = new Date()
 
-        const newLike = await this.postDao.likePost(postLike)
+        const newLike = await this.dao.likePost(postLike)
 
         if (newLike)
             return res.status(200).json({ 'message': 'Post liked!' })
@@ -94,10 +106,10 @@ class PostService {
         // Retrieve user
         const user = await this.fetchUser(req)
         // Retrieve post
-        const foundPost = await this.postDao.getPostByPath(req.params.path)
+        const foundPost = await this.dao.getPostByPath(req.params.path)
 
-        const foundLike = await this.postDao.findLikeByPostAndUser(foundPost, user)
-        const removedLike = await this.postDao.unlikePost(foundLike)
+        const foundLike = await this.dao.findLikeByPostAndUser(foundPost, user)
+        const removedLike = await this.dao.unlikePost(foundLike)
 
         if (removedLike && removedLike.affected > 0) {
             return res.status(200).json({ 'message': 'Like removed!' })
@@ -107,8 +119,8 @@ class PostService {
     }
 
     public getPostLikes = async (req: Request, res: Response): Promise<any> => {
-        const foundPost = await this.postDao.getPostByPath(req.params.path)
-        const foundLikes = await this.postDao.getPostLikesById(foundPost.id)
+        const foundPost = await this.dao.getPostByPath(req.params.path)
+        const foundLikes = await this.dao.getPostLikesById(foundPost.id)
 
         if (req.params.path && foundLikes)
             return res.status(200).json(foundLikes)

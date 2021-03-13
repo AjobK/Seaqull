@@ -4,10 +4,16 @@ import {PostLike} from '../entity/post_like'
 import User from "../entity/user";
 
 class PostDAO {
-    public async getPosts(): Promise<Post[]> {
+    public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const postList = await repository.find()
+        const skipAmount = parseInt(skipSize) * amount;
+        const postList = repository.find({ take : amount, skip: skipAmount })
         return postList
+    }
+
+    public async getAmountPosts(): Promise<number>{
+        const repository = await DatabaseConnector.getRepository('Post')
+        return await repository.count()
     }
 
     public async getPostByPath(path: string): Promise<Post> {
