@@ -18,5 +18,12 @@ class AccountDAO {
         const repository = await DatabaseConnector.getRepository('Account')
         await repository.save(acc)
     }
+
+    public async getAccountIdByUsername(username: string): Promise<number> {
+        const repositoryAccount = await DatabaseConnector.getRepository('Account')
+        const account = await repositoryAccount.findOne({ user_name: username })
+
+        return account.id || -1;
+    }
 }
 export default AccountDAO

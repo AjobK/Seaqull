@@ -3,6 +3,7 @@ import PostDAO from '../dao/postDao'
 import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
 import UserDAO from '../dao/userDao'
+import AccountDAO from '../dao/accountDao'
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
@@ -17,6 +18,22 @@ class PostService {
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
         const posts = await this.dao.getPosts()
+
+        return res.status(200).json(posts)
+    }
+
+    public getOwnedPosts = async (req: Request, res: Response): Promise<Response> => {
+        const { JWT_SECRET } = process.env
+        let decodedId = -1;
+
+        try {
+            const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
+            decodedId = await new AccountDAO().getAccountIdByUsername(decodedToken.username)
+        } catch (e) {
+            console.log(e)
+        }
+
+        const posts = await this.dao.getOwnedPosts(decodedId)
 
         return res.status(200).json(posts)
     }

@@ -15,6 +15,7 @@ class PostController implements ControllerBase{
 
     public initRoutes(): void {
         this.router.get(this.post, this.postService.getPosts)
+        this.router.get(this.post + '/owned', auth, this.postService.getOwnedPosts)
         this.router.get(this.post + '/:path', this.postService.getPostByPath)
         this.router.post(this.post, this.postService.createPost)
         this.router.put(this.post + '/:path', auth, this.postService.updatePost)

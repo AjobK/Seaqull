@@ -8,6 +8,14 @@ class PostDAO {
         return postList
     }
 
+    public async getOwnedPosts(decodedId: number): Promise<Post[]> {
+        if (decodedId == -1) return []
+
+        const repository = await DatabaseConnector.getRepository('Post')
+        const postList = await repository.find({ where: { user_id: decodedId }, relations: ['user'] })
+        return postList
+    }
+
     public async getPostByPath(path: string): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
         const foundPost = await repository.findOne({ where: { path: path }, relations: ['user'] })
