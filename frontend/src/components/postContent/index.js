@@ -37,7 +37,7 @@ class PostContent extends Component {
   }
 
   onChange = (editorState) => {
-    this.setState({ editorState })
+    this.setState({ editorState }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
   }
 
   handleBeforeInput = (chars) => {

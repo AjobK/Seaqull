@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
 import { PostBanner, PostContent, Button, Icon } from '../../components'
 import { withRouter } from 'react-router-dom'
+import Axios from 'axios'
 import styles from './post.scss'
 
 @inject('store') @observer
@@ -49,6 +50,23 @@ class Post extends App {
                 path: path
             }
 
+            try {
+                postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
+                this.post = {
+                    title: convertFromRaw(JSON.parse(json.title)),
+                    content: convertFromRaw(JSON.parse(json.content)),
+                    description: '',
+                    path: path
+                }
+            } catch (e) {
+                this.post = {
+                    title: json.title,
+                    content: json.content,
+                    description: json.description,
+                    path: path
+                }
+            }
+
             this.setState({
                 post: this.post,
                 loaded: true,
@@ -60,21 +78,34 @@ class Post extends App {
 
     componentDidMount() {
         // TODO: API Call for initial data
-        this.loadArticle();
+        if (!this.props.new) this.loadArticle();
     }
 
     sendToDB() {
-        console.log('Saving');
-        console.log(this.state.post.title != null ? this.state.post.title.blocks[0].text : null)
+        Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    
+        const payload = {
+            title: this.state.post.title,
+            description: 'None',
+            content: this.state.post.content
+        }
 
-        return;
+        Axios.post('/post', payload, {withCredentials: true})
+        .then(res => {
+            console.log('IT WORKED!')
+            console.log(res)
+        })
+        .catch(res => {
+            alert('DIDN\'T WORK...')
+            console.log(res)
+        })
     }
 
     render() {
         // Values change based on initial response from server
         const { isEditing, isOwner } = this.state
 
-        if (!this.state.loaded) return (<h1>Not loaded</h1>) 
+        if (!this.state.loaded && !this.props.new) return (<h1>Not loaded</h1>) 
 
         return (
             <Standard className={[styles.stdBgWhite]}>
@@ -86,6 +117,8 @@ class Post extends App {
                     // Saves post title with draftJS content
                     callBackSaveData={(data) => {
                         this.post.title = data;
+                        
+                        console.log('Saving title...')
 
                         this.setState({ post: this.post })
                     }}
@@ -97,6 +130,8 @@ class Post extends App {
                     // Saves post content with draftJS content
                     callBackSaveData={(data) => {
                         this.post.content = data;
+
+                        console.log('Saving content...')
 
                         this.setState({ post: this.post })
                     }}

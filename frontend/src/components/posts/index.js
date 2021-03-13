@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Loader } from '../../components'
 import fetch from 'isomorphic-fetch'
 import styles from './posts.scss'
+import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
 
 class Posts extends Component {
   constructor(props) {
@@ -45,7 +46,12 @@ class Posts extends Component {
       article.classList.add(styles.postItem)
       let postItem = document.createElement('div')
 
-      postItem.innerText = this.data[i].title
+      try {
+        postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
+      } catch (e) {
+        postItem.innerText = this.data[i].title
+      }
+
       postItem.classList.add(styles.postItemText)
       article.appendChild(postItem)
       singleLi.appendChild(article)
