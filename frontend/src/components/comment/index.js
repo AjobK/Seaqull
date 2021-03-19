@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import styles from './comment.scss'
 
+import { Link } from 'react-router-dom';
+
+import { CommentForm } from '../'
+
 class Comment extends Component {
 
     //TODO: move to util
@@ -46,33 +50,38 @@ class Comment extends Component {
     }
 
     render() {
-        return (
-            <article className={styles.comment}>
-                <section className={styles.comment__body}>
-                    <div className={styles.comment__avatar}>
-                        {/* TODO: replace profile image */}
-                        <img src={require('../../static/dummy/user/profile.jpg')} className={styles.comment__avatarPicture} />
-                        {/* TODO: display level badge */}
-                        <div className={styles.comment__avatarBadge}>
-                            {this.props.comment.user.experience > 0 ? this.props.comment.user.experience/1000 : 0 }
-                        </div>
-                    </div>
-                    <div className={styles.comment__main}>
-                        <div className={styles.comment__header}>
-                            <div className={styles.comment__headerAuthor}>
-                                {this.props.comment.user.display_name}
-                            </div>
-                            <div className={styles.comment__headerPublishedTime}>
-                                {this.timeAgo(new Date(this.props.comment.created_at))}
+        if (this.props.comment) {
+            return (
+                <article className={styles.comment}>
+                    <section className={styles.comment__body}>
+                        <div className={styles.comment__avatar}>
+                            {/* TODO: replace profile image */}
+                            <img src={require('../../static/dummy/user/profile.jpg')} className={styles.comment__avatarPicture} />
+                            {/* TODO: display level badge */}
+                            <div className={styles.comment__avatarBadge}>
+                                {this.props.comment.profile.experience > 0 ? this.props.comment.profile.experience/1000 : 0 }
                             </div>
                         </div>
-                        <div className={styles.comment__content}>
-                            {this.props.comment.content}
+                        <div className={styles.comment__main}>
+                            <div className={styles.comment__header}>
+                                <div className={styles.comment__headerAuthor}>
+                                    <Link to={`/profile/${this.props.comment.profile.display_name}`}>
+                                        {this.props.comment.profile.display_name}
+                                    </Link>
+                                </div>
+                                <div className={styles.comment__headerPublishedTime}>
+                                    {this.timeAgo(new Date(this.props.comment.created_at))}
+                                </div>
+                            </div>
+                            <div className={styles.comment__content}>
+                                {this.props.comment.content}
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </article>
-        )
+                    </section>
+                    <CommentForm parent_comment={this.props.comment.id }/>
+                </article>
+            ) 
+        }
     }
 }
 

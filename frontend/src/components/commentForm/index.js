@@ -11,7 +11,8 @@ class CommentForm extends Component {
 
         this.comment = {
             path: window.location.pathname.split('/').filter(i => i != '').pop(),
-            content: null
+            content: null,
+            parent_comment_id: this.props.parent_comment
         }
 
         this.state = {

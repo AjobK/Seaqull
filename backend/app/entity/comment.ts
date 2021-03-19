@@ -16,6 +16,11 @@ export class Comment extends BaseEntity {
     @Column()
     content: string
 
+    @Column({ nullable: true })
+    @ManyToOne(() => Comment, comment => comment.id)
+    @JoinColumn({ name: 'parent_comment_id', referencedColumnName: 'id' })
+    parent_comment_id: Comment
+
     @CreateDateColumn({ nullable: true })
     created_at: Date
 

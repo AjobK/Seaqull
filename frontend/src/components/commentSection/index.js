@@ -37,9 +37,11 @@ class CommentSection extends Component {
         }
 
         return this.data.map((comment) => {
-            return (
-                <Comment key={comment.id} comment={comment} />
-            )
+            if(!comment.parent_comment_id) {
+                return (
+                    <Comment key={comment.id} comment={comment} />
+                )
+            }
         })
     }
 
