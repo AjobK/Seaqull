@@ -1,14 +1,11 @@
 import * as Faker from 'faker'
 import { define, factory } from 'typeorm-seeding'
-import { Account } from '../entity/account'
 import title from '../entity/title'
 import { Profile } from '../entity/profile'
 
 define(Profile, (faker: typeof Faker): Profile => {
     const profileFake = new Profile()
 
-    const createdAccount = factory(Account)() as any
-    profileFake.account = createdAccount
     // userFake.account_id = createdAccount.id
 
     const createdTitle = factory(title)() as any

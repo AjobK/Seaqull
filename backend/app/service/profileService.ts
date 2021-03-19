@@ -50,13 +50,15 @@ class ProfileService {
 
         // get user with username
         const profile = await this.dao.getProfileByUsername(decodedToken.username)
-
+        console.log(profile)
+        const title = await this.titleDAO.getTitleByUserId(profile.id)
+        console.log(title)
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
             username: recievedUsername,
             experience: profile.experience,
-            title: profile.title.name,
+            title: title.name,
             posts: ''
         }
 
@@ -162,23 +164,21 @@ class ProfileService {
 
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
+        let newProfile = new Profile()
+        newProfile.title = await this.titleDAO.getTitleByTitleId(1);
+        newProfile.display_name = u.username
+        newProfile.experience = 0
+        newProfile.custom_path = uuidv4()
+        newProfile.rows_scrolled = 0
+        newProfile = await this.dao.saveProfile(newProfile)
         const acc = new Account()
-
         acc.last_ip = req.ip
+        acc.profile = newProfile;
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
         acc.role = await this.roleDAO.getRoleById(1)
         const createdAccount = await this.accountDAO.saveAccount(acc)
-
-        const newProfile = new Profile()
-        newProfile.account = createdAccount
-        newProfile.title = await this.titleDAO.getTitleById(1);
-        newProfile.display_name = u.username
-        newProfile.experience = 0
-        newProfile.custom_path = uuidv4()
-        newProfile.rows_scrolled = 0
-        await this.dao.saveProfile(newProfile)
         return createdAccount
     }
 
