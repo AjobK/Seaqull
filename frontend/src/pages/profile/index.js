@@ -49,7 +49,6 @@ class Profile extends App {
         this.setState({ posts: posts.data })
       })
       .catch(() => {
-        console.log('oops')
         // this.setState({ error: true })
       })
   }

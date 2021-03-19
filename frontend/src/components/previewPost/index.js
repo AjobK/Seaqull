@@ -22,8 +22,6 @@ class previewPost extends Component {
       return <article className={[styles.article, styles.filler].join(' ')}></article>
     }
 
-    console.log(post)
-
     return (
       <Link to={post.path ? `posts/${post.path}` : ''} className={[styles.article, ...className || ''].join(' ')} style={{
         // backgroundColor: rgb,

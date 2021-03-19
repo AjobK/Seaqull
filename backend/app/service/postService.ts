@@ -55,9 +55,7 @@ class PostService {
             const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
             const account = await new AccountDAO().getAccountByUsername(decodedToken.username);
             decodedId = account.profile.id;
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) { }
 
 
         if (req.params.path && foundPost)
@@ -81,7 +79,6 @@ class PostService {
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
         if(decodedToken.username != null){
             const profile = await this.profileDAO.getProfileByUsername(decodedToken.username)
-            console.log(profile)
             newPost.profile = profile;
             await this.dao.createPost(newPost)
         } else {
@@ -98,7 +95,6 @@ class PostService {
         post.title = req.body.title
         post.description = req.body.description
         post.content = req.body.content
-        console.log(post)
 
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
         if(post.profile.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })

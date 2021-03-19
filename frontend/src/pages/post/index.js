@@ -112,8 +112,6 @@ class Post extends App {
                     // Saves post title with draftJS content
                     callBackSaveData={(data) => {
                         this.post.title = data;
-                        
-                        console.log('Saving title...')
 
                         this.setState({ post: this.post })
                     }}
@@ -125,8 +123,6 @@ class Post extends App {
                     // Saves post content with draftJS content
                     callBackSaveData={(data) => {
                         this.post.content = data;
-
-                        console.log('Saving content...')
 
                         this.setState({ post: this.post })
                     }}

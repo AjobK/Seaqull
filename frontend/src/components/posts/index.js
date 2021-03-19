@@ -93,8 +93,6 @@ class Posts extends Component {
 
 
   loadMore = () => {
-    //console.log('load more')
-    // this.page = this.page % this.totalPages
     this.page = this.page + 1;
 
     this.scrolling = true
