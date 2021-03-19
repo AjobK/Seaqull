@@ -45,8 +45,8 @@ class Profile extends App {
 
   fetchOwnedPosts(username) {
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/owned-by/${username}`)
-      .then((posts) => {
-        this.setState({ posts: posts.data })
+      .then((json) => {
+        this.setState({ posts: json.data })
       })
       .catch(() => {
         // this.setState({ error: true })
@@ -106,7 +106,8 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={this.state.posts} create={user.isOwner && this.props.store.user.loggedIn} />
+          {/* <PostsPreview posts={this.state.posts} create={user.isOwner && this.props.store.user.loggedIn} /> */}
+          <PostsPreview posts={this.state.posts} create={true} />
         </Section>
         <Section title={'LIKED POSTS'}>
           <PostsPreview posts={this.state.posts} />
