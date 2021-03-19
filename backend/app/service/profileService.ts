@@ -50,9 +50,8 @@ class ProfileService {
 
         // get user with username
         const profile = await this.dao.getProfileByUsername(decodedToken.username)
-        console.log(profile)
         const title = await this.titleDAO.getTitleByUserId(profile.id)
-        console.log(title)
+
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
