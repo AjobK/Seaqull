@@ -1,14 +1,14 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm'
-import user from './user'
+import Profile from './profile'
 
-@Entity('user_activity')
-export class UserActivity extends BaseEntity {
+@Entity('profile_activity')
+export class ProfileActivity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => user, user => user.id)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user_id: number
+    @ManyToOne(() => Profile, Profile => Profile.id)
+    @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
+    profile_id: number
 
     @Column()
     previos_password: string
@@ -22,4 +22,4 @@ export class UserActivity extends BaseEntity {
     @CreateDateColumn()
     created_at: Date
 }
-export default UserActivity
+export default ProfileActivity

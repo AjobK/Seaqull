@@ -11,9 +11,21 @@ class PostService {
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
-        const posts = await this.dao.getPosts()
+        let posts
+        const amount = 7;
 
-        return res.status(200).json(posts)
+        if(req.query.page == null) {
+            posts = await this.dao.getPosts('0', amount)
+        } else {
+            posts = await this.dao.getPosts(String(req.query.page), amount)
+            if(posts.length == 0 ){
+                posts = await this.dao.getPosts('0', amount)
+                return res.status(200).json({ 'message': 'You`ve reached the last post' })
+            }
+        }
+        const count = await this.dao.getAmountPosts();
+        const message = { posts, totalPosts: count, per_page: amount }
+        return res.status(200).json(message)
     }
 
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {

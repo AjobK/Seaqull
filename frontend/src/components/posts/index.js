@@ -1,25 +1,30 @@
 import React, { Component } from 'react'
 import { Loader } from '../../components'
-import fetch from 'isomorphic-fetch'
 import styles from './posts.scss'
+import Axios from 'axios'
 
 class Posts extends Component {
   constructor(props) {
     super(props)
     this.data = []
-    this.page = 2
+    this.page = 0
     this.totalPages = null
     this.scrolling = false
   }
 
   loadArticle = () => {
-    const url = `http://localhost:8000/api/post` // ?page=${this.page}`
+    Axios.defaults.baseURL = 'http://localhost:8000'
+    const url = `/api/post/?page=`+this.page // ?page=${this.page}`
 
-    fetch(url)
-      .then(response => response.json())
+    Axios.get(url,  {withCredentials: true})
+      .then(response => response.data)
       .then(json => {
         // if (!this.totalPages) this.totalPages = json.data.last_page
-        this.data = json
+        if(json.message != null) {
+          this.page = 0;
+          this.loadArticle()
+        }
+        this.data = json.posts
         this.setNewPosts()
       })
   }
@@ -72,17 +77,19 @@ class Posts extends Component {
     const pageOffset = window.pageYOffset + window.innerHeight
     let bottomOffset = window.innerHeight
 
-    if (pageOffset > lastLiOffset - bottomOffset)
+    if (pageOffset > lastLiOffset - bottomOffset){
       this.loadMore()
-
+    }
+    
     if (window.pageYOffset >= document.body.clientHeight)
       window.scrollTo(0, document.body.clientHeight)
   }
 
 
   loadMore = () => {
-    this.page = this.page % this.totalPages
-    this.page++
+    //console.log('load more')
+    // this.page = this.page % this.totalPages
+    this.page = this.page + 1;
 
     this.scrolling = true
     this.loadArticle()

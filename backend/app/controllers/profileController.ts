@@ -1,15 +1,15 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
-import UserService from '../service/userService'
+import ProfileService from '../service/profileService'
 
-class UserController implements ControllerBase{
+class profileController implements ControllerBase{
     public profile = '/profile/:username?'
     public register = '/profile/register'
     public router = express.Router()
-    private profileService: UserService
+    private profileService: ProfileService
 
     constructor(){
-        this.profileService = new UserService()
+        this.profileService = new ProfileService()
         this.initRoutes()
     }
 
@@ -18,4 +18,4 @@ class UserController implements ControllerBase{
         this.router.get (this.profile, this.profileService.getProfile)
     }
 }
-export default UserController
+export default profileController
