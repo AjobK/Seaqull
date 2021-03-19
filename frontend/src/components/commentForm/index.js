@@ -26,6 +26,7 @@ class CommentForm extends Component {
         Axios.post(url, this.state.comment, {withCredentials: true}).then(response => {
             console.log(response.data)
             this.resetComment()
+            this.props.onCommentAdd()
         }).catch(err => {
             console.log(err)
         })

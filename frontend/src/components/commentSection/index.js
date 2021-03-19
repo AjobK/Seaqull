@@ -12,18 +12,21 @@ class CommentSection extends Component {
         this.data = []
     }
 
-    loadComments = () => {
+    loadComments() {
         let path = window.location.pathname.split('/').filter(i => i != '').pop();
         const url = `http://localhost:8000/api/comment/${path}`
 
         Axios.get(url)
         .then(response => {
-            console.log(response.data)
             this.data = response.data
         })
     }
 
     componentDidMount() {
+        this.loadComments()
+    }
+
+    onCommentAdd() {
         this.loadComments()
     }
 
@@ -47,7 +50,7 @@ class CommentSection extends Component {
         return (
             <div className={styles.commentSection}>
                 <Section noTitle>
-                    <CommentForm />
+                    <CommentForm onCommentAdd={this.onCommentAdd} />
                     { this.displayComments() }
                 </Section>
             </div>

@@ -32,8 +32,6 @@ class CommentEditor extends Component {
     onChange = (editorState) => {
         this.setState({editorState});
 
-        console.log(convertToRaw(editorState.getCurrentContent()))
-
         const contentState = editorState.getCurrentContent()
 
         if (this.props.onCommentChangeCallback)
@@ -62,6 +60,8 @@ class CommentEditor extends Component {
 
     onSave = () => {
         this.props.onCommentSubmitCallback(this)
+        const editorState = EditorState.push(this.state.editorState, ContentState.createFromText(''));
+        this.setState({ editorState });
     }
 
     render() {
