@@ -4,7 +4,10 @@ import { Account } from '../entity/account'
 class AccountDAO {
     public async getAccountByUsername( username:string ): Promise<Account> {
         const repository = await DatabaseConnector.getRepository('Account')
-        const account = await repository.findOne({ user_name: username })
+        const account = await repository.createQueryBuilder('account')
+            .leftJoinAndSelect('account.profile', 'profile')
+            .where('account.user_name = :user_name', { user_name: username })
+            .getOne()
         return account
     }
 

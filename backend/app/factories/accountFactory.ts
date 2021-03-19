@@ -2,7 +2,7 @@ import { define, factory } from 'typeorm-seeding'
 import { Account } from '../entity/account'
 import role from '../entity/role'
 import * as Faker from 'faker'
-import User from '../entity/user';
+import Profile from '../entity/profile';
 
 define(Account, (faker: typeof Faker) => {
     const acc = new Account()
@@ -10,9 +10,9 @@ define(Account, (faker: typeof Faker) => {
     const name = faker.name.firstName()
 
     const createdRole = factory(role)() as any
-    const createdUser = factory(User)({ display_name: name }) as any
+    const createdUser = factory(Profile)({ display_name: name }) as any
 
-    acc.user = createdUser
+    acc.profile = createdUser
     acc.role = createdRole
     acc.user_name = name
     acc.email = name + '@gmail.com'

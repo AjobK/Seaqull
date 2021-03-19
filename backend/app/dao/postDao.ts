@@ -1,5 +1,6 @@
 import DatabaseConnector from '../util/databaseConnector'
 import { Post } from '../entity/post'
+import Profile from '../entity/profile';
 
 class PostDAO {
     public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
@@ -14,15 +15,15 @@ class PostDAO {
         return await repository.count()
     }
 
-    public async getOwnedPosts(decodedId: number): Promise<Post> {
+    public async getOwnedPosts(profile: Profile): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const postList = await repository.find({ where: { user_id: decodedId }, relations: ['user'] })
+        const postList = await repository.find({ where: { profile: profile }, relations: ['profile'] })
         return postList
     }
 
     public async getPostByPath(path: string): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const foundPost = await repository.findOne({ where: { path: path }, relations: ['user'] })
+        const foundPost = await repository.findOne({ where: { path: path }, relations: ['profile'] })
         return foundPost
     }
 

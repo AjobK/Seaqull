@@ -1,12 +1,12 @@
 import { define } from 'typeorm-seeding'
 import { Post } from '../entity/post'
 import * as Faker from 'faker'
-import { User } from '../entity/user'
+import Profile from '../entity/profile'
 
-define(Post, (faker: typeof Faker, settings: { user: User }): Post => {
+define(Post, (faker: typeof Faker, settings: { profile: Profile }): Post => {
     const postFake = new Post()
 
-    postFake.user = settings.user
+    postFake.profile = settings.profile
     postFake.content = faker.lorem.paragraphs(3)
     postFake.description = faker.lorem.sentence(~~(Math.random() * 7) + 3)
     postFake.title = faker.lorem.sentence(~~(Math.random() * 4) + 2)

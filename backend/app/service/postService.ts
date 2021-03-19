@@ -2,18 +2,18 @@ import { Request, Response } from 'express'
 import PostDAO from '../dao/postDao'
 import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
-import UserDAO from '../dao/userDao'
+import ProfileDAO from '../dao/profileDao'
 import AccountDAO from '../dao/accountDao'
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 class PostService {
     private dao: PostDAO
-    private userDAO: UserDAO;
+    private profileDAO: ProfileDAO;
 
     constructor() {
         this.dao = new PostDAO()
-        this.userDAO = new UserDAO()
+        this.profileDAO = new ProfileDAO()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -35,17 +35,13 @@ class PostService {
     }
 
     public getOwnedPosts = async (req: Request, res: Response): Promise<Response> => {
-        const { JWT_SECRET } = process.env
-        let decodedId = -1;
+        let account = null
 
         try {
-            const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
-            decodedId = await new AccountDAO().getAccountIdByUsername(decodedToken.username)
-        } catch (e) {
-            console.log(e)
-        }
+            account = await new AccountDAO().getAccountByUsername(req.params.username)
+        } catch (e) { return res.status(404).json([]) }
 
-        const posts = await this.dao.getOwnedPosts(decodedId)
+        const posts = await this.dao.getOwnedPosts(account.profile)
 
         return res.status(200).json(posts)
     }
@@ -57,15 +53,15 @@ class PostService {
 
         try {
             const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
-            const user = await new UserDAO().getUserByUsername(decodedToken.username);
-            decodedId = user.id;
+            const account = await new AccountDAO().getAccountByUsername(decodedToken.username);
+            decodedId = account.profile.id;
         } catch (e) {
             console.log(e)
         }
 
 
         if (req.params.path && foundPost)
-            return res.status(200).json({ isOwner: foundPost.user.id == decodedId, ...foundPost })
+            return res.status(200).json({ isOwner: foundPost.profile.id == decodedId, ...foundPost })
         else
             return res.status(404).json({ 'message': 'No post found on that path' })
     }
@@ -84,9 +80,9 @@ class PostService {
 
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
         if(decodedToken.username != null){
-            const user = await this.userDAO.getUserByUsername(decodedToken.username)
-            console.log(user)
-            newPost.user = user;
+            const profile = await this.profileDAO.getProfileByUsername(decodedToken.username)
+            console.log(profile)
+            newPost.profile = profile;
             await this.dao.createPost(newPost)
         } else {
             return res.status(200).json({ message: 'Invalid jwt' })
@@ -105,7 +101,7 @@ class PostService {
         console.log(post)
 
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET);
-        if(post.user.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })
+        if(post.profile.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })
 
         if(!post) return res.status(404).json({ 'message': 'post not found' });
         const updatedPost = await this.dao.updatePost(post)

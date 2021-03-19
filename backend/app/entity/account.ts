@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToOne } from 'typeorm'
 import Role from './role'
-import User from './user';
+import Profile from './profile';
 
 @Entity('account')
 export class Account extends BaseEntity {
@@ -11,9 +11,9 @@ export class Account extends BaseEntity {
     @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
     role: Role
 
-    @OneToOne(() => User)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user: User
+    @OneToOne(() => Profile)
+    @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
+    profile: Profile
 
     @Column({ unique: true })
     user_name: string

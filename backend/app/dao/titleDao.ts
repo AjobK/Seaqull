@@ -8,7 +8,7 @@ class TitleDAO {
         return title
     }
     public async getTitleByUserId(id: number): Promise<Title> {
-        const repository = await DatabaseConnector.getRepository('User');
+        const repository = await DatabaseConnector.getRepository('Profile');
         const user = await repository.findOne({ where: { id: id }, relations: ['title'] })
         return !user ? null : user.title
     }

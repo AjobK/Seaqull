@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './previewPost.scss'
 import { Icon } from '../../components'
+import Link from 'react-router-dom/Link'
 
 class previewPost extends Component {
   render() {
@@ -12,7 +13,8 @@ class previewPost extends Component {
     let { red, green, blue } = randomRGB
     let rgb = `rgb(${red},${green},${blue})`
 
-    const { title, likes, className } = this.props
+    const { className } = this.props
+    const { post } = this.props
 
     let randomNumber = Math.floor(Math.random() * 1085)
 
@@ -20,27 +22,27 @@ class previewPost extends Component {
       return <article className={[styles.article, styles.filler].join(' ')}></article>
     }
 
+    console.log(post)
+
     return (
-      <article className={[styles.article, ...className || ''].join(' ')} style={{
-        backgroundColor: rgb,
-        backgroundImage: `url('https://picsum.photos/225/225/?image=${randomNumber}')`
+      <Link to={post.path ? `posts/${post.path}` : ''} className={[styles.article, ...className || ''].join(' ')} style={{
+        // backgroundColor: rgb,
+        backgroundImage: post != {} ? `url('https://picsum.photos/225/225/?image=${randomNumber}')` : ''
       }}>
         <div className={styles.articleWrapper}>
           <div className={styles.articleWrapperStats}>
-            {likes > 0 && (
-              <div className={styles.articleWrapperStatsLikes}>
-                <Icon iconName='FeatherAlt' />
-                <p className={styles.articleWrapperStatsLikesText}>{likes || 0}</p>
-              </div>
-            ) || null}
+            {post.likes > 0 && <div className={styles.articleWrapperStatsLikes}>
+              <Icon iconName='FeatherAlt' />
+              <p className={styles.articleWrapperStatsLikesText}>{post.likes}</p>
+            </div>}
           </div>
-          <div className={styles.articleWrapperText}>
+          {post.title && <div className={styles.articleWrapperText}>
             <p className={styles.articleWrapperTextTitle}>
-              {title || 'This article is about developers'}
+              {post.title}
             </p>
-          </div>
+          </div>}
         </div>
-      </article>
+      </Link>
     )
   }
 }

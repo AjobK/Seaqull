@@ -1,14 +1,14 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
 import comment from './comment'
-import { User } from './user'
+import { Profile } from './profile'
 
-@Entity('user_comment_like')
-export class UserCommentLike extends BaseEntity {
+@Entity('profile_comment_like')
+export class ProfileCommentLike extends BaseEntity {
     @PrimaryColumn()
     id: number;
 
-    @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    @ManyToOne(() => Profile, Profile => Profile.id)
+    @JoinColumn({ name: 'Profile', referencedColumnName: 'id' })
     user: number
 
     @ManyToOne(() => comment, comment => comment.id)
@@ -18,4 +18,4 @@ export class UserCommentLike extends BaseEntity {
     @Column()
     liked_at: Date
 }
-export default UserCommentLike
+export default ProfileCommentLike
