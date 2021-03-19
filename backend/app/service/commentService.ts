@@ -1,15 +1,15 @@
 import { Request, Response } from 'express'
 import CommentDAO from '../dao/commentDAO'
 import comment from '../entity/comment'
-import UserDAO from '../dao/userDao'
+import ProfileDAO from '../dao/profileDao'
 
 class CommentService {
     private dao: CommentDAO
-    private userDAO: UserDAO
+    private profileDAO: ProfileDAO
 
     constructor() {
         this.dao = new CommentDAO()
-        this.userDAO = new UserDAO()
+        this.profileDAO = new ProfileDAO()
     }
 
     public getComments = async (req: Request, res: Response): Promise<Response> => {
@@ -24,9 +24,10 @@ class CommentService {
     public createComment = async (req: Request | any, res: Response): Promise<Response> => {
         const newComment = new comment()
         const { path, content } = req.body
-        const user = await this.userDAO.getUserByUsername(req.decoded.username)
+        console.log('made it here')
+        const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
 
-        newComment.user = user
+        newComment.profile = profile
         newComment.path = path
         newComment.content = content
         newComment.created_at = new Date()
