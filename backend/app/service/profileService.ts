@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import TitleDAO from '../dao/titleDao'
-import UserDao from '../dao/userDao'
+import ProfileDAO from '../dao/profileDao'
 import isEmail from 'validator/lib/isEmail'
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -10,19 +10,19 @@ import Account from '../entity/account'
 import * as bcrypt from 'bcrypt'
 import AccountDAO from '../dao/accountDao'
 import { v4 as uuidv4 } from 'uuid'
-import User from '../entity/user'
+import Profile from '../entity/profile'
 import RoleDao from '../dao/roleDao'
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
-class UserService {
-    private dao: UserDao
+class ProfileService {
+    private dao: ProfileDAO
     private titleDAO: TitleDAO
     private accountDAO: AccountDAO
     private roleDAO: RoleDao
 
     constructor() {
-        this.dao = new UserDao()
+        this.dao = new ProfileDAO()
         this.titleDAO = new TitleDAO()
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDao()
@@ -49,14 +49,14 @@ class UserService {
         }
 
         // get user with username
-        const user = await this.dao.getUserByUsername(decodedToken.username)
+        const profile = await this.dao.getProfileByUsername(decodedToken.username)
 
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
             username: recievedUsername,
-            experience: user.experience,
-            title: user.title.name,
+            experience: profile.experience,
+            title: profile.title.name,
             posts: ''
         }
 
@@ -97,7 +97,7 @@ class UserService {
         if(isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
             return res.status(401).json({ errors: errors })
         }
-        const createAccount = await this.saveUser(req)
+        const createAccount = await this.saveProfile(req)
 
         const newAccount = this.cleanAccount(createAccount);
         // creating payload for token
@@ -123,7 +123,7 @@ class UserService {
             return 'Username too short'
         }
 
-        const isUsernameTaken = await this.dao.getUserByUsername(username)
+        const isUsernameTaken = await this.dao.getProfileByUsername(username)
         if(isUsernameTaken){
             return 'Username not available'
         }
@@ -160,7 +160,7 @@ class UserService {
         return null
     }
 
-    private async saveUser(req: Request):Promise<Account> {
+    private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
         const acc = new Account()
 
@@ -171,14 +171,14 @@ class UserService {
         acc.role = await this.roleDAO.getRoleById(1)
         const createdAccount = await this.accountDAO.saveAccount(acc)
 
-        const newUser = new User()
-        newUser.account = createdAccount
-        newUser.title = await this.titleDAO.getTitleById(1);
-        newUser.display_name = u.username
-        newUser.experience = 0
-        newUser.custom_path = uuidv4()
-        newUser.rows_scrolled = 0
-        await this.dao.saveUser(newUser)
+        const newProfile = new Profile()
+        newProfile.account = createdAccount
+        newProfile.title = await this.titleDAO.getTitleById(1);
+        newProfile.display_name = u.username
+        newProfile.experience = 0
+        newProfile.custom_path = uuidv4()
+        newProfile.rows_scrolled = 0
+        await this.dao.saveProfile(newProfile)
         return createdAccount
     }
 
@@ -193,4 +193,4 @@ class UserService {
         return account
     }
 }
-export default UserService
+export default ProfileService

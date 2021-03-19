@@ -2,8 +2,8 @@ import { OneToOne, BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDat
 import { Account } from './account'
 import { Title } from './title'
 
-@Entity('user')
-export class User extends BaseEntity {
+@Entity('profile')
+export class Profile extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -17,6 +17,9 @@ export class User extends BaseEntity {
 
     @Column({ nullable: true })
     avatar_attachment: number
+
+    @Column({ nullable: true })
+    description: string
 
     @Column()
     display_name: string
@@ -39,4 +42,4 @@ export class User extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
-export default User
+export default Profile
