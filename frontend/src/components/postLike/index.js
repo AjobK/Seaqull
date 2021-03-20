@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import styles from './postLike.scss'
 import { inject, observer } from 'mobx-react'
-import Axios from "axios";
-
-// TODO
-// - Replace dummy user by user data from cookies (backend)
-// - Read whether user has liked the post already to enable it accordingly (at page init)
-// - Validation in backend (user can only like a post once)
+import Axios from 'axios'
+import { withRouter } from 'react-router'
 
 @inject('store') @observer
 class PostLike extends Component {
@@ -18,14 +14,13 @@ class PostLike extends Component {
     postLike = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
-        Axios.post(`/post/like/${path}`, {}, {withCredentials: true})
+        Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, {withCredentials: true})
             .then(res => {
-                console.log(res.data.message)
                 this.toggleLike()
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    alert('Not signed in!')
+                    this.props.history.push('/login/')
                 }
             })
 
@@ -34,13 +29,11 @@ class PostLike extends Component {
     postUnlike = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
-        Axios.delete(`/post/like/${path}`, {withCredentials: true})
+        Axios.delete(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {withCredentials: true})
             .then(res => {
-                console.log(res.data.message)
                 this.toggleLike()
             })
             .catch(err => {
-                console.log(err)
             })
     }
 
@@ -71,4 +64,4 @@ class PostLike extends Component {
     }
 }
 
-export default PostLike
+export default withRouter(PostLike)

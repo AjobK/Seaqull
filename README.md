@@ -1,10 +1,21 @@
 # [Seaqull](http://www.seaqull.com/) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]
 
-Seaqull is a project focused on improving the accessibility to the world of technology
+#### Commands front end
 
 [Read more on our wiki!](https://github.com/AjobK/Seaqull/wiki).
 
-## Installation
+`- npm run dev`
+#### Commands back end
+
+`- npm i`
+
+`- npm run seed:config`
+
+`- npm run seed:run`
+
+`- npm run schema:drop`
+
+`- npm start`
 
 * Install the latest [LTS version of Node](https://nodejs.org/en/).
 * Clone the seaqull [project](https://github.com/AjobK/Seaqull).
@@ -15,10 +26,27 @@ Seaqull is a project focused on improving the accessibility to the world of tech
 
 You can find the Seaqull documentation [on our github](https://github.com/AjobK/Seaqull/wiki).  
 
-Check out the [Getting Started](https://github.com/AjobK/Seaqull/wiki/Setup) page for a quick overview of all commands.
+> You are always allowed to make a new issue with a new idea / bug / improvement / question, however, add the awaiting approval label to the issue.
 
-Important links:
 
-* [Git Flow](https://github.com/AjobK/Seaqull/wiki/Git-Flow)
-* [Suggestions and Ideas](https://github.com/AjobK/Seaqull/wiki/Suggestions-&-Ideas)
-* [Our Investments](https://github.com/AjobK/Seaqull/wiki/Our-Investments)
+#### SPRINTS
+____________
+
+From now on we will be working with sprints, this will ensure more structure in the project. Each sprint will take 2 weaks.
+The sprint will always end on a Friday and start on a Saturday. Every second Friday we will decide what issues will be added to the following sprint.
+
+#### WORKDAYS
+_____________
+
+Working on Fridays is still required, but the time will be moved from *18:00* to *19:00*  
+We will be picking up the speed however. So you are not required to work extra days.
+You are however obligated to finish the issues you are assigned to in the sprint.
+If you are not able to work on Fridays due to appointments other then Seaqull give us a heads up. Preferably 1 week in advance.
+If you are sick or any other reasons like a relatives decease, just tell us in discord. We are not heartless and we will understand
+
+#### PULL REQUEST
+_________________
+
+We will be making a template for pull requests. It is required to follow this template. This will make sure it is easy to review.
+So we spend less time on reviewing and more on coding. Don't forget to label your pull request.
+You are **never** allowed to merge your own pull request. This way we keep the quality of our code high.  
