@@ -20,6 +20,14 @@ const ProfileStore = types
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn
+    },
+    logOut() {
+      Axios.defaults.baseURL = 'http://localhost:8000'
+
+      Axios.get('/api/logout', { withCredentials: true })
+      .then(() => {
+        self.setLoggedIn(false)
+      })
     }
   }))
 
