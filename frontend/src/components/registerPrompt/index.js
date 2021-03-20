@@ -118,9 +118,6 @@ class RegisterPrompt extends Component {
   }
 
   render() {
-    console.log('RENDERING AGAIN')
-    console.log(this.state)
-    console.log('-------------')
     const { username, email, password, recaptcha } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 

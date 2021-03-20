@@ -1,34 +1,34 @@
 /* eslint-disable indent */
-import { Request, Response } from 'express';
-import accountDao from '../dao/accountDao';
-const jwt = require('jsonwebtoken');
-const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME;
-import * as bcrypt from 'bcrypt';
-import { Account } from '../entity/account';
+import { Request, Response } from 'express'
+import accountDao from '../dao/accountDao'
+const jwt = require('jsonwebtoken')
+const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
+import * as bcrypt from 'bcrypt'
+import { Account } from '../entity/account'
 
-require('dotenv').config();
-const { SECURE } = process.env;
+require('dotenv').config()
+const { SECURE } = process.env
 
 class PostService {
-    private accountDao: accountDao;
+    private accountDao: accountDao
 
     constructor() {
-        this.accountDao = new accountDao();
+        this.accountDao = new accountDao()
     }
 
     // main function user login
     public login = async (req: Request, res: Response): Promise<any> => {
         // extracting username and password from request body
-        const { username, password } = req.body;
+        const { username, password } = req.body
 
         // check if user filled in a password and username
-        if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false });
+        if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
         // getting account from database
-        let account = await this.accountDao.getAccountByUsername(username);
+        let account = await this.accountDao.getAccountByUsername(username)
 
         if(account == null) {
-            return res.status(400).json({ error: ['Incorrect username or password'] });
+            return res.status(400).json({ error: ['Incorrect username or password'] })
         }
 
         // check if account is locked if so return remaining wait time
@@ -57,11 +57,11 @@ class PostService {
             account = this.cleanAccount(account)
 
             // set cookie header
-            res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`);
+            res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
             res.status(200).json({
                 user: account
-            });
-            res.send();
+            })
+            res.send()
         }
     }
 
@@ -109,9 +109,9 @@ class PostService {
     // function user for logout
     public logout = (req: Request, res: Response): void => {
         // if cookie is there remove it
-        if (req.cookies['jwt']) {
+        if (req.cookies['token']) {
             res
-            .clearCookie('jwt')
+            .clearCookie('token')
             .status(200)
             .json({
                 message: 'You have logged out'
@@ -123,4 +123,4 @@ class PostService {
         }
     }
 }
-export default PostService;
+export default PostService
