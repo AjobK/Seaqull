@@ -19,8 +19,6 @@ class previewPost extends Component {
         post.title = JSON.parse(post.title).blocks[0].text
     } catch (e) { }
 
-    let randomNumber = Math.floor(Math.random() * 1085)
-
     if(this.props.filler) {
       return <article className={[styles.article, styles.filler].join(' ')}></article>
     }
