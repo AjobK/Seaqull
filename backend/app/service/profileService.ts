@@ -12,7 +12,7 @@ import AccountDAO from '../dao/accountDao'
 import { v4 as uuidv4 } from 'uuid'
 import Profile from '../entity/profile'
 import RoleDao from '../dao/roleDao'
-import Title from '../entity/title';
+import Title from '../entity/title'
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
@@ -104,7 +104,7 @@ class ProfileService {
         }
         const createAccount = await this.saveProfile(req)
 
-        const newAccount = this.cleanAccount(createAccount);
+        const newAccount = this.cleanAccount(createAccount)
         // creating payload for token
         const payload = {
             username: createAccount.user_name,
@@ -114,7 +114,7 @@ class ProfileService {
         // creating token
         const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
-        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`);
+        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
         res.status(200).json({
             user: newAccount
         })
@@ -168,7 +168,7 @@ class ProfileService {
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
         let newProfile = new Profile()
-        newProfile.title = await this.titleDAO.getTitleByTitleId(1);
+        newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
@@ -176,7 +176,7 @@ class ProfileService {
         newProfile = await this.dao.saveProfile(newProfile)
         const acc = new Account()
         acc.last_ip = req.ip
-        acc.profile = newProfile;
+        acc.profile = newProfile
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username

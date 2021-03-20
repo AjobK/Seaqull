@@ -37,13 +37,12 @@ class Post extends App {
     }
 
     loadArticle = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop();
+        let path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/post/${path}`
 
         fetch(url)
         .then(response => response.json())
         .then(json => {
-            // if (!this.totalPages) this.totalPages = json.data.last_page
             this.post = {
                 title: json.title,
                 content: json.content,
@@ -52,7 +51,6 @@ class Post extends App {
             }
 
             try {
-                // postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
                 this.post = {
                     title: convertFromRaw(JSON.parse(json.title)),
                     content: convertFromRaw(JSON.parse(json.content)),
@@ -77,8 +75,7 @@ class Post extends App {
     }
 
     componentDidMount() {
-        // TODO: API Call for initial data
-        if (!this.props.new) this.loadArticle();
+        if (!this.props.new) this.loadArticle()
     }
 
     sendToDB() {
@@ -111,7 +108,7 @@ class Post extends App {
                     type={'title'}
                     // Saves post title with draftJS content
                     callBackSaveData={(data) => {
-                        this.post.title = data;
+                        this.post.title = data
 
                         this.setState({ post: this.post })
                     }}
@@ -122,7 +119,7 @@ class Post extends App {
                     type={'content'}
                     // Saves post content with draftJS content
                     callBackSaveData={(data) => {
-                        this.post.content = data;
+                        this.post.content = data
 
                         this.setState({ post: this.post })
                     }}

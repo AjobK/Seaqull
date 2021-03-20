@@ -106,7 +106,6 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          {/* <PostsPreview posts={this.state.posts} create={user.isOwner && this.props.store.user.loggedIn} /> */}
           <PostsPreview posts={this.state.posts} create={true} />
         </Section>
         <Section title={'LIKED POSTS'}>

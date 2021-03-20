@@ -26,7 +26,7 @@ class AccountDAO {
         const repositoryAccount = await DatabaseConnector.getRepository('Account')
         const account = await repositoryAccount.findOne({ user_name: username })
 
-        return account.id || -1;
+        return account.id || -1
     }
 }
 export default AccountDAO

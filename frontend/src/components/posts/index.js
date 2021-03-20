@@ -22,7 +22,7 @@ class Posts extends Component {
       .then(json => {
         // if (!this.totalPages) this.totalPages = json.data.last_page
         if(json.message != null) {
-          this.page = 0;
+          this.page = 0
           this.loadArticle()
         }
         this.data = json.posts
@@ -46,7 +46,7 @@ class Posts extends Component {
 
       let article = document.createElement('a')
 
-      article.href = `posts/${this.data[i].path}`;
+      article.href = `posts/${this.data[i].path}`
       article.style.backgroundColor = rgb
       article.classList.add(styles.postItem)
       let postItem = document.createElement('div')
@@ -93,7 +93,7 @@ class Posts extends Component {
 
 
   loadMore = () => {
-    this.page = this.page + 1;
+    this.page = this.page + 1
 
     this.scrolling = true
     this.loadArticle()
