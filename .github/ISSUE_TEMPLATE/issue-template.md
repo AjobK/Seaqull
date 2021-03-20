@@ -1,11 +1,13 @@
 ---
 name: Issue template
 about: Feature implementation or fixes
-title: ''
+title: "[123] Test Issue"
 labels: Backlog
 assignees: ''
 
 ---
+
+Closes #XXX
 
 **Current state**
 What is the state before implementing this issue
