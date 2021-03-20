@@ -24,7 +24,7 @@ class PostService {
             posts = await this.dao.getPosts('0', amount)
         } else {
             posts = await this.dao.getPosts(String(req.query.page), amount)
-            if (posts.length == 0 ){
+            if (posts.length == 0 ) {
                 posts = await this.dao.getPosts('0', amount)
                 return res.status(200).json({ 'message': 'You`ve reached the last post' })
             }
@@ -109,4 +109,5 @@ class PostService {
         return res.status(200).json({ 'message': 'post was updated' })
     }
 }
+
 export default PostService
