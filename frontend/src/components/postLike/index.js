@@ -3,12 +3,23 @@ import styles from './postLike.scss'
 import { inject, observer } from 'mobx-react'
 import Axios from 'axios'
 import { withRouter } from 'react-router'
+import { PostLikesList } from '../../components'
 
 @inject('store') @observer
 class PostLike extends Component {
     constructor(props) {
         super(props)
         this.toggleLike = this.props.toggleLike.bind(this)
+
+        this.state = {
+            showLikes: false
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            showLikes: false
+        })
     }
 
     postLike = () => {
@@ -47,7 +58,15 @@ class PostLike extends Component {
     }
 
     openLikesList = () => {
-        // const
+        this.setState({
+            showLikes: true
+        })
+    }
+
+    closeLikesList = () => {
+        this.setState({
+            showLikes: false
+        })
     }
 
     render() {
@@ -55,10 +74,13 @@ class PostLike extends Component {
 
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
-            <p onClick={ this.openLikesList }>{likesAmount} feathers</p>
+                <p onClick={ this.openLikesList }>{likesAmount} feathers</p>
                 <button onClick={ this.likeClicked }>
                     &#10084;
                 </button>
+                {this.state.showLikes && (
+                    <PostLikesList closeLikesList={ this.closeLikesList }/>
+                )}
             </div>
         )
     }

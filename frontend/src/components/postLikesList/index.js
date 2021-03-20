@@ -7,21 +7,19 @@ import Axios from "axios";
 class PostLikesList extends Component {
     constructor(props) {
         super(props)
-        this.toggleLike = this.props.toggleLike.bind(this)
     }
 
     render() {
-        const { likesAmount } = this.props
-
         return (
-            <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
-            <p>{likesAmount} feathers</p>
-                <button onClick={ this.likeClicked }>
-                    &#10084;
-                </button>
+            <div className={`${styles.postLikesListWrapper}`}>
+                <div className={`${styles.likesBackground}`} onClick={this.props.closeLikesList}/>
+                <div className={`${styles.likesList}`}>
+                    <h1>Likes</h1>
+                    
+                </div>
             </div>
         )
     }
 }
 
-export default PostLike
+export default PostLikesList
