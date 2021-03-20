@@ -3,18 +3,18 @@ import PostDAO from '../dao/postDao'
 import Post from '../entity/post'
 import PostLike from '../entity/post_like'
 import {v4 as uuidv4} from 'uuid'
-import AccountDao from "../dao/accountDao";
-import Account from "../entity/account";
+import Profile from "../entity/profile";
+import ProfileDao from "../dao/profileDao";
 
 const jwt = require('jsonwebtoken')
 
 class PostService {
     private dao: PostDAO
-    private accountDao: AccountDao
+    private profileDao: ProfileDao
 
     constructor() {
         this.dao = new PostDAO()
-        this.accountDao = new AccountDao()
+        this.profileDao = new ProfileDao()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -53,9 +53,9 @@ class PostService {
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
         let postLikesAmount = foundLikes ? foundLikes.length : 0
 
-        // Fetch whether account liked the post
-        const account = await this.fetchAccount(req)
-        let userLiked = !!(await this.dao.findLikeByPostAndAccount(foundPost, account || null))
+        // Fetch whether profile liked the post
+        const profile = await this.fetchProfile(req)
+        let userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
 
         response.post = foundPost
         response.likes = {
@@ -83,18 +83,18 @@ class PostService {
     }
 
     public likePost = async (req: Request, res: Response): Promise<Response> => {
-        // Retrieve user
-        const user = await this.fetchAccount(req)
+        // Retrieve profile
+        const profile = await this.fetchProfile(req)
         // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
         // Check whether post has been liked before
-        const foundLike = await this.dao.findLikeByPostAndAccount(foundPost, user)
+        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
         if (foundLike)
             return res.status(400).json({ 'error': 'Post has already been liked.' })
 
         const postLike = new PostLike()
-        postLike.user = user
+        postLike.profile = profile
         postLike.post = foundPost
         postLike.liked_at = new Date()
 
@@ -108,12 +108,12 @@ class PostService {
 
 
     public unlikePost = async (req: Request, res: Response): Promise<Response> => {
-        // Retrieve account
-        const account = await this.fetchAccount(req)
+        // Retrieve profile
+        const profile = await this.fetchProfile(req)
         // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
-        const foundLike = await this.dao.findLikeByPostAndAccount(foundPost, account)
+        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
         const removedLike = await this.dao.unlikePost(foundLike)
 
         if (removedLike && removedLike.affected > 0) {
@@ -134,12 +134,12 @@ class PostService {
     }
 
     // TODO Move to another file?
-    private fetchAccount = async (req: Request): Promise<Account> => {
+    private fetchProfile = async (req: Request): Promise<Profile> => {
         const {token} = req.cookies
         if (token) {
             try {
                 const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-                return await this.accountDao.getAccountByUsername(decodedToken.username)
+                return await this.profileDao.getProfileByUsername(decodedToken.username)
             } catch(err) {
                 return null
             }

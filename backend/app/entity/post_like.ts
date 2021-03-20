@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Account } from './account'
+import { Profile } from './profile'
 import { Post } from './post'
 
 @Entity('post_like')
@@ -7,9 +7,9 @@ export class PostLike extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Account, user => user.id)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-    user: Account
+    @ManyToOne(() => Profile, profile => profile.id)
+    @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
+    profile: Profile
 
     @ManyToOne(() => Post, post => post.id)
     @JoinColumn({ name: 'post_id', referencedColumnName: 'id' })
