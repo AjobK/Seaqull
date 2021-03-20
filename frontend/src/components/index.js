@@ -22,7 +22,8 @@ import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
 import StyleButton from './styleButton'
 import FormInput from './formInput'
-
+import ProfileInfo from './profileInfo'
+ 
 export {
   Button,
   Hamburger,
@@ -47,5 +48,6 @@ export {
   StyleButton,
   LoginPrompt,
   RegisterPrompt,
-  FormInput
+  FormInput,
+  ProfileInfo
 }

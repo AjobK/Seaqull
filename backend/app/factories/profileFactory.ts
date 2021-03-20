@@ -18,6 +18,6 @@ define(Profile, (faker: typeof Faker): Profile => {
     profileFake.display_name = 'root'
     profileFake.experience = 0
     profileFake.rows_scrolled = 0
-
+    profileFake.description = ' i`m a wild seaqull'
     return profileFake
 })

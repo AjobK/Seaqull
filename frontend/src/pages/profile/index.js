@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import { UserBanner, PostsPreview, Statistics, Loader } from '../../components'
+import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import Axios from 'axios'
 import Error from '../error'
 
@@ -57,6 +57,7 @@ class Profile extends App {
   }
 
   updateProfile(profile) {
+    console.log(profile)
     const user = {
       isOwner: profile.isOwner,
       username: profile.username,
@@ -64,7 +65,8 @@ class Profile extends App {
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
       banner: profile.banner || '/src/static/dummy/user/banner.jpg',
-      picture: profile.avatar || '/src/static/dummy/user/profile.jpg'
+      picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
+      description: profile.description
     }
 
     this.setState({ user })
@@ -90,6 +92,9 @@ class Profile extends App {
     return (
       <Standard>
         <UserBanner user={user} />
+        <Section title={'Info'}>
+          <ProfileInfo description={user.description} create={user.isOwner && this.props.store.user.loggedIn} />
+        </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={user.posts} create={user.isOwner && this.props.store.user.loggedIn} />
         </Section>
