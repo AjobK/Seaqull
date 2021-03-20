@@ -49,13 +49,15 @@ class PostService {
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.params.path)
         const { JWT_SECRET } = process.env
-        let decodedId = -1
+        let decodedId
 
         try {
             const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
             const account = await new AccountDAO().getAccountByUsername(decodedToken.username)
             decodedId = account.profile.id
-        } catch (e) { }
+        } catch (e) {
+            decodedId = -1
+        }
 
 
         if (req.params.path && foundPost)

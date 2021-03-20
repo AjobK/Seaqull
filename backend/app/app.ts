@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser'
 import PostController from './controllers/postController'
 import serverConstructor from './serverConstructor'
 import AuthorizationController from './controllers/authorizationController'
-import profileController from './controllers/profileController'
+import ProfileController from './controllers/profileController'
 const cookieParser = require('cookie-parser')
 
 const { FRONTEND_URL } = process.env
@@ -14,7 +14,7 @@ const backend = new serverConstructor({
     controllers: [
         new PostController(),
         new AuthorizationController(),
-        new profileController()
+        new ProfileController()
     ],
     middleWares: [
         cookieParser(),
