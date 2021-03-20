@@ -42,9 +42,9 @@ class ProfileService {
         let receivedUsername = req.params.username
 
         // check if username is precent in the paramenters
-        if(!receivedUsername){
+        if (!receivedUsername) {
             // check if a username is present in payload
-            if(decodedToken && decodedToken.username){
+            if (decodedToken && decodedToken.username) {
                 // if there is no username in params then use one in the jwt
                 receivedUsername = decodedToken.username
             } else {
@@ -80,26 +80,26 @@ class ProfileService {
             recaptcha: []
         }
         const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
-        if(isUsernamNotValid){
+        if (isUsernamNotValid) {
             errors.username = [isUsernamNotValid]
         }
 
         const isEmailNotValid = await this.checkValidEmail(userRequested.email)
-        if(isEmailNotValid){
+        if (isEmailNotValid) {
             errors.email = [isEmailNotValid]
         }
 
         const isPasswordNotStrong = await this.checkPasswordStrength(userRequested.password)
-        if(isPasswordNotStrong) {
+        if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
         }
 
         const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
-        if(isRecaptchaNotValid){
+        if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if(isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
             return res.status(401).json({ errors: errors })
         }
         const createAccount = await this.saveProfile(req)
@@ -122,14 +122,14 @@ class ProfileService {
     }
 
     private async checkValidUsername (username: string): Promise<string> {
-        if (!matches(username, '^[a-zA-Z0-9_.-]*$')){
+        if (!matches(username, '^[a-zA-Z0-9_.-]*$')) {
             return 'Invalid characters in username'
-        } else if (username.length < 4){
+        } else if (username.length < 4) {
             return 'Username too short'
         }
 
         const isUsernameTaken = await this.dao.getProfileByUsername(username)
-        if(isUsernameTaken){
+        if (isUsernameTaken) {
             return 'Username not available'
         }
         return null
@@ -137,12 +137,12 @@ class ProfileService {
 
     // todo verify email by sending an email to user
     private async checkValidEmail (email: string): Promise<string> {
-        if(!isEmail(email)){
+        if (!isEmail(email)) {
             return 'Invalid email adress'
         }
 
         const isEmailTaken = await this.dao.getUserByEmail(email)
-        if(isEmailTaken){
+        if (isEmailTaken) {
             return 'Email not available'
         }
 
@@ -150,7 +150,7 @@ class ProfileService {
     }
 
     private checkPasswordStrength(password: string): string {
-        if (!isStrongPassword(password, { minSymbols: 0 })){
+        if (!isStrongPassword(password, { minSymbols: 0 })) {
             return 'Password is too weak.\nUse lowercase letter(s), uppercase letter(s) and number(s).\nShould be atleast 8 characters long.'
         }
         return null

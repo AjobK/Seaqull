@@ -20,11 +20,11 @@ class PostService {
         let posts
         const amount = 7
 
-        if(req.query.page == null) {
+        if (req.query.page == null) {
             posts = await this.dao.getPosts('0', amount)
         } else {
             posts = await this.dao.getPosts(String(req.query.page), amount)
-            if(posts.length == 0 ){
+            if (posts.length == 0 ){
                 posts = await this.dao.getPosts('0', amount)
                 return res.status(200).json({ 'message': 'You`ve reached the last post' })
             }
@@ -77,7 +77,8 @@ class PostService {
         newPost.created_at = new Date()
 
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
-        if(decodedToken.username != null){
+
+        if (decodedToken.username != null) {
             const profile = await this.profileDAO.getProfileByUsername(decodedToken.username)
             newPost.profile = profile
             await this.dao.createPost(newPost)
@@ -97,12 +98,13 @@ class PostService {
         post.content = req.body.content
 
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
-        if(post.profile.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })
+        if (post.profile.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })
 
-        if(!post) return res.status(404).json({ 'message': 'post not found' })
+        if (!post) return res.status(404).json({ 'message': 'post not found' })
+
         const updatedPost = await this.dao.updatePost(post)
 
-        if(!updatedPost) return res.status(404).json({ 'message': 'post not updated' })
+        if (!updatedPost) return res.status(404).json({ 'message': 'post not updated' })
 
         return res.status(200).json({ 'message': 'post was updated' })
     }
