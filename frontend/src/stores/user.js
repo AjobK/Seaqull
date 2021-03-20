@@ -20,7 +20,6 @@ const UserStore = types
       self.loggedIn = false
       self.name = ''
       Axios.get('/logout', payload, {withCredentials: true})
-
     },
     logIn() {
       self.loggedIn = true
