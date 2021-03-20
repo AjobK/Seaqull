@@ -53,12 +53,16 @@ class PostLike extends Component {
         }
     }
 
+    openLikesList = () => {
+        // const
+    }
+
     render() {
         const { likesAmount } = this.props
 
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
-            <p>{likesAmount} feathers</p>
+            <p onClick={ this.openLikesList }>{likesAmount} feathers</p>
                 <button onClick={ this.likeClicked }>
                     &#10084;
                 </button>
