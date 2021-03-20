@@ -22,6 +22,7 @@ import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
 import StyleButton from './styleButton'
 import FormInput from './formInput'
+import PostLike from './postLike'
 
 export {
   Button,
@@ -47,5 +48,6 @@ export {
   StyleButton,
   LoginPrompt,
   RegisterPrompt,
-  FormInput
+  FormInput,
+  PostLike
 }

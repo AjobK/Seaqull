@@ -2,8 +2,10 @@ import { Request, Response } from 'express'
 import PostDAO from '../dao/postDao'
 import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
-import ProfileDAO from '../dao/profileDao'
+import ProfileDAO from '../dao/ProfileDao'
 import AccountDAO from '../dao/accountDao'
+import PostLike from '../entity/post_like'
+import Profile from '../entity/profile'
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -47,6 +49,15 @@ class PostService {
     }
 
     public getPostByPath = async (req: Request, res: Response): Promise<any> => {
+        const response = {
+            post: null,
+            likes: {
+                amount: 0,
+                userLiked: false
+            },
+            isOwner: false
+        }
+
         const foundPost = await this.dao.getPostByPath(req.params.path)
         const { JWT_SECRET } = process.env
         let decodedId
@@ -60,8 +71,23 @@ class PostService {
         }
 
 
+        // Fetch amount of likes on post
+        const foundLikes = await this.dao.getPostLikesById(foundPost.id)
+        let postLikesAmount = foundLikes ? foundLikes.length : 0
+
+        // Fetch whether profile liked the post
+        const profile = await this.fetchProfile(req)
+        let userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
+
+        response.post = foundPost
+        response.likes = {
+            amount: postLikesAmount,
+            userLiked: userLiked
+        }
+        response.isOwner = foundPost.profile.id == decodedId
+
         if (req.params.path && foundPost)
-            return res.status(200).json({ isOwner: foundPost.profile.id == decodedId, ...foundPost })
+            return res.status(200).json(response)
         else
             return res.status(404).json({ 'message': 'No post found on that path' })
     }
@@ -109,6 +135,71 @@ class PostService {
         if (!updatedPost) return res.status(404).json({ 'message': 'post not updated' })
 
         return res.status(200).json({ 'message': 'post was updated' })
+    }
+
+    public likePost = async (req: Request, res: Response): Promise<Response> => {
+        // Retrieve profile
+        const profile = await this.fetchProfile(req)
+        // Retrieve post
+        const foundPost = await this.dao.getPostByPath(req.params.path)
+
+        // Check whether post has been liked before
+        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
+        if (foundLike)
+            return res.status(400).json({ 'error': 'Post has already been liked.' })
+
+        const postLike = new PostLike()
+        postLike.profile = profile
+        postLike.post = foundPost
+        postLike.liked_at = new Date()
+
+        const newLike = await this.dao.likePost(postLike)
+
+        if (newLike)
+            return res.status(200).json({ 'message': 'Post liked!' })
+        else
+            return res.status(400).json({ 'error': 'Post could not be liked.' })
+    }
+
+
+    public unlikePost = async (req: Request, res: Response): Promise<Response> => {
+        // Retrieve profile
+        const profile = await this.fetchProfile(req)
+        // Retrieve post
+        const foundPost = await this.dao.getPostByPath(req.params.path)
+
+        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
+        const removedLike = await this.dao.unlikePost(foundLike)
+
+        if (removedLike && removedLike.affected > 0) {
+            return res.status(200).json({ 'message': 'Like removed!' })
+        } else {
+            return res.status(404).json({ 'message': 'Like to remove could not be found' })
+        }
+    }
+
+    public getPostLikes = async (req: Request, res: Response): Promise<any> => {
+        const foundPost = await this.dao.getPostByPath(req.params.path)
+        const foundLikes = await this.dao.getPostLikesById(foundPost.id)
+
+        if (req.params.path && foundLikes)
+            return res.status(200).json(foundLikes)
+        else
+            return res.status(404).json({ 'message': 'No likes found for that post id' })
+    }
+
+    // TODO Move to another file?
+    private fetchProfile = async (req: Request): Promise<Profile> => {
+        const {token} = req.cookies
+        if (token) {
+            try {
+                const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+                return await this.profileDAO.getProfileByUsername(decodedToken.username)
+            } catch(err) {
+                return null
+            }
+        }
+        return null
     }
 }
 

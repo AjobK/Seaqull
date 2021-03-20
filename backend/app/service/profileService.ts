@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import TitleDAO from '../dao/titleDao'
-import ProfileDAO from '../dao/profileDao'
+import ProfileDAO from '../dao/ProfileDao'
 import isEmail from 'validator/lib/isEmail'
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
