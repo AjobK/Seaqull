@@ -32,11 +32,13 @@ class ProfileService {
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
         // extracting token
         const { token } = req.cookies
-        let decodedToken: any = null
+        let decodedToken: any
 
         try {
             decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        } catch (e) { }
+        } catch (e) {
+            decodedToken = null
+        }
 
         // getting username from parameters
         let receivedUsername = req.params.username
