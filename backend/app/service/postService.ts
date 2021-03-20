@@ -40,7 +40,7 @@ class PostService {
             post: null,
             likes: {
                 amount: 0,
-                user_liked: false
+                userLiked: false
             }
         }
 
@@ -60,7 +60,7 @@ class PostService {
         response.post = foundPost
         response.likes = {
             amount: postLikesAmount,
-            user_liked: userLiked
+            userLiked: userLiked
         }
 
         return res.status(200).json(response)

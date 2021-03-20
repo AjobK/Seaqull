@@ -19,7 +19,7 @@ class Post extends App {
             path: 'Loading..',
             likes: {
                 amount: 0,
-                user_liked: false
+                userLiked: false
             }
         }
 
@@ -58,7 +58,7 @@ class Post extends App {
                 path: path,
                 likes: {
                     amount: res.data.likes.amount,
-                    user_liked: res.data.likes.user_liked
+                    userLiked: res.data.likes.userLiked
                 }
             }
 
@@ -67,24 +67,22 @@ class Post extends App {
             })
         })
         .catch(err => {
-            console.log('Error occurred while fetching post')
         })
     }
 
     toggleLike = () => {
         // Toggles liked state for all like components
-        console.log('LIKE TOGGLED')
         let newState = this.state
 
         // Increment/decrement likes locally
         let newLikesAmount
-        if (this.state.post.likes.user_liked && newState.post.likes.amount > 0) {
+        if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
             newLikesAmount = this.state.post.likes.amount - 1
         } else {
             newLikesAmount = this.state.post.likes.amount + 1
         }
         newState.post.likes.amount = newLikesAmount
-        this.state.post.likes.user_liked = !this.state.post.likes.user_liked
+        this.state.post.likes.userLiked = !this.state.post.likes.userLiked
 
         this.setState(newState)
     }
@@ -110,7 +108,7 @@ class Post extends App {
                 <div className={styles.likePostWrapper}>
                     <PostLike
                         likesAmount={this.state.post.likes.amount || 0}
-                        liked={this.state.post.likes.user_liked}
+                        liked={this.state.post.likes.userLiked}
                         toggleLike={this.toggleLike}
                     />
                 </div>
