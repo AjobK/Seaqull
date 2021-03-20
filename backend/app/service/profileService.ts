@@ -12,6 +12,7 @@ import AccountDAO from '../dao/accountDao'
 import { v4 as uuidv4 } from 'uuid'
 import Profile from '../entity/profile'
 import RoleDao from '../dao/roleDao'
+import Title from '../entity/title';
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
@@ -31,17 +32,21 @@ class ProfileService {
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
         // extracting token
         const { token } = req.cookies
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        let decodedToken: any = null
+
+        try {
+            decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        } catch (e) { }
 
         // getting username from parameters
-        let recievedUsername = req.params.username
+        let receivedUsername = req.params.username
 
         // check if username is precent in the paramenters
-        if(!recievedUsername){
+        if(!receivedUsername){
             // check if a username is present in payload
-            if(decodedToken.username){
+            if(decodedToken && decodedToken.username){
                 // if there is no username in params then use one in the jwt
-                recievedUsername = decodedToken.username
+                receivedUsername = decodedToken.username
             } else {
                 // no username was found in payload nor was it found in the params
                 return res.status(404).json({ error: 'No username was given' })
@@ -49,16 +54,15 @@ class ProfileService {
         }
 
         // get user with username
-        const profile = await this.dao.getProfileByUsername(decodedToken.username)
-        const title = await this.titleDAO.getTitleByUserId(profile.id)
+        const profile = await this.dao.getProfileByUsername(receivedUsername)
+        const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
 
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
-            username: recievedUsername,
+            username: receivedUsername,
             experience: profile.experience,
-            title: title.name,
-            posts: ''
+            title: title ? title.name : 'Title not found...' ,
         }
 
         res.status(200)
