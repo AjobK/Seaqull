@@ -92,7 +92,7 @@ class Profile extends App {
     return (
       <Standard>
         <UserBanner user={user} />
-        <Section title={'Info'}>
+        <Section title={'Description'}>
           <ProfileInfo description={user.description} create={user.isOwner && this.props.store.user.loggedIn} />
         </Section>
         <Section title={'CREATED POSTS'}>
