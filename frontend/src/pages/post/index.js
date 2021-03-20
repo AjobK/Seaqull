@@ -42,14 +42,13 @@ class Post extends App {
 
     loadArticle = () => {
         let path = window.location.pathname.split('/').filter(i => i != '').pop()
-        const url = `http://localhost:8000/api/post/${path}`
 
-        Axios.get(`/post/${path}`, {withCredentials: true})
+        Axios.get(`${this.props.store.defaultData.backendUrl}/post/${path}`, {withCredentials: true})
         .then(res => {
             this.post = {
-                title: res.data.title,
-                content: res.data.content,
-                description: res.data.description,
+                title: res.data.post.title,
+                content: res.data.post.content,
+                description: res.data.post.description,
                 path: path,
                 likes: {
                     amount: res.data.likes.amount,
@@ -59,8 +58,8 @@ class Post extends App {
 
             try {
                 this.post = {
-                    title: convertFromRaw(JSON.parse(res.data.title)),
-                    content: convertFromRaw(JSON.parse(res.data.content)),
+                    title: convertFromRaw(JSON.parse(res.data.post.title)),
+                    content: convertFromRaw(JSON.parse(res.data.post.content)),
                     description: '',
                     path: path,
                     likes: {
@@ -70,9 +69,9 @@ class Post extends App {
                 }
             } catch (e) {
                 this.post = {
-                    title: res.data.title,
-                    content: res.data.content,
-                    description: res.data.description,
+                    title: res.data.post.title,
+                    content: res.data.post.content,
+                    description: res.data.post.description,
                     path: path,
                     likes: {
                         amount: res.data.likes.amount,
@@ -84,7 +83,7 @@ class Post extends App {
             this.setState({
                 post: this.post,
                 loaded: true,
-                isOwner: json.isOwner
+                isOwner: res.data.isOwner
             })
         })
     }

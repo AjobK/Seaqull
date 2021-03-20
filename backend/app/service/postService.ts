@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import PostDAO from '../dao/postDao'
 import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
-import ProfileDAO from '../dao/profileDao'
+import ProfileDAO from '../dao/ProfileDao'
 import AccountDAO from '../dao/accountDao'
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -54,7 +54,8 @@ class PostService {
             likes: {
                 amount: 0,
                 userLiked: false
-            }
+            },
+            isOwner: false
         }
 
         const foundPost = await this.dao.getPostByPath(req.params.path)
@@ -67,11 +68,6 @@ class PostService {
             decodedId = account.profile.id
         } catch (e) { }
 
-
-        if (req.params.path && foundPost)
-            return res.status(200).json({ isOwner: foundPost.profile.id == decodedId, ...foundPost })
-        else
-            return res.status(404).json({ 'message': 'No post found on that path' })
 
         // Fetch amount of likes on post
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
@@ -86,8 +82,12 @@ class PostService {
             amount: postLikesAmount,
             userLiked: userLiked
         }
+        response.isOwner = foundPost.profile.id == decodedId
 
-        return res.status(200).json(response)
+        if (req.params.path && foundPost)
+            return res.status(200).json(response)
+        else
+            return res.status(404).json({ 'message': 'No post found on that path' })
     }
 
     public createPost = async (req: Request, res: Response): Promise<Response> => {
@@ -192,7 +192,7 @@ class PostService {
         if (token) {
             try {
                 const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-                return await this.profileDao.getProfileByUsername(decodedToken.username)
+                return await this.profileDAO.getProfileByUsername(decodedToken.username)
             } catch(err) {
                 return null
             }

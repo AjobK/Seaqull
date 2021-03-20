@@ -14,7 +14,7 @@ class PostLike extends Component {
     postLike = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
-        Axios.post(`/post/like/${path}`, {}, {withCredentials: true})
+        Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, {withCredentials: true})
             .then(res => {
                 this.toggleLike()
             })
@@ -29,7 +29,7 @@ class PostLike extends Component {
     postUnlike = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
-        Axios.delete(`/post/like/${path}`, {withCredentials: true})
+        Axios.delete(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {withCredentials: true})
             .then(res => {
                 this.toggleLike()
             })
