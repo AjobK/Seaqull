@@ -30,8 +30,6 @@ class Profile extends App {
   }
 
   fetchProfileData(path) {
-    let token = localStorage.getItem('token')
-
     Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
