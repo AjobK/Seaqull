@@ -8,7 +8,6 @@ import Post from './post'
 import Error from './error'
 import Login from'./login'
 import Register from'./register'
-import Test from'./test'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -31,7 +30,6 @@ class AppRouter extends Component {
             <Route path='/posts/:postUrl' exact component={Post} />
             <Route path='/login' exact component={Login} />
             <Route path='/register' exact component={Register} />
-            <Route path='/test' exact component={Test} />
             <Route component={Error} />
           </Switch>
         </Router>

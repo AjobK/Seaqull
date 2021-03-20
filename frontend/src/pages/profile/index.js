@@ -85,6 +85,7 @@ class Profile extends App {
 
   render() {
     const { user, error, isOwner } = this.state
+    const { profile } = this.props.store
 
     if (!user && !error) {
       return (
@@ -104,7 +105,7 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={this.state.posts} create={isOwner} />
+          <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
           <PostsPreview posts={this.state.posts} />
