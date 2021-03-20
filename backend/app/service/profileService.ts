@@ -12,6 +12,7 @@ import AccountDAO from '../dao/accountDao'
 import { v4 as uuidv4 } from 'uuid'
 import Profile from '../entity/profile'
 import RoleDao from '../dao/roleDao'
+import Title from '../entity/title'
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
@@ -31,17 +32,21 @@ class ProfileService {
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
         // extracting token
         const { token } = req.cookies
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        let decodedToken: any = null
+
+        try {
+            decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        } catch (e) { }
 
         // getting username from parameters
-        let recievedUsername = req.params.username
+        let receivedUsername = req.params.username
 
         // check if username is precent in the paramenters
-        if(!recievedUsername){
+        if (!receivedUsername) {
             // check if a username is present in payload
-            if(decodedToken.username){
+            if (decodedToken && decodedToken.username) {
                 // if there is no username in params then use one in the jwt
-                recievedUsername = decodedToken.username
+                receivedUsername = decodedToken.username
             } else {
                 // no username was found in payload nor was it found in the params
                 return res.status(404).json({ error: 'No username was given' })
@@ -49,17 +54,15 @@ class ProfileService {
         }
 
         // get user with username
-        const profile = await this.dao.getProfileByUsername(decodedToken.username)
-        const title = await this.titleDAO.getTitleByUserId(profile.id)
+        const profile = await this.dao.getProfileByUsername(receivedUsername)
+        const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
 
         // creating payload
         const payload = {
             isOwner: decodedToken ? true : false,
-            username: recievedUsername,
+            username: receivedUsername,
             experience: profile.experience,
-            title: title.name,
-            description: profile.description,
-            posts: ''
+            title: title ? title.name : 'Title not found...' ,
         }
 
         res.status(200)
@@ -77,31 +80,31 @@ class ProfileService {
             recaptcha: []
         }
         const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
-        if(isUsernamNotValid){
+        if (isUsernamNotValid) {
             errors.username = [isUsernamNotValid]
         }
 
         const isEmailNotValid = await this.checkValidEmail(userRequested.email)
-        if(isEmailNotValid){
+        if (isEmailNotValid) {
             errors.email = [isEmailNotValid]
         }
 
         const isPasswordNotStrong = await this.checkPasswordStrength(userRequested.password)
-        if(isPasswordNotStrong) {
+        if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
         }
 
         const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
-        if(isRecaptchaNotValid){
+        if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if(isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
             return res.status(401).json({ errors: errors })
         }
         const createAccount = await this.saveProfile(req)
 
-        const newAccount = this.cleanAccount(createAccount);
+        const newAccount = this.cleanAccount(createAccount)
         // creating payload for token
         const payload = {
             username: createAccount.user_name,
@@ -111,7 +114,7 @@ class ProfileService {
         // creating token
         const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
-        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`);
+        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
         res.status(200).json({
             user: newAccount
         })
@@ -119,14 +122,14 @@ class ProfileService {
     }
 
     private async checkValidUsername (username: string): Promise<string> {
-        if (!matches(username, '^[a-zA-Z0-9_.-]*$')){
+        if (!matches(username, '^[a-zA-Z0-9_.-]*$')) {
             return 'Invalid characters in username'
-        } else if (username.length < 4){
+        } else if (username.length < 4) {
             return 'Username too short'
         }
 
         const isUsernameTaken = await this.dao.getProfileByUsername(username)
-        if(isUsernameTaken){
+        if (isUsernameTaken) {
             return 'Username not available'
         }
         return null
@@ -134,12 +137,12 @@ class ProfileService {
 
     // todo verify email by sending an email to user
     private async checkValidEmail (email: string): Promise<string> {
-        if(!isEmail(email)){
+        if (!isEmail(email)) {
             return 'Invalid email adress'
         }
 
         const isEmailTaken = await this.dao.getUserByEmail(email)
-        if(isEmailTaken){
+        if (isEmailTaken) {
             return 'Email not available'
         }
 
@@ -147,7 +150,7 @@ class ProfileService {
     }
 
     private checkPasswordStrength(password: string): string {
-        if (!isStrongPassword(password, { minSymbols: 0 })){
+        if (!isStrongPassword(password, { minSymbols: 0 })) {
             return 'Password is too weak.\nUse lowercase letter(s), uppercase letter(s) and number(s).\nShould be atleast 8 characters long.'
         }
         return null
@@ -165,7 +168,7 @@ class ProfileService {
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
         let newProfile = new Profile()
-        newProfile.title = await this.titleDAO.getTitleByTitleId(1);
+        newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
@@ -175,7 +178,7 @@ class ProfileService {
 
         const acc = new Account()
         acc.last_ip = req.ip
-        acc.profile = newProfile;
+        acc.profile = newProfile
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username

@@ -1,48 +1,50 @@
 import React, { Component } from 'react'
 import styles from './previewPost.scss'
 import { Icon } from '../../components'
+import Link from 'react-router-dom/Link'
 
 class previewPost extends Component {
   render() {
-    let randomRGB = {
-      red: Math.random() * 255,
-      green: Math.random() * 255,
-      blue: Math.random() * 255
-    }
-    let { red, green, blue } = randomRGB
-    let rgb = `rgb(${red},${green},${blue})`
+    let randomRGB = [
+      Math.random() * 255,
+      Math.random() * 255,
+      Math.random() * 255
+    ]
+    let rgb = `rgb(${randomRGB.join(',')})`
 
-    const { title, likes, className } = this.props
+    let { post, className } = this.props
 
-    let randomNumber = Math.floor(Math.random() * 1085)
+    try {
+        // DraftJS content and regular text
+        post.title = JSON.parse(post.title).blocks[0].text
+    } catch (e) { }
 
     if(this.props.filler) {
       return <article className={[styles.article, styles.filler].join(' ')}></article>
     }
 
     return (
-      <article className={[styles.article, ...className || ''].join(' ')} style={{
-        backgroundColor: rgb,
-        backgroundImage: `url('https://picsum.photos/225/225/?image=${randomNumber}')`
-      }}>
-        <div className={styles.articleWrapper}>
-          <div className={styles.articleWrapperStats}>
-            {likes > 0 && (
-              <div className={styles.articleWrapperStatsLikes}>
+        <Link to={post.path ? `/posts/${post.path}` : '#'} className={[styles.article, ...className || ''].join(' ')} style={{
+            backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
+        }}>
+            <div className={styles.articleWrapper}>
+            <div className={styles.articleWrapperStats}>
+                {post.likes > 0 && <div className={styles.articleWrapperStatsLikes}>
                 <Icon iconName='FeatherAlt' />
-                <p className={styles.articleWrapperStatsLikesText}>{likes || 0}</p>
-              </div>
-            ) || null}
-          </div>
-          <div className={styles.articleWrapperText}>
-            <p className={styles.articleWrapperTextTitle}>
-              {title || 'This article is about developers'}
-            </p>
-          </div>
-        </div>
-      </article>
-    )
-  }
+                <p className={styles.articleWrapperStatsLikesText}>{post.likes}</p>
+                </div>}
+            </div>
+                {post.title && 
+                    <div className={styles.articleWrapperText}>
+                        <p className={styles.articleWrapperTextTitle}>
+                        {post.title}
+                        </p>
+                    </div>
+                }
+            </div>
+        </Link>
+        )
+    }
 }
 
 export default previewPost
