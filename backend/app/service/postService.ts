@@ -1,20 +1,20 @@
 import {Request, Response} from 'express'
 import PostDAO from '../dao/postDao'
-import UserDao from '../dao/userDao'
 import Post from '../entity/post'
 import PostLike from '../entity/post_like'
 import {v4 as uuidv4} from 'uuid'
-import User from "../entity/user";
+import AccountDao from "../dao/accountDao";
+import Account from "../entity/account";
 
 const jwt = require('jsonwebtoken')
 
 class PostService {
     private dao: PostDAO
-    private userDao: UserDao
+    private accountDao: AccountDao
 
     constructor() {
         this.dao = new PostDAO()
-        this.userDao = new UserDao()
+        this.accountDao = new AccountDao()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -53,9 +53,9 @@ class PostService {
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
         let postLikesAmount = foundLikes ? foundLikes.length : 0
 
-        // Fetch whether user liked the post
-        const user = await this.fetchUser(req)
-        let userLiked = !!(await this.dao.findLikeByPostAndUser(foundPost, user || null))
+        // Fetch whether account liked the post
+        const account = await this.fetchAccount(req)
+        let userLiked = !!(await this.dao.findLikeByPostAndAccount(foundPost, account || null))
 
         response.post = foundPost
         response.likes = {
@@ -84,12 +84,12 @@ class PostService {
 
     public likePost = async (req: Request, res: Response): Promise<Response> => {
         // Retrieve user
-        const user = await this.fetchUser(req)
+        const user = await this.fetchAccount(req)
         // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
         // Check whether post has been liked before
-        const foundLike = await this.dao.findLikeByPostAndUser(foundPost, user)
+        const foundLike = await this.dao.findLikeByPostAndAccount(foundPost, user)
         if (foundLike)
             return res.status(400).json({ 'error': 'Post has already been liked.' })
 
@@ -108,12 +108,12 @@ class PostService {
 
 
     public unlikePost = async (req: Request, res: Response): Promise<Response> => {
-        // Retrieve user
-        const user = await this.fetchUser(req)
+        // Retrieve account
+        const account = await this.fetchAccount(req)
         // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
-        const foundLike = await this.dao.findLikeByPostAndUser(foundPost, user)
+        const foundLike = await this.dao.findLikeByPostAndAccount(foundPost, account)
         const removedLike = await this.dao.unlikePost(foundLike)
 
         if (removedLike && removedLike.affected > 0) {
@@ -134,12 +134,12 @@ class PostService {
     }
 
     // TODO Move to another file?
-    private fetchUser = async (req: Request): Promise<User> => {
+    private fetchAccount = async (req: Request): Promise<Account> => {
         const {token} = req.cookies
         if (token) {
             try {
                 const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-                return await this.userDao.getUserByUsername(decodedToken.username)
+                return await this.accountDao.getAccountByUsername(decodedToken.username)
             } catch(err) {
                 return null
             }
