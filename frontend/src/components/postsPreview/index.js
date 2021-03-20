@@ -10,7 +10,6 @@ import Axios from 'axios'
 class PostsPreview extends Component {
   render() {
     const posts = this.props.posts
-    const user = this.props.store
 
     let arr = []
 

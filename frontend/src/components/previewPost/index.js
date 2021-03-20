@@ -5,13 +5,12 @@ import Link from 'react-router-dom/Link'
 
 class previewPost extends Component {
   render() {
-    let randomRGB = {
-      red: Math.random() * 255,
-      green: Math.random() * 255,
-      blue: Math.random() * 255
-    }
-    let { red, green, blue } = randomRGB
-    let rgb = `rgb(${red},${green},${blue})`
+    let randomRGB = [
+      Math.random() * 255,
+      Math.random() * 255,
+      Math.random() * 255
+    ]
+    let rgb = `rgb(${randomRGB.join(',')})`
 
     let { post, className } = this.props
 
@@ -27,9 +26,8 @@ class previewPost extends Component {
     }
 
     return (
-        <Link to={post.path ? `posts/${post.path}` : ''} className={[styles.article, ...className || ''].join(' ')} style={{
-            // backgroundColor: rgb,
-            backgroundImage: post != {} ? `url('https://picsum.photos/225/225/?image=${randomNumber}')` : ''
+        <Link to={post.path ? `/posts/${post.path}` : '#'} className={[styles.article, ...className || ''].join(' ')} style={{
+            backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
         }}>
             <div className={styles.articleWrapper}>
             <div className={styles.articleWrapperStats}>
