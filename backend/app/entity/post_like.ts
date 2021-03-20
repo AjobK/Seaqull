@@ -5,7 +5,7 @@ import { Post } from './post'
 @Entity('post_like')
 export class PostLike extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @ManyToOne(() => Profile, profile => profile.id)
     @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })

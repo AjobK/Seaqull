@@ -4,10 +4,10 @@ import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
 import ProfileDAO from '../dao/ProfileDao'
 import AccountDAO from '../dao/accountDao'
+import PostLike from '../entity/post_like'
+import Profile from '../entity/profile'
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-import PostLike from '../entity/post_like'
-import Profile from '../entity/profile';
 
 class PostService {
     private dao: PostDAO
