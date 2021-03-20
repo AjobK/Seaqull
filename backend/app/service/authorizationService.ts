@@ -18,7 +18,7 @@ class PostService {
 
     public loginVerify = async (req: Request, res: Response): Promise<any> => {
         if (!req.cookies || !req.cookies.token)
-            return res.status(401).json({ loggedIn: false });
+            return res.status(401).json({ loggedIn: false })
 
         try {
             let account = await this.accountDao.getAccountByUsername(
@@ -27,9 +27,9 @@ class PostService {
 
             let profile = account.profile
 
-            return res.status(200).json({ loggedIn: true, profile: profile });
+            return res.status(200).json({ loggedIn: true, profile: profile })
         } catch (error) {
-            return res.status(401).send({ loggedIn: false });
+            return res.status(401).send({ loggedIn: false })
         }
     }
 
