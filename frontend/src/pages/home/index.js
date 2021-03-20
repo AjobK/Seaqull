@@ -1,6 +1,7 @@
 import React from 'react'
 import App from '../App'
 import { Standard, Main } from '../../layouts'
+import { inject, observer } from 'mobx-react';
 
 class Home extends App {
   render() {

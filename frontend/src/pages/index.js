@@ -8,11 +8,13 @@ import Post from './post'
 import Error from './error'
 import Login from'./login'
 import Register from'./register'
+import Test from'./test'
 
 class AppRouter extends Component {
   constructor(props) {
     super(props)
     this.store = initStore(true)
+    this.store.profile.loginVerify()
   }
 
   render () {
@@ -29,6 +31,7 @@ class AppRouter extends Component {
             <Route path='/posts/:postUrl' exact component={Post} />
             <Route path='/login' exact component={Login} />
             <Route path='/register' exact component={Register} />
+            <Route path='/test' exact component={Test} />
             <Route component={Error} />
           </Switch>
         </Router>
