@@ -11,6 +11,5 @@ Explain how can test your branch Ex. width, height etc...
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Opera
-- [ ] Internet Explorer
 - [ ] Edge
 - [ ] Safari
