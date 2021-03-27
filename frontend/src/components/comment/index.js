@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './comment.scss'
+import { Link } from 'react-router-dom';
 
 class Comment extends Component {
 
@@ -53,16 +54,15 @@ class Comment extends Component {
                         <div className={styles.comment__avatar}>
                             {/* TODO: replace profile image */}
                             <img src={require('../../static/dummy/user/profile.jpg')} className={styles.comment__avatarPicture} />
-                            {/* TODO: display level badge */}
                             <div className={styles.comment__avatarBadge}>
                                 {this.props.comment.profile.experience > 0 ? this.props.comment.profile.experience/1000 : 0 }
                             </div>
                         </div>
                         <div className={styles.comment__main}>
                             <div className={styles.comment__header}>
-                                <div className={styles.comment__headerAuthor}>
+                                <Link to={`/profile/${this.props.comment.profile.display_name}`} className={styles.comment__headerAuthor}>
                                     {this.props.comment.profile.display_name}
-                                </div>
+                                </Link>
                                 <div className={styles.comment__headerPublishedTime}>
                                     {this.timeAgo(new Date(this.props.comment.created_at))}
                                 </div>

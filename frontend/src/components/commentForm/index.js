@@ -20,15 +20,13 @@ class CommentForm extends Component {
     }
 
     onCommentSubmit = () => {
-        console.log('saving')
         const url = `http://localhost:8000/api/comment/`
 
         Axios.post(url, this.state.comment, {withCredentials: true}).then(response => {
-            console.log(response.data)
             this.resetComment()
             this.props.onCommentAdd()
         }).catch(err => {
-            console.log(err)
+            //TODO: handle error
         })
     }
 

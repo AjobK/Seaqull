@@ -60,6 +60,10 @@
 		&Author {
 			font-size: 1.5rem;
 			font-weight: 600;
+			&:link,
+			&:visited {
+				color: $textdark;
+			}
 		}
 
 		&PublishedTime {

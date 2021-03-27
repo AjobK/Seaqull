@@ -24,7 +24,6 @@ class CommentService {
     public createComment = async (req: Request | any, res: Response): Promise<Response> => {
         const newComment = new comment()
         const { path, content } = req.body
-        console.log('made it here')
         const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
 
         newComment.profile = profile

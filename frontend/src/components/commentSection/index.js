@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
+import { Link } from 'react-router-dom'
+
 import styles from './commentSection.scss'
 
 import { Comment } from '../'
 import { CommentForm } from '../'
 import { Section } from '../../layouts'
-
+@inject('store') @observer
 class CommentSection extends Component {
     constructor(props) {
         super(props)
-        this.data = []
+        //this.data = []
+        this.state = {data: []}
     }
 
     loadComments() {
@@ -18,7 +22,7 @@ class CommentSection extends Component {
 
         Axios.get(url)
         .then(response => {
-            this.data = response.data
+            this.setState({data: response.data})
         })
     }
 
@@ -26,20 +30,34 @@ class CommentSection extends Component {
         this.loadComments()
     }
 
-    onCommentAdd() {
+    onCommentAdd = () => {
         this.loadComments()
     }
 
-    displayComments() {
-        if(!this.data) {
+    displayCommentForm = () => {
+        const { user, profile } = this.props.store
+        
+        if(profile.loggedIn) {
+            return (
+                <CommentForm onCommentAdd={this.onCommentAdd} />
+            )
+        }
+
+        return (
+            <p>Please <Link to='/login' className={styles.commentSection__highlightedLink}>log in</Link> to comment to this post</p>
+        )
+    }
+
+    displayComments = () => {
+        if(!this.state.data) {
             return <p>Loading...</p>
         } 
         
-        if (this.data.length <= 0) {
+        if (this.state.data.length <= 0) {
             return <p>No comments have been added yet.</p>
         }
 
-        return this.data.map((comment) => {
+        return this.state.data.map((comment) => {
             return (
                 <Comment key={comment.id} comment={comment} />
             )
@@ -47,10 +65,11 @@ class CommentSection extends Component {
     }
 
     render() {
+
         return (
             <div className={styles.commentSection}>
                 <Section noTitle>
-                    <CommentForm onCommentAdd={this.onCommentAdd} />
+                    { this.displayCommentForm() }
                     { this.displayComments() }
                 </Section>
             </div>
