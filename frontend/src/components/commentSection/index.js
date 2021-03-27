@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import Axios from 'axios'
 import { Link } from 'react-router-dom'
+import Axios from 'axios'
 
 import styles from './commentSection.scss'
 
+import { Section } from '../../layouts'
 import { Comment } from '../'
 import { CommentForm } from '../'
-import { Section } from '../../layouts'
 @inject('store') @observer
 class CommentSection extends Component {
     constructor(props) {
         super(props)
-        //this.data = []
         this.state = {data: []}
     }
 
@@ -65,7 +64,6 @@ class CommentSection extends Component {
     }
 
     render() {
-
         return (
             <div className={styles.commentSection}>
                 <Section noTitle>

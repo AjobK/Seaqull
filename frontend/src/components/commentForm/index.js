@@ -40,13 +40,13 @@ class CommentForm extends Component {
             <div className="commentForm">
                 <CommentEditor 
                     onCommentChangeCallback={(data) => {
-                        this.comment.content = data.blocks[0].text
+                        this.comment.content = data
 
                         this.setState({ comment: this.comment })
                     }}
-                    value={this.state.comment.content} 
+                    value={this.state.comment.content}
+                    onSubmitCallback={this.onCommentSubmit}
                 />
-                <button type="button" onClick={this.onCommentSubmit}>Save</button>
             </div>
         )
     }
