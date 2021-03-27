@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Loader } from '../../components'
 import styles from './posts.scss'
+import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
 import Axios from 'axios'
 
 class Posts extends Component {
@@ -21,7 +22,7 @@ class Posts extends Component {
       .then(json => {
         // if (!this.totalPages) this.totalPages = json.data.last_page
         if(json.message != null) {
-          this.page = 0;
+          this.page = 0
           this.loadArticle()
         }
         this.data = json.posts
@@ -45,12 +46,17 @@ class Posts extends Component {
 
       let article = document.createElement('a')
 
-      article.href = `posts/${this.data[i].path}`;
+      article.href = `posts/${this.data[i].path}`
       article.style.backgroundColor = rgb
       article.classList.add(styles.postItem)
       let postItem = document.createElement('div')
 
-      postItem.innerText = this.data[i].title
+      try {
+        postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
+      } catch (e) {
+        postItem.innerText = this.data[i].title
+      }
+
       postItem.classList.add(styles.postItemText)
       article.appendChild(postItem)
       singleLi.appendChild(article)
@@ -87,9 +93,7 @@ class Posts extends Component {
 
 
   loadMore = () => {
-    //console.log('load more')
-    // this.page = this.page % this.totalPages
-    this.page = this.page + 1;
+    this.page = this.page + 1
 
     this.scrolling = true
     this.loadArticle()

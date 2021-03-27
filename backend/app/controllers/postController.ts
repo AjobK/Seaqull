@@ -1,6 +1,7 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import PostService from '../service/postService'
+const auth = require('../middleware/isAuth.ts')
 
 class PostController implements ControllerBase{
     public post = '/post'
@@ -14,8 +15,13 @@ class PostController implements ControllerBase{
 
     public initRoutes(): void {
         this.router.get(this.post, this.postService.getPosts)
+        this.router.get(this.post + '/owned-by/:username', this.postService.getOwnedPosts)
         this.router.get(this.post + '/:path', this.postService.getPostByPath)
         this.router.post(this.post, this.postService.createPost)
+        this.router.post(this.post + '/like/:path', auth, this.postService.likePost)
+        this.router.delete(this.post + '/like/:path', auth, this.postService.unlikePost)
+        this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
+        this.router.put(this.post + '/:path', auth, this.postService.updatePost)
     }
 }
 export default PostController

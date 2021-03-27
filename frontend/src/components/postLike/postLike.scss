@@ -1,0 +1,29 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+
+.postLike {
+	display: flex;
+	align-items: center;
+
+	p {
+		height: fit-content;
+		margin-right: 5px;
+		color: $nav-items;
+	}
+
+	button {
+		background-color: $primary;
+		border: none;
+		border-radius: 20px;
+		padding: 5px 8px;
+		color: white;
+		font-size: 18px;
+		cursor: pointer;
+	}
+}
+
+.liked {
+	button {
+		background-color: $dark;
+	}
+}

@@ -2,9 +2,11 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon, CommentSection } from '../../components'
+import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection } from '../../components'
 import { withRouter } from 'react-router-dom'
+import Axios from 'axios'
 import styles from './post.scss'
+import { convertFromRaw } from 'draft-js'
 
 @inject('store') @observer
 class Post extends App {
@@ -12,10 +14,14 @@ class Post extends App {
         super(props)
 
         this.post = {
-            title: null,
-            description: null,
-            content: null,
-            path: null
+            title: '',
+            description: '',
+            content: '',
+            path: '',
+            likes: {
+                amount: 0,
+                userLiked: false
+            }
         }
 
         this.state = {
@@ -29,77 +35,134 @@ class Post extends App {
                 level: 0,                                           // Level of user
                 title: 'Software Engineer'                          // Currently selected title by ID
             },
+            loaded: false,
             post: this.post
         }
-        
-        // TODO: API Call for initial data
-        this.loadArticle();
     }
-    
-    loadArticle = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop();
-        const url = `http://localhost:8000/api/post/${path}`
 
-        fetch(url)
-        .then(response => response.json())
-        .then(json => {
-            // if (!this.totalPages) this.totalPages = json.data.last_page
-            console.log('POST FOUND')
+    loadArticle = () => {
+        let path = window.location.pathname.split('/').filter(i => i != '').pop()
+
+        Axios.get(`${this.props.store.defaultData.backendUrl}/post/${path}`, {withCredentials: true})
+        .then(res => {
             this.post = {
-                title: json.title,
-                content: json.content,
-                description: json.description,
-                path: path
+                title: res.data.post.title,
+                content: res.data.post.content,
+                description: res.data.post.description,
+                path: path,
+                likes: {
+                    amount: res.data.likes.amount,
+                    userLiked: res.data.likes.userLiked
+                }
+            }
+
+            try {
+                this.post = {
+                    title: convertFromRaw(JSON.parse(res.data.post.title)),
+                    content: convertFromRaw(JSON.parse(res.data.post.content)),
+                    description: '',
+                    path: path,
+                    likes: {
+                        amount: res.data.likes.amount,
+                        userLiked: res.data.likes.userLiked
+                    }
+                }
+            } catch (e) {
+                this.post = {
+                    title: res.data.post.title,
+                    content: res.data.post.content,
+                    description: res.data.post.description,
+                    path: path,
+                    likes: {
+                        amount: res.data.likes.amount,
+                        userLiked: res.data.likes.userLiked
+                    }
+                }
             }
 
             this.setState({
-                post: this.post
+                post: this.post,
+                loaded: true,
+                isOwner: res.data.isOwner
             })
         })
     }
 
-    sendToDB() {
-        console.log('Saving');
-        console.log(this.state.post.title != null ? this.state.post.title.blocks[0].text : null)
+    toggleLike = () => {
+        // Toggles liked state for all like components
+        let newState = this.state
 
-        return;
+        // Increment/decrement likes locally
+        let newLikesAmount
+        if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
+            newLikesAmount = this.state.post.likes.amount - 1
+        } else {
+            newLikesAmount = this.state.post.likes.amount + 1
+        }
+        newState.post.likes.amount = newLikesAmount
+        this.state.post.likes.userLiked = !this.state.post.likes.userLiked
+
+        this.setState(newState)
+    }
+
+    componentDidMount() {
+        if (!this.props.new) this.loadArticle()
+    }
+
+    sendToDB() {
+        Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
+        const payload = {
+            title: this.state.post.title,
+            description: 'None',
+            content: this.state.post.content
+        }
+
+        Axios.post('/post', payload, { withCredentials: true })
+        .then(res => {
+            this.props.history.push('/')
+        })
     }
 
     render() {
         // Values change based on initial response from server
-        const { isEditing, isOwner } = this.state
+        const { isEditing, isOwner, post, loaded, author } = this.state
 
-        console.log('RERENDERED')
-        console.log(this.state.post)
+        if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner author={this.state.author} isOwner={isOwner} />
+                <PostBanner author={author} isOwner={isOwner} />
                 <Section noTitle>
+                <div className={styles.likePostWrapper}>
+                    <PostLike
+                        likesAmount={this.state.post.likes.amount || 0}
+                        liked={this.state.post.likes.userLiked}
+                        toggleLike={this.toggleLike}
+                    />
+                </div>
                 <div className={styles.renderWrapper}>
                 <PostContent
-                    key={1}
                     type={'title'}
                     // Saves post title with draftJS content
                     callBackSaveData={(data) => {
-                        this.post.title = data;
+                        this.post.title = data
 
                         this.setState({ post: this.post })
                     }}
                     readOnly={!isOwner || !isEditing}
-                    value={this.state.post.title} // Initial no content, should be prefilled by API
+                    value={post.title} // Initial no content, should be prefilled by API
                 />
                 <PostContent
-                    key={2}
                     type={'content'}
                     // Saves post content with draftJS content
                     callBackSaveData={(data) => {
-                        this.post.content = data;
+                        this.post.content = data
 
                         this.setState({ post: this.post })
                     }}
                     readOnly={!isOwner || !isEditing}
-                    value={this.state.post.content} // Initial no content, should be prefilled by API
+                    value={post.content} // Initial no content, should be prefilled by API
                 />
                 </div>
                 {
