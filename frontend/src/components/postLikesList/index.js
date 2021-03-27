@@ -21,22 +21,22 @@ class PostLikesList extends Component {
     loadLikes = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
         Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/${path}`)
-        .then(res => {
-            const likes = []
-            res.data.forEach(like => {
-                console.log(like)
-                const userLike = {
-                    display_name: like.profile.display_name,
-                    avatarURL: '/src/static/dummy/user/profile.jpg',
-                    level: null
-                }
-                likes.push(userLike)
-            })
+            .then(res => {
+                const likes = []
+                res.data.forEach(like => {
+                    console.log(like)
+                    const userLike = {
+                        display_name: like.profile.display_name,
+                        avatarURL: '/src/static/dummy/user/profile.jpg',
+                        level: null
+                    }
+                    likes.push(userLike)
+                })
 
-            this.setState({
-                likes
+                this.setState({
+                    likes
+                })
             })
-        })
     }
 
     goToProfile = (displayName) => {
@@ -44,8 +44,6 @@ class PostLikesList extends Component {
     }
 
     render() {
-        console.log(this.state.likes)
-
         return (
             <div className={`${styles.postLikesListWrapper}`}>
                 <div className={`${styles.likesBackground}`} onClick={this.props.closeLikesList}/>

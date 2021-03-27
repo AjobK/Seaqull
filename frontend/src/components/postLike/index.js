@@ -74,7 +74,12 @@ class PostLike extends Component {
 
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
-                <p onClick={ this.openLikesList }>{likesAmount} feathers</p>
+                {likesAmount <= 0 && (
+                    <p className={`${styles.postLikesAmount}`}>0 feathers</p>
+                )}
+                {likesAmount > 0 && (
+                    <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'feather' : 'feathers'}</p>
+                )}
                 <button onClick={ this.likeClicked }>
                     &#10084;
                 </button>

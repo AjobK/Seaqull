@@ -5,11 +5,13 @@
 	display: flex;
 	align-items: center;
 
-	p {
+	.postLikesAmount {
 		height: fit-content;
 		margin-right: 5px;
 		color: $nav-items;
+	}
 
+	.clickableLikes {
 		&:hover {
 			text-decoration: underline;
 			cursor: pointer;
