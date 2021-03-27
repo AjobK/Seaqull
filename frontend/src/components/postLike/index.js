@@ -26,7 +26,7 @@ class PostLike extends Component {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
         Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, {withCredentials: true})
-            .then(res => {
+            .then(() => {
                 this.toggleLike()
             })
             .catch(err => {
@@ -41,7 +41,7 @@ class PostLike extends Component {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
         Axios.delete(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {withCredentials: true})
-            .then(res => {
+            .then(() => {
                 this.toggleLike()
             })
             .catch(err => {
@@ -49,7 +49,6 @@ class PostLike extends Component {
     }
 
     likeClicked = () => {
-        // Like or unlike based on old liked state value
         if (this.props.liked) {
             this.postUnlike()
         } else {

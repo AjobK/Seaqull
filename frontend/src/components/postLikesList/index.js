@@ -3,7 +3,7 @@ import styles from './postLikesList.scss'
 import { inject, observer } from 'mobx-react'
 import Axios from "axios"
 import { withRouter } from "react-router"
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 @inject('store') @observer
 class PostLikesList extends Component {
@@ -73,4 +73,4 @@ class PostLikesList extends Component {
     }
 }
 
-export default withRouter(PostLikesList)
+export default PostLikesList
