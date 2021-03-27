@@ -5,10 +5,9 @@
    "main": "app.ts",
    "scripts": {
       "start": "nodemon app/app.ts",
-      "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
       "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
       "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
-      "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync"
+      "reset": "ts-node ./node_modules/typeorm/cli.js schema:drop && ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
    },
    "author": "seaqull",
    "license": "ISC",

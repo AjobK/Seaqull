@@ -4,10 +4,10 @@ import Post from '../entity/post'
 import { v4 as uuidv4 } from 'uuid'
 import ProfileDAO from '../dao/ProfileDao'
 import AccountDAO from '../dao/accountDao'
+import PostLike from '../entity/post_like'
+import Profile from '../entity/profile'
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-import PostLike from '../entity/post_like'
-import Profile from '../entity/profile';
 
 class PostService {
     private dao: PostDAO
@@ -60,13 +60,15 @@ class PostService {
 
         const foundPost = await this.dao.getPostByPath(req.params.path)
         const { JWT_SECRET } = process.env
-        let decodedId = -1
+        let decodedId
 
         try {
             const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
             const account = await new AccountDAO().getAccountByUsername(decodedToken.username)
             decodedId = account.profile.id
-        } catch (e) { }
+        } catch (e) {
+            decodedId = -1
+        }
 
 
         // Fetch amount of likes on post

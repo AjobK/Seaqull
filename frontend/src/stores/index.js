@@ -4,6 +4,7 @@ import UIStore from './ui'
 import NavigationStore from './navigation'
 import UserStore from './user'
 import PostStore from './post'
+import ProfileStore from './profile'
 
 let store = null
 
@@ -13,7 +14,8 @@ const Store = types
     ui: types.optional(UIStore, {}),
     nav: types.optional(NavigationStore, {}),
     user: types.optional(UserStore, {}),
-    post: types.optional(PostStore, {})
+    post: types.optional(PostStore, {}),
+    profile: types.optional(ProfileStore, {})
   })
 
 export function initStore(isServer, snapshot = null) {

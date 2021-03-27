@@ -16,6 +16,23 @@ class PostService {
         this.accountDao = new accountDao()
     }
 
+    public loginVerify = async (req: Request, res: Response): Promise<any> => {
+        if (!req.cookies || !req.cookies.token)
+            return res.status(401).json({ loggedIn: false })
+
+        try {
+            let account = await this.accountDao.getAccountByUsername(
+                jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
+            )
+
+            let profile = account.profile
+
+            return res.status(200).json({ loggedIn: true, profile: profile })
+        } catch (error) {
+            return res.status(401).send({ loggedIn: false })
+        }
+    }
+
     // main function user login
     public login = async (req: Request, res: Response): Promise<any> => {
         // extracting username and password from request body

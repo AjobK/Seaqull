@@ -32,11 +32,13 @@ class ProfileService {
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
         // extracting token
         const { token } = req.cookies
-        let decodedToken: any = null
+        let decodedToken: any
 
         try {
             decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        } catch (e) { }
+        } catch (e) {
+            decodedToken = null
+        }
 
         // getting username from parameters
         let receivedUsername = req.params.username
@@ -56,10 +58,14 @@ class ProfileService {
         // get user with username
         const profile = await this.dao.getProfileByUsername(receivedUsername)
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
+        let isOwner = false
+
+        if (receivedUsername && decodedToken)
+            isOwner = !!(receivedUsername == decodedToken.username)
 
         // creating payload
         const payload = {
-            isOwner: decodedToken ? true : false,
+            isOwner: isOwner,
             username: receivedUsername,
             experience: profile.experience,
             title: title ? title.name : 'Title not found...' ,
