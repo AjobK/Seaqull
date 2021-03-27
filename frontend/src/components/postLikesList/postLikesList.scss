@@ -3,6 +3,12 @@
 @import '../../styles/mixins.scss';
 @import '../../styles/breakpoints.scss';
 
+$likes-list-padding: 20px;
+
+* {
+	transition: .2s ease-in-out;
+}
+
 .postLikesListWrapper {
 	width: 100%;
 	height: 100%;
@@ -19,21 +25,125 @@
 		animation: fade-in 0.2s
 	}
 
-	.likesList {
+	.likesListWrapper {
 		position: fixed;
 		background-color: white;
 		border-radius: 10px;
 		z-index: 102;
 		width: 500px;
-		padding: 0 20px;
 		height: 50%;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		overflow-y: hidden;
 
 		@include mobile-tablet {
 			width: 70%;
 		}
+
+		@include mobile-all {
+			width: 90%;
+		}
+
+		header {
+			display: flex;
+			align-items: center;
+
+			h2 {
+				color: $dark;
+				padding: 15px $likes-list-padding 12px;
+
+				.feather {
+					color: $primary;
+				}
+			}
+
+			.closeLikes {
+				cursor: pointer;
+				position: absolute;
+				right: 20px;
+				font-size: 1.4rem;
+				line-height: 1.4rem;
+				padding: 5px;
+				text-align: center;
+				border-radius: 100%;
+				width: 34px;
+				height: 34px;
+				color: $primary;
+
+				&:hover {
+					color: $dark;
+				}
+			}
+		}
+
+		.likesList {
+			list-style: none;
+			overflow-y: auto;
+			max-height: 100%;
+
+			.likesListItem {
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+				padding: 12px $likes-list-padding;
+				border-bottom: $primary-light 1px solid;
+
+				.avatarWrapper {
+					position: relative;
+
+					.avatar {
+						transition: 0.2s;
+						overflow: hidden;
+						border-radius: 100%;
+						position: relative;
+						background-size: cover;
+						background-position: center;
+						background-color: #1f1f1f;
+						width: 50px;
+						height: 50px;
+						@include box-shadow;
+					}
+
+					.level {
+						border: white 1.8px solid;
+						font-weight: bold;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						position: absolute;
+						bottom: -2px;
+						right: -4px;
+						height: 22px;
+						min-width: 22px;
+						width: auto;
+						text-align: center;
+						background-color: $primary;
+						border-radius: 100%;
+
+						.levelNumber {
+							text-align: center;
+							font-family: $sidefont;
+							color: white;
+							font-size: 0.68em;
+							line-height: 0.8em;
+							margin-bottom: -1px;
+						}
+					}
+				}
+
+				.displayName {
+					margin-left: 15px;
+					color: black;
+					font-size: 18px;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+
 	}
 }
 
