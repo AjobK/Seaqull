@@ -28,7 +28,7 @@ class PostBanner extends Component {
                 <div className={styles.user_info}>
                   <h2 className={[styles.name].join(' ')}>{ author.name || ''}</h2>
                   <div className={styles.achieved}>
-                    <span className={styles.level}>{ Number.isSafeInteger(author.level) ?  author.level : '-1'}</span>
+                    <span className={styles.level}>{ Number.isSafeInteger(author.level) ? author.level : '-1'}</span>
                     <h3 className={styles.role}>{ author.title || ''}</h3>
                   </div>
                 </div>
