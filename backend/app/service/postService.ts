@@ -191,11 +191,12 @@ class PostService {
         const foundLikes = await this.dao.getRecentUserLikesByProfileId(foundUser.id, 8)
 
         if (req.params.username && foundLikes) {
+            const likes = []
             foundLikes.forEach((like) => {
-                delete like.profile
+                likes.push(like.post)
             })
 
-            return res.status(200).json(foundLikes)
+            return res.status(200).json(likes)
         }
         else
             return res.status(404).json({ 'message': 'No likes found for that username' })

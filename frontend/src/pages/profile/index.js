@@ -50,7 +50,6 @@ class Profile extends App {
   fetchOwnedPosts(username) {
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/owned-by/${username}`)
       .then((json) => {
-        console.log(json.data)
         this.setState({ posts: json.data })
       })
       .catch(() => {
@@ -61,7 +60,7 @@ class Profile extends App {
   fetchLikedPosts(username) {
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
         .then((json) => {
-            this.setState({ likes: json.data })
+          this.setState({ likes: json.data })
         })
         .catch(() => {
           // this.setState({ error: true })
