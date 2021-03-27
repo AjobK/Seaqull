@@ -186,6 +186,21 @@ class PostService {
             return res.status(404).json({ 'message': 'No likes found for that post id' })
     }
 
+    public getRecentUserLikes = async (req: Request, res: Response): Promise<any> => {
+        const foundUser = await this.profileDAO.getProfileByUsername(req.params.username)
+        const foundLikes = await this.dao.getRecentUserLikesByProfileId(foundUser.id, 8)
+
+        if (req.params.username && foundLikes) {
+            foundLikes.forEach((like) => {
+                delete like.profile
+            })
+
+            return res.status(200).json(foundLikes)
+        }
+        else
+            return res.status(404).json({ 'message': 'No likes found for that username' })
+    }
+
     // TODO Move to another file?
     private fetchProfile = async (req: Request): Promise<Profile> => {
         const {token} = req.cookies

@@ -21,6 +21,7 @@ class PostController implements ControllerBase{
         this.router.post(this.post + '/like/:path', auth, this.postService.likePost)
         this.router.delete(this.post + '/like/:path', auth, this.postService.unlikePost)
         this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
+        this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
         this.router.put(this.post + '/:path', auth, this.postService.updatePost)
     }
 }

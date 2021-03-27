@@ -15,7 +15,8 @@ class Profile extends App {
     this.state = {
       user: null,
       error: false,
-      posts: []
+      posts: [],
+      likes: []
     }
 
     this.loadDataFromBackend()
@@ -38,6 +39,9 @@ class Profile extends App {
       .then(() => {
         this.fetchOwnedPosts(this.state.user.username)
       })
+      .then(() => {
+        this.fetchLikedPosts(this.state.user.username)
+      })
       .catch(() => {
         this.setState({ error: true })
       })
@@ -46,11 +50,22 @@ class Profile extends App {
   fetchOwnedPosts(username) {
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/owned-by/${username}`)
       .then((json) => {
+        console.log(json.data)
         this.setState({ posts: json.data })
       })
       .catch(() => {
         // this.setState({ error: true })
       })
+  }
+
+  fetchLikedPosts(username) {
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
+        .then((json) => {
+            this.setState({ likes: json.data })
+        })
+        .catch(() => {
+          // this.setState({ error: true })
+        })
   }
 
   calcLevel(cXp) {
@@ -109,7 +124,7 @@ class Profile extends App {
           <PostsPreview posts={this.state.posts} create={true} />
         </Section>
         <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={this.state.posts} />
+          <PostsPreview posts={this.state.likes} />
         </Section>
         <Section title={'STATISTICS'}>
           <Statistics />
