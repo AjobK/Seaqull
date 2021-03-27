@@ -83,70 +83,72 @@ $likes-list-padding: 20px;
 			max-height: 100%;
 
 			.likesListItem {
-				display: flex;
-				align-items: center;
-				cursor: pointer;
-				padding: 12px $likes-list-padding;
-				border-bottom: $primary-light 1px solid;
+				.profileLikeLink {
+					display: flex;
+					align-items: center;
+					cursor: pointer;
+					padding: 12px $likes-list-padding;
+					border-bottom: $primary-light 1px solid;
 
-				.profileAvatarWrapper {
-					position: relative;
-
-					.avatar {
-						transition: 0.2s;
-						overflow: hidden;
-						border-radius: 100%;
+					.profileAvatarWrapper {
 						position: relative;
-						background-size: cover;
-						background-position: center;
-						background-color: #1f1f1f;
-						width: 50px;
-						height: 50px;
-					}
 
-					.level {
-						border: white 1.8px solid;
-						font-weight: bold;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						position: absolute;
-						bottom: -2px;
-						right: -4px;
-						height: 22px;
-						min-width: 22px;
-						width: auto;
-						text-align: center;
-						background-color: $primary;
-						border-radius: 100%;
+						.avatar {
+							transition: 0.2s;
+							overflow: hidden;
+							border-radius: 100%;
+							position: relative;
+							background-size: cover;
+							background-position: center;
+							background-color: #1f1f1f;
+							width: 50px;
+							height: 50px;
+						}
 
-						.levelNumber {
+						.level {
+							border: white 1.8px solid;
+							font-weight: bold;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							position: absolute;
+							bottom: -2px;
+							right: -4px;
+							height: 22px;
+							min-width: 22px;
+							width: auto;
 							text-align: center;
-							font-family: $sidefont;
-							color: white;
-							font-size: 0.68em;
-							line-height: 0.8em;
-							margin-bottom: -1px;
-						}
-					}
-				}
+							background-color: $primary;
+							border-radius: 100%;
 
-				.profileTextWrapper {
-					margin-left: 15px;
-
-					.profileDisplayName {
-						color: black;
-						font-size: 1.2em;
-
-						&:hover {
-							text-decoration: underline;
+							.levelNumber {
+								text-align: center;
+								font-family: $sidefont;
+								color: white;
+								font-size: 0.68em;
+								line-height: 0.8em;
+								margin-bottom: -1px;
+							}
 						}
 					}
 
-					.profileTitle {
-						color: $primary;
-						font-size: .8em;
-						line-height: 1em;
+					.profileTextWrapper {
+						margin-left: 15px;
+
+						.profileDisplayName {
+							color: black;
+							font-size: 1.2em;
+
+							&:hover {
+								text-decoration: underline;
+							}
+						}
+
+						.profileTitle {
+							color: $primary;
+							font-size: .8em;
+							line-height: 1em;
+						}
 					}
 				}
 			}
