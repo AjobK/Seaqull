@@ -31,11 +31,6 @@ class PostLikesList extends Component {
                     level: null
                 }
                 likes.push(userLike)
-                likes.push(userLike)
-                likes.push(userLike)
-                likes.push(userLike)
-                likes.push(userLike)
-
             })
 
             this.setState({
