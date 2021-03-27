@@ -83,7 +83,7 @@ class PostContent extends Component {
       eState = EditorState.createWithContent(this.props.value)
     } catch (e) {}
 
-    this.setState({ editorState: eState })
+    this.setState({ editorState: eState }, () => this.props.callBackSaveData(convertToRaw(eState.getCurrentContent())))
   }
 
   render() {
