@@ -24,11 +24,11 @@ class PostLikesList extends Component {
             .then(res => {
                 const likes = []
                 res.data.forEach(like => {
-                    console.log(like)
                     const userLike = {
                         display_name: like.profile.display_name,
                         avatarURL: '/src/static/dummy/user/profile.jpg',
-                        level: null
+                        level: null,
+                        title: 'Software Engineer'
                     }
                     likes.push(userLike)
                 })
@@ -55,13 +55,16 @@ class PostLikesList extends Component {
                     <ul className={`${styles.likesList}`}>
                         {this.state.likes.map((like, index) => {
                             return <li key={index} className={`${styles.likesListItem}`} onClick={() => this.goToProfile(like.display_name)}>
-                                <div className={`${styles.avatarWrapper}`}>
+                                <div className={`${styles.profileAvatarWrapper}`}>
                                     <div className={`${styles.avatar}`} style={{ backgroundImage: `url(${like.avatarURL || ''})` }} />
                                     <div className={`${styles.level}`}>
                                         <div className={`${styles.levelNumber}`}>{like.level || Math.floor(Math.random() * 100)}</div>
                                     </div>
                                 </div>
-                                <p className={`${styles.displayName}`}>{like.display_name}</p>
+                                <div className={`${styles.profileTextWrapper}`}>
+                                    <p className={`${styles.profileDisplayName}`}>{like.display_name}</p>
+                                    <p className={`${styles.profileTitle}`}>{like.title}</p>
+                                </div>
                             </li>
                         })}
                     </ul>
