@@ -136,7 +136,8 @@ class PostService {
 
         const updatedPost = await this.dao.updatePost(post)
 
-        if (!updatedPost) return res.status(404).json({ 'message': 'Could not update post' })
+        if (!updatedPost)
+            return res.status(404).json({ 'message': 'Could not update post' })
 
         return res.status(200).json({ 'message': 'Post has been updated!' })
     }
