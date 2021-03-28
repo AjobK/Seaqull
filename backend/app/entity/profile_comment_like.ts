@@ -9,7 +9,7 @@ export class ProfileCommentLike extends BaseEntity {
 
     @ManyToOne(() => Profile, Profile => Profile.id)
     @JoinColumn({ name: 'Profile', referencedColumnName: 'id' })
-    user: number
+    profile: number
 
     @ManyToOne(() => comment, comment => comment.id)
     @JoinColumn({ name: 'comment_id', referencedColumnName: 'id' })

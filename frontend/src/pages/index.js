@@ -13,6 +13,7 @@ class AppRouter extends Component {
   constructor(props) {
     super(props)
     this.store = initStore(true)
+    this.store.profile.loginVerify()
   }
 
   render () {

@@ -36,6 +36,7 @@ class ProfileInfo extends Component {
   }
   
   getDescription = () => {
+    console.log(this.state.user)
     const textBlockArray = JSON.parse(this.state.user.description)
     let text = ''
     for(let blockIndex = 0; blockIndex < textBlockArray.blocks.length; blockIndex++) {

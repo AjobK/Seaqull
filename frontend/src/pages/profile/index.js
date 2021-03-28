@@ -21,7 +21,8 @@ class Profile extends App {
       error: false,
       posts: [],
       editing: false,
-      icon: faEdit
+      icon: faEdit,
+      isOwner: false
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
@@ -40,9 +41,8 @@ class Profile extends App {
     Axios.get(`/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
-      })
-      .then(() => {
         this.fetchOwnedPosts(this.state.user.username)
+        this.setState({ isOwner: response.data.profile.isOwner })
       })
       .catch(() => {
         this.setState({ error: true })
@@ -117,7 +117,8 @@ class Profile extends App {
   }
 
   render() {
-    const { user, error } = this.state
+    const { user, error, isOwner } = this.state
+    const { profile } = this.props.store
 
     if (!user && !error) {
       return (
@@ -150,7 +151,7 @@ class Profile extends App {
           {icon}
         </Section>
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={this.state.posts} create={true} />
+          <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
           <PostsPreview posts={this.state.posts} />

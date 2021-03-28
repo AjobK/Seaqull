@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import TitleDAO from '../dao/titleDao'
-import ProfileDAO from '../dao/profileDao'
 import isEmail from 'validator/lib/isEmail'
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -13,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Profile from '../entity/profile'
 import RoleDao from '../dao/roleDao'
 import Title from '../entity/title'
+import ProfileDAO from '../dao/profileDao'
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
@@ -63,22 +63,22 @@ class ProfileService {
         }
 
         const profile = await this.dao.getProfileByUsername(receivedUsername)
-        if (profile != null) {
-            const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
+        const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
+        let isOwner = false
 
-            const payload = {
-                isOwner: decodedToken.username == receivedUsername ? true : false,
-                username: receivedUsername,
-                experience: profile.experience,
-                title: title ? title.name : 'Title not found...' ,
-                description: profile.description
-            }
+        if (receivedUsername && decodedToken)
+            isOwner = !!(receivedUsername == decodedToken.username)
 
-            res.status(200).json({ 'profile': payload })
-        } else {
-            res.status(400).json({ error: 'User not found' })
+        // creating payload
+        const payload = {
+            isOwner: isOwner,
+            username: receivedUsername,
+            experience: profile.experience,
+            title: title ? title.name : 'Title not found...' ,
+            description: profile.description
         }
-        return res
+        return res.status(200).json({ 'profile': payload })
+
     }
 
     public register = async (req: Request, res: Response): Promise<Response> => {
