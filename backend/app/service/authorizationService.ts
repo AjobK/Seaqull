@@ -18,45 +18,41 @@ class PostService {
 
     // main function user login
     public login = async (req: Request, res: Response): Promise<any> => {
-        // extracting username and password from request body
         const { username, password } = req.body
 
-        // check if user filled in a password and username
         if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
-        // getting account from database
         let account = await this.accountDao.getAccountByUsername(username)
 
-        if(account == null) {
+        if (account == null) {
             return res.status(400).json({ error: ['Incorrect username or password'] })
         }
 
-        // check if account is locked if so return remaining wait time
-        if(account.locked_to - Date.now() > 0){
+        if (account.locked_to - Date.now() > 0) {
             return res.status(400).send({
                 error: ['cannot login yet'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
-        }else {
-            // check if username and password are correct if not return error
+        } else {
+
+            if (req.cookies['token']) {
+                res.clearCookie('token')
+            }
+
             const validation = this.validateAccountRequest(account,username,password)
             if(validation != null){
                 return res.status(400).send(validation)
             }
 
-            // creating payload for token
             const payload = {
                 username: username,
                 expiration: Date.now() + parseInt(expirationtimeInMs)
             }
 
-            // creating token
             const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
-            // remove unnecessary data
             account = this.cleanAccount(account)
 
-            // set cookie header
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
             res.status(200).json({
                 user: account

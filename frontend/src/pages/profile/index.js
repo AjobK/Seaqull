@@ -2,9 +2,13 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
+import styles from './profile.scss'
 import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import Axios from 'axios'
 import Error from '../error'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit,faSave } from '@fortawesome/free-solid-svg-icons'
+
 
 @inject('store') @observer
 class Profile extends App {
@@ -15,9 +19,11 @@ class Profile extends App {
     this.state = {
       user: null,
       error: false,
-      posts: []
+      posts: [],
+      editing: false,
+      icon: faEdit
     }
-
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
   }
 
@@ -31,7 +37,7 @@ class Profile extends App {
   fetchProfileData(path) {
     let token = localStorage.getItem('token')
 
-    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`,  {withCredentials: true})
+    Axios.get(`/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
       })
@@ -72,7 +78,6 @@ class Profile extends App {
   }
 
   updateProfile(profile) {
-    console.log(profile)
     const user = {
       isOwner: profile.isOwner,
       username: profile.username,
@@ -85,6 +90,30 @@ class Profile extends App {
     }
 
     this.setState({ user })
+  }
+
+  changeEditingState() {
+    if (!this.state.editing) {
+      this.setState({
+        editing: true,
+        icon: faSave
+      })
+    } else {
+      this.saveNewDescription()
+      this.setState({
+        editing: false,
+        icon: faEdit
+      })
+    }  
+  }
+
+  saveNewDescription = () => {
+    const payload = {
+      username: this.state.user.username,
+      description: this.state.user.description
+    }
+
+    Axios.put('/profile', payload, {withCredentials: true})
   }
 
   render() {
@@ -103,12 +132,21 @@ class Profile extends App {
         <Error></Error>
       )
     }
+    let icon
+    if(this.state.user.isOwner){
+      icon = <FontAwesomeIcon icon={this.state.icon} 
+      className={styles.editIcon} 
+      onClick={() => this.changeEditingState()}
+      size='lg'
+      />
+    }
 
     return (
       <Standard>
         <UserBanner user={user} />
-        <Section title={'Description'}>
-          <ProfileInfo description={user.description} create={user.isOwner && this.props.store.user.loggedIn} />
+        <Section title={'DESCRIPTION'}>
+          <ProfileInfo startEditing={this.state.editing} user={user}/>
+          {icon}
         </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={true} />

@@ -6,10 +6,8 @@ import { Profile } from '../entity/profile'
 define(Profile, (faker: typeof Faker): Profile => {
     const profileFake = new Profile()
 
-    // userFake.account_id = createdAccount.id
 
     const createdTitle = factory(title)() as any
-    // userFake.title_id = createdTitle.id
     profileFake.title = createdTitle
 
     profileFake.avatar_attachment = null
@@ -18,6 +16,6 @@ define(Profile, (faker: typeof Faker): Profile => {
     profileFake.display_name = 'root'
     profileFake.experience = 0
     profileFake.rows_scrolled = 0
-    profileFake.description = ' i`m a wild seaqull'
+    profileFake.description = '{"blocks":[{"key":"dvnp","text":"i`m a wild seaqull","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
     return profileFake
 })

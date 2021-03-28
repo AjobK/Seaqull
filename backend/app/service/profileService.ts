@@ -29,8 +29,18 @@ class ProfileService {
         this.roleDAO = new RoleDao()
     }
 
+    public updateProfile = async (req: any, res: Response): Promise<Response> => {
+
+        if(req.decoded.username != req.body.username)
+            return res.status(401).json({ 'error': 'Unauthorized' })
+
+        const profile = await this.dao.getProfileByUsername(req.body.username)
+        profile.description = req.body.description
+        await this.dao.saveProfile(profile)
+        return res.status(200).json({ 'message': 'Succes' })
+    }
+
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
-        // extracting token
         const { token } = req.cookies
         let decodedToken: any
 
@@ -40,36 +50,32 @@ class ProfileService {
             decodedToken = null
         }
 
-        // getting username from parameters
         let receivedUsername = req.params.username
 
-        // check if username is precent in the paramenters
         if (!receivedUsername) {
-            // check if a username is present in payload
             if (decodedToken && decodedToken.username) {
-                // if there is no username in params then use one in the jwt
                 receivedUsername = decodedToken.username
             } else {
-                // no username was found in payload nor was it found in the params
                 return res.status(404).json({ error: 'No username was given' })
             }
         }
 
-        // get user with username
         const profile = await this.dao.getProfileByUsername(receivedUsername)
-        const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
+        if (profile != null) {
+            const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
 
-        // creating payload
-        const payload = {
-            isOwner: decodedToken ? true : false,
-            username: receivedUsername,
-            experience: profile.experience,
-            title: title ? title.name : 'Title not found...' ,
+            const payload = {
+                isOwner: decodedToken.username == receivedUsername ? true : false,
+                username: receivedUsername,
+                experience: profile.experience,
+                title: title ? title.name : 'Title not found...' ,
+                description: profile.description
+            }
+
+            res.status(200).json({ 'profile': payload })
+        } else {
+            res.status(400).json({ error: 'User not found' })
         }
-
-        res.status(200)
-        res.json({ 'profile': payload })
-
         return res
     }
 
@@ -81,6 +87,7 @@ class ProfileService {
             password: [],
             recaptcha: []
         }
+
         const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
         if (isUsernamNotValid) {
             errors.username = [isUsernamNotValid]
@@ -107,13 +114,17 @@ class ProfileService {
         const createAccount = await this.saveProfile(req)
 
         const newAccount = this.cleanAccount(createAccount)
-        // creating payload for token
+
         const payload = {
             username: createAccount.user_name,
             expiration: Date.now() + parseInt(expirationtimeInMs)
         }
 
-        // creating token
+        // remove old cookie
+        if (req.cookies['token']) {
+            res.clearCookie('token')
+        }
+
         const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
         res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
@@ -161,6 +172,7 @@ class ProfileService {
     private async checkReCAPTCHA(token: string): Promise<string> {
         const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
         const verificationResult = await reCaptcha.verify(token)
+
         if (!verificationResult.isHuman) {
             return 'Invalid captcha'
         }
@@ -175,7 +187,7 @@ class ProfileService {
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
-        newProfile.description = 'i`m a wild seaqull'
+        newProfile.description = '{"blocks":[{"key":"dvnp","text":"i`m a wild seaqull","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
         newProfile = await this.dao.saveProfile(newProfile)
 
         const acc = new Account()
