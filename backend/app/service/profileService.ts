@@ -30,11 +30,13 @@ class ProfileService {
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
-
         if(req.decoded.username != req.body.username)
             return res.status(401).json({ 'error': 'Unauthorized' })
 
         const profile = await this.dao.getProfileByUsername(req.body.username)
+        if(profile == null)
+            return res.status(404).json({ 'error': 'Not found' })
+
         profile.description = req.body.description
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })

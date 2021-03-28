@@ -132,6 +132,7 @@ class Profile extends App {
         <Error></Error>
       )
     }
+    
     let icon
     if(this.state.user.isOwner){
       icon = <FontAwesomeIcon icon={this.state.icon} 

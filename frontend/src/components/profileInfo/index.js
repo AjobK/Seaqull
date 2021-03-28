@@ -4,7 +4,7 @@ import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
-import {Editor, EditorState, ContentState, convertFromRaw, convertToRaw,} from 'draft-js';
+import {Editor, EditorState, ContentState, convertFromRaw, convertToRaw} from 'draft-js'
 import Axios from 'axios'
 
 @inject('store') @observer
