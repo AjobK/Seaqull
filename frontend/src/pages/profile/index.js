@@ -137,7 +137,6 @@ class Profile extends App {
 
     if (this.state.user.isOwner){
       icon = <FontAwesomeIcon icon={this.state.icon} 
-      className={styles.editIcon} 
       onClick={() => this.changeEditingState()}
       size='lg'/>
     }
