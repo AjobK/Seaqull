@@ -8,51 +8,59 @@ class PostDAO {
         const repository = await DatabaseConnector.getRepository('Post')
         const skipAmount = parseInt(skipSize) * amount
         const postList = repository.find({ take : amount, skip: skipAmount })
+
         return postList
     }
 
     public async getAmountPosts(): Promise<number>{
         const repository = await DatabaseConnector.getRepository('Post')
+
         return await repository.count()
     }
 
     public async getOwnedPosts(profile: Profile): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
         const postList = await repository.find({ where: { profile: profile }, relations: ['profile'] })
+
         return postList
     }
 
     public async getPostByPath(path: string): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
         const foundPost = await repository.findOne({ where: { path: path }, relations: ['profile'] })
+
         return foundPost
     }
 
     public async createPost(newPost: Post): Promise<any> {
         const repository = await DatabaseConnector.getRepository('Post')
+
         return repository.save(newPost)
     }
 
     public async updatePost(post: Post): Promise<any> {
         const repository = await DatabaseConnector.getRepository('Post')
         const newPost = await repository.save(post)
+
         return newPost
     }
 
     public async likePost(like: PostLike): Promise<any> {
         const repository = await DatabaseConnector.getRepository('PostLike')
+
         return await repository.save(like)
     }
 
     public async unlikePost(like: PostLike): Promise<any> {
         const repository = await DatabaseConnector.getRepository('PostLike')
+
         return await repository.delete(like)
     }
 
     public async getPostLikesById(id: number): Promise<any> {
-        if (!id)
-            return null
+        if (!id) return null
         const repository = await DatabaseConnector.getRepository('PostLike')
+
         return await repository.find({ where: { post: id }, relations: ['post', 'profile'] })
     }
 
@@ -60,6 +68,7 @@ class PostDAO {
         if (!profile || !post)
             return false
         const repository = await DatabaseConnector.getRepository('PostLike')
+
         return await repository.findOne({ where: { post: post.id, profile: profile.id }, relations: ['post', 'profile'] })
     }
 }

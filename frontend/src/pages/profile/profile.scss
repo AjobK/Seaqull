@@ -1,7 +1,6 @@
 @import '../../styles/index.scss';
-
-.editIcon {
-	position: absolute;
-	right: 50%;
-	margin-top: 20px;
+.iconContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

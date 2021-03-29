@@ -2,12 +2,12 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import styles from './profile.scss'
-import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
-import Axios from 'axios'
-import Error from '../error'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit,faSave } from '@fortawesome/free-solid-svg-icons'
+import Axios from 'axios'
+import Error from '../error'
+import styles from './profile.scss'
+import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 
 
 @inject('store') @observer
@@ -32,7 +32,6 @@ class Profile extends App {
     const { path } = this.props.match.params
 
     this.fetchProfileData(path || '')
-    // this.fetchOwnedPosts(this.state.username)
   }
 
   fetchProfileData(path) {
@@ -135,12 +134,12 @@ class Profile extends App {
     }
     
     let icon
-    if(this.state.user.isOwner){
+
+    if (this.state.user.isOwner){
       icon = <FontAwesomeIcon icon={this.state.icon} 
       className={styles.editIcon} 
       onClick={() => this.changeEditingState()}
-      size='lg'
-      />
+      size='lg'/>
     }
 
     return (
@@ -148,7 +147,9 @@ class Profile extends App {
         <UserBanner user={user} />
         <Section title={'DESCRIPTION'}>
           <ProfileInfo startEditing={this.state.editing} user={user}/>
-          {icon}
+          <section className={styles.iconContainer}>
+            {icon}
+          </section>
         </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />

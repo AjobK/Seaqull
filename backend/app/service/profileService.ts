@@ -1,18 +1,20 @@
 import { Request, Response } from 'express'
-import TitleDAO from '../dao/titleDao'
+import { v4 as uuidv4 } from 'uuid'
 import isEmail from 'validator/lib/isEmail'
+import { ReCAPTCHA } from 'node-grecaptcha-verify'
+import * as bcrypt from 'bcrypt'
+import Account from '../entity/account'
+import Profile from '../entity/profile'
+import Title from '../entity/title'
+import RoleDao from '../dao/roleDao'
+import ProfileDAO from '../dao/profileDao'
+import TitleDAO from '../dao/titleDao'
+import AccountDAO from '../dao/accountDao'
+
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
 const isStrongPassword = require('validator/lib/isStrongPassword')
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
-import Account from '../entity/account'
-import * as bcrypt from 'bcrypt'
-import AccountDAO from '../dao/accountDao'
-import { v4 as uuidv4 } from 'uuid'
-import Profile from '../entity/profile'
-import RoleDao from '../dao/roleDao'
-import Title from '../entity/title'
-import ProfileDAO from '../dao/profileDao'
+
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
@@ -30,11 +32,12 @@ class ProfileService {
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
-        if(req.decoded.username != req.body.username)
+        if (req.decoded.username != req.body.username)
             return res.status(401).json({ 'error': 'Unauthorized' })
 
         const profile = await this.dao.getProfileByUsername(req.body.username)
-        if(profile == null)
+
+        if (profile == null)
             return res.status(404).json({ 'error': 'Not found' })
 
         profile.description = req.body.description
@@ -69,7 +72,6 @@ class ProfileService {
         if (receivedUsername && decodedToken)
             isOwner = !!(receivedUsername == decodedToken.username)
 
-        // creating payload
         const payload = {
             isOwner: isOwner,
             username: receivedUsername,
@@ -91,16 +93,19 @@ class ProfileService {
         }
 
         const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
+
         if (isUsernamNotValid) {
             errors.username = [isUsernamNotValid]
         }
 
         const isEmailNotValid = await this.checkValidEmail(userRequested.email)
+
         if (isEmailNotValid) {
             errors.email = [isEmailNotValid]
         }
 
         const isPasswordNotStrong = await this.checkPasswordStrength(userRequested.password)
+
         if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
         }
@@ -122,10 +127,7 @@ class ProfileService {
             expiration: Date.now() + parseInt(expirationtimeInMs)
         }
 
-        // remove old cookie
-        if (req.cookies['token']) {
-            res.clearCookie('token')
-        }
+        if (req.cookies['token']) res.clearCookie('token')
 
         const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 

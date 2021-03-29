@@ -1,6 +1,7 @@
-import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import ProfileService from '../service/profileService'
+import ControllerBase from '../interfaces/ControllerBase'
+
 const auth = require('../middleware/isAuth.ts')
 
 class ProfileController implements ControllerBase{

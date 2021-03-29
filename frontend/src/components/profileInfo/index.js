@@ -20,33 +20,35 @@ class ProfileInfo extends Component {
     }
 
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    
   }
 
   onChange = (editorState) => {
     const user = this.state.user
+
     user.description = convertToRaw(editorState.getCurrentContent())
+
     this.setState({user, editorState, changedContent: true})
   }
 
   componentDidMount = () => {
-    let state = EditorState.createWithContent(ContentState.createFromText(this.getDescription()))
-    this.setState({
-      editorState: state
-    })
+    let editorState = EditorState.createWithContent(ContentState.createFromText(this.getDescription()))
+    
+    this.setState({ editorState })
   }
   
   getDescription = () => {
-    console.log(this.state.user)
     const textBlockArray = JSON.parse(this.state.user.description)
     let text = ''
-    for(let blockIndex = 0; blockIndex < textBlockArray.blocks.length; blockIndex++) {
+
+    for (let blockIndex = 0; blockIndex < textBlockArray.blocks.length; blockIndex++) {
       text = text + ' ' + textBlockArray.blocks[blockIndex].text
     }
     return text
   }
 
   saveNewDescription = () => {
-    if(this.state.changedContent){
+    if (this.state.changedContent){
       const payload = {
         username: this.state.user.username,
         description: this.state.user.description
@@ -58,6 +60,7 @@ class ProfileInfo extends Component {
 
   render() {
     if (!this.props.startEditing) this.saveNewDescription()
+
     return (
       <section className={styles.wrapper}>
         <Editor 
@@ -65,8 +68,7 @@ class ProfileInfo extends Component {
           editorState={this.state.editorState} 
           onChange={this.onChange} 
           spellCheck={true}
-          textAlignment={'center'}
-          />
+          textAlignment={'center'}/>
       </section>
     )
   }

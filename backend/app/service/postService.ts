@@ -6,6 +6,7 @@ import AccountDAO from '../dao/accountDao'
 import PostLike from '../entity/post_like'
 import Profile from '../entity/profile'
 import ProfileDAO from '../dao/profileDao'
+
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -196,6 +197,7 @@ class PostService {
     // TODO Move to another file?
     private fetchProfile = async (req: Request): Promise<Profile> => {
         const { token } = req.cookies
+
         if (token) {
             try {
                 const decodedToken = jwt.verify(token, process.env.JWT_SECRET)

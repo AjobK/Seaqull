@@ -17,5 +17,6 @@ define(Profile, (faker: typeof Faker, settings: { display_name: string }): Profi
     profileFake.experience = 0
     profileFake.rows_scrolled = 0
     profileFake.description = '{"blocks":[{"key":"dvnp","text":"i`m a wild seaqull","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+
     return profileFake
 })

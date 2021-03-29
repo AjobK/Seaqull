@@ -33,7 +33,6 @@ class PostService {
         }
     }
 
-    // main function user login
     public login = async (req: Request, res: Response): Promise<any> => {
         const { username, password } = req.body
 
@@ -41,9 +40,9 @@ class PostService {
 
         let account = await this.accountDao.getAccountByUsername(username)
 
-        if (account == null) {
+        if (account == null)
             return res.status(400).json({ error: ['Incorrect username or password'] })
-        }
+
 
         if (account.locked_to - Date.now() > 0) {
             return res.status(400).send({
@@ -51,15 +50,11 @@ class PostService {
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
         } else {
-
-            if (req.cookies['token']) {
-                res.clearCookie('token')
-            }
+            if (req.cookies['token']) res.clearCookie('token')
 
             const validation = this.validateAccountRequest(account,username,password)
-            if(validation != null){
-                return res.status(400).send(validation)
-            }
+
+            if(validation != null) return res.status(400).send(validation)
 
             const payload = {
                 username: username,
