@@ -9,69 +9,73 @@ import Axios from 'axios'
 
 @inject('store') @observer
 class ProfileInfo extends Component {
-  constructor(props) {
-    super(props)
+	constructor(props) {
+		super(props)
 
-    this.state = {
-      user: props.user,
-      editing: false,
-      editorState: EditorState.createEmpty(),
-      changedContent: false
-    }
+		this.state = {
+			user: props.user,
+			editing: false,
+			editorState: EditorState.createEmpty(),
+			changedContent: false
+		}
 
-    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
-    
-  }
+		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+		
+	}
 
-  onChange = (editorState) => {
-    const user = this.state.user
+	onChange = (editorState) => {
+		const user = this.state.user
 
-    user.description = convertToRaw(editorState.getCurrentContent())
+		user.description = convertToRaw(editorState.getCurrentContent())
 
-    this.setState({user, editorState, changedContent: true})
-  }
+		this.setState({user, editorState, changedContent: true})
+	}
 
-  componentDidMount = () => {
-    let editorState = EditorState.createWithContent(ContentState.createFromText(this.getDescription()))
-    
-    this.setState({ editorState })
-  }
-  
-  getDescription = () => {
-    const textBlockArray = JSON.parse(this.state.user.description)
-    let text = ''
+	componentDidMount = () => {
+		let editorState = EditorState.createWithContent(ContentState.createFromText(this.getDescription()))
+	
+		this.setState({ editorState })
+	}
+	
+	getDescription = () => {
+		try {
+			const textBlockArray = JSON.parse(this.state.user.description)
+				let text = ''
 
-    for (let blockIndex = 0; blockIndex < textBlockArray.blocks.length; blockIndex++) {
-      text = text + ' ' + textBlockArray.blocks[blockIndex].text
-    }
-    return text
-  }
+			for (let blockIndex = 0; blockIndex < textBlockArray.blocks.length; blockIndex++) {
+				text = text + ' ' + textBlockArray.blocks[blockIndex].text
+			}
+			return text
+		} catch {
+			return this.state.user.description
+		}
+	}
 
-  saveNewDescription = () => {
-    if (this.state.changedContent){
-      const payload = {
-        username: this.state.user.username,
-        description: this.state.user.description
-      }
+	saveNewDescription = () => {
+		if (this.state.changedContent){
+			const payload = {
+				username: this.state.user.username,
+				description: this.state.user.description
+			}
 
-      Axios.put('/profile', payload, {withCredentials: true})
-    }
-  }
+			Axios.put('/profile', payload, {withCredentials: true})
+		}
+	}
 
-  render() {
-    if (!this.props.startEditing) this.saveNewDescription()
+	render() {
+		if (!this.props.startEditing) this.saveNewDescription()
 
-    return (
-      <section className={styles.wrapper}>
-        <Editor 
-          readOnly={!this.props.startEditing}
-          editorState={this.state.editorState} 
-          onChange={this.onChange} 
-          spellCheck={true}
-          textAlignment={'center'}/>
-      </section>
-    )
-  }
+		return (
+			<section className={styles.wrapper}>
+				<Editor 
+					readOnly={!this.props.startEditing}
+					editorState={this.state.editorState} 
+					onChange={this.onChange} 
+					spellCheck={true}
+					textAlignment={'center'}/>
+			</section>
+		)
+	}
 }
 
 export default ProfileInfo

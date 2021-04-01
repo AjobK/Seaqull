@@ -191,7 +191,8 @@ class ProfileService {
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
-        newProfile.description = '{"blocks":[{"key":"dvnp","text":"i`m a wild seaqull","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+        //newProfile.description = '{"blocks":[{"key":"dvnp","text":"i`m a wild seaqull","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+        newProfile.description = 'i`m a wild seaqull'
         newProfile = await this.dao.saveProfile(newProfile)
 
         const acc = new Account()

@@ -3,7 +3,7 @@ import * as express from 'express'
 import PostService from '../service/postService'
 const auth = require('../middleware/isAuth.ts')
 
-class PostController implements ControllerBase{
+class PostController implements ControllerBase {
     public post = '/post'
     public router = express.Router()
     private postService: PostService
