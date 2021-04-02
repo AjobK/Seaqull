@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import styles from './postLikesList.scss'
 import { inject, observer } from 'mobx-react'
 import Axios from "axios"
-import { withRouter } from "react-router"
 import { Link } from "react-router-dom";
+import Like from '../../static/icons/heart-solid.svg'
 
 @inject('store') @observer
 class PostLikesList extends Component {
@@ -28,7 +28,7 @@ class PostLikesList extends Component {
                     const userLike = {
                         displayName: like.profile.display_name,
                         avatarURL: '/src/static/dummy/user/profile.jpg',
-                        level: null,
+                        level: 0,
                         title: 'Software Engineer'
                     }
                     likes.push(userLike)
@@ -46,7 +46,9 @@ class PostLikesList extends Component {
                 <div className={`${styles.likesBackground}`} onClick={this.props.closeLikesList}/>
                 <div className={`${styles.likesListWrapper}`}>
                     <header>
-                        <h2>Feathers <span className={`${styles.feather}`}>&#10084;</span></h2>
+                        <div className={`${styles.likesListTitle}`}>
+                            <h2>Likes <img src={Like} alt={'Like'} className={`${styles.like}`}/></h2>
+                        </div>
                         <span className={`${styles.closeLikes}`} onClick={this.props.closeLikesList}>x</span>
                     </header>
                     <ul className={`${styles.likesList}`}>
@@ -56,7 +58,7 @@ class PostLikesList extends Component {
                                     <div className={`${styles.profileAvatarWrapper}`}>
                                         <div className={`${styles.avatar}`} style={{ backgroundImage: `url(${like.avatarURL || ''})` }} />
                                         <div className={`${styles.level}`}>
-                                            <div className={`${styles.levelNumber}`}>{like.level || Math.floor(Math.random() * 100)}</div>
+                                            <div className={`${styles.levelNumber}`}>{like.level}</div>
                                         </div>
                                     </div>
                                     <div className={`${styles.profileTextWrapper}`}>

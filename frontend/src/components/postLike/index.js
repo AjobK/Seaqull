@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import Axios from 'axios'
 import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
+import Like from '../../static/icons/heart-solid.svg';
 
 @inject('store') @observer
 class PostLike extends Component {
@@ -74,13 +75,13 @@ class PostLike extends Component {
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
                 {likesAmount <= 0 && (
-                    <p className={`${styles.postLikesAmount}`}>0 feathers</p>
+                    <p className={`${styles.postLikesAmount}`}>0 likes</p>
                 )}
                 {likesAmount > 0 && (
-                    <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'feather' : 'feathers'}</p>
+                    <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'like' : 'likes'}</p>
                 )}
                 <button onClick={ this.likeClicked }>
-                    &#10084;
+                    <img src={Like} alt={'Like'}/>
                 </button>
                 {this.state.showLikes && (
                     <PostLikesList closeLikesList={ this.closeLikesList }/>

@@ -14,7 +14,7 @@ $likes-list-padding: 20px;
 	height: 100%;
 	left: 0;
 	top: 0;
-	position: absolute;
+	position: fixed;
 	z-index: 101;
 
 	.likesBackground {
@@ -49,12 +49,16 @@ $likes-list-padding: 20px;
 			display: flex;
 			align-items: center;
 
-			h2 {
-				color: $dark;
-				padding: 15px $likes-list-padding 12px;
+			.likesListTitle {
+				display: flex;
 
-				.feather {
-					color: $primary;
+				h2 {
+					color: $dark;
+					padding: 15px $likes-list-padding 0;
+
+					.like {
+						width: 20px;
+					}
 				}
 			}
 
@@ -83,12 +87,14 @@ $likes-list-padding: 20px;
 			max-height: 100%;
 
 			.likesListItem {
+				padding: 0 $likes-list-padding;
+
 				.profileLikeLink {
+					padding: 20px 0;
 					display: flex;
 					align-items: center;
 					cursor: pointer;
-					padding: 12px $likes-list-padding;
-					border-bottom: $primary-light 1px solid;
+					border-bottom: #CFCFCF 1px solid;
 
 					.profileAvatarWrapper {
 						position: relative;

@@ -22,10 +22,17 @@
 		background-color: $primary;
 		border: none;
 		border-radius: 20px;
-		padding: 5px 8px;
-		color: white;
+		padding: 8px;
 		font-size: 18px;
 		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		img {
+			width: 16px;
+			filter: brightness(10)
+		}
 	}
 }
 
