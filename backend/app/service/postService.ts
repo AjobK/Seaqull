@@ -146,21 +146,17 @@ class PostService {
         if (profile.id === foundPost.profile.id)
             return res.status(400).json({ 'error': 'Post owners cannot like their posts.' })
 
-        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
-        if (foundLike)
-            return res.status(400).json({ 'error': 'Post has already been liked.' })
-
         const postLike = new PostLike()
         postLike.profile = profile
         postLike.post = foundPost
         postLike.liked_at = new Date()
 
-        const newLike = await this.dao.likePost(postLike)
-
-        if (newLike)
+        try {
+            await this.dao.likePost(postLike)
             return res.status(200).json({ 'message': 'Post liked!' })
-        else
+        } catch (e) {
             return res.status(400).json({ 'error': 'Post could not be liked.' })
+        }
     }
 
 
