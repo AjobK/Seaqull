@@ -104,6 +104,7 @@ class ProfileInfo extends Component {
 						readOnly={!this.state.editing}
 						editorState={this.state.editorState} 
 						onChange={this.onChange} 
+						onBlur={() => this.changeEditingState()}
 						spellCheck={true}/>
 				</section>
 				<section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
