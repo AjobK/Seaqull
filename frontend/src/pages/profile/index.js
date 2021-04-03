@@ -115,7 +115,7 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner user={user} />
+        <UserBanner user={user} owner={isOwner && profile.loggedIn} />
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>

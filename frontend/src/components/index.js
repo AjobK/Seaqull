@@ -24,6 +24,7 @@ import StyleButton from './styleButton'
 import FormInput from './formInput'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
+import AvatarUpload from './avatarUpload'
 
 export {
   Button,
@@ -51,5 +52,6 @@ export {
   RegisterPrompt,
   FormInput,
   PostLike,
-  PostLikesList
+  PostLikesList,
+  AvatarUpload
 }

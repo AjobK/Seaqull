@@ -1,10 +1,39 @@
 import React, { Component } from 'react'
 import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon } from '..';
+import { Icon, AvatarUpload } from '..'
 
 @inject('store') @observer
 class UserBanner extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      upAvatar: null
+    }
+  }
+
+  componentDidMount() {
+  }
+
+  onEditAvatar = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader()
+      reader.addEventListener('load', () => {
+        this.setState({
+          upAvatar: reader.result
+        })
+      })
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }
+
+  closeAvatarUpload = () => {
+    this.setState({
+      upAvatar: null
+    })
+  }
+
   render() {
     const user = this.props.user
 
@@ -23,9 +52,12 @@ class UserBanner extends Component {
         <div className={styles.innerWrapper}>
           <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={styles.levelMobile}>{ user.level || ''}</span>
-            {user.editable && <span className={styles.pictureEdit}>
-              <Icon iconName={'Pen'} />
-            </span>}
+            { this.props.owner && (
+                <span className={styles.pictureEdit}>
+                  <Icon iconName={'Pen'} />
+                  <input type="file" accept="image/*" onChange={this.onEditAvatar} />
+                </span>
+            )}
           </div>
           <div className={styles.info}>
             <h2 className={[styles.name, fontSize].join(' ')}>{ user.username || ''}</h2>
@@ -36,6 +68,9 @@ class UserBanner extends Component {
           </div>
         </div>
         <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
+        {/*{ this.state.upAvatar && (*/}
+            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={ this.closeAvatarUpload }/>
+        {/*)}*/}
       </section>
     )
   }

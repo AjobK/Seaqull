@@ -1,0 +1,43 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+
+* {
+	transition: .2s ease-in-out;
+}
+
+.avatarUpload {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 101;
+
+	&Background {
+		width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+		animation: fade-in 0.2s
+	}
+
+	&PopUp {
+		@include pop-up();
+		overflow-x: hidden;
+
+		.uploadedImg {
+			img {
+				width: 70px;
+			}
+		}
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.5;
+	}
+}

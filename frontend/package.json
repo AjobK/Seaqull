@@ -73,6 +73,7 @@
     "react-addons-update": "^15.6.3",
     "react-contenteditable": "^3.3.5",
     "react-google-recaptcha": "^1.0.5",
+    "react-image-crop": "^8.6.6",
     "react-router": "^4.3.1",
     "react-sane-contenteditable": "^1.6.1",
     "react-visibility-sensor": "^5.1.1",
