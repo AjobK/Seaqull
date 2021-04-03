@@ -4,6 +4,7 @@
 .postLike {
 	display: flex;
 	align-items: center;
+	margin-bottom: 10px;
 
 	.postLikesAmount {
 		height: fit-content;
@@ -28,10 +29,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin-right: 8px;
 
 		.likeIcon {
 			width: 16px;
-			filter: invert(97%) saturate(261%) brightness(119%) contrast(100%);
+			height: 16px;
+			// filter: invert(97%) saturate(261%) brightness(119%) contrast(100%);
 		}
 	}
 }

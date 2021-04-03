@@ -45,19 +45,20 @@ $likes-list-padding: 20px;
 			width: 90%;
 		}
 
-		header {
+		.likesListHeader {
 			display: flex;
 			align-items: center;
+			padding: 15px $likes-list-padding 10px;
+			justify-content: space-between;
 
 			.likesListTitle {
 				display: flex;
 
 				h2 {
 					color: $dark;
-					padding: 15px $likes-list-padding 10px;
+					font-size: 1em;
 
 					.like {
-						filter: brightness(0) saturate(100%) invert(30%) sepia(39%) saturate(4777%) hue-rotate(338deg);
 						width: 20px;
 					}
 				}
@@ -65,8 +66,6 @@ $likes-list-padding: 20px;
 
 			.closeLikes {
 				cursor: pointer;
-				position: absolute;
-				right: 20px;
 				width: 20px;
 				height: 20px;
 				opacity: 0.65;
