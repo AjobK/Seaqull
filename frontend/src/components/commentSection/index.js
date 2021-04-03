@@ -16,7 +16,7 @@ class CommentSection extends Component {
     }
 
     loadComments() {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop();
+        let path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/comment/${path}`
 
         Axios.get(url)

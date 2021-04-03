@@ -1,43 +1,30 @@
 class TimeUtil {
-    static timeAgo = (prevDate) => {
-        const diff = Number(new Date()) - prevDate;
-        const minute = 60 * 1000;
-        const hour = minute * 60;
-        const day = hour * 24;
-        const month = day * 30;
-        const year = day * 365;
-        switch (true) {
-            case diff < minute:
-                const seconds = Math.round(diff / 1000);
-                 return `${seconds} ${seconds > 1 ? 'seconds' : 'second'} ago`
-            case diff < hour:
-                if (diff < 2 * minute)
-                    return Math.round(diff / day) + ' minute ago'
+    static epochs = {
+        'year': 31536000,
+        'month': 2592000,
+        'day': 86400,
+        'hour': 3600,
+        'minute': 60,
+        'second': 1
+    }
 
-                return Math.round(diff / minute) + ' minutes ago'
-            case diff < day:
-                if (diff < 2 * hour)
-                    return Math.round(diff / day) + ' hour ago'
-
-                return Math.round(diff / hour) + ' hours ago'
-            case diff < month:
-                if (diff < 2 * day)
-                    return Math.round(diff / day) + ' day ago'
-
-                return Math.round(diff / day) + ' days ago'
-            case diff < year:
-                if (diff < 2 * month)
-                    return Math.round(diff / day) + ' month ago'
-
-                return Math.round(diff / month) + ' months ago'
-            case diff > year:
-                if (diff < 2 * year)
-                    return Math.round(diff / day) + ' year ago'
-
-                return Math.round(diff / year) + ' years ago'
-            default:
-                return ''
+    static getDuration = (timeAgoInSeconds) => {
+        for (const epoch in this.epochs) {
+            const interval = Math.floor(timeAgoInSeconds / this.epochs[epoch])
+            if (interval >= 1) {
+                return {
+                    interval: interval,
+                    epoch: epoch
+                }
+            }
         }
+    }
+    
+    static timeAgo = (date) => {
+        const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000)
+        const {interval, epoch} = this.getDuration(timeAgoInSeconds)
+        const suffix = interval === 1 ? '' : 's'
+        return `${interval} ${epoch}${suffix} ago`
     }
 }
 

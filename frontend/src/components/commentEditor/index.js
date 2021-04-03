@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { EditorState, Editor, convertToRaw, ContentState, getDefaultKeyBinding } from 'draft-js'
-import 'draft-js/dist/Draft.css';
+import 'draft-js/dist/Draft.css'
 import { Icon, Button } from '../'
 
 import styles from './commentEditor.scss'

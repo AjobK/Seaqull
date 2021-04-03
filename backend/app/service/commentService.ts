@@ -18,7 +18,7 @@ class CommentService {
         if (req.params.path && foundComments)
             return res.status(200).json(foundComments);
         else
-            return res.status(404).json({ 'message': 'No comments found on that path' });
+            return res.status(404).json({ 'message': 'No comments found on that path' })
     }
 
     public createComment = async (req: Request | any, res: Response): Promise<Response> => {
