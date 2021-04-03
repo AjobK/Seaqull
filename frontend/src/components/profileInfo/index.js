@@ -85,16 +85,13 @@ class ProfileInfo extends Component {
 
 	render() {
 		let icon
+		let currentOption = ''
 
 		if (this.state.user.isOwner){
 			icon = <FontAwesomeIcon icon={this.state.icon}
 			size='lg'/>
-		}
 
-		let currentOption = 'EDIT'
-
-		if (this.state.editing) {
-			currentOption = 'SAVE'
+			this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'
 		}
 
 		return (
