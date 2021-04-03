@@ -3,8 +3,7 @@ import styles from './profileInfo.scss'
 import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
 import { inject, observer } from 'mobx-react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faSave } from '@fortawesome/free-solid-svg-icons'
+import { Icon } from '..';
 import { Link } from 'react-router-dom'
 import {Editor, EditorState, ContentState, convertFromRaw, convertToRaw} from 'draft-js'
 import Axios from 'axios'
@@ -19,7 +18,7 @@ class ProfileInfo extends Component {
 			editing: false,
 			editorState: EditorState.createEmpty(),
 			changedContent: false,
-			icon: faPen,
+			icon: 'Pen'
 		}
 
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -59,14 +58,14 @@ class ProfileInfo extends Component {
 		if (!this.state.editing) {
 		  this.setState({
 			editing: true,
-			icon: faSave
+			icon: 'Save'
 		  })
 		} else {
 		  this.saveNewDescription()
 
 		  this.setState({
 			editing: false,
-			icon: faPen
+			icon: 'Pen'
 		  })
 		}  
 	  }
@@ -88,8 +87,7 @@ class ProfileInfo extends Component {
 		let currentOption = ''
 
 		if (this.state.user.isOwner){
-			icon = <FontAwesomeIcon icon={this.state.icon}
-			size='lg'/>
+			icon = <Icon iconName={this.state.icon} className={styles.icon} />
 
 			this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'
 		}
