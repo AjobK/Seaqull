@@ -35,24 +35,19 @@ class ProfileInfo extends Component {
 	}
 
 	componentDidMount = () => {
-		let editorState = EditorState.createWithContent(ContentState.createFromText(this.getDescription()))
-	
-		this.setState({ editorState })
+		this.setDescription()
 	}
 	
-	getDescription = () => {
-		try {
-			const textBlockArray = JSON.parse(this.state.user.description)
-			let text = ''
+	setDescription = () => {
+		let editorState
 
-			for (let blockIndex = 0; blockIndex < textBlockArray.blocks.length; blockIndex++) {
-				text = text + ' ' + textBlockArray.blocks[blockIndex].text
-			}
-			
-			return text
+		try {
+			editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.state.user.description)))
 		} catch {
-			return this.state.user.description
+			editorState = EditorState.createWithContent(ContentState.createFromText(this.state.user.description))
 		}
+		
+		this.setState({ editorState })
 	}
 
 	changeEditingState() {
