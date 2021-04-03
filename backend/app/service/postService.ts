@@ -190,14 +190,16 @@ class PostService {
 
         if (req.params.username && foundLikes) {
             const likes = []
+
             foundLikes.forEach((like) => {
                 likes.push(like.post)
             })
 
             return res.status(200).json(likes)
         }
-        else
+        else {
             return res.status(404).json({ 'message': 'No likes found for that username' })
+        }
     }
 
     // TODO Move to another file?

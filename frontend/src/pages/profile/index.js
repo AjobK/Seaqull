@@ -51,7 +51,6 @@ class Profile extends App {
         this.setState({ posts: json.data })
       })
       .catch(() => {
-        // this.setState({ error: true })
       })
   }
 
@@ -61,7 +60,6 @@ class Profile extends App {
           this.setState({ likes: json.data })
         })
         .catch(() => {
-          // this.setState({ error: true })
         })
   }
 

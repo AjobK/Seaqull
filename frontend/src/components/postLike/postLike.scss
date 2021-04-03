@@ -29,9 +29,9 @@
 		justify-content: center;
 		align-items: center;
 
-		img {
+		.likeIcon {
 			width: 16px;
-			filter: brightness(10)
+			filter: invert(97%) saturate(261%) brightness(119%) contrast(100%);
 		}
 	}
 }

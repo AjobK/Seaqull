@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import styles from './postLikesList.scss'
 import { inject, observer } from 'mobx-react'
-import Axios from "axios"
-import { Link } from "react-router-dom";
-import Like from '../../static/icons/heart-solid.svg'
+import Axios from 'axios'
+import { Link } from 'react-router-dom'
+import { Icon } from '../../components'
 
 @inject('store') @observer
 class PostLikesList extends Component {
@@ -21,9 +21,11 @@ class PostLikesList extends Component {
 
     loadLikes = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
+
         Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/${path}`)
             .then(res => {
                 const likes = []
+
                 res.data.forEach(like => {
                     const userLike = {
                         displayName: like.profile.display_name,
@@ -31,6 +33,7 @@ class PostLikesList extends Component {
                         level: 0,
                         title: 'Software Engineer'
                     }
+
                     likes.push(userLike)
                 })
 
@@ -47,12 +50,12 @@ class PostLikesList extends Component {
                 <div className={`${styles.likesListWrapper}`}>
                     <header>
                         <div className={`${styles.likesListTitle}`}>
-                            <h2>Likes <img src={Like} alt={'Like'} className={`${styles.like}`}/></h2>
+                            <h2>Likes <Icon iconName={'Heart'} className={styles.like}/></h2>
                         </div>
-                        <span className={`${styles.closeLikes}`} onClick={this.props.closeLikesList}>x</span>
+                        <Icon iconName={'TimesCircle'} className={styles.closeLikes} onClick={this.props.closeLikesList} />
                     </header>
                     <ul className={`${styles.likesList}`}>
-                        {this.state.likes.map((like, index) => {
+                        { this.state.likes.map((like, index) => {
                             return <li key={index} className={`${styles.likesListItem}`}>
                                 <Link to={`/profile/${like.displayName}`} className={styles.profileLikeLink}>
                                     <div className={`${styles.profileAvatarWrapper}`}>
