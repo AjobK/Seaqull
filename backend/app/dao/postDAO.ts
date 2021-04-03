@@ -64,6 +64,20 @@ class PostDAO {
         return await repository.find({ where: { post: id }, relations: ['post', 'profile'] })
     }
 
+    public async getRecentUserLikesByProfileId(profileId: number, limit): Promise<any> {
+        if (!profileId)
+            return null
+
+        const repository = await DatabaseConnector.getRepository('PostLike')
+        const likes = await repository.find({ where: { profile: profileId }, relations: ['post', 'profile'], take: limit })
+
+        if (!likes || likes.length <= 0) return
+
+        return likes.sort((like1, like2) => {
+            return like2.liked_at - like1.liked_at
+        })
+    }
+
     public async findLikeByPostAndProfile(post: Post, profile: Profile): Promise<any> {
         if (!profile || !post)
             return false

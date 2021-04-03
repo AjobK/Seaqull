@@ -18,6 +18,7 @@ class Profile extends App {
       user: null,
       error: false,
       posts: [],
+      likes: [],
       isOwner: false
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -39,6 +40,9 @@ class Profile extends App {
         this.fetchOwnedPosts(this.state.user.username)
         this.setState({ isOwner: response.data.profile.isOwner })
       })
+      .then(() => {
+        this.fetchLikedPosts(this.state.user.username)
+      })
       .catch(() => {
         this.setState({ error: true })
       })
@@ -50,8 +54,16 @@ class Profile extends App {
         this.setState({ posts: json.data })
       })
       .catch(() => {
-        // this.setState({ error: true })
       })
+  }
+
+  fetchLikedPosts(username) {
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
+        .then((json) => {
+          this.setState({ likes: json.data })
+        })
+        .catch(() => {
+        })
   }
 
   calcLevel(cXp) {
@@ -115,7 +127,7 @@ class Profile extends App {
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={this.state.posts} />
+          <PostsPreview posts={this.state.likes} />
         </Section>
         <Section title={'STATISTICS'}>
           <Statistics />

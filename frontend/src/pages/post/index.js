@@ -152,15 +152,13 @@ class Post extends App {
             <Standard className={[styles.stdBgWhite]}>
                 <PostBanner author={author} isOwner={isOwner} />
                 <Section noTitle>
-                { !isOwner &&
                     <div className={styles.likePostWrapper}>
                         <PostLike
                             likesAmount={this.state.post.likes.amount || 0}
-                            liked={this.state.post.likes.userLiked}
-                            toggleLike={this.toggleLike}
+                            liked={!isOwner ? this.state.post.likes.userLiked : true}
+                            toggleLike={!isOwner ? this.toggleLike : null}
                         />
                     </div>
-                }
                 <div className={styles.renderWrapper}>
                 <PostContent
                     type={'title'}

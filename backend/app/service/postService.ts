@@ -71,12 +71,9 @@ class PostService {
             decodedId = -1
         }
 
-
-        // Fetch amount of likes on post
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
         const postLikesAmount = foundLikes ? foundLikes.length : 0
 
-        // Fetch whether profile liked the post
         const profile = await this.fetchProfile(req)
         const userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
 
@@ -144,34 +141,28 @@ class PostService {
     }
 
     public likePost = async (req: Request, res: Response): Promise<Response> => {
-        // Retrieve profile
         const profile = await this.fetchProfile(req)
-        // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
-        // Check whether post has been liked before
-        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
-        if (foundLike)
-            return res.status(400).json({ 'error': 'Post has already been liked.' })
+        if (profile.id === foundPost.profile.id)
+            return res.status(400).json({ 'error': 'Post owners cannot like their posts.' })
 
         const postLike = new PostLike()
         postLike.profile = profile
         postLike.post = foundPost
         postLike.liked_at = new Date()
 
-        const newLike = await this.dao.likePost(postLike)
-
-        if (newLike)
+        try {
+            await this.dao.likePost(postLike)
             return res.status(200).json({ 'message': 'Post liked!' })
-        else
+        } catch (e) {
             return res.status(400).json({ 'error': 'Post could not be liked.' })
+        }
     }
 
 
     public unlikePost = async (req: Request, res: Response): Promise<Response> => {
-        // Retrieve profile
         const profile = await this.fetchProfile(req)
-        // Retrieve post
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
         const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
@@ -189,9 +180,26 @@ class PostService {
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
 
         if (req.params.path && foundLikes)
-            return res.status(200).json(foundLikes)
+            return res.status(200).json(foundLikes.reverse())
         else
             return res.status(404).json({ 'message': 'No likes found for that post id' })
+    }
+
+    public getRecentUserLikes = async (req: Request, res: Response): Promise<any> => {
+        const foundUser = await this.profileDAO.getProfileByUsername(req.params.username)
+        const foundLikes = await this.dao.getRecentUserLikesByProfileId(foundUser.id, 8)
+
+        if (req.params.username && foundLikes) {
+            const likes = []
+
+            foundLikes.forEach((like) => {
+                likes.push(like.post)
+            })
+
+            return res.status(200).json(likes)
+        } else {
+            return res.status(404).json({ 'message': 'No likes found for that username' })
+        }
     }
 
     // TODO Move to another file?
