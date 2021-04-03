@@ -74,15 +74,15 @@ class PostLike extends Component {
 
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
-                <button onClick={ this.likeClicked }>
-                    <Icon iconName={'Heart'} className={styles.likeIcon} />
-                </button>
                 { likesAmount <= 0 && (
                     <p className={`${styles.postLikesAmount}`}>0 likes</p>
                 )}
                 { likesAmount > 0 && (
                     <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'like' : 'likes'}</p>
                 )}
+                <button onClick={ this.likeClicked }>
+                    <Icon iconName={'Heart'} className={styles.likeIcon} />
+                </button>
                 { this.state.showLikes && (
                     <PostLikesList closeLikesList={ this.closeLikesList }/>
                 )}
