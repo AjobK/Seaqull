@@ -6,8 +6,8 @@
 	&__body {
 		display: flex;
 		border-radius: 8px;
+		padding: 30px;
 		box-shadow: 0 5px 10px -2px rgba(0, 0, 0, .1);
-		width: 100%;
 		background-color: white;
 		max-width: $wrapper-width;
 	}
@@ -16,8 +16,6 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-
-		padding: 30px;
 
 		&Picture {
 			border-radius: 100%;
@@ -47,9 +45,9 @@
 	}
 
 	&__main {
-		padding: 30px 30px 30px 0;
+		margin-left: 30px;
 		width: 100%;
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 
 	&__header {
@@ -59,7 +57,7 @@
 		margin-bottom: 10px;
 
 		&Author {
-			font-size: 1.7rem;
+			font-size: 1.2rem;
 			font-weight: 600;
 			&:link,
 			&:visited {
@@ -74,9 +72,7 @@
 			display: flex;
 			color: $gray;
 			align-items: center;
-			font-size: 1.3rem;
-			white-space: nowrap;
-			word-break: keep-all;
+			font-size: 1rem;
 		}
 	}
 }
@@ -89,16 +85,16 @@
 
 	.comment__main {
 		padding: 30px;
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 
 	.comment__header {
 		&Author {
-			font-size: 1.2rem;
+			font-size: 1rem;
 		}
 
 		&PublishedTime {
-			font-size: 1.2rem;
+			font-size: 1rem;
 		}
 	}
 }

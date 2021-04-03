@@ -7,7 +7,7 @@
 
 .editorLabel {
 	&__icon {
-		font-size: 1.3rem;
+		font-size: 1em;
 		margin-right: 5px;
 		background-color: white;
 		border-radius: 100%;
@@ -39,15 +39,16 @@
 
 .editorForm {
 	display: flex;
+	align-items: flex-end;
 	justify-content: space-between;
 	width: 100%;
 	margin-bottom: 20px;
 
 	&__editor {
-		border-radius: 100vh;
+		border-radius: 22.5px;
 		background-color: white;
 		color: $textdark;
-		padding: 10px 15px;
+		padding: 10px 18px;
 		width: 88%;
 	}
 }

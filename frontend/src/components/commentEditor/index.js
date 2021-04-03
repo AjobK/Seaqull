@@ -128,7 +128,7 @@ class CommentEditor extends Component {
 
         return (
             <section>
-                {this.displayHeader()}              
+                {this.displayHeader()}
                 {this.displayError()}
                 <div className={styles.editorForm}>
                     <div onClick={this.focusOnEditor} className={styles.editorForm__editor}>

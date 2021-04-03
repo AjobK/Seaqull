@@ -60,7 +60,7 @@ class Comment extends Component {
                             <div className={styles.comment__content}>
                                 <Editor editorState={this.state.editorState} readOnly={true}/>
                             </div>
-                            {this.displayCommentForm()}
+                            {/* {this.displayCommentForm()} */}
                         </div>
                     </section>
                         <CommentChildren commentChildren={this.props.comment.children} />
