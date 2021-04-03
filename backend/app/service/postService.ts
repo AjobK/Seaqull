@@ -196,8 +196,7 @@ class PostService {
             })
 
             return res.status(200).json(likes)
-        }
-        else {
+        } else {
             return res.status(404).json({ 'message': 'No likes found for that username' })
         }
     }

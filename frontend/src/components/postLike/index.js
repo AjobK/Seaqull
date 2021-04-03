@@ -10,7 +10,10 @@ import { Icon } from '../../components'
 class PostLike extends Component {
     constructor(props) {
         super(props)
-        this.toggleLike = this.props.toggleLike.bind(this)
+
+        if (this.props.toggleLike) {
+            this.toggleLike = this.props.toggleLike.bind(this)
+        }
 
         this.state = {
             showLikes: false
@@ -50,6 +53,8 @@ class PostLike extends Component {
     }
 
     likeClicked = () => {
+        if (!this.toggleLike) return
+
         if (this.props.liked) {
             this.postUnlike()
         } else {
