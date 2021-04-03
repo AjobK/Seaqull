@@ -80,10 +80,21 @@ class Post extends App {
                 }
             }
 
+            let author = {
+                name: res.data.post.profile.display_name,               // Display name
+                bannerURL: '/src/static/dummy/user/banner.jpg',         // Banner URL from ID
+                avatarURL: '/src/static/dummy/user/profile.jpg',        // Avatar URL from ID
+                path: `/profile/${res.data.post.profile.display_name}`, // Custom path
+                level: 1,                                               // Level of user
+                title: 'Default Title'                                  // Currently selected title by ID
+            }
+
             this.setState({
                 post: this.post,
                 loaded: true,
-                isOwner: res.data.isOwner
+                isOwner: res.data.isOwner,
+                isEditing: true,
+                author: author
             })
         })
     }
@@ -109,7 +120,7 @@ class Post extends App {
         if (!this.props.new) this.loadArticle()
     }
 
-    sendToDB() {
+    sendToDB(path=null) {
         Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
         const payload = {
@@ -118,10 +129,17 @@ class Post extends App {
             content: this.state.post.content
         }
 
-        Axios.post('/post', payload, { withCredentials: true })
-        .then(res => {
-            this.props.history.push('/')
-        })
+        if (!path) {
+            Axios.post('/post', payload, { withCredentials: true })
+            .then(res => {
+                this.props.history.push('/')
+            })
+        } else if (typeof path == 'string') {
+            Axios.put(`/post/${path}`, payload, { withCredentials: true })
+            .then(res => {
+                this.props.history.push('/profile')
+            })
+        }
     }
 
     render() {
@@ -134,13 +152,15 @@ class Post extends App {
             <Standard className={[styles.stdBgWhite]}>
                 <PostBanner author={author} isOwner={isOwner} />
                 <Section noTitle>
-                <div className={styles.likePostWrapper}>
-                    <PostLike
-                        likesAmount={this.state.post.likes.amount || 0}
-                        liked={this.state.post.likes.userLiked}
-                        toggleLike={this.toggleLike}
-                    />
-                </div>
+                { !isOwner &&
+                    <div className={styles.likePostWrapper}>
+                        <PostLike
+                            likesAmount={this.state.post.likes.amount || 0}
+                            liked={this.state.post.likes.userLiked}
+                            toggleLike={this.toggleLike}
+                        />
+                    </div>
+                }
                 <div className={styles.renderWrapper}>
                 <PostContent
                     type={'title'}
@@ -166,11 +186,19 @@ class Post extends App {
                 />
                 </div>
                 {
-                    isOwner && isEditing &&
+                    isOwner && this.props.new &&
                     <Button
                         className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
                         value={'Create'}
                         onClick={() => this.sendToDB()}
+                    />
+                }
+                {
+                    isOwner && isEditing && !this.props.new &&
+                    <Button
+                        className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+                        value={'Update'}
+                        onClick={() => this.sendToDB(this.post.path)}
                     />
                 }
                 </Section>

@@ -120,21 +120,26 @@ class PostService {
     public updatePost = async (req: Request, res: Response): Promise<any> => {
         const post = await this.dao.getPostByPath(req.params.path)
         const { JWT_SECRET } = process.env
+        const { title, description, content } = req.body
 
-        post.title = req.body.title
-        post.description = req.body.description
-        post.content = req.body.content
+        post.title = title
+        post.description = description
+        post.content = content
 
         const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
-        if (post.profile.display_name != decodedToken.username) return res.status(405).json({ 'error': 'Not allowed' })
 
-        if (!post) return res.status(404).json({ 'message': 'post not found' })
+        if (post.profile.display_name != decodedToken.username)
+            return res.status(405).json({ 'error': 'Not allowed' })
+
+        if (!post)
+            return res.status(404).json({ 'message': 'Post not found' })
 
         const updatedPost = await this.dao.updatePost(post)
 
-        if (!updatedPost) return res.status(404).json({ 'message': 'post not updated' })
+        if (!updatedPost)
+            return res.status(404).json({ 'message': 'Could not update post' })
 
-        return res.status(200).json({ 'message': 'post was updated' })
+        return res.status(200).json({ 'message': 'Post has been updated!' })
     }
 
     public likePost = async (req: Request, res: Response): Promise<Response> => {
