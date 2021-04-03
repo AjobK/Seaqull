@@ -21,7 +21,7 @@ class ProfileInfo extends Component {
 			icon: 'Pen',
 			loggedIn: this.props.loggedIn
 		}
-
+		
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 		
 	}
@@ -57,17 +57,21 @@ class ProfileInfo extends Component {
 
 	changeEditingState() {
 		if (!this.state.editing) {
-		  this.setState({
-			editing: true,
-			icon: 'Save'
-		  })
-		} else {
-		  this.saveNewDescription()
+			this.setState({
+				editing: true,
+				icon: 'Save'
+		  	})
 
-		  this.setState({
-			editing: false,
-			icon: 'Pen'
-		  })
+			this.setState({
+				editorState: EditorState.moveFocusToEnd(this.state.editorState)
+			})
+		} else {
+		  	this.saveNewDescription()
+
+		  	this.setState({
+				editing: false,
+				icon: 'Pen'
+		  	})
 		}  
 	  }
 	
