@@ -18,7 +18,8 @@ class ProfileInfo extends Component {
 			editing: false,
 			editorState: EditorState.createEmpty(),
 			changedContent: false,
-			icon: 'Pen'
+			icon: 'Pen',
+			loggedIn: this.props.loggedIn
 		}
 
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -86,7 +87,7 @@ class ProfileInfo extends Component {
 		let icon
 		let currentOption = ''
 
-		if (this.state.user.isOwner){
+		if (this.props.loggedIn){
 			icon = <Icon iconName={this.state.icon} className={styles.icon} />
 
 			this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'

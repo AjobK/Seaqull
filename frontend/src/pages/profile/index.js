@@ -109,7 +109,7 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'DESCRIPTION'}>
-          <ProfileInfo user={user}/>
+          <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
         </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
