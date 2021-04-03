@@ -48,12 +48,12 @@ class PostLikesList extends Component {
             <div className={`${styles.postLikesListWrapper}`}>
                 <div className={`${styles.likesBackground}`} onClick={this.props.closeLikesList}/>
                 <div className={`${styles.likesListWrapper}`}>
-                    <header>
+                    <div className={styles.likesListHeader}>
                         <div className={`${styles.likesListTitle}`}>
-                            <h2>Likes <Icon iconName={'Heart'} className={styles.like}/></h2>
+                            <h2><Icon iconName={'Heart'} className={styles.like}/> Liked by </h2>
                         </div>
                         <Icon iconName={'TimesCircle'} className={styles.closeLikes} onClick={this.props.closeLikesList} />
-                    </header>
+                    </div>
                     <ul className={`${styles.likesList}`}>
                         { this.state.likes.map((like, index) => {
                             return <li key={index} className={`${styles.likesListItem}`}>

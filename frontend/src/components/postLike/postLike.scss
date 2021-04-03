@@ -4,11 +4,13 @@
 .postLike {
 	display: flex;
 	align-items: center;
+	margin-bottom: 10px;
+	justify-content: flex-end;
 
 	.postLikesAmount {
 		height: fit-content;
-		margin-right: 5px;
 		color: $nav-items;
+		margin-right: 8px;
 	}
 
 	.clickableLikes {
@@ -31,7 +33,10 @@
 
 		.likeIcon {
 			width: 16px;
-			filter: invert(97%) saturate(261%) brightness(119%) contrast(100%);
+			height: 16px;
+			path {
+				fill: white;
+			}
 		}
 	}
 }

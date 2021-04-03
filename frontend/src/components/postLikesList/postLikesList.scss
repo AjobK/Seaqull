@@ -28,19 +28,20 @@ $likes-list-padding: 20px;
 	.likesListWrapper {
 		@include pop-up();
 
-		header {
+		.likesListHeader {
 			display: flex;
 			align-items: center;
+			padding: 15px $likes-list-padding 10px;
+			justify-content: space-between;
 
 			.likesListTitle {
 				display: flex;
 
 				h2 {
 					color: $dark;
-					padding: 15px $likes-list-padding 10px;
+					font-size: 1em;
 
 					.like {
-						filter: brightness(0) saturate(100%) invert(30%) sepia(39%) saturate(4777%) hue-rotate(338deg);
 						width: 20px;
 					}
 				}
@@ -48,14 +49,17 @@ $likes-list-padding: 20px;
 
 			.closeLikes {
 				cursor: pointer;
-				position: absolute;
-				right: 20px;
 				width: 20px;
 				height: 20px;
-				opacity: 0.65;
+
+				path {
+					fill: $primary;
+				}
 
 				&:hover {
-					opacity: 1;
+					path {
+						fill: $dark;
+					}
 				}
 			}
 		}
@@ -66,7 +70,7 @@ $likes-list-padding: 20px;
 			max-height: 100%;
 			padding-bottom: 15%;
 
-			.likesListItem {
+			&Item {
 				padding: 0 $likes-list-padding;
 
 				.profileLikeLink {
@@ -75,6 +79,10 @@ $likes-list-padding: 20px;
 					align-items: center;
 					cursor: pointer;
 					border-bottom: #CFCFCF 1px solid;
+
+					&:hover {
+						border-bottom-color: $primary;
+					}
 
 					.profileAvatarWrapper {
 						position: relative;
