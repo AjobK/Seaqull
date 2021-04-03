@@ -22,6 +22,7 @@ import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
 import StyleButton from './styleButton'
 import FormInput from './formInput'
+import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 
 export {
@@ -49,5 +50,6 @@ export {
   LoginPrompt,
   RegisterPrompt,
   FormInput,
+  ProfileInfo,
   PostLike
 }
