@@ -11,6 +11,7 @@ export class Profile extends BaseEntity {
     title: Title
 
     @Column({ nullable: true })
+    @JoinColumn({ name: 'attatchment_id', referencedColumnName: 'id' })
     avatar_attachment: number
 
     @Column({ nullable: true })
