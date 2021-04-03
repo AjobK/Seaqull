@@ -14,27 +14,40 @@ class Profile extends App {
 
     this.state = {
       user: null,
-      error: false
+      error: false,
+      posts: [],
+      isOwner: false
     }
 
     this.loadDataFromBackend()
   }
 
-  loadDataFromBackend() {
+  loadDataFromBackend = () => {
     const { path } = this.props.match.params
 
     this.fetchProfileData(path || '')
+    // this.fetchOwnedPosts(this.state.username)
   }
 
   fetchProfileData(path) {
-    let token = localStorage.getItem('token')
-
     Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
+        this.fetchOwnedPosts(this.state.user.username)
+        this.setState({ isOwner: response.data.profile.isOwner })
       })
       .catch(() => {
         this.setState({ error: true })
+      })
+  }
+
+  fetchOwnedPosts(username) {
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/owned-by/${username}`)
+      .then((json) => {
+        this.setState({ posts: json.data })
+      })
+      .catch(() => {
+        // this.setState({ error: true })
       })
   }
 
@@ -71,7 +84,8 @@ class Profile extends App {
   }
 
   render() {
-    const { user, error } = this.state
+    const { user, error, isOwner } = this.state
+    const { profile } = this.props.store
 
     if (!user && !error) {
       return (
@@ -91,10 +105,10 @@ class Profile extends App {
       <Standard>
         <UserBanner user={user} />
         <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={user.posts} create={user.isOwner && this.props.store.user.loggedIn} />
+          <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={user.posts} />
+          <PostsPreview posts={this.state.posts} />
         </Section>
         <Section title={'STATISTICS'}>
           <Statistics />

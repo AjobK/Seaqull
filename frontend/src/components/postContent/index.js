@@ -21,12 +21,7 @@ class PostContent extends Component {
     this.editorInput = React.createRef()
 
     this.state = {
-      // editorState: value != null
-      //   ? EditorState.createWithContent(convertFromRaw(value))
-      //   : EditorState.createEmpty(),
-      editorState: value != null
-        ? EditorState.createWithContent(ContentState.createFromText(value))
-        : EditorState.createEmpty(),
+      editorState: EditorState.createEmpty(),
       focused: false,
       toolTipPosition: {
         top: -9999,
@@ -39,35 +34,7 @@ class PostContent extends Component {
   }
 
   onChange = (editorState) => {
-    // if (this.focused) {
-    //   let selectedText = window.getSelection().toString()
-
-    //   if (selectedText.trim().length) {
-    //     this.selected = true
-    //     // this.showSelectToolbox()
-    //   } else if (this.selected) {
-    //     // this.hideSelectToolbox()
-    //     this.selected = false
-    //   }
-    // }
-
-    const contentState = editorState.getCurrentContent()
-
-    // console.log(editorState);
-    // return;
-    // const oldContent = this.state.editorState.getCurrentContent()
-
-    // if (contentState === oldContent || !this.maxLength || contentState.getPlainText().length <= this.maxLength) {
-    this.setState({ editorState }, () => {
-      const currentUnix = ~~(Date.now() / 1000)
-
-      // if (currentUnix >= this.nextCallBackTime) {
-        if (this.props.callBackSaveData)
-          this.props.callBackSaveData(convertToRaw(contentState))
-        this.nextCallBackTime = currentUnix + 10 // Adding delay for next callback
-      // }
-    })
-    // }
+    this.setState({ editorState }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
   }
 
   handleBeforeInput = (chars) => {
@@ -92,7 +59,7 @@ class PostContent extends Component {
       focused: true
     })
   }
-
+  
   onBlur = () => {
     this.focused = false
     this.setState({
@@ -107,50 +74,41 @@ class PostContent extends Component {
     this.editorInput.current.focus()
   }
 
+  componentDidMount() {
+    let eState = typeof this.props.value == 'string'
+      ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
+      : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+
+    try {
+      eState = EditorState.createWithContent(this.props.value)
+    } catch (e) {}
+
+    this.setState({ editorState: eState }, () => this.props.callBackSaveData(convertToRaw(eState.getCurrentContent())))
+  }
+
   render() {
-    const { type, readOnly, value } = this.props
+    const { type, readOnly } = this.props
+
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
-
-    // if (!store.user.isEditing || !store.post.isOwner || noEdit) {
-    //   return (
-    //     <div>
-    //       <PostContentBlock
-    //         className={[style]}
-    //         noHeading={true}>
-    //         <Editor
-    //           readOnly={true}
-    //           editorState={editorState}
-    //           ref={this.editorInput}
-    //           placeholder={type == 'title' ? 'Title' : 'Write your story...'}
-    //           blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
-    //         />
-    //       </PostContentBlock>
-    //     </div>
-    //   )
-    // }
-
-    let editorState = value != null
-        ? EditorState.createWithContent(ContentState.createFromText(value))
-        : EditorState.createEmpty()
 
     return (
       <div>
         <PostContentBlock
           heading={`${type == 'content' ? 'Your' : ''} ${type}`}
           noHeading={readOnly}
-          onClick={this.focusOnEditor}
+          // onClick={this.focusOnEditor}
           className={[style]}>
           <Editor
-            editorState={editorState}
+            editorState={this.state.editorState}
             ref={this.editorInput}
             onChange={this.onChange}
             readOnly={readOnly != undefined ? readOnly : false}
             // onFocus={this.onFocus}
             // onBlur={this.onBlur}
-            // spellCheck={true}
+            spellCheck={true}
             placeholder={type == 'title' ? 'Title' : 'Write your story...'}
-            // handleBeforeInput={this.handleBeforeInput}
-            // handlePastedText={this.handlePastedText}
+            handleBeforeInput={this.handleBeforeInput}
+            handlePastedText={this.handlePastedText}
             blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
           />
           {/* { type != 'title' && this.inlineStyleControls()} */}

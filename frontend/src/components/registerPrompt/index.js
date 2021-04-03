@@ -36,15 +36,17 @@ class RegisterPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
-      username: document.getElementById(this.elId.username).value,
+      username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
 
+
     Axios.post('/profile/register', payload, {withCredentials: true})
-    .then(res => {  
-      this.props.store.user.fillUserData(res.data.user);     
+    .then(res => {
+      this.props.store.profile.setLoggedIn(true)
+      this.props.store.user.fillUserData(res.data.user)
       this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
@@ -71,6 +73,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       password: 'loading'
     })
+
     //checking if recaptcha is already loaded
     if(!(this.captcha.state.ready)){
       this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
@@ -118,9 +121,6 @@ class RegisterPrompt extends Component {
   }
 
   render() {
-    console.log('RENDERING AGAIN')
-    console.log(this.state)
-    console.log('-------------')
     const { username, email, password, recaptcha } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
 
@@ -130,7 +130,7 @@ class RegisterPrompt extends Component {
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput name={'username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
+            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
