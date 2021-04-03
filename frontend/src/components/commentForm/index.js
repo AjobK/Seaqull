@@ -21,14 +21,13 @@ class CommentForm extends Component {
     }
 
     onCommentSubmit = () => {
-        console.log('saving')
         const url = `http://localhost:8000/api/comment/`
 
         Axios.post(url, this.state.comment, {withCredentials: true}).then(response => {
-            console.log(response.data)
             this.resetComment()
+            this.props.onCommentAdd()
         }).catch(err => {
-            console.log(err)
+            //TODO: handle error
         })
     }
 
@@ -42,13 +41,13 @@ class CommentForm extends Component {
             <div className="commentForm">
                 <CommentEditor 
                     onCommentChangeCallback={(data) => {
-                        this.comment.content = data.blocks[0].text
+                        this.comment.content = data
 
                         this.setState({ comment: this.comment })
                     }}
-                    value={this.state.comment.content} 
+                    value={this.state.comment.content}
+                    onSubmitCallback={this.onCommentSubmit}
                 />
-                <button type="button" onClick={this.onCommentSubmit}>Save</button>
             </div>
         )
     }

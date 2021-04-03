@@ -1,7 +1,7 @@
 import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import CommentService from '../service/commentService'
-const isAuth = require('../middleware/isAuth');
+const isAuth = require('../middleware/isAuth')
 
 class CommentController implements ControllerBase{
     public comment = '/comment'

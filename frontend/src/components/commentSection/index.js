@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
+import { Link } from 'react-router-dom'
 import Axios from 'axios'
+
 import styles from './commentSection.scss'
 
+import { Section } from '../../layouts'
 import { Comment } from '../'
 import { CommentForm } from '../'
-import { Section } from '../../layouts'
-
+@inject('store') @observer
 class CommentSection extends Component {
     constructor(props) {
         super(props)
-        this.data = []
+        this.state = {data: []}
     }
 
-    loadComments = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop();
+    loadComments() {
+        let path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/comment/${path}`
 
         Axios.get(url)
         .then(response => {
-            console.log(response.data)
-            this.data = response.data
+            this.setState({data: response.data})
         })
     }
 
@@ -27,21 +29,46 @@ class CommentSection extends Component {
         this.loadComments()
     }
 
-    displayComments() {
-        if(!this.data) {
+    onCommentAdd = () => {
+        this.loadComments()
+    }
+
+    displayCommentForm = () => {
+        const { user, profile } = this.props.store
+        
+        if(profile.loggedIn) {
+            return (
+                <CommentForm onCommentAdd={this.onCommentAdd} />
+            )
+        }
+
+        return (
+            <p>Please <Link to='/login' className={styles.commentSection__highlightedLink}>log in</Link> to comment to this post</p>
+        )
+    }
+
+    displayComments = () => {
+        if(!this.state.data) {
             return <p>Loading...</p>
         } 
         
-        if (this.data.length <= 0) {
+        if (this.state.data.length <= 0) {
             return <p>No comments have been added yet.</p>
         }
 
+<<<<<<< HEAD
         return this.data.map((comment) => {
             if(!comment.parent_comment_id) {
                 return (
                     <Comment key={comment.id} comment={comment} />
                 )
             }
+=======
+        return this.state.data.map((comment) => {
+            return (
+                <Comment key={comment.id} comment={comment} />
+            )
+>>>>>>> c59c7ab830c5c67af92eda1f6fd8271799715ebf
         })
     }
 
@@ -49,7 +76,7 @@ class CommentSection extends Component {
         return (
             <div className={styles.commentSection}>
                 <Section noTitle>
-                    <CommentForm />
+                    { this.displayCommentForm() }
                     { this.displayComments() }
                 </Section>
             </div>
