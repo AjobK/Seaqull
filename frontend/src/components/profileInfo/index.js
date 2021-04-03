@@ -4,7 +4,7 @@ import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit,faSave } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faSave } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import {Editor, EditorState, ContentState, convertFromRaw, convertToRaw} from 'draft-js'
 import Axios from 'axios'
@@ -19,7 +19,7 @@ class ProfileInfo extends Component {
 			editing: false,
 			editorState: EditorState.createEmpty(),
 			changedContent: false,
-			icon: faEdit,
+			icon: faPen,
 		}
 
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -66,7 +66,7 @@ class ProfileInfo extends Component {
 
 		  this.setState({
 			editing: false,
-			icon: faEdit
+			icon: faPen
 		  })
 		}  
 	  }
@@ -104,7 +104,9 @@ class ProfileInfo extends Component {
 						spellCheck={true}/>
 				</section>
 				<section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
-            		{icon}
+            		<section> 
+						{icon} 
+					</section>
 					<p> {currentOption} </p>
           		</section>
 			</section>

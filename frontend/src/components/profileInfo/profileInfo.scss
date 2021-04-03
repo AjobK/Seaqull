@@ -9,9 +9,16 @@
 }
 
 .iconContainer {
+	@include noselect;
 	margin-top: 20px;
 	display: flex;
 	justify-content: flex-end;
+}
+
+.iconContainer section {
+	padding: 3px;
+	border: solid 1px;
+	border-radius: 100%;
 }
 
 .iconContainer:hover {
