@@ -2,15 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { PostBanner, PostContent, Button, Icon, CommentSection } from '../../components'
-=======
-import { PostBanner, PostContent, Button, Icon, PostLike } from '../../components'
->>>>>>> d2c3f965b8cae8a0cca89cb7245c564e9940407e
-=======
 import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection } from '../../components'
->>>>>>> c59c7ab830c5c67af92eda1f6fd8271799715ebf
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'

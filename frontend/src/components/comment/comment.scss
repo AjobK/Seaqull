@@ -49,6 +49,7 @@
 	&__main {
 		padding: 30px 30px 30px 0;
 		width: 100%;
+		font-size: 1.2rem;
 	}
 
 	&__header {
@@ -58,18 +59,46 @@
 		margin-bottom: 10px;
 
 		&Author {
-			font-size: 1.5rem;
+			font-size: 1.7rem;
 			font-weight: 600;
 			&:link,
 			&:visited {
 				color: $textdark;
 			}
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		&PublishedTime {
 			display: flex;
 			color: $gray;
 			align-items: center;
+			font-size: 1.3rem;
+			white-space: nowrap;
+			word-break: keep-all;
+		}
+	}
+}
+
+.reply {
+	margin-top: 10px;
+	.comment__body {
+		background-color: rgba(255,255,255, 0.4);
+	}
+
+	.comment__main {
+		padding: 30px;
+		font-size: 1.2rem;
+	}
+
+	.comment__header {
+		&Author {
+			font-size: 1.2rem;
+		}
+
+		&PublishedTime {
+			font-size: 1.2rem;
 		}
 	}
 }

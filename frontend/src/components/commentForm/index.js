@@ -39,7 +39,8 @@ class CommentForm extends Component {
     render() {
         return (
             <div className="commentForm">
-                <CommentEditor 
+                <CommentEditor
+                    type={this.props.type} 
                     onCommentChangeCallback={(data) => {
                         this.comment.content = data
 

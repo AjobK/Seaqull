@@ -14,6 +14,13 @@ class CommentEditor extends Component {
         this.maxLength = 280
 
         this.editorInput = React.createRef()
+        this.showHeader = true
+        this.buttonText = 'SEND'
+
+        if (props.type === 'reply') {
+            this.showHeader = false
+            this.buttonText = 'REPLY'
+        }
 
         this.state = {
             editorState: props.value != null
@@ -100,12 +107,12 @@ class CommentEditor extends Component {
         }
     }
 
-    render() {
-        const iconClassName = ((this.state.formError == null) && 'noClass') || (this.state.formError == null ? styles.iconCheck : styles.iconTimes),
-          iconName = (this.state.formError == null && 'MinusCircle')|| (this.state.formError == null ? 'CheckCircle' : 'TimesCircle')
+    displayHeader = () => {
+        if (this.showHeader) {
+            const iconClassName = ((this.state.formError == null) && 'noClass') || (this.state.formError == null ? styles.iconCheck : styles.iconTimes),
+              iconName = (this.state.formError == null && 'MinusCircle')|| (this.state.formError == null ? 'CheckCircle' : 'TimesCircle')
 
-        return (
-            <section>
+            return (
                 <div className={styles.editorLabel}>
                     <Icon
                         className={`${styles.editorLabel__icon} ${iconClassName}`}
@@ -113,6 +120,15 @@ class CommentEditor extends Component {
                     />
                     <span className={styles.editorLabel__title}>Comment</span>
                 </div>
+            )
+        }
+    }
+
+    render() {
+
+        return (
+            <section>
+                {this.displayHeader()}              
                 {this.displayError()}
                 <div className={styles.editorForm}>
                     <div onClick={this.focusOnEditor} className={styles.editorForm__editor}>
@@ -125,7 +141,7 @@ class CommentEditor extends Component {
                             handleKeyCommand={this.handleKeyCommand}                     
                         />
                     </div>
-                    <Button value="SEND" type="button" onClick={this.onSubmit}/>
+                    <Button value={this.buttonText} type="button" onClick={this.onSubmit}/>
                 </div>
             </section>
         )

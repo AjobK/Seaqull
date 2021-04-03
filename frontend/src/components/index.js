@@ -26,6 +26,7 @@ import CommentSection from './commentSection'
 import Comment from './comment'
 import CommentForm from './commentForm'
 import CommentEditor from './commentEditor'
+import CommentChildren from './commentChildren'
 import PostLike from './postLike'
 
 export {
@@ -57,5 +58,6 @@ export {
   Comment,
   CommentForm,
   CommentEditor,
+  CommentChildren,
   PostLike
 }

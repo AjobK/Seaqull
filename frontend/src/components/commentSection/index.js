@@ -56,20 +56,39 @@ class CommentSection extends Component {
             return <p>No comments have been added yet.</p>
         }
 
-<<<<<<< HEAD
-        return this.data.map((comment) => {
-            if(!comment.parent_comment_id) {
-                return (
-                    <Comment key={comment.id} comment={comment} />
-                )
-            }
-=======
-        return this.state.data.map((comment) => {
+        // return this.state.data.map((comment) => {
+        //     if(!comment.parent_comment_id) {
+        //         return (
+        //             <Comment key={comment.id} comment={comment} />
+        //         )
+        //     }
+        // })
+
+        return this.nestComments(this.state.data).map((comment) => {
+            console.log(comment)
             return (
                 <Comment key={comment.id} comment={comment} />
             )
->>>>>>> c59c7ab830c5c67af92eda1f6fd8271799715ebf
         })
+    }
+
+    nestComments = (commentList) => {
+        const commentMap = {}
+        
+        if(commentList.length > 0) {
+            commentList.forEach(comment => commentMap[comment.id] = comment)
+
+            commentList.forEach(comment => {
+                if (comment.parent_comment_id !== null) {
+                    const parent = commentMap[comment.parent_comment_id]
+                    parent.children ? parent.children.push(comment) : parent.children = [comment]
+                }
+            })
+    
+            return commentList.filter(comment => {
+                return comment.parent_comment_id === null
+            })
+        }
     }
 
     render() {
