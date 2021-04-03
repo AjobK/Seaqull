@@ -91,7 +91,7 @@ class ProfileInfo extends Component {
 		let icon
 		let currentOption = ''
 
-		if (this.props.loggedIn){
+		if (this.props.loggedIn && this.state.user.isOwner){
 			icon = <Icon iconName={this.state.icon} className={styles.icon} />
 
 			this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'
