@@ -20,12 +20,6 @@ class PostLike extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            showLikes: false
-        })
-    }
-
     postLike = () => {
         const path = window.location.pathname.split('/').filter(i => i != '').pop()
 
@@ -75,7 +69,7 @@ class PostLike extends Component {
     }
 
     render() {
-        const { likesAmount } = this.props
+        const { likesAmount, isOwner } = this.props
 
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
@@ -85,9 +79,11 @@ class PostLike extends Component {
                 { likesAmount > 0 && (
                     <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'like' : 'likes'}</p>
                 )}
-                <button onClick={ this.likeClicked }>
-                    <Icon iconName={'Heart'} className={styles.likeIcon} />
-                </button>
+                { !isOwner && (
+                    <button onClick={ this.likeClicked }>
+                        <Icon iconName={'Heart'} className={styles.likeIcon} />
+                    </button>
+                )}
                 { this.state.showLikes && (
                     <PostLikesList closeLikesList={ this.closeLikesList }/>
                 )}
