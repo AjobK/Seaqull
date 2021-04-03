@@ -60,25 +60,25 @@ class ProfileInfo extends Component {
 			this.setState({
 				editorState: EditorState.moveFocusToEnd(this.state.editorState)
 			})
-		} else {
-		  	this.saveNewDescription()
-
+		} else if (this.state.changedContent) {
 		  	this.setState({
 				editing: false,
 				icon: 'Pen'
 		  	})
+			this.saveNewDescription()
 		}  
 	  }
 	
 
 	saveNewDescription = () => {
-		if (this.state.changedContent){
+		if (this.state.changedContent) {
 			const payload = {
 				username: this.state.user.username,
 				description: this.state.user.description
 			}
 
-			Axios.put('/profile', payload, {withCredentials: true})
+			Axios.put('/profile', payload, { withCredentials: true })
+			this.setState({ changedContent: false })
 		}
 	}
 
@@ -86,7 +86,7 @@ class ProfileInfo extends Component {
 		let icon
 		let currentOption = ''
 
-		if (this.props.loggedIn && this.state.user.isOwner){
+		if (this.props.loggedIn && this.state.user.isOwner) {
 			icon = <Icon iconName={this.state.icon} className={styles.icon} />
 
 			this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'
@@ -99,14 +99,14 @@ class ProfileInfo extends Component {
 						readOnly={!this.state.editing}
 						editorState={this.state.editorState} 
 						onChange={this.onChange} 
-						onBlur={() => this.changeEditingState()}
+						onBlur={() => this.saveNewDescription()}
 						spellCheck={true}/>
 				</section>
 				<section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
-            		<section> 
-						{icon} 
-					</section>
-					<p> {currentOption} </p>
+						<section> 
+							{icon} 
+						</section>
+						<p> {currentOption} </p>
           		</section>
 			</section>
 		)
