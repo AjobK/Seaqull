@@ -194,7 +194,7 @@ class ProfileService {
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
-        newProfile.description = 'i`m a wild seaqull'
+        newProfile.description = 'Welcome to my profile!'
         newProfile = await this.dao.saveProfile(newProfile)
 
         const acc = new Account()
