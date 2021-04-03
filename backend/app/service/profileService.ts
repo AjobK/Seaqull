@@ -43,6 +43,7 @@ class ProfileService {
         profile.description = req.body.description
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
+
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -79,8 +80,8 @@ class ProfileService {
             title: title ? title.name : 'Title not found...' ,
             description: profile.description
         }
-        return res.status(200).json({ 'profile': payload })
 
+        return res.status(200).json({ 'profile': payload })
     }
 
     public register = async (req: Request, res: Response): Promise<Response> => {
@@ -118,6 +119,7 @@ class ProfileService {
         if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
             return res.status(401).json({ errors: errors })
         }
+
         const createAccount = await this.saveProfile(req)
 
         const newAccount = this.cleanAccount(createAccount)
@@ -191,7 +193,6 @@ class ProfileService {
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
-        //newProfile.description = '{"blocks":[{"key":"dvnp","text":"i`m a wild seaqull","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
         newProfile.description = 'i`m a wild seaqull'
         newProfile = await this.dao.saveProfile(newProfile)
 
