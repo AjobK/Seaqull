@@ -2,9 +2,11 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import { UserBanner, PostsPreview, Statistics, Loader } from '../../components'
 import Axios from 'axios'
 import Error from '../error'
+import styles from './profile.scss'
+import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
+
 
 @inject('store') @observer
 class Profile extends App {
@@ -19,7 +21,7 @@ class Profile extends App {
       likes: [],
       isOwner: false
     }
-
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
   }
 
@@ -27,11 +29,12 @@ class Profile extends App {
     const { path } = this.props.match.params
 
     this.fetchProfileData(path || '')
-    // this.fetchOwnedPosts(this.state.username)
   }
 
   fetchProfileData(path) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`,  {withCredentials: true})
+    let token = localStorage.getItem('token')
+
+    Axios.get(`/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
         this.fetchOwnedPosts(this.state.user.username)
@@ -89,7 +92,8 @@ class Profile extends App {
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
       banner: profile.banner || '/src/static/dummy/user/banner.jpg',
-      picture: profile.avatar || '/src/static/dummy/user/profile.jpg'
+      picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
+      description: profile.description
     }
 
     this.setState({ user })
@@ -112,10 +116,13 @@ class Profile extends App {
         <Error></Error>
       )
     }
-
+    
     return (
       <Standard>
         <UserBanner user={user} />
+        <Section title={'DESCRIPTION'}>
+          <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
+        </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>
