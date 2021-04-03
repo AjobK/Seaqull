@@ -51,7 +51,7 @@ class ProfileInfo extends Component {
 	}
 
 	changeEditingState() {
-		if (!this.state.editing) {
+		if (!this.state.editing && !this.state.changedContent) {
 			this.setState({
 				editing: true,
 				icon: 'Save'
@@ -60,13 +60,7 @@ class ProfileInfo extends Component {
 			this.setState({
 				editorState: EditorState.moveFocusToEnd(this.state.editorState)
 			})
-		} else if (this.state.changedContent) {
-		  	this.setState({
-				editing: false,
-				icon: 'Pen'
-		  	})
-			this.saveNewDescription()
-		}  
+		} 
 	  }
 	
 
@@ -76,6 +70,11 @@ class ProfileInfo extends Component {
 				username: this.state.user.username,
 				description: this.state.user.description
 			}
+
+			this.setState({
+				editing: false,
+				icon: 'Pen'
+		  	})
 
 			Axios.put('/profile', payload, { withCredentials: true })
 			this.setState({ changedContent: false })
