@@ -1,9 +1,9 @@
-import ControllerBase from '../interfaces/ControllerBase'
+import RoutesBase from '../interfaces/ControllerBase'
 import * as express from 'express'
 import PostService from '../service/postService'
 const auth = require('../middleware/isAuth.ts')
 
-class PostController implements ControllerBase {
+class PostRoutes implements RoutesBase {
     public post = '/post'
     public router = express.Router()
     private postService: PostService
@@ -27,4 +27,4 @@ class PostController implements ControllerBase {
         this.router.put(this.post + '/:path', auth, this.postService.updatePost)
     }
 }
-export default PostController
+export default PostRoutes

@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { Request, Response } from 'express'
-import accountDao from '../dao/accountDao'
+import accountDao from '../dao/accountDAO'
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 import * as bcrypt from 'bcrypt'
@@ -54,7 +54,7 @@ class PostService {
 
             const validation = this.validateAccountRequest(account,username,password)
 
-            if(validation != null) return res.status(400).send(validation)
+            if (validation != null) return res.status(400).send(validation)
 
             const payload = {
                 username: username,

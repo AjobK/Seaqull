@@ -2,8 +2,6 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit,faSave } from '@fortawesome/free-solid-svg-icons'
 import Axios from 'axios'
 import Error from '../error'
 import styles from './profile.scss'
@@ -20,8 +18,6 @@ class Profile extends App {
       user: null,
       error: false,
       posts: [],
-      editing: false,
-      icon: faEdit,
       isOwner: false
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -91,30 +87,6 @@ class Profile extends App {
     this.setState({ user })
   }
 
-  changeEditingState() {
-    if (!this.state.editing) {
-      this.setState({
-        editing: true,
-        icon: faSave
-      })
-    } else {
-      this.saveNewDescription()
-      this.setState({
-        editing: false,
-        icon: faEdit
-      })
-    }  
-  }
-
-  saveNewDescription = () => {
-    const payload = {
-      username: this.state.user.username,
-      description: this.state.user.description
-    }
-
-    Axios.put('/profile', payload, {withCredentials: true})
-  }
-
   render() {
     const { user, error, isOwner } = this.state
     const { profile } = this.props.store
@@ -133,22 +105,11 @@ class Profile extends App {
       )
     }
     
-    let icon
-
-    if (this.state.user.isOwner){
-      icon = <FontAwesomeIcon icon={this.state.icon} 
-      onClick={() => this.changeEditingState()}
-      size='lg'/>
-    }
-
     return (
       <Standard>
         <UserBanner user={user} />
         <Section title={'DESCRIPTION'}>
-          <ProfileInfo startEditing={this.state.editing} user={user}/>
-          <section className={styles.iconContainer}>
-            {icon}
-          </section>
+          <ProfileInfo user={user}/>
         </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />

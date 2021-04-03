@@ -1,1 +1,23 @@
 @import '../../styles/index.scss';
+
+.editor {
+	background-color: rgba(255, 255, 255, 0.1); 
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 2px rgb(0, 0, 0 / 15%);
+	border: 1px solid rgba(0,0,0,0.15);
+}
+
+.iconContainer {
+	margin-top: 20px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.iconContainer:hover {
+	cursor: pointer;
+}
+
+.iconContainer p {
+	margin-left: 10px;
+}

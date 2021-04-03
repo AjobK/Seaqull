@@ -3,6 +3,8 @@ import styles from './profileInfo.scss'
 import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
 import { inject, observer } from 'mobx-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit,faSave } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import {Editor, EditorState, ContentState, convertFromRaw, convertToRaw} from 'draft-js'
 import Axios from 'axios'
@@ -16,7 +18,8 @@ class ProfileInfo extends Component {
 			user: props.user,
 			editing: false,
 			editorState: EditorState.createEmpty(),
-			changedContent: false
+			changedContent: false,
+			icon: faEdit,
 		}
 
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -52,6 +55,23 @@ class ProfileInfo extends Component {
 		}
 	}
 
+	changeEditingState() {
+		if (!this.state.editing) {
+		  this.setState({
+			editing: true,
+			icon: faSave
+		  })
+		} else {
+		  this.saveNewDescription()
+
+		  this.setState({
+			editing: false,
+			icon: faEdit
+		  })
+		}  
+	  }
+	
+
 	saveNewDescription = () => {
 		if (this.state.changedContent){
 			const payload = {
@@ -64,16 +84,32 @@ class ProfileInfo extends Component {
 	}
 
 	render() {
-		if (!this.props.startEditing) this.saveNewDescription()
+		let icon
+
+		if (this.state.user.isOwner){
+			icon = <FontAwesomeIcon icon={this.state.icon}
+			size='lg'/>
+		}
+
+		let currentOption = 'EDIT'
+
+		if (this.state.editing) {
+			currentOption = 'SAVE'
+		}
 
 		return (
 			<section className={styles.wrapper}>
-				<Editor 
-					readOnly={!this.props.startEditing}
-					editorState={this.state.editorState} 
-					onChange={this.onChange} 
-					spellCheck={true}
-					textAlignment={'center'}/>
+				<section className={styles.editor}>
+					<Editor 
+						readOnly={!this.state.editing}
+						editorState={this.state.editorState} 
+						onChange={this.onChange} 
+						spellCheck={true}/>
+				</section>
+				<section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
+            		{icon}
+					<p> {currentOption} </p>
+          		</section>
 			</section>
 		)
 	}

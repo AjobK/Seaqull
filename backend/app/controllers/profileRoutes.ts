@@ -1,10 +1,10 @@
 import * as express from 'express'
 import ProfileService from '../service/profileService'
-import ControllerBase from '../interfaces/ControllerBase'
+import RoutesBase from '../interfaces/ControllerBase'
 
 const auth = require('../middleware/isAuth.ts')
 
-class ProfileController implements ControllerBase{
+class ProfileRoutes implements RoutesBase {
     public profile = '/profile/:username?'
     public register = '/profile/register'
     public router = express.Router()
@@ -21,4 +21,4 @@ class ProfileController implements ControllerBase{
         this.router.get (this.profile, this.profileService.getProfile)
     }
 }
-export default ProfileController
+export default ProfileRoutes
