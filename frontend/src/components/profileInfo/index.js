@@ -22,6 +22,7 @@ class ProfileInfo extends Component {
 			loggedIn: this.props.loggedIn
 		}
 		
+		this.changeStateLock = null
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 		
 	}
@@ -50,8 +51,8 @@ class ProfileInfo extends Component {
 		this.setState({ editorState })
 	}
 
-	changeEditingState() {
-		if (!this.state.editing && !this.state.changedContent) {
+	changeEditingState(param) {	
+		if (!this.state.editing && this.changeStateLock < Date.now()) {
 			this.setState({
 				editing: true,
 				icon: 'Save'
@@ -60,9 +61,16 @@ class ProfileInfo extends Component {
 			this.setState({
 				editorState: EditorState.moveFocusToEnd(this.state.editorState)
 			})
-		} 
+		} else if (this.changeStateLock < Date.now()) {
+			this.changeStateLock = Date.now() + 500
+		  	this.saveNewDescription()
+
+		  	this.setState({
+				editing: false,
+				icon: 'Pen'
+		  	})
+		}  
 	  }
-	
 
 	saveNewDescription = () => {
 		if (this.state.changedContent) {
@@ -98,7 +106,7 @@ class ProfileInfo extends Component {
 						readOnly={!this.state.editing}
 						editorState={this.state.editorState} 
 						onChange={this.onChange} 
-						onBlur={() => this.saveNewDescription()}
+						onBlur={() => this.changeEditingState()}
 						spellCheck={true}/>
 				</section>
 				<section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
