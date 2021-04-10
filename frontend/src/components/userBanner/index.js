@@ -17,6 +17,7 @@ class UserBanner extends Component {
   }
 
   onEditAvatar = (e) => {
+    e.value = ''
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader()
       reader.addEventListener('load', () => {
@@ -55,7 +56,7 @@ class UserBanner extends Component {
             { this.props.owner && (
                 <span className={styles.pictureEdit}>
                   <Icon iconName={'Pen'} />
-                  <input type="file" accept="image/*" onChange={this.onEditAvatar} />
+                  <input type="file" accept="image/*" onChange={this.onEditAvatar} value={''} />
                 </span>
             )}
           </div>
@@ -68,9 +69,9 @@ class UserBanner extends Component {
           </div>
         </div>
         <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
-        {/*{ this.state.upAvatar && (*/}
+        { this.state.upAvatar && (
             <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={ this.closeAvatarUpload }/>
-        {/*)}*/}
+        )}
       </section>
     )
   }
