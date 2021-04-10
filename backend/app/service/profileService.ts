@@ -75,8 +75,19 @@ class ProfileService {
         if (receivedUsername && decodedToken)
             isOwner = !!(receivedUsername == decodedToken.username)
 
+        let following = false
+
+        if (!isOwner && decodedToken && decodedToken.username) {
+            let profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
+            profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
+            profileFollowedBy.profile = profile.id
+
+            following = await this.dao.isFollowing(profileFollowedBy)
+        }
+
         const payload = {
             isOwner: isOwner,
+            following: following,
             username: receivedUsername,
             experience: profile.experience,
             title: title ? title.name : 'Title not found...' ,
@@ -170,16 +181,16 @@ class ProfileService {
         if (!follower || !profile)
             return res.status(422).json({ error: 'No profile to follow or follower found in request' })
 
+        if (follower.id == profile.id)
+            return res.status(422).json({ error: 'Following yourself is not possible' })
+
         let profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
         profileFollowedBy.follower = follower.id
         profileFollowedBy.profile = profile.id
         
         const followedProfile = await this.dao.follow(profileFollowedBy)
 
-        if (followedProfile)
-            res.status(200).json({ message: 'Succesfully toggled follow' })
-        else
-            res.status(500).json({ error: 'Could not toggle follow' })
+        return res.status(200).json({ message: `Succesfully ${followedProfile ? '' : 'un'}followed profile`, following: followedProfile })
     }
 
     private async checkValidUsername (username: string): Promise<string> {

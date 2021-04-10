@@ -21,16 +21,26 @@ class ProfileDAO {
         const profile = await repositoryProfile.save(u)
         return profile
     }
-    
+
     public async follow(profileFollowedBy: ProfileFollowedBy): Promise<any> {
         const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
 
         const foundFollow = await repository.findOne(profileFollowedBy)
 
         if (!foundFollow)
-            return await repository.save(profileFollowedBy)
+            await repository.save(profileFollowedBy)
         else
-            return await repository.delete(profileFollowedBy)
+            await repository.delete(profileFollowedBy)
+
+        return !foundFollow
+    }
+
+    public async isFollowing(profileFollowedBy: ProfileFollowedBy): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+
+        const foundFollow = await repository.findOne(profileFollowedBy)
+
+        return !!foundFollow
     }
 }
 
