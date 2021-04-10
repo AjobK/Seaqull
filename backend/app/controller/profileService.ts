@@ -10,6 +10,8 @@ import RoleDao from '../dao/roleDAO'
 import ProfileDAO from '../dao/profileDAO'
 import TitleDAO from '../dao/titleDAO'
 import AccountDAO from '../dao/accountDAO'
+import ProfileFollowedBy from '../entity/profile_followed_by'
+import { fips } from 'crypto'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
