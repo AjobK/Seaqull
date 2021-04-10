@@ -54,6 +54,6 @@ export {
   FormInput,
   PostLike,
   ProfileInfo,
-  PostLikesList
+  PostLikesList,
   AvatarUpload
 }
