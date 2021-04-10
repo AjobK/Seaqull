@@ -10,17 +10,14 @@ import { Icon } from '../../components'
 class PostLike extends Component {
     constructor(props) {
         super(props)
-        this.toggleLike = this.props.toggleLike.bind(this)
+
+        if (this.props.toggleLike) {
+            this.toggleLike = this.props.toggleLike.bind(this)
+        }
 
         this.state = {
             showLikes: false
         }
-    }
-
-    componentDidMount() {
-        this.setState({
-            showLikes: false
-        })
     }
 
     postLike = () => {
@@ -50,6 +47,8 @@ class PostLike extends Component {
     }
 
     likeClicked = () => {
+        if (!this.toggleLike) return
+
         if (this.props.liked) {
             this.postUnlike()
         } else {
@@ -70,7 +69,7 @@ class PostLike extends Component {
     }
 
     render() {
-        const { likesAmount } = this.props
+        const { likesAmount, isOwner } = this.props
 
         return (
             <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
@@ -80,9 +79,11 @@ class PostLike extends Component {
                 { likesAmount > 0 && (
                     <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'like' : 'likes'}</p>
                 )}
-                <button onClick={ this.likeClicked }>
-                    <Icon iconName={'Heart'} className={styles.likeIcon} />
-                </button>
+                { !isOwner && (
+                    <button onClick={ this.likeClicked }>
+                        <Icon iconName={'Heart'} className={styles.likeIcon} />
+                    </button>
+                )}
                 { this.state.showLikes && (
                     <PostLikesList closeLikesList={ this.closeLikesList }/>
                 )}

@@ -16,6 +16,7 @@
 }
 
 .content {
+	margin-top: 4vh;
 	min-height: 10vh;
 
 	@include mobile-all-portrait {

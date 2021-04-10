@@ -13,7 +13,7 @@ export class Profile extends BaseEntity {
     @Column({ nullable: true })
     avatar_attachment: number
 
-    @Column({ nullable: true })
+    @Column()
     description: string
 
     @Column()
