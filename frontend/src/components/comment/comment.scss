@@ -75,12 +75,33 @@
 			font-size: 1rem;
 		}
 	}
+
+	&__replyButton {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		&Icon {
+			color: $textdark;
+			font-size: 1.2rem;
+			&:hover {
+				color: $primary;
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__replyForm {
+		margin-top: 10px;
+		background-color: rgba(255,255,255, 0.4);
+		padding: 10px 30px 5px 30px;
+	}
 }
 
 .reply {
 	margin-top: 10px;
 	.comment__body {
 		background-color: rgba(255,255,255, 0.4);
+		padding: 10px 30px 10px 30px;
 	}
 
 	.comment__main {

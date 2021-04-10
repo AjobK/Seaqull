@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './comment.scss'
 import { Link } from 'react-router-dom'
 import {Editor, EditorState, convertFromRaw, ContentState} from 'draft-js'
-import { CommentForm, CommentChildren } from '../'
+import { CommentForm, CommentChildren, Icon } from '../'
 
 import TimeUtil from '../../util/timeUtil'
 
@@ -12,7 +12,8 @@ class Comment extends Component {
         this.state = {
             editorState: props.comment.content != null
                 ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.comment.content)))
-                : EditorState.createEmpty()
+                : EditorState.createEmpty(),
+            isReplying: false
         }
 
         if (this.props.comment && this.props.comment.parent_comment_id) {
@@ -35,8 +36,26 @@ class Comment extends Component {
     }
 
     displayCommentForm = () => {
+        if(!this.isReply && this.state.isReplying) {
+            return (
+                <div className={styles.comment__replyForm}>
+                    <CommentForm type="reply" parent_comment={this.props.comment.id }/>
+                </div>
+            )
+        }
+    }
+
+    onReplyClick = () => {
+        this.setState({isReplying: !this.state.isReplying})
+    }
+
+    displayReplyButton = () => {
         if(!this.isReply) {
-            return <CommentForm type="reply" parent_comment={this.props.comment.id }/>
+            return (
+                <div className={styles.comment__replyButton}>
+                    <Icon iconName={'Reply'} className={styles.comment__replyButtonIcon} onClick={this.onReplyClick}/>
+                </div>
+            )
         }
     }
 
@@ -44,7 +63,7 @@ class Comment extends Component {
         if (this.props.comment) {
             return (
                 <article className={`${styles.comment} ${this.isReply && styles.reply}`}>
-                    <section className={styles.comment__body}>
+                    <div className={styles.comment__body}>
                         {this.displayAvatar()}
                         <div className={styles.comment__main}>
                             <div className={styles.comment__header}>
@@ -60,10 +79,11 @@ class Comment extends Component {
                             <div className={styles.comment__content}>
                                 <Editor editorState={this.state.editorState} readOnly={true}/>
                             </div>
-                            {/* {this.displayCommentForm()} */}
+                            { this.displayReplyButton() }
                         </div>
-                    </section>
-                        <CommentChildren commentChildren={this.props.comment.children} />
+                    </div>
+                        { this.displayCommentForm() }
+                    <CommentChildren commentChildren={this.props.comment.children} />
                 </article>
             )
         }
