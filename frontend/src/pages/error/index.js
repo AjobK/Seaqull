@@ -1,7 +1,7 @@
 import React from 'react'
 import App from '../App'
 import styles from './error.scss'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 class Error extends App {
   render() {

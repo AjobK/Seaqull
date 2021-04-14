@@ -1,0 +1,179 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/breakpoints.scss';
+
+$likes-list-padding: 20px;
+
+* {
+	transition: .2s ease-in-out;
+}
+
+.postLikesListWrapper {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 101;
+
+	.likesBackground {
+		width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+		animation: fade-in 0.2s
+	}
+
+	.likesListWrapper {
+		position: fixed;
+		background-color: white;
+		border-radius: 10px;
+		z-index: 102;
+		width: 500px;
+		height: 50%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		overflow-y: hidden;
+
+		@include mobile-tablet {
+			width: 70%;
+		}
+
+		@include mobile-all {
+			width: 90%;
+		}
+
+		.likesListHeader {
+			display: flex;
+			align-items: center;
+			padding: 15px $likes-list-padding 10px;
+			justify-content: space-between;
+
+			.likesListTitle {
+				display: flex;
+
+				h2 {
+					color: $dark;
+					font-size: 1em;
+
+					.like {
+						width: 20px;
+					}
+				}
+			}
+
+			.closeLikes {
+				cursor: pointer;
+				width: 20px;
+				height: 20px;
+
+				path {
+					fill: $primary;
+				}
+
+				&:hover {
+					path {
+						fill: $dark;
+					}
+				}
+			}
+		}
+
+		.likesList {
+			list-style: none;
+			overflow-y: auto;
+			max-height: 100%;
+			padding-bottom: 15%;
+
+			&Item {
+				padding: 0 $likes-list-padding;
+
+				.profileLikeLink {
+					padding: 20px 0;
+					display: flex;
+					align-items: center;
+					cursor: pointer;
+					border-bottom: #CFCFCF 1px solid;
+
+					&:hover {
+						border-bottom-color: $primary;
+					}
+
+					.profileAvatarWrapper {
+						position: relative;
+
+						.avatar {
+							transition: 0.2s;
+							overflow: hidden;
+							border-radius: 100%;
+							position: relative;
+							background-size: cover;
+							background-position: center;
+							background-color: #1f1f1f;
+							width: 50px;
+							height: 50px;
+
+							&:hover {
+								filter: brightness(90%);
+							}
+						}
+
+						.level {
+							border: white 1.8px solid;
+							font-weight: bold;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							position: absolute;
+							bottom: -2px;
+							right: -4px;
+							height: 22px;
+							min-width: 22px;
+							width: auto;
+							text-align: center;
+							background-color: $primary;
+							border-radius: 100%;
+
+							.levelNumber {
+								text-align: center;
+								font-family: $sidefont;
+								color: white;
+								font-size: 0.68em;
+								line-height: 0.8em;
+								margin-bottom: -1px;
+							}
+						}
+					}
+
+					.profileTextWrapper {
+						margin-left: 15px;
+
+						.profileDisplayName {
+							color: black;
+							font-size: 1em;
+							font-weight: bold;
+						}
+
+						.profileTitle {
+							color: $primary;
+							font-size: .8em;
+							line-height: 1em;
+						}
+					}
+				}
+			}
+		}
+
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.5;
+	}
+}

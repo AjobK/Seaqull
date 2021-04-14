@@ -1,8 +1,9 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, Unique, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Profile } from './profile'
 import { Post } from './post'
 
 @Entity('post_like')
+@Unique(['profile', 'post'])
 export class PostLike extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
