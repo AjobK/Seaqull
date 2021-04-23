@@ -10,23 +10,42 @@ class AvatarUpload extends Component {
         super(props)
 
         this.state = {
-            upAvatar: null
+            upAvatar: null,
+            error: ''
         }
     }
 
     componentDidMount() {
+        this.validateImage(this.props.img)
+    }
+
+    validateImage = (img) => {
+        const allowedFileTypes = ['jpeg', 'png']
+        const maxFileSizeKB = 40
+
+        const fileSizeKB = ((3 * (img.length / 4)) / 1024).toFixed(2)
+        const fileType = img.match(/[^:/]\w+(?=;|,)/)[0];
+
+        if (!allowedFileTypes.includes(fileType)) {
+            return this.setState({
+                error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join()}.`
+            })
+        }
+        if (maxFileSizeKB < fileSizeKB) {
+            return this.setState({
+                error: `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`
+            })
+        }
+
         this.setState({
             upAvatar: this.props.img
         })
     }
 
     saveAvatar = () => {
-        let payload = new FormData()
-        payload.append('avatar', this.state.upAvatar)
-
-        Axios.post(`${this.props.store.defaultData.backendUrl}/profile/avatar`, payload, {withCredentials: true})
+        Axios.post(`${this.props.store.defaultData.backendUrl}/profile/upload-avatar`, this.state.upAvatar, {withCredentials: true})
             .then((res) => {
-                
+
             })
             .catch(err => {
                 if (err.response.status === 401) {
@@ -38,11 +57,16 @@ class AvatarUpload extends Component {
     render() {
         return (
             <div className={styles.avatarUpload}>
-                <div className={`${styles.avatarUploadBackground}`} onClick={this.props.closeAvatarUpload}/>
+                <div className={styles.avatarUploadBackground} onClick={this.props.closeAvatarUpload}/>
                 <section className={styles.avatarUploadPopUp}>
                     <div className={styles.uploadedImgWrapper}>
                         <div className={styles.uploadedImg}>
-                            <img src={this.state.upAvatar} alt=""/>
+                            { !this.state.error && (
+                                <img src={this.state.upAvatar} alt='Avatar'/>
+                            )}
+                            { this.state.error && (
+                                <p className={styles.errorMessage}>{this.state.error}</p>
+                            )}
                         </div>
                     </div>
                     <div className={styles.avatarUploadPopUpBtns}>
