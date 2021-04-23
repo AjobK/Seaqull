@@ -56,7 +56,7 @@ class UserBanner extends Component {
             { this.props.owner && (
                 <span className={styles.pictureEdit}>
                   <Icon iconName={'Pen'} />
-                  <input type="file" accept="image/*" onChange={this.onEditAvatar} value={''} />
+                  <input type="file" accept="image/png, image/jpeg" onChange={this.onEditAvatar} value={''} />
                 </span>
             )}
           </div>
