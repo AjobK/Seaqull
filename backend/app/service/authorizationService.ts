@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { Request, Response } from 'express'
-import accountDao from '../dao/accountDao'
+import accountDao from '../dao/accountDAO'
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 import * as bcrypt from 'bcrypt'
@@ -21,11 +21,11 @@ class PostService {
             return res.status(401).json({ loggedIn: false })
 
         try {
-            let account = await this.accountDao.getAccountByUsername(
+            const account = await this.accountDao.getAccountByUsername(
                 jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
             )
 
-            let profile = account.profile
+            const profile = account.profile
 
             return res.status(200).json({ loggedIn: true, profile: profile })
         } catch (error) {
@@ -33,47 +33,38 @@ class PostService {
         }
     }
 
-    // main function user login
     public login = async (req: Request, res: Response): Promise<any> => {
-        // extracting username and password from request body
         const { username, password } = req.body
 
-        // check if user filled in a password and username
         if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
-        // getting account from database
         let account = await this.accountDao.getAccountByUsername(username)
 
-        if(account == null) {
+        if (account == null)
             return res.status(400).json({ error: ['Incorrect username or password'] })
-        }
 
-        // check if account is locked if so return remaining wait time
-        if(account.locked_to - Date.now() > 0){
+
+        if (account.locked_to - Date.now() > 0) {
             return res.status(400).send({
                 error: ['cannot login yet'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
-        }else {
-            // check if username and password are correct if not return error
-            const validation = this.validateAccountRequest(account,username,password)
-            if(validation != null){
-                return res.status(400).send(validation)
-            }
+        } else {
+            if (req.cookies['token']) res.clearCookie('token')
 
-            // creating payload for token
+            const validation = this.validateAccountRequest(account,username,password)
+
+            if (validation != null) return res.status(400).send(validation)
+
             const payload = {
                 username: username,
                 expiration: Date.now() + parseInt(expirationtimeInMs)
             }
 
-            // creating token
             const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET)
 
-            // remove unnecessary data
             account = this.cleanAccount(account)
 
-            // set cookie header
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
             res.status(200).json({
                 user: account

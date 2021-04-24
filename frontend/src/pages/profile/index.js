@@ -2,9 +2,11 @@ import React from 'react'
 import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
-import { UserBanner, PostsPreview, Statistics, Loader } from '../../components'
 import Axios from 'axios'
 import Error from '../error'
+import styles from './profile.scss'
+import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
+
 
 @inject('store') @observer
 class Profile extends App {
@@ -16,9 +18,10 @@ class Profile extends App {
       user: null,
       error: false,
       posts: [],
+      likes: [],
       isOwner: false
     }
-
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
   }
 
@@ -26,15 +29,19 @@ class Profile extends App {
     const { path } = this.props.match.params
 
     this.fetchProfileData(path || '')
-    // this.fetchOwnedPosts(this.state.username)
   }
 
   fetchProfileData(path) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/profile/${path}`,  {withCredentials: true})
+    let token = localStorage.getItem('token')
+
+    Axios.get(`/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
         this.fetchOwnedPosts(this.state.user.username)
         this.setState({ isOwner: response.data.profile.isOwner })
+      })
+      .then(() => {
+        this.fetchLikedPosts(this.state.user.username)
       })
       .catch(() => {
         this.setState({ error: true })
@@ -47,8 +54,16 @@ class Profile extends App {
         this.setState({ posts: json.data })
       })
       .catch(() => {
-        // this.setState({ error: true })
       })
+  }
+
+  fetchLikedPosts(username) {
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
+        .then((json) => {
+          this.setState({ likes: json.data })
+        })
+        .catch(() => {
+        })
   }
 
   calcLevel(cXp) {
@@ -77,7 +92,8 @@ class Profile extends App {
       level: this.calcLevel(profile.experience),
       posts: profile.posts,
       banner: profile.banner || '/src/static/dummy/user/banner.jpg',
-      picture: profile.avatar || '/src/static/dummy/user/profile.jpg'
+      picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
+      description: profile.description
     }
 
     this.setState({ user })
@@ -100,15 +116,18 @@ class Profile extends App {
         <Error></Error>
       )
     }
-
+    
     return (
       <Standard>
         <UserBanner user={user} />
+        <Section title={'DESCRIPTION'}>
+          <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
+        </Section>
         <Section title={'CREATED POSTS'}>
           <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
         </Section>
         <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={this.state.posts} />
+          <PostsPreview posts={this.state.likes} />
         </Section>
         <Section title={'STATISTICS'}>
           <Statistics />

@@ -27,7 +27,9 @@ import Comment from './comment'
 import CommentForm from './commentForm'
 import CommentEditor from './commentEditor'
 import CommentChildren from './commentChildren'
+import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
+import PostLikesList from './postLikesList'
 
 export {
   Button,
@@ -59,5 +61,7 @@ export {
   CommentForm,
   CommentEditor,
   CommentChildren,
-  PostLike
+  PostLike,
+  ProfileInfo,
+  PostLikesList
 }

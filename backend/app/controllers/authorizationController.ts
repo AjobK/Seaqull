@@ -1,10 +1,8 @@
-import ControllerBase from '../interfaces/ControllerBase'
 import * as express from 'express'
+import ControllerBase from '../interfaces/ControllerBase'
 import authorizationService from '../service/authorizationService'
 
-const isAuth = require('../middleware/isAuth.ts')
-
-class AuthorizationController implements ControllerBase{
+class AuthorizationController implements ControllerBase {
     public login = '/login'
     public loginVerify = '/login-verify'
     public logout = '/logout'
