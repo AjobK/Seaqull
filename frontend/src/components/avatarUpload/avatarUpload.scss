@@ -24,7 +24,6 @@
 	&PopUp {
 		@include pop-up();
 		height: auto;
-		max-height: 50%;
 		padding: 50px 0;
 		overflow-x: hidden;
 		display: flex;
@@ -37,9 +36,11 @@
 			align-items: center;
 			height: fit-content;
 			margin-bottom: 30px;
+			width: 100%;
 
 			.uploadedImg {
-				height: fit-content;
+				height: 300px;
+				background-color: white;
 
 				&Cropper {
 					* {
@@ -55,7 +56,9 @@
 					border-radius: 50%;
 					border: $primary 4px solid;
 				}
+			}
 
+			.errorMessageWrapper {
 				.errorMessage {
 					white-space: normal;
 					word-wrap: break-word;
@@ -63,6 +66,10 @@
 					padding: 0 30px;
 				}
 			}
+		}
+
+		.uploadedImgWrapperDarkBg {
+			background-color: $secondary;
 		}
 
 		&Btns {

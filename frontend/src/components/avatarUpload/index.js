@@ -72,7 +72,7 @@ class AvatarUpload extends Component {
         );
 
         return new Promise((resolve, reject) => {
-            canvas.toBlob(blob => {
+            canvas.toBlob((blob) => {
                 if (!blob) {
                     //reject(new Error('Canvas is empty'));
                     console.error('Canvas is empty');
@@ -82,7 +82,7 @@ class AvatarUpload extends Component {
                 window.URL.revokeObjectURL(this.fileUrl);
                 this.fileUrl = window.URL.createObjectURL(blob);
                 resolve(this.fileUrl);
-            }, 'image/jpeg');
+            }, 'image/png');
         });
     }
 
@@ -134,9 +134,9 @@ class AvatarUpload extends Component {
             <div className={styles.avatarUpload}>
                 <div className={styles.avatarUploadBackground} onClick={this.props.closeAvatarUpload}/>
                 <section className={styles.avatarUploadPopUp}>
-                    <div className={styles.uploadedImgWrapper}>
-                        <div className={styles.uploadedImg}>
-                            { !error && inputAvatar && (
+                    <div className={`${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}`}>
+                        { !error && inputAvatar && (
+                            <div className={styles.uploadedImg}>
                                 <ReactCrop
                                     className={styles.uploadedImgCropper}
                                     src={inputAvatar}
@@ -145,11 +145,13 @@ class AvatarUpload extends Component {
                                     onComplete={this.onCropComplete}
                                     onChange={this.onCropChange}
                                 />
-                            )}
-                            { error && (
+                            </div>
+                        )}
+                        { error && (
+                            <div className={styles.errorMessageWrapper}>
                                 <p className={styles.errorMessage}>{error}</p>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                     <div className={styles.avatarUploadPopUpBtns}>
                         <Button
