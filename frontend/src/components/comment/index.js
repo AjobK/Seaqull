@@ -93,7 +93,7 @@ class Comment extends Component {
                                 {
                                     (comment.children && comment.children.length > 0) && (
                                     <>
-                                        <button onClick={() => this.setState({ showReplies: !showReplies })} className={ showReplies && styles.showReplies }>
+                                        <button onClick={() => this.setState({ showReplies: !showReplies })} className={ showReplies ? styles.showReplies : '' }>
                                             { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y'}
                                             <span>{/* Underline animation */}</span>
                                         </button>
