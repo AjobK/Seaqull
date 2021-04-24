@@ -41,8 +41,17 @@
 			.uploadedImg {
 				height: fit-content;
 
-				img {
-					width: 200px;
+				&Cropper {
+					* {
+						transition: none;
+					}
+
+					img {
+						height: 300px;
+					}
+				}
+
+				&CroppedImage {
 					border-radius: 50%;
 					border: $primary 4px solid;
 				}
