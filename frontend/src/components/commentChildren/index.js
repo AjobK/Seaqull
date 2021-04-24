@@ -24,7 +24,7 @@ class CommentChildren extends Component {
 
     render() {
         return (
-            <div>
+            <div className={styles.childrenWrapper}>
                 { this.displayChildren() }
             </div>
         )

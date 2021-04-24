@@ -109,16 +109,9 @@ class CommentEditor extends Component {
 
     displayHeader = () => {
         if (this.showHeader) {
-            const iconClassName = ((this.state.formError == null) && 'noClass') || (this.state.formError == null ? styles.iconCheck : styles.iconTimes),
-              iconName = (this.state.formError == null && 'MinusCircle')|| (this.state.formError == null ? 'CheckCircle' : 'TimesCircle')
-
             return (
                 <div className={styles.editorLabel}>
-                    <Icon
-                        className={`${styles.editorLabel__icon} ${iconClassName}`}
-                        iconName={iconName}
-                    />
-                    <span className={styles.editorLabel__title}>Comment</span>
+                    <span className={styles.editorLabel__title}>Comment section</span>
                 </div>
             )
         }
