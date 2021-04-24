@@ -42,7 +42,7 @@ class CommentController {
         const comment = await this.dao.getComment(req.params.id)
         if(comment.profile.display_name === req.decoded.username) {
             await this.dao.archiveComment(req.params.id)
-            res.status(200).json({ message: 'Comment removed' })
+            return res.status(200).json({ message: 'Comment removed' })
         }
         return res.status(403).json({ message: 'Unauthorized' })
 

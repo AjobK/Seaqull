@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import styles from './comment.scss'
+import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import {Editor, EditorState, convertFromRaw, ContentState} from 'draft-js'
 import { CommentForm, CommentChildren, Icon } from '../'
 
 import TimeUtil from '../../util/timeUtil'
+import axios from 'axios'
 
+@inject('store') @observer
 class Comment extends Component {
     constructor(props) {
         super(props)
@@ -54,6 +57,20 @@ class Comment extends Component {
         this.setState({ isReplying: !this.state.isReplying })
     }
 
+    onDeleteClick = () => {
+        // TODO: add custom dialog
+        if (confirm("Are you sure you want to delete this comment?")) {
+            const url = `http://localhost:8000/api/comment/${this.props.comment.id}`
+
+            axios.delete(url, {withCredentials: true})
+            .then(response => {
+                this.props.onReplyAdd()
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    }
+
     displayReplyButton = () => {
         if(!this.isReply) {
             return (
@@ -67,6 +84,7 @@ class Comment extends Component {
     render() {
         const { comment } = this.props
         const { showReplies } = this.state
+        const { profile } = this.props.store
 
         if (comment) {
             return (
@@ -99,6 +117,14 @@ class Comment extends Component {
                                         </button>
                                         <span className={styles.seperator}></span>
                                     </>
+                                    )
+                                }
+                                {
+                                    (profile.loggedIn && comment.profile.display_name === profile.display_name) && (
+                                        <>
+                                        <Icon iconName={'Trash'} className={styles.comment__deleteButtonIcon} onClick={this.onDeleteClick}/>
+                                        <span className={styles.seperator}></span>
+                                        </>
                                     )
                                 }
                                 { this.displayReplyButton() }
