@@ -2,11 +2,22 @@
 
 .commentSection {
 	background-color: rgba(0,0,0, 0.1);
+	padding-bottom: 30px;
 
 	&__highlightedLink {
 		&:link,
 		&:visited {
 			color: $primary
+		}
+	}
+}
+
+.commentForm {
+	> section {
+		margin-bottom: 20px;
+	
+		> div:first-child {
+			margin-bottom: 10px;
 		}
 	}
 }
