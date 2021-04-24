@@ -10,7 +10,7 @@ import ProfileDAO from '../dao/profileDAO'
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-class PostService {
+class PostController {
     private dao: PostDAO
     private profileDAO: ProfileDAO
 
@@ -218,4 +218,4 @@ class PostService {
     }
 }
 
-export default PostService
+export default PostController
