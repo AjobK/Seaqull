@@ -51,6 +51,7 @@ class Comment extends Component {
 
     onReplyAdd = () => {
         this.props.onReplyAdd()
+        this.setState({ showReplies: true })
     }
 
     onReplyClick = () => {
@@ -83,13 +84,13 @@ class Comment extends Component {
 
     render() {
         const { comment } = this.props
-        const { showReplies } = this.state
         const { profile } = this.props.store
+        const { showReplies, isReplying } = this.state
 
         if (comment) {
             return (
                 <article className={`${styles.comment} ${this.isReply && styles.reply}`}>
-                    <div className={styles.comment__body}>
+                    <div className={`${styles.comment__body} ${isReplying ? styles.isReplying : ''}`}>
                         {this.displayAvatar()}
                         <div className={styles.comment__main}>
                             <div className={styles.comment_content}>

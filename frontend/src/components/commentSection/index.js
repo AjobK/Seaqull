@@ -43,7 +43,7 @@ class CommentSection extends Component {
         
         if (profile.loggedIn) {
             return (
-                <CommentForm onCommentAdd={this.onCommentAdd} />
+                <CommentForm onCommentAdd={this.onCommentAdd} className={styles.commentForm} />
             )
         }
 
