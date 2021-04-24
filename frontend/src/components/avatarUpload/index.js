@@ -41,6 +41,9 @@ class AvatarUpload extends Component {
     }
 
     saveAvatar = () => {
+        this.props.changeAvatar(this.state.upAvatar) // put in Axios response
+        this.props.closeAvatarUpload()
+
         // TODO send to API
         Axios.post(`${this.props.store.defaultData.backendUrl}/profile/UPLOAD-AVATAR-ROUTE`, this.state.upAvatar, {withCredentials: true})
             .then((res) => {
@@ -74,7 +77,11 @@ class AvatarUpload extends Component {
                             inverted={true} onClick={this.props.closeAvatarUpload}
                         />
                         { !this.state.error && (
-                            <Button className={styles.avatarUploadPopUpBtnsSaveButton} value={'Save'} disabled={!this.state.upAvatar} onClick={this.state.upAvatar ? this.saveAvatar : undefined}/>
+                            <Button
+                                className={styles.avatarUploadPopUpBtnsSaveButton}
+                                value={'Save'} disabled={!this.state.upAvatar}
+                                onClick={this.state.upAvatar ? this.saveAvatar : undefined}
+                            />
                         )}
                     </div>
                 </section>

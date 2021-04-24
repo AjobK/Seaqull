@@ -31,6 +31,10 @@ class UserBanner extends Component {
     }
   }
 
+  changeAvatar = (newAvatar) => {
+    this.props.user.picture = newAvatar
+  }
+
   closeAvatarUpload = () => {
     this.setState({
       upAvatar: null
@@ -72,7 +76,7 @@ class UserBanner extends Component {
         </div>
         <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
         { this.state.upAvatar && (
-            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={this.closeAvatarUpload}/>
+            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={this.closeAvatarUpload} changeAvatar={this.changeAvatar}/>
         )}
       </section>
     )
