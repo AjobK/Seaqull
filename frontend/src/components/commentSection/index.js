@@ -19,21 +19,12 @@ class CommentSection extends Component {
         let path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/comment/${path}`
 
-        fetch(url)
-        .then((i) => i.json())
-        .then((res) => {
-            console.log('Response data (FETCH)')
-            console.log(res)
-        })
-
         Axios.get(url)
         .then(response => {
-            console.log('Response data (AXIOS)')
-            console.log(response.data)
-            let comments = this.nestComments(response.data)
-            this.setState({ comments: comments },
-                this.displayComments
-            )
+            // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
+            this.setState({ comments: [] }, () => {
+                this.setState({ comments: this.nestComments(response.data) })
+            })
         }).catch((err) => {
             console.log(err)
         })
@@ -44,14 +35,13 @@ class CommentSection extends Component {
     }
 
     onCommentAdd = () => {
-        console.log('Reloading comments with onadd!')
         this.loadComments()
     }
 
     displayCommentForm = () => {
         const { user, profile } = this.props.store
         
-        if(profile.loggedIn) {
+        if (profile.loggedIn) {
             return (
                 <CommentForm onCommentAdd={this.onCommentAdd} />
             )
@@ -63,33 +53,26 @@ class CommentSection extends Component {
     }
 
     nestComments = (commentList) => {
-        console.log('Commentlist')
-        console.log(commentList)
-        const commentMap = {}
+        let commentMap = {}
+        commentList.forEach((comment) => {
+            commentMap[comment.id] = comment
+        })
 
-        if(commentList.length > 0) {
-            // Add comment to comment map based on id
-            commentList.forEach(comment => commentMap[comment.id] = comment)
-            console.log('first commentMap')
-            console.log(commentMap)
-
-
+        if (commentList.length > 0) {
             commentList.forEach(comment => {
                 if (comment.parent_comment_id !== null) {
                     const parent = commentMap[comment.parent_comment_id]
 
-                    console.log(parent)
                     parent.children ? parent.children.push(comment) : parent.children = [comment]
                 }
             })
-            console.log('second commentMap')
-            console.log(commentMap)
-    
-            return commentList.filter(comment => {
-                return comment.parent_comment_id === null
-            })
-
         }
+
+        let filteredComments = commentList.filter(comment => {
+            return comment.parent_comment_id === null
+        })
+
+        return filteredComments
     }
 
     render() {
