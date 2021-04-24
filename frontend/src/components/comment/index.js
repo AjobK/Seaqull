@@ -39,14 +39,18 @@ class Comment extends Component {
         if(!this.isReply && this.state.isReplying) {
             return (
                 <div className={styles.comment__replyForm}>
-                    <CommentForm type="reply" parent_comment={this.props.comment.id }/>
+                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd }/>
                 </div>
             )
         }
     }
 
+    onReplyAdd = () => {
+        this.props.onReplyAdd();
+    }
+
     onReplyClick = () => {
-        this.setState({isReplying: !this.state.isReplying})
+        this.setState({ isReplying: !this.state.isReplying })
     }
 
     displayReplyButton = () => {

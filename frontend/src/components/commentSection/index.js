@@ -12,7 +12,7 @@ import { CommentForm } from '../'
 class CommentSection extends Component {
     constructor(props) {
         super(props)
-        this.state = {data: []}
+        this.state = { comments: [], commentObjects: []}
     }
 
     loadComments() {
@@ -21,7 +21,11 @@ class CommentSection extends Component {
 
         Axios.get(url)
         .then(response => {
-            this.setState({data: response.data})
+            let comments = this.nestComments(response.data)
+            this.setState({ comments: comments })
+            this.displayComments()
+        }).catch((err) => {
+            console.log(err)
         })
     }
 
@@ -48,33 +52,28 @@ class CommentSection extends Component {
     }
 
     displayComments = () => {
-        if(!this.state.data) {
+        console.log('displaying comments')
+        if(!this.state.comments) {
+            console.log('loading..')
             return <p>Loading...</p>
         } 
         
-        if (this.state.data.length <= 0) {
+        if (this.state.comments.length <= 0) {
+            console.log('empty')
             return <p>No comments have been added yet.</p>
         }
 
-        // return this.state.data.map((comment) => {
-        //     if(!comment.parent_comment_id) {
-        //         return (
-        //             <Comment key={comment.id} comment={comment} />
-        //         )
-        //     }
-        // })
-
-        return this.nestComments(this.state.data).map((comment) => {
-            console.log(comment)
+        this.setState({ commentObjects: this.state.comments.map((comment) => {         
+            console.log(comment)   
             return (
-                <Comment key={comment.id} comment={comment} />
+                <Comment key={comment.id} comment={comment} onReplyAdd={this.onCommentAdd} />
             )
-        })
+        })})
     }
 
     nestComments = (commentList) => {
         const commentMap = {}
-        
+
         if(commentList.length > 0) {
             commentList.forEach(comment => commentMap[comment.id] = comment)
 
@@ -88,15 +87,18 @@ class CommentSection extends Component {
             return commentList.filter(comment => {
                 return comment.parent_comment_id === null
             })
+
         }
     }
 
     render() {
+        console.log('rendering')
+        console.log(this.state.commentObjects)
         return (
             <div className={styles.commentSection}>
                 <Section noTitle>
                     { this.displayCommentForm() }
-                    { this.displayComments() }
+                    { this.state.commentObjects }
                 </Section>
             </div>
         )
