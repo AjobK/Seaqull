@@ -23,9 +23,10 @@ class CommentChildren extends Component {
     }
 
     render() {
+        console.log(this.props.commentChildren)
         return (
             <div>
-                {this.displayChildren()}
+                { this.displayChildren() }
             </div>
         )
     }

@@ -12,18 +12,28 @@ import { CommentForm } from '../'
 class CommentSection extends Component {
     constructor(props) {
         super(props)
-        this.state = { comments: [], commentObjects: []}
+        this.state = { comments: []}
     }
 
     loadComments() {
         let path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/comment/${path}`
 
+        fetch(url)
+        .then((i) => i.json())
+        .then((res) => {
+            console.log('Response data (FETCH)')
+            console.log(res)
+        })
+
         Axios.get(url)
         .then(response => {
+            console.log('Response data (AXIOS)')
+            console.log(response.data)
             let comments = this.nestComments(response.data)
-            this.setState({ comments: comments })
-            this.displayComments()
+            this.setState({ comments: comments },
+                this.displayComments
+            )
         }).catch((err) => {
             console.log(err)
         })
@@ -34,6 +44,7 @@ class CommentSection extends Component {
     }
 
     onCommentAdd = () => {
+        console.log('Reloading comments with onadd!')
         this.loadComments()
     }
 
@@ -51,38 +62,28 @@ class CommentSection extends Component {
         )
     }
 
-    displayComments = () => {
-        console.log('displaying comments')
-        if(!this.state.comments) {
-            console.log('loading..')
-            return <p>Loading...</p>
-        } 
-        
-        if (this.state.comments.length <= 0) {
-            console.log('empty')
-            return <p>No comments have been added yet.</p>
-        }
-
-        this.setState({ commentObjects: this.state.comments.map((comment) => {         
-            console.log(comment)   
-            return (
-                <Comment key={comment.id} comment={comment} onReplyAdd={this.onCommentAdd} />
-            )
-        })})
-    }
-
     nestComments = (commentList) => {
+        console.log('Commentlist')
+        console.log(commentList)
         const commentMap = {}
 
         if(commentList.length > 0) {
+            // Add comment to comment map based on id
             commentList.forEach(comment => commentMap[comment.id] = comment)
+            console.log('first commentMap')
+            console.log(commentMap)
+
 
             commentList.forEach(comment => {
                 if (comment.parent_comment_id !== null) {
                     const parent = commentMap[comment.parent_comment_id]
+
+                    console.log(parent)
                     parent.children ? parent.children.push(comment) : parent.children = [comment]
                 }
             })
+            console.log('second commentMap')
+            console.log(commentMap)
     
             return commentList.filter(comment => {
                 return comment.parent_comment_id === null
@@ -92,13 +93,16 @@ class CommentSection extends Component {
     }
 
     render() {
-        console.log('rendering')
-        console.log(this.state.commentObjects)
         return (
             <div className={styles.commentSection}>
                 <Section noTitle>
                     { this.displayCommentForm() }
-                    { this.state.commentObjects }
+                    { this.state.comments && this.state.comments.length > 0
+                        ? this.state.comments.map((comment) => (
+                            <Comment key={comment.id} comment={comment} onReplyAdd={this.onCommentAdd} />
+                        ))
+                        : <p>No comments</p>
+                    }
                 </Section>
             </div>
         )

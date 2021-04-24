@@ -46,7 +46,7 @@ class Comment extends Component {
     }
 
     onReplyAdd = () => {
-        this.props.onReplyAdd();
+        this.props.onReplyAdd()
     }
 
     onReplyClick = () => {
@@ -86,7 +86,7 @@ class Comment extends Component {
                             { this.displayReplyButton() }
                         </div>
                     </div>
-                        { this.displayCommentForm() }
+                    { this.displayCommentForm() }
                     <CommentChildren commentChildren={this.props.comment.children} />
                 </article>
             )
