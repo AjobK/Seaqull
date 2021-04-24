@@ -91,11 +91,15 @@ class Comment extends Component {
                             </div>
                             <div className={styles.comment__interactive}>
                                 {
-                                    (comment.children && comment.children.length > 0) && 
-                                    <button onClick={() => this.setState({ showReplies: !showReplies })} className={ showReplies && styles.showReplies }>
-                                        { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y'}
-                                        <span>{/* Underline animation */}</span>
-                                    </button> 
+                                    (comment.children && comment.children.length > 0) && (
+                                    <>
+                                        <button onClick={() => this.setState({ showReplies: !showReplies })} className={ showReplies && styles.showReplies }>
+                                            { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y'}
+                                            <span>{/* Underline animation */}</span>
+                                        </button>
+                                        <span className={styles.seperator}></span>
+                                    </>
+                                    )
                                 }
                                 { this.displayReplyButton() }
                             </div>

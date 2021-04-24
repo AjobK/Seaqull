@@ -56,6 +56,7 @@
 	&__interactive {
 		display: flex;
 		justify-content: flex-end;
+		align-items: center;
 
 		> button {
 			position: relative;
@@ -168,4 +169,16 @@
 			font-size: 1rem;
 		}
 	}
+}
+
+.seperator {
+	margin-right: 10px;
+	color: $primary;
+	opacity: 0.35;
+	height: 1rem;
+	width: 2px;
+	background-color: $primary;
+	border: none;
+
+	@include noselect;
 }
