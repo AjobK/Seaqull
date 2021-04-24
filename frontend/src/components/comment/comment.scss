@@ -48,6 +48,50 @@
 		margin-left: 30px;
 		width: 100%;
 		font-size: 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	&__interactive {
+		display: flex;
+		justify-content: flex-end;
+
+		> button {
+			position: relative;
+			cursor: pointer;
+			font-weight: bold;
+			margin-right: 10px;
+			white-space: nowrap;
+			border: none;
+			background: none;
+			text-transform: uppercase;
+			font-family: $mainfont;
+			color: $primary;
+			font-size: 0.875rem;
+
+			> span {
+				transition: 0.2s;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 2px;
+				width: 0%;
+				background-color: $primary;
+			}
+
+			&:hover {
+				> span {
+					width: 100%;
+				}
+			}
+
+			&.showReplies {
+				> span {
+					width: 100%;
+				}
+			}
+		}
 	}
 
 	&__header {
@@ -77,7 +121,6 @@
 	}
 
 	&__replyButton {
-		width: 100%;
 		display: flex;
 		justify-content: flex-end;
 		&Icon {
@@ -98,15 +141,22 @@
 }
 
 .reply {
-	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2px;
+
 	.comment__body {
-		background-color: rgba(255,255,255, 0.4);
-		padding: 10px 30px 10px 30px;
+		border-radius: 0;
+		width: 100%;
+		background-color: rgba(255,255,255, 0.5);
+		padding: 20px;
+		box-shadow: none;
+		border: 1px solid rgba(255,255,255, 0.5);
 	}
 
 	.comment__main {
-		padding: 30px;
 		font-size: 1rem;
+		margin: 0;
 	}
 
 	.comment__header {

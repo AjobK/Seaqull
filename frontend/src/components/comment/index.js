@@ -13,7 +13,8 @@ class Comment extends Component {
             editorState: props.comment.content != null
                 ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.comment.content)))
                 : EditorState.createEmpty(),
-            isReplying: false
+            isReplying: false,
+            showReplies: false
         }
 
         if (this.props.comment && this.props.comment.parent_comment_id) {
@@ -64,30 +65,44 @@ class Comment extends Component {
     }
 
     render() {
-        if (this.props.comment) {
+        const { comment } = this.props
+        const { showReplies } = this.state
+
+        if (comment) {
             return (
                 <article className={`${styles.comment} ${this.isReply && styles.reply}`}>
                     <div className={styles.comment__body}>
                         {this.displayAvatar()}
                         <div className={styles.comment__main}>
-                            <div className={styles.comment__header}>
-                                <div className={styles.comment__headerAuthor}>
-                                <Link to={`/profile/${this.props.comment.profile.display_name}`} className={styles.comment__headerAuthor}>
-                                    {this.props.comment.profile.display_name}
-                                </Link>
+                            <div className={styles.comment_content}>
+                                <div className={styles.comment__header}>
+                                    <div className={styles.comment__headerAuthor}>
+                                    <Link to={`/profile/${comment.profile.display_name}`} className={styles.comment__headerAuthor}>
+                                        {comment.profile.display_name}
+                                    </Link>
+                                    </div>
+                                    <div className={styles.comment__headerPublishedTime}>
+                                        {TimeUtil.timeAgo(new Date(comment.created_at))}
+                                    </div>
                                 </div>
-                                <div className={styles.comment__headerPublishedTime}>
-                                    {TimeUtil.timeAgo(new Date(this.props.comment.created_at))}
+                                <div className={styles.comment__content}>
+                                    <Editor editorState={this.state.editorState} readOnly={true}/>
                                 </div>
                             </div>
-                            <div className={styles.comment__content}>
-                                <Editor editorState={this.state.editorState} readOnly={true}/>
+                            <div className={styles.comment__interactive}>
+                                {
+                                    (comment.children && comment.children.length > 0) && 
+                                    <button onClick={() => this.setState({ showReplies: !showReplies })} className={ showReplies && styles.showReplies }>
+                                        { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y'}
+                                        <span>{/* Underline animation */}</span>
+                                    </button> 
+                                }
+                                { this.displayReplyButton() }
                             </div>
-                            { this.displayReplyButton() }
                         </div>
                     </div>
                     { this.displayCommentForm() }
-                    <CommentChildren commentChildren={this.props.comment.children} />
+                    { showReplies && <CommentChildren commentChildren={ comment.children } /> }
                 </article>
             )
         }
