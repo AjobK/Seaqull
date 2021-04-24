@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import styles from './avatarUpload.scss'
 import { inject, observer } from 'mobx-react'
-import { Button } from '../../components'
 import Axios from 'axios'
+import styles from './avatarUpload.scss'
+import { Button } from '../../components'
 
 @inject('store') @observer
 class AvatarUpload extends Component {
@@ -26,24 +26,23 @@ class AvatarUpload extends Component {
         const fileSizeKB = ((3 * (img.length / 4)) / 1024).toFixed(2)
         const fileType = img.match(/[^:/]\w+(?=;|,)/)[0];
 
-        if (!allowedFileTypes.includes(fileType)) {
+        if (!allowedFileTypes.includes(fileType))
             return this.setState({
                 error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join(', ')}.`
             })
-        }
-        if (maxFileSizeKB < fileSizeKB) {
+        if (maxFileSizeKB < fileSizeKB)
             return this.setState({
                 error: `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`
             })
-        }
 
         this.setState({
-            upAvatar: this.props.img
+            upAvatar: img
         })
     }
 
     saveAvatar = () => {
-        Axios.post(`${this.props.store.defaultData.backendUrl}/profile/upload-avatar`, this.state.upAvatar, {withCredentials: true})
+        // TODO send to API
+        Axios.post(`${this.props.store.defaultData.backendUrl}/profile/UPLOAD-AVATAR-ROUTE`, this.state.upAvatar, {withCredentials: true})
             .then((res) => {
 
             })
