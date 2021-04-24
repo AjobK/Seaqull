@@ -28,7 +28,7 @@ class AvatarUpload extends Component {
 
         if (!allowedFileTypes.includes(fileType)) {
             return this.setState({
-                error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join()}.`
+                error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join(', ')}.`
             })
         }
         if (maxFileSizeKB < fileSizeKB) {
@@ -71,10 +71,12 @@ class AvatarUpload extends Component {
                     </div>
                     <div className={styles.avatarUploadPopUpBtns}>
                         <Button
-                            className={styles.avatarUploadPopUpBtnsCancelButton} value={'Cancel'}
+                            className={styles.avatarUploadPopUpBtnsCancelButton} value={this.state.error ? 'Back' : 'Cancel'}
                             inverted={true} onClick={this.props.closeAvatarUpload}
                         />
-                        <Button className={styles.avatarUploadPopUpBtnsSaveButton} value={'Save'} disabled={!this.state.upAvatar} onClick={this.state.upAvatar ? this.saveAvatar : undefined}/>
+                        { !this.state.error && (
+                            <Button className={styles.avatarUploadPopUpBtnsSaveButton} value={'Save'} disabled={!this.state.upAvatar} onClick={this.state.upAvatar ? this.saveAvatar : undefined}/>
+                        )}
                     </div>
                 </section>
             </div>
