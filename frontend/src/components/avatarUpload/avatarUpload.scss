@@ -23,8 +23,7 @@
 
 	&PopUp {
 		@include pop-up();
-		height: fit-content;
-		max-height: 50%;
+		height: auto;
 		padding: 50px 0;
 		overflow-x: hidden;
 		display: flex;
@@ -37,16 +36,40 @@
 			align-items: center;
 			height: fit-content;
 			margin-bottom: 30px;
+			width: 100%;
 
 			.uploadedImg {
-				height: fit-content;
+				height: 300px;
+				background-color: white;
 
-				img {
-					width: 200px;
+				&Cropper {
+					* {
+						transition: none;
+					}
+
+					img {
+						height: 300px;
+					}
+				}
+
+				&CroppedImage {
 					border-radius: 50%;
 					border: $primary 4px solid;
 				}
 			}
+
+			.errorMessageWrapper {
+				.errorMessage {
+					white-space: normal;
+					word-wrap: break-word;
+					text-align: center;
+					padding: 0 30px;
+				}
+			}
+		}
+
+		.uploadedImgWrapperDarkBg {
+			background-color: $secondary;
 		}
 
 		&Btns {

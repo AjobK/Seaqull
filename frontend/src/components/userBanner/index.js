@@ -16,17 +16,23 @@ class UserBanner extends Component {
   componentDidMount() {
   }
 
-  onEditAvatar = (e) => {
-    e.value = ''
-    if (e.target.files && e.target.files.length > 0) {
+  onEditAvatar = (input) => {
+    input.value = ''
+
+    if (input.target.files && input.target.files.length > 0) {
       const reader = new FileReader()
+
       reader.addEventListener('load', () => {
         this.setState({
           upAvatar: reader.result
         })
       })
-      reader.readAsDataURL(e.target.files[0])
+      reader.readAsDataURL(input.target.files[0])
     }
+  }
+
+  changeAvatar = (newAvatar) => {
+    this.props.user.picture = newAvatar
   }
 
   closeAvatarUpload = () => {
@@ -56,7 +62,7 @@ class UserBanner extends Component {
             { this.props.owner && (
                 <span className={styles.pictureEdit}>
                   <Icon iconName={'Pen'} />
-                  <input type="file" accept="image/*" onChange={this.onEditAvatar} value={''} />
+                  <input type="file" accept="image/png, image/jpeg" onChange={this.onEditAvatar} value={''} />
                 </span>
             )}
           </div>
@@ -70,7 +76,7 @@ class UserBanner extends Component {
         </div>
         <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
         { this.state.upAvatar && (
-            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={ this.closeAvatarUpload }/>
+            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={this.closeAvatarUpload} changeAvatar={this.changeAvatar}/>
         )}
       </section>
     )
