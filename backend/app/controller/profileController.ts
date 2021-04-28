@@ -10,6 +10,8 @@ import RoleDao from '../dao/roleDAO'
 import ProfileDAO from '../dao/profileDAO'
 import TitleDAO from '../dao/titleDAO'
 import AccountDAO from '../dao/accountDAO'
+import attachmentDAO from '../dao/attachmentDAO'
+import FileService from '../service/fileService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -18,33 +20,98 @@ const isStrongPassword = require('validator/lib/isStrongPassword')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
-class ProfileService {
+class ProfileController {
     private dao: ProfileDAO
     private titleDAO: TitleDAO
     private accountDAO: AccountDAO
     private roleDAO: RoleDao
+    private attachmentDAO: attachmentDAO
+    private fileService: FileService
 
     constructor() {
         this.dao = new ProfileDAO()
         this.titleDAO = new TitleDAO()
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDao()
+        this.attachmentDAO = new attachmentDAO()
+        this.fileService = new FileService()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
-        if (req.decoded.username != req.body.username)
-            return res.status(401).json({ 'error': 'Unauthorized' })
+        let updateUser
+        try{
+            updateUser = JSON.parse(req.body.data)
+        } catch {
+            updateUser = req.body
+        }
 
-        const profile = await this.dao.getProfileByUsername(req.body.username)
+        if (req.decoded.username != updateUser.username) {
+            if ( req.file ) this.fileService.deleteImage(req.file.path)
+            return res.status(401).json({ 'error': 'Unauthorized' })
+        } else if ( req.decoded.username && req.file ) {
+            return await this.updateProfile(req.decoded.username, req.file )
+        }
+
+        const profile = await this.dao.getProfileByUsername(updateUser.username)
+        if(req.file){
+            const attachment = await this.dao.getProfileAttachment(profile.id)
+            const isImage = await this.fileService.isImage(req.file)
+            if(!isImage) {
+                this.fileService.deleteImage(req.file.path)
+                return res.status(400).json({ 'error': 'Only images are allowed' })
+            } else {
+                await this.fileService.convertImage(req.file)
+                if (attachment.path != 'app/default/default.jpg') this.fileService.deleteImage(attachment.path)
+                this.fileService.moveImage(req.file.path, req.file.filename)
+                const profileAttachment = attachment
+
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const yyyy = today.getFullYear();
+
+                const newPath = 'app/public/' + yyyy + '/' + mm + '/' + dd + '/' + req.file.filename
+
+                profileAttachment.path = newPath
+                this.attachmentDAO.saveAttachment(profileAttachment)
+            }
+        }
 
         if (profile == null)
             return res.status(404).json({ 'error': 'Not found' })
 
-        profile.description = req.body.description
+        profile.description = updateUser.description
 
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
+    }
 
+    public updateProfilePicture = async ( req: any, res: Response ): Promise<Response> => {
+        console.log(req.body)
+        const profile = await this.dao.getProfileByUsername( req.decoded.username )
+        const isImage = await this.fileService.isImage(req.file)
+        const attachment = await this.dao.getProfileAttachment(profile.id)
+
+        if(!isImage) {
+            this.fileService.deleteImage(req.file.path)
+            return res.status(400).json({ 'error': 'Only images are allowed' })
+        } else {
+            await this.fileService.convertImage(req.file)
+            if (attachment.path != 'app/default/default.jpg') this.fileService.deleteImage(attachment.path)
+            this.fileService.moveImage(req.file.path, req.file.filename)
+            const profileAttachment = attachment
+
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const yyyy = today.getFullYear();
+
+            const newPath = 'app/public/' + yyyy + '/' + mm + '/' + dd + '/' + req.file.filename
+
+            profileAttachment.path = newPath
+            this.attachmentDAO.saveAttachment(profileAttachment)
+        }
+        return res.status(200).json({ 'message': 'succes' })
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -68,6 +135,7 @@ class ProfileService {
         }
 
         const profile = await this.dao.getProfileByUsername(receivedUsername)
+        if ( !profile ) return res.status(404).json({ 'message': 'User not found' })
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
 
@@ -78,14 +146,18 @@ class ProfileService {
             isOwner: isOwner,
             username: receivedUsername,
             experience: profile.experience,
-            title: title ? title.name : 'Title not found...' ,
+            title: title ? title.name : 'Title not found...',
             description: profile.description
         }
+
+        const attachment = await this.dao.getProfileAttachment(profile.id)
+        if ( attachment )
+            payload['avatar'] = attachment.path
 
         return res.status(200).json({ 'profile': payload })
     }
 
-    public register = async (req: Request, res: Response): Promise<Response> => {
+    public register = async (req: any, res: Response): Promise<Response> => {
         const userRequested = req.body
         const errors = {
             username: [],
@@ -106,7 +178,7 @@ class ProfileService {
             errors.email = [isEmailNotValid]
         }
 
-        const isPasswordNotStrong = await this.checkPasswordStrength(userRequested.password)
+        const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
 
         if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
@@ -117,7 +189,7 @@ class ProfileService {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong ) {
             return res.status(401).json({ errors: errors })
         }
 
@@ -139,6 +211,7 @@ class ProfileService {
             user: newAccount
         })
         res.send()
+        return res
     }
 
     private async checkValidUsername (username: string): Promise<string> {
@@ -188,13 +261,16 @@ class ProfileService {
 
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
+
         let newProfile = new Profile()
+
+        newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
-        newProfile.description = 'i`m a wild seaqull'
+        newProfile.description = 'Welcome to my profile!'
         newProfile = await this.dao.saveProfile(newProfile)
 
         const acc = new Account()
@@ -219,4 +295,4 @@ class ProfileService {
         return account
     }
 }
-export default ProfileService
+export default ProfileController

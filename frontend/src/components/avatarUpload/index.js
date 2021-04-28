@@ -70,7 +70,7 @@ class AvatarUpload extends Component {
             crop.width,
             crop.height
         );
-
+        
         return new Promise((resolve, reject) => {
             canvas.toBlob((blob) => {
                 if (!blob) {
@@ -90,7 +90,7 @@ class AvatarUpload extends Component {
 
     validateImage = (img) => {
         const allowedFileTypes = ['jpeg', 'png']
-        const maxFileSizeKB = 1000
+        const maxFileSizeKB = 4000
 
         const fileSizeKB = ((3 * (img.length / 4)) / 1024).toFixed(2)
         const fileType = img.match(/[^:/]\w+(?=;|,)/)[0];
@@ -112,19 +112,44 @@ class AvatarUpload extends Component {
     saveAvatar = () => {
         const avatar = this.state.croppedAvatar
 
-        this.props.changeAvatar(avatar) // put in Axios response
-        this.props.closeAvatarUpload()
+        let bodyFormData = new FormData()
+        console.log(avatar)
+
+        const reader = new FileReader()
+
+        reader.readAsDataURL(avatar[0])
+        
+        reader.onload = () => {
+            if (!!reader.result) {
+                resolve(reader.result)
+            } else {
+                reject(Error("Failed converting to base64"))
+            }
+        }
+
+        bodyFormData.append('avatar', reader.result)
+
+        Axios.put(`${this.props.store.defaultData.backendUrl}/profile/picture`, bodyFormData, {withCredentials: true}).then((res) => {
+            this.props.changeAvatar(avatar) // put in Axios response
+            this.props.closeAvatarUpload()
+            console.log(res)
+        })
+        .catch(err => {
+            if (err.response.status === 401) {
+                this.props.history.push('/login/')
+            }
+        })
 
         // TODO send to API
-        Axios.post(`${this.props.store.defaultData.backendUrl}/profile/UPLOAD-AVATAR-ROUTE`, avatar, {withCredentials: true})
-            .then((res) => {
+        // Axios.post(`${this.props.store.defaultData.backendUrl}/profile/UPLOAD-AVATAR-ROUTE`, avatar, {withCredentials: true})
+        //     .then((res) => {
 
-            })
-            .catch(err => {
-                if (err.response.status === 401) {
-                    this.props.history.push('/login/')
-                }
-            })
+        //     })
+        //     .catch(err => {
+        //         if (err.response.status === 401) {
+        //             this.props.history.push('/login/')
+        //         }
+        //     })
     }
 
     render() {

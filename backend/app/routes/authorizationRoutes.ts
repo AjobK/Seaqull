@@ -1,8 +1,8 @@
 import * as express from 'express'
-import ControllerBase from '../interfaces/ControllerBase'
-import authorizationService from '../service/authorizationService'
+import RoutesBase from '../interfaces/RoutesBase'
+import authorizationService from '../controller/authorizationController'
 
-class AuthorizationController implements ControllerBase {
+class AuthorizationController implements RoutesBase {
     public login = '/login'
     public loginVerify = '/login-verify'
     public logout = '/logout'

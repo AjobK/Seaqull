@@ -1,10 +1,10 @@
 import * as cors from 'cors'
 import * as bodyParser from 'body-parser'
 
-import PostController from './controllers/postRoutes'
+import PostController from './routes/postRoutes'
 import serverConstructor from './serverConstructor'
-import AuthorizationController from './controllers/authorizationController'
-import ProfileController from './controllers/profileRoutes'
+import AuthorizationController from './routes/authorizationRoutes'
+import ProfileController from './routes/profileRoutes'
 const cookieParser = require('cookie-parser')
 
 const { FRONTEND_URL } = process.env

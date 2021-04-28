@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm'
+import Attachment from './attachment'
 import { Title } from './title'
 
 @Entity('profile')
@@ -10,9 +11,9 @@ export class Profile extends BaseEntity {
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title: Title
 
-    @Column({ nullable: true })
-    @JoinColumn({ name: 'attatchment_id', referencedColumnName: 'id' })
-    avatar_attachment: number
+    @ManyToOne(() => Attachment, attachment => attachment.id)
+    @JoinColumn({ name: 'attachment_id', referencedColumnName: 'id' })
+    avatar_attachment: Attachment
 
     @Column()
     description: string

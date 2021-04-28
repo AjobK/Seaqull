@@ -1,4 +1,4 @@
-import DatabaseConnector from '../util/databaseConnector'
+import DatabaseConnector from '../service/databaseConnector'
 import { Post } from '../entity/post'
 import Profile from '../entity/profile'
 import { PostLike } from '../entity/post_like'

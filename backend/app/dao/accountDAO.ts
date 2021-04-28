@@ -1,4 +1,4 @@
-import DatabaseConnector from '../util/databaseConnector'
+import DatabaseConnector from '../service/databaseConnector'
 import { Account } from '../entity/account'
 
 class AccountDAO {

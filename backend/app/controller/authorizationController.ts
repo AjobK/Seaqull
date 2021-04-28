@@ -9,7 +9,7 @@ import { Account } from '../entity/account'
 require('dotenv').config()
 const { SECURE } = process.env
 
-class PostService {
+class AuthorizationController {
     private accountDao: accountDao
 
     constructor() {
@@ -131,4 +131,4 @@ class PostService {
         }
     }
 }
-export default PostService
+export default AuthorizationController

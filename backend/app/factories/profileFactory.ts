@@ -6,7 +6,6 @@ import { Profile } from '../entity/profile'
 define(Profile, (faker: typeof Faker, settings: { display_name: string }): Profile => {
     const profileFake = new Profile()
 
-
     const createdTitle = factory(title)() as any
     profileFake.title = createdTitle
 

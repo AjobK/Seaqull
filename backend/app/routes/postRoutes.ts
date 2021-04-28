@@ -1,6 +1,6 @@
-import RoutesBase from '../interfaces/ControllerBase'
+import RoutesBase from '../interfaces/RoutesBase'
 import * as express from 'express'
-import PostService from '../service/postService'
+import PostService from '../controller/postController'
 const auth = require('../middleware/isAuth.ts')
 
 class PostRoutes implements RoutesBase {
