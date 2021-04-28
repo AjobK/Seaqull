@@ -26,8 +26,6 @@ class AvatarUpload extends Component {
         this.validateImage(this.props.img)
     }
 
-
-
     onImageLoaded = (image) => {
         this.imageRef = image;
     };
@@ -44,14 +42,13 @@ class AvatarUpload extends Component {
         if (this.imageRef && crop.width && crop.height) {
             const croppedAvatar = await this.getCroppedImg(
                 this.imageRef,
-                crop,
-                'newFile.jpeg'
+                crop
             );
             this.setState({ croppedAvatar });
         }
     }
 
-    getCroppedImg(image, crop, fileName) {
+    getCroppedImg(image, crop) {
         const canvas = document.createElement('canvas');
         const scaleX = image.naturalWidth / image.width;
         const scaleY = image.naturalHeight / image.height;
@@ -74,19 +71,18 @@ class AvatarUpload extends Component {
         return new Promise((resolve, reject) => {
             canvas.toBlob((blob) => {
                 if (!blob) {
-                    //reject(new Error('Canvas is empty'));
-                    console.error('Canvas is empty');
+                    reject(new Error('Canvas is empty'));
                     return;
                 }
-                blob.name = fileName;
-                window.URL.revokeObjectURL(this.fileUrl);
-                this.fileUrl = window.URL.createObjectURL(blob);
-                resolve(this.fileUrl);
+
+                let reader = new FileReader()
+                reader.readAsDataURL(blob)
+                reader.onload = () => {
+                    resolve(reader.result)
+                }
             }, 'image/png');
         });
     }
-
-
 
     validateImage = (img) => {
         const allowedFileTypes = ['jpeg', 'png']
@@ -110,7 +106,7 @@ class AvatarUpload extends Component {
     }
 
     saveAvatar = () => {
-        const avatar = this.state.croppedAvatar
+        const avatar = JSON.stringify(this.state.croppedAvatar)
 
         this.props.changeAvatar(avatar) // put in Axios response
         this.props.closeAvatarUpload()
