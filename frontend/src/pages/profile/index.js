@@ -116,10 +116,10 @@ class Profile extends App {
         <Error></Error>
       )
     }
-    
+
     return (
       <Standard>
-        <UserBanner user={user} />
+          <UserBanner user={user} owner={isOwner && profile.loggedIn} />
         <Section title={'DESCRIPTION'}>
           <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
         </Section>

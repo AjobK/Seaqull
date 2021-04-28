@@ -1,0 +1,80 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+
+* {
+	transition: .2s ease-in-out;
+}
+
+.avatarUpload {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 101;
+
+	&Background {
+		width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+		animation: fade-in 0.2s
+	}
+
+	&PopUp {
+		@include pop-up();
+		height: fit-content;
+		max-height: 50%;
+		padding: 50px 0;
+		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.uploadedImgWrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: fit-content;
+			margin-bottom: 30px;
+
+			.uploadedImg {
+				height: fit-content;
+
+				img {
+					width: 200px;
+					border-radius: 50%;
+					border: $primary 4px solid;
+				}
+			}
+		}
+
+		&Btns {
+			display: flex;
+			flex-direction: row;
+
+			&CancelButton {
+				background-color: $secondary;
+				color: $dark;
+
+				&:hover {
+					animation: none;
+					color: black;
+				}
+			}
+
+			&SaveButton {
+				margin-left: 12px;
+			}
+		}
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.5;
+	}
+}
