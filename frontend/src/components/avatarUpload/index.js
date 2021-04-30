@@ -75,11 +75,7 @@ class AvatarUpload extends Component {
                     return;
                 }
 
-                let reader = new FileReader()
-                reader.readAsDataURL(blob)
-                reader.onload = () => {
-                    resolve(reader.result)
-                }
+                resolve(new File([blob], "avatar",{ type: "image/png" }))
             }, 'image/png');
         });
     }
@@ -106,9 +102,7 @@ class AvatarUpload extends Component {
     }
 
     saveAvatar = () => {
-        let avatar = JSON.stringify(this.state.croppedAvatar)
-        console.log(this.state.inputAvatar)
-        avatar = window.URL.createObjectURL(this.state.inputAvatar)
+        const avatar = this.state.croppedAvatar
 
         const fd = new FormData()
         fd.append('file', avatar)
