@@ -107,11 +107,11 @@ class AvatarUpload extends Component {
 
     saveAvatar = () => {
         let avatar = JSON.stringify(this.state.croppedAvatar)
-        //avatar = this.dataURItoBlob(avatar);
+        console.log(this.state.inputAvatar)
+        avatar = window.URL.createObjectURL(this.state.inputAvatar)
 
-        const fd = new window.FormData()
+        const fd = new FormData()
         fd.append('file', avatar)
-        console.log(avatar)
 
         Axios.put(`${this.props.store.defaultData.backendUrl}/profile/picture`, 
                     fd, {withCredentials: true, 'content-type': 'multipart/form-data'}).then((res) => 

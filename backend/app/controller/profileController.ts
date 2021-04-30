@@ -59,13 +59,10 @@ class ProfileController {
     }
 
     public updateProfilePicture = async ( req: any, res: Response ): Promise<Response> => {
-        //console.log(req)
+        console.log(req)
 
-        //const bitmap = new Buffer(req.body.file, 'base64');
-        //console.log(__dirname)
-        //fs.writeFileSync('app/public/temp/test.png', bitmap);
-        const profile = await this.dao.getProfileByUsername( req.decoded.username )
         const isImage = await this.fileService.isImage(req.file)
+        const profile = await this.dao.getProfileByUsername( req.decoded.username )
 
         if(!isImage) {
             this.fileService.deleteImage(req.file.path)

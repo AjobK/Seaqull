@@ -8,7 +8,7 @@ const pipeline = promisify(require('stream').pipeline);
 class FileService {
 
     public getUpload (): any {
-        const upload = multer({ limits: { fieldSize: 2 * 1024 * 1024 }})
+        const upload = multer({ limits: { fieldSize: 2 * 1024 * 1024 } })
         return upload
     }
 
