@@ -67,7 +67,7 @@ class AvatarUpload extends Component {
             crop.width,
             crop.height
         );
-        
+
         return new Promise((resolve, reject) => {
             canvas.toBlob((blob) => {
                 if (!blob) {
@@ -106,46 +106,24 @@ class AvatarUpload extends Component {
     }
 
     saveAvatar = () => {
-        const avatar = JSON.stringify(this.state.croppedAvatar)
+        let avatar = JSON.stringify(this.state.croppedAvatar)
+        //avatar = this.dataURItoBlob(avatar);
 
-        let bodyFormData = new FormData()
+        const fd = new window.FormData()
+        fd.append('file', avatar)
         console.log(avatar)
 
-        const reader = new FileReader()
-
-        reader.readAsDataURL(avatar[0])
-        
-        reader.onload = () => {
-            if (!!reader.result) {
-                resolve(reader.result)
-            } else {
-                reject(Error("Failed converting to base64"))
-            }
-        }
-
-        bodyFormData.append('avatar', reader.result)
-
-        Axios.put(`${this.props.store.defaultData.backendUrl}/profile/picture`, bodyFormData, {withCredentials: true}).then((res) => {
+        Axios.put(`${this.props.store.defaultData.backendUrl}/profile/picture`, 
+                    fd, {withCredentials: true, 'content-type': 'multipart/form-data'}).then((res) => 
+        {
             this.props.changeAvatar(avatar) // put in Axios response
             this.props.closeAvatarUpload()
-            console.log(res)
         })
         .catch(err => {
             if (err.response.status === 401) {
                 this.props.history.push('/login/')
             }
         })
-
-        // TODO send to API
-        // Axios.post(`${this.props.store.defaultData.backendUrl}/profile/UPLOAD-AVATAR-ROUTE`, avatar, {withCredentials: true})
-        //     .then((res) => {
-
-        //     })
-        //     .catch(err => {
-        //         if (err.response.status === 401) {
-        //             this.props.history.push('/login/')
-        //         }
-        //     })
     }
 
     render() {

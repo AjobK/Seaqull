@@ -13,6 +13,7 @@ import AccountDAO from '../dao/accountDAO'
 import attachmentDAO from '../dao/attachmentDAO'
 import FileService from '../service/fileService'
 
+import fs = require('fs')
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
 const isStrongPassword = require('validator/lib/isStrongPassword')
@@ -46,65 +47,37 @@ class ProfileController {
         }
 
         if (req.decoded.username != updateUser.username) {
-            if ( req.file ) this.fileService.deleteImage(req.file.path)
             return res.status(401).json({ 'error': 'Unauthorized' })
         } else if ( req.decoded.username && req.file ) {
             return await this.updateProfile(req.decoded.username, req.file )
         }
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
-        if(req.file){
-            const attachment = await this.dao.getProfileAttachment(profile.id)
-            const isImage = await this.fileService.isImage(req.file)
-            if(!isImage) {
-                this.fileService.deleteImage(req.file.path)
-                return res.status(400).json({ 'error': 'Only images are allowed' })
-            } else {
-                await this.fileService.convertImage(req.file)
-                if (attachment.path != 'app/default/default.jpg') this.fileService.deleteImage(attachment.path)
-                this.fileService.moveImage(req.file.path, req.file.filename)
-                const profileAttachment = attachment
-
-                const today = new Date();
-                const dd = String(today.getDate()).padStart(2, '0');
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const yyyy = today.getFullYear();
-
-                const newPath = 'app/public/' + yyyy + '/' + mm + '/' + dd + '/' + req.file.filename
-
-                profileAttachment.path = newPath
-                this.attachmentDAO.saveAttachment(profileAttachment)
-            }
-        }
-
-        if (profile == null)        console.log(req.body)
 
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
     }
 
     public updateProfilePicture = async ( req: any, res: Response ): Promise<Response> => {
+        //console.log(req)
+
+        //const bitmap = new Buffer(req.body.file, 'base64');
+        //console.log(__dirname)
+        //fs.writeFileSync('app/public/temp/test.png', bitmap);
         const profile = await this.dao.getProfileByUsername( req.decoded.username )
         const isImage = await this.fileService.isImage(req.file)
-        const attachment = await this.dao.getProfileAttachment(profile.id)
 
         if(!isImage) {
             this.fileService.deleteImage(req.file.path)
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
-            await this.fileService.convertImage(req.file)
+            const attachment = await this.dao.getProfileAttachment(profile.id)
+            const location = await this.fileService.storeImage(req.file)
+            await this.fileService.convertImage(location)
             if (attachment.path != 'app/default/default.jpg') this.fileService.deleteImage(attachment.path)
-            this.fileService.moveImage(req.file.path, req.file.filename)
             const profileAttachment = attachment
 
-            const today = new Date();
-            const dd = String(today.getDate()).padStart(2, '0');
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const yyyy = today.getFullYear();
-
-            const newPath = 'app/public/' + yyyy + '/' + mm + '/' + dd + '/' + req.file.filename
-
-            profileAttachment.path = newPath
+            profileAttachment.path = location
             this.attachmentDAO.saveAttachment(profileAttachment)
         }
         return res.status(200).json({ 'message': 'succes' })

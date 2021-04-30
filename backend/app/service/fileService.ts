@@ -1,54 +1,37 @@
-import multer = require('multer')
-import path = require('path')
 import { v4 as uuidv4 } from 'uuid'
 import im = require('imagemagick')
 import fs = require('fs')
-
-const FileType = require('file-type')
+import multer = require('multer')
+const { promisify } = require('util');
+const pipeline = promisify(require('stream').pipeline);
 
 class FileService {
-    private storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'app/public/temp')
-        },
-        filename: function (req, file, cb) {
-            cb(null, uuidv4() + '.jpg')
-        }
-    })
 
     public getUpload (): any {
-        const upload = multer({ storage: this.storage,
-            fileFilter: function (req, file, callback) {
-                const ext = path.extname(file.originalname)
-                if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-                    return callback(new Error('Only images are allowed'))
-                }
-                callback(null, true)
-            }
-        })
+        const upload = multer({ limits: { fieldSize: 2 * 1024 * 1024 }})
         return upload
     }
 
     public async isImage(file: any): Promise<any> {
-        const type = await FileType.fromFile(file.path)
-        const ext = type.ext
-        if(ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg') {
+        const ext = file.detectedFileExtension
+        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
             return false
         } else {
             return true
         }
     }
 
-    public async convertImage(file: any): Promise<void> {
+    public async convertImage(path: any): Promise<void> {
         im.resize({
-            srcData: fs.readFileSync(file.path, 'binary'),
+            srcData: fs.readFileSync(path, 'binary'),
             width:   800
         }, function(err){
             console.log(err)
         })
     }
 
-    public moveImage(oldPath: string, filename: string): string {
+    public async storeImage(file: any): Promise<string> {
+        console.log(file)
         const today = new Date()
         const dd = String(today.getDate()).padStart(2, '0')
         const mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -65,12 +48,14 @@ class FileService {
         } else if(!fs.existsSync(newPath + '/' + mm + '/' + dd)) {
             fs.mkdirSync(newPath + '/' + mm + '/' + dd)
         }
-        newPath = newPath + '/' + mm + '/' + dd + '/'
-
-        fs.rename(oldPath, newPath + filename, function (err) {
-            if (err) throw err
-        })
-        return newPath + filename
+        const name = uuidv4() + file.detectedFileExtension
+        newPath = newPath + '/' + mm + '/' + dd + '/' + name
+        console.log(newPath)
+        await pipeline(file.stream, fs.createWriteStream(newPath))
+        // fs.rename(oldPath, newPath + filename, function (err) {
+        //     if (err) throw err
+        // })
+        return newPath
     }
 
     public deleteImage(fileName: string): void {
