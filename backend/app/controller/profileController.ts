@@ -77,17 +77,13 @@ class ProfileController {
             }
         }
 
-        if (profile == null)
-            return res.status(404).json({ 'error': 'Not found' })
-
-        profile.description = updateUser.description
+        if (profile == null)        console.log(req.body)
 
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
     }
 
     public updateProfilePicture = async ( req: any, res: Response ): Promise<Response> => {
-        console.log(req.body)
         const profile = await this.dao.getProfileByUsername( req.decoded.username )
         const isImage = await this.fileService.isImage(req.file)
         const attachment = await this.dao.getProfileAttachment(profile.id)
