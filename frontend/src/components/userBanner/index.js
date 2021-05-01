@@ -27,6 +27,8 @@ class UserBanner extends Component {
       })
       reader.readAsDataURL(input.target.files[0])
     }
+
+    this.onAvatarDragLeave()
   }
 
   onAvatarDragEnter = () => {
