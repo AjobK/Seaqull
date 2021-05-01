@@ -23,7 +23,7 @@ class FileService {
 
     public async convertImage(path: any): Promise<void> {
         im.resize({
-            srcData: fs.readFileSync(path, 'binary'),
+            srcData: fs.readFileSync('app/public/' + path, 'binary'),
             width:   800
         }, function(err){
             console.log(err)
@@ -31,7 +31,6 @@ class FileService {
     }
 
     public async storeImage(file: any): Promise<string> {
-        console.log(file)
         const today = new Date()
         const dd = String(today.getDate()).padStart(2, '0')
         const mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -50,16 +49,12 @@ class FileService {
         }
         const name = uuidv4() + file.detectedFileExtension
         newPath = newPath + '/' + mm + '/' + dd + '/' + name
-        console.log(newPath)
         await pipeline(file.stream, fs.createWriteStream(newPath))
-        // fs.rename(oldPath, newPath + filename, function (err) {
-        //     if (err) throw err
-        // })
-        return newPath
+        return yyyy + '/' + mm + '/' + dd + '/' + name
     }
 
-    public deleteImage(fileName: string): void {
-        fs.unlink(fileName, function (err) {
+    public deleteImage(path: string): void {
+        fs.unlink('app/public/' + path, function (err) {
             if (err) throw err
         })
     }

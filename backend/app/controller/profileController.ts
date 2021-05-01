@@ -13,7 +13,6 @@ import AccountDAO from '../dao/accountDAO'
 import attachmentDAO from '../dao/attachmentDAO'
 import FileService from '../service/fileService'
 
-import fs = require('fs')
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
 const isStrongPassword = require('validator/lib/isStrongPassword')
@@ -39,16 +38,11 @@ class ProfileController {
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
-        let updateUser
-        try{
-            updateUser = JSON.parse(req.body.data)
-        } catch {
-            updateUser = req.body
-        }
+        const updateUser = req.body
 
         if (req.decoded.username != updateUser.username) {
             return res.status(401).json({ 'error': 'Unauthorized' })
-        } else if ( req.decoded.username && req.file ) {
+        } else if (req.decoded.username && req.file) {
             return await this.updateProfile(req.decoded.username, req.file )
         }
 
@@ -58,18 +52,16 @@ class ProfileController {
         return res.status(200).json({ 'message': 'Succes' })
     }
 
-    public updateProfilePicture = async ( req: any, res: Response ): Promise<Response> => {
-        console.log(req)
-
+    public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
-        const profile = await this.dao.getProfileByUsername( req.decoded.username )
-
         if(!isImage) {
             this.fileService.deleteImage(req.file.path)
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
+            const profile = await this.dao.getProfileByUsername( req.decoded.username )
             const attachment = await this.dao.getProfileAttachment(profile.id)
             const location = await this.fileService.storeImage(req.file)
+
             await this.fileService.convertImage(location)
             if (attachment.path != 'app/default/default.jpg') this.fileService.deleteImage(attachment.path)
             const profileAttachment = attachment
