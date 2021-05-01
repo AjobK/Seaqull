@@ -12,6 +12,7 @@ import TitleDAO from '../dao/titleDAO'
 import AccountDAO from '../dao/accountDAO'
 import attachmentDAO from '../dao/attachmentDAO'
 import FileService from '../service/fileService'
+import Attachment from '../entity/attachment'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -62,12 +63,25 @@ class ProfileController {
             const location = await this.fileService.storeImage(req.file)
 
             await this.fileService.convertImage(location)
-            if (attachment.path != 'profile/default/default.jpg') this.fileService.deleteImage(attachment.path)
-            const profileAttachment = attachment
 
-            profileAttachment.path = location
-            this.attachmentDAO.saveAttachment(profileAttachment)
-            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + attachment.path })
+            let profileAttachment = attachment
+
+            if (attachment.path != 'profile/default/default.jpg') {
+                console.log('1')
+                this.fileService.deleteImage(attachment.path)
+                profileAttachment.path = location
+                this.attachmentDAO.saveAttachment(profileAttachment)
+            } else {
+                const attachnew = new Attachment()
+                profileAttachment = attachnew;
+                profileAttachment.path = location
+                const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
+                profile.avatar_attachment = storedAttachment
+                console.log(profile)
+                await this.dao.saveProfile(profile)
+            }
+
+            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
         }
     }
 
