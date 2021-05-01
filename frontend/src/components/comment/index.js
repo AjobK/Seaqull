@@ -130,7 +130,11 @@ class Comment extends Component {
                                     (profile.loggedIn && comment.profile.display_name === profile.display_name) && (
                                         <>
                                             <Icon iconName={ 'Trash' } className={ styles.comment__deleteButtonIcon } onClick={ this.onDeleteClick }/>
-                                            <span className={ styles.seperator }></span>
+                                            {
+                                                (!this.isReply) && (
+                                                    <span className={ styles.seperator }></span>
+                                                )
+                                            }
                                         </>
                                     )
                                 }
