@@ -1,0 +1,41 @@
+@import '../../styles/index.scss';
+
+@mixin pop-up () {
+	position: fixed;
+	background-color: white;
+	border-radius: 10px;
+	z-index: 102;
+	width: 500px;
+	height: 50%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow-y: hidden;
+
+	@include mobile-tablet {
+		width: 70%;
+	}
+
+	@include mobile-all {
+		width: 90%;
+	}
+}
+
+.dialog {
+    &background {
+        width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+		animation: fade-in 0.2s
+    }
+    
+    &wrapper {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        position: fixed;
+        z-index: 101;
+    }
+}

@@ -17,7 +17,8 @@ class Comment extends Component {
                 ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.comment.content)))
                 : EditorState.createEmpty(),
             isReplying: false,
-            showReplies: false
+            showReplies: false,
+            isDeleting: false
         }
 
         if (this.props.comment && this.props.comment.parent_comment_id) {
@@ -60,16 +61,17 @@ class Comment extends Component {
 
     onDeleteClick = () => {
         // TODO: add custom dialog
-        if (confirm("Are you sure you want to delete this comment?")) {
-            const url = `http://localhost:8000/api/comment/${this.props.comment.id}`
+        // if (confirm("Are you sure you want to delete this comment?")) {
+        //     const url = `http://localhost:8000/api/comment/${this.props.comment.id}`
 
-            axios.delete(url, {withCredentials: true})
-            .then(response => {
-                this.props.onReplyAdd()
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
+        //     axios.delete(url, {withCredentials: true})
+        //     .then(response => {
+        //         this.props.onReplyAdd()
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
+        // }
+        this.setState({isDeleting: true })
     }
 
     displayReplyButton = () => {
@@ -134,6 +136,13 @@ class Comment extends Component {
                     </div>
                     { this.displayCommentForm() }
                     { showReplies && <CommentChildren commentChildren={ comment.children } /> }
+                    {
+                        (this.state.isDeleting) && (
+                            <div className={styles.deletePopUp}>
+                                <h1>delete pop up</h1>
+                            </div>
+                        )
+                    }
                 </article>
             )
         }
