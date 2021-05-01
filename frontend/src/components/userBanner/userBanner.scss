@@ -81,6 +81,44 @@
 	letter-spacing: 1px;
 	margin-bottom: -10px;
 
+	@include mobile-all-portrait {
+		margin-left: 5px;
+		padding: 0;
+		height: 2rem;
+		width: 2rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: $darkest;
+		color: $primary;
+		margin-bottom: -0.5rem;
+		transition: none;
+
+		&.replied {
+			background: white;
+
+			> svg {
+				color: $primary;
+			}
+		}
+	}
+
+	> p {
+		@include mobile-all-portrait {
+			display: none;
+		}
+	}
+
+	> svg { 
+		display: none;
+		color: white;
+		transition: none;
+
+		@include mobile-all-portrait {
+			display: block;
+		}
+	}
+
 	&:hover {
 		transition: 0.2s;
 		transform: scale(1.1);

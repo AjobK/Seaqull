@@ -49,8 +49,9 @@ class UserBanner extends Component {
               <Icon iconName={'Pen'} />
             </span>}
             { this.props.store.profile.loggedIn && !user.isOwner &&
-              <button className={styles.follow} onClick={this.follow}>
-                { this.state.following ? 'unfollow' : 'follow' }
+              <button className={`${styles.follow} ${this.state.following ? styles.replied : ''}`} onClick={this.follow}>
+                <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
+                <Icon iconName={this.state.following ? 'Check' : 'Reply'} classNames={styles.replyIcon} />
               </button>
             }
           </div>
