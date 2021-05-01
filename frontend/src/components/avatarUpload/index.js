@@ -108,16 +108,16 @@ class AvatarUpload extends Component {
         fd.append('file', avatar)
 
         Axios.put(`${this.props.store.defaultData.backendUrl}/profile/picture`, 
-                    fd, {withCredentials: true, 'content-type': 'multipart/form-data'}).then((res) => 
-        {
-            this.props.changeAvatar(avatar) // put in Axios response
-            this.props.closeAvatarUpload()
-        })
-        .catch(err => {
-            if (err.response.status === 401) {
-                this.props.history.push('/login/')
-            }
-        })
+                fd, 
+                {withCredentials: true, 'content-type': 'multipart/form-data'})
+                .then((res) => {
+                    this.props.changeAvatar(res.data.url) // put in Axios response
+                    this.props.closeAvatarUpload()
+                }).catch(err => {
+                    if (err.response.status === 401) {
+                    this.props.history.push('/login/')
+                }
+            })
     }
 
     render() {

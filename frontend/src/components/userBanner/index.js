@@ -76,7 +76,9 @@ class UserBanner extends Component {
                   <Icon iconName={'Pen'} />
                   <input
                       type="file" accept="image/png, image/jpeg" value={''}
-                      onChange={this.onEditAvatar} onDragEnter={this.onAvatarDragEnter} onDragLeave={this.onAvatarDragLeave}/>
+                      onChange={this.onEditAvatar} onDragEnter={this.onAvatarDragEnter} onDragLeave={this.onAvatarDragLeave}
+                      style={{ backgroundImage: `url(${user.picture})` }}
+                  />
                 </span>
             )}
           </div>

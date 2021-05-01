@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid'
 import im = require('imagemagick')
 import fs = require('fs')
 import multer = require('multer')
-const { promisify } = require('util');
-const pipeline = promisify(require('stream').pipeline);
+const { promisify } = require('util')
+const pipeline = promisify(require('stream').pipeline)
 
 class FileService {
 
@@ -35,8 +35,9 @@ class FileService {
         const dd = String(today.getDate()).padStart(2, '0')
         const mm = String(today.getMonth() + 1).padStart(2, '0')
         const yyyy = today.getFullYear()
+        const name = uuidv4() + file.detectedFileExtension
+        let newPath = 'app/public/profile/' + yyyy
 
-        let newPath = 'app/public/' + yyyy
         if (!fs.existsSync(newPath)) {
             fs.mkdirSync(newPath)
             fs.mkdirSync(newPath + '/' + mm)
@@ -47,10 +48,10 @@ class FileService {
         } else if(!fs.existsSync(newPath + '/' + mm + '/' + dd)) {
             fs.mkdirSync(newPath + '/' + mm + '/' + dd)
         }
-        const name = uuidv4() + file.detectedFileExtension
+
         newPath = newPath + '/' + mm + '/' + dd + '/' + name
         await pipeline(file.stream, fs.createWriteStream(newPath))
-        return yyyy + '/' + mm + '/' + dd + '/' + name
+        return 'profile/' + yyyy + '/' + mm + '/' + dd + '/' + name
     }
 
     public deleteImage(path: string): void {
@@ -60,4 +61,4 @@ class FileService {
     }
 }
 
-export default FileService;
+export default FileService
