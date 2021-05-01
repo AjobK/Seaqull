@@ -55,7 +55,6 @@ class ProfileController {
     public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
         if(!isImage) {
-            this.fileService.deleteImage(req.file.path)
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
             const profile = await this.dao.getProfileByUsername( req.decoded.username )
@@ -63,13 +62,13 @@ class ProfileController {
             const location = await this.fileService.storeImage(req.file)
 
             await this.fileService.convertImage(location)
-            if (attachment.path != 'app/default/default.jpg') this.fileService.deleteImage(attachment.path)
+            if (attachment.path != 'profile/default/default.jpg') this.fileService.deleteImage(attachment.path)
             const profileAttachment = attachment
 
             profileAttachment.path = location
             this.attachmentDAO.saveAttachment(profileAttachment)
+            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + attachment.path })
         }
-        return res.status(200).json({ 'message': 'succes' })
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -110,7 +109,7 @@ class ProfileController {
 
         const attachment = await this.dao.getProfileAttachment(profile.id)
         if ( attachment )
-            payload['avatar'] = attachment.path
+            payload['avatar'] = 'http://localhost:8000/' + attachment.path
 
         return res.status(200).json({ 'profile': payload })
     }

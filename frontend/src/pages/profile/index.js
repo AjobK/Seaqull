@@ -37,7 +37,6 @@ class Profile extends App {
     Axios.get(`/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
-        console.log(response)
         this.fetchOwnedPosts(this.state.user.username)
         this.setState({ isOwner: response.data.profile.isOwner })
       })

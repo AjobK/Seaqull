@@ -3,7 +3,7 @@ import { Attachment } from '../entity/attachment'
 
 define(Attachment, (): Attachment => {
     const attachment = new Attachment()
-    attachment.path = 'default/default.jpg'
+    attachment.path = 'profile/default/default.jpg'
 
     return attachment
 })
