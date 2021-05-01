@@ -37,7 +37,7 @@ class CommentDAO {
         if(children) {
             children.forEach(child => {
                 child.archived_at = archiveDate
-            });
+            })
 
             repository.save(children)
         }

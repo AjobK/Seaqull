@@ -16,7 +16,7 @@ class CommentController {
         const foundComments = await this.dao.getComments(req.params.path)
 
         if (req.params.path && foundComments)
-            return res.status(200).json(foundComments);
+            return res.status(200).json(foundComments)
         else
             return res.status(404).json({ 'message': 'No comments found on that path' })
     }
