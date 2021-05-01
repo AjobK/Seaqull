@@ -30,6 +30,7 @@ import CommentChildren from './commentChildren'
 import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
+import Dialog from './dialog'
 
 export {
   Button,
@@ -63,5 +64,6 @@ export {
   CommentChildren,
   PostLike,
   ProfileInfo,
-  PostLikesList
+  PostLikesList,
+  Dialog
 }

@@ -3,7 +3,7 @@ import styles from './comment.scss'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import {Editor, EditorState, convertFromRaw, ContentState} from 'draft-js'
-import { CommentForm, CommentChildren, Icon } from '../'
+import { CommentForm, CommentChildren, Icon, Dialog } from '../'
 
 import TimeUtil from '../../util/timeUtil'
 import axios from 'axios'
@@ -60,18 +60,22 @@ class Comment extends Component {
     }
 
     onDeleteClick = () => {
-        // TODO: add custom dialog
-        // if (confirm("Are you sure you want to delete this comment?")) {
-        //     const url = `http://localhost:8000/api/comment/${this.props.comment.id}`
+        this.setState({ isDeleting: true })
+    }
 
-        //     axios.delete(url, {withCredentials: true})
-        //     .then(response => {
-        //         this.props.onReplyAdd()
-        //     }).catch((err) => {
-        //         console.log(err)
-        //     })
-        // }
-        this.setState({isDeleting: true })
+    onDeleteConfirm = () => {
+        const url = `http://localhost:8000/api/comment/${this.props.comment.id}`
+
+        axios.delete(url, { withCredentials: true })
+        .then(response => {
+            this.props.onReplyAdd()
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    onDeleteCancelClick = () => {
+        this.setState({ isDeleting: false })
     }
 
     displayReplyButton = () => {
@@ -138,9 +142,7 @@ class Comment extends Component {
                     { showReplies && <CommentChildren commentChildren={ comment.children } /> }
                     {
                         (this.state.isDeleting) && (
-                            <div className={styles.deletePopUp}>
-                                <h1>delete pop up</h1>
-                            </div>
+                            <Dialog header="Deleting comment" body="Are you sure you want to delete this comment?" onConfirmCallback={ this.onDeleteConfirm } onCloseCallback={ this.onDeleteCancelClick } />
                         )
                     }
                 </article>
