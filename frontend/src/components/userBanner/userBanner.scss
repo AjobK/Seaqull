@@ -66,6 +66,12 @@
 			opacity: 0;
 		}
 	}
+
+	&DraggingOver {
+		cursor: pointer;
+		transition: 0.2s;
+		opacity: 1;
+	}
 }
 
 .background {
