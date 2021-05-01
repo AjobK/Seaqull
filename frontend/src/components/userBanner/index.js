@@ -39,7 +39,6 @@ class UserBanner extends Component {
     this.setState({
       upAvatar: null
     })
-    this.props.fetchProfileData(this.props.user.username)
   }
 
   render() {

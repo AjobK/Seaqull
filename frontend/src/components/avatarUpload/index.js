@@ -111,7 +111,7 @@ class AvatarUpload extends Component {
                 fd, 
                 {withCredentials: true, 'content-type': 'multipart/form-data'})
                 .then((res) => {
-                    this.props.changeAvatar(avatar) // put in Axios response
+                    this.props.changeAvatar(res.data.url) // put in Axios response
                     this.props.closeAvatarUpload()
                 }).catch(err => {
                     if (err.response.status === 401) {

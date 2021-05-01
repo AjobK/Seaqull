@@ -120,7 +120,7 @@ class Profile extends App {
 
     return (
       <Standard>
-          <UserBanner fetchProfileData={this.fetchProfileData} user={user} owner={isOwner && profile.loggedIn} />
+          <UserBanner user={user} owner={isOwner && profile.loggedIn} />
         <Section title={'DESCRIPTION'}>
           <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
         </Section>
