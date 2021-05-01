@@ -39,6 +39,7 @@ class UserBanner extends Component {
     this.setState({
       upAvatar: null
     })
+    this.props.fetchProfileData(this.props.user.username)
   }
 
   render() {
@@ -62,7 +63,7 @@ class UserBanner extends Component {
             { this.props.owner && (
                 <span className={styles.pictureEdit}>
                   <Icon iconName={'Pen'} />
-                  <input type="file" accept="image/png, image/jpeg" onChange={this.onEditAvatar} value={''} />
+                  <input type="file" accept="image/png, image/jpeg" style={{ backgroundImage: `url(${user.picture})` }} onChange={this.onEditAvatar} value={''} />
                 </span>
             )}
           </div>

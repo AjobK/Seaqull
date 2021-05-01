@@ -37,6 +37,7 @@ class Profile extends App {
     Axios.get(`/profile/${path}`,  {withCredentials: true})
       .then((response) => {
         this.updateProfile(response.data.profile)
+        console.log(response)
         this.fetchOwnedPosts(this.state.user.username)
         this.setState({ isOwner: response.data.profile.isOwner })
       })
@@ -119,7 +120,7 @@ class Profile extends App {
 
     return (
       <Standard>
-          <UserBanner user={user} owner={isOwner && profile.loggedIn} />
+          <UserBanner fetchProfileData={this.fetchProfileData} user={user} owner={isOwner && profile.loggedIn} />
         <Section title={'DESCRIPTION'}>
           <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
         </Section>
