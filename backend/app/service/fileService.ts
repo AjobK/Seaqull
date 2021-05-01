@@ -10,12 +10,13 @@ class FileService {
 
     public getUpload (): any {
         const upload = multer({ limits: { fieldSize: 2 * 1024 * 1024 } })
+
         return upload
     }
 
     public async isImage (file: any): Promise<any> {
         const ext = file.detectedFileExtension
-        
+
         return !(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg')
     }
 

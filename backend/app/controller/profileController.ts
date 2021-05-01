@@ -55,6 +55,7 @@ class ProfileController {
 
     public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
+
         if (!isImage) {
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
@@ -104,7 +105,9 @@ class ProfileController {
         }
 
         const profile = await this.dao.getProfileByUsername(receivedUsername)
+
         if ( !profile ) return res.status(404).json({ 'message': 'User not found' })
+
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
 
@@ -118,8 +121,8 @@ class ProfileController {
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
-
         const attachment = await this.dao.getProfileAttachment(profile.id)
+
         if ( attachment )
             payload['avatar'] = 'http://localhost:8000/' + attachment.path
 
