@@ -28,26 +28,26 @@ class FileService {
 
     public async storeImage (file: any): Promise<string> {
         const today = new Date()
-        const dd = String(today.getDate()).padStart(2, '0')
-        const mm = String(today.getMonth() + 1).padStart(2, '0')
-        const yyyy = today.getFullYear()
+        const day = String(today.getDate()).padStart(2, '0')
+        const month = String(today.getMonth() + 1).padStart(2, '0')
+        const year = today.getFullYear()
         const name = uuidv4() + file.detectedFileExtension
-        let newPath = 'app/public/profile/' + yyyy
+        let newPath = 'app/public/profile/' + year
 
         if (!fs.existsSync(newPath)) {
             fs.mkdirSync(newPath)
-            fs.mkdirSync(newPath + '/' + mm)
-            fs.mkdirSync(newPath + '/' + mm + '/' + dd)
-        } else if (!fs.existsSync(newPath + '/' + mm)) {
-            fs.mkdirSync(newPath + '/' + mm)
-            fs.mkdirSync(newPath + '/' + mm + '/' + dd)
-        } else if (!fs.existsSync(newPath + '/' + mm + '/' + dd)) {
-            fs.mkdirSync(newPath + '/' + mm + '/' + dd)
+            fs.mkdirSync(newPath + '/' + month)
+            fs.mkdirSync(newPath + '/' + month + '/' + day)
+        } else if (!fs.existsSync(newPath + '/' + month)) {
+            fs.mkdirSync(newPath + '/' + month)
+            fs.mkdirSync(newPath + '/' + month + '/' + day)
+        } else if (!fs.existsSync(newPath + '/' + month + '/' + day)) {
+            fs.mkdirSync(newPath + '/' + month + '/' + day)
         }
 
-        newPath = newPath + '/' + mm + '/' + dd + '/' + name
+        newPath = newPath + '/' + month + '/' + day + '/' + name
         await pipeline(file.stream, fs.createWriteStream(newPath))
-        return 'profile/' + yyyy + '/' + mm + '/' + dd + '/' + name
+        return 'profile/' + year + '/' + month + '/' + day + '/' + name
     }
 
     public deleteImage (path: string): void {

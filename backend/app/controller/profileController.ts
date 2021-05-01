@@ -55,7 +55,7 @@ class ProfileController {
 
     public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
-        if(!isImage) {
+        if (!isImage) {
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
             const profile = await this.dao.getProfileByUsername( req.decoded.username )
@@ -71,8 +71,8 @@ class ProfileController {
                 profileAttachment.path = location
                 this.attachmentDAO.saveAttachment(profileAttachment)
             } else {
-                const attachnew = new Attachment()
-                profileAttachment = attachnew;
+                const newAttachment = new Attachment()
+                profileAttachment = newAttachment;
                 profileAttachment.path = location
                 const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
                 profile.avatar_attachment = storedAttachment
@@ -109,7 +109,7 @@ class ProfileController {
         let isOwner = false
 
         if (receivedUsername && decodedToken)
-            isOwner = !!(receivedUsername == decodedToken.username)
+            isOwner = receivedUsername == decodedToken.username
 
         const payload = {
             isOwner: isOwner,
