@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import fs = require('fs')
 import multer = require('multer')
-import im = require('imagemagick')
+
 const { promisify } = require('util')
 const pipeline = promisify(require('stream').pipeline)
 const sharp = require('sharp');
@@ -13,7 +13,7 @@ class FileService {
         return upload
     }
 
-    public async isImage(file: any): Promise<any> {
+    public async isImage (file: any): Promise<any> {
         const ext = file.detectedFileExtension
         if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
             return false
@@ -22,11 +22,11 @@ class FileService {
         }
     }
 
-    public async convertImage(path: any): Promise<void> {
+    public async convertImage (path: any): Promise<void> {
         sharp(path).resize(800)
     }
 
-    public async storeImage(file: any): Promise<string> {
+    public async storeImage (file: any): Promise<string> {
         const today = new Date()
         const dd = String(today.getDate()).padStart(2, '0')
         const mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -38,10 +38,10 @@ class FileService {
             fs.mkdirSync(newPath)
             fs.mkdirSync(newPath + '/' + mm)
             fs.mkdirSync(newPath + '/' + mm + '/' + dd)
-        } else if(!fs.existsSync(newPath + '/' + mm)) {
+        } else if (!fs.existsSync(newPath + '/' + mm)) {
             fs.mkdirSync(newPath + '/' + mm)
             fs.mkdirSync(newPath + '/' + mm + '/' + dd)
-        } else if(!fs.existsSync(newPath + '/' + mm + '/' + dd)) {
+        } else if (!fs.existsSync(newPath + '/' + mm + '/' + dd)) {
             fs.mkdirSync(newPath + '/' + mm + '/' + dd)
         }
 
@@ -50,7 +50,7 @@ class FileService {
         return 'profile/' + yyyy + '/' + mm + '/' + dd + '/' + name
     }
 
-    public deleteImage(path: string): void {
+    public deleteImage (path: string): void {
         fs.unlink('app/public/' + path, function (err) {
             if (err) throw err
         })

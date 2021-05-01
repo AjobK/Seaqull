@@ -38,3 +38,4 @@ package-lock.json
 backend/node_modules
 backend/ormconfig.js
 backend/ormconfig.json
+backend/public/profile
