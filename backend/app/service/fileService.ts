@@ -15,11 +15,8 @@ class FileService {
 
     public async isImage (file: any): Promise<any> {
         const ext = file.detectedFileExtension
-        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-            return false
-        } else {
-            return true
-        }
+        
+        return !(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg')
     }
 
     public async convertImage (path: any): Promise<void> {
