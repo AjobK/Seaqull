@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
-import im = require('imagemagick')
 import fs = require('fs')
 import multer = require('multer')
+import im = require('imagemagick')
 const { promisify } = require('util')
 const pipeline = promisify(require('stream').pipeline)
+const sharp = require('sharp');
 
 class FileService {
 
@@ -22,12 +23,7 @@ class FileService {
     }
 
     public async convertImage(path: any): Promise<void> {
-        im.resize({
-            srcData: fs.readFileSync('app/public/' + path, 'binary'),
-            width:   800
-        }, function(err){
-            console.log(err)
-        })
+        sharp(path).resize(800)
     }
 
     public async storeImage(file: any): Promise<string> {

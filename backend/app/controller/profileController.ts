@@ -67,7 +67,6 @@ class ProfileController {
             let profileAttachment = attachment
 
             if (attachment.path != 'profile/default/default.jpg') {
-                console.log('1')
                 this.fileService.deleteImage(attachment.path)
                 profileAttachment.path = location
                 this.attachmentDAO.saveAttachment(profileAttachment)
@@ -77,7 +76,6 @@ class ProfileController {
                 profileAttachment.path = location
                 const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
                 profile.avatar_attachment = storedAttachment
-                console.log(profile)
                 await this.dao.saveProfile(profile)
             }
 
