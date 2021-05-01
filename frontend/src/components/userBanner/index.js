@@ -9,11 +9,9 @@ class UserBanner extends Component {
     super(props)
 
     this.state = {
-      upAvatar: null
+      upAvatar: null,
+      draggingOver: false
     }
-  }
-
-  componentDidMount() {
   }
 
   onEditAvatar = (input) => {
@@ -29,6 +27,18 @@ class UserBanner extends Component {
       })
       reader.readAsDataURL(input.target.files[0])
     }
+  }
+
+  onAvatarDragEnter = () => {
+    this.setState({
+      draggingOver: true
+    })
+  }
+
+  onAvatarDragLeave = () => {
+    this.setState({
+      draggingOver: false
+    })
   }
 
   changeAvatar = (newAvatar) => {
@@ -60,9 +70,11 @@ class UserBanner extends Component {
           <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={styles.levelMobile}>{ user.level || ''}</span>
             { this.props.owner && (
-                <span className={styles.pictureEdit}>
+                <span className={`${styles.pictureEdit} ${this.state.draggingOver ? styles.pictureDraggingOver : ''}`}>
                   <Icon iconName={'Pen'} />
-                  <input type="file" accept="image/png, image/jpeg" onChange={this.onEditAvatar} value={''} />
+                  <input
+                      type="file" accept="image/png, image/jpeg" value={''}
+                      onChange={this.onEditAvatar} onDragEnter={this.onAvatarDragEnter} onDragLeave={this.onAvatarDragLeave}/>
                 </span>
             )}
           </div>
