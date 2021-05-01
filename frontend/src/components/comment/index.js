@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './comment.scss'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
-import {Editor, EditorState, convertFromRaw, ContentState} from 'draft-js'
+import { Editor, EditorState, convertFromRaw } from 'draft-js'
 import { CommentForm, CommentChildren, Icon, Dialog } from '../'
 
 import TimeUtil from '../../util/timeUtil'
@@ -31,9 +31,9 @@ class Comment extends Component {
             return(
                 <div className={styles.comment__avatar}>
                     {/* TODO: replace profile image */}
-                    <img src={require('../../static/dummy/user/profile.jpg')} className={styles.comment__avatarPicture} />
-                    <div className={styles.comment__avatarBadge}>
-                        {this.props.comment.profile.experience > 0 ? this.props.comment.profile.experience/1000 : 0 }
+                    <img src={ require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } />
+                    <div className={ styles.comment__avatarBadge }>
+                        { this.props.comment.profile.experience > 0 ? this.props.comment.profile.experience/1000 : 0 }
                     </div>
                 </div>
             )
@@ -43,7 +43,7 @@ class Comment extends Component {
     displayCommentForm = () => {
         if(!this.isReply && this.state.isReplying) {
             return (
-                <div className={styles.comment__replyForm}>
+                <div className={ styles.comment__replyForm }>
                     <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd }/>
                 </div>
             )
@@ -81,8 +81,8 @@ class Comment extends Component {
     displayReplyButton = () => {
         if(!this.isReply) {
             return (
-                <div className={styles.comment__replyButton}>
-                    <Icon iconName={'Reply'} className={styles.comment__replyButtonIcon} onClick={this.onReplyClick}/>
+                <div className={ styles.comment__replyButton }>
+                    <Icon iconName={ 'Reply' } className={ styles.comment__replyButtonIcon } onClick={ this.onReplyClick }/>
                 </div>
             )
         }
@@ -95,42 +95,42 @@ class Comment extends Component {
 
         if (comment) {
             return (
-                <article className={`${styles.comment} ${this.isReply && styles.reply}`}>
-                    <div className={`${styles.comment__body} ${isReplying ? styles.isReplying : ''}`}>
-                        {this.displayAvatar()}
-                        <div className={styles.comment__main}>
-                            <div className={styles.comment_content}>
-                                <div className={styles.comment__header}>
-                                    <div className={styles.comment__headerAuthor}>
-                                    <Link to={`/profile/${comment.profile.display_name}`} className={styles.comment__headerAuthor}>
-                                        {comment.profile.display_name}
+                <article className={ `${ styles.comment } ${ this.isReply && styles.reply }` }>
+                    <div className={ `${ styles.comment__body } ${ isReplying ? styles.isReplying : '' }` }>
+                        { this.displayAvatar() }
+                        <div className={ styles.comment__main }>
+                            <div className={ styles.comment_content }>
+                                <div className={ styles.comment__header }>
+                                    <div className={ styles.comment__headerAuthor }>
+                                    <Link to={ `/profile/${ comment.profile.display_name }` } className={ styles.comment__headerAuthor }>
+                                        { comment.profile.display_name }
                                     </Link>
                                     </div>
-                                    <div className={styles.comment__headerPublishedTime}>
-                                        {TimeUtil.timeAgo(new Date(comment.created_at))}
+                                    <div className={ styles.comment__headerPublishedTime }>
+                                        { TimeUtil.timeAgo(new Date(comment.created_at)) }
                                     </div>
                                 </div>
-                                <div className={styles.comment__content}>
-                                    <Editor editorState={this.state.editorState} readOnly={true}/>
+                                <div className={ styles.comment__content }>
+                                    <Editor editorState={ this.state.editorState } readOnly={ true }/>
                                 </div>
                             </div>
-                            <div className={styles.comment__interactive}>
+                            <div className={ styles.comment__interactive }>
                                 {
                                     (comment.children && comment.children.length > 0) && (
                                     <>
-                                        <button onClick={() => this.setState({ showReplies: !showReplies })} className={ showReplies ? styles.showReplies : '' }>
-                                            { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y'}
+                                        <button onClick={ () => this.setState({ showReplies: !showReplies }) } className={ showReplies ? styles.showReplies : '' }>
+                                            { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y' }
                                             <span>{/* Underline animation */}</span>
                                         </button>
-                                        <span className={styles.seperator}></span>
+                                        <span className={ styles.seperator }></span>
                                     </>
                                     )
                                 }
                                 {
                                     (profile.loggedIn && comment.profile.display_name === profile.display_name) && (
                                         <>
-                                        <Icon iconName={'Trash'} className={styles.comment__deleteButtonIcon} onClick={this.onDeleteClick}/>
-                                        <span className={styles.seperator}></span>
+                                            <Icon iconName={ 'Trash' } className={ styles.comment__deleteButtonIcon } onClick={ this.onDeleteClick }/>
+                                            <span className={ styles.seperator }></span>
                                         </>
                                     )
                                 }

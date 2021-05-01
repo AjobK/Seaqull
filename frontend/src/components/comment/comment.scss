@@ -1,5 +1,4 @@
 @import '../../styles/index.scss';
-
 .comment {
 	margin-bottom: 20px;
 
@@ -10,12 +9,20 @@
 		box-shadow: 0 5px 10px -2px rgba(0, 0, 0, .1);
 		background-color: white;
 		max-width: $wrapper-width;
+
+		@include mobile-all-portrait {
+			padding: 15px;
+		}
 	}
 
 	&__avatar {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+
+		@include mobile-all-portrait {
+			display: none;
+		}
 
 		&Picture {
 			border-radius: 100%;
@@ -51,6 +58,10 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+
+		@include mobile-all-portrait {
+			margin-left: 0;
+		}
 	}
 
 	&__interactive {
@@ -111,6 +122,10 @@
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+
+			@include mobile-all-portrait {
+				font-size: 1rem;
+			}
 		}
 
 		&PublishedTime {
