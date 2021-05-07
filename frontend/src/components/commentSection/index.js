@@ -16,7 +16,7 @@ class CommentSection extends Component {
     }
 
     loadComments() {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop()
+        const path = window.location.pathname.split('/').filter(i => i != '').pop()
         const url = `http://localhost:8000/api/comment/${path}`
 
         Axios.get(url)
@@ -53,7 +53,8 @@ class CommentSection extends Component {
     }
 
     nestComments = (commentList) => {
-        let commentMap = {}
+        const commentMap = {}
+
         commentList.forEach((comment) => {
             commentMap[comment.id] = comment
         })
@@ -68,7 +69,7 @@ class CommentSection extends Component {
             })
         }
 
-        let filteredComments = commentList.filter(comment => {
+        const filteredComments = commentList.filter(comment => {
             return comment.parent_comment_id === null
         })
 

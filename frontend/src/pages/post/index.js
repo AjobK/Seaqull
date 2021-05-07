@@ -203,7 +203,7 @@ class Post extends App {
                     />
                 }
                 </Section>
-                <CommentSection />
+                <CommentSection/>
             </Standard>
         )
     }
