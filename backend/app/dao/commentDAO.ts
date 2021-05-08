@@ -26,7 +26,6 @@ class CommentDAO {
 
     public async archiveComment(id: number): Promise<any> {
         const repository = await DatabaseConnector.getRepository(this.repo)
-
         const archiveDate = new Date()
 
         const comment: Comment = await repository.findOne({ where: { id: id } })

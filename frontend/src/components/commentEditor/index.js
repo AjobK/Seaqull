@@ -118,7 +118,6 @@ class CommentEditor extends Component {
     }
 
     render() {
-
         return (
             <section>
                 {this.displayHeader()}
