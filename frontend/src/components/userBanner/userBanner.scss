@@ -50,7 +50,6 @@
 		font-size: 2rem;
 
 		&:hover {
-			cursor: pointer;
 			transition: 0.2s;
 			opacity: 1;
 		}
@@ -60,6 +59,7 @@
 		}
 
 		input {
+			cursor: pointer;
 			width: 100%;
 			height: 100%;
 			position: absolute;
@@ -74,16 +74,80 @@
 	}
 }
 
-.background {
+.banner {
+	display: flex;
+	justify-content: flex-end;
 	position: absolute;
 	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
-	background-size: cover;
-	background-position: center;
-	opacity: 0.5;
-	background-color: white;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+
+	&:hover {
+		.bannerEdit {
+			opacity: 1;
+		}
+	}
+
+	&Image {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		opacity: 0.5;
+		background-size: cover;
+		background-position: center;
+	}
+
+	&Edit {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		justify-content: flex-end;
+
+		&:hover {
+			.bannerEditActionBtn {
+				opacity: 1;
+			}
+		}
+
+		&ActionBtn {
+			align-self: flex-end;
+			display: flex;
+			opacity: 0;
+			color: $primary;
+			background-color: rgba(0, 0, 0, 0.7);
+			z-index: 1;
+			border-radius: 100%;
+			justify-content: center;
+			align-items: center;
+			font-size: 1.5rem;
+			padding: 22px;
+			margin: 0 30px 25px 0;
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.85);
+				transform: scale(1.015);
+			}
+		}
+
+		input {
+			cursor: pointer;
+			width: inherit;
+			height: inherit;
+			position: absolute;
+			opacity: 0;
+		}
+
+		&DraggingOver {
+			.bannerEditActionBtn {
+				opacity: 1;
+			}
+		}
+	}
 }
 
 .innerWrapper {

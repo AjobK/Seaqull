@@ -10,7 +10,8 @@ class UserBanner extends Component {
 
     this.state = {
       upAvatar: null,
-      draggingOver: false
+      draggingOverAvatar: false,
+      draggingOverBanner: false
     }
   }
 
@@ -33,13 +34,23 @@ class UserBanner extends Component {
 
   onAvatarDragEnter = () => {
     this.setState({
-      draggingOver: true
+      draggingOverAvatar: true
+    })
+  }
+  onAvatarDragLeave = () => {
+    this.setState({
+      draggingOverAvatar: false
     })
   }
 
-  onAvatarDragLeave = () => {
+  onBannerDragEnter = () => {
     this.setState({
-      draggingOver: false
+      draggingOverBanner: true
+    })
+  }
+  onBannerDragLeave = () => {
+    this.setState({
+      draggingOverBanner: false
     })
   }
 
@@ -72,12 +83,11 @@ class UserBanner extends Component {
           <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={styles.levelMobile}>{ user.level || ''}</span>
             { this.props.owner && (
-                <span className={`${styles.pictureEdit} ${this.state.draggingOver ? styles.pictureDraggingOver : ''}`}>
+                <span className={`${styles.pictureEdit} ${this.state.draggingOverAvatar ? styles.pictureDraggingOver : ''}`}>
                   <Icon iconName={'Pen'} />
                   <input
                       type="file" accept="image/png, image/jpeg" value={''}
                       onChange={this.onEditAvatar} onDragEnter={this.onAvatarDragEnter} onDragLeave={this.onAvatarDragLeave}
-                      style={{ backgroundImage: `url(${user.picture})` }}
                   />
                 </span>
             )}
@@ -90,7 +100,21 @@ class UserBanner extends Component {
             </div>
           </div>
         </div>
-        <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
+        <div className={styles.banner}>
+          <div className={styles.bannerImage} style={{ backgroundImage: `url(${user.banner})` }}/>
+          { this.props.owner && (
+              <div className={`${styles.bannerEdit} ${this.state.draggingOverBanner ? styles.bannerEditDraggingOver : ''}`}>
+                <input
+                    type="file" accept="image/png, image/jpeg" value={''}
+                    onChange={this.onEditAvatar} onDragEnter={this.onBannerDragEnter} onDragLeave={this.onBannerDragLeave}
+                />
+                <div className={`${styles.bannerEditActionBtn}`}>
+                  <Icon iconName={'Pen'} />
+                </div>
+              </div>
+          )}
+        </div>
+
         { this.state.upAvatar && (
             <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={this.closeAvatarUpload} changeAvatar={this.changeAvatar}/>
         )}
