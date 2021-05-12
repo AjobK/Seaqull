@@ -7,14 +7,5 @@ export class rolePermission extends BaseEntity {
 
     @Column({ unique: true })
     name: string
-
-    @CreateDateColumn()
-    created_at: Date
-
-    @UpdateDateColumn({ nullable: true })
-    updated_at: Date
-
-    @Column({ nullable: true })
-    archived_at: Date
 }
 export default rolePermission
