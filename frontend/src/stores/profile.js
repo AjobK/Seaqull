@@ -4,7 +4,9 @@ import Axios from 'axios'
 const ProfileStore = types
   .model('ProfileStore', {
     loaded: types.optional(types.string, 'Nooooo'),
-    loggedIn: types.optional(types.boolean, false)
+    loggedIn: types.optional(types.boolean, false),
+    display_name: types.optional(types.string, 'Emily Washington')
+
   })
   .actions((self) => ({
     loginVerify() {
@@ -13,6 +15,7 @@ const ProfileStore = types
       Axios.get(`/api/login-verify`, { withCredentials: true })
       .then((res) => {
         self.setLoggedIn(true)
+        self.setDisplayName(res.data.profile.display_name)
       })
       .catch((e) => {
         self.setLoggedIn(false)
@@ -20,6 +23,9 @@ const ProfileStore = types
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn
+    },
+    setDisplayName(display_name) {
+      self.display_name = display_name
     },
     logOut() {
       Axios.defaults.baseURL = 'http://localhost:8000'

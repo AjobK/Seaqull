@@ -22,9 +22,15 @@ import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
 import StyleButton from './styleButton'
 import FormInput from './formInput'
+import CommentSection from './commentSection'
+import Comment from './comment'
+import CommentForm from './commentForm'
+import CommentEditor from './commentEditor'
+import CommentChildren from './commentChildren'
 import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
+import Dialog from './dialog'
 
 export {
   Button,
@@ -51,7 +57,13 @@ export {
   LoginPrompt,
   RegisterPrompt,
   FormInput,
+  CommentSection,
+  Comment,
+  CommentForm,
+  CommentEditor,
+  CommentChildren,
   PostLike,
   ProfileInfo,
-  PostLikesList
+  PostLikesList,
+  Dialog
 }
