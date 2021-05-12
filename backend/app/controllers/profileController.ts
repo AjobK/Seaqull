@@ -18,7 +18,7 @@ const isStrongPassword = require('validator/lib/isStrongPassword')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
-class ProfileService {
+class ProfileController {
     private dao: ProfileDAO
     private titleDAO: TitleDAO
     private accountDAO: AccountDAO
@@ -194,7 +194,7 @@ class ProfileService {
         newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
-        newProfile.description = 'i`m a wild seaqull'
+        newProfile.description = 'Welcome to my profile!'
         newProfile = await this.dao.saveProfile(newProfile)
 
         const acc = new Account()
@@ -219,4 +219,4 @@ class ProfileService {
         return account
     }
 }
-export default ProfileService
+export default ProfileController
