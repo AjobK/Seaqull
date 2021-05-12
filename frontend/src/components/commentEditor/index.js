@@ -32,7 +32,8 @@ class CommentEditor extends Component {
     }
 
     handleBeforeInput = (chars) => {
-        if (!this.maxLength) return false
+        if (!this.maxLength) 
+            return false
 
         const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + chars.length
 

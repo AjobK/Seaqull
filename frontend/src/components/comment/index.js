@@ -138,11 +138,11 @@ class Comment extends Component {
                                         </>
                                     )
                                 }
-                                { this.displayReplyButton() }
+                                { (profile.loggedIn) && this.displayReplyButton() }
                             </div>
                         </div>
                     </div>
-                    { this.displayCommentForm() }
+                    { (profile.loggedIn) && this.displayCommentForm() }
                     { showReplies && <CommentChildren commentChildren={ comment.children } /> }
                     {
                         (this.state.isDeleting) && (
