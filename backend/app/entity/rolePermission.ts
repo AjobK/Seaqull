@@ -1,11 +1,18 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import Permission from './permission'
+import Role from './role'
 
 @Entity('rolePermission')
-export class rolePermission extends BaseEntity {
+export class RolePermission extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ unique: true })
-    name: string
+    @ManyToOne(() => Role, role => role.id)
+    @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
+    role: Role
+
+    @ManyToOne(() => Permission, permission => permission.id)
+    @JoinColumn({ name: 'permission_id', referencedColumnName: 'id' })
+    permission: Permission
 }
-export default rolePermission
+export default RolePermission
