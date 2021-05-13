@@ -10,12 +10,23 @@ class UserBanner extends Component {
 
     this.state = {
       upAvatar: null,
+      upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false
     }
   }
 
   onEditAvatar = (input) => {
+    this.handleInput(input, 'upAvatar')
+    this.onAvatarDragLeave()
+  }
+
+  onEditBanner = (input) => {
+    this.handleInput(input, 'upBanner')
+    this.onBannerDragLeave()
+  }
+
+  handleInput = (input, stateVar) => {
     input.value = ''
 
     if (input.target.files && input.target.files.length > 0) {
@@ -23,13 +34,11 @@ class UserBanner extends Component {
 
       reader.addEventListener('load', () => {
         this.setState({
-          upAvatar: reader.result
+          [stateVar]: reader.result
         })
       })
       reader.readAsDataURL(input.target.files[0])
     }
-
-    this.onAvatarDragLeave()
   }
 
   onAvatarDragEnter = () => {
@@ -106,7 +115,7 @@ class UserBanner extends Component {
               <div className={`${styles.bannerEdit} ${this.state.draggingOverBanner ? styles.bannerEditDraggingOver : ''}`}>
                 <input
                     type="file" accept="image/png, image/jpeg" value={''}
-                    onChange={this.onEditAvatar} onDragEnter={this.onBannerDragEnter} onDragLeave={this.onBannerDragLeave}
+                    onChange={this.onEditBanner} onDragEnter={this.onBannerDragEnter} onDragLeave={this.onBannerDragLeave}
                 />
                 <div className={`${styles.bannerEditActionBtn}`}>
                   <Icon iconName={'Pen'} />
