@@ -23,6 +23,8 @@
 	justify-content: center;
 	min-width: 200px;
 	min-height: 200px;
+	pointer-events: initial;
+
 	@include mobile-all-portrait {
 		overflow: visible;
 		min-width: 150px;
@@ -66,7 +68,6 @@
 			opacity: 0;
 		}
 	}
-
 	&DraggingOver {
 		cursor: pointer;
 		transition: 0.2s;
@@ -97,6 +98,7 @@
 		width: 100%;
 		height: 100%;
 		opacity: 0.5;
+		z-index: 0;
 		background-size: cover;
 		background-position: center;
 	}
@@ -119,19 +121,13 @@
 			opacity: 0;
 			color: $primary;
 			background-color: rgba(0, 0, 0, 0.7);
-			z-index: 1;
+			z-index: 0;
 			border-radius: 100%;
 			justify-content: center;
 			align-items: center;
 			font-size: 1.5rem;
 			padding: 22px;
 			margin: 0 30px 25px 0;
-			cursor: pointer;
-
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.85);
-				transform: scale(1.015);
-			}
 		}
 
 		input {
@@ -139,6 +135,7 @@
 			width: inherit;
 			height: inherit;
 			position: absolute;
+			z-index: 1;
 			opacity: 0;
 		}
 
@@ -151,7 +148,7 @@
 }
 
 .innerWrapper {
-	z-index: 1;
+	z-index: 2;
 	transition: 0.5s;
 	padding: $header-spacing;
 	width: 100%;
@@ -159,6 +156,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	pointer-events: none;
+
 	@include mobile-all-portrait {
 		align-items: center;
 		flex-direction: column;
@@ -188,6 +187,7 @@
 	padding: $header-spacing / 2;
 	border-radius: $header-spacing / 3;
 	margin-top: $header-spacing / 2;
+	pointer-events: initial;
 }
 
 .level {
@@ -203,7 +203,7 @@
 	color: white;
 	background-color: $primary;
 	z-index: 1;
-	
+
 	@include box-shadow;
 	@include mobile-all-portrait {
 		display: none;
@@ -248,11 +248,13 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 100%;
+	max-width: 100%;
+	width: fit-content;
 	letter-spacing: 0.1rem;
 	color: white;
 	font-weight: bold;
 	font-size: 3rem;
+	pointer-events: initial;
 
 	&Large {
 		font-size: 2.5rem;
