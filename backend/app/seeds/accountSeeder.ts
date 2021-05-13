@@ -9,6 +9,6 @@ export default class CreateAccount implements Seeder {
                 await factory(Post)({ profile: account.profile }).create()
 
                 return account
-            }).createMany(5)
+            }).createMany(1)
     }
 }

@@ -203,7 +203,7 @@ class ProfileController {
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
-        acc.role = await this.roleDAO.getRoleById(1)
+        acc.role = await this.roleDAO.getRoleById(2)
         const createdAccount = await this.accountDAO.saveAccount(acc)
         return createdAccount
     }
