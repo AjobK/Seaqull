@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon, AvatarUpload } from '..'
+import { Icon, Cropper } from '..'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -66,10 +66,14 @@ class UserBanner extends Component {
   changeAvatar = (newAvatar) => {
     this.props.user.picture = newAvatar
   }
+  changeBanner = (newBanner) => {
+    this.props.user.banner = newBanner
+  }
 
-  closeAvatarUpload = () => {
+  closeCropper = () => {
     this.setState({
-      upAvatar: null
+      upAvatar: null,
+      upBanner: null
     })
   }
 
@@ -125,7 +129,10 @@ class UserBanner extends Component {
         </div>
 
         { this.state.upAvatar && (
-            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={this.closeAvatarUpload} changeAvatar={this.changeAvatar}/>
+            <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closeCropper} changeAvatar={this.changeAvatar}/>
+        )}
+        { this.state.upBanner && (
+            <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closeCropper} changeBanner={this.changeBanner}/>
         )}
       </section>
     )
