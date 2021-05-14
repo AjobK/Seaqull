@@ -29,6 +29,14 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		width: fit-content;
+		min-width: 500px;
+		max-width: 80%;
+
+		@include mobile-sm {
+			min-width: initial;
+			max-width: 95%;
+		}
 
 		.uploadedImgWrapper {
 			display: flex;
@@ -49,6 +57,7 @@
 
 					img {
 						height: 300px;
+						object-fit: cover;
 					}
 				}
 
