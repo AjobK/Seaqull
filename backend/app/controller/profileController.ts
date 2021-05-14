@@ -63,7 +63,43 @@ class ProfileController {
             const attachment = await this.dao.getProfileAttachment(profile.id)
             const location = await this.fileService.storeImage(req.file)
 
-            await this.fileService.convertImage(location)
+            await this.fileService.convertImage(location, 800)
+
+            let profileAttachment = attachment
+
+            if (attachment.path != 'default/default.jpg') {
+                this.fileService.deleteImage(attachment.path)
+                profileAttachment.path = location
+                this.attachmentDAO.saveAttachment(profileAttachment)
+            } else {
+                const newAttachment = new Attachment()
+                profileAttachment = newAttachment;
+                profileAttachment.path = location
+                const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
+                profile.avatar_attachment = storedAttachment
+                await this.dao.saveProfile(profile)
+            }
+
+            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
+        }
+    }
+
+    /* TODO
+     * Avatars currently aren't separated from banners and are
+     * generalized as attachments stored directly in the 'profile' folder,
+     * making it difficult to store banners.
+     */
+    public updateProfileBanner = async (req: any, res: Response): Promise<Response> => {
+        const isImage = await this.fileService.isImage(req.file)
+
+        if (!isImage) {
+            return res.status(400).json({ 'error': 'Only images are allowed' })
+        } else {
+            const profile = await this.dao.getProfileByUsername( req.decoded.username )
+            const attachment = await this.dao.getProfileAttachment(profile.id)
+            const location = await this.fileService.storeImage(req.file)
+
+            await this.fileService.convertImage(location, {width: 400, height: 200})
 
             let profileAttachment = attachment
 

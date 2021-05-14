@@ -10,6 +10,7 @@ class ProfileRoutes implements RoutesBase {
     public profile = '/profile/:username?'
     public register = '/profile/register'
     public profilePicture = '/profile/picture'
+    public profileBanner = '/profile/banner'
     public router = express.Router()
     private profileController: ProfileController
     private upload
@@ -23,6 +24,7 @@ class ProfileRoutes implements RoutesBase {
     public initRoutes(): void {
         this.router.post(this.register, this.profileController.register)
         this.router.put(this.profilePicture, auth, this.upload.single('file'), this.profileController.updateProfilePicture)
+        this.router.put(this.profileBanner, auth, this.upload.single('file'), this.profileController.updateProfileBanner)
         this.router.put(this.profile, auth, this.profileController.updateProfile)
         this.router.get (this.profile, this.profileController.getProfile)
     }

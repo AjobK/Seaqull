@@ -20,8 +20,8 @@ class FileService {
         return !(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg')
     }
 
-    public async convertImage (path: any): Promise<void> {
-        sharp(path).resize(800)
+    public async convertImage (path: any, dimensions: {}): Promise<void> {
+        sharp(path).resize(dimensions)
     }
 
     public async storeImage (file: any): Promise<string> {
