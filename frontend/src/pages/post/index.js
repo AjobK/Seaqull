@@ -28,12 +28,12 @@ class Post extends App {
             isOwner: true,
             isEditing: true,
             author: {
-                name: 'Emily Washington',                                   // Display name
-                bannerURL: '/src/static/dummy/user/banner.jpg',     // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',    // Avatar URL from ID
-                path: '/profile',                                   // Custom path
-                level: 0,                                           // Level of user
-                title: 'Software Engineer'                          // Currently selected title by ID
+                name: '',                 // Display name
+                bannerURL: '',           // Banner URL from ID
+                avatarURL: '',          // Avatar URL from ID
+                path: '/profile/',     // Custom path
+                level: 0,             // Level of user
+                title: ''            // Currently selected title by ID
             },
             loaded: false,
             post: this.post
@@ -99,6 +99,24 @@ class Post extends App {
         })
     }
 
+    loadAuthor = () => {
+        /* TODO
+            display_name doesn't work for some reason (probably because I don't understand store
+            load avatar
+         */
+        const storeProfile = this.props.store.profile
+        const storeUser = this.props.store.user
+        this.setState({
+            author: {
+                name: storeProfile.display_name,                    // Display name
+                bannerURL: storeUser.banner,                        // Banner URL from ID
+                avatarURL: '/src/static/dummy/user/profile.jpg',    // Avatar URL from ID
+                level: storeUser.level,                             // Level of user
+                title: 'Default Title'                              // Currently selected title by ID
+            }
+        })
+    }
+
     toggleLike = () => {
         // Toggles liked state for all like components
         let newState = this.state
@@ -117,7 +135,9 @@ class Post extends App {
     }
 
     componentDidMount() {
-        if (!this.props.new) this.loadArticle()
+        if (!this.props.new)
+            return this.loadArticle()
+        return this.loadAuthor()
     }
 
     sendToDB(path=null) {
