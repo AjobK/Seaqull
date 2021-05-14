@@ -122,7 +122,7 @@ class RegisterPrompt extends Component {
 
   render() {
     const { username, email, password, recaptcha } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
+    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
