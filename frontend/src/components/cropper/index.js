@@ -143,6 +143,7 @@ class Cropper extends Component {
 
     render() {
         const { crop, inputImage: inputImage, error } = this.state;
+        const isCropped = (crop.height > 0 && crop.width > 0)
 
         return (
             <div className={styles.avatarUpload}>
@@ -175,8 +176,8 @@ class Cropper extends Component {
                         { !error && (
                             <Button
                                 className={styles.avatarUploadPopUpBtnsSaveButton}
-                                value={'Save'} disabled={!inputImage}
-                                onClick={inputImage ? this.saveImage : undefined}
+                                value={'Save'} disabled={!inputImage || !isCropped}
+                                onClick={inputImage && isCropped ? this.saveImage : undefined}
                             />
                         )}
                     </div>
