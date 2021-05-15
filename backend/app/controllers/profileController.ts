@@ -19,7 +19,7 @@ const isStrongPassword = require('validator/lib/isStrongPassword')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
-class ProfileService {
+class ProfileController {
     private dao: ProfileDAO
     private titleDAO: TitleDAO
     private accountDAO: AccountDAO
@@ -78,7 +78,7 @@ class ProfileService {
         let following = false
 
         if (!isOwner && decodedToken && decodedToken.username) {
-            let profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
+            const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
             profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
             profileFollowedBy.profile = profile.id
 
@@ -174,7 +174,7 @@ class ProfileService {
         }
 
         let profile: Profile | null = null
-        
+
         if (req.params.username)
             profile = await this.dao.getProfileByUsername(req.params.username)
 
@@ -184,10 +184,10 @@ class ProfileService {
         if (follower.id == profile.id)
             return res.status(422).json({ error: 'Following yourself is not possible' })
 
-        let profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
+        const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
         profileFollowedBy.follower = follower.id
         profileFollowedBy.profile = profile.id
-        
+
         const followedProfile = await this.dao.follow(profileFollowedBy)
 
         return res.status(200).json({ message: `Succesfully ${followedProfile ? '' : 'un'}followed profile`, following: followedProfile })
@@ -271,4 +271,4 @@ class ProfileService {
         return account
     }
 }
-export default ProfileService
+export default ProfileController

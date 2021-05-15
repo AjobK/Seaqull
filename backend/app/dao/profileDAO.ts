@@ -1,7 +1,6 @@
 import DatabaseConnector from '../util/databaseConnector'
 import { Profile } from '../entity/profile'
 import ProfileFollowedBy from '../entity/profile_followed_by'
-import { profile } from 'console'
 
 class ProfileDAO {
     public async getProfileByUsername(username: string): Promise<Profile> {

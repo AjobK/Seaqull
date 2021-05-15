@@ -1,0 +1,70 @@
+@import '../../styles/index.scss';
+
+.error {
+	color: $primary;
+	margin-bottom: 10px;
+}
+
+.editorLabel {
+	&__icon {
+		font-size: 1em;
+		margin-right: 5px;
+		background-color: white;
+		border-radius: 100%;
+		color: $textdark;
+	
+		@include mobile-all-portrait {
+			font-size: 1rem;
+		}
+	
+		@include mobile-xs {
+			font-size: 0.9rem;
+		}
+	
+		&Check {
+			color: $success;
+		}
+	
+		&Times {
+			color: $failure;
+		}
+	}
+
+	&__title {
+		font-size: 1.5rem;
+		font-weight: bold;
+		color: $textdark;
+	}
+}
+
+.editorForm {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	width: 100%;
+
+	@include mobile-all-portrait {
+		flex-direction: column;
+	}
+
+	&__editor {
+		border-radius: 22.5px;
+		background-color: white;
+		color: $textdark;
+		padding: 10px 18px;
+		margin-right: 10px;
+		//TODO: find better solution
+		width: 88%;
+
+		@include mobile-all-portrait {
+			width: 100%;
+			margin-right: 0;
+		}
+	}
+
+	&__button {
+		@include mobile-all-portrait {
+			margin-top: 10px;
+		}
+	}
+}
