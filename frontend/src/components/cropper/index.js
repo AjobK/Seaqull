@@ -129,13 +129,15 @@ class Cropper extends Component {
         }
 
         Axios.put(address,
-                fd, 
-                {withCredentials: true, 'content-type': 'multipart/form-data'})
-                .then((res) => {
-                    this.props.changeAvatar(res.data.url) // put in Axios response
-                    this.props.closeCropper()
-                }).catch(err => {
-                    if (err.response.status === 401) {
+            fd,
+            {withCredentials: true, 'content-type': 'multipart/form-data'})
+            .then((res) => {
+                this.props.changeImage(res.data.url) // put in Axios response
+                this.props.closeCropper()
+            })
+            .catch(err => {
+                console.log(err)
+                if (err.response.status === 401) {
                     this.props.history.push('/login/')
                 }
             })

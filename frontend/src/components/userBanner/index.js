@@ -129,10 +129,10 @@ class UserBanner extends Component {
         </div>
 
         { this.state.upAvatar && (
-            <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closeCropper} changeAvatar={this.changeAvatar}/>
+            <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closeCropper} changeImage={this.changeAvatar}/>
         )}
         { this.state.upBanner && (
-            <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closeCropper} changeBanner={this.changeBanner}/>
+            <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closeCropper} changeImage={this.changeBanner}/>
         )}
       </section>
     )

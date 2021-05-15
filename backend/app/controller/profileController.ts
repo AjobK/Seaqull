@@ -196,8 +196,6 @@ class ProfileController {
 
         let attachment = attachments[type]
 
-        console.log(attachments)
-
         // Create type dependent variables
         let dimensions
         let typeDefaultPath = 'default/'
@@ -211,7 +209,7 @@ class ProfileController {
 
         await this.fileService.convertImage(location, dimensions)
 
-        if (attachment.path != typeDefaultPath) {
+        if (attachment.path !== typeDefaultPath) {
             this.fileService.deleteImage(attachment.path)
             attachment.path = location
 
@@ -282,7 +280,8 @@ class ProfileController {
 
         let newProfile = new Profile()
 
-        newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)
+        newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
+        newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0
