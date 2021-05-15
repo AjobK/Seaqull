@@ -41,15 +41,15 @@ class Cropper extends Component {
     }
 
     onImageLoaded = (image) => {
-        this.imageRef = image;
+        this.imageRef = image
     };
 
     onCropComplete = (crop) => {
-        this.makeClientCrop(crop).then();
+        this.makeClientCrop(crop).then()
     };
 
     onCropChange = (crop) => {
-        this.setState({ crop });
+        this.setState({ crop })
     };
 
     async makeClientCrop(crop) {
@@ -58,17 +58,17 @@ class Cropper extends Component {
                 this.imageRef,
                 crop
             );
-            this.setState({ croppedImage });
+            this.setState({ croppedImage })
         }
     }
 
     getCroppedImg(image, crop) {
-        const canvas = document.createElement('canvas');
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-        const ctx = canvas.getContext('2d');
+        const canvas = document.createElement('canvas')
+        const scaleX = image.naturalWidth / image.width
+        const scaleY = image.naturalHeight / image.height
+        canvas.width = crop.width
+        canvas.height = crop.height
+        const ctx = canvas.getContext('2d')
 
         ctx.drawImage(
             image,
@@ -82,15 +82,13 @@ class Cropper extends Component {
             crop.height
         );
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             canvas.toBlob((blob) => {
-                if (!blob) {
-                    reject(new Error('Canvas is empty'));
-                    return;
-                }
+                if (!blob)
+                    return
 
                 resolve(new File([blob], "cropped",{ type: "image/png" }))
-            }, 'image/png');
+            }, 'image/png')
         });
     }
 
@@ -99,7 +97,7 @@ class Cropper extends Component {
         const maxFileSizeKB = 4000
 
         const fileSizeKB = ((3 * (img.length / 4)) / 1024).toFixed(2)
-        const fileType = img.match(/[^:/]\w+(?=;|,)/)[0];
+        const fileType = img.match(/[^:/]\w+(?=;|,)/)[0]
 
         if (!allowedFileTypes.includes(fileType))
             return this.setState({
@@ -144,7 +142,7 @@ class Cropper extends Component {
     }
 
     render() {
-        const { crop, inputImage: inputImage, error } = this.state;
+        const { crop, inputImage: inputImage, error } = this.state
         const isCropped = (crop.height > 0 && crop.width > 0)
 
         return (
