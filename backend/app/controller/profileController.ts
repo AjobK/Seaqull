@@ -1,7 +1,7 @@
-import { Request, Response } from 'express'
-import { v4 as uuidv4 } from 'uuid'
+import {Request, Response} from 'express'
+import {v4 as uuidv4} from 'uuid'
 import isEmail from 'validator/lib/isEmail'
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
+import {ReCAPTCHA} from 'node-grecaptcha-verify'
 import * as bcrypt from 'bcrypt'
 import Account from '../entity/account'
 import Profile from '../entity/profile'
@@ -60,27 +60,25 @@ class ProfileController {
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
             const profile = await this.dao.getProfileByUsername( req.decoded.username )
-            const attachment = await this.dao.getProfileAttachment(profile.id)
-            const location = await this.fileService.storeImage(req.file)
+            const attachments = await this.dao.getProfileAttachments(profile.id)
+            const location = await this.fileService.storeImage(req.file, 'avatar')
 
             await this.fileService.convertImage(location, 800)
 
-            let profileAttachment = attachment
+            let avatar = attachments.avatar
 
-            if (attachment.path != 'default/default.jpg') {
-                this.fileService.deleteImage(attachment.path)
-                profileAttachment.path = location
-                this.attachmentDAO.saveAttachment(profileAttachment)
+            if (avatar.path != 'default/defaultAvatar.jpg') {
+                this.fileService.deleteImage(avatar.path)
+                avatar.path = location
+                await this.attachmentDAO.saveAttachment(avatar)
             } else {
-                const newAttachment = new Attachment()
-                profileAttachment = newAttachment;
-                profileAttachment.path = location
-                const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
-                profile.avatar_attachment = storedAttachment
+                avatar = new Attachment();
+                avatar.path = location
+                profile.avatar_attachment = await this.attachmentDAO.saveAttachment(avatar)
                 await this.dao.saveProfile(profile)
             }
 
-            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
+            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + avatar.path })
         }
     }
 
@@ -90,34 +88,35 @@ class ProfileController {
      * making it difficult to store banners.
      */
     public updateProfileBanner = async (req: any, res: Response): Promise<Response> => {
-        const isImage = await this.fileService.isImage(req.file)
-
-        if (!isImage) {
-            return res.status(400).json({ 'error': 'Only images are allowed' })
-        } else {
-            const profile = await this.dao.getProfileByUsername( req.decoded.username )
-            const attachment = await this.dao.getProfileAttachment(profile.id)
-            const location = await this.fileService.storeImage(req.file)
-
-            await this.fileService.convertImage(location, {width: 400, height: 200})
-
-            let profileAttachment = attachment
-
-            if (attachment.path != 'default/default.jpg') {
-                this.fileService.deleteImage(attachment.path)
-                profileAttachment.path = location
-                this.attachmentDAO.saveAttachment(profileAttachment)
-            } else {
-                const newAttachment = new Attachment()
-                profileAttachment = newAttachment;
-                profileAttachment.path = location
-                const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
-                profile.avatar_attachment = storedAttachment
-                await this.dao.saveProfile(profile)
-            }
-
-            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
-        }
+        // const isImage = await this.fileService.isImage(req.file)
+        //
+        // if (!isImage) {
+        //     return res.status(400).json({ 'error': 'Only images are allowed' })
+        // } else {
+        //     const profile = await this.dao.getProfileByUsername( req.decoded.username )
+        //     const attachment = await this.dao.getProfileAttachment(profile.id)
+        //     const location = await this.fileService.storeImage(req.file)
+        //
+        //     await this.fileService.convertImage(location, {width: 400, height: 200})
+        //
+        //     let profileAttachment = attachment
+        //
+        //     if (attachment.path != 'default/defaultAvatar.jpg') {
+        //         this.fileService.deleteImage(attachment.path)
+        //         profileAttachment.path = location
+        //         this.attachmentDAO.saveAttachment(profileAttachment)
+        //     } else {
+        //         const newAttachment = new Attachment()
+        //         profileAttachment = newAttachment;
+        //         profileAttachment.path = location
+        //         const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
+        //         profile.avatar_attachment = storedAttachment
+        //         await this.dao.saveProfile(profile)
+        //     }
+        //
+        //     return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
+        // }
+        return res.status(200)
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -157,10 +156,12 @@ class ProfileController {
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
-        const attachment = await this.dao.getProfileAttachment(profile.id)
+        const attachments = await this.dao.getProfileAttachments(profile.id)
 
-        if ( attachment )
-            payload['avatar'] = 'http://localhost:8000/' + attachment.path
+        if ( attachments.avatar )
+            payload['avatar'] = 'http://localhost:8000/' + attachments.avatar.path
+        if ( attachments.banner )
+            payload['banner'] = 'http://localhost:8000/' + attachments.banner.path
 
         return res.status(200).json({ 'profile': payload })
     }

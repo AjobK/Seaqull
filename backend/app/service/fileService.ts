@@ -24,13 +24,14 @@ class FileService {
         sharp(path).resize(dimensions)
     }
 
-    public async storeImage (file: any): Promise<string> {
+    // Types: banner & avatar
+    public async storeImage (file: any, type: string): Promise<string> {
         const today = new Date()
         const day = String(today.getDate()).padStart(2, '0')
         const month = String(today.getMonth() + 1).padStart(2, '0')
         const year = today.getFullYear()
         const name = uuidv4() + file.detectedFileExtension
-        let newPath = 'app/public/profile/' + year
+        let newPath = 'app/public/profile/' + type + '/' + year
 
         if (!fs.existsSync(newPath)) {
             fs.mkdirSync(newPath)
@@ -45,7 +46,7 @@ class FileService {
 
         newPath = newPath + '/' + month + '/' + day + '/' + name
         await pipeline(file.stream, fs.createWriteStream(newPath))
-        return 'profile/' + year + '/' + month + '/' + day + '/' + name
+        return 'profile/' + type + '/' + year + '/' + month + '/' + day + '/' + name
     }
 
     public deleteImage (path: string): void {
