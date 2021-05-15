@@ -21,6 +21,9 @@ const isStrongPassword = require('validator/lib/isStrongPassword')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
+const BANNER = 'banner'
+const AVATAR = 'avatar'
+
 class ProfileController {
     private dao: ProfileDAO
     private titleDAO: TitleDAO
@@ -59,24 +62,7 @@ class ProfileController {
         if (!isImage) {
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
-            const profile = await this.dao.getProfileByUsername( req.decoded.username )
-            const attachments = await this.dao.getProfileAttachments(profile.id)
-            const location = await this.fileService.storeImage(req.file, 'avatar')
-
-            await this.fileService.convertImage(location, 800)
-
-            let avatar = attachments.avatar
-
-            if (avatar.path != 'default/defaultAvatar.jpg') {
-                this.fileService.deleteImage(avatar.path)
-                avatar.path = location
-                await this.attachmentDAO.saveAttachment(avatar)
-            } else {
-                avatar = new Attachment();
-                avatar.path = location
-                profile.avatar_attachment = await this.attachmentDAO.saveAttachment(avatar)
-                await this.dao.saveProfile(profile)
-            }
+            const avatar = await this.updateAttachment(req.decoded.username, req.file, AVATAR)
 
             return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + avatar.path })
         }
@@ -221,6 +207,40 @@ class ProfileController {
         })
         res.send()
         return res
+    }
+
+    private updateAttachment = async (username, file, type): Promise<any> => {
+        const profile = await this.dao.getProfileByUsername( username )
+        const attachments = await this.dao.getProfileAttachments(profile.id)
+        const location = await this.fileService.storeImage(file, type)
+
+        // Resize attachment
+        if (type === AVATAR)
+            await this.fileService.convertImage(location, 800)
+        if (type === BANNER)
+            await this.fileService.convertImage(location, {width: 400, height: 200})
+
+        let attachment = attachments[type]
+
+        if (attachment.path != 'default/defaultAvatar.jpg') {
+            this.fileService.deleteImage(attachment.path)
+            attachment.path = location
+
+            return await this.attachmentDAO.saveAttachment(attachment)
+        }
+
+        let typeField
+        if (type === AVATAR)
+            typeField = 'avatar_attachment'
+        if (type === BANNER)
+            typeField = 'banner_attachment'
+
+        attachment = new Attachment();
+        attachment.path = location
+        profile[typeField] = await this.attachmentDAO.saveAttachment(attachment)
+        await this.dao.saveProfile(profile)
+
+        return profile[typeField]
     }
 
     private async checkValidUsername (username: string): Promise<string> {
