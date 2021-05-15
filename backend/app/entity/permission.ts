@@ -1,10 +1,12 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity('permission')
 export class Permission extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-RolePermission
+    @Column()
+    name: string
 }
+
 export default Permission
