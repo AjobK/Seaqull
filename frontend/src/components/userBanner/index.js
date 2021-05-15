@@ -17,9 +17,8 @@ class UserBanner extends Component {
   follow = () => {
     const username = window.location.pathname.split('/').filter(i => i != '').pop()
 
-    Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, {withCredentials: true})
+    Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
     .then((res) => {
-      console.log(res.data.following)
       this.setState({ following: res.data.following || false })
     })
     .catch(err => {
@@ -41,13 +40,13 @@ class UserBanner extends Component {
     }
 
     return (
-      <section className={styles.wrapper}>
-        <div className={styles.innerWrapper}>
-          <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
-            <span className={styles.levelMobile}>{ user.level || ''}</span>
-            { user.editable && <span className={styles.pictureEdit}>
-              <Icon iconName={'Pen'} />
-            </span>}
+      <section className={ styles.wrapper }>
+        <div className={ styles.innerWrapper }>
+          <div className={ styles.picture } style={{ backgroundImage: `url(${user.picture})` }}>
+            <span className={ styles.levelMobile }>{ user.level || ''}</span>
+            { user.editable && <span className={ styles.pictureEdit }>
+              <Icon iconName={ 'Pen' } />
+            </span> }
             { this.props.store.profile.loggedIn && !user.isOwner &&
               <button className={`${styles.follow} ${this.state.following ? styles.replied : ''}`} onClick={this.follow}>
                 <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
@@ -55,15 +54,15 @@ class UserBanner extends Component {
               </button>
             }
           </div>
-          <div className={styles.info}>
-            <h2 className={[styles.name, fontSize].join(' ')}>{ user.username || ''}</h2>
-            <div className={styles.achieved}>
-              <span className={styles.level}>{ user.level || ''}</span>
-              <h3 className={styles.role}>{ user.title || ''}</h3>
+          <div className={ styles.info }>
+            <h2 className={ [styles.name, fontSize].join(' ')}>{ user.username || '' }</h2>
+            <div className={ styles.achieved }>
+              <span className={ styles.level }>{ user.level || '' }</span>
+              <h3 className={ styles.role }>{ user.title || '' }</h3>
             </div>
           </div>
         </div>
-        <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
+        <div className={ styles.background } style={{ backgroundImage: `url(${user.banner})` }} />
       </section>
     )
   }
