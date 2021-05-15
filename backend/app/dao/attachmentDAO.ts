@@ -1,4 +1,4 @@
-import DatabaseConnector from '../service/databaseConnector'
+import DatabaseConnector from '../util/databaseConnector'
 import Attachment from '../entity/attachment';
 
 class attachmentDAO {

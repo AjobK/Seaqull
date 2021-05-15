@@ -1,4 +1,4 @@
-import DatabaseConnector from '../service/databaseConnector'
+import DatabaseConnector from '../util/databaseConnector'
 import { Post } from '../entity/post'
 import Profile from '../entity/profile'
 import { PostLike } from '../entity/post_like'
@@ -87,4 +87,5 @@ class PostDAO {
         return await repository.findOne({ where: { post: post.id, profile: profile.id }, relations: ['post', 'profile'] })
     }
 }
+
 export default PostDAO

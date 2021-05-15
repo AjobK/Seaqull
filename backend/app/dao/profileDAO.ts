@@ -1,6 +1,7 @@
-import DatabaseConnector from '../service/databaseConnector';
+import DatabaseConnector from '../util/databaseConnector';
 import { Profile } from '../entity/profile';
 import Attachment from '../entity/attachment';
+import ProfileFollowedBy from '../entity/profile_followed_by'
 
 class ProfileDAO {
     public async getProfileByUsername(username: string): Promise<Profile> {
@@ -26,5 +27,27 @@ class ProfileDAO {
         const profile = await repositoryProfile.save(u)
         return profile
     }
+
+    public async follow(profileFollowedBy: ProfileFollowedBy): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+
+        const foundFollow = await repository.findOne(profileFollowedBy)
+
+        if (!foundFollow)
+            await repository.save(profileFollowedBy)
+        else
+            await repository.delete(profileFollowedBy)
+
+        return !foundFollow
+    }
+
+    public async isFollowing(profileFollowedBy: ProfileFollowedBy): Promise<any> {
+        const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+
+        const foundFollow = await repository.findOne(profileFollowedBy)
+
+        return !!foundFollow
+    }
 }
+
 export default ProfileDAO

@@ -2,6 +2,7 @@ import * as Faker from 'faker'
 import { define, factory } from 'typeorm-seeding'
 import title from '../entity/title'
 import { Profile } from '../entity/profile'
+import Attachment from '../entity/attachment'
 
 define(Profile, (faker: typeof Faker, settings: { display_name: string }): Profile => {
     const profileFake = new Profile()
@@ -9,7 +10,7 @@ define(Profile, (faker: typeof Faker, settings: { display_name: string }): Profi
     const createdTitle = factory(title)() as any
     profileFake.title = createdTitle
 
-    profileFake.avatar_attachment = null
+    profileFake.avatar_attachment = factory(Attachment)('default/default.jpg') as any
     profileFake.created_at = new Date()
     profileFake.custom_path = faker.random.uuid()
     profileFake.display_name = settings.display_name || 'root'

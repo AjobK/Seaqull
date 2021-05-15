@@ -17,4 +17,5 @@ export class PostHasAttachment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
+
 export default PostHasAttachment

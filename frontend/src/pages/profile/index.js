@@ -87,6 +87,7 @@ class Profile extends App {
   updateProfile(profile) {
     const user = {
       isOwner: profile.isOwner,
+      following: profile.isOwner ? false : profile.following,
       username: profile.username,
       title: profile.title,
       level: this.calcLevel(profile.experience),

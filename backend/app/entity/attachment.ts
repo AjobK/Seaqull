@@ -17,4 +17,5 @@ export class Attachment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
+
 export default Attachment

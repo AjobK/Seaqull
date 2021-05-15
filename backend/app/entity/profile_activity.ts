@@ -22,4 +22,5 @@ export class ProfileActivity extends BaseEntity {
     @CreateDateColumn()
     created_at: Date
 }
+
 export default ProfileActivity
