@@ -87,4 +87,5 @@ class PostDAO {
         return await repository.findOne({ where: { post: post.id, profile: profile.id }, relations: ['post', 'profile'] })
     }
 }
+
 export default PostDAO

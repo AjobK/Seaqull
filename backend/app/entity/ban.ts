@@ -28,4 +28,5 @@ export class Ban extends BaseEntity {
     @Column()
     ip_ban: number
 }
+
 export default Ban

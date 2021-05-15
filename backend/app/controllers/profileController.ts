@@ -10,6 +10,7 @@ import RoleDao from '../dao/roleDAO'
 import ProfileDAO from '../dao/profileDAO'
 import TitleDAO from '../dao/titleDAO'
 import AccountDAO from '../dao/accountDAO'
+import ProfileFollowedBy from '../entity/profile_followed_by'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -74,8 +75,19 @@ class ProfileController {
         if (receivedUsername && decodedToken)
             isOwner = !!(receivedUsername == decodedToken.username)
 
+        let following = false
+
+        if (!isOwner && decodedToken && decodedToken.username) {
+            const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
+            profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
+            profileFollowedBy.profile = profile.id
+
+            following = await this.dao.isFollowing(profileFollowedBy)
+        }
+
         const payload = {
             isOwner: isOwner,
+            following: following,
             username: receivedUsername,
             experience: profile.experience,
             title: title ? title.name : 'Title not found...' ,
@@ -139,6 +151,46 @@ class ProfileController {
             user: newAccount
         })
         res.send()
+    }
+
+    public follow = async (req: Request, res: Response): Promise<Response> => {
+        const { token } = req.cookies
+        let decodedToken: any
+
+        try {
+            decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        } catch (e) {
+            decodedToken = null
+
+            return res.status(401).json({ error: 'Unauthorized' })
+        }
+
+        let follower: Profile | null = null
+
+        if (decodedToken && decodedToken.username) {
+            follower = await this.dao.getProfileByUsername(decodedToken.username)
+        } else {
+            return res.status(404).json({ error: 'No username to follow was given' })
+        }
+
+        let profile: Profile | null = null
+
+        if (req.params.username)
+            profile = await this.dao.getProfileByUsername(req.params.username)
+
+        if (!follower || !profile)
+            return res.status(422).json({ error: 'No profile to follow or follower found in request' })
+
+        if (follower.id == profile.id)
+            return res.status(422).json({ error: 'Following yourself is not possible' })
+
+        const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
+        profileFollowedBy.follower = follower.id
+        profileFollowedBy.profile = profile.id
+
+        const followedProfile = await this.dao.follow(profileFollowedBy)
+
+        return res.status(200).json({ message: `Succesfully ${followedProfile ? '' : 'un'}followed profile`, following: followedProfile })
     }
 
     private async checkValidUsername (username: string): Promise<string> {
@@ -219,4 +271,5 @@ class ProfileController {
         return account
     }
 }
+
 export default ProfileController

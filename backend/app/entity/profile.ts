@@ -37,4 +37,5 @@ export class Profile extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
+
 export default Profile

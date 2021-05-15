@@ -8,4 +8,5 @@ class RoleDao {
         return role
     }
 }
+
 export default RoleDao

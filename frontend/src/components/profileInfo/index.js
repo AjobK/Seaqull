@@ -22,6 +22,7 @@ class ProfileInfo extends Component {
 			loggedIn: this.props.loggedIn
 		}
 		
+		this.changeStateLock = null
 		Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 		
 	}
@@ -50,8 +51,8 @@ class ProfileInfo extends Component {
 		this.setState({ editorState })
 	}
 
-	changeEditingState() {
-		if (!this.state.editing) {
+	changeEditingState(param) {	
+		if (!this.state.editing && this.changeStateLock < Date.now()) {
 			this.setState({
 				editing: true,
 				icon: 'Save'
@@ -60,7 +61,8 @@ class ProfileInfo extends Component {
 			this.setState({
 				editorState: EditorState.moveFocusToEnd(this.state.editorState)
 			})
-		} else {
+		} else if (this.changeStateLock < Date.now()) {
+			this.changeStateLock = Date.now() + 500
 		  	this.saveNewDescription()
 
 		  	this.setState({
@@ -69,16 +71,21 @@ class ProfileInfo extends Component {
 		  	})
 		}  
 	  }
-	
 
 	saveNewDescription = () => {
-		if (this.state.changedContent){
+		if (this.state.changedContent) {
 			const payload = {
 				username: this.state.user.username,
 				description: this.state.user.description
 			}
 
-			Axios.put('/profile', payload, {withCredentials: true})
+			this.setState({
+				editing: false,
+				icon: 'Pen'
+		  	})
+
+			Axios.put('/profile', payload, { withCredentials: true })
+			this.setState({ changedContent: false })
 		}
 	}
 
@@ -86,7 +93,7 @@ class ProfileInfo extends Component {
 		let icon
 		let currentOption = ''
 
-		if (this.props.loggedIn && this.state.user.isOwner){
+		if (this.props.loggedIn && this.state.user.isOwner) {
 			icon = <Icon iconName={this.state.icon} className={styles.icon} />
 
 			this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'
@@ -103,10 +110,10 @@ class ProfileInfo extends Component {
 						spellCheck={true}/>
 				</section>
 				<section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
-            		<section> 
-						{icon} 
-					</section>
-					<p> {currentOption} </p>
+						<section> 
+							{icon} 
+						</section>
+						<p> {currentOption} </p>
           		</section>
 			</section>
 		)

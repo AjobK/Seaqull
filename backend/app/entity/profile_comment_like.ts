@@ -18,4 +18,5 @@ export class ProfileCommentLike extends BaseEntity {
     @Column()
     liked_at: Date
 }
+
 export default ProfileCommentLike
