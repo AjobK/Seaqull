@@ -4,7 +4,7 @@ import multer = require('multer')
 
 const { promisify } = require('util')
 const pipeline = promisify(require('stream').pipeline)
-const sharp = require('sharp');
+const sharp = require('sharp')
 
 class FileService {
 
@@ -21,7 +21,8 @@ class FileService {
     }
 
     public async convertImage (path: any, dimensions: {}): Promise<void> {
-        sharp(path).resize(dimensions)
+        sharp(path)
+            .resize(dimensions)
     }
 
     // Types: banner & avatar

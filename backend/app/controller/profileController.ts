@@ -203,7 +203,7 @@ class ProfileController {
             dimensions = 800
             typeDefaultPath += 'defaultAvatar.jpg'
         } else if (type === BANNER) {
-            dimensions = {width: 400, height: 200}
+            dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
             typeDefaultPath += 'defaultBanner.jpg'
         }
 
