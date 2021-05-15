@@ -23,7 +23,7 @@ class CommentForm extends Component {
     onCommentSubmit = () => {
         const url = `http://localhost:8000/api/comment/`
 
-        Axios.post(url, this.state.comment, {withCredentials: true}).then(response => {
+        Axios.post(url, this.state.comment, { withCredentials: true }).then(response => {
             this.resetComment()
             this.props.onCommentAdd()
         }).catch(err => {
@@ -40,16 +40,16 @@ class CommentForm extends Component {
         const { className } = this.props
 
         return (
-            <div className={className ? className : ''}>
+            <div className={ className ? className : '' }>
                 <CommentEditor
-                    type={this.props.type} 
-                    onCommentChangeCallback={(data) => {
+                    type={ this.props.type } 
+                    onCommentChangeCallback={ (data) => {
                         this.comment.content = data
 
                         this.setState({ comment: this.comment })
-                    }}
-                    value={this.state.comment.content}
-                    onSubmitCallback={this.onCommentSubmit}
+                    } }
+                    value={ this.state.comment.content }
+                    onSubmitCallback={ this.onCommentSubmit }
                 />
             </div>
         )

@@ -20,8 +20,8 @@ class Dialog extends Component {
                         <p>{ this.props.body }</p>
                     </div>
                     <div className={ styles.dialogButtons }>
-                        <Button className={ styles.dialogCancelButton } onClick={ this.props.onCloseCallback } value="Cancel"/>
-                        <Button className={ styles.dialogConfirmButton } onClick={ this.props.onConfirmCallback } value={ this.props.confirmText || 'Confirm' }/>
+                        <Button className={ styles.dialogCancelButton } onClick={ this.props.onCloseCallback } value="Cancel" />
+                        <Button className={ styles.dialogConfirmButton } onClick={ this.props.onConfirmCallback } value={ this.props.confirmText || 'Confirm' } />
                     </div>
                 </div>
             </div>
