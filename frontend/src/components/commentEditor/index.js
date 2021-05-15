@@ -134,7 +134,7 @@ class CommentEditor extends Component {
                             handleKeyCommand={ this.handleKeyCommand }                     
                         />
                     </div>
-                    <Button value={ this.buttonText } className={ styles.editorForm__button } type="button" onClick={ this.onSubmit }/>
+                    <Button value={ this.buttonText } className={ styles.editorForm__button } type="button" onClick={ this.onSubmit } />
                 </div>
             </section>
         )

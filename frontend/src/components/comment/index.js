@@ -44,7 +44,7 @@ class Comment extends Component {
         if(!this.isReply && this.state.isReplying) {
             return (
                 <div className={ styles.comment__replyForm }>
-                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd }/>
+                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd } />
                 </div>
             )
         }
@@ -82,7 +82,7 @@ class Comment extends Component {
         if(!this.isReply) {
             return (
                 <div className={ styles.comment__replyButton }>
-                    <Icon iconName={ 'Reply' } className={ styles.comment__replyButtonIcon } onClick={ this.onReplyClick }/>
+                    <Icon iconName={ 'Reply' } className={ styles.comment__replyButtonIcon } onClick={ this.onReplyClick } />
                 </div>
             )
         }
@@ -111,7 +111,7 @@ class Comment extends Component {
                                     </div>
                                 </div>
                                 <div className={ styles.comment__content }>
-                                    <Editor editorState={ this.state.editorState } readOnly={ true }/>
+                                    <Editor editorState={ this.state.editorState } readOnly={ true } />
                                 </div>
                             </div>
                             <div className={ styles.comment__interactive }>
@@ -129,7 +129,7 @@ class Comment extends Component {
                                 {
                                     (profile.loggedIn && comment.profile.display_name === profile.display_name) && (
                                         <>
-                                            <Icon iconName={ 'Trash' } className={ styles.comment__deleteButtonIcon } onClick={ this.onDeleteClick }/>
+                                            <Icon iconName={ 'Trash' } className={ styles.comment__deleteButtonIcon } onClick={ this.onDeleteClick } />
                                             {
                                                 (!this.isReply) && (
                                                     <span className={ styles.seperator }></span>
