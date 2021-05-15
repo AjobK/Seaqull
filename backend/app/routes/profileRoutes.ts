@@ -1,6 +1,6 @@
 import * as express from 'express'
 import ProfileController from '../controllers/profileController'
-import RoutesBase from '../interfaces/ControllerBase'
+import RoutesBase from '../interfaces/RouterBase'
 
 const auth = require('../middleware/isAuth.ts')
 
@@ -11,7 +11,7 @@ class ProfileRoutes implements RoutesBase {
     public follow = '/profile/follow/:username?'
     private profileController: ProfileController
 
-    constructor(){
+    constructor() {
         this.profileController = new ProfileController()
         this.initRoutes()
     }
@@ -23,4 +23,5 @@ class ProfileRoutes implements RoutesBase {
         this.router.post(this.follow, this.profileController.follow)
     }
 }
+
 export default ProfileRoutes

@@ -271,4 +271,5 @@ class ProfileController {
         return account
     }
 }
+
 export default ProfileController

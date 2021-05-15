@@ -39,4 +39,5 @@ export class Account extends BaseEntity {
     @Column({ nullable: true })
     changed_pw_at: Date
 }
+
 export default Account

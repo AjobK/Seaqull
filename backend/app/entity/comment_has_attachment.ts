@@ -24,4 +24,5 @@ export class CommentHasAttachment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
+
 export default CommentHasAttachment
