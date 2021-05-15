@@ -12,10 +12,10 @@ class ProfileDAO {
     public async getProfileAttachments(profileId: number): Promise<{ avatar: Attachment, banner: Attachment }> {
         const repositoryProfile = await DatabaseConnector.getRepository('Profile')
         const avatar = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['avatar_attachment'] })
-        const banner = null
+        const banner = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['banner_attachment'] })
         return {
             avatar: avatar.avatar_attachment,
-            banner
+            banner: banner.banner_attachment
         }
     }
 

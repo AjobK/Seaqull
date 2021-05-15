@@ -74,35 +74,15 @@ class ProfileController {
      * making it difficult to store banners.
      */
     public updateProfileBanner = async (req: any, res: Response): Promise<Response> => {
-        // const isImage = await this.fileService.isImage(req.file)
-        //
-        // if (!isImage) {
-        //     return res.status(400).json({ 'error': 'Only images are allowed' })
-        // } else {
-        //     const profile = await this.dao.getProfileByUsername( req.decoded.username )
-        //     const attachment = await this.dao.getProfileAttachment(profile.id)
-        //     const location = await this.fileService.storeImage(req.file)
-        //
-        //     await this.fileService.convertImage(location, {width: 400, height: 200})
-        //
-        //     let profileAttachment = attachment
-        //
-        //     if (attachment.path != 'default/defaultAvatar.jpg') {
-        //         this.fileService.deleteImage(attachment.path)
-        //         profileAttachment.path = location
-        //         this.attachmentDAO.saveAttachment(profileAttachment)
-        //     } else {
-        //         const newAttachment = new Attachment()
-        //         profileAttachment = newAttachment;
-        //         profileAttachment.path = location
-        //         const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
-        //         profile.avatar_attachment = storedAttachment
-        //         await this.dao.saveProfile(profile)
-        //     }
-        //
-        //     return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
-        // }
-        return res.status(200)
+        const isImage = await this.fileService.isImage(req.file)
+
+        if (!isImage) {
+            return res.status(400).json({ 'error': 'Only images are allowed' })
+        } else {
+            const banner = await this.updateAttachment(req.decoded.username, req.file, BANNER)
+
+            return res.status(200).json({ 'message': 'success' , 'url': 'http://localhost:8000/' + banner.path })
+        }
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -214,15 +194,24 @@ class ProfileController {
         const attachments = await this.dao.getProfileAttachments(profile.id)
         const location = await this.fileService.storeImage(file, type)
 
-        // Resize attachment
-        if (type === AVATAR)
-            await this.fileService.convertImage(location, 800)
-        if (type === BANNER)
-            await this.fileService.convertImage(location, {width: 400, height: 200})
-
         let attachment = attachments[type]
 
-        if (attachment.path != 'default/defaultAvatar.jpg') {
+        console.log(attachments)
+
+        // Create type dependent variables
+        let dimensions
+        let typeDefaultPath = 'default/'
+        if (type === AVATAR) {
+            dimensions = 800
+            typeDefaultPath += 'defaultAvatar.jpg'
+        } else if (type === BANNER) {
+            dimensions = {width: 400, height: 200}
+            typeDefaultPath += 'defaultBanner.jpg'
+        }
+
+        await this.fileService.convertImage(location, dimensions)
+
+        if (attachment.path != typeDefaultPath) {
             this.fileService.deleteImage(attachment.path)
             attachment.path = location
 
@@ -232,7 +221,7 @@ class ProfileController {
         let typeField
         if (type === AVATAR)
             typeField = 'avatar_attachment'
-        if (type === BANNER)
+        else if (type === BANNER)
             typeField = 'banner_attachment'
 
         attachment = new Attachment();
