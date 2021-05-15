@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, AvatarUpload } from '..'
+import Axios from 'axios'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -83,7 +84,7 @@ class UserBanner extends Component {
       <section className={styles.wrapper}>
         <div className={styles.innerWrapper}>
           <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
-            <span className={styles.levelMobile}>{ user.level || ''}</span>
+            <span className={styles.levelMobile}>{ user.level || '' }</span>
             { this.props.owner && (
                 <span className={`${styles.pictureEdit} ${this.state.draggingOver ? styles.pictureDraggingOver : ''}`}>
                   <Icon iconName={'Pen'} />
@@ -93,12 +94,11 @@ class UserBanner extends Component {
                       style={{ backgroundImage: `url(${user.picture})` }}
                   />
                 </span>
-                
             )}
             { this.props.store.profile.loggedIn && !user.isOwner &&
-              <button className={`${styles.follow} ${this.state.following ? styles.replied : ''}`} onClick={this.follow}>
+              <button className={ `${styles.follow} ${this.state.following ? styles.replied : ''}` } onClick={ this.follow }>
                 <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
-                <Icon iconName={this.state.following ? 'Check' : 'Reply'} classNames={styles.replyIcon} />
+                <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
               </button>
             }
           </div>
@@ -110,9 +110,9 @@ class UserBanner extends Component {
             </div>
           </div>
         </div>
-        <div className={styles.background} style={{ backgroundImage: `url(${user.banner})` }} />
+        <div className={ styles.background } style={{ backgroundImage: `url(${user.banner})` }} />
         { this.state.upAvatar && (
-            <AvatarUpload img={this.state.upAvatar} closeAvatarUpload={this.closeAvatarUpload} changeAvatar={this.changeAvatar}/>
+            <AvatarUpload img={ this.state.upAvatar } closeAvatarUpload={ this.closeAvatarUpload } changeAvatar={ this.changeAvatar }/>
         )}
       </section>
     )

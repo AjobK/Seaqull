@@ -60,7 +60,7 @@ class ProfileController {
         if (!isImage) {
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
-            const profile = await this.dao.getProfileByUsername( req.decoded.username )
+            const profile = await this.dao.getProfileByUsername(req.decoded.username)
             const attachment = await this.dao.getProfileAttachment(profile.id)
             const location = await this.fileService.storeImage(req.file)
 
@@ -71,13 +71,16 @@ class ProfileController {
             if (attachment.path != 'default/default.jpg') {
                 this.fileService.deleteImage(attachment.path)
                 profileAttachment.path = location
+
                 this.attachmentDAO.saveAttachment(profileAttachment)
             } else {
                 const newAttachment = new Attachment()
-                profileAttachment = newAttachment;
+                profileAttachment = newAttachment
                 profileAttachment.path = location
+
                 const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
                 profile.avatar_attachment = storedAttachment
+
                 await this.dao.saveProfile(profile)
             }
 
@@ -107,7 +110,7 @@ class ProfileController {
 
         const profile = await this.dao.getProfileByUsername(receivedUsername)
 
-        if ( !profile ) return res.status(404).json({ 'message': 'User not found' })
+        if (!profile) return res.status(404).json({ 'message': 'User not found' })
 
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
@@ -135,7 +138,7 @@ class ProfileController {
         }
         const attachment = await this.dao.getProfileAttachment(profile.id)
 
-        if ( attachment )
+        if (attachment)
             payload['avatar'] = 'http://localhost:8000/' + attachment.path
 
         return res.status(200).json({ 'profile': payload })
@@ -173,7 +176,7 @@ class ProfileController {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong ) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong) {
             return res.status(401).json({ errors: errors })
         }
 

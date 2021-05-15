@@ -52,7 +52,7 @@ class AuthorizationController {
         } else {
             if (req.cookies['token']) res.clearCookie('token')
 
-            const validation = this.validateAccountRequest(account,username,password)
+            const validation = this.validateAccountRequest(account, username, password)
 
             if (validation != null) return res.status(400).send(validation)
 
@@ -131,4 +131,5 @@ class AuthorizationController {
         }
     }
 }
+
 export default AuthorizationController

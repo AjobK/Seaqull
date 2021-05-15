@@ -120,17 +120,17 @@ class Profile extends App {
 
     return (
       <Standard>
-          <UserBanner user={user} owner={isOwner && profile.loggedIn} />
-        <Section title={'DESCRIPTION'}>
-          <ProfileInfo user={user} loggedIn={profile.loggedIn}/>
+        <UserBanner user={ user } owner={ isOwner && profile.loggedIn } />
+        <Section title={ 'DESCRIPTION' }>
+          <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
         </Section>
-        <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
+        <Section title={ 'CREATED POSTS' }>
+          <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } />
         </Section>
-        <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={this.state.likes} />
+        <Section title={ 'LIKED POSTS' }>
+          <PostsPreview posts={ this.state.likes } />
         </Section>
-        <Section title={'STATISTICS'}>
+        <Section title={ 'STATISTICS' }>
           <Statistics />
         </Section>
       </Standard>

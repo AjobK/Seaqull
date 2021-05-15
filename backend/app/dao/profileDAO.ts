@@ -1,6 +1,6 @@
-import DatabaseConnector from '../util/databaseConnector';
-import { Profile } from '../entity/profile';
-import Attachment from '../entity/attachment';
+import DatabaseConnector from '../util/databaseConnector'
+import { Profile } from '../entity/profile'
+import Attachment from '../entity/attachment'
 import ProfileFollowedBy from '../entity/profile_followed_by'
 
 class ProfileDAO {
@@ -13,6 +13,7 @@ class ProfileDAO {
     public async getProfileAttachment(profileId: number): Promise<Attachment> {
         const repositoryProfile = await DatabaseConnector.getRepository('Profile')
         const profile = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['avatar_attachment'] })
+
         return !profile.avatar_attachment ? null : profile.avatar_attachment
     }
 

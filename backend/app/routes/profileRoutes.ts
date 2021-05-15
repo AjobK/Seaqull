@@ -1,11 +1,11 @@
 import * as express from 'express'
 import ProfileController from '../controller/profileController'
-import RoutesBase from '../interfaces/RoutesBase'
+import RouterBase from '../interfaces/RouterBase'
 import FileService from '../util/fileService'
 
 const auth = require('../middleware/isAuth.ts')
 
-class ProfileRoutes implements RoutesBase {
+class ProfileRoutes implements RouterBase {
     public profile = '/profile/:username?'
     public register = '/profile/register'
     public profilePicture = '/profile/picture'
@@ -14,7 +14,7 @@ class ProfileRoutes implements RoutesBase {
     private profileController: ProfileController
     private upload
 
-    constructor(){
+    constructor() {
         this.profileController = new ProfileController()
         this.upload = new FileService().getUpload()
         this.initRoutes()
@@ -28,4 +28,5 @@ class ProfileRoutes implements RoutesBase {
         this.router.post(this.follow, this.profileController.follow)
     }
 }
+
 export default ProfileRoutes

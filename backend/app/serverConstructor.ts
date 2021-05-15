@@ -19,7 +19,7 @@ class serverConstructor {
         middleWares.forEach(middleWare => {
             this.app.use(middleWare)
         })
-        this.app.use(express.static(__dirname + '/public'));
+        this.app.use(express.static(__dirname + '/public'))
 
     }
 
