@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>650</x>
+      <y>610</y>
+      <w>310</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>RoleController
+--
+dao: RoleDAO
+rolePermissionDAO: RolePermissionDAO
+--
++getRoles()
++getRole(id: number) // geeft ook perms
++checkPermission(requiredPermission, account)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>650</x>
+      <y>800</y>
+      <w>310</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>PermissionController
+--
++save()
++update()
++delete()
++get()
++getOne(id: number)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1030</x>
+      <y>610</y>
+      <w>280</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>RoleDAO
+--
++getRoles()
++getRole(id: number)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1030</x>
+      <y>420</y>
+      <w>280</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>RolePermissionDAO
+--
++save()
++update()
++delete()
++get()
++getOne(id: number)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1030</x>
+      <y>800</y>
+      <w>280</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>PermissionDAO
+--
++save()
++update()
++delete()
++get()
++getOne(id: number)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>920</x>
+      <y>270</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>RolePermission
+--
+role: number
+permission: number</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1080</x>
+      <y>270</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Permission
+--
+id: number
+name: string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>270</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Role
+--
+id: number
+name: string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>220</y>
+      <w>720</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1000</x>
+      <y>390</y>
+      <w>340</w>
+      <h>580</h>
+    </coordinates>
+    <panel_attributes>DAO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>390</y>
+      <w>370</w>
+      <h>580</h>
+    </coordinates>
+    <panel_attributes>Controller</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
