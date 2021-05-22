@@ -76,7 +76,7 @@ class AvatarUpload extends Component {
                     return
                 }
 
-                resolve(new File([blob], "avatar",{ type: "image/png" }))
+                resolve(new File([blob], "avatar", { type: "image/png" }))
             }, 'image/png')
         })
     }
