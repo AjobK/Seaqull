@@ -7,7 +7,7 @@ class Home extends App {
   render() {
     return (
       <Standard>
-        <PostsBlock />
+        <PostsBlock structure={'LS'}/>
       </Standard>
     )
   }
