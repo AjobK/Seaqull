@@ -43,7 +43,6 @@ class AuthorizationController {
         if (account == null)
             return res.status(400).json({ error: ['Incorrect username or password'] })
 
-
         if (account.locked_to - Date.now() > 0) {
             return res.status(400).send({
                 error: ['cannot login yet'],
