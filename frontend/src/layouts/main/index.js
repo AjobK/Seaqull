@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './main.scss'
-import { Posts } from '../../components'
+import { PostsBlock } from '../../components'
 
 @inject('store') @observer
 class Main extends Component {
   render() {
     return (
-      <div className={styles.wrapper}>
         <div className={styles.main}>
-          <div className={styles.grid}>
-            <Posts />
-          </div>
+            <PostsBlock structure={'LS'}/>
+            <PostsBlock structure={'SS'}/>
+            <PostsBlock structure={'SL'}/>
         </div>
-      </div>
     )
   }
 }

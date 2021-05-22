@@ -32,8 +32,8 @@ class PostsBlockSmall extends Component {
 								<p>6 min</p>
 							</div>
 							<span className={styles.smallPostContentBottomInfoBullet}>
-											&bull;
-										</span>
+								&bull;
+							</span>
 							<div className={styles.smallPostContentBottomInfoText}>
 								<p>10 minutes ago</p>
 							</div>

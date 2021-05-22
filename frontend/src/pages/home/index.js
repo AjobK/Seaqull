@@ -1,13 +1,12 @@
 import React from 'react'
 import App from '../App'
-import { Standard } from '../../layouts'
-import { PostsBlock } from '../../components'
+import { Main, Standard } from '../../layouts'
 
 class Home extends App {
   render() {
     return (
       <Standard>
-        <PostsBlock structure={'LS'}/>
+        <Main/>
       </Standard>
     )
   }
