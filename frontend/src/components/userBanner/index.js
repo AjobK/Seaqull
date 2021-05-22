@@ -86,11 +86,11 @@ class UserBanner extends Component {
           <div className={ styles.picture } style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={ styles.levelMobile }>{ user.level || '' }</span>
             { this.props.owner && (
-                <span className={ `${ styles.pictureEdit } ${this.state.draggingOver ? styles.pictureDraggingOver : ''}` }>
+                <span className={ `${ styles.pictureEdit } ${ this.state.draggingOver ? styles.pictureDraggingOver : ''}` }>
                   <Icon iconName={ 'Pen' } />
                   <input
                       type="file" accept="image/png, image/jpeg" value={''}
-                      onChange={this.onEditAvatar} onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
+                      onChange={ this.onEditAvatar } onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
                       style={{ backgroundImage: `url(${ user.picture })` }}
                   />
                 </span>
