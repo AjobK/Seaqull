@@ -1,6 +1,6 @@
 import * as express from 'express'
 import RouterBase from '../interfaces/RouterBase'
-import AuthorizationController from '../controllers/authorizationController'
+import AuthorizationController from '../controller/authorizationController'
 
 class AuthorizationRoutes implements RouterBase {
     public login = '/login'

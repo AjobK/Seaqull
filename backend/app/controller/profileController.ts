@@ -10,6 +10,9 @@ import RoleDao from '../dao/roleDAO'
 import ProfileDAO from '../dao/profileDAO'
 import TitleDAO from '../dao/titleDAO'
 import AccountDAO from '../dao/accountDAO'
+import attachmentDAO from '../dao/attachmentDAO'
+import FileService from '../util/fileService'
+import Attachment from '../entity/attachment'
 import ProfileFollowedBy from '../entity/profile_followed_by'
 
 const jwt = require('jsonwebtoken')
@@ -24,28 +27,65 @@ class ProfileController {
     private titleDAO: TitleDAO
     private accountDAO: AccountDAO
     private roleDAO: RoleDao
+    private attachmentDAO: attachmentDAO
+    private fileService: FileService
 
     constructor() {
         this.dao = new ProfileDAO()
         this.titleDAO = new TitleDAO()
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDao()
+        this.attachmentDAO = new attachmentDAO()
+        this.fileService = new FileService()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
-        if (req.decoded.username != req.body.username)
+        const updateUser = req.body
+
+        if (req.decoded.username != updateUser.username) {
             return res.status(401).json({ 'error': 'Unauthorized' })
+        } else if (req.decoded.username && req.file) {
+            return await this.updateProfile(req.decoded.username, req.file)
+        }
 
-        const profile = await this.dao.getProfileByUsername(req.body.username)
-
-        if (profile == null)
-            return res.status(404).json({ 'error': 'Not found' })
-
-        profile.description = req.body.description
+        const profile = await this.dao.getProfileByUsername(updateUser.username)
 
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
+    }
 
+    public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
+        const isImage = await this.fileService.isImage(req.file)
+
+        if (!isImage) {
+            return res.status(400).json({ 'error': 'Only images are allowed' })
+        } else {
+            const profile = await this.dao.getProfileByUsername(req.decoded.username)
+            const attachment = await this.dao.getProfileAttachment(profile.id)
+            const location = await this.fileService.storeImage(req.file)
+
+            await this.fileService.convertImage(location)
+
+            let profileAttachment = attachment
+
+            if (attachment.path != 'default/default.jpg') {
+                this.fileService.deleteImage(attachment.path)
+                profileAttachment.path = location
+
+                this.attachmentDAO.saveAttachment(profileAttachment)
+            } else {
+                const newAttachment = new Attachment()
+                profileAttachment = newAttachment
+                profileAttachment.path = location
+
+                const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
+                profile.avatar_attachment = storedAttachment
+
+                await this.dao.saveProfile(profile)
+            }
+
+            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
+        }
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -69,11 +109,14 @@ class ProfileController {
         }
 
         const profile = await this.dao.getProfileByUsername(receivedUsername)
+
+        if (!profile) return res.status(404).json({ 'message': 'User not found' })
+
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
 
         if (receivedUsername && decodedToken)
-            isOwner = !!(receivedUsername == decodedToken.username)
+            isOwner = receivedUsername == decodedToken.username
 
         let following = false
 
@@ -90,14 +133,18 @@ class ProfileController {
             following: following,
             username: receivedUsername,
             experience: profile.experience,
-            title: title ? title.name : 'Title not found...' ,
+            title: title ? title.name : 'Title not found...',
             description: profile.description
         }
+        const attachment = await this.dao.getProfileAttachment(profile.id)
+
+        if (attachment)
+            payload['avatar'] = 'http://localhost:8000/' + attachment.path
 
         return res.status(200).json({ 'profile': payload })
     }
 
-    public register = async (req: Request, res: Response): Promise<Response> => {
+    public register = async (req: any, res: Response): Promise<Response> => {
         const userRequested = req.body
         const errors = {
             username: [],
@@ -118,7 +165,7 @@ class ProfileController {
             errors.email = [isEmailNotValid]
         }
 
-        const isPasswordNotStrong = await this.checkPasswordStrength(userRequested.password)
+        const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
 
         if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
@@ -129,7 +176,7 @@ class ProfileController {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong) {
             return res.status(401).json({ errors: errors })
         }
 
@@ -151,6 +198,7 @@ class ProfileController {
             user: newAccount
         })
         res.send()
+        return res
     }
 
     public follow = async (req: Request, res: Response): Promise<Response> => {
@@ -240,7 +288,10 @@ class ProfileController {
 
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
+
         let newProfile = new Profile()
+
+        newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0
