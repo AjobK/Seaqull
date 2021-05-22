@@ -47,7 +47,45 @@
 				&Content {
 					min-height: 100%;
 					width: 100%;
-					background-color: #7f7f7f;
+					padding: 20px 15px 0;
+
+					&Title {
+						font-size: 1.4em;
+						line-height: 1.3em;
+						white-space: pre-line;
+						color: $secondary;
+					}
+
+					&Description {
+						white-space: pre-line;
+						color: #6D6C81;
+						margin: 10px 0;
+					}
+
+					&Bottom {
+						display: flex;
+						justify-content: space-between;
+
+						&Info {
+							display: flex;
+							color: $primary-light;
+
+							& > * {
+								margin-right: 12px;
+							}
+
+							&Bullet {
+								color: $gray;
+								opacity: 0.15;
+							}
+						}
+
+						&Button {
+							color: $primary;
+							font-size: 1.4em;
+
+						}
+					}
 				}
 			}
 		}
