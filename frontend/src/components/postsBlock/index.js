@@ -15,8 +15,16 @@ class PostsBlock extends Component {
 						<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
 					</div>
 					<div className={`${styles.postsBlockPost} ${styles.small}`}>
-						<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
-						<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+						<div className={styles.smallPost}>
+							<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+							<div className={styles.smallPostContent}>
+							</div>
+						</div>
+						<div className={styles.smallPost}>
+							<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+							<div className={styles.smallPostContent}>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
