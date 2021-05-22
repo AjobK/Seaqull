@@ -38,10 +38,39 @@
 			&Post {
 				display: flex;
 
-				img {
-					min-width: 348px;
-					max-width: 348px;
-					height: 211px;
+				&Thumbnail {
+					position: relative;
+					height: 212px;
+
+					&Overlay {
+						display: flex;
+						position: absolute;
+						bottom: 0;
+						width: 100%;
+						height: 40%;
+						background: $secondary;
+						background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 60%, rgba($secondary, 0) 100%);
+						opacity: 1;
+						padding: 0 14px;
+
+						&Category {
+							margin-top: auto;
+							margin-bottom: 3px;
+							color: $primary;
+							display: flex;
+							align-items: center;
+
+							.smallPostCategoryBullet {
+								font-size: 2em;
+								margin-right: 5px;
+							}
+						}
+					}
+
+					img {
+						min-width: 348px;
+						max-width: 348px;
+					}
 				}
 
 				&Content {
@@ -68,10 +97,13 @@
 
 						&Info {
 							display: flex;
-							color: $primary-light;
 
 							& > * {
 								margin-right: 12px;
+							}
+
+							&Text {
+								color: $primary-light;
 							}
 
 							&Bullet {

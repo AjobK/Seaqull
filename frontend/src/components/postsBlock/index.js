@@ -16,7 +16,15 @@ class PostsBlock extends Component {
 					</div>
 					<div className={`${styles.postsBlockPost} ${styles.small}`}>
 						<div className={styles.smallPost}>
-							<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+							<div className={styles.smallPostThumbnail}>
+								<div className={styles.smallPostThumbnailOverlay}>
+									<a href="#" className={styles.smallPostThumbnailOverlayCategory}>
+										<span className={styles.smallPostCategoryBullet}>&bull;</span>
+										Machine learning
+									</a>
+								</div>
+								<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+							</div>
 							<div className={styles.smallPostContent}>
 								<h3 className={styles.smallPostContentTitle}>The Seaqull Resource Library, with some extra words</h3>
 								<p className={styles.smallPostContentDescription}>
@@ -26,13 +34,13 @@ class PostsBlock extends Component {
 								</p>
 								<div className={styles.smallPostContentBottom}>
 									<div className={styles.smallPostContentBottomInfo}>
-										<div className={styles.smallPostContentBottomInfoReadingTime}>
+										<div className={styles.smallPostContentBottomInfoText}>
 											<p>6 min</p>
 										</div>
 										<span className={styles.smallPostContentBottomInfoBullet}>
 											&bull;
 										</span>
-										<div className={styles.smallPostContentBottomInfoTimeAgo}>
+										<div className={styles.smallPostContentBottomInfoText}>
 											<p>10 minutes ago</p>
 										</div>
 									</div>
@@ -43,7 +51,15 @@ class PostsBlock extends Component {
 							</div>
 						</div>
 						<div className={styles.smallPost}>
-							<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+							<div className={styles.smallPostThumbnail}>
+								<div className={styles.smallPostThumbnailOverlay}>
+									<a href="#" className={styles.smallPostThumbnailOverlayCategory}>
+										<span className={styles.smallPostCategoryBullet}>&bull;</span>
+										Machine learning
+									</a>
+								</div>
+								<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+							</div>
 							<div className={styles.smallPostContent}>
 								<h3 className={styles.smallPostContentTitle}>The Seaqull Resource Library, with some extra words</h3>
 								<p className={styles.smallPostContentDescription}>
@@ -53,13 +69,13 @@ class PostsBlock extends Component {
 								</p>
 								<div className={styles.smallPostContentBottom}>
 									<div className={styles.smallPostContentBottomInfo}>
-										<div className={styles.smallPostContentBottomInfoReadingTime}>
+										<div className={styles.smallPostContentBottomInfoText}>
 											<p>6 min</p>
 										</div>
 										<span className={styles.smallPostContentBottomInfoBullet}>
 											&bull;
 										</span>
-										<div className={styles.smallPostContentBottomInfoTimeAgo}>
+										<div className={styles.smallPostContentBottomInfoText}>
 											<p>10 minutes ago</p>
 										</div>
 									</div>
