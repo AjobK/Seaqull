@@ -12,6 +12,7 @@ class attachmentDAO {
     public async getAttachment(id: number): Promise<Attachment> {
         const repository = await DatabaseConnector.getRepository('Attachment')
         const attachment = await repository.findOne({ where: { id: id } })
+
         return attachment
     }
 }

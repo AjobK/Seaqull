@@ -45,7 +45,7 @@ class ProfileController {
         if (req.decoded.username != updateUser.username) {
             return res.status(401).json({ 'error': 'Unauthorized' })
         } else if (req.decoded.username && req.file) {
-            return await this.updateProfile(req.decoded.username, req.file )
+            return await this.updateProfile(req.decoded.username, req.file)
         }
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
