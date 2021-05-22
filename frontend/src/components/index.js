@@ -26,6 +26,9 @@ import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
 import Cropper from './cropper'
+import PostsBlock from './postsBlock'
+import PostsBlockLarge from './postsBlockLarge'
+import PostsBlockSmall from './postsBlockSmall'
 
 export {
   Button,
@@ -55,5 +58,8 @@ export {
   PostLike,
   ProfileInfo,
   PostLikesList,
-  Cropper
+  Cropper,
+  PostsBlock,
+  PostsBlockLarge,
+  PostsBlockSmall
 }

@@ -1,0 +1,88 @@
+@import '../../styles/index.scss';
+
+.smallPost {
+	display: flex;
+
+	&Thumbnail {
+		position: relative;
+		height: 212px;
+
+		&Overlay {
+			display: flex;
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: 40%;
+			background: $secondary;
+			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 60%, rgba($secondary, 0) 100%);
+			padding: 0 14px 17px;
+
+			&Category {
+				margin-top: auto;
+				color: $primary;
+				display: flex;
+				align-items: center;
+
+				&Bullet {
+					font-size: 2em;
+					line-height: .3em;
+					margin-right: 5px;
+				}
+			}
+		}
+
+		img {
+			min-width: 348px;
+			max-width: 348px;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&Content {
+		min-height: 100%;
+		width: 100%;
+		padding: 20px 15px 0;
+
+		&Title {
+			font-size: 1.4em;
+			line-height: 1.3em;
+			white-space: pre-line;
+			color: $secondary;
+		}
+
+		&Description {
+			white-space: pre-line;
+			color: #6D6C81;
+			margin: 10px 0;
+		}
+
+		&Bottom {
+			display: flex;
+			justify-content: space-between;
+
+			&Info {
+				display: flex;
+
+				& > * {
+					margin-right: 12px;
+				}
+
+				&Text {
+					color: $primary-light;
+				}
+
+				&Bullet {
+					color: $light-gray;
+					opacity: .3;
+				}
+			}
+
+			&Button {
+				color: $primary;
+				font-size: 1.4em;
+			}
+		}
+	}
+}
