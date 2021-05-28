@@ -6,7 +6,7 @@
 	justify-content: center;
 	align-items: center;
 	margin: $header-height auto 0;
-	width: 100%;
+	width: $wrapper-width;
 
 	@include mobile-all-portrait {
 		width: 100%;
