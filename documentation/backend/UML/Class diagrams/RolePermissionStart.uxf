@@ -16,7 +16,7 @@ rolePermissionDAO: RolePermissionDAO
 permissionDAO: PermissionDAO
 --
 +getRoles()
-+getRole(id: number) // geeft ook perms
++getRole(id: number)
 +checkPermission(requiredPermission, account)</panel_attributes>
     <additional_attributes/>
   </element>
