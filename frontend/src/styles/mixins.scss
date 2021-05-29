@@ -77,13 +77,14 @@
 
 @mixin fade-in () {
 	@keyframes fade-in {
-		0% {
+		from {
 			opacity: 0;
-		}
-		100% {
+		} to {
 			opacity: 1;
 		}
 	}
+
+	animation: fade-in 1s;
 }
 
 @mixin pop-up () {

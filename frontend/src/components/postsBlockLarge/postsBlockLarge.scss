@@ -1,32 +1,66 @@
 @import '../../styles/index.scss';
 
+* {
+	transition: all .2s ease-in-out;
+}
+
 .large {
 	max-width: 100%;
 	position: relative;
 	height: 449px;
+
+	&:hover {
+		.largeOverlay {
+			&Description {
+				@include fade-in();
+				opacity: 1;
+				margin-top: 20px;
+				margin-bottom: 30px;
+				visibility: visible;
+				max-height: 500px;
+				transition: max-height 1s ease-in;
+			}
+		}
+	}
 
 	&Overlay {
 		display: flex;
 		flex-direction: column;
 		position: absolute;
 		bottom: 0;
-		height: 52%;
+		min-height: 52%;
 		background: $secondary;
-		background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 60%, rgba($secondary, 0) 100%);
-		padding: 0 28px;
+		background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
+		padding: 50px 28px 0;
+		max-width: inherit;
 
 		&Title {
 			margin-top: auto;
-			margin-bottom: 18px;
 			font-size: 2.4em;
 			line-height: 1.35em;
 			white-space: pre-line;
 			color: white;
 		}
 
+		&Description {
+			display: block;
+			//visibility: hidden;
+			opacity: 0;
+			max-height: 0;
+			overflow: hidden;
+			transition: all 1s ease-in-out, visibility 0s, max-height .8s ease-out;
+
+			p {
+				color: white;
+				opacity: 0.8;
+				white-space: normal;
+			}
+		}
+
 		&Bottom {
 			display: flex;
 			justify-content: space-between;
+			margin-top: 20px;
 			margin-bottom: 15px;
 			height: fit-content;
 

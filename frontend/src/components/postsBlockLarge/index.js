@@ -12,6 +12,9 @@ class PostsBlockLarge extends Component {
 			<div className={styles.large}>
 				<div className={styles.largeOverlay}>
 					<h3 className={styles.largeOverlayTitle}>The Seaqull Resource Library, with some extra words</h3>
+					<div className={styles.largeOverlayDescription}>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+					</div>
 					<div className={styles.largeOverlayBottom}>
 						<div className={styles.largeOverlayBottomInfo}>
 							<a href="#" className={styles.largeOverlayBottomInfoCategory}>
@@ -25,8 +28,8 @@ class PostsBlockLarge extends Component {
 								<p>6 min</p>
 							</div>
 							<span className={styles.largeOverlayBottomInfoBullet}>
-										&bull;
-									</span>
+								&bull;
+							</span>
 							<div className={styles.largeOverlayBottomInfoText}>
 								<p>10 minutes ago</p>
 							</div>

@@ -1,13 +1,16 @@
 @import '../../styles/index.scss';
 
 .postsBlockWrapper {
-	margin-top: 25px;
+	margin: 25px 0;
 
-	.postsBlock {
-		display: grid;
+	.postsBlockDesktop {
 		grid-template-columns: repeat(2, calc(50% - 25px / 2));
 		grid-template-rows: repeat(2, 449px);
 		grid-template-areas: 'l1 s1' 's2 l2';
+	}
+
+	.postsBlock {
+		display: grid;
 		grid-gap: 25px;
 
 		.large1 {
