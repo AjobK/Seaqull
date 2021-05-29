@@ -8,9 +8,7 @@ class Main extends Component {
   render() {
     return (
         <div className={styles.main}>
-            <PostsBlock structure={'LS'}/>
-            <PostsBlock structure={'SS'}/>
-            <PostsBlock structure={'SL'}/>
+            <PostsBlock/>
         </div>
     )
   }

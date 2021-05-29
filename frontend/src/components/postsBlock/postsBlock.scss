@@ -6,9 +6,22 @@
 	.postsBlock {
 		display: grid;
 		grid-template-columns: repeat(2, calc(50% - 25px / 2));
+		grid-template-rows: repeat(2, 449px);
+		grid-template-areas: 'l1 s1' 's2 l2';
 		grid-gap: 25px;
-		max-height: 449px;
-		height: fit-content;
+
+		.large1 {
+			grid-area: l1;
+		}
+		.large2 {
+			grid-area: l2;
+		}
+		.small1 {
+			grid-area: s1;
+		}
+		.small2 {
+			grid-area: s2;
+		}
 
 		.small {
 			display: grid;
