@@ -17,4 +17,5 @@ export class Role extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 }
+
 export default Role

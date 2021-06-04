@@ -1,15 +1,17 @@
-import DatabaseConnector from '../service/databaseConnector'
+import DatabaseConnector from '../util/databaseConnector'
 import Attachment from '../entity/attachment';
 
 class attachmentDAO {
-    public async saveAttachment(attatchment: Attachment): Promise<Attachment> {
+    public async saveAttachment(attachment: Attachment): Promise<Attachment> {
         const repository = await DatabaseConnector.getRepository('Attachment')
-        const createdAttachment = await repository.save(attatchment)
+        const createdAttachment = await repository.save(attachment)
+
         return createdAttachment
     }
+
     public async getAttachment(id: number): Promise<Attachment> {
         const repository = await DatabaseConnector.getRepository('Attachment')
-        const attachment = await repository.findOne({where: {id: id}})
+        const attachment = await repository.findOne({where: { id: id }})
         return attachment
     }
     public async getDefaultAvatarAttachment(): Promise<Attachment> {
@@ -22,4 +24,5 @@ class attachmentDAO {
     }
 
 }
+
 export default attachmentDAO

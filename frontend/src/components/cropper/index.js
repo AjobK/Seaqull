@@ -42,22 +42,23 @@ class Cropper extends Component {
 
     onImageLoaded = (image) => {
         this.imageRef = image
-    };
+    }
 
     onCropComplete = (crop) => {
         this.makeClientCrop(crop).then()
-    };
+    }
 
     onCropChange = (crop) => {
         this.setState({ crop })
-    };
+    }
 
     async makeClientCrop(crop) {
         if (this.imageRef && crop.width && crop.height) {
             const croppedImage = await this.getCroppedImg(
                 this.imageRef,
                 crop
-            );
+            )
+
             this.setState({ croppedImage })
         }
     }
@@ -66,9 +67,9 @@ class Cropper extends Component {
         const canvas = document.createElement('canvas')
         const scaleX = image.naturalWidth / image.width
         const scaleY = image.naturalHeight / image.height
+        const ctx = canvas.getContext('2d')
         canvas.width = crop.width
         canvas.height = crop.height
-        const ctx = canvas.getContext('2d')
 
         ctx.drawImage(
             image,
@@ -80,16 +81,16 @@ class Cropper extends Component {
             0,
             crop.width,
             crop.height
-        );
+        )
 
         return new Promise((resolve) => {
             canvas.toBlob((blob) => {
                 if (!blob)
                     return
 
-                resolve(new File([blob], "cropped",{ type: "image/png" }))
+                resolve(new File([blob], 'cropped', { type: 'image/png' }))
             }, 'image/png')
-        });
+        })
     }
 
     validateImage = (img) => {
@@ -146,38 +147,38 @@ class Cropper extends Component {
         const isCropped = (crop.height > 0 && crop.width > 0)
 
         return (
-            <div className={styles.avatarUpload}>
-                <div className={styles.avatarUploadBackground} onClick={this.props.closeAvatarUpload}/>
-                <section className={styles.avatarUploadPopUp}>
-                    <div className={`${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}`}>
+            <div className={ styles.avatarUpload }>
+                <div className={ styles.avatarUploadBackground } onClick={this.props.closeAvatarUpload}/>
+                <section className={ styles.avatarUploadPopUp }>
+                    <div className={ `${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}` }>
                         { !error && inputImage && (
-                            <div className={styles.uploadedImg}>
+                            <div className={ styles.uploadedImg }>
                                 <ReactCrop
-                                    className={styles.uploadedImgCropper}
-                                    src={inputImage}
-                                    crop={crop}
-                                    onImageLoaded={this.onImageLoaded}
-                                    onComplete={this.onCropComplete}
-                                    onChange={this.onCropChange}
+                                    className={ styles.uploadedImgCropper }
+                                    src={ inputImage }
+                                    crop={ crop }
+                                    onImageLoaded={ this.onImageLoaded }
+                                    onComplete={ this.onCropComplete }
+                                    onChange={ this.onCropChange }
                                 />
                             </div>
                         )}
                         { error && (
-                            <div className={styles.errorMessageWrapper}>
-                                <p className={styles.errorMessage}>{error}</p>
+                            <div className={ styles.errorMessageWrapper }>
+                                <p className={ styles.errorMessage }>{ error }</p>
                             </div>
                         )}
                     </div>
-                    <div className={styles.avatarUploadPopUpBtns}>
+                    <div className={ styles.avatarUploadPopUpBtns }>
                         <Button
-                            className={styles.avatarUploadPopUpBtnsCancelButton} value={error ? 'Back' : 'Cancel'}
-                            inverted={true} onClick={this.props.closeCropper}
+                            className={ styles.avatarUploadPopUpBtnsCancelButton } value={ error ? 'Back' : 'Cancel' }
+                            inverted={ true } onClick={ this.props.closeCropper }
                         />
                         { !error && (
                             <Button
-                                className={styles.avatarUploadPopUpBtnsSaveButton}
-                                value={'Save'} disabled={!inputImage || !isCropped}
-                                onClick={inputImage && isCropped ? this.saveImage : undefined}
+                                className={ styles.avatarUploadPopUpBtnsSaveButton }
+                                value={ 'Save' } disabled={ !inputImage || !isCropped }
+                                onClick={ inputImage && isCropped ? this.saveImage : undefined }
                             />
                         )}
                     </div>

@@ -15,4 +15,5 @@ export class TitleOwnedBy extends BaseEntity {
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title: title
 }
+
 export default TitleOwnedBy

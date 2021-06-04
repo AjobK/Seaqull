@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, Cropper } from '..'
+import Axios from 'axios'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -12,7 +13,8 @@ class UserBanner extends Component {
       upAvatar: null,
       upBanner: null,
       draggingOverAvatar: false,
-      draggingOverBanner: false
+      draggingOverBanner: false,
+      following: this.props.user.following || false
     }
   }
 
@@ -46,6 +48,7 @@ class UserBanner extends Component {
       draggingOverAvatar: true
     })
   }
+
   onAvatarDragLeave = () => {
     this.setState({
       draggingOverAvatar: false
@@ -66,6 +69,7 @@ class UserBanner extends Component {
   changeAvatar = (newAvatar) => {
     this.props.user.picture = newAvatar
   }
+
   changeBanner = (newBanner) => {
     this.props.user.banner = newBanner
   }
@@ -74,6 +78,18 @@ class UserBanner extends Component {
     this.setState({
       upAvatar: null,
       upBanner: null
+    })
+  }
+
+  follow = () => {
+    const username = window.location.pathname.split('/').filter(i => i != '').pop()
+
+    Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
+    .then((res) => {
+      this.setState({ following: res.data.following || false })
+    })
+    .catch(err => {
+        console.log('Something went wrong')
     })
   }
 
@@ -91,38 +107,44 @@ class UserBanner extends Component {
     }
 
     return (
-      <section className={styles.wrapper}>
-        <div className={styles.innerWrapper}>
-          <div className={styles.picture} style={{ backgroundImage: `url(${user.picture})` }}>
-            <span className={styles.levelMobile}>{ user.level || ''}</span>
+      <section className={ styles.wrapper }>
+        <div className={ styles.innerWrapper }>
+          <div className={ styles.picture } style={{ backgroundImage: `url(${user.picture})` }}>
+            <span className={ styles.levelMobile }>{ user.level || '' }</span>
             { this.props.owner && (
-                <span className={`${styles.pictureEdit} ${this.state.draggingOverAvatar ? styles.pictureDraggingOver : ''}`}>
-                  <Icon iconName={'Pen'} />
+                <span className={ `${ styles.pictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }` }>
+                  <Icon iconName={ 'Pen' } />
                   <input
                       type="file" accept="image/png, image/jpeg" value={''}
-                      onChange={this.onEditAvatar} onDragEnter={this.onAvatarDragEnter} onDragLeave={this.onAvatarDragLeave}
+                      onChange={ this.onEditAvatar } onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
                   />
                 </span>
             )}
+            { this.props.store.profile.loggedIn && !user.isOwner &&
+              <button className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` } onClick={ this.follow }>
+                <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
+                <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
+              </button>
+            }
           </div>
-          <div className={styles.info}>
-            <h2 className={[styles.name, fontSize].join(' ')}>{ user.username || ''}</h2>
-            <div className={styles.achieved}>
-              <span className={styles.level}>{ user.level || ''}</span>
-              <h3 className={styles.role}>{ user.title || ''}</h3>
+          <div className={ styles.info }>
+            <h2 className={ [styles.name, fontSize].join(' ') }>{ user.username || '' }</h2>
+            <div className={ styles.achieved }>
+              <span className={ styles.level }>{ user.level || '' }</span>
+              <h3 className={ styles.role }>{ user.title || '' }</h3>
             </div>
           </div>
         </div>
-        <div className={styles.banner}>
-          <div className={styles.bannerImage} style={{ backgroundImage: `url(${user.banner})` }}/>
+        <div className={ styles.banner }>
+          <div className={ styles.bannerImage } style={{ backgroundImage: `url(${ user.banner })` }} />
           { this.props.owner && (
-              <div className={`${styles.bannerEdit} ${this.state.draggingOverBanner ? styles.bannerEditDraggingOver : ''}`}>
+              <div className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                 <input
                     type="file" accept="image/png, image/jpeg" value={''}
-                    onChange={this.onEditBanner} onDragEnter={this.onBannerDragEnter} onDragLeave={this.onBannerDragLeave}
+                    onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
                 />
-                <div className={`${styles.bannerEditActionBtn}`}>
-                  <Icon iconName={'Pen'} />
+                <div className={ `${ styles.bannerEditActionBtn }` }>
+                  <Icon iconName={ 'Pen' } />
                 </div>
               </div>
           )}
