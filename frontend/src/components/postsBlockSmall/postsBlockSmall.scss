@@ -4,6 +4,24 @@
 	display: flex;
 	height: 212px;
 
+	@include mobile-all() {
+		.smallPost {
+			&Content {
+				&Title {
+					//font-size: 1.6em;
+				}
+
+				&Description {
+					display: none;
+				}
+
+				&Bottom {
+
+				}
+			}
+		}
+	}
+
 	&Thumbnail {
 		position: relative;
 

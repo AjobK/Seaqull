@@ -1,6 +1,7 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Poppins:500,700');
 @import url('https://fonts.googleapis.com/css?family=Sanchez');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
 
 // Colors
 $primary: #ff4040; // Changes color of most elements, including logo
@@ -9,6 +10,7 @@ $secondary: #EFEFEF;
 $textdark: #2b2b2b;
 $secondary: #2e2e4c;
 $light: #efefef;
+$dark-light: #dcdcde;
 $dark: #4e4e4e;
 $darker: #2b2b2b;
 $darkest: #1f1f1f;
@@ -31,13 +33,13 @@ $light-gray: #aeafb9;
 $mobile-text-login: #fff;
 
 // Fonts
-$mainfont: Poppins;
+$mainfont: Source Sans Pro;
 $sidefont: Sanchez;
-$navigationfont: Poppins;
+$navigationfont: Source Sans Pro;
 $secondaryfont: arial;
 
 // Sizes
-$wrapper-width: 1700px;
+$wrapper-width: 1600px;
 $logo-font-size: 2.5rem;
 $logo-font-size-sm: 2.5rem;
 $header-height: 80px;

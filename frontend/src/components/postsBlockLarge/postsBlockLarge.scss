@@ -40,24 +40,24 @@
 
 		&Title {
 			margin-top: auto;
-			font-size: 2.4em;
-			line-height: 1.35em;
+			font-size: 2.75em;
+			line-height: 1.1em;
 			white-space: pre-line;
 			color: white;
+			font-weight: 600;
 		}
 
 		&Description {
 			display: block;
-			//visibility: hidden;
 			opacity: 0;
 			max-height: 0;
 			overflow: hidden;
 			transition: all 1s ease-in-out, visibility 0s, max-height .8s ease-out;
 
 			p {
-				color: white;
-				opacity: 0.8;
+				color: $dark-light;
 				white-space: normal;
+				font-size: 1.3em;
 			}
 		}
 
@@ -77,25 +77,49 @@
 				}
 
 				&Category {
-					margin-top: auto;
 					color: $primary;
 					display: flex;
+					font-size: 1.2em;
 					align-items: center;
 
 					&Bullet {
-						font-size: 3em;
-						line-height: .3em;
-						margin-right: 8px;
+						&Icon {
+							margin-right: 12px;
+							font-size: .7em;
+						}
 					}
 				}
 
 				&Text {
 					color: $light-gray;
+					font-size: 1.2em;
+					font-weight: 300;
+					display: flex;
+
+					&ReadingTime {
+						font-size: .8em;
+						margin-right: 4px;
+						display: flex;
+						align-items: center;
+
+						&Icon {
+
+						}
+					}
 				}
 
 				&Bullet {
 					color: $light-gray;
+					opacity: .8;
 				}
+			}
+
+			&Bookmark {
+				display: flex;
+				color: $dark-light;
+				align-items: center;
+				font-size: 1.5em;
+				margin-top: 2px;
 			}
 		}
 	}
