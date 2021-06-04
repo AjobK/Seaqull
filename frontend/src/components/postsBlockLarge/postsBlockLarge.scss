@@ -23,6 +23,10 @@
 		}
 	}
 
+	@include mobile-all() {
+		
+	}
+
 	&Overlay {
 		display: flex;
 		flex-direction: column;

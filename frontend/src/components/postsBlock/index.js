@@ -10,7 +10,7 @@ class PostsBlock extends Component {
 	render() {
 		return (
 			<div className={styles.postsBlockWrapper}>
-				<div className={`${styles.postsBlock} ${styles.postsBlockDesktop}`}>
+				<div className={styles.postsBlock}>
 
 					<div className={styles.large1}>
 						<PostsBlockLarge/>
