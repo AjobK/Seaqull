@@ -7,11 +7,11 @@ class serverConstructor {
     public server: http.Server
     public port: number
 
-    constructor(appInit: { port: number; middleWares: any; controllers: any; }) {
+    constructor(appInit: { port: number; middleWares: any; routes: any; }) {
         this.app = express()
         this.port = appInit.port
         this.middlewares(appInit.middleWares)
-        this.routes(appInit.controllers)
+        this.routes(appInit.routes)
         this.listen()
     }
 
@@ -19,7 +19,7 @@ class serverConstructor {
         middleWares.forEach(middleWare => {
             this.app.use(middleWare)
         })
-        this.app.use(express.static(__dirname + '/public'));
+        this.app.use(express.static(__dirname + '/public'))
 
     }
 

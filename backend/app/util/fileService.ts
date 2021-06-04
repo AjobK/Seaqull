@@ -7,17 +7,15 @@ const pipeline = promisify(require('stream').pipeline)
 const sharp = require('sharp')
 
 class FileService {
-
     public getUpload (): any {
-        const upload = multer({ limits: { fieldSize: 2 * 1024 * 1024 } })
-
-        return upload
+        return multer({ limits: { fieldSize: 2 * 1024 * 1024 } })
     }
 
-    public async isImage (file: any): Promise<any> {
+    public async isImage (file: any): Promise<boolean> {
         const ext = file.detectedFileExtension
+        const extensions = ['.png', '.jpg', '.gif', '.jpeg']
 
-        return !(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg')
+        return extensions.indexOf(ext) != -1
     }
 
     public async convertImage (path: any, dimensions: {}): Promise<void> {

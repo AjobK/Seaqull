@@ -1,4 +1,4 @@
-import DatabaseConnector from '../service/databaseConnector'
+import DatabaseConnector from '../util/databaseConnector'
 import { Account } from '../entity/account'
 
 class AccountDAO {
@@ -29,4 +29,5 @@ class AccountDAO {
         return account.id || -1
     }
 }
+
 export default AccountDAO

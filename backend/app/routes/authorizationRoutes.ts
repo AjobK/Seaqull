@@ -1,23 +1,24 @@
 import * as express from 'express'
-import RoutesBase from '../interfaces/RoutesBase'
-import authorizationService from '../controller/authorizationController'
+import RouterBase from '../interfaces/RouterBase'
+import AuthorizationController from '../controller/authorizationController'
 
-class AuthorizationController implements RoutesBase {
+class AuthorizationRoutes implements RouterBase {
     public login = '/login'
     public loginVerify = '/login-verify'
     public logout = '/logout'
     public router = express.Router()
-    private authService: authorizationService
+    private authController: AuthorizationController
 
-    constructor(){
-        this.authService = new authorizationService()
+    constructor() {
+        this.authController = new AuthorizationController()
         this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.get(this.loginVerify, this.authService.loginVerify)
-        this.router.post(this.login, this.authService.login)
-        this.router.get(this.logout, this.authService.logout)
+        this.router.get(this.loginVerify, this.authController.loginVerify)
+        this.router.post(this.login, this.authController.login)
+        this.router.get(this.logout, this.authController.logout)
     }
 }
-export default AuthorizationController
+
+export default AuthorizationRoutes

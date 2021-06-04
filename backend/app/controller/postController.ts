@@ -27,13 +27,17 @@ class PostController {
             posts = await this.dao.getPosts('0', amount)
         } else {
             posts = await this.dao.getPosts(String(req.query.page), amount)
-            if (posts.length == 0 ) {
+
+            if (posts.length <= 0 ) {
                 posts = await this.dao.getPosts('0', amount)
+
                 return res.status(200).json({ 'message': 'You`ve reached the last post' })
             }
         }
+
         const count = await this.dao.getAmountPosts()
         const message = { posts, totalPosts: count, per_page: amount }
+
         return res.status(200).json(message)
     }
 
@@ -107,6 +111,7 @@ class PostController {
         if (decodedToken.username != null) {
             const profile = await this.profileDAO.getProfileByUsername(decodedToken.username)
             newPost.profile = profile
+
             await this.dao.createPost(newPost)
         } else {
             return res.status(200).json({ message: 'Invalid jwt' })
@@ -154,6 +159,7 @@ class PostController {
 
         try {
             await this.dao.likePost(postLike)
+
             return res.status(200).json({ 'message': 'Post liked!' })
         } catch (e) {
             return res.status(400).json({ 'error': 'Post could not be liked.' })
@@ -209,11 +215,13 @@ class PostController {
         if (token) {
             try {
                 const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
                 return await this.profileDAO.getProfileByUsername(decodedToken.username)
             } catch(err) {
                 return null
             }
         }
+
         return null
     }
 }

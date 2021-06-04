@@ -1,4 +1,4 @@
-import DatabaseConnector from '../service/databaseConnector'
+import DatabaseConnector from '../util/databaseConnector'
 import { Title } from '../entity/title'
 
 class TitleDAO {
@@ -14,4 +14,5 @@ class TitleDAO {
     }
 
 }
+
 export default TitleDAO
