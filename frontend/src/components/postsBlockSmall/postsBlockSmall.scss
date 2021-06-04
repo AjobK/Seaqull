@@ -2,10 +2,10 @@
 
 .smallPost {
 	display: flex;
+	height: 212px;
 
 	&Thumbnail {
 		position: relative;
-		height: 212px;
 
 		&Overlay {
 			display: flex;
@@ -42,12 +42,13 @@
 
 	&Content {
 		width: 100%;
-		max-height: 212px;
-		margin-top: 2.2%;
 		margin-left: 1.7%;
 		overflow: hidden;
+		display: flex;
+		flex-direction: column;
 
 		&Title {
+			margin-top: 2.2%;
 			font-size: 1.4em;
 			line-height: 1.3em;
 			white-space: pre-line;
@@ -57,11 +58,13 @@
 		&Description {
 			white-space: pre-line;
 			color: #6D6C81;
-			margin: 10px 0;
 			line-height: 1.5em;
+			overflow: hidden;
+			margin: 10px 0 0;
 		}
 
 		&Bottom {
+			margin-top: auto;
 			display: flex;
 			justify-content: space-between;
 
