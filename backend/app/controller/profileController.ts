@@ -269,7 +269,7 @@ class ProfileController {
         else if (type === BANNER)
             typeField = 'banner_attachment'
 
-        attachment = new Attachment();
+        attachment = new Attachment()
         attachment.path = location
         profile[typeField] = await this.attachmentDAO.saveAttachment(attachment)
         await this.dao.saveProfile(profile)
