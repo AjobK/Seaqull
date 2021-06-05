@@ -9,7 +9,7 @@
 	max-width: $wrapper-width;
 	width: 100%;
 
-	@include mobile-all-portrait {
-		width: 100%;
+	@include mobile-all() {
+		padding: 0 22px;
 	}
 }
