@@ -11,13 +11,16 @@
     </coordinates>
     <panel_attributes>RoleController
 --
-dao: RoleDAO
-rolePermissionDAO: RolePermissionDAO
-permissionDAO: PermissionDAO
+-dao: RoleDAO
+-rolePermissionDAO: RolePermissionDAO
+-permissionDAO: PermissionDAO
 --
-+getRoles()
-+getRole(id: number)
-+checkPermission(requiredPermission, account)</panel_attributes>
++getRoles(): Role[]
++getRole(id: number): Role
++checkPermission(
+                        requiredPermissionName: String, 
+                        account: Account
+): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -30,8 +33,8 @@ permissionDAO: PermissionDAO
     </coordinates>
     <panel_attributes>RoleDAO
 --
-+getRoles()
-+getRole(id: number)</panel_attributes>
++getRoles(): Role[]
++getRole(id: number): Role</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -44,7 +47,7 @@ permissionDAO: PermissionDAO
     </coordinates>
     <panel_attributes>RolePermissionDAO
 --
-+getForRole(role_id: number)</panel_attributes>
++getForRole(roleId: number): Permission[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -57,7 +60,7 @@ permissionDAO: PermissionDAO
     </coordinates>
     <panel_attributes>PermissionDAO
 --
-+getOne(id: number)</panel_attributes>
++getOne(id: number): Permission</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -70,8 +73,8 @@ permissionDAO: PermissionDAO
     </coordinates>
     <panel_attributes>RolePermission
 --
-role: number
-permission: number</panel_attributes>
++role: number
++permission: number</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -84,8 +87,8 @@ permission: number</panel_attributes>
     </coordinates>
     <panel_attributes>Permission
 --
-id: number
-name: string</panel_attributes>
++id: number
++name: string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -98,8 +101,8 @@ name: string</panel_attributes>
     </coordinates>
     <panel_attributes>Role
 --
-id: number
-name: string</panel_attributes>
++id: number
++name: string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -119,7 +122,7 @@ name: string</panel_attributes>
       <x>1110</x>
       <y>300</y>
       <w>370</w>
-      <h>320</h>
+      <h>350</h>
     </coordinates>
     <panel_attributes>DAO</panel_attributes>
     <additional_attributes/>
@@ -130,7 +133,7 @@ name: string</panel_attributes>
       <x>730</x>
       <y>300</y>
       <w>370</w>
-      <h>320</h>
+      <h>350</h>
     </coordinates>
     <panel_attributes>Controller</panel_attributes>
     <additional_attributes/>
@@ -141,7 +144,7 @@ name: string</panel_attributes>
       <x>320</x>
       <y>300</y>
       <w>400</w>
-      <h>320</h>
+      <h>350</h>
     </coordinates>
     <panel_attributes>Routes</panel_attributes>
     <additional_attributes/>
@@ -156,10 +159,10 @@ name: string</panel_attributes>
     </coordinates>
     <panel_attributes>RoleRoutes
 --
-router: express.Router()
-roleController: RoleController
++router: express.Router()
+-roleController: RoleController
 --
-+initRoutes()</panel_attributes>
++initRoutes(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -172,8 +175,8 @@ roleController: RoleController
     </coordinates>
     <panel_attributes>Account
 --
-id: number
-role: Role</panel_attributes>
++id: number
++role: Role</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -186,10 +189,10 @@ role: Role</panel_attributes>
     </coordinates>
     <panel_attributes>AccountRoutes
 --
-router: express.Router()
-accountController: AccountController
++router: express.Router()
+-accountController: AccountController
 --
-+initRoutes()</panel_attributes>
++initRoutes(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -198,11 +201,14 @@ accountController: AccountController
       <x>760</x>
       <y>530</y>
       <w>310</w>
-      <h>60</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>AccountController
 --
-+updateRole(user_id: number, role_id: number)</panel_attributes>
++updateRole(
+                userId: number, 
+                roleId: number
+): Account</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -211,11 +217,14 @@ accountController: AccountController
       <x>1140</x>
       <y>530</y>
       <w>310</w>
-      <h>50</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>AccountDAO
 --
-+updateRole(user_id: number, role_id: number)</panel_attributes>
++updateRole(
+                userId: number, 
+                roleId: number
+): Account</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
