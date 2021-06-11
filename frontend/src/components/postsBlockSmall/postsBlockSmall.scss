@@ -4,36 +4,6 @@
 	display: flex;
 	height: 212px;
 
-	@include mobile-all() {
-		max-height: 145px;
-
-		.smallPost {
-			&Thumbnail {
-				max-height: 145px;
-				max-width: 255px;
-
-				img {
-					max-width: 100%;
-					min-width: initial;
-				}
-			}
-
-			&Content {
-				&Title {
-					//font-size: 1.6em;
-				}
-
-				&Description {
-					display: none;
-				}
-
-				&Bottom {
-
-				}
-			}
-		}
-	}
-
 	&Thumbnail {
 		position: relative;
 
@@ -109,22 +79,6 @@
 			line-height: 1.3em;
 			overflow: hidden;
 			margin: 10px 0 0;
-			position: relative;
-		}
-		&Description:before  {
-			background: $background;
-			bottom: 0;
-			position: absolute;
-			right: 0;
-			content: '\2026';
-		}
-		&Description:after{
-			content: '';
-			background: $background;
-			position: absolute;
-			height: 50px;
-			width: 100%;
-			z-index: 1;
 		}
 
 		&Bottom {
@@ -133,6 +87,7 @@
 			//margin-bottom: 1.45em;
 			display: flex;
 			justify-content: space-between;
+			overflow: hidden;
 
 			&Info {
 				display: flex;
@@ -167,6 +122,36 @@
 
 				&Icon {
 					font-size: .7em;
+				}
+			}
+		}
+	}
+
+	@include mobile-all() {
+		max-height: 145px;
+
+		.smallPost {
+			&Thumbnail {
+				max-height: 145px;
+				max-width: 255px;
+
+				img {
+					max-width: 100%;
+					min-width: initial;
+				}
+			}
+
+			&Content {
+				&Title {
+					font-size: 1.6em;
+				}
+
+				&Description {
+					display: none;
+				}
+
+				&Bottom {
+
 				}
 			}
 		}
