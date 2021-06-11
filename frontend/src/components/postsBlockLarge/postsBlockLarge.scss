@@ -106,6 +106,31 @@
 				color: #68677D;
 				font-size: 1.3em;
 			}
+
+			&GoToBtn {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				cursor: pointer;
+
+				p {
+					color: $primary-light;
+					width: fit-content;
+				}
+
+				&Icon {
+					margin-left: 1.4em;
+					color: $primary-light;
+				}
+
+				&:hover {
+					.largeDescriptionSmartphoneGoToBtn {
+						&Icon {
+							transform: translateX(-.4em);
+						}
+					}
+				}
+			}
 		}
 	}
 }
