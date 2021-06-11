@@ -9,20 +9,6 @@
 	position: relative;
 	height: 449px;
 
-	&:hover {
-		.largeThumbnailOverlay {
-			.largeDescription {
-				@include fade-in();
-				opacity: 1;
-				margin-top: 20px;
-				margin-bottom: 30px;
-				visibility: visible;
-				max-height: 500px;
-				transition: max-height 1s ease-in;
-			}
-		}
-	}
-
 	&Thumbnail {
 		position: relative;
 		height: 100%;
@@ -80,6 +66,20 @@
 		object-fit: cover;
 	}
 
+	&:hover {
+		.largeThumbnailOverlay {
+			.largeDescription {
+				@include fade-in();
+				opacity: 1;
+				margin-top: 20px;
+				margin-bottom: 30px;
+				visibility: visible;
+				max-height: 500px;
+				transition: max-height 1s ease-in;
+			}
+		}
+	}
+
 	@include mobile-all() {
 		width: 100%;
 		height: fit-content;
@@ -98,7 +98,7 @@
 		}
 
 		.largeBottomSmartphone {
-			display: block !important;
+			display: block;
 		}
 
 		.largeDescriptionSmartphone {
