@@ -5,7 +5,19 @@
 	height: 212px;
 
 	@include mobile-all() {
+		max-height: 145px;
+
 		.smallPost {
+			&Thumbnail {
+				max-height: 145px;
+				max-width: 255px;
+
+				img {
+					max-width: 100%;
+					min-width: initial;
+				}
+			}
+
 			&Content {
 				&Title {
 					//font-size: 1.6em;
@@ -97,11 +109,28 @@
 			line-height: 1.3em;
 			overflow: hidden;
 			margin: 10px 0 0;
+			position: relative;
+		}
+		&Description:before  {
+			background: $background;
+			bottom: 0;
+			position: absolute;
+			right: 0;
+			content: '\2026';
+		}
+		&Description:after{
+			content: '';
+			background: $background;
+			position: absolute;
+			height: 50px;
+			width: 100%;
+			z-index: 1;
 		}
 
 		&Bottom {
 			margin-top: auto;
 			margin-bottom: 12px;
+			//margin-bottom: 1.45em;
 			display: flex;
 			justify-content: space-between;
 

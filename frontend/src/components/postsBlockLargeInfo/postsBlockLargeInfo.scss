@@ -7,6 +7,14 @@
 	margin-bottom: 15px;
 	height: fit-content;
 
+	@include mobile-all() {
+		.postsBlockLargeInfoLeft {
+			&Text {
+				color: #68677D;
+			}
+		}
+	}
+
 	&Left {
 		display: flex;
 		align-items: center;

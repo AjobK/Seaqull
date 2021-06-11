@@ -3,19 +3,6 @@
 .postsBlockWrapper {
 	margin: 25px 0;
 
-	@include mobile-all() {
-		.postsBlock {
-			grid-template-columns: 1fr !important;
-			grid-template-rows: auto !important;
-			grid-template-areas: 'l1' 'l2' 's1' 's2' !important;
-
-			.small {
-				grid-template-rows: 1fr;
-				grid-template-columns: auto;
-			}
-		}
-	}
-
 	.postsBlock {
 		display: grid;
 		grid-gap: 25px;
@@ -43,6 +30,19 @@
 			grid-template-columns: 1fr;
 			grid-gap: 25px;
 			max-width: 100%;
+		}
+	}
+
+	@include mobile-all() {
+		.postsBlock {
+			grid-template-columns: 1fr;
+			grid-template-rows: auto;
+			grid-template-areas: 'l1' 's1' 's2' 'l2';
+
+			.small {
+				grid-template-rows: 1fr;
+				grid-template-columns: auto;
+			}
 		}
 	}
 }
