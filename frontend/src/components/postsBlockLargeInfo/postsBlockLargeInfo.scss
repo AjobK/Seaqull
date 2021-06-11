@@ -10,7 +10,7 @@
 	@include mobile-all() {
 		.postsBlockLargeInfoLeft {
 			&Text {
-				color: #68677D;
+				color: $text;
 			}
 		}
 	}

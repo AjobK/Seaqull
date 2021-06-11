@@ -66,7 +66,7 @@
 		flex-direction: column;
 
 		&Title {
-			margin-top: 3.3%;
+			margin-top: 9px;
 			font-size: 1.6em;
 			line-height: 1.2em;
 			white-space: pre-line;
@@ -75,7 +75,7 @@
 
 		&Description {
 			white-space: pre-line;
-			color: #68677D;
+			color: $text;
 			font-size: 1.2em;
 			line-height: 1.3em;
 			overflow: hidden;
@@ -85,13 +85,13 @@
 		&Bottom {
 			margin-top: auto;
 			margin-bottom: 12px;
-			//margin-bottom: 1.45em;
 			display: flex;
 			justify-content: space-between;
 			overflow: hidden;
 
 			&Info {
 				display: flex;
+				align-items: center;
 				font-size: 1.2em;
 				font-weight: 300;
 
@@ -136,6 +136,23 @@
 				max-height: 145px;
 				max-width: 255px;
 
+				&Overlay {
+					padding: 0 10px 7px;
+
+					&Category {
+						&Bullet {
+							&Icon {
+								margin-right: 10px;
+							}
+						}
+					}
+
+					&Bookmark {
+						font-size: .9em;
+						transform: translateY(-3px);
+					}
+				}
+
 				img {
 					max-width: 100%;
 					min-width: initial;
@@ -144,7 +161,8 @@
 
 			&Content {
 				&Title {
-					font-size: 1.6em;
+					font-size: 1.4em;
+					margin-top: 0;
 				}
 
 				&Description {
@@ -152,7 +170,23 @@
 				}
 
 				&Bottom {
+					margin-bottom: 2px;
 
+					&Info {
+						font-size: 1.2em;
+
+						& > * {
+							margin-right: 10px;
+						}
+
+						&Text {
+							color: $text;
+						}
+
+						&Bullet {
+							opacity: .9;
+						}
+					}
 				}
 			}
 		}
