@@ -8,6 +8,8 @@ class PostsBlockSmall extends Component {
 	}
 
 	render() {
+		const { post } = this.props
+
 		return (
 			<div className={styles.smallPost}>
 				<div className={styles.smallPostThumbnail}>
@@ -25,11 +27,11 @@ class PostsBlockSmall extends Component {
 					<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
 				</div>
 				<div className={styles.smallPostContent}>
-					<h4 className={styles.smallPostContentTitle}>The Seaqull Resource Library, with some extra words</h4>
+					<h4 className={styles.smallPostContentTitle}>
+						{ post.title }
+					</h4>
 					<p className={styles.smallPostContentDescription}>
-						Lorem ipsum dolor sit amet, consectetur adipiscing
-						elit, sed do eiusmod tempor incididunt ut labore et
-						dolore magna aliqua. Ut enim ad minim veniam,
+						{ post.description }
 					</p>
 					<div className={styles.smallPostContentBottom}>
 						<div className={styles.smallPostContentBottomInfo}>

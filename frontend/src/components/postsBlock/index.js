@@ -8,7 +8,7 @@ class PostsBlock extends Component {
 	}
 
 	render() {
-		const {large, small} = this.props
+		const { large, small } = this.props
 		
 		return (
 			<div className={styles.postsBlockWrapper}>

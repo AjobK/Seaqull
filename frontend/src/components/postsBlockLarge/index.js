@@ -9,14 +9,20 @@ class PostsBlockLarge extends Component {
 	}
 
 	render() {
+		const { post } = this.props
+
 		return (
 			<div className={ styles.large }>
 				<div className={ styles.largeThumbnail }>
 					<div className={ styles.largeThumbnailOverlay }>
-						<h3 className={ styles.largeThumbnailOverlayTitle }>The Seaqull Resource Library, with some extra words</h3>
+						<h3 className={ styles.largeThumbnailOverlayTitle }>
+							{ post.title }
+						</h3>
 						<div className={ styles.largeThumbnailOverlayDesktop }>
 							<div className={ `${styles.largeDescription} ${styles.largeDescriptionDesktop}` }>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+								<p>
+									{ post.description }
+								</p>
 							</div>
 							<PostsBlockLargeInfo />
 						</div>
