@@ -31,17 +31,22 @@ Good content should be rewarded. That's why every author has a chance to be high
 ---
 
 
-## Start up project
+## Project commands
 
-#### Commands front end
+### Commands front end
 
-`- npm i`   
-`- npm run dev`  
+| Command                | Description                         |
+|------------------------|-------------------------------------|
+| `npm i`                | Install front-end modules           |
+| `npm run dev`          | Start the back-end                  |
 
-#### Commands back end
+### Commands back end
 
-`- npm i`  
-`- npm run seed:config`  
-`- npm run seed:run`  
-`- npm run schema:drop`  
-`- npm start`  
+| Command                | Description                         |
+|------------------------|-------------------------------------|
+| `npm i`                | Install back-end modules            |
+| `npm run seed:config`  | Seed the database and set DB config |
+| `npm run seed:run`     | Run seeder                          |
+| `npm run schema:drop`  | Drop the database schema            |
+| `npm run reset`        | Reset the database and seeded data  |
+| `npm start`            | Start the back-end                  |
