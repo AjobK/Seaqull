@@ -3,10 +3,6 @@ import {Icon, Loader} from '../../components'
 import styles from './postsBlockSmall.scss'
 
 class PostsBlockSmall extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<div className={styles.smallPost}>

@@ -3,10 +3,6 @@ import styles from './postsBlockLargeInfo.scss'
 import {Icon} from "../index";
 
 class PostsBlockLargeInfo extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<div className={styles.postsBlockLargeInfo}>

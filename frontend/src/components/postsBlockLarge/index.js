@@ -4,10 +4,6 @@ import styles from './postsBlockLarge.scss'
 import PostsBlockLargeInfo from '../postsBlockLargeInfo'
 
 class PostsBlockLarge extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<div className={ styles.large }>
