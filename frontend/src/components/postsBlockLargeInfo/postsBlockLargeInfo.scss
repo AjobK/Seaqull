@@ -2,10 +2,49 @@
 
 .postsBlockLargeInfo {
 	display: flex;
-	justify-content: space-between;
-	margin-top: 20px;
-	margin-bottom: 15px;
-	height: fit-content;
+	align-items: center;
+	width: fit-content;
+
+	& > * {
+		margin-right: 12px;
+	}
+
+	&Category {
+		color: $primary;
+		display: flex;
+		font-size: 1.2em;
+		align-items: center;
+
+		&Bullet {
+			&Icon {
+				margin-right: 12px;
+				font-size: .7em;
+			}
+		}
+
+		&:hover {
+			color: $primary-light;
+		}
+	}
+
+	&Text {
+		color: $light-gray;
+		font-size: 1.2em;
+		font-weight: 300;
+		display: flex;
+
+		&ReadingTime {
+			font-size: .8em;
+			margin-right: 4px;
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	&Bullet {
+		color: $light-gray;
+		opacity: .8;
+	}
 
 	@include mobile-all() {
 		.postsBlockLargeInfoLeft {
@@ -13,57 +52,5 @@
 				color: $text;
 			}
 		}
-	}
-
-	&Left {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-
-		& > * {
-			margin-right: 12px;
-		}
-
-		&Category {
-			color: $primary;
-			display: flex;
-			font-size: 1.2em;
-			align-items: center;
-
-			&Bullet {
-				&Icon {
-					margin-right: 12px;
-					font-size: .7em;
-				}
-			}
-		}
-
-		&Text {
-			color: $light-gray;
-			font-size: 1.2em;
-			font-weight: 300;
-			display: flex;
-
-			&ReadingTime {
-				font-size: .8em;
-				margin-right: 4px;
-				display: flex;
-				align-items: center;
-			}
-		}
-
-		&Bullet {
-			color: $light-gray;
-			opacity: .8;
-		}
-	}
-
-	&Bookmark {
-		cursor: pointer;
-		display: flex;
-		color: $dark-light;
-		align-items: center;
-		font-size: 1.5em;
-		margin-top: 2px;
 	}
 }

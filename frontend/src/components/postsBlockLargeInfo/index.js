@@ -10,32 +10,28 @@ class PostsBlockLargeInfo extends Component {
 	render() {
 		return (
 			<div className={styles.postsBlockLargeInfo}>
-				<div className={styles.postsBlockLargeInfoLeft}>
-					<a href="#" className={styles.postsBlockLargeInfoLeftCategory}>
-						<span className={styles.postsBlockLargeInfoLeftCategoryBullet}>
-							<Icon iconName={'Circle'} className={styles.postsBlockLargeInfoLeftCategoryBulletIcon} />
+
+					<a href="#" className={styles.postsBlockLargeInfoCategory}>
+						<span className={styles.postsBlockLargeInfoCategoryBullet}>
+							<Icon iconName={'Circle'} className={styles.postsBlockLargeInfoCategoryBulletIcon} />
 						</span>
 						Machine learning
 					</a>
-					<span className={styles.postsBlockLargeInfoLeftBullet}>
+					<span className={styles.postsBlockLargeInfoBullet}>
 						&bull;
 					</span>
-					<div className={styles.postsBlockLargeInfoLeftText}>
-						<span className={styles.postsBlockLargeInfoLeftTextReadingTime}>
-							<Icon iconName={'Stopwatch'} className={styles.postsBlockLargeInfoLeftTextReadingTimeIcon} />
+					<div className={styles.postsBlockLargeInfoText}>
+						<span className={styles.postsBlockLargeInfoTextReadingTime}>
+							<Icon iconName={'Stopwatch'} className={styles.postsBlockLargeInfoTextReadingTimeIcon} />
 						</span>
 						<p>6 min</p>
 					</div>
-					<span className={styles.postsBlockLargeInfoLeftBullet}>
+					<span className={styles.postsBlockLargeInfoBullet}>
 						&bull;
 					</span>
-					<div className={styles.postsBlockLargeInfoLeftText}>
+					<div className={styles.postsBlockLargeInfoText}>
 						<p>10 minutes ago</p>
 					</div>
-				</div>
-				<span className={styles.postsBlockLargeInfoBookmark}>
-					<Icon iconName={'Bookmark'} className={styles.postsBlockLargeInfoLeftBookmarkIcon} />
-				</span>
 			</div>
 		)
 	}

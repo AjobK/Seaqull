@@ -14,20 +14,31 @@ class PostsBlockLarge extends Component {
 		return (
 			<div className={ styles.large }>
 				<div className={ styles.largeThumbnail }>
-					<div className={ styles.largeThumbnailOverlay }>
-						<h3 className={ styles.largeThumbnailOverlayTitle }>
-							{ post.title }
-						</h3>
-						<div className={ styles.largeThumbnailOverlayDesktop }>
-							<div className={ `${styles.largeDescription} ${styles.largeDescriptionDesktop}` }>
-								<p>
-									{ post.description }
-								</p>
+					<a href={ `posts/${ post.path }` }>
+						<div className={ styles.largeThumbnailContent }>
+							<h3 className={ styles.largeThumbnailContentTitle }>
+								{ post.title }
+							</h3>
+							<div className={ styles.largeThumbnailContentDesktop }>
+								<div className={ `${styles.largeDescription} ${styles.largeDescriptionDesktop}` }>
+									<p>
+										{ post.description }
+									</p>
+								</div>
+								<div className={ styles.largeBottom }>
+									<PostsBlockLargeInfo />
+									<a href="#">
+										<span className={styles.largeBottomBookmark}>
+											<Icon iconName={'Bookmark'} className={styles.largeBottomBookmarkIcon} />
+										</span>
+									</a>
+								</div>
 							</div>
-							<PostsBlockLargeInfo />
 						</div>
-					</div>
-					<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+					</a>
+					<a href={ `posts/${ post.path }` }>
+						<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
+					</a>
 				</div>
 				<div className={ styles.largeBottomSmartphone }>
 					<PostsBlockLargeInfo />
