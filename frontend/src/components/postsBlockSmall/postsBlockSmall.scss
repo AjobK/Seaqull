@@ -24,13 +24,16 @@
 			padding: 0 14px 17px;
 			pointer-events: none;
 
+			& > * {
+				pointer-events: initial;
+			}
+
 			&Category {
 				margin-top: auto;
 				color: $primary;
 				display: flex;
 				align-items: center;
 				font-size: 1.2em;
-				pointer-events: initial;
 
 				&Bullet {
 					display: flex;
@@ -42,6 +45,10 @@
 						margin-right: 7px;
 					}
 				}
+
+				&:hover {
+					color: $primary-light;
+				}
 			}
 
 			&Bookmark {
@@ -52,10 +59,9 @@
 				color: $dark-light;
 				align-items: center;
 				font-size: 1.5em;
-				pointer-events: initial;
 
 				&:hover {
-					color: black;
+					color: $primary;
 				}
 			}
 		}

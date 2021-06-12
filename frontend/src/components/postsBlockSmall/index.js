@@ -18,12 +18,12 @@ class PostsBlockSmall extends Component {
 				<div className={ styles.smallPostThumbnail }>
 					<a className={ styles.smallPostThumbnailOverlay } href={ `posts/${ post.path }` } />
 					<div className={ styles.smallPostThumbnailContent }>
-						<div className={ styles.smallPostThumbnailContentCategory }>
+						<a className={ styles.smallPostThumbnailContentCategory } href={ '#' }>
 							<span className={ styles.smallPostThumbnailContentCategoryBullet }>
-									<Icon iconName={' Circle' } className={ styles.smallPostThumbnailContentCategoryBulletIcon } />
+									<Icon iconName={ 'Circle' } className={ styles.smallPostThumbnailContentCategoryBulletIcon } />
 							</span>
 							<p>Machine learning</p>
-						</div>
+						</a>
 						<span className={ styles.smallPostThumbnailContentBookmark } onClick={ this.bookmarkPost }>
 							<Icon iconName={ 'Bookmark' } className={ styles.smallPostThumbnailContentBookmarkIcon } />
 						</span>
@@ -31,12 +31,14 @@ class PostsBlockSmall extends Component {
 					<img src={ 'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76' } alt={ 'post' } />
 				</div>
 				<div className={ styles.smallPostContent}>
-					<h4 className={styles.smallPostContentTitle }>
-						{ post.title }
-					</h4>
-					<p className={ styles.smallPostContentDescription }>
-						{ post.description }
-					</p>
+					<a href={ `posts/${ post.path }` }>
+						<h4 className={styles.smallPostContentTitle }>
+							{ post.title }
+						</h4>
+						<p className={ styles.smallPostContentDescription }>
+							{ post.description }
+						</p>
+					</a>
 					<div className={ styles.smallPostContentBottom }>
 						<div className={ styles.smallPostContentBottomInfo }>
 							<div className={ styles.smallPostContentBottomInfoText }>
