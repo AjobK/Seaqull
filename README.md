@@ -30,17 +30,29 @@ Good content should be rewarded. That's why every author has a chance to be high
 
 ---
 
+Personalize your profile and engage with other community members. View all the content you have been in touch with and save some for later. Freedom of knowledge right at your fingertips.
 
-## Project commands
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/35965716/121773057-b1d5eb00-cb79-11eb-841f-afdb90df49fb.png">
+</p>
 
-### Commands front end
+---
+
+<br />
+<br />
+<br />
+<br />
+
+<h1 align="center" colo="red"> Seaqull - Base Commands  </h1>
+
+## Commands front end
 
 | Command                | Description                         |
 |------------------------|-------------------------------------|
 | `npm i`                | Install front-end modules           |
 | `npm run dev`          | Start the back-end                  |
 
-### Commands back end
+## Commands back end
 
 | Command                | Description                         |
 |------------------------|-------------------------------------|
