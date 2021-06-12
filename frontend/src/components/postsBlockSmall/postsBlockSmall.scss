@@ -9,15 +9,20 @@
 		max-width: 348px;
 
 		&Overlay {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(0deg, rgba($secondary, .9) 10%, rgba($secondary, .6) 30%, rgba($secondary, 0) 50%);
+		}
+
+		&Content {
 			display: flex;
 			position: absolute;
 			justify-content: space-between;
 			bottom: 0;
 			width: 100%;
-			height: 40%;
-			background: $secondary;
-			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 60%, rgba($secondary, 0) 100%);
 			padding: 0 14px 17px;
+			pointer-events: none;
 
 			&Category {
 				margin-top: auto;
@@ -25,6 +30,7 @@
 				display: flex;
 				align-items: center;
 				font-size: 1.2em;
+				pointer-events: initial;
 
 				&Bullet {
 					display: flex;
@@ -46,7 +52,18 @@
 				color: $dark-light;
 				align-items: center;
 				font-size: 1.5em;
+				pointer-events: initial;
+
+				&:hover {
+					color: black;
+				}
 			}
+		}
+
+		&Link {
+			position: absolute;
+			width: 100%;
+			height: 100%;
 		}
 
 		img {
@@ -149,7 +166,7 @@
 				max-height: 145px;
 				max-width: 255px;
 
-				&Overlay {
+				&Content {
 					padding: 0 10px 7px;
 
 					&Category {
