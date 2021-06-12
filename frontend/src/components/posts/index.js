@@ -129,8 +129,6 @@ class Posts extends Component {
 	}
 
 	render() {
-
-
 		return (
 			<div>
 				<ul className={styles.posts}>

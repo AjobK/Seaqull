@@ -3,6 +3,10 @@ import { PostsBlockLarge, PostsBlockSmall } from '../../components'
 import styles from './postsBlock.scss'
 
 class PostsBlock extends Component {
+	constructor(props) {
+		super(props)
+	}
+
 	render() {
 		const {large, small} = this.props
 		
