@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { Loader } from '../../components'
 import styles from './posts.scss'
-import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
+import { convertFromRaw } from 'draft-js'
 import Axios from 'axios'
+import PostsBlock from "../postsBlock";
+import {createElement} from "react/cjs/react.production.min";
+import {inject, observer} from "mobx-react";
 
+@inject('store') @observer
 class Posts extends Component {
 	constructor(props) {
 		super(props)
@@ -11,6 +15,7 @@ class Posts extends Component {
 		this.page = 0
 		this.totalPages = null
 		this.scrolling = false
+		this.postBlocks = []
 	}
 
 	loadArticle = () => {
@@ -20,6 +25,7 @@ class Posts extends Component {
 		Axios.get(url,  {withCredentials: true})
 			.then(response => response.data)
 			.then(json => {
+				console.log(json)
 				// if (!this.totalPages) this.totalPages = json.data.last_page
 				if(json.message != null) {
 					this.page = 0
@@ -30,38 +36,61 @@ class Posts extends Component {
 			})
 	}
 
-	setNewPosts() {
+	createPostsBlock = (largePosts, smallPosts) => {
+		return <PostsBlock large={largePosts} small={smallPosts}/>
+	}
+
+	setNewPosts = () => {
 		let singleLi = document.createElement('li')
 
 		singleLi.classList.add(styles.post)
 
-		for (let i = 0; i < this.data.length; i++) {
-			let randomRGB = {
-				red: Math.random() * 255,
-				green: Math.random() * 255,
-				blue: Math.random() * 255
-			}
-			let { red, green, blue } = randomRGB
-			let rgb = `rgb(${red},${green},${blue})`
+		this.data = this.data.concat(this.data) // remove
 
-			let article = document.createElement('a')
-
-			article.href = `posts/${this.data[i].path}`
-			article.style.backgroundColor = rgb
-			article.classList.add(styles.postItem)
-			let postItem = document.createElement('div')
-
-			try {
-				postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
-			} catch (e) {
-				postItem.innerText = this.data[i].title
+		let postIteration = 0
+		let postsBlocks = []
+		let postsBlockLarge = []
+		let postsBlockSmall = []
+		this.data.forEach((post) => {
+			postIteration++
+ 			if (postIteration > 6) {
+				postsBlocks.push(this.createPostsBlock(postsBlockLarge, postsBlockSmall))
+ 				postIteration = 0
+				postsBlockLarge = postsBlockSmall = []
 			}
 
-			postItem.classList.add(styles.postItemText)
-			article.appendChild(postItem)
-			singleLi.appendChild(article)
-		}
-		document.getElementsByClassName(styles.article)[0].appendChild(singleLi)
+ 			postsBlockLarge.length < 2
+				? postsBlockLarge.push(post)
+				: postsBlockSmall.push(post)
+		})
+
+		// for (let i = 0; i < this.data.length; i++) {
+		// 	let randomRGB = {
+		// 		red: Math.random() * 255,
+		// 		green: Math.random() * 255,
+		// 		blue: Math.random() * 255
+		// 	}
+		// 	let { red, green, blue } = randomRGB
+		// 	let rgb = `rgb(${red},${green},${blue})`
+		//
+		// 	let article = document.createElement('a')
+		//
+		// 	article.href = `posts/${this.data[i].path}`
+		// 	article.style.backgroundColor = rgb
+		// 	article.classList.add(styles.postItem)
+		// 	let postItem = document.createElement('div')
+		//
+		// 	try {
+		// 		postItem.innerText = convertFromRaw(JSON.parse(this.data[i].title)).getPlainText()
+		// 	} catch (e) {
+		// 		postItem.innerText = this.data[i].title
+		// 	}
+		//
+		// 	postItem.classList.add(styles.postItemText)
+		// 	article.appendChild(postItem)
+		// 	singleLi.appendChild(article)
+		// }
+		// document.getElementsByClassName(styles.posts)[0].appendChild(singleLi)
 	}
 
 	componentWillMount() {
@@ -78,17 +107,17 @@ class Posts extends Component {
 
 		// const { scrolling } = this
 		// if (scrolling) return
-		const lastLi = document.querySelector('.' + styles.article)
-		const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
-		const pageOffset = window.pageYOffset + window.innerHeight
-		let bottomOffset = window.innerHeight
-
-		if (pageOffset > lastLiOffset - bottomOffset){
-			this.loadMore()
-		}
-		
-		if (window.pageYOffset >= document.body.clientHeight)
-			window.scrollTo(0, document.body.clientHeight)
+		// const lastLi = document.querySelector('.' + styles.article)
+		// const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
+		// const pageOffset = window.pageYOffset + window.innerHeight
+		// let bottomOffset = window.innerHeight
+		//
+		// if (pageOffset > lastLiOffset - bottomOffset){
+		// 	this.loadMore()
+		// }
+		//
+		// if (window.pageYOffset >= document.body.clientHeight)
+		// 	window.scrollTo(0, document.body.clientHeight)
 	}
 
 
@@ -100,9 +129,14 @@ class Posts extends Component {
 	}
 
 	render() {
+		
+
 		return (
 			<div>
-				<ul className={styles.article} />
+				<ul className={styles.posts}>
+					{{postBlocks}}
+				</ul>
+				{/*<PostsBlock/>*/}
 				<Loader />
 			</div>
 		)

@@ -12,18 +12,18 @@ class PostsBlock extends Component {
 			<div className={styles.postsBlockWrapper}>
 				<div className={styles.postsBlock}>
 					<div className={styles.large1}>
-						<PostsBlockLarge/>
+						<PostsBlockLarge post={this.props.large[0]}/>
 					</div>
 					<div className={styles.large2}>
-						<PostsBlockLarge/>
+						<PostsBlockLarge post={this.props.large[1]}/>
 					</div>
 					<div className={`${styles.small} ${styles.small1}`}>
-						<PostsBlockSmall/>
-						<PostsBlockSmall/>
+						<PostsBlockSmall post={this.props.small[0]}/>
+						<PostsBlockSmall post={this.props.small[1]}/>
 					</div>
 					<div className={`${styles.small} ${styles.small2}`}>
-						<PostsBlockSmall/>
-						<PostsBlockSmall/>
+						<PostsBlockSmall post={this.props.small[2]}/>
+						<PostsBlockSmall post={this.props.small[3]}/>
 					</div>
 				</div>
 			</div>

@@ -19,11 +19,11 @@
 	}
 }
 
-.article {
-	position: static;
-	min-height: calc(100vh / 3)
-}
-
 .post {
 	list-style: none
+}
+
+.posts {
+	position: static;
+	min-height: calc(100vh / 3)
 }
