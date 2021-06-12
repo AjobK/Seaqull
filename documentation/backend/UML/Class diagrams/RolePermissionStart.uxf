@@ -233,16 +233,16 @@
       <x>1060</x>
       <y>350</y>
       <w>100</w>
-      <h>30</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;60.0;80.0;60.0;10.0;80.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1060</x>
-      <y>410</y>
+      <y>420</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -253,12 +253,12 @@
     <id>Relation</id>
     <coordinates>
       <x>1060</x>
-      <y>490</y>
+      <y>420</y>
       <w>100</w>
-      <h>30</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;80.0;80.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
