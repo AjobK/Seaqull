@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { Loader } from '../../components'
 import styles from './posts.scss'
-import { convertFromRaw } from 'draft-js'
 import Axios from 'axios'
 import PostsBlock from "../postsBlock";
-import {createElement} from "react/cjs/react.production.min";
 import {inject, observer} from "mobx-react";
 
 @inject('store') @observer
@@ -15,7 +13,9 @@ class Posts extends Component {
 		this.page = 0
 		this.totalPages = null
 		this.scrolling = false
-		this.postBlocks = []
+		this.state = {
+			postsBlocks: []
+		}
 	}
 
 	loadArticle = () => {
@@ -36,8 +36,8 @@ class Posts extends Component {
 			})
 	}
 
-	createPostsBlock = (largePosts, smallPosts) => {
-		return <PostsBlock large={largePosts} small={smallPosts}/>
+	createPostsBlock = (largePosts, smallPosts, key) => {
+		return <PostsBlock large={largePosts} small={smallPosts} key={key}/>
 	}
 
 	setNewPosts = () => {
@@ -46,22 +46,27 @@ class Posts extends Component {
 		singleLi.classList.add(styles.post)
 
 		this.data = this.data.concat(this.data) // remove
+		this.data = this.data.concat(this.data)
 
 		let postIteration = 0
-		let postsBlocks = []
 		let postsBlockLarge = []
 		let postsBlockSmall = []
-		this.data.forEach((post) => {
+		let postsBlocks = []
+		for (let i = 0; i < this.data.length; i++) {
 			postIteration++
- 			if (postIteration > 6) {
-				postsBlocks.push(this.createPostsBlock(postsBlockLarge, postsBlockSmall))
- 				postIteration = 0
+			if (postIteration > 6) {
+				postsBlocks.push(this.createPostsBlock(postsBlockLarge, postsBlockSmall, i))
+				postIteration = 0
 				postsBlockLarge = postsBlockSmall = []
 			}
 
- 			postsBlockLarge.length < 2
-				? postsBlockLarge.push(post)
-				: postsBlockSmall.push(post)
+			postsBlockLarge.length < 2
+				? postsBlockLarge.push(this.data[i])
+				: postsBlockSmall.push(this.data[i])
+		}
+
+		this.setState({
+			postsBlocks
 		})
 
 		// for (let i = 0; i < this.data.length; i++) {
@@ -129,12 +134,13 @@ class Posts extends Component {
 	}
 
 	render() {
+		const { postsBlocks } = this.state
+
 		return (
 			<div>
 				<ul className={styles.posts}>
-					{{postBlocks}}
+					{ postsBlocks }
 				</ul>
-				{/*<PostsBlock/>*/}
 				<Loader />
 			</div>
 		)
