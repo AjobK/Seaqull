@@ -1,23 +1,23 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component} from 'react'
+import { inject, observer } from 'mobx-react';
 import { Loader } from '../../components'
 import styles from './posts.scss'
 import Axios from 'axios'
-import PostsBlock from "../postsBlock";
-import {inject, observer} from "mobx-react";
+import PostsBlock from '../postsBlock';
 
 @inject('store') @observer
 class Posts extends Component {
 	constructor(props) {
 		super(props)
+		this.MAX_POSTS_IN_BLOCK = 6
 		this.totalPages = null
 		this.scrolling = false
 		this.state = {
-			data: [],
 			postsBlocks: [],
 			isFetching: false,
-			page: 0
+			page: 0,
+			endReached: false
 		}
-		this.POSTS_IN_POST_BLOCK = 6
 	}
 
 	componentDidMount() {
@@ -33,22 +33,36 @@ class Posts extends Component {
 		Axios.get(`/api/post/?page=` + this.state.page, { withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
-				console.log(json)
-				// if (!this.totalPages) this.totalPages = json.data.last_page
-				// if (json.message != null) {
-				// 	this.page = 0
-				// 	this.fetchPosts()
-				// }
+				if (json.message) {
+					this.setEndReached(true)
+					return
+				}
+
 				this.setState({
 					...this.state,
-					data: json.posts,
 					page: this.state.page + 1
 				})
-				this.renderNewPosts()
+				this.renderNewPosts(json.posts ? json.posts : [])
+
+				if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
+					this.setEndReached(true)
+				}
 			})
 	}
 
+	setEndReached(endReached) {
+		this.setState({
+			...this.state,
+			endReached
+		})
+	}
+
 	fetchMorePosts = () => {
+		if (this.state.endReached) {
+			console.log('END REACHED')
+			return
+		}
+		console.log('FETCH MORE')
 		this.fetchPosts()
 		this.setState({
 			...this.state,
@@ -66,20 +80,18 @@ class Posts extends Component {
 			...this.state,
 			isFetching: true
 		})
-
-		console.log(this.state.isFetching)
+		this.fetchMorePosts()
 	}
 
-	renderNewPosts = () => {
+	renderNewPosts = (posts) => {
 		let singleLi = document.createElement('li')
 
 		singleLi.classList.add(styles.post)
 
-		let data = this.state.data
-		let postsBlocks = []
+		let postsBlocks = this.state.postsBlocks
 
 		postsBlocks.push(
-			this.createPostsBlock(data)
+			this.createPostsBlock(posts)
 		)
 
 		this.setState({
@@ -100,7 +112,9 @@ class Posts extends Component {
 				<ul className={styles.posts}>
 					{ postsBlocks }
 				</ul>
-				<Loader />
+				{ this.state.isFetching || !this.state.endReached && (
+					<Loader />
+				)}
 			</div>
 		)
 	}
