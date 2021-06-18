@@ -88,7 +88,7 @@
 		color: $dark-light;
 		align-items: center;
 		font-size: 1.5em;
-		margin-top: 2px;
+		transform: translateY(2px);
 		pointer-events: initial;
 
 		&:hover {
@@ -136,13 +136,13 @@
 	&:hover {
 		.largeThumbnailContent {
 			.largeDescription {
-				@include fade-in();
 				opacity: 1;
 				margin-top: 20px;
 				margin-bottom: 30px;
 				visibility: visible;
 				max-height: 500px;
 				transition: max-height 1s ease-in;
+				@include fade-in();
 			}
 
 			.largeBottomDesktop {
