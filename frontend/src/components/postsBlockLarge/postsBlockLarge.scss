@@ -26,6 +26,7 @@
 			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 			padding: 50px 28px 0;
 			max-width: inherit;
+			pointer-events: none;
 
 			&Title {
 				margin-top: auto;
@@ -71,6 +72,7 @@
 		margin-top: 20px;
 		margin-bottom: 15px;
 		flex-wrap: wrap;
+		pointer-events: none;
 
 		&Bookmark {
 			cursor: pointer;
@@ -79,6 +81,7 @@
 			align-items: center;
 			font-size: 1.5em;
 			margin-top: 2px;
+			pointer-events: initial;
 
 			&:hover {
 				color: $primary;
