@@ -30,6 +30,8 @@ class Posts extends Component {
 	}
 
 	fetchPosts = () => {
+		Axios.defaults.baseURL = 'http://localhost:8000'
+
 		Axios.get(`/api/post/?page=` + this.state.page, { withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
