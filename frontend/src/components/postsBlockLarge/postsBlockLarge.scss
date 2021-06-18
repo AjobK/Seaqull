@@ -88,6 +88,12 @@
 
 	.largeBottomSmartphone {
 		display: none;
+
+		.largeBottomSmartphoneInfoWrapper {
+			display: flex;
+			justify-content: space-between;
+			margin: 20px 0;
+		}
 	}
 
 	&:hover {
@@ -121,6 +127,10 @@
 			}
 		}
 
+		.largeBottomDesktop {
+			display: none;
+		}
+
 		.largeBottomSmartphone {
 			display: block;
 		}
@@ -136,6 +146,7 @@
 				justify-content: flex-end;
 				align-items: center;
 				cursor: pointer;
+				margin-top: 15px;
 
 				p {
 					color: $primary-light;

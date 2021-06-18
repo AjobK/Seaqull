@@ -27,7 +27,7 @@ class PostsBlockLarge extends Component {
 								</div>
 							</div>
 						</a>
-						<div className={ styles.largeBottom }>
+						<div className={ `${styles.largeBottom} ${styles.largeBottomDesktop}` }>
 							<PostsBlockLargeInfo />
 							<a href="#">
 								<span className={styles.largeBottomBookmark}>
@@ -41,7 +41,14 @@ class PostsBlockLarge extends Component {
 					</a>
 				</div>
 				<div className={ styles.largeBottomSmartphone }>
-					<PostsBlockLargeInfo />
+					<div className={ styles.largeBottomSmartphoneInfoWrapper }>
+						<PostsBlockLargeInfo />
+						<a href="#">
+								<span className={styles.largeBottomBookmark}>
+									<Icon iconName={'Bookmark'} className={styles.largeBottomBookmarkIcon} />
+								</span>
+						</a>
+					</div>
 					<div className={ `${styles.largeDescription} ${styles.largeDescriptionSmartphone}` }>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
 						<div className={ styles.largeDescriptionSmartphoneGoToBtn }>
