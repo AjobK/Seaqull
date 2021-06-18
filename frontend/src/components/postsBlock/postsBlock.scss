@@ -7,7 +7,7 @@
 		display: grid;
 		grid-gap: 25px;
 		grid-template-columns: repeat(2, calc(50% - 25px / 2));
-		grid-template-rows: repeat(2, 449px);
+		grid-template-rows: repeat(auto-fill, 449px);
 		grid-template-areas: 'l1 s1' 's2 l2';
 
 		.large1 {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './postsBlockLargeInfo.scss'
-import {Icon} from "../index";
+import { Icon } from '../index'
 
 class PostsBlockLargeInfo extends Component {
 	constructor(props) {

@@ -50,7 +50,7 @@ class PostsBlockLarge extends Component {
 						</a>
 					</div>
 					<div className={ `${styles.largeDescription} ${styles.largeDescriptionSmartphone}` }>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+						<p>{ post.description }</p>
 						<div className={ styles.largeDescriptionSmartphoneGoToBtn }>
 							<p>Read more</p>
 							<Icon iconName={'ChevronRight'} className={ styles.largeDescriptionSmartphoneGoToBtnIcon } />

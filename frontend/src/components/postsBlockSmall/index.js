@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Icon, Loader} from '../../components'
+import { Icon } from '../../components'
 import styles from './postsBlockSmall.scss'
 
 class PostsBlockSmall extends Component {
@@ -8,6 +8,7 @@ class PostsBlockSmall extends Component {
 	}
 
 	bookmarkPost = () => {
+
 	}
 
 	render() {
