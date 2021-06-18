@@ -125,7 +125,11 @@ class Cropper extends Component {
 
         Axios.put(address,
             fd,
-            {withCredentials: true, 'content-type': 'multipart/form-data'})
+            {
+                'withCredentials': true,
+                'content-type': 'multipart/form-data'
+            }
+        )
             .then((res) => {
                 this.props.changeImage(res.data.url) // put in Axios response
                 this.props.closeCropper()
