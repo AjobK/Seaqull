@@ -16,6 +16,7 @@
 		&Content {
 			display: flex;
 			flex-direction: column;
+			justify-content: flex-end;
 			position: absolute;
 			bottom: 0;
 			min-height: 52%;

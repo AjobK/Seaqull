@@ -14,8 +14,8 @@ class PostsBlockLarge extends Component {
 		return (
 			<div className={ styles.large }>
 				<div className={ styles.largeThumbnail }>
-					<a href={ `posts/${ post.path }` }>
-						<div className={ styles.largeThumbnailContent }>
+					<div className={ styles.largeThumbnailContent }>
+						<a href={ `posts/${ post.path }` }>
 							<h3 className={ styles.largeThumbnailContentTitle }>
 								{ post.title }
 							</h3>
@@ -25,17 +25,17 @@ class PostsBlockLarge extends Component {
 										{ post.description }
 									</p>
 								</div>
-								<div className={ styles.largeBottom }>
-									<PostsBlockLargeInfo />
-									<a href="#">
-										<span className={styles.largeBottomBookmark}>
-											<Icon iconName={'Bookmark'} className={styles.largeBottomBookmarkIcon} />
-										</span>
-									</a>
-								</div>
 							</div>
+						</a>
+						<div className={ styles.largeBottom }>
+							<PostsBlockLargeInfo />
+							<a href="#">
+								<span className={styles.largeBottomBookmark}>
+									<Icon iconName={'Bookmark'} className={styles.largeBottomBookmarkIcon} />
+								</span>
+							</a>
 						</div>
-					</a>
+					</div>
 					<a href={ `posts/${ post.path }` }>
 						<img src={'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76'} alt={'post'}/>
 					</a>
