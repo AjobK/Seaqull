@@ -38,6 +38,13 @@
 			}
 		}
 
+		.largeBookmarkHover {
+			display: none;
+			position: absolute;
+			right: 0;
+			margin: 15px 28px 0;
+		}
+
 		img {
 			display: block;
 			width: 100%;
@@ -73,18 +80,45 @@
 		margin-bottom: 15px;
 		flex-wrap: wrap;
 		pointer-events: none;
+	}
 
-		&Bookmark {
-			cursor: pointer;
-			display: flex;
-			color: $dark-light;
-			align-items: center;
-			font-size: 1.5em;
-			margin-top: 2px;
-			pointer-events: initial;
+	.largeBookmarkIcon {
+		cursor: pointer;
+		display: flex;
+		color: $dark-light;
+		align-items: center;
+		font-size: 1.5em;
+		margin-top: 2px;
+		pointer-events: initial;
 
-			&:hover {
-				color: $primary;
+		&:hover {
+			color: $primary;
+		}
+	}
+
+	.largeGoTo {
+		display: none;
+		justify-content: flex-end;
+		align-items: center;
+		cursor: pointer;
+		font-size: 1em;
+		pointer-events: initial;
+		color: $primary;
+		@include fade-in();
+
+		p {
+			width: fit-content;
+		}
+
+		&Icon {
+			margin-left: 1.4em;
+		}
+
+		&:hover {
+			.largeGoTo {
+				&Icon {
+					transform: translateX(-.4em);
+				}
 			}
 		}
 	}
@@ -110,6 +144,21 @@
 				max-height: 500px;
 				transition: max-height 1s ease-in;
 			}
+
+			.largeBottomDesktop {
+				.largeBookmark {
+					display: none;
+				}
+
+				.largeGoTo {
+					display: flex;
+				}
+			}
+		}
+
+		.largeBookmarkHover {
+			display: initial;
+			@include fade-in();
 		}
 	}
 
@@ -138,36 +187,27 @@
 			display: block;
 		}
 
-		.largeDescriptionSmartphone {
-			p {
+		.largeDescription {
+			&Text {
 				color: $text;
 				font-size: 1.3em;
 			}
 
-			&GoToBtn {
-				display: flex;
-				justify-content: flex-end;
-				align-items: center;
-				cursor: pointer;
+			.largeGoTo {
 				margin-top: 15px;
-
-				p {
-					color: $primary-light;
-					width: fit-content;
-				}
+				font-size: 1.3em;
+				display: flex;
+				color: $primary-light;
 
 				&Icon {
 					margin-left: 1.4em;
-					color: $primary-light;
 				}
+			}
+		}
 
-				&:hover {
-					.largeDescriptionSmartphoneGoToBtn {
-						&Icon {
-							transform: translateX(-.4em);
-						}
-					}
-				}
+		&:hover {
+			.largeBookmarkHover {
+				display: none;
 			}
 		}
 	}
