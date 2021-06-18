@@ -133,6 +133,7 @@ class ProfileController {
 
         if ( attachments.avatar )
             payload['avatar'] = 'http://localhost:8000/' + attachments.avatar.path
+
         if ( attachments.banner )
             payload['banner'] = 'http://localhost:8000/' + attachments.banner.path
 
@@ -242,10 +243,9 @@ class ProfileController {
         const location = await this.fileService.storeImage(file, type)
 
         let attachment = attachments[type]
-
-        // Create type dependent variables
         let dimensions
         let typeDefaultPath = 'default/'
+
         if (type === AVATAR) {
             dimensions = 800
             typeDefaultPath += 'defaultAvatar.jpg'
@@ -285,6 +285,7 @@ class ProfileController {
         }
 
         const isUsernameTaken = await this.dao.getProfileByUsername(username)
+
         if (isUsernameTaken) {
             return 'Username not available'
         }

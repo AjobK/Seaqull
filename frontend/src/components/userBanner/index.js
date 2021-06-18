@@ -60,6 +60,7 @@ class UserBanner extends Component {
       draggingOverBanner: true
     })
   }
+
   onBannerDragLeave = () => {
     this.setState({
       draggingOverBanner: false

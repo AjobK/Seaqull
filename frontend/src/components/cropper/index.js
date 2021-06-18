@@ -14,19 +14,14 @@ class Cropper extends Component {
         this.BANNER = 'banner'
         this.AVATAR = 'avatar'
 
-        let crop = {}
+        let crop = {
+            unit: '%',
+            width: 100,
+            aspect: 1
+        }
+
         if (props.inputType === this.BANNER) {
-            crop = {
-                unit: '%',
-                width: 100,
-                aspect: 16/9
-            }
-        } else if (props.inputType === this.AVATAR) {
-            crop = {
-                unit: '%',
-                width: 100,
-                aspect: 1
-            }
+            crop.aspect = 16/9
         }
 
         this.state = {
@@ -104,6 +99,7 @@ class Cropper extends Component {
             return this.setState({
                 error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join(', ')}.`
             })
+
         if (maxFileSizeKB < fileSizeKB)
             return this.setState({
                 error: `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`
@@ -135,7 +131,6 @@ class Cropper extends Component {
                 this.props.closeCropper()
             })
             .catch(err => {
-                console.log(err)
                 if (err.response.status === 401) {
                     this.props.history.push('/login/')
                 }
