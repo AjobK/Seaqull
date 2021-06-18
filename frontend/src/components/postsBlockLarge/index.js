@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Icon, Loader} from '../../components'
+import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
 import PostsBlockLargeInfo from '../postsBlockLargeInfo'
 

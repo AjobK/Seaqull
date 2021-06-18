@@ -1,9 +1,9 @@
-import React, { Component} from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import { inject, observer } from 'mobx-react';
 import { Loader } from '../../components'
 import styles from './posts.scss'
 import Axios from 'axios'
-import PostsBlock from '../postsBlock';
+const PostsBlock = lazy(() => import('../../components/postsBlock'))
 
 @inject('store') @observer
 class Posts extends Component {
@@ -101,7 +101,11 @@ class Posts extends Component {
 	}
 
 	createPostsBlock = (posts) => {
-		return <PostsBlock posts={posts} key={Math.random()}/>
+		return <div key={Math.random()}>
+			<Suspense fallback={<div>Loading...</div>}>
+				<PostsBlock posts={posts}/>
+			</Suspense>
+		</div>
 	}
 
 	render() {
