@@ -120,12 +120,8 @@ class Cropper extends Component {
         const fd = new FormData()
         fd.append('file', image)
 
-        let address = this.props.store.defaultData.backendUrl
-        if (this.props.inputType === this.BANNER) {
-            address += '/profile/banner'
-        } else if (this.props.inputType === this.AVATAR) {
-            address += '/profile/picture'
-        }
+        const { inputType } = this.props
+        let address = this.props.store.defaultData.backendUrl + '/profile/' + inputType
 
         Axios.put(address,
             fd,
