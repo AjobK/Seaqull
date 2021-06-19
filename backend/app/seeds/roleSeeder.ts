@@ -24,7 +24,7 @@ export default class CreateRole implements Seeder {
         'COMMENT_BLOCK_USERS',
         'REMOVE_ATTACHMENTS',
         'RECOVER_ATTACHMENTS'
-    ].concat(this.permissionsUsers)
+    ]
 
     private permissionsAdmins = [
         'PROMOTE_MODERATORS',
@@ -32,12 +32,12 @@ export default class CreateRole implements Seeder {
         'PERMA_BAN_USERS',
         'REVIEW_BAN_APPEALS',
         'MACHINE_BAN_USERS'
-    ].concat(this.permissionsModerators)
+    ]
 
     private permissionsHeadAdmins = [
         'PROMOTE_ADMINS',
         'DEMOTE_ADMINS'
-    ].concat(this.permissionsAdmins)
+    ]
 
     public async run(factory: Factory): Promise<any> {
         const user = await factory(Role)({ name: 'user' }).create()
@@ -45,16 +45,30 @@ export default class CreateRole implements Seeder {
         const admin = await factory(Role)({ name: 'admin' }).create()
         const headAdmin = await factory(Role)({ name: 'head-admin' }).create()
 
-        await this.linkPermission(this.permissionsUsers, user, factory)
-        await this.linkPermission(this.permissionsModerators, mod, factory)
-        await this.linkPermission(this.permissionsAdmins, admin, factory)
-        await this.linkPermission(this.permissionsHeadAdmins, headAdmin, factory)
+        const userPermissionsObjects = await this.createPermssion(this.permissionsUsers, user, factory)
+        const modPermisionsObjects = (await this.createPermssion(this.permissionsModerators, mod, factory)).concat(userPermissionsObjects)
+        const adminPermsionsObjects = (await this.createPermssion(this.permissionsAdmins, admin, factory)).concat(modPermisionsObjects)
+        const headAdminPermissionsObject = (await this.createPermssion(this.permissionsHeadAdmins, headAdmin, factory)).concat(adminPermsionsObjects)
+
+        await this.linkPermission(userPermissionsObjects, user, factory)
+        await this.linkPermission(modPermisionsObjects, mod, factory)
+        await this.linkPermission(adminPermsionsObjects, admin, factory)
+        await this.linkPermission(headAdminPermissionsObject, headAdmin, factory)
     }
 
-    private linkPermission = async (permissionsArray: string[], role: Role, factory: Factory) => {
+    private createPermssion = async (permissionsArray: string[], role: Role, factory: Factory) => {
+        const permissions = []
+
         for (let i = 0; i < permissionsArray.length; i++) {
             const userPermission = await factory(Permission)({ name: permissionsArray[i] }).create()
-            await factory(RolePermission)({ role: role, permission: userPermission }).create()
+            permissions.push(userPermission)
+        }
+        return permissions
+    }
+
+    private linkPermission = async (permissionsArray: Permission[], role: Role, factory: Factory) => {
+        for (let i = 0; i < permissionsArray.length; i++) {
+            await factory(RolePermission)({ role: role, permission: permissionsArray[i] }).create()
         }
     }
 }
