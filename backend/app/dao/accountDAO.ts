@@ -29,4 +29,5 @@ class AccountDAO {
         return account.id || -1
     }
 }
+
 export default AccountDAO

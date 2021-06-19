@@ -2,7 +2,7 @@ import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } fro
 import Permission from './permission'
 import Role from './role'
 
-@Entity('rolePermission')
+@Entity('role_permission')
 export class RolePermission extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number

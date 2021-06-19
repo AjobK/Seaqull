@@ -32,7 +32,8 @@ class CommentEditor extends Component {
     }
 
     handleBeforeInput = (chars) => {
-        if (!this.maxLength) return false
+        if (!this.maxLength) 
+            return false
 
         const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + chars.length
 
@@ -72,7 +73,7 @@ class CommentEditor extends Component {
             this.props.onSubmitCallback(this)
             this.clearEditor()
         } else {
-            this.setState({formError: 'Comment should not be empty.'})
+            this.setState({ formError: 'Comment should not be empty.' })
         }
     }
 
@@ -110,8 +111,8 @@ class CommentEditor extends Component {
     displayHeader = () => {
         if (this.showHeader) {
             return (
-                <div className={styles.editorLabel}>
-                    <span className={styles.editorLabel__title}>Comment section</span>
+                <div className={ styles.editorLabel }>
+                    <span className={ styles.editorLabel__title }>Comment section</span>
                 </div>
             )
         }
@@ -120,20 +121,20 @@ class CommentEditor extends Component {
     render() {
         return (
             <section>
-                {this.displayHeader()}
-                {this.displayError()}
-                <div className={styles.editorForm}>
-                    <div onClick={this.focusOnEditor} className={styles.editorForm__editor}>
+                { this.displayHeader() }
+                { this.displayError() }
+                <div className={ styles.editorForm }>
+                    <div onClick={ this.focusOnEditor } className={ styles.editorForm__editor }>
                         <Editor
-                            editorState={this.state.editorState}
-                            ref={this.editorInput}
-                            onChange={this.onChange}
+                            editorState={ this.state.editorState }
+                            ref={ this.editorInput }
+                            onChange={ this.onChange }
                             placeholder="Leave a comment..."
-                            keyBindingFn={this.keyBindingFn}
-                            handleKeyCommand={this.handleKeyCommand}                     
+                            keyBindingFn={ this.keyBindingFn }
+                            handleKeyCommand={ this.handleKeyCommand }                     
                         />
                     </div>
-                    <Button value={this.buttonText} className={ styles.editorForm__button } type="button" onClick={this.onSubmit}/>
+                    <Button value={ this.buttonText } className={ styles.editorForm__button } type="button" onClick={ this.onSubmit } />
                 </div>
             </section>
         )

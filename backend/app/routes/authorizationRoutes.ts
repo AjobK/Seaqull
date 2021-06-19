@@ -1,15 +1,15 @@
 import * as express from 'express'
-import ControllerBase from '../interfaces/ControllerBase'
-import AuthorizationController from '../controllers/authorizationController'
+import RouterBase from '../interfaces/RouterBase'
+import AuthorizationController from '../controller/authorizationController'
 
-class AuthorizationRoutes implements ControllerBase {
+class AuthorizationRoutes implements RouterBase {
     public login = '/login'
     public loginVerify = '/login-verify'
     public logout = '/logout'
     public router = express.Router()
     private authController: AuthorizationController
 
-    constructor(){
+    constructor() {
         this.authController = new AuthorizationController()
         this.initRoutes()
     }
@@ -20,4 +20,5 @@ class AuthorizationRoutes implements ControllerBase {
         this.router.get(this.logout, this.authController.logout)
     }
 }
+
 export default AuthorizationRoutes

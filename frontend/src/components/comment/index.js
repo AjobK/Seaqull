@@ -29,7 +29,7 @@ class Comment extends Component {
     displayAvatar = () => {
         if (!this.isReply) {
             return(
-                <div className={styles.comment__avatar}>
+                <div className={ styles.comment__avatar }>
                     {/* TODO: replace profile image */}
                     <img src={ require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } />
                     <div className={ styles.comment__avatarBadge }>
@@ -44,7 +44,7 @@ class Comment extends Component {
         if(!this.isReply && this.state.isReplying) {
             return (
                 <div className={ styles.comment__replyForm }>
-                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd }/>
+                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd } />
                 </div>
             )
         }
@@ -82,7 +82,7 @@ class Comment extends Component {
         if(!this.isReply) {
             return (
                 <div className={ styles.comment__replyButton }>
-                    <Icon iconName={ 'Reply' } className={ styles.comment__replyButtonIcon } onClick={ this.onReplyClick }/>
+                    <Icon iconName={ 'Reply' } className={ styles.comment__replyButtonIcon } onClick={ this.onReplyClick } />
                 </div>
             )
         }
@@ -111,7 +111,7 @@ class Comment extends Component {
                                     </div>
                                 </div>
                                 <div className={ styles.comment__content }>
-                                    <Editor editorState={ this.state.editorState } readOnly={ true }/>
+                                    <Editor editorState={ this.state.editorState } readOnly={ true } />
                                 </div>
                             </div>
                             <div className={ styles.comment__interactive }>
@@ -119,7 +119,7 @@ class Comment extends Component {
                                     (comment.children && comment.children.length > 0) && (
                                     <>
                                         <button onClick={ () => this.setState({ showReplies: !showReplies }) } className={ showReplies ? styles.showReplies : '' }>
-                                            { comment.children.length } repl{comment.children.length > 1 ? 'ies' : 'y' }
+                                            { comment.children.length } repl{ comment.children.length > 1 ? 'ies' : 'y' }
                                             <span>{/* Underline animation */}</span>
                                         </button>
                                         <span className={ styles.seperator }></span>
@@ -129,7 +129,7 @@ class Comment extends Component {
                                 {
                                     (profile.loggedIn && comment.profile.display_name === profile.display_name) && (
                                         <>
-                                            <Icon iconName={ 'Trash' } className={ styles.comment__deleteButtonIcon } onClick={ this.onDeleteClick }/>
+                                            <Icon iconName={ 'Trash' } className={ styles.comment__deleteButtonIcon } onClick={ this.onDeleteClick } />
                                             {
                                                 (!this.isReply) && (
                                                     <span className={ styles.seperator }></span>
@@ -138,11 +138,11 @@ class Comment extends Component {
                                         </>
                                     )
                                 }
-                                { this.displayReplyButton() }
+                                { (profile.loggedIn) && this.displayReplyButton() }
                             </div>
                         </div>
                     </div>
-                    { this.displayCommentForm() }
+                    { (profile.loggedIn) && this.displayCommentForm() }
                     { showReplies && <CommentChildren commentChildren={ comment.children } /> }
                     {
                         (this.state.isDeleting) && (

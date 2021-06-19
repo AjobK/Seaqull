@@ -19,4 +19,5 @@ export class PostLike extends BaseEntity {
     @Column()
     liked_at: Date
 }
+
 export default PostLike

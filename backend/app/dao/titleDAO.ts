@@ -14,4 +14,5 @@ class TitleDAO {
     }
 
 }
+
 export default TitleDAO
