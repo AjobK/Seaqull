@@ -14,7 +14,7 @@
 	&Category {
 		color: $primary;
 		display: flex;
-		font-size: 1.2em;
+		font-size: $nr-xs-fontsize;
 		align-items: center;
 
 		&Bullet {
@@ -31,7 +31,7 @@
 
 	&Text {
 		color: $light-gray;
-		font-size: 1.2em;
+		font-size: $nr-xs-fontsize;
 		font-weight: 300;
 		display: flex;
 
