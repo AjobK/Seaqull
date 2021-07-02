@@ -30,11 +30,15 @@ class Posts extends Component {
 	}
 
 	fetchPosts = () => {
+		this.setIsFetching(true)
+
 		Axios.defaults.baseURL = 'http://localhost:8000'
 
 		Axios.get(`/api/post/?page=` + this.state.page, { withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
+				this.setIsFetching(false)
+
 				if (json.message) {
 					this.setEndReached(true)
 					return
@@ -59,29 +63,28 @@ class Posts extends Component {
 		})
 	}
 
+	setIsFetching = (isFetching) => {
+		this.setState({
+			...this.state,
+			isFetching
+		})
+	}
+
 	fetchMorePosts = () => {
 		if (this.state.endReached) {
-			console.log('END REACHED')
 			return
 		}
 		console.log('FETCH MORE')
 		this.fetchPosts()
-		this.setState({
-			...this.state,
-			isFetching: false
-		})
 	}
 
 	handleScroll = () => {
-		if (
-			Math.ceil(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight
-			|| this.state.isFetching) {
-			return;
+		if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight
+			|| this.state.isFetching
+		) {
+			return
 		}
-		this.setState({
-			...this.state,
-			isFetching: true
-		})
+
 		this.fetchMorePosts()
 	}
 
