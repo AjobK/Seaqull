@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { initStore } from '../stores'
 import { Provider } from 'mobx-react'
+import GuardedRoute from '../util/guards/guardedRoute'
 import Home from './home'
 import Profile from './profile'
 import Post from './post'
@@ -27,7 +28,8 @@ class AppRouter extends Component {
             <Route path='/404' exact component={Error} />
             <Route path='/500' exact component={() => <Error title={500} sub={'Internal server error'} />} />
             <Route path='/new-post' exact component={() => <Post new={true} />} />
-            <Route path='/posts/:postUrl' exact component={Post} />
+            <GuardedRoute path='/posts/:postUrl' exact component={Post} />
+            {/* <Route path='/posts/:postUrl' exact component={Post} /> */}
             <Route path='/login' exact component={Login} />
             <Route path='/register' exact component={Register} />
             <Route component={Error} />
