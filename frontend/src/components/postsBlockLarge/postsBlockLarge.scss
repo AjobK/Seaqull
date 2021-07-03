@@ -83,6 +83,63 @@ $post-padding: 20px;
 		margin-bottom: 10px;
 		flex-wrap: wrap;
 		pointer-events: none;
+
+		.postsBlockLargeInfo {
+			display: flex;
+			align-items: center;
+			width: fit-content;
+			flex-wrap: wrap;
+			pointer-events: initial;
+
+			& > * {
+				margin-right: 10px;
+			}
+
+			&Category {
+				color: $primary;
+				display: flex;
+				font-size: $nr-xs-fontsize;
+				align-items: center;
+
+				&Bullet {
+					&Icon {
+						margin-right: 10px;
+						font-size: .7em;
+					}
+				}
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			&Text {
+				color: $light-gray;
+				font-size: $nr-xs-fontsize;
+				font-weight: 300;
+				display: flex;
+
+				&ReadingTime {
+					font-size: .8em;
+					margin-right: 3px;
+					display: flex;
+					align-items: center;
+				}
+			}
+
+			&Bullet {
+				color: $light-gray;
+				opacity: .8;
+			}
+
+			@include mobile-all() {
+				.postsBlockLargeInfoLeft {
+					&Text {
+						color: $text;
+					}
+				}
+			}
+		}
 	}
 
 	.largeBookmarkIcon {
@@ -125,12 +182,6 @@ $post-padding: 20px;
 
 	.largeBottomSmartphone {
 		display: none;
-
-		.largeBottomSmartphoneInfoWrapper {
-			display: flex;
-			justify-content: space-between;
-			margin: $post-padding 0;
-		}
 	}
 
 	&:hover {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
-import PostsBlockLargeInfo from '../postsBlockLargeInfo'
 
 class PostsBlockLarge extends Component {
 	constructor(props) {
@@ -31,7 +30,29 @@ class PostsBlockLarge extends Component {
 							</div>
 						</a>
 						<div className={ `${ styles.largeBottom } ${ styles.largeBottomDesktop }` }>
-							<PostsBlockLargeInfo />
+							<div className={styles.postsBlockLargeInfo}>
+								<a href="#" className={styles.postsBlockLargeInfoCategory}>
+									<span className={styles.postsBlockLargeInfoCategoryBullet}>
+										<Icon iconName={'Circle'} className={styles.postsBlockLargeInfoCategoryBulletIcon} />
+									</span>
+									Machine learning
+								</a>
+								<span className={styles.postsBlockLargeInfoBullet}>
+									&bull;
+								</span>
+								<div className={styles.postsBlockLargeInfoText}>
+									<span className={styles.postsBlockLargeInfoTextReadingTime}>
+										<Icon iconName={'Stopwatch'} className={styles.postsBlockLargeInfoTextReadingTimeIcon} />
+									</span>
+									<p>6 min</p>
+								</div>
+								<span className={styles.postsBlockLargeInfoBullet}>
+									&bull;
+								</span>
+								<div className={styles.postsBlockLargeInfoText}>
+									<p>10 minutes ago</p>
+								</div>
+							</div>
 							<a href={ '#' } className={ styles.largeBookmark }>
 								<Icon iconName={ 'Bookmark' } className={ styles.largeBookmarkIcon } />
 							</a>
@@ -48,14 +69,6 @@ class PostsBlockLarge extends Component {
 					</a>
 				</div>
 				<div className={ styles.largeBottomSmartphone }>
-					<div className={ styles.largeBottomSmartphoneInfoWrapper }>
-						<PostsBlockLargeInfo />
-						<a href="#">
-							<span className={ styles.largeBookmark }>
-								<Icon iconName={ 'Bookmark' } className={ styles.largeBookmarkIcon } />
-							</span>
-						</a>
-					</div>
 					<div className={ `${ styles.largeDescription } ${ styles.largeDescriptionSmartphone }` }>
 						<p className={ styles.largeDescriptionText }>
 							{ post.description }
