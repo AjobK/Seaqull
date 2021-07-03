@@ -4,134 +4,113 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>650</x>
-      <y>610</y>
+      <x>760</x>
+      <y>330</y>
       <w>310</w>
-      <h>150</h>
+      <h>190</h>
     </coordinates>
     <panel_attributes>RoleController
 --
-dao: RoleDAO
-rolePermissionDAO: RolePermissionDAO
+-dao: RoleDAO
+-rolePermissionDAO: RolePermissionDAO
+-permissionDAO: PermissionDAO
 --
-+getRoles()
-+getRole(id: number) // geeft ook perms
-+checkPermission(requiredPermission, account)</panel_attributes>
++getRoles(): Role[]
++getRole(id: number): Role
++checkPermission(
+                        requiredPermissionName: String, 
+                        account: Account
+): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>650</x>
-      <y>800</y>
+      <x>1140</x>
+      <y>390</y>
       <w>310</w>
-      <h>140</h>
-    </coordinates>
-    <panel_attributes>PermissionController
---
-+save()
-+update()
-+delete()
-+get()
-+getOne(id: number)</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1030</x>
-      <y>610</y>
-      <w>280</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>RoleDAO
 --
-+getRoles()
-+getRole(id: number)</panel_attributes>
++getRoles(): Role[]
++getRole(id: number): Role</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1030</x>
-      <y>420</y>
-      <w>280</w>
-      <h>150</h>
+      <x>1140</x>
+      <y>330</y>
+      <w>310</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>RolePermissionDAO
 --
-+save()
-+update()
-+delete()
-+get()
-+getOne(id: number)</panel_attributes>
++getForRole(roleId: number): Permission[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1030</x>
-      <y>800</y>
-      <w>280</w>
-      <h>140</h>
+      <x>1140</x>
+      <y>470</y>
+      <w>310</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>PermissionDAO
 --
-+save()
-+update()
-+delete()
-+get()
-+getOne(id: number)</panel_attributes>
++getOne(id: number): Permission</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>920</x>
-      <y>270</y>
-      <w>140</w>
+      <x>910</x>
+      <y>180</y>
+      <w>160</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>RolePermission
 --
-role: number
-permission: number</panel_attributes>
++role: Role
++permission: Permission</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1080</x>
-      <y>270</y>
+      <x>1120</x>
+      <y>180</y>
       <w>140</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>Permission
 --
-id: number
-name: string</panel_attributes>
++id: number
++name: string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>270</y>
+      <x>720</x>
+      <y>180</y>
       <w>140</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>Role
 --
-id: number
-name: string</panel_attributes>
++id: number
++name: string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>620</x>
-      <y>220</y>
-      <w>720</w>
+      <x>320</x>
+      <y>130</y>
+      <w>1160</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>Model</panel_attributes>
@@ -140,10 +119,10 @@ name: string</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1000</x>
-      <y>390</y>
-      <w>340</w>
-      <h>580</h>
+      <x>1110</x>
+      <y>300</y>
+      <w>370</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>DAO</panel_attributes>
     <additional_attributes/>
@@ -151,12 +130,201 @@ name: string</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>620</x>
-      <y>390</y>
+      <x>730</x>
+      <y>300</y>
       <w>370</w>
-      <h>580</h>
+      <h>350</h>
     </coordinates>
     <panel_attributes>Controller</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>300</y>
+      <w>400</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>Routes</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>330</y>
+      <w>340</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>RoleRoutes
+--
++router: express.Router()
+-roleController: RoleController
+--
++initRoutes(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>180</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Account
+--
++id: number
++role: Role</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>500</y>
+      <w>340</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>AccountRoutes
+--
++router: express.Router()
+-accountController: AccountController
+--
++initRoutes(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>530</y>
+      <w>310</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>AccountController
+--
++updateRole(
+                userId: number, 
+                roleId: number
+): Account</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>530</y>
+      <w>310</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>AccountDAO
+--
++updateRole(
+                userId: number, 
+                roleId: number
+): Account</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>350</y>
+      <w>100</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;60.0;80.0;60.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>420</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>420</y>
+      <w>100</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;80.0;80.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>550</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>550</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>350</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>210</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>850</x>
+      <y>210</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>210</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
 </diagram>
+
