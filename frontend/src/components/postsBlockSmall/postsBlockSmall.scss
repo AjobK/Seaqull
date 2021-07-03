@@ -1,5 +1,7 @@
 @import '../../styles/index.scss';
 
+$post-padding: 10px;
+
 .smallPost {
 	display: flex;
 	height: 158px;
@@ -7,6 +9,7 @@
 	&Thumbnail {
 		position: relative;
 		max-width: 260px;
+		min-width: 260px;
 
 		&Overlay {
 			position: absolute;
@@ -21,7 +24,7 @@
 			justify-content: space-between;
 			bottom: 0;
 			width: 100%;
-			padding: 0 14px 17px;
+			padding: 0 $post-padding calc(#{$post-padding} + 2px);
 			pointer-events: none;
 
 			& > * {
@@ -47,7 +50,7 @@
 				}
 
 				&:hover {
-					color: $primary-light;
+					text-decoration: underline;
 				}
 			}
 
@@ -85,11 +88,11 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		padding: $post-padding 0;
 
 		&Title {
-			margin-top: 9px;
 			font-size: $nr-md-fontsize;
-			line-height: 1.2em;
+			line-height: 22px;
 			white-space: pre-line;
 			color: $secondary;
 		}
@@ -98,7 +101,7 @@
 			white-space: pre-line;
 			color: $text;
 			font-size: $nr-xs-fontsize;
-			line-height: 1.3em;
+			line-height: 1.29;
 			overflow: hidden;
 			margin: 10px 0 0;
 			text-overflow: ellipsis;
@@ -110,7 +113,6 @@
 
 		&Bottom {
 			margin-top: auto;
-			margin-bottom: 12px;
 			display: flex;
 			justify-content: space-between;
 			overflow: hidden;
@@ -123,7 +125,7 @@
 				flex-wrap: wrap;
 
 				& > * {
-					margin-right: 12px;
+					margin-right: $post-padding;
 				}
 
 				&Text {
