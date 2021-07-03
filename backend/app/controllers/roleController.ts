@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 //import Role from '../entity/role'
-import RoleDAO from '../dao/roleDAO'
+import RoleDAO from '../daos/roleDAO'
 
 class RoleController {
     private dao: RoleDAO

@@ -1,13 +1,14 @@
 import { define, factory } from 'typeorm-seeding'
-import { Account } from '../entity/account'
-import role from '../entity/role'
-import Profile from '../entity/profile';
+import { Account } from '../entities/account'
+import role from '../entities/role'
+import Profile from '../entities/profile';
+import * as Faker from 'faker'
 
-define(Account, () => {
+define(Account, (faker: typeof Faker, settings: { role: role }) => {
     const acc = new Account()
-    const name = 'rootAdmin'
-    const createdRole = factory(role)({ name: 'RootAdmin' }) as any
-    const createdUser = factory(Profile)({ display_name: name }) as any
+    const name = settings.role.name
+    const createdRole = settings.role
+    const createdUser = factory(Profile)({ display_name: name, role: role }) as any
 
     acc.profile = createdUser
     acc.role = createdRole

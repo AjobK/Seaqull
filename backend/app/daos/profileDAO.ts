@@ -1,7 +1,7 @@
-import DatabaseConnector from '../util/databaseConnector'
-import { Profile } from '../entity/profile'
-import Attachment from '../entity/attachment'
-import ProfileFollowedBy from '../entity/profile_followed_by'
+import DatabaseConnector from '../utils/databaseConnector'
+import { Profile } from '../entities/profile'
+import Attachment from '../entities/attachment'
+import ProfileFollowedBy from '../entities/profile_followed_by'
 
 class ProfileDAO {
     public async getProfileByUsername(username: string): Promise<Profile> {

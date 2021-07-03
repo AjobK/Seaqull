@@ -1,7 +1,7 @@
 import { define } from 'typeorm-seeding'
-import { Post } from '../entity/post'
+import { Post } from '../entities/post'
 import * as Faker from 'faker'
-import Profile from '../entity/profile'
+import Profile from '../entities/profile'
 
 define(Post, (faker: typeof Faker, settings: { profile: Profile }): Post => {
     const postFake = new Post()
