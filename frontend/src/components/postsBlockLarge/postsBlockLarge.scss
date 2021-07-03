@@ -162,6 +162,24 @@ $post-padding: 20px;
 		}
 	}
 
+	@include mobile-tablet() {
+		height: 274px;
+
+		.large {
+			&Thumbnail {
+				&Content {
+					&Title {
+						font-size: $nr-xm-fontsize;
+					}
+				}
+			}
+
+			&Bottom {
+				margin-top: 10px;
+			}
+		}
+	}
+
 	@include mobile-all() {
 		width: 100%;
 		height: fit-content;

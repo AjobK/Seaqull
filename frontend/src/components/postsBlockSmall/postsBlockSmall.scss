@@ -1,15 +1,19 @@
 @import '../../styles/index.scss';
 
+$small-height-desktop: 158px;
+$small-width-desktop: 260px;
+$small-height-tablet: 127px;
+$small-width-tablet: 210px;
 $post-padding: 10px;
 
 .smallPost {
 	display: flex;
-	height: 158px;
+	height: $small-height-desktop;
 
 	&Thumbnail {
 		position: relative;
-		max-width: 260px;
-		min-width: 260px;
+		max-width: $small-width-desktop;
+		min-width: $small-width-desktop;
 
 		&Overlay {
 			position: absolute;
@@ -103,7 +107,7 @@ $post-padding: 10px;
 			font-size: $nr-xs-fontsize;
 			line-height: 1.29;
 			overflow: hidden;
-			margin: 10px 0 0;
+			margin-top: $post-padding;
 			text-overflow: ellipsis;
 			display: -webkit-box;
 			-webkit-line-clamp: 3;
@@ -137,6 +141,7 @@ $post-padding: 10px;
 						margin-right: 6px;
 						display: flex;
 						align-items: center;
+						transform: translateY(1px);
 					}
 				}
 
@@ -157,10 +162,45 @@ $post-padding: 10px;
 	}
 
 	@include mobile-tablet() {
+		height: $small-height-tablet;
+
 		.smallPost {
+			&Thumbnail {
+				max-width: $small-width-tablet;
+				min-width: $small-width-tablet;
+
+				&Content {
+					&Category {
+						font-size: $nr-xxs-fontsize;
+					}
+				}
+			}
+
 			&Content {
 				&Title {
 					//font-size: 1.4em;
+				}
+
+				&Description {
+					margin-top: calc(#{$post-padding} / 2)
+				}
+
+				&Bottom {
+					&Info {
+						font-size: $nr-xxs-fontsize;
+
+						&Text {
+							&ReadingTime {
+								font-size: .8em;
+							}
+						}
+					}
+
+					&Button {
+						&Icon {
+							font-size: .7em;
+						}
+					}
 				}
 			}
 		}
