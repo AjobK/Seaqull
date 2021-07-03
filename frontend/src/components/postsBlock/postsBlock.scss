@@ -6,7 +6,7 @@
 	.postsBlock {
 		display: grid;
 		grid-gap: $grid-block-gap;
-		grid-template-columns: repeat(2, calc(50% - 25px / 2));
+		grid-template-columns: repeat(2, calc(50% - #{$grid-block-gap} / 2));
 		grid-template-rows: repeat(auto-fill, 336px);
 		grid-template-areas: 'l1 s1' 's2 l2';
 

@@ -8,7 +8,7 @@
 	pointer-events: initial;
 
 	& > * {
-		margin-right: 12px;
+		margin-right: 10px;
 	}
 
 	&Category {
@@ -19,13 +19,13 @@
 
 		&Bullet {
 			&Icon {
-				margin-right: 12px;
+				margin-right: 10px;
 				font-size: .7em;
 			}
 		}
 
 		&:hover {
-			color: $primary-light;
+			text-decoration: underline;
 		}
 	}
 
@@ -37,7 +37,7 @@
 
 		&ReadingTime {
 			font-size: .8em;
-			margin-right: 4px;
+			margin-right: 3px;
 			display: flex;
 			align-items: center;
 		}
