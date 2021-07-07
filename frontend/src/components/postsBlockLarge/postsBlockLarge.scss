@@ -64,7 +64,8 @@ $post-padding: 20px;
 		transition: all 1s ease-in-out, visibility 0s, max-height .8s ease-out;
 
 		p {
-			color: $dark-light;
+			color: $light;
+			opacity: .9;
 			font-size: $nr-md-fontsize;
 		}
 	}
@@ -114,7 +115,8 @@ $post-padding: 20px;
 			}
 
 			&Text {
-				color: $light-gray;
+				color: $dark-light;
+				opacity: .7;
 				font-size: $nr-xs-fontsize;
 				font-weight: 300;
 				display: flex;
@@ -128,8 +130,9 @@ $post-padding: 20px;
 			}
 
 			&Bullet {
-				color: $light-gray;
-				opacity: .8;
+				color: white;
+				opacity: .4;
+				font-size: .9em;
 			}
 
 			@include mobile-all() {
@@ -145,7 +148,8 @@ $post-padding: 20px;
 	.largeBookmarkIcon {
 		cursor: pointer;
 		display: flex;
-		color: $dark-light;
+		color: white;
+		opacity: .8;
 		align-items: center;
 		font-size: 1.1em;
 		transform: translateY(2px);
@@ -259,6 +263,8 @@ $post-padding: 20px;
 		.large {
 			&Thumbnail {
 				&Content {
+					padding: 50px calc(#{$post-padding} / 2) 0;
+
 					&Title {
 						display: none;
 					}
@@ -272,6 +278,15 @@ $post-padding: 20px;
 							display: none;
 						}
 
+						&Category {
+							&Bullet {
+								&Icon {
+									font-size: .5em;
+									vertical-align: 0;
+								}
+							}
+						}
+
 						&Bullet {
 							display: none;
 						}
@@ -280,6 +295,13 @@ $post-padding: 20px;
 
 				&Smartphone {
 					display: block;
+				}
+
+				&Title {
+					margin-top: 10px;
+					font-size: $nr-xm-fontsize;
+					color: $secondary;
+					white-space: initial;
 				}
 			}
 

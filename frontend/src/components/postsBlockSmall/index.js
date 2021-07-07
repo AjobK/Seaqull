@@ -23,10 +23,12 @@ class PostsBlockSmall extends Component {
 							<span className={ styles.smallPostThumbnailContentCategoryBullet }>
 									<Icon iconName={ 'Circle' } className={ styles.smallPostThumbnailContentCategoryBulletIcon } />
 							</span>
-							<p>Machine learning</p>
+							<p>
+								Machine learning
+							</p>
 						</a>
-						<span className={ styles.smallPostThumbnailContentBookmark } onClick={ this.bookmarkPost }>
-							<Icon iconName={ 'Bookmark' } className={ styles.smallPostThumbnailContentBookmarkIcon } />
+						<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
+							<Icon iconName={ 'Bookmark' } className={ styles.bookmarkIcon } />
 						</span>
 					</div>
 					<img src={ 'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76' } alt={ 'post' } />
@@ -55,6 +57,9 @@ class PostsBlockSmall extends Component {
 								<p>10 minutes ago</p>
 							</div>
 						</div>
+						<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
+							<Icon iconName={ 'Bookmark' } className={ styles.bookmarkIcon } />
+						</span>
 						<a href={ '#' } className={ styles.smallPostContentBottomButton }>
 							<Icon iconName={ 'ChevronRight' } className={ styles.smallPostContentBottomButtonIcon } />
 						</a>

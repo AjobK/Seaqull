@@ -1,9 +1,11 @@
 @import '../../styles/index.scss';
 
 $small-height-desktop: 158px;
-$small-width-desktop: 260px;
+$small-thumbnail-width-desktop: 260px;
 $small-height-tablet: 127px;
-$small-width-tablet: 210px;
+$small-thumbnail-width-tablet: 210px;
+$small-height-smartphone: 109px;
+$small-thumbnail-width-smartphone: 190px;
 $post-padding: 10px;
 
 .smallPost {
@@ -12,8 +14,8 @@ $post-padding: 10px;
 
 	&Thumbnail {
 		position: relative;
-		max-width: $small-width-desktop;
-		min-width: $small-width-desktop;
+		max-width: $small-thumbnail-width-desktop;
+		min-width: $small-thumbnail-width-desktop;
 
 		&Overlay {
 			position: absolute;
@@ -58,18 +60,8 @@ $post-padding: 10px;
 				}
 			}
 
-			&Bookmark {
-				margin-top: auto;
+			.bookmark {
 				transform: translateY(2px);
-				cursor: pointer;
-				display: flex;
-				color: $dark-light;
-				align-items: center;
-				font-size: 1.1em;
-
-				&:hover {
-					color: $primary;
-				}
 			}
 		}
 
@@ -158,6 +150,23 @@ $post-padding: 10px;
 					font-size: .8em;
 				}
 			}
+
+			.bookmark {
+				display: none;
+			}
+		}
+	}
+
+	.bookmark {
+		margin-top: auto;
+		cursor: pointer;
+		color: white;
+		opacity: .8;
+		align-items: center;
+		font-size: 1.1em;
+
+		&:hover {
+			color: $primary;
 		}
 	}
 
@@ -166,8 +175,8 @@ $post-padding: 10px;
 
 		.smallPost {
 			&Thumbnail {
-				max-width: $small-width-tablet;
-				min-width: $small-width-tablet;
+				max-width: $small-thumbnail-width-tablet;
+				min-width: $small-thumbnail-width-tablet;
 
 				&Content {
 					&Category {
@@ -207,27 +216,26 @@ $post-padding: 10px;
 	}
 
 	@include mobile-all() {
-		max-height: 145px;
+		max-height: $small-height-smartphone;
 
 		.smallPost {
 			&Thumbnail {
-				max-height: 145px;
-				max-width: 255px;
+				max-height: $small-height-smartphone;
+				max-width: $small-thumbnail-width-smartphone;
 
 				&Content {
-					padding: 0 10px 7px;
+					padding: 0 10px 12px;
 
 					&Category {
 						&Bullet {
 							&Icon {
-								margin-right: 10px;
+								margin-right: 8px;
 							}
 						}
 					}
 
-					&Bookmark {
-						//font-size: .9em;
-						transform: translateY(-3px);
+					.bookmark {
+						display: none;
 					}
 				}
 
@@ -238,8 +246,10 @@ $post-padding: 10px;
 			}
 
 			&Content {
+				padding: 0 0 calc(#{$post-padding} / 2) 0;
+
 				&Title {
-					margin-top: 0;
+					font-size: $nr-sm-fontsize;
 				}
 
 				&Description {
@@ -247,21 +257,20 @@ $post-padding: 10px;
 				}
 
 				&Bottom {
-					margin-bottom: 2px;
-
 					&Info {
-						//font-size: 1.2em;
+						display: none;
+					}
 
-						& > * {
-							margin-right: 10px;
-						}
+					.bookmark {
+						display: flex;
+						color: #818193;
+					}
 
-						&Text {
-							color: $text;
-						}
+					&Button {
+						margin-left: auto;
 
-						&Bullet {
-							opacity: .9;
+						&Icon {
+							font-size: 1em;
 						}
 					}
 				}
