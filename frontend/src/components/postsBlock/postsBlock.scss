@@ -7,7 +7,6 @@
 		display: grid;
 		grid-gap: $grid-block-gap;
 		grid-template-columns: repeat(2, calc(50% - #{$grid-block-gap} / 2));
-		grid-template-rows: repeat(auto-fill, 336px);
 		grid-template-areas: 'l1 s1' 's2 l2';
 
 		.large1 {
@@ -30,12 +29,6 @@
 			grid-template-columns: 1fr;
 			grid-gap: $grid-block-gap;
 			max-width: 100%;
-		}
-	}
-
-	@include mobile-tablet() {
-		.postsBlock {
-			grid-template-rows: repeat(auto-fill, 274px);
 		}
 	}
 

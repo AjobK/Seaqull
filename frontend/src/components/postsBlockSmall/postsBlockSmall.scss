@@ -81,7 +81,6 @@ $post-padding: 10px;
 	&Content {
 		width: 100%;
 		margin-left: 1.7%;
-		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		padding: $post-padding 0;
@@ -91,6 +90,13 @@ $post-padding: 10px;
 			line-height: 22px;
 			white-space: pre-line;
 			color: $secondary;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			word-break: break-word;
+			-webkit-line-clamp: 3;
+			-o-ellipsis-lastline: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
 		}
 
 		&Description {
@@ -220,8 +226,8 @@ $post-padding: 10px;
 
 		.smallPost {
 			&Thumbnail {
-				max-height: $small-height-smartphone;
 				max-width: $small-thumbnail-width-smartphone;
+				min-width: $small-thumbnail-width-smartphone;
 
 				&Content {
 					padding: 0 10px 12px;
