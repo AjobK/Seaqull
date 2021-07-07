@@ -44,13 +44,17 @@ class PostsBlockLarge extends Component {
 									<span className={styles.postsBlockLargeInfoTextReadingTime}>
 										<Icon iconName={'Stopwatch'} className={styles.postsBlockLargeInfoTextReadingTimeIcon} />
 									</span>
-									<p>6 min</p>
+									<p>
+										6 min
+									</p>
 								</div>
 								<span className={styles.postsBlockLargeInfoBullet}>
 									&bull;
 								</span>
 								<div className={styles.postsBlockLargeInfoText}>
-									<p>10 minutes ago</p>
+									<p>
+										10 minutes ago
+									</p>
 								</div>
 							</div>
 							<a href={ '#' } className={ styles.largeBookmark }>
@@ -68,11 +72,12 @@ class PostsBlockLarge extends Component {
 						<img src={ 'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76' } alt={ 'post' }/>
 					</a>
 				</div>
+
 				<div className={ styles.largeBottomSmartphone }>
 					<div className={ `${ styles.largeDescription } ${ styles.largeDescriptionSmartphone }` }>
-						<p className={ styles.largeDescriptionText }>
-							{ post.description }
-						</p>
+						<h3 className={ styles.largeBottomTitle }>
+							{ post.title }
+						</h3>
 						<a href={ '#' } className={ styles.largeGoTo }>
 							<p>
 								Read more

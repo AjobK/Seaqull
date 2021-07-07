@@ -229,47 +229,74 @@ $post-padding: 20px;
 				margin-top: 10px;
 			}
 		}
+
+		&:hover {
+			.large {
+				&Thumbnail {
+					&Content {
+						.largeDescription {
+							display: none;
+						}
+
+						.largeBottomDesktop {
+							.largeBookmark {
+								display: flex
+							}
+
+							.largeGoTo {
+								display: none;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@include mobile-all() {
-		width: 100%;
 		height: fit-content;
-		max-height: initial;
 
-		.largeThumbnailContent {
-			padding: 50px 12px 16px;
-
-			&Title {
-				//font-size: 1.9em;
+		.large {
+			&Thumbnail {
+				&Content {
+					&Title {
+						display: none;
+					}
+				}
 			}
 
-			.largeThumbnailContentDesktop {
-				display: none;
+			&Bottom {
+				&Desktop {
+					.postsBlockLargeInfo {
+						div:not(.postsBlockLargeInfoCategory) {
+							display: none;
+						}
+
+						&Bullet {
+							display: none;
+						}
+					}
+				}
+
+				&Smartphone {
+					display: block;
+				}
 			}
-		}
 
-		.largeBottomDesktop {
-			display: none;
-		}
-
-		.largeBottomSmartphone {
-			display: block;
 		}
 
 		.largeDescription {
-			&Text {
-				color: $text;
-				//font-size: 1.3em;
-			}
-
 			.largeGoTo {
-				margin-top: 15px;
-				//font-size: 1.3em;
+				margin-top: 6px;
+				font-size: 1em;
 				display: flex;
-				color: $primary-light;
+
+				p {
+					display: none;
+				}
 
 				&Icon {
-					margin-left: 1.4em;
+					margin-left: 0;
 				}
 			}
 		}
