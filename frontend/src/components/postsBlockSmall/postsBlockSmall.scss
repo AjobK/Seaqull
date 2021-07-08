@@ -98,10 +98,16 @@ $post-padding: 10px;
 
 	&Content {
 		width: 100%;
-		margin-left: 1.7%;
+		margin-left: $post-padding;
 		display: flex;
-		flex-direction: column;
-		padding: $post-padding 0;
+		//justify-content: center;
+		align-items: center;
+
+		& > div {
+			display: flex;
+			flex-direction: column;
+			min-height: calc(100% - #{$post-padding});
+		}
 
 		&Title {
 			font-size: $nr-md-fontsize;
@@ -123,11 +129,11 @@ $post-padding: 10px;
 			font-size: $nr-xs-fontsize;
 			line-height: 1.29;
 			overflow: hidden;
-			margin-top: $post-padding;
+			margin-top: calc(#{$post-padding} - 5px);
 			text-overflow: ellipsis;
 			display: -webkit-box;
-			-webkit-line-clamp: 4;
-			-o-ellipsis-lastline: 4;
+			-webkit-line-clamp: 3;
+			-o-ellipsis-lastline: 3;
 			-webkit-box-orient: vertical;
 		}
 
@@ -135,7 +141,7 @@ $post-padding: 10px;
 			margin-top: auto;
 			display: flex;
 			justify-content: space-between;
-			overflow: hidden;
+			min-height: $nr-sm-fontsize;
 
 			&Info {
 				display: flex;
