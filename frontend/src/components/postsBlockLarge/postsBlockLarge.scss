@@ -6,28 +6,76 @@ $post-padding: 20px;
 	transition: all .2s ease-in-out;
 }
 
+.goTo {
+	display: none;
+	justify-content: flex-end;
+	align-items: center;
+	cursor: pointer;
+	font-size: $nr-xxs-fontsize;
+	pointer-events: initial;
+	color: $primary;
+	margin-left: 20px;
+	transform: translateY(1px);
+	@include fade-in();
+
+	p {
+		width: fit-content;
+	}
+
+	&Icon {
+		margin-left: 20px;
+		transform: translateY(1px);
+	}
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.bookmark {
+	cursor: pointer;
+	display: flex;
+	color: white;
+	opacity: .8;
+	align-items: center;
+	font-size: 1.1em;
+	transform: translateY(2px);
+	pointer-events: initial;
+
+	&Hover {
+		display: none;
+		position: absolute;
+		right: 0;
+		margin: $post-padding $post-padding 0;
+	}
+
+	&:hover {
+		color: $primary;
+	}
+}
+
 .large {
-	max-width: 100%;
 	position: relative;
 	height: 336px;
+	max-width: 100%;
 
 	&Thumbnail {
 		position: relative;
 		height: 100%;
 
 		&Content {
+			position: absolute;
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
-			position: absolute;
 			bottom: 0;
+			width: 100%;
+			max-width: inherit;
+			max-height: 100%;
 			min-height: 52%;
 			background: $secondary;
-			width: 100%;
-			max-height: 100%;
 			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 			padding: 50px $post-padding 0;
-			max-width: inherit;
 			line-height: 22px;
 			pointer-events: none;
 
@@ -39,13 +87,80 @@ $post-padding: 20px;
 				color: white;
 				font-weight: 600;
 			}
-		}
 
-		.largeBookmarkHover {
-			display: none;
-			position: absolute;
-			right: 0;
-			margin: $post-padding $post-padding 0;
+			&Description {
+				display: block;
+				opacity: 0;
+				max-height: 0;
+				white-space: normal;
+				overflow: hidden;
+				transition: all 1s ease-in-out, visibility 0s, max-height .8s ease-out;
+
+				p {
+					color: $light;
+					opacity: .9;
+					font-size: $nr-md-fontsize;
+				}
+			}
+
+			&Bottom {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 15px;
+				margin-bottom: 10px;
+				flex-wrap: wrap;
+				pointer-events: none;
+
+				&Info {
+					display: flex;
+					align-items: center;
+					width: fit-content;
+					flex-wrap: wrap;
+					pointer-events: initial;
+
+					& > * {
+						margin-right: 10px;
+					}
+
+					&Category {
+						color: $primary;
+						display: flex;
+						font-size: $nr-xs-fontsize;
+						align-items: center;
+
+						&Bullet {
+							margin-right: 10px;
+							font-size: .7em;
+						}
+
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+
+					&Text {
+						color: $dark-light;
+						opacity: .7;
+						font-size: $nr-xs-fontsize;
+						font-weight: 300;
+						display: flex;
+
+						&Icon {
+							font-size: .8em;
+							margin-right: 3px;
+							display: flex;
+							align-items: center;
+						}
+					}
+
+					&Bullet {
+						color: white;
+						opacity: .4;
+						font-size: .9em;
+					}
+				}
+			}
 		}
 
 		img {
@@ -56,164 +171,63 @@ $post-padding: 20px;
 		}
 	}
 
-	.largeDescriptionDesktop {
-		display: block;
-		opacity: 0;
-		max-height: 0;
-		overflow: hidden;
-		transition: all 1s ease-in-out, visibility 0s, max-height .8s ease-out;
+	&Bottom {
+		display: none;
 
-		p {
-			color: $light;
-			opacity: .9;
-			font-size: $nr-md-fontsize;
+		&Title {
+			margin-top: 10px;
+			font-size: $nr-xm-fontsize;
+			color: $secondary;
+			white-space: initial;
 		}
-	}
 
-	.largeDescription {
-		p {
-			white-space: normal;
-		}
-	}
-
-	.largeBottom {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 15px;
-		margin-bottom: 10px;
-		flex-wrap: wrap;
-		pointer-events: none;
-
-		.postsBlockLargeInfo {
+		.goTo {
+			margin-top: 6px;
+			font-size: 1em;
 			display: flex;
-			align-items: center;
-			width: fit-content;
-			flex-wrap: wrap;
-			pointer-events: initial;
 
-			& > * {
-				margin-right: 10px;
+			p {
+				display: none;
 			}
 
-			&Category {
-				color: $primary;
-				display: flex;
-				font-size: $nr-xs-fontsize;
-				align-items: center;
-
-				&Bullet {
-					&Icon {
-						margin-right: 10px;
-						font-size: .7em;
-					}
-				}
-
-				&:hover {
-					text-decoration: underline;
-				}
-			}
-
-			&Text {
-				color: $dark-light;
-				opacity: .7;
-				font-size: $nr-xs-fontsize;
-				font-weight: 300;
-				display: flex;
-
-				&ReadingTime {
-					font-size: .8em;
-					margin-right: 3px;
-					display: flex;
-					align-items: center;
-				}
-			}
-
-			&Bullet {
-				color: white;
-				opacity: .4;
-				font-size: .9em;
-			}
-
-			@include mobile-all() {
-				.postsBlockLargeInfoLeft {
-					&Text {
-						color: $text;
-					}
-				}
+			&Icon {
+				margin-left: 0;
 			}
 		}
-	}
-
-	.largeBookmarkIcon {
-		cursor: pointer;
-		display: flex;
-		color: white;
-		opacity: .8;
-		align-items: center;
-		font-size: 1.1em;
-		transform: translateY(2px);
-		pointer-events: initial;
-
-		&:hover {
-			color: $primary;
-		}
-	}
-
-	.largeGoTo {
-		display: none;
-		justify-content: flex-end;
-		align-items: center;
-		cursor: pointer;
-		font-size: $nr-xxs-fontsize;
-		pointer-events: initial;
-		color: $primary;
-		@include fade-in();
-
-		p {
-			width: fit-content;
-		}
-
-		&Icon {
-			margin-left: 20px;
-			transform: translateY(1px);
-		}
-
-		&:hover {
-			text-decoration: underline;
-		}
-	}
-
-	.largeBottomSmartphone {
-		display: none;
 	}
 
 	&:hover {
-		.largeThumbnailContent {
-			.largeDescription {
-				opacity: 1;
-				margin-top: 15px;
-				margin-bottom: 25px;
-				visibility: visible;
-				max-height: 500px;
-				transition: max-height 1s ease-in;
-				@include fade-in();
-			}
+		.large {
+			&Thumbnail {
+				&Content {
+					&Description {
+						opacity: 1;
+						margin-top: 15px;
+						margin-bottom: 25px;
+						visibility: visible;
+						max-height: 500px;
+						transition: max-height 1s ease-in;
+						@include fade-in();
+					}
 
-			.largeBottomDesktop {
-				.largeBookmark {
-					display: none;
+					&Bottom {
+						.bookmark {
+							display: none;
+						}
+
+						.goTo {
+							display: flex;
+						}
+					}
 				}
 
-				.largeGoTo {
-					display: flex;
+				.bookmark {
+					&Hover {
+						display: initial;
+						@include fade-in();
+					}
 				}
 			}
-		}
-
-		.largeBookmarkHover {
-			display: initial;
-			@include fade-in();
 		}
 	}
 
@@ -226,11 +240,11 @@ $post-padding: 20px;
 					&Title {
 						font-size: $nr-xm-fontsize;
 					}
-				}
-			}
 
-			&Bottom {
-				margin-top: 10px;
+					&Bottom {
+						margin-top: 10px;
+					}
+				}
 			}
 		}
 
@@ -238,18 +252,24 @@ $post-padding: 20px;
 			.large {
 				&Thumbnail {
 					&Content {
-						.largeDescription {
+						&Description {
 							display: none;
 						}
 
-						.largeBottomDesktop {
-							.largeBookmark {
-								display: flex
+						&Bottom {
+							.bookmark {
+								display: flex;
 							}
 
-							.largeGoTo {
+							.goTo {
 								display: none;
 							}
+						}
+					}
+
+					.bookmark {
+						&Hover {
+							display: none;
 						}
 					}
 				}
@@ -268,64 +288,38 @@ $post-padding: 20px;
 					&Title {
 						display: none;
 					}
-				}
-			}
 
-			&Bottom {
-				&Desktop {
-					.postsBlockLargeInfo {
-						div:not(.postsBlockLargeInfoCategory) {
-							display: none;
-						}
+					&Bottom {
+						&Info {
+							div:not(.largeThumbnailContentBottomInfoCategory) {
+								display: none;
+							}
 
-						&Category {
-							&Bullet {
-								&Icon {
+							&Category {
+								&Bullet {
 									font-size: .5em;
 									vertical-align: 0;
 								}
 							}
-						}
 
-						&Bullet {
-							display: none;
+							&Bullet {
+								display: none;
+							}
 						}
 					}
 				}
-
-				&Smartphone {
-					display: block;
-				}
-
-				&Title {
-					margin-top: 10px;
-					font-size: $nr-xm-fontsize;
-					color: $secondary;
-					white-space: initial;
-				}
 			}
 
-		}
-
-		.largeDescription {
-			.largeGoTo {
-				margin-top: 6px;
-				font-size: 1em;
-				display: flex;
-
-				p {
-					display: none;
-				}
-
-				&Icon {
-					margin-left: 0;
-				}
+			&Bottom {
+				display: block;
 			}
 		}
 
 		&:hover {
-			.largeBookmarkHover {
-				display: none;
+			.bookmark {
+				&Hover {
+					display: none;
+				}
 			}
 		}
 	}

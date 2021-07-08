@@ -7,64 +7,66 @@ class PostsBlockLarge extends Component {
 		super(props)
 	}
 
+	bookmarkPost = () => {
+
+	}
+
 	render() {
 		const { post } = this.props
 
 		return (
 			<div className={ styles.large }>
 				<div className={ styles.largeThumbnail }>
-					<a href={ '#' } className={ styles.largeBookmarkHover }>
-						<Icon iconName={ 'Bookmark' } className={ styles.largeBookmarkIcon } />
-					</a>
+					<span className={ `${ styles.bookmark } ${ styles.bookmarkHover }` } onClick={ this.bookmarkPost }>
+						<Icon iconName={ 'Bookmark' } />
+					</span>
 					<div className={ styles.largeThumbnailContent }>
 						<a href={ `posts/${ post.path }` }>
 							<h3 className={ styles.largeThumbnailContentTitle }>
 								{ post.title }
 							</h3>
-							<div className={ styles.largeThumbnailContentDesktop }>
-								<div className={ `${styles.largeDescription} ${styles.largeDescriptionDesktop}` }>
-									<p>
-										{ post.description }
-									</p>
-								</div>
+							<div className={ styles.largeThumbnailContentDescription }>
+								<p>
+									{ post.description }
+								</p>
 							</div>
 						</a>
-						<div className={ `${ styles.largeBottom } ${ styles.largeBottomDesktop }` }>
-							<div className={styles.postsBlockLargeInfo}>
-								<a href="#" className={styles.postsBlockLargeInfoCategory}>
-									<span className={styles.postsBlockLargeInfoCategoryBullet}>
-										<Icon iconName={'Circle'} className={styles.postsBlockLargeInfoCategoryBulletIcon} />
+						<div className={ styles.largeThumbnailContentBottom }>
+							<div className={styles.largeThumbnailContentBottomInfo}>
+								<a href="#" className={styles.largeThumbnailContentBottomInfoCategory}>
+									<span className={styles.largeThumbnailContentBottomInfoCategoryBullet}>
+										<Icon iconName={'Circle'} />
 									</span>
 									Machine learning
 								</a>
-								<span className={styles.postsBlockLargeInfoBullet}>
+								<span className={styles.largeThumbnailContentBottomInfoBullet}>
 									&bull;
 								</span>
-								<div className={styles.postsBlockLargeInfoText}>
-									<span className={styles.postsBlockLargeInfoTextReadingTime}>
-										<Icon iconName={'Stopwatch'} className={styles.postsBlockLargeInfoTextReadingTimeIcon} />
+								<div className={styles.largeThumbnailContentBottomInfoText}>
+									<span className={styles.largeThumbnailContentBottomInfoTextIcon}>
+										<Icon iconName={'Stopwatch'} />
 									</span>
 									<p>
 										6 min
 									</p>
 								</div>
-								<span className={styles.postsBlockLargeInfoBullet}>
+								<span className={styles.largeThumbnailContentBottomInfoBullet}>
 									&bull;
 								</span>
-								<div className={styles.postsBlockLargeInfoText}>
+								<div className={styles.largeThumbnailContentBottomInfoText}>
 									<p>
 										10 minutes ago
 									</p>
 								</div>
 							</div>
-							<a href={ '#' } className={ styles.largeBookmark }>
-								<Icon iconName={ 'Bookmark' } className={ styles.largeBookmarkIcon } />
-							</a>
-							<a href={ `posts/${ post.path }` } className={ styles.largeGoTo }>
+							<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
+								<Icon iconName={ 'Bookmark' } />
+							</span>
+							<a href={ `posts/${ post.path }` } className={ styles.goTo }>
 								<p>
 									Read more
 								</p>
-								<Icon iconName={ 'ChevronRight' } className={ styles.largeGoToIcon } />
+								<Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />
 							</a>
 						</div>
 					</div>
@@ -73,18 +75,16 @@ class PostsBlockLarge extends Component {
 					</a>
 				</div>
 
-				<div className={ styles.largeBottomSmartphone }>
-					<div className={ `${ styles.largeDescription } ${ styles.largeDescriptionSmartphone }` }>
-						<h3 className={ styles.largeBottomTitle }>
-							{ post.title }
-						</h3>
-						<a href={ '#' } className={ styles.largeGoTo }>
-							<p>
-								Read more
-							</p>
-							<Icon iconName={ 'ChevronRight' } className={ styles.largeGoToIcon } />
-						</a>
-					</div>
+				<div className={ styles.largeBottom }>
+					<h3 className={ styles.largeBottomTitle }>
+						{ post.title }
+					</h3>
+					<a href={ '#' } className={ styles.goTo }>
+						<p>
+							Read more
+						</p>
+						<Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />
+					</a>
 				</div>
 			</div>
 		)
