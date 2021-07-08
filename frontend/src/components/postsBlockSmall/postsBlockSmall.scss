@@ -15,7 +15,7 @@ $post-padding: 10px;
 	&Thumbnail {
 		position: relative;
 		max-width: $small-thumbnail-width-desktop;
-		min-width: $small-thumbnail-width-desktop;
+		min-width: 0;
 
 		&Overlay {
 			position: absolute;
@@ -30,8 +30,10 @@ $post-padding: 10px;
 			justify-content: space-between;
 			bottom: 0;
 			width: 100%;
-			padding: 0 $post-padding calc(#{$post-padding} + 2px);
+			padding: 30px $post-padding calc(#{$post-padding} + 2px);
 			pointer-events: none;
+			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
+			min-height: 35%;
 
 			& > * {
 				pointer-events: initial;
@@ -43,6 +45,8 @@ $post-padding: 10px;
 				display: flex;
 				align-items: center;
 				font-size: $nr-xs-fontsize;
+				overflow: hidden;
+				white-space: pre-line;
 
 				&Bullet {
 					display: flex;
@@ -108,8 +112,8 @@ $post-padding: 10px;
 			margin-top: $post-padding;
 			text-overflow: ellipsis;
 			display: -webkit-box;
-			-webkit-line-clamp: 3;
-			-o-ellipsis-lastline: 3;
+			-webkit-line-clamp: 4;
+			-o-ellipsis-lastline: 4;
 			-webkit-box-orient: vertical;
 		}
 
@@ -124,7 +128,7 @@ $post-padding: 10px;
 				align-items: center;
 				font-size: $nr-xs-fontsize;
 				font-weight: 300;
-				flex-wrap: wrap;
+				overflow: hidden;
 
 				& > * {
 					margin-right: $post-padding;
@@ -182,7 +186,6 @@ $post-padding: 10px;
 		.smallPost {
 			&Thumbnail {
 				max-width: $small-thumbnail-width-tablet;
-				min-width: $small-thumbnail-width-tablet;
 
 				&Content {
 					&Category {
@@ -197,7 +200,9 @@ $post-padding: 10px;
 				}
 
 				&Description {
-					margin-top: calc(#{$post-padding} / 2)
+					margin-top: calc(#{$post-padding} / 2);
+					-webkit-line-clamp: 2;
+					-o-ellipsis-lastline: 2;
 				}
 
 				&Bottom {
@@ -227,10 +232,10 @@ $post-padding: 10px;
 		.smallPost {
 			&Thumbnail {
 				max-width: $small-thumbnail-width-smartphone;
-				min-width: $small-thumbnail-width-smartphone;
+				width: 100vw;
 
 				&Content {
-					padding: 0 10px 12px;
+					padding: 30px 10px 12px;
 
 					&Category {
 						&Bullet {

@@ -17,7 +17,6 @@ class PostsBlockSmall extends Component {
 		return (
 			<div className={ styles.smallPost }>
 				<div className={ styles.smallPostThumbnail }>
-					<a className={ styles.smallPostThumbnailOverlay } href={ `posts/${ post.path }` } />
 					<div className={ styles.smallPostThumbnailContent }>
 						<a className={ styles.smallPostThumbnailContentCategory } href={ '#' }>
 							<span className={ styles.smallPostThumbnailContentCategoryBullet }>
