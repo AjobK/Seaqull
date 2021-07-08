@@ -8,6 +8,10 @@ $small-height-smartphone: 109px;
 $small-thumbnail-width-smartphone: 190px;
 $post-padding: 10px;
 
+* {
+	transition: all .2s ease-in-out;
+}
+
 .bookmark {
 	margin-top: auto;
 	cursor: pointer;
@@ -43,7 +47,7 @@ $post-padding: 10px;
 			justify-content: space-between;
 			bottom: 0;
 			width: 100%;
-			padding: 30px $post-padding calc(#{$post-padding} + 2px);
+			padding: 30px $post-padding $post-padding;
 			pointer-events: none;
 			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 			min-height: 35%;
@@ -75,7 +79,7 @@ $post-padding: 10px;
 			}
 
 			.bookmark {
-				transform: translateY(2px);
+				transform: translateY(3px);
 			}
 		}
 
@@ -164,6 +168,7 @@ $post-padding: 10px;
 			}
 
 			&GoTo {
+				margin-top: 4px;
 				color: $primary-light;
 				font-size: .8em;
 			}

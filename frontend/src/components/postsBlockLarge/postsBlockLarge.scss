@@ -6,6 +6,29 @@ $post-padding: 20px;
 	transition: all .2s ease-in-out;
 }
 
+.bookmark {
+	cursor: pointer;
+	display: flex;
+	color: white;
+	opacity: .8;
+	align-items: center;
+	font-size: 1.1em;
+	transform: translateY(2px);
+	pointer-events: initial;
+	margin-left: auto;
+
+	&Hover {
+		display: none;
+		position: absolute;
+		right: 0;
+		margin: $post-padding $post-padding 0;
+	}
+
+	&:hover {
+		color: $primary;
+	}
+}
+
 .goTo {
 	display: none;
 	justify-content: flex-end;
@@ -29,28 +52,6 @@ $post-padding: 20px;
 
 	&:hover {
 		text-decoration: underline;
-	}
-}
-
-.bookmark {
-	cursor: pointer;
-	display: flex;
-	color: white;
-	opacity: .8;
-	align-items: center;
-	font-size: 1.1em;
-	transform: translateY(2px);
-	pointer-events: initial;
-
-	&Hover {
-		display: none;
-		position: absolute;
-		right: 0;
-		margin: $post-padding $post-padding 0;
-	}
-
-	&:hover {
-		color: $primary;
 	}
 }
 
@@ -132,6 +133,8 @@ $post-padding: 20px;
 						&Bullet {
 							margin-right: 10px;
 							font-size: .7em;
+							display: flex;
+							margin-top: 1px;
 						}
 
 						&:hover {

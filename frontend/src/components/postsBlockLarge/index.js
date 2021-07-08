@@ -32,28 +32,28 @@ class PostsBlockLarge extends Component {
 							</div>
 						</a>
 						<div className={ styles.largeThumbnailContentBottom }>
-							<div className={styles.largeThumbnailContentBottomInfo}>
-								<a href="#" className={styles.largeThumbnailContentBottomInfoCategory}>
-									<span className={styles.largeThumbnailContentBottomInfoCategoryBullet}>
-										<Icon iconName={'Circle'} />
+							<div className={ styles.largeThumbnailContentBottomInfo }>
+								<a href={'#'} className={ styles.largeThumbnailContentBottomInfoCategory }>
+									<span className={ styles.largeThumbnailContentBottomInfoCategoryBullet }>
+										<Icon iconName={ 'Circle' } />
 									</span>
 									Machine learning
 								</a>
-								<span className={styles.largeThumbnailContentBottomInfoBullet}>
+								<span className={ styles.largeThumbnailContentBottomInfoBullet }>
 									&bull;
 								</span>
-								<div className={styles.largeThumbnailContentBottomInfoText}>
-									<span className={styles.largeThumbnailContentBottomInfoTextIcon}>
-										<Icon iconName={'Stopwatch'} />
+								<div className={ styles.largeThumbnailContentBottomInfoText }>
+									<span className={ styles.largeThumbnailContentBottomInfoTextIcon }>
+										<Icon iconName={ 'Stopwatch' } />
 									</span>
 									<p>
 										6 min
 									</p>
 								</div>
-								<span className={styles.largeThumbnailContentBottomInfoBullet}>
+								<span className={ styles.largeThumbnailContentBottomInfoBullet }>
 									&bull;
 								</span>
-								<div className={styles.largeThumbnailContentBottomInfoText}>
+								<div className={ styles.largeThumbnailContentBottomInfoText }>
 									<p>
 										10 minutes ago
 									</p>
