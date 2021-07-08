@@ -8,7 +8,20 @@ $small-height-smartphone: 109px;
 $small-thumbnail-width-smartphone: 190px;
 $post-padding: 10px;
 
-.smallPost {
+.bookmark {
+	margin-top: auto;
+	cursor: pointer;
+	color: white;
+	opacity: .8;
+	align-items: center;
+	font-size: 1.1em;
+
+	&:hover {
+		color: $primary;
+	}
+}
+
+.small {
 	display: flex;
 	height: $small-height-desktop;
 
@@ -51,12 +64,9 @@ $post-padding: 10px;
 				&Bullet {
 					display: flex;
 					align-items: center;
-
-					&Icon {
-						margin-top: 2px;
-						font-size: .4em;
-						margin-right: 7px;
-					}
+					margin-top: 2px;
+					font-size: .4em;
+					margin-right: 7px;
 				}
 
 				&:hover {
@@ -138,7 +148,7 @@ $post-padding: 10px;
 					color: $primary-lighter;
 					display: flex;
 
-					&ReadingTime {
+					&Icon {
 						font-size: .7em;
 						margin-right: 6px;
 						display: flex;
@@ -153,12 +163,9 @@ $post-padding: 10px;
 				}
 			}
 
-			&Button {
+			&GoTo {
 				color: $primary-light;
-
-				&Icon {
-					font-size: .8em;
-				}
+				font-size: .8em;
 			}
 
 			.bookmark {
@@ -167,23 +174,10 @@ $post-padding: 10px;
 		}
 	}
 
-	.bookmark {
-		margin-top: auto;
-		cursor: pointer;
-		color: white;
-		opacity: .8;
-		align-items: center;
-		font-size: 1.1em;
-
-		&:hover {
-			color: $primary;
-		}
-	}
-
 	@include mobile-tablet() {
 		height: $small-height-tablet;
 
-		.smallPost {
+		.small {
 			&Thumbnail {
 				max-width: $small-thumbnail-width-tablet;
 
@@ -195,10 +189,6 @@ $post-padding: 10px;
 			}
 
 			&Content {
-				&Title {
-					//font-size: 1.4em;
-				}
-
 				&Description {
 					margin-top: calc(#{$post-padding} / 2);
 					-webkit-line-clamp: 2;
@@ -210,16 +200,14 @@ $post-padding: 10px;
 						font-size: $nr-xxs-fontsize;
 
 						&Text {
-							&ReadingTime {
+							&Icon {
 								font-size: .8em;
 							}
 						}
 					}
 
-					&Button {
-						&Icon {
-							font-size: .7em;
-						}
+					&GoTo {
+						font-size: .7em;
 					}
 				}
 			}
@@ -229,7 +217,7 @@ $post-padding: 10px;
 	@include mobile-all() {
 		max-height: $small-height-smartphone;
 
-		.smallPost {
+		.small {
 			&Thumbnail {
 				max-width: $small-thumbnail-width-smartphone;
 				width: 100vw;
@@ -239,9 +227,7 @@ $post-padding: 10px;
 
 					&Category {
 						&Bullet {
-							&Icon {
-								margin-right: 8px;
-							}
+							margin-right: 8px;
 						}
 					}
 
@@ -277,12 +263,9 @@ $post-padding: 10px;
 						color: #818193;
 					}
 
-					&Button {
+					&GoTo {
 						margin-left: auto;
-
-						&Icon {
-							font-size: 1em;
-						}
+						font-size: 1em;
 					}
 				}
 			}

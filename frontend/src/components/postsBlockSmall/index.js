@@ -15,52 +15,56 @@ class PostsBlockSmall extends Component {
 		const { post } = this.props
 
 		return (
-			<div className={ styles.smallPost }>
-				<div className={ styles.smallPostThumbnail }>
-					<div className={ styles.smallPostThumbnailContent }>
-						<a className={ styles.smallPostThumbnailContentCategory } href={ '#' }>
-							<span className={ styles.smallPostThumbnailContentCategoryBullet }>
-									<Icon iconName={ 'Circle' } className={ styles.smallPostThumbnailContentCategoryBulletIcon } />
+			<div className={ styles.small }>
+				<div className={ styles.smallThumbnail }>
+					<div className={ styles.smallThumbnailContent }>
+						<a className={ styles.smallThumbnailContentCategory } href={ '#' }>
+							<span className={ styles.smallThumbnailContentCategoryBullet }>
+									<Icon iconName={ 'Circle' } />
 							</span>
 							<p>
 								Machine learning
 							</p>
 						</a>
 						<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
-							<Icon iconName={ 'Bookmark' } className={ styles.bookmarkIcon } />
+							<Icon iconName={ 'Bookmark' } />
 						</span>
 					</div>
 					<img src={ 'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76' } alt={ 'post' } />
 				</div>
-				<div className={ styles.smallPostContent}>
+				<div className={ styles.smallContent}>
 					<a href={ `posts/${ post.path }` }>
-						<h4 className={styles.smallPostContentTitle }>
+						<h4 className={ styles.smallContentTitle }>
 							{ post.title }
 						</h4>
-						<p className={ styles.smallPostContentDescription }>
+						<p className={ styles.smallContentDescription }>
 							{ post.description }
 						</p>
 					</a>
-					<div className={ styles.smallPostContentBottom }>
-						<div className={ styles.smallPostContentBottomInfo }>
-							<div className={ styles.smallPostContentBottomInfoText }>
-								<span className={ styles.smallPostContentBottomInfoTextReadingTime }>
-									<Icon iconName={ 'Stopwatch' } className={ styles.smallPostContentBottomInfoTextReadingTimeIcon } />
+					<div className={ styles.smallContentBottom }>
+						<div className={ styles.smallContentBottomInfo }>
+							<div className={ styles.smallContentBottomInfoText }>
+								<span className={ styles.smallContentBottomInfoTextIcon }>
+									<Icon iconName={ 'Stopwatch' } />
 								</span>
-								<p>6 min</p>
+								<p>
+									6 min
+								</p>
 							</div>
-							<span className={ styles.smallPostContentBottomInfoBullet }>
+							<span className={ styles.smallContentBottomInfoBullet }>
 								&bull;
 							</span>
-							<div className={ styles.smallPostContentBottomInfoText }>
-								<p>10 minutes ago</p>
+							<div className={ styles.smallContentBottomInfoText }>
+								<p>
+									10 minutes ago
+								</p>
 							</div>
 						</div>
 						<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
-							<Icon iconName={ 'Bookmark' } className={ styles.bookmarkIcon } />
+							<Icon iconName={ 'Bookmark' } />
 						</span>
-						<a href={ '#' } className={ styles.smallPostContentBottomButton }>
-							<Icon iconName={ 'ChevronRight' } className={ styles.smallPostContentBottomButtonIcon } />
+						<a href={ '#' } className={ styles.smallContentBottomGoTo }>
+							<Icon iconName={ 'ChevronRight' } />
 						</a>
 					</div>
 				</div>
