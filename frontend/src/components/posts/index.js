@@ -1,8 +1,8 @@
 import React, { Component, lazy, Suspense } from 'react'
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react'
+import Axios from 'axios'
 import { Loader } from '../../components'
 import styles from './posts.scss'
-import Axios from 'axios'
 const PostsBlock = lazy(() => import('../../components/postsBlock'))
 
 @inject('store') @observer
@@ -32,9 +32,7 @@ class Posts extends Component {
 	fetchPosts = () => {
 		this.setIsFetching(true)
 
-		Axios.defaults.baseURL = 'http://localhost:8000'
-
-		Axios.get(`/api/post/?page=` + this.state.page, { withCredentials: true })
+		Axios.get(`${this.props.store.defaultData.backendUrl}/post/?page=${this.state.page}`, { withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
 				this.setIsFetching(false)
@@ -53,6 +51,8 @@ class Posts extends Component {
 				if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
 					this.setEndReached(true)
 				}
+
+				this.handleScroll()
 			})
 	}
 
