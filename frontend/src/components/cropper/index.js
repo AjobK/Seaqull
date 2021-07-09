@@ -143,7 +143,7 @@ class Cropper extends Component {
 
         return (
             <div className={ styles.avatarUpload }>
-                <div className={ styles.avatarUploadBackground } onClick={this.props.closeAvatarUpload}/>
+                <div className={ styles.avatarUploadBackground } onClick={this.props.closeCropper}/>
                 <section className={ styles.avatarUploadPopUp }>
                     <div className={ `${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}` }>
                         { !error && inputImage && (
