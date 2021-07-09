@@ -57,7 +57,7 @@ class ProfileController {
         return res.status(200).json({ 'message': 'Succes' })
     }
 
-    public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
+    public updateProfileAvatar = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
 
         if (!isImage) {

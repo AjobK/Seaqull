@@ -127,7 +127,7 @@ class Cropper extends Component {
             }
         )
             .then((res) => {
-                this.props.changeImage(res.data.url) // put in Axios response
+                this.props.changeImage(res.data.url)
                 this.props.closeCropper()
             })
             .catch(err => {
