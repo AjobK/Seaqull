@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TimeUtil from '../../util/timeUtil'
 import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
 
@@ -55,7 +56,7 @@ class PostsBlockLarge extends Component {
 								</span>
 								<div className={ styles.largeThumbnailContentBottomInfoText }>
 									<p>
-										10 minutes ago
+										{ TimeUtil.timeAgo(new Date(post.created_at)) }
 									</p>
 								</div>
 							</div>

@@ -98,12 +98,12 @@ $post-padding: 10px;
 
 	&Content {
 		width: 100%;
-		margin-left: $post-padding;
 		display: flex;
-		//justify-content: center;
+		margin-left: $post-padding;
 		align-items: center;
 
 		& > div {
+			width: 100%;
 			display: flex;
 			flex-direction: column;
 			min-height: calc(100% - #{$post-padding});
