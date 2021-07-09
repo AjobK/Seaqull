@@ -1,7 +1,7 @@
-import DatabaseConnector from '../util/databaseConnector'
-import { Post } from '../entity/post'
-import Profile from '../entity/profile'
-import { PostLike } from '../entity/post_like'
+import DatabaseConnector from '../utils/databaseConnector'
+import { Post } from '../entities/post'
+import Profile from '../entities/profile'
+import { PostLike } from '../entities/post_like'
 
 class PostDAO {
     public async getPosts(skipSize: string, amount: number): Promise<Post[]> {

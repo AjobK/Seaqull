@@ -1,5 +1,5 @@
-import DatabaseConnector from '../util/databaseConnector'
-import { Comment } from '../entity/comment'
+import DatabaseConnector from '../utils/databaseConnector'
+import { Comment } from '../entities/comment'
 
 class CommentDAO {
     private repo = 'Comment'

@@ -1,5 +1,5 @@
-import DatabaseConnector from '../util/databaseConnector'
-import Attachment from '../entity/attachment';
+import DatabaseConnector from '../utils/databaseConnector'
+import Attachment from '../entities/attachment';
 
 class attachmentDAO {
     public async saveAttachment(attachment: Attachment): Promise<Attachment> {

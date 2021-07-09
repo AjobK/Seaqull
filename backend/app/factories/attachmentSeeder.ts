@@ -1,5 +1,5 @@
 import { define } from 'typeorm-seeding'
-import { Attachment } from '../entity/attachment'
+import { Attachment } from '../entities/attachment'
 
 define(Attachment, (): Attachment => {
     const attachment = new Attachment()
