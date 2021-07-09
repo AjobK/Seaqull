@@ -227,7 +227,14 @@ $post-padding: 20px;
 				.bookmark {
 					&Hover {
 						display: initial;
-						@include fade-in();
+						@keyframes fade-in-bookmark {
+							from {
+								opacity: 0;
+							} to {
+								opacity: .8;
+							}
+						}
+						animation: fade-in-bookmark 1s;
 					}
 				}
 			}
