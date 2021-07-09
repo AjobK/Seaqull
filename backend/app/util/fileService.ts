@@ -45,6 +45,7 @@ class FileService {
 
         newPath = newPath + '/' + month + '/' + day + '/' + name
         await pipeline(file.stream, fs.createWriteStream(newPath))
+
         return 'profile/' + type + '/' + year + '/' + month + '/' + day + '/' + name
     }
 
