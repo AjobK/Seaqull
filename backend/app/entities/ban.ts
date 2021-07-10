@@ -14,17 +14,17 @@ export class Ban extends BaseEntity {
     @JoinColumn({ name: 'user_account', referencedColumnName: 'id' })
     user_account: Account
 
-    @Column()
+    @Column({ unique: false })
     reason: string
 
     @Column()
     banned_at: Date
 
-    @Column()
-    banned_to: Date
+    @Column({ type: 'bigint' })
+    banned_to: number
 
-    @Column()
-    ip_ban: number
+    @Column({ unique: false })
+    ip_ban: string
 }
 
 export default Ban

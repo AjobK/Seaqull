@@ -3,6 +3,7 @@ import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
 import { Account } from '../entities/account'
+import BanDAO from '../daos/banDAO'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -14,10 +15,12 @@ const { SECURE } = process.env
 class AuthorizationController {
     private accountDAO: AccountDAO
     private roleDAO: RoleDAO
+    private banDAO: BanDAO
 
     constructor() {
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDAO()
+        this.banDAO = new BanDAO()
     }
 
     public loginVerify = async (req: Request, res: Response): Promise<any> => {
@@ -58,6 +61,19 @@ class AuthorizationController {
             const validation = this.validateAccountRequest(account, username, password)
 
             if (validation != null) return res.status(400).send(validation)
+
+            const ban = await this.banDAO.getBanByUser(account)
+
+            if (ban.banned_to > Date.now()) {
+                const bannedDateobject = new Date(ban.banned_to * 1)
+                const date = bannedDateobject.getDate() + '-' +
+                                bannedDateobject.getMonth() + '-' +
+                                bannedDateobject.getFullYear() + ' ' +
+                                bannedDateobject.getHours() + ':' +
+                                bannedDateobject.getMinutes()
+
+                return res.status(403).json({ error: ['Account banned up to: ' + date] })
+            }
 
             const role = await this.roleDAO.getRoleByUser(username)
             const payload = {
