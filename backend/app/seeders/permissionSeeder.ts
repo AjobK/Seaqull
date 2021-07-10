@@ -6,6 +6,7 @@ module.exports = async (permissionsArray: Permission[], factory: Factory) => {
 
     for (let i = 0; i < permissionsArray.length; i++) {
         const userPermission = await factory(Permission)({ name: permissionsArray[i] }).create()
+
         permissions.push(userPermission)
     }
     return permissions
