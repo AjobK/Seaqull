@@ -1,5 +1,5 @@
 import { Factory } from 'typeorm-seeding'
-import Permission from '../../entities/permission'
+import Permission from '../entities/permission'
 
 module.exports = async (permissionsArray: Permission[], factory: Factory) => {
     const permissions = []

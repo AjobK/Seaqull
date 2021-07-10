@@ -1,5 +1,5 @@
-import Permission from '../../entities/permission'
-import RolePermission from '../../entities/rolePermission'
+import Permission from '../entities/permission'
+import RolePermission from '../entities/rolePermission'
 
 module.exports = async (permissionsArray: Permission[], role, factory) => {
     for (let i = 0; i < permissionsArray.length; i++) {

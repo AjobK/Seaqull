@@ -1,10 +1,10 @@
 import { Factory, Seeder } from 'typeorm-seeding'
 
-const roleSeeder = require('./seeders/roleSeeder')
-const attachmentSeeder = require('./seeders/attachmentSeeder')
-const accountSeeder = require('./seeders/accountSeeder')
-const permissionSeeder = require('./seeders/permissionSeeder')
-const rolePermissionSeeder = require('./seeders/rolePermissionSeeder')
+const roleSeeder = require('./roleSeeder')
+const attachmentSeeder = require('./attachmentSeeder')
+const accountSeeder = require('./accountSeeder')
+const permissionSeeder = require('./permissionSeeder')
+const rolePermissionSeeder = require('./rolePermissionSeeder')
 
 export default class CreateObjects implements Seeder {
     private permissionsUsers = [
