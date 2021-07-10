@@ -15,4 +15,5 @@ export class RolePermission extends BaseEntity {
     @JoinColumn({ name: 'permission_id', referencedColumnName: 'id' })
     permission: Permission
 }
+
 export default RolePermission
