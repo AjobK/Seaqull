@@ -5,6 +5,7 @@ class PermissionDAO {
     public async getPermissions(): Promise<Permission[]> {
         const repository = await DatabaseConnector.getRepository('Permission')
         const permissionList = repository.find()
+        
         return permissionList
     }
 
