@@ -8,4 +8,5 @@ class RolePermissionDAO {
         return rolePermissions
     }
 }
+
 export default RolePermissionDAO
