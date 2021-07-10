@@ -6,6 +6,7 @@ import PostRoutes from './routes/postRoutes'
 import AuthorizationRoutes from './routes/authorizationRoutes'
 import CommentRoutes from './routes/commentRoutes'
 import ProfileRoutes from './routes/profileRoutes'
+import RoleRoutes from './routes/roleRoute'
 const cookieParser = require('cookie-parser')
 
 const { FRONTEND_URL } = process.env
@@ -16,7 +17,8 @@ const backend = new serverConstructor({
         new PostRoutes(),
         new AuthorizationRoutes(),
         new CommentRoutes(),
-        new ProfileRoutes()
+        new ProfileRoutes(),
+        new RoleRoutes()
     ],
     middleWares: [
         cookieParser(),

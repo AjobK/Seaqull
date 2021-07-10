@@ -18,7 +18,10 @@ class RoleController {
         return res.status(404).json({ 'message': 'No roles found.' })
     }
 
-    public getRole
+    public getRole = async (req: any, res: Response): Promise<Response> => {
+        const role = await this.dao.getRoleById(req.decoded.role)
+        return res.status(200).json(role)
+    }
 }
 
 export default RoleController
