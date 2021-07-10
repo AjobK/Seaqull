@@ -9,17 +9,19 @@ class GuardedRoute extends Component {
     }
 
     render() {
-        const { user, profile } = this.props.store
-
-        const loggedIn = profile.loggedIn
+        const { profile } = this.props.store
+        console.log('getting auth')
+        console.log(profile.loaded)
+        console.log(profile.loggedIn)
 
         return (
             <Route {...this.props.rest} render={(props) => {
-                console.log(this.props.store)
-                console.log(loggedIn)
-                return loggedIn
-                ? <Component {...props} /> 
-                : <Redirect to='/' /> 
+                if (!profile.loaded) {
+                    return <h1>loading</h1>
+                }
+                return profile.loggedIn
+                ? <this.props.component {...props} /> 
+                : <Redirect to='/login' /> 
             }} 
             />
         )
