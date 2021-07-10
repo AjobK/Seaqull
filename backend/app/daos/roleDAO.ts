@@ -17,7 +17,7 @@ class RoleDao {
     }
 
     public async getRoleByUser(username: string): Promise<Role> {
-        const repository = await DatabaseConnector.getRepository('Account');
+        const repository = await DatabaseConnector.getRepository('Account')
         const role = await repository.createQueryBuilder('account')
             .leftJoinAndSelect('account.role', 'role')
             .select(['account.role'])
