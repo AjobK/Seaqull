@@ -8,7 +8,7 @@ module.exports = (requiredPermissionName) => {
         let hasPermission = false
       
         permissionList.forEach(permission => {
-            if(permission.permission.name == requiredPermissionName) {
+            if (permission.permission.name == requiredPermissionName) {
                 hasPermission = true
             }
         })
