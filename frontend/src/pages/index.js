@@ -9,6 +9,7 @@ import Post from './post'
 import Error from './error'
 import Login from'./login'
 import Register from'./register'
+import Admin from './admin'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -28,8 +29,8 @@ class AppRouter extends Component {
             <Route path='/404' exact component={Error} />
             <Route path='/500' exact component={() => <Error title={500} sub={'Internal server error'} />} />
             <Route path='/new-post' exact component={() => <Post new={true} />} />
-            <GuardedRoute path='/posts/:postUrl' exact component={Post} />
-            {/* <Route path='/posts/:postUrl' exact component={Post} /> */}
+            <GuardedRoute path='/admin' exact component={Admin} />
+            <Route path='/posts/:postUrl' exact component={Post} />
             <Route path='/login' exact component={Login} />
             <Route path='/register' exact component={Register} />
             <Route component={Error} />

@@ -11,11 +11,13 @@ class GuardedRoute extends Component {
     render() {
         const { user, profile } = this.props.store
 
+        const loggedIn = profile.loggedIn
+
         return (
             <Route {...this.props.rest} render={(props) => {
                 console.log(this.props.store)
-                console.log(profile.loggedIn)
-                return profile.loggedIn
+                console.log(loggedIn)
+                return loggedIn
                 ? <Component {...props} /> 
                 : <Redirect to='/' /> 
             }} 
