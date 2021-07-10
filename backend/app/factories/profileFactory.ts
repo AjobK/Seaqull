@@ -10,8 +10,8 @@ define(Profile, (faker: typeof Faker, settings: { display_name: string }): Profi
     const createdTitle = factory(title)() as any
     profileFake.title = createdTitle
 
-    profileFake.avatar_attachment = factory(Attachment)('default/default.jpg') as any
-    profileFake.banner_attachment = null
+    profileFake.avatar_attachment = factory(Attachment)('default/defaultAvatar.jpg') as any
+    profileFake.banner_attachment = factory(Attachment)('default/defaultBanner.jpg') as any
     profileFake.created_at = new Date()
     profileFake.custom_path = faker.random.uuid()
     profileFake.display_name = settings.display_name || 'root'

@@ -242,6 +242,7 @@ class ProfileController {
         const attachments = await this.dao.getProfileAttachments(profile.id)
         const location = await this.fileService.storeImage(file, type)
 
+        console.log(attachments)
         let attachment = attachments[type]
         let dimensions
         let typeDefaultPath = 'default/'
@@ -257,6 +258,7 @@ class ProfileController {
         await this.fileService.convertImage(location, dimensions)
 
         if (attachment.path !== typeDefaultPath) {
+            console.log(attachment.path)
             this.fileService.deleteImage(attachment.path)
             attachment.path = location
 
@@ -330,6 +332,7 @@ class ProfileController {
 
         newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
         newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
+        console.log(newProfile)
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0
