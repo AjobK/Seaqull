@@ -1,19 +1,24 @@
 /* eslint-disable indent */
 import { Request, Response } from 'express'
-import accountDao from '../dao/accountDAO'
+import AccountDAO from '../daos/accountDAO'
+import RoleDAO from '../daos/roleDAO'
+import * as bcrypt from 'bcrypt'
+import { Account } from '../entities/account'
+
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
-import * as bcrypt from 'bcrypt'
-import { Account } from '../entity/account'
+
 
 require('dotenv').config()
 const { SECURE } = process.env
 
 class AuthorizationController {
-    private accountDao: accountDao
+    private accountDAO: AccountDAO
+    private roleDAO: RoleDAO
 
     constructor() {
-        this.accountDao = new accountDao()
+        this.accountDAO = new AccountDAO()
+        this.roleDAO = new RoleDAO()
     }
 
     public loginVerify = async (req: Request, res: Response): Promise<any> => {
@@ -21,7 +26,7 @@ class AuthorizationController {
             return res.status(401).json({ loggedIn: false })
 
         try {
-            const account = await this.accountDao.getAccountByUsername(
+            const account = await this.accountDAO.getAccountByUsername(
                 jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
             )
 
@@ -38,7 +43,7 @@ class AuthorizationController {
 
         if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
-        let account = await this.accountDao.getAccountByUsername(username)
+        let account = await this.accountDAO.getAccountByUsername(username)
 
         if (account == null)
             return res.status(400).json({ error: ['Incorrect username or password'] })
@@ -55,7 +60,9 @@ class AuthorizationController {
 
             if (validation != null) return res.status(400).send(validation)
 
+            const role = await this.roleDAO.getRoleByUser(username)
             const payload = {
+                role: role.id,
                 username: username,
                 expiration: Date.now() + parseInt(expirationtimeInMs)
             }
@@ -81,13 +88,13 @@ class AuthorizationController {
                     // check if the user attempted more then 3 logins
                     if(account.login_attempts_counts != 2){
                         account.login_attempts_counts++
-                        this.accountDao.updateAccount(account)
+                        this.accountDAO.updateAccount(account)
                         return { error: ['Incorrect username or password'] }
                     } else {
                         // lock account for 30 seconds
                         account.login_attempts_counts = null
                         account.locked_to = Date.now()+30000
-                        this.accountDao.updateAccount(account)
+                        this.accountDAO.updateAccount(account)
                         return { error: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
                     }
                 } else {

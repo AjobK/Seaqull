@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import {Editor, EditorState, convertFromRaw, ContentState} from 'draft-js'
 
 import styles from './commentChildren.scss'
 
@@ -16,7 +14,7 @@ class CommentChildren extends Component {
         if (this.state.data) {
             return this.state.data.map((comment) => {
                 return (
-                    <Comment key={comment.id} comment={comment} type="reply" />
+                    <Comment key={ comment.id } comment={ comment } type="reply" />
                 )
             })
         }
@@ -24,7 +22,7 @@ class CommentChildren extends Component {
 
     render() {
         return (
-            <div className={styles.childrenWrapper}>
+            <div className={ styles.childrenWrapper }>
                 { this.displayChildren() }
             </div>
         )

@@ -1,52 +1,63 @@
-# [Seaqull](http://www.seaqull.com/) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]
+<p align="center">
+  <img height="150" src="https://user-images.githubusercontent.com/35965716/121770737-6d435300-cb6b-11eb-8979-4118aaadfc53.png">
+</p>
 
-#### Commands front end
+<h1 align="center" colo="red"> Seaqull - Educational Blog Project  </h1>
+  
+The platform made for technology enthousiasts! With community members ranging from gadget lovers to programmers, we have a ton of varied educational posts just for you.
 
-[Read more on our wiki!](https://github.com/AjobK/Seaqull/wiki).
-
-`- npm run dev`
-#### Commands back end
-
-`- npm i`
-
-`- npm run seed:config`
-
-`- npm run seed:run`
-
-`- npm run schema:drop`
-
-`- npm start`
-
-* Install the latest [LTS version of Node](https://nodejs.org/en/).
-* Clone the seaqull [project](https://github.com/AjobK/Seaqull).
-* Download all our dependencies ```npm ci```
-* Start the server ```npm run dev```
-
-## Documentation
-
-You can find the Seaqull documentation [on our github](https://github.com/AjobK/Seaqull/wiki).  
-
-> You are always allowed to make a new issue with a new idea / bug / improvement / question, however, add the awaiting approval label to the issue.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/35965716/121772716-7d612f80-cb77-11eb-8f57-236b3e0a9a13.png">
+</p>
 
 
-#### SPRINTS
-____________
+---
 
-From now on we will be working with sprints, this will ensure more structure in the project. Each sprint will take 2 weaks.
-The sprint will always end on a Friday and start on a Saturday. Every second Friday we will decide what issues will be added to the following sprint.
+Feeling like sharing your own piece of knowledge? Share it with others by creating content that you're passionate about! With a little luck and enthousiasm you might just create your own community through likes, comments and followers. You might even end up in our next selection of 'Top Authors'!
 
-#### WORKDAYS
-_____________
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/35965716/121772616-afbe5d00-cb76-11eb-9f3a-238f5ac858a2.png">
+</p>
+  
+---
 
-Working on Fridays is still required, but the time will be moved from *18:00* to *19:00*  
-We will be picking up the speed however. So you are not required to work extra days.
-You are however obligated to finish the issues you are assigned to in the sprint.
-If you are not able to work on Fridays due to appointments other then Seaqull give us a heads up. Preferably 1 week in advance.
-If you are sick or any other reasons like a relatives decease, just tell us in discord. We are not heartless and we will understand
+Good content should be rewarded. That's why every author has a chance to be highlighted on the front page! 
 
-#### PULL REQUEST
-_________________
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/35965716/121772566-4d655c80-cb76-11eb-8311-9b4474cfde00.png">
+</p>
 
-We will be making a template for pull requests. It is required to follow this template. This will make sure it is easy to review.
-So we spend less time on reviewing and more on coding. Don't forget to label your pull request.
-You are **never** allowed to merge your own pull request. This way we keep the quality of our code high.  
+---
+
+Personalize your profile and engage with other community members. View all the content you have been in touch with and save some for later. Freedom of knowledge right at your fingertips.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/35965716/121773057-b1d5eb00-cb79-11eb-841f-afdb90df49fb.png">
+</p>
+
+---
+
+<br />
+<br />
+<br />
+<br />
+
+<h1 align="center" colo="red"> Seaqull - Base Commands  </h1>
+
+## Commands front end
+
+| Command                | Description                         |
+|------------------------|-------------------------------------|
+| `npm i`                | Install front-end modules           |
+| `npm run dev`          | Start the back-end                  |
+
+## Commands back end
+
+| Command                | Description                         |
+|------------------------|-------------------------------------|
+| `npm i`                | Install back-end modules            |
+| `npm run seed:config`  | Seed the database and set DB config |
+| `npm run seed:run`     | Run seeder                          |
+| `npm run schema:drop`  | Drop the database schema            |
+| `npm run reset`        | Reset the database and seeded data  |
+| `npm start`            | Start the back-end                  |
