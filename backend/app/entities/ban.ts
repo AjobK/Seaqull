@@ -11,13 +11,11 @@ export class Ban extends BaseEntity {
     staff_account: Account
 
     @OneToOne(() => Account)
+    @JoinColumn({ name: 'user_account', referencedColumnName: 'id' })
     user_account: Account
 
     @Column()
     reason: string
-
-    @Column()
-    description: string
 
     @Column()
     banned_at: Date
