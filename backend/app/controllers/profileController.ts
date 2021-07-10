@@ -68,7 +68,7 @@ class ProfileController {
 
             let profileAttachment = attachment
 
-            if (attachment.path != 'default/default.jpg') {
+            if (attachment.path != 'default/default.png') {
                 this.fileService.deleteImage(attachment.path)
                 profileAttachment.path = location
 

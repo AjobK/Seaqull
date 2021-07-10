@@ -10,7 +10,7 @@ const UserStore = types
     loggedIn: types.optional(types.boolean, !!localStorage.getItem('token')),
     username: types.optional(types.string, 'Emily Washington'),
     role: types.optional(types.string, 'Software Engineer'),
-    picture: types.optional(types.string, '/src/static/dummy/user/profile.jpg'),
+    picture: types.optional(types.string, '/src/static/dummy/user/mood_default.png'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
     level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10),
