@@ -56,7 +56,10 @@ export default class CreateObjects implements Seeder {
         await accountSeeder(factory, headAdminRole, profilePic)
 
         const userPermissionsObjects = await permissionSeeder(this.permissionsUsers, factory)
-        const modPermisionsObjects = (await permissionSeeder(this.permissionsModerators, factory)).concat(userPermissionsObjects)
+        const modPermisionsObjects = (await permissionSeeder(
+            this.permissionsModerators,
+            factory
+        )).concat(userPermissionsObjects)
         const adminPermsionsObjects = (await permissionSeeder(this.permissionsAdmins, factory)).concat(modPermisionsObjects)
         const headAdminPermissionsObject = (await permissionSeeder(this.permissionsHeadAdmins, factory)).concat(adminPermsionsObjects)
 
