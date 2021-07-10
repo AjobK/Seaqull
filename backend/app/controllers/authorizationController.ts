@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
@@ -125,11 +124,11 @@ class AuthorizationController {
         // if cookie is there remove it
         if (req.cookies['token']) {
             res
-            .clearCookie('token')
-            .status(200)
-            .json({
-                message: 'You have logged out'
-            })
+                .clearCookie('token')
+                .status(200)
+                .json({
+                    message: 'You have logged out'
+                })
         } else {
             res.status(401).json({
                 error: 'Invalid jwt'
