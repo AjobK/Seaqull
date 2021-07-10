@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
 
     let decodedToken = ''
 
-    try{
+    try {
         decodedToken = jwt.verify(token, JWT_SECRET)
     } catch (error) {
         return res.status(422).send('Token invalid')
