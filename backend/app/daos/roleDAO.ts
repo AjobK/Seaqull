@@ -3,7 +3,7 @@ import { Role } from '../entities/role'
 
 class RoleDao {
     public async getRoles(): Promise<Role[]> {
-        const repository = await DatabaseConnector.getRepository('Role');
+        const repository = await DatabaseConnector.getRepository('Role')
         const roles = await repository.find()
         return roles
     }
