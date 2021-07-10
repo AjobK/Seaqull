@@ -1,7 +1,7 @@
 import { define, factory } from 'typeorm-seeding'
 import { Account } from '../entities/account'
 import role from '../entities/role'
-import Profile from '../entities/profile';
+import Profile from '../entities/profile'
 import * as Faker from 'faker'
 
 define(Account, (faker: typeof Faker, settings: { role: role }) => {
