@@ -1,5 +1,5 @@
-import DatabaseConnector from '../util/databaseConnector'
-import { Title } from '../entity/title'
+import DatabaseConnector from '../utils/databaseConnector'
+import { Title } from '../entities/title'
 
 class TitleDAO {
     public async getTitleByTitleId(id: number): Promise<Title> {

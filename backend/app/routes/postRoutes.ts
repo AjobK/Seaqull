@@ -1,7 +1,7 @@
 import * as express from 'express'
-import PostService from '../controller/postController'
+import PostService from '../controllers/postController'
 import RouterBase from '../interfaces/RouterBase'
-const auth = require('../middleware/isAuth.ts')
+const auth = require('../middlewares/isAuth.ts')
 
 class PostRoutes implements RouterBase {
     public post = '/post'

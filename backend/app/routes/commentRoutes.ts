@@ -1,7 +1,7 @@
 import RouterBase from '../interfaces/RouterBase'
 import * as express from 'express'
-import CommentController from '../controller/commentController'
-const isAuth = require('../middleware/isAuth')
+import CommentController from '../controllers/commentController'
+const isAuth = require('../middlewares/isAuth')
 
 class CommentRoutes implements RouterBase {
     public comment = '/comment'
