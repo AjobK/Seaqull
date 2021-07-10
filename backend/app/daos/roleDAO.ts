@@ -23,6 +23,7 @@ class RoleDao {
             .select(['account.role'])
             .where('account.user_name = :user_name', { user_name: username })
             .getRawOne()
+        
         return await this.getRoleById(role.role_id)
     }
 }
