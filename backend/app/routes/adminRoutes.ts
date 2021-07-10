@@ -1,19 +1,20 @@
 import * as express from 'express'
+import AdminController from '../controllers/adminController'
 import RouterBase from '../interfaces/RouterBase'
 
 class AdminRoutes implements RouterBase {
     public ban = '/ban'
     public router = express.Router()
-    private authController: AuthorizationController
+    private adminController: AdminController
 
     constructor() {
-        this.authController = new AuthorizationController()
+        this.adminController = new AdminController()
         this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.patch(this.ban, this.authController.loginVerify)
+        this.router.patch(this.ban, this.adminController.banUser)
     }
 }
 
-export default AuthorizationRoutes
+export default AdminRoutes
