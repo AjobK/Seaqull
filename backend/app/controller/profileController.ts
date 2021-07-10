@@ -242,7 +242,6 @@ class ProfileController {
         const attachments = await this.dao.getProfileAttachments(profile.id)
         const location = await this.fileService.storeImage(file, type)
 
-        console.log(attachments)
         let attachment = attachments[type]
         let dimensions
         let typeDefaultPath = 'default/'
