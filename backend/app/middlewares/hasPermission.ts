@@ -12,6 +12,7 @@ module.exports = (requiredPermissionName) => {
                 hasPermission = true
             }
         })
+       
         if (!hasPermission) {
             return res.status(401).json({ 'error': 'You don\'t have the right permisions' })
         }
