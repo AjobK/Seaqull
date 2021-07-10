@@ -11,7 +11,7 @@ class attachmentDAO {
 
     public async getAttachment(id: number): Promise<Attachment> {
         const repository = await DatabaseConnector.getRepository('Attachment')
-        const attachment = await repository.findOne({where: { id: id }})
+        const attachment = await repository.findOne({ where: { id: id } })
 
         return attachment
     }
@@ -19,13 +19,13 @@ class attachmentDAO {
     public async getDefaultAvatarAttachment(): Promise<Attachment> {
         const repository = await DatabaseConnector.getRepository('Attachment')
 
-        return await repository.findOne({where: {id: 1}})
+        return await repository.findOne({ where: { id: 1 } })
     }
 
     public async getDefaultBannerAttachment(): Promise<Attachment> {
         const repository = await DatabaseConnector.getRepository('Attachment')
 
-        return await repository.findOne({where: {id: 2}})
+        return await repository.findOne({ where: { id: 2 } })
     }
 
 }
