@@ -42,9 +42,6 @@ class ProfileController {
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
         const updateUser = req.body
 
-        console.log('req fileeee')
-        console.log(updateUser)
-
         if (req.decoded.username != updateUser.username) {
             return res.status(401).json({ 'error': 'Unauthorized' })
         }
