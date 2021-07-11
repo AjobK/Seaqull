@@ -59,8 +59,8 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 ---
 
 **PR Rules**  
-*1. Add relevant labels*  
-*2. Select atleast two reviewers*  
-*3. Assign all reviewers allowed to merge the branch, including yourself*  
+*1. Add relevant labels.*  
+*2. Select atleast two reviewers.*  
+*3. Assign all reviewers allowed to merge the branch, including yourself.*  
 *4. If relevant to the sprint, put related issue in 'Awaiting Approval' column on project board.*  
 *5. Add to the corresponding [milestone](https://github.com/AjobK/Seaqull/milestones).*
