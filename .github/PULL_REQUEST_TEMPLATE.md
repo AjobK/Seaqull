@@ -21,7 +21,7 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 - [ ] No floating comma's and spaces.
 - [ ] No unexpected/unhandled errors.
 - [ ] Lines no longer than 'guideline' in IDE.
-- [ ] Correct indentation
+- [ ] Correct indentation.
 - [ ] No usage of legacy functionalities.
 - [ ] (JS) Curly braces on the sameline as reserved keywords *(`if () {` instead of `{` on line below)*
 - [ ] (JS) No double quotes.
