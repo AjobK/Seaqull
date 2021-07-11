@@ -6,10 +6,12 @@ import { inject, observer } from 'mobx-react'
 @inject('store') @observer
 class ProfileBar extends Component {
   render() {
+    const { picture, name, role } = this.props
+
     return (
       <section className={ styles.profile }>
         <Link to={ '/profile' }>
-          <div className={ styles.profilePicture } style={{ backgroundImage: `url('${picture}')` }}></div>
+          <div className={ styles.profilePicture } style={{ backgroundImage: `url('${ picture }')` }}></div>
         </Link>
         <div className={ styles.profileInfo }>
           <div className={ styles.profileInfoWrapper }>
