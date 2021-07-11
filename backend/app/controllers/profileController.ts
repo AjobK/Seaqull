@@ -3,17 +3,17 @@ import { v4 as uuidv4 } from 'uuid'
 import isEmail from 'validator/lib/isEmail'
 import { ReCAPTCHA } from 'node-grecaptcha-verify'
 import * as bcrypt from 'bcrypt'
-import Account from '../entity/account'
-import Profile from '../entity/profile'
-import Title from '../entity/title'
-import RoleDao from '../dao/roleDAO'
-import ProfileDAO from '../dao/profileDAO'
-import TitleDAO from '../dao/titleDAO'
-import AccountDAO from '../dao/accountDAO'
-import attachmentDAO from '../dao/attachmentDAO'
-import FileService from '../util/fileService'
-import Attachment from '../entity/attachment'
-import ProfileFollowedBy from '../entity/profile_followed_by'
+import Account from '../entities/account'
+import Profile from '../entities/profile'
+import Title from '../entities/title'
+import RoleDao from '../daos/roleDAO'
+import ProfileDAO from '../daos/profileDAO'
+import TitleDAO from '../daos/titleDAO'
+import AccountDAO from '../daos/accountDAO'
+import attachmentDAO from '../daos/attachmentDAO'
+import FileService from '../utils/fileService'
+import Attachment from '../entities/attachment'
+import ProfileFollowedBy from '../entities/profile_followed_by'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -181,6 +181,7 @@ class ProfileController {
         const newAccount = this.cleanAccount(createAccount)
 
         const payload = {
+            role: createAccount.role.id,
             username: createAccount.user_name,
             expiration: Date.now() + parseInt(expirationtimeInMs)
         }
@@ -346,7 +347,7 @@ class ProfileController {
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
-        acc.role = await this.roleDAO.getRoleById(1)
+        acc.role = await this.roleDAO.getRoleById(2)
         const createdAccount = await this.accountDAO.saveAccount(acc)
         return createdAccount
     }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import comment from '../entity/comment'
-import ProfileDAO from '../dao/profileDAO'
-import CommentDAO from '../dao/commentDAO'
+import comment from '../entities/comment'
+import ProfileDAO from '../daos/profileDAO'
+import CommentDAO from '../daos/commentDAO'
 
 class CommentController {
     private dao: CommentDAO

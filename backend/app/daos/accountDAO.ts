@@ -1,5 +1,5 @@
-import DatabaseConnector from '../util/databaseConnector'
-import { Account } from '../entity/account'
+import DatabaseConnector from '../utils/databaseConnector'
+import { Account } from '../entities/account'
 
 class AccountDAO {
     public async getAccountByUsername( username:string ): Promise<Account> {

@@ -1,5 +1,5 @@
 import { define } from 'typeorm-seeding'
-import { Title } from '../entity/title'
+import { Title } from '../entities/title'
 import * as Faker from 'faker'
 
 define(Title, (faker: typeof Faker):Title => {

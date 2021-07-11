@@ -1,10 +1,9 @@
 import { define } from 'typeorm-seeding'
-import { Attachment } from '../entity/attachment'
-import * as Faker from 'faker'
+import { Attachment } from '../entities/attachment'
 
-define(Attachment, (faker: typeof Faker, path: string): Attachment => {
+define(Attachment, (): Attachment => {
     const attachment = new Attachment()
-    attachment.path = path
+    attachment.path = 'default/default.jpg'
 
     return attachment
 })
