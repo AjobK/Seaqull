@@ -3,7 +3,7 @@ import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, AvatarUpload } from '..'
 import Axios from 'axios'
-import { sha256 } from 'js-sha256';
+import ColorUtil from '../../util/colorUtil'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -81,7 +81,7 @@ class UserBanner extends Component {
       fontSize = styles.nameLarge
     }
 
-    const uniqueAvatarColorBasedOnHash = `hsl(${~~(parseInt(sha256(user.username).substr(0, 2), 16) * 1.4)}, 40%, 60%)`
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(user.username)
 
     return (
       <section className={ styles.wrapper }>
