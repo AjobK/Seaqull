@@ -45,19 +45,19 @@ class PostsBlock extends Component {
 						<PostsBlockSmall post={ this.state.posts[2] }/>
 					)}
 				</div>
-				{ this.state.posts[3] && (
-					<div className={styles.large2}>
-						<PostsBlockLarge post={ this.state.posts[3] }/>
-					</div>
-				)}
 				<div className={`${styles.small} ${styles.small2}`}>
+					{ this.state.posts[3] && (
+						<PostsBlockSmall post={ this.state.posts[3] }/>
+					)}
 					{ this.state.posts[4] && (
 						<PostsBlockSmall post={ this.state.posts[4] }/>
 					)}
-					{ this.state.posts[5] && (
-						<PostsBlockSmall post={ this.state.posts[5] }/>
-					)}
 				</div>
+				{ this.state.posts[5] && (
+					<div className={styles.large2}>
+						<PostsBlockLarge post={ this.state.posts[5] }/>
+					</div>
+				)}
 			</div>
 		)
 	}
