@@ -32,9 +32,6 @@ class Comment extends Component {
                 <div className={ styles.comment__avatar }>
                     {/* TODO: replace profile image */}
                     <img src={ require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } />
-                    <div className={ styles.comment__avatarBadge }>
-                        { this.props.comment.profile.experience > 0 ? this.props.comment.profile.experience/1000 : 0 }
-                    </div>
                 </div>
             )
         }

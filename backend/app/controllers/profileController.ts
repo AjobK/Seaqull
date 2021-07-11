@@ -132,7 +132,6 @@ class ProfileController {
             isOwner: isOwner,
             following: following,
             username: receivedUsername,
-            experience: profile.experience,
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
@@ -295,7 +294,6 @@ class ProfileController {
         newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
-        newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
         newProfile.description = 'Welcome to my profile!'

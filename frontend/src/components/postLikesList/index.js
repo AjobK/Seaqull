@@ -30,7 +30,6 @@ class PostLikesList extends Component {
                     const userLike = {
                         displayName: like.profile.display_name,
                         avatarURL: '/src/static/dummy/user/profile.jpg',
-                        level: 0,
                         title: 'Software Engineer'
                     }
 
@@ -60,9 +59,6 @@ class PostLikesList extends Component {
                                 <Link to={`/profile/${like.displayName}`} className={styles.profileLikeLink}>
                                     <div className={`${styles.profileAvatarWrapper}`}>
                                         <div className={`${styles.avatar}`} style={{ backgroundImage: `url(${like.avatarURL || ''})` }} />
-                                        <div className={`${styles.level}`}>
-                                            <div className={`${styles.levelNumber}`}>{like.level}</div>
-                                        </div>
                                     </div>
                                     <div className={`${styles.profileTextWrapper}`}>
                                         <p className={`${styles.profileDisplayName}`}>{like.displayName}</p>

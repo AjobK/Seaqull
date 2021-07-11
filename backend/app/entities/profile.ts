@@ -22,9 +22,6 @@ export class Profile extends BaseEntity {
     display_name: string
 
     @Column()
-    experience: number
-
-    @Column()
     rows_scrolled: number
 
     @Column()

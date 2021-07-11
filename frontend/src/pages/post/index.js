@@ -28,12 +28,11 @@ class Post extends App {
             isOwner: true,
             isEditing: true,
             author: {
-                name: '',                 // Display name
-                bannerURL: '',           // Banner URL from ID
-                avatarURL: '',          // Avatar URL from ID
-                path: '/profile/',     // Custom path
-                level: 0,             // Level of user
-                title: ''            // Currently selected title by ID
+                name: '',
+                bannerURL: '',
+                avatarURL: '',
+                path: '/profile/',
+                title: ''
             },
             loaded: false,
             post: this.post
@@ -118,11 +117,10 @@ class Post extends App {
         const storeUser = this.props.store.user
         this.setState({
             author: {
-                name: storeProfile.display_name,                    // Display name
-                bannerURL: storeUser.banner,                        // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',    // Avatar URL from ID
-                level: storeUser.level,                             // Level of user
-                title: 'Default Title'                              // Currently selected title by ID
+                name: storeProfile.display_name,
+                bannerURL: storeUser.banner,
+                avatarURL: '/src/static/dummy/user/profile.jpg',
+                title: 'Default Title'
             }
         })
     }

@@ -31,7 +31,7 @@ class NavigationMobile extends Component {
       ].join(' ')}>
         {!this.props.filler &&
           <div className={styles.menu}>
-            {user.loggedIn && <ProfileBar userName={user.name} userRole={user.role} levelPercentage={user.percentage} level={user.level} />}
+            {user.loggedIn && <ProfileBar userName={user.name} userRole={user.role} />}
             <ul className={styles.menuUl}>
               {arr}
             </ul>

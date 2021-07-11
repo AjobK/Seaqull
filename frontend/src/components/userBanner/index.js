@@ -87,7 +87,6 @@ class UserBanner extends Component {
       <section className={ styles.wrapper }>
         <div className={ styles.innerWrapper }>
           <div className={ styles.picture } style={{ backgroundImage: `url(${user.picture})`, backgroundColor: uniqueAvatarColorBasedOnHash }}>
-            <span className={ styles.levelMobile }>{ user.level || '' }</span>
             { this.props.owner && (
                 <span className={ `${ styles.pictureEdit } ${ this.state.draggingOver ? styles.pictureDraggingOver : ''}` }>
                   <Icon iconName={ 'Pen' } />
@@ -108,7 +107,6 @@ class UserBanner extends Component {
           <div className={ styles.info }>
             <h2 className={ [styles.name, fontSize].join(' ') }>{ user.username || '' }</h2>
             <div className={ styles.achieved }>
-              <span className={ styles.level }>{ user.level || '' }</span>
               <h3 className={ styles.role }>{ user.title || '' }</h3>
             </div>
           </div>

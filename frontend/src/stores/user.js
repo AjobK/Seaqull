@@ -12,7 +12,6 @@ const UserStore = types
     role: types.optional(types.string, 'Software Engineer'),
     picture: types.optional(types.string, '/src/static/dummy/user/mood_default.png'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
-    level: types.optional(types.integer, 12),
     percentage: types.optional(types.number, 10),
   })
   .actions(self => ({
@@ -43,9 +42,6 @@ const UserStore = types
     setTitle(title) {
       self.title = title;
     },
-    setLevel(level) {
-      self.level = level;
-    }
   }))
 
 export default UserStore

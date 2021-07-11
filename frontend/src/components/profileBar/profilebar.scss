@@ -46,45 +46,4 @@
 			color: $primary;
 		}
 	}
-	
-	&Level {
-		font-weight: bold;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		justify-content: center;
-		height: 25px;
-		min-width: 25px;
-		width: auto;
-		text-align: center;
-		background-color: $primary;
-		
-		&Number {
-			font-family: $sidefont;
-			color: white;
-			font-size: 1em;
-			line-height: 0.8em;
-			margin-bottom: -2px;
-			padding: 0 6px;
-		}
-	}
-}
-
-.level {
-	align-self: flex-end;
-	position: absolute;
-	width: 100%;
-	height: 4px;
-	bottom: 0;
-	left: 0;
-	@include primary-gradient;
-	
-	&Progress {
-		float: right;
-		background-color: #414141;
-		height: 100%;
-	}
 }

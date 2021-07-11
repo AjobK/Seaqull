@@ -181,64 +181,30 @@
 	@include mobile-all-portrait {
 		align-self: center;
 	}
+
 	display: inline-flex;
 	overflow: hidden;
 	background-color: rgba(0,0,0,0.75);
-	padding: $header-spacing / 2;
-	border-radius: $header-spacing / 3;
+	padding: ($header-spacing / 2) ($header-spacing / 1.5);
+	border-radius: 3px;
 	margin-top: $header-spacing / 2;
-}
-
-.level {
-	display: flex;
-	align-items: center;
-	border-radius: 0.25rem;
-	align-self: center;
-	height: 1.8rem;
-	padding: 0 0.6rem;
-	font-size: 1rem;
-	font-weight: bold;
-	letter-spacing: 2px;
-	color: white;
-	background-color: $primary;
-	z-index: 1;
-	
-	@include box-shadow;
-	@include mobile-all-portrait {
-		display: none;
-	}
-
-	&Mobile {
-		@extend .level;
-
-		align-self: flex-end;
-		border-radius: 0.2rem;
-		margin-bottom: -0.5rem;
-		min-width: 6vw;
-		height: 2rem;
-		display: none;
-
-		@include mobile-all-portrait {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	}
 }
 
 .role {
 	align-items: center;
 	font-size: 1.2rem;
-	margin-left: $header-spacing / 2;
+	line-height: 1.4rem;
 	font-weight: normal;
 	color: $primary;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+
 	@include text-shadow;
 	@include mobile-all-portrait {
 		white-space: pre-wrap;
 		font-size: 1rem;
+		line-height: 1.2rem;
 		margin-left: 0;
 	}
 }
