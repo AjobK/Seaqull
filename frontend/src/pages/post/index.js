@@ -43,56 +43,66 @@ class Post extends App {
     loadArticle = () => {
         let path = window.location.pathname.split('/').filter(i => i != '').pop()
 
-        Axios.get(`${this.props.store.defaultData.backendUrl}/post/${path}`, {withCredentials: true})
+        const { defaultData } = this.props.store
+
+        Axios.get(`${defaultData.backendUrl}/post/${path}`, {withCredentials: true})
         .then(res => {
+
+            const { post, likes, isOwner } = res.data
+
             this.post = {
-                title: res.data.post.title,
-                content: res.data.post.content,
-                description: res.data.post.description,
+                title: post.title,
+                content: post.content,
+                description: post.description,
                 path: path,
                 likes: {
-                    amount: res.data.likes.amount,
-                    userLiked: res.data.likes.userLiked
+                    amount: likes.amount,
+                    userLiked: likes.userLiked
                 }
             }
 
             try {
                 this.post = {
-                    title: convertFromRaw(JSON.parse(res.data.post.title)),
-                    content: convertFromRaw(JSON.parse(res.data.post.content)),
+                    title: convertFromRaw(JSON.parse(post.title)),
+                    content: convertFromRaw(JSON.parse(post.content)),
                     description: '',
                     path: path,
                     likes: {
-                        amount: res.data.likes.amount,
-                        userLiked: res.data.likes.userLiked
+                        amount: likes.amount,
+                        userLiked: likes.userLiked
                     }
                 }
             } catch (e) {
                 this.post = {
-                    title: res.data.post.title,
-                    content: res.data.post.content,
-                    description: res.data.post.description,
+                    title: post.title,
+                    content: post.content,
+                    description: post.description,
                     path: path,
                     likes: {
-                        amount: res.data.likes.amount,
-                        userLiked: res.data.likes.userLiked
+                        amount: likes.amount,
+                        userLiked: likes.userLiked
                     }
                 }
             }
 
+
+            console.log('RES DATA')
+            console.log(res.data)
+
             let author = {
-                name: res.data.post.profile.display_name,               // Display name
-                bannerURL: '/src/static/dummy/user/banner.jpg',         // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',        // Avatar URL from ID
-                path: `/profile/${res.data.post.profile.display_name}`, // Custom path
-                level: 1,                                               // Level of user
-                title: 'Default Title'                                  // Currently selected title by ID
+                name: post.profile.display_name,
+                bannerURL: '/src/static/dummy/user/banner.jpg',
+                avatarURL: post.profile.avatar_attachment 
+                    ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
+                    : '/src/static/dummy/user/profile.jpg',
+                path: `/profile/${post.profile.display_name}`,
+                title: post.profile.title || 'No title'
             }
 
             this.setState({
                 post: this.post,
                 loaded: true,
-                isOwner: res.data.isOwner,
+                isOwner: isOwner,
                 isEditing: true,
                 author: author
             })
