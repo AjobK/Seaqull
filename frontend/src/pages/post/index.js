@@ -84,10 +84,6 @@ class Post extends App {
                 }
             }
 
-
-            console.log('RES DATA')
-            console.log(res.data)
-
             let author = {
                 name: post.profile.display_name,
                 bannerURL: '/src/static/dummy/user/banner.jpg',

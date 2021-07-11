@@ -291,9 +291,6 @@ class ProfileController {
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
 
-        console.log('SAVING PROFILE')
-        console.log(u)
-
         let newProfile = new Profile()
 
         newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)

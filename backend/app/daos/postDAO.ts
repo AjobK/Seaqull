@@ -29,6 +29,8 @@ class PostDAO {
         const repository = await DatabaseConnector.getRepository('Post')
         const foundPost = await repository.findOne({ where: { path: path }, relations: ['profile'] })
 
+        if (!foundPost) return foundPost
+
         const profileRepository = await DatabaseConnector.getRepository('Profile')
         const foundProfile = await profileRepository.findOne({ where: { id: foundPost.profile.id }, relations: ['avatar_attachment', 'title'] })
 

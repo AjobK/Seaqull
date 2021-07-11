@@ -1,13 +1,14 @@
 import DatabaseConnector from '../utils/databaseConnector'
 import { Comment } from '../entities/comment'
+import Post from '../entities/post'
 
 class CommentDAO {
     private repo = 'Comment'
 
-    public async getComments(path: string): Promise<Comment[]> {
+    public async getComments(post: Post): Promise<Comment[]> {
         const repository = await DatabaseConnector.getRepository(this.repo)
 
-        const commentList = await repository.find({ where: { path: path, archived_at: null }, relations: ['profile'], order: { id: 'DESC', }, })
+        const commentList = await repository.find({ where: { post: post, archived_at: null }, relations: ['profile'], order: { id: 'DESC', }, })
 
         return commentList
     }
