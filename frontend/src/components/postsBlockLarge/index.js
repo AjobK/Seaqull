@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TimeUtil from '../../util/timeUtil'
 import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
+import defaultThumbnail from '../../static/images/default-thumbnail.jpg'
 
 class PostsBlockLarge extends Component {
 	constructor(props) {
@@ -72,7 +73,7 @@ class PostsBlockLarge extends Component {
 						</div>
 					</div>
 					<a href={ `posts/${ post.path }` }>
-						<img src={ 'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76' } alt={ 'post' }/>
+						<img src={ defaultThumbnail } alt={ 'post' }/>
 					</a>
 				</div>
 

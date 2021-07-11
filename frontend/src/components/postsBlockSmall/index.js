@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Icon } from '../../components'
 import TimeUtil from '../../util/timeUtil'
 import styles from './postsBlockSmall.scss'
+import defaultThumbnail from '../../static/images/default-thumbnail.jpg'
 
 class PostsBlockSmall extends Component {
 	constructor(props) {
@@ -32,7 +33,7 @@ class PostsBlockSmall extends Component {
 						</span>
 					</div>
 					<a href={ `posts/${ post.path }` }>
-						<img src={ 'https://preview.redd.it/e6mr16a9ah071.jpg?width=640&crop=smart&auto=webp&s=bf7f4c3e7f590df70fab692ed64040b27691df76' } alt={ 'post' } />
+						<img src={ defaultThumbnail } alt={ 'post' } />
 					</a>
 				</div>
 				<div className={ styles.smallContent}>
