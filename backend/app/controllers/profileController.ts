@@ -42,13 +42,18 @@ class ProfileController {
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
         const updateUser = req.body
 
+        console.log('req fileeee')
+        console.log(updateUser)
+
         if (req.decoded.username != updateUser.username) {
             return res.status(401).json({ 'error': 'Unauthorized' })
-        } else if (req.decoded.username && req.file) {
-            return await this.updateProfile(req.decoded.username, req.file)
         }
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
+
+        for (let i = 0; i < Object.keys(updateUser).length; i++) {
+            profile[Object.keys(updateUser)[i]] = updateUser[Object.keys(updateUser)[i]]
+        }
 
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
@@ -288,6 +293,9 @@ class ProfileController {
 
     private async saveProfile(req: Request):Promise<Account> {
         const u = req.body
+
+        console.log('SAVING PROFILE')
+        console.log(u)
 
         let newProfile = new Profile()
 
