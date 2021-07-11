@@ -21,6 +21,6 @@
         "migrationsDir": "app/migrations",
         "subscribersDir": "app/subscribers"
     },
-    "seeds": ["app/seeder/mainSeeder.ts"],
+    "seeds": ["app/seeders/mainSeeder.ts"],
     "factories": ["app/factories/*.ts"]
 }
