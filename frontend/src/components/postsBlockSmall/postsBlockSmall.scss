@@ -155,7 +155,8 @@ $post-padding: 10px;
 				}
 
 				&Text {
-					color: $primary-lighter;
+					color: $primary;
+					opacity: .6;
 					display: flex;
 
 					&Icon {
@@ -175,7 +176,8 @@ $post-padding: 10px;
 
 			&GoTo {
 				margin-top: 4px;
-				color: $primary-light;
+				color: $primary;
+				opacity: .8;
 				font-size: .8em;
 			}
 
@@ -277,6 +279,7 @@ $post-padding: 10px;
 					&GoTo {
 						margin-left: auto;
 						font-size: 1em;
+						opacity: 1;
 					}
 				}
 			}
