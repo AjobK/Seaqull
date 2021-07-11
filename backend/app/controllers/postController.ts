@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import PostDAO from '../dao/postDAO'
-import Post from '../entity/post'
+import PostDAO from '../daos/postDAO'
+import Post from '../entities/post'
 import { v4 as uuidv4 } from 'uuid'
-import AccountDAO from '../dao/accountDAO'
-import PostLike from '../entity/post_like'
-import Profile from '../entity/profile'
-import ProfileDAO from '../dao/profileDAO'
+import AccountDAO from '../daos/accountDAO'
+import PostLike from '../entities/post_like'
+import Profile from '../entities/profile'
+import ProfileDAO from '../daos/profileDAO'
 
 const jwt = require('jsonwebtoken')
 require('dotenv').config()

@@ -1,9 +1,9 @@
 import * as express from 'express'
-import ProfileController from '../controller/profileController'
+import ProfileController from '../controllers/profileController'
 import RouterBase from '../interfaces/RouterBase'
-import FileService from '../util/fileService'
+import FileService from '../utils/fileService'
 
-const auth = require('../middleware/isAuth.ts')
+const auth = require('../middlewares/isAuth.ts')
 
 class ProfileRoutes implements RouterBase {
     public profile = '/profile/:username?'
