@@ -3,12 +3,13 @@ import { Account } from '../entities/account'
 import role from '../entities/role'
 import Profile from '../entities/profile'
 import * as Faker from 'faker'
+import Attachment from '../entities/attachment'
 
-define(Account, (faker: typeof Faker, settings: { role: role }) => {
+define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attachment, bannerPic: Attachment }) => {
     const acc = new Account()
     const name = settings.role.name
     const createdRole = settings.role
-    const createdUser = factory(Profile)({ display_name: name, role: role }) as any
+    const createdUser = factory(Profile)({ display_name: name, profilePic: settings.profilePic, bannerPic: settings.bannerPic }) as any
 
     acc.profile = createdUser
     acc.role = createdRole
