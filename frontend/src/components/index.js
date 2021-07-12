@@ -30,7 +30,7 @@ import CommentChildren from './commentChildren'
 import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
-import Cropper from './cropper'
+import AvatarUpload from './avatarUpload'
 import PostsBlock from './postsBlock'
 import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
@@ -69,7 +69,7 @@ export {
   PostLike,
   ProfileInfo,
   PostLikesList,
-  Cropper,
+  AvatarUpload,
   PostsBlock,
   PostsBlockLarge,
   PostsBlockSmall,

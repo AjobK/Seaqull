@@ -12,12 +12,8 @@ export class Profile extends BaseEntity {
     title: Title
 
     @ManyToOne(() => Attachment, attachment => attachment.id)
-    @JoinColumn({ name: 'avatar_attachment_id', referencedColumnName: 'id' })
+    @JoinColumn({ name: 'attachment_id', referencedColumnName: 'id' })
     avatar_attachment: Attachment
-
-    @ManyToOne(() => Attachment, attachment => attachment.id)
-    @JoinColumn({ name: 'banner_attachment_id', referencedColumnName: 'id' })
-    banner_attachment: Attachment
 
     @Column()
     description: string

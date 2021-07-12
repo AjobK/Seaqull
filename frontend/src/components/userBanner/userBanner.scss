@@ -22,8 +22,6 @@
 	justify-content: center;
 	min-width: 200px;
 	min-height: 200px;
-	pointer-events: initial;
-
 	@include mobile-all-portrait {
 		overflow: visible;
 		min-width: 150px;
@@ -49,9 +47,9 @@
 		justify-content: center;
 		align-items: center;
 		font-size: 2rem;
-		border-radius: 50%;
 
 		&:hover {
+			cursor: pointer;
 			transition: 0.2s;
 			opacity: 1;
 		}
@@ -61,7 +59,6 @@
 		}
 
 		input {
-			cursor: pointer;
 			width: 100%;
 			height: 100%;
 			position: absolute;
@@ -123,7 +120,7 @@
 		}
 	}
 
-	> svg {
+	> svg { 
 		display: none;
 		color: white;
 		transition: none;
@@ -139,80 +136,20 @@
 	}
 }
 
-.banner {
-	display: flex;
-	justify-content: flex-end;
+.background {
 	position: absolute;
 	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
-
-	&:hover {
-		.bannerEdit {
-			opacity: 1;
-		}
-	}
-
-	&Image {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		opacity: 0.5;
-		z-index: 0;
-		background-size: cover;
-		background-position: center;
-	}
-
-	&Edit {
-		display: flex;
-		width: 100%;
-		height: 100%;
-		justify-content: flex-end;
-
-		&:hover {
-			.bannerEditActionBtn {
-				opacity: 1;
-			}
-		}
-
-		&ActionBtn {
-			align-self: flex-end;
-			display: flex;
-			opacity: 0;
-			color: $primary;
-			background-color: rgba(0, 0, 0, 0.7);
-			z-index: 0;
-			border-radius: 100%;
-			justify-content: center;
-			align-items: center;
-			font-size: 1.5rem;
-			padding: 22px;
-			margin: 0 30px 25px 0;
-		}
-
-		input {
-			cursor: pointer;
-			width: inherit;
-			height: inherit;
-			position: absolute;
-			z-index: 1;
-			opacity: 0;
-		}
-
-		&DraggingOver {
-			.bannerEditActionBtn {
-				opacity: 1;
-			}
-		}
-	}
+	background-size: cover;
+	background-position: center;
+	opacity: 0.5;
+	background-color: white;
 }
 
 .innerWrapper {
-	z-index: 2;
+	z-index: 1;
 	transition: 0.5s;
 	padding: $header-spacing;
 	width: 100%;
@@ -220,8 +157,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	pointer-events: none;
-
 	@include mobile-all-portrait {
 		align-items: center;
 		flex-direction: column;
@@ -251,7 +186,6 @@
 	padding: $header-spacing / 2;
 	border-radius: $header-spacing / 3;
 	margin-top: $header-spacing / 2;
-	pointer-events: initial;
 }
 
 .level {
@@ -267,7 +201,7 @@
 	color: white;
 	background-color: $primary;
 	z-index: 1;
-
+	
 	@include box-shadow;
 	@include mobile-all-portrait {
 		display: none;
@@ -312,13 +246,11 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 100%;
-	width: auto;
+	width: 100%;
 	letter-spacing: 0.1rem;
 	color: white;
 	font-weight: bold;
 	font-size: 3rem;
-	pointer-events: initial;
 
 	&Large {
 		font-size: 2.5rem;

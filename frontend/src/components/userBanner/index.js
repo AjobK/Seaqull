@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon, Cropper } from '..'
+import { Icon, AvatarUpload } from '..'
 import Axios from 'axios'
 
 @inject('store') @observer
@@ -11,24 +11,12 @@ class UserBanner extends Component {
 
     this.state = {
       upAvatar: null,
-      upBanner: null,
-      draggingOverAvatar: false,
-      draggingOverBanner: false,
+      draggingOver: false,
       following: this.props.user.following || false
     }
   }
 
   onEditAvatar = (input) => {
-    this.handleInput(input, 'upAvatar')
-    this.onAvatarDragLeave()
-  }
-
-  onEditBanner = (input) => {
-    this.handleInput(input, 'upBanner')
-    this.onBannerDragLeave()
-  }
-
-  handleInput = (input, stateVar) => {
     input.value = ''
 
     if (input.target.files && input.target.files.length > 0) {
@@ -36,33 +24,24 @@ class UserBanner extends Component {
 
       reader.addEventListener('load', () => {
         this.setState({
-          [stateVar]: reader.result
+          upAvatar: reader.result
         })
       })
       reader.readAsDataURL(input.target.files[0])
     }
+
+    this.onAvatarDragLeave()
   }
 
   onAvatarDragEnter = () => {
     this.setState({
-      draggingOverAvatar: true
+      draggingOver: true
     })
   }
 
   onAvatarDragLeave = () => {
     this.setState({
-      draggingOverAvatar: false
-    })
-  }
-
-  onBannerDragEnter = () => {
-    this.setState({
-      draggingOverBanner: true
-    })
-  }
-  onBannerDragLeave = () => {
-    this.setState({
-      draggingOverBanner: false
+      draggingOver: false
     })
   }
 
@@ -70,14 +49,9 @@ class UserBanner extends Component {
     this.props.user.picture = newAvatar
   }
 
-  changeBanner = (newBanner) => {
-    this.props.user.banner = newBanner
-  }
-
-  closeCropper = () => {
+  closeAvatarUpload = () => {
     this.setState({
-      upAvatar: null,
-      upBanner: null
+      upAvatar: null
     })
   }
 
@@ -112,11 +86,12 @@ class UserBanner extends Component {
           <div className={ styles.picture } style={{ backgroundImage: `url(${user.picture})` }}>
             <span className={ styles.levelMobile }>{ user.level || '' }</span>
             { this.props.owner && (
-                <span className={ `${ styles.pictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }` }>
+                <span className={ `${ styles.pictureEdit } ${ this.state.draggingOver ? styles.pictureDraggingOver : ''}` }>
                   <Icon iconName={ 'Pen' } />
                   <input
                       type="file" accept="image/png, image/jpeg" value={''}
                       onChange={ this.onEditAvatar } onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
+                      style={{ backgroundImage: `url(${ user.picture })` }}
                   />
                 </span>
             )}
@@ -135,26 +110,9 @@ class UserBanner extends Component {
             </div>
           </div>
         </div>
-        <div className={ styles.banner }>
-          <div className={ styles.bannerImage } style={{ backgroundImage: `url(${ user.banner })` }} />
-          { this.props.owner && (
-              <div className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
-                <input
-                    type="file" accept="image/png, image/jpeg" value={''}
-                    onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
-                />
-                <div className={ `${ styles.bannerEditActionBtn }` }>
-                  <Icon iconName={ 'Pen' } />
-                </div>
-              </div>
-          )}
-        </div>
-
+        <div className={ styles.background } style={{ backgroundImage: `url(${ user.banner })` }} />
         { this.state.upAvatar && (
-            <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closeCropper} changeImage={this.changeAvatar}/>
-        )}
-        { this.state.upBanner && (
-            <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closeCropper} changeImage={this.changeBanner}/>
+            <AvatarUpload img={ this.state.upAvatar } closeAvatarUpload={ this.closeAvatarUpload } changeAvatar={ this.changeAvatar }/>
         )}
       </section>
     )

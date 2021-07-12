@@ -10,14 +10,11 @@ class ProfileDAO {
         return !account ? null : account.profile
     }
 
-    public async getProfileAttachments(profileId: number): Promise<{ avatar: Attachment, banner: Attachment }> {
+    public async getProfileAttachment(profileId: number): Promise<Attachment> {
         const repositoryProfile = await DatabaseConnector.getRepository('Profile')
-        const avatar = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['avatar_attachment'] })
-        const banner = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['banner_attachment'] })
-        return {
-            avatar: avatar.avatar_attachment,
-            banner: banner.banner_attachment
-        }
+        const profile = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['avatar_attachment'] })
+
+        return !profile.avatar_attachment ? null : profile.avatar_attachment
     }
 
     public async getUserByEmail(email: string): Promise<Profile> {
