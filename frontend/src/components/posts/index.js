@@ -54,6 +54,9 @@ class Posts extends Component {
 
 				this.handleScroll()
 			})
+			.catch((err) => {
+				this.setIsFetching(false)
+			})
 	}
 
 	setEndReached(endReached) {
