@@ -83,12 +83,19 @@ $post-padding: 20px;
 				max-height: 0;
 				white-space: normal;
 				overflow: hidden;
-				transition: all 1s ease-in-out, visibility 0s, max-height .8s ease-out;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				word-break: break-word;
+				-webkit-line-clamp: 3;
+				-o-ellipsis-lastline: 3;
+				-webkit-box-orient: vertical;
+				transition: all .5s ease-in-out, max-height .4s ease-out;
 
 				p {
 					color: $light;
 					opacity: .9;
-					font-size: $nr-md-fontsize;
+					font-size: $nr-sm-fontsize;
+					line-height: $nr-xm-fontsize;
 				}
 			}
 
@@ -198,11 +205,8 @@ $post-padding: 20px;
 					&Description {
 						opacity: 1;
 						margin-top: 15px;
-						margin-bottom: 25px;
-						visibility: visible;
+						margin-bottom: 20px;
 						max-height: 500px;
-						transition: max-height 1s ease-in;
-						@include fade-in();
 					}
 
 					&Bottom {
@@ -225,6 +229,10 @@ $post-padding: 20px;
 						font-size: $nr-xm-fontsize;
 					}
 
+					&Description {
+						font-size: $nr-xs-fontsize;
+					}
+
 					&Bottom {
 						margin-top: 10px;
 
@@ -241,7 +249,8 @@ $post-padding: 20px;
 				&Thumbnail {
 					&Content {
 						&Description {
-							display: none;
+							margin-bottom: 5px;
+							margin-top: 5px;
 						}
 					}
 				}

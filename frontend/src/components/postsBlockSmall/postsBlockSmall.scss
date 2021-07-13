@@ -32,14 +32,6 @@ $post-padding: 10px;
 	&Thumbnail {
 		position: relative;
 		max-width: $small-thumbnail-width-desktop;
-		min-width: $small-thumbnail-width-desktop;
-
-		&Overlay {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(0deg, rgba($secondary, .9) 10%, rgba($secondary, .6) 30%, rgba($secondary, 0) 50%);
-		}
 
 		&Content {
 			display: flex;
