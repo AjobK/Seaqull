@@ -36,16 +36,16 @@ class PostsBlockSmall extends Component {
 						<img src={ defaultThumbnail } alt={ 'post' } />
 					</a>
 				</div>
-				<div className={ styles.smallContent}>
+				<a href={ `posts/${ post.path }` } className={ styles.smallContent}>
 					<div>
-						<a href={ `posts/${ post.path }` }>
+						<div>
 							<h4 className={ styles.smallContentTitle }>
 								{ post.title }
 							</h4>
 							<p className={ styles.smallContentDescription }>
 								{ post.description }
 							</p>
-						</a>
+						</div>
 						<div className={ styles.smallContentBottom }>
 							<div className={ styles.smallContentBottomInfo }>
 								<div className={ styles.smallContentBottomInfoText }>
@@ -68,12 +68,12 @@ class PostsBlockSmall extends Component {
 							<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
 								<Icon iconName={ 'Bookmark' } />
 							</span>
-							<a href={ '#' } className={ styles.smallContentBottomGoTo }>
+							<div className={ styles.smallContentBottomGoTo }>
 								<Icon iconName={ 'ChevronRight' } />
-							</a>
+							</div>
 						</div>
 					</div>
-				</div>
+				</a>
 			</div>
 		)
 	}

@@ -35,7 +35,7 @@ class PostsBlockLarge extends Component {
 						</a>
 						<div className={ styles.largeThumbnailContentBottom }>
 							<div className={ styles.largeThumbnailContentBottomInfo }>
-								<a href={'#'} className={ styles.largeThumbnailContentBottomInfoCategory }>
+								<a href={ '#' } className={ styles.largeThumbnailContentBottomInfoCategory }>
 									<span className={ styles.largeThumbnailContentBottomInfoCategoryBullet }>
 										<Icon iconName={ 'Circle' } />
 									</span>
