@@ -79,7 +79,10 @@ $post-padding: 10px;
 			}
 
 			.bookmark {
-				transform: translateY(3px);
+				position: absolute;
+				padding: $post-padding $post-padding calc(#{$post-padding - 3px}) $post-padding;
+				right: 0;
+				bottom: 0;
 			}
 		}
 
