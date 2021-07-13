@@ -32,7 +32,7 @@ $post-padding: 10px;
 	&Thumbnail {
 		position: relative;
 		max-width: $small-thumbnail-width-desktop;
-		min-width: 0;
+		min-width: $small-thumbnail-width-desktop;
 
 		&Overlay {
 			position: absolute;
