@@ -6,44 +6,15 @@ $post-padding: 20px;
 	transition: all .2s ease-in-out;
 }
 
-.bookmark {
-	cursor: pointer;
-	display: flex;
-	color: white;
-	opacity: .8;
-	align-items: center;
-	font-size: 1.1em;
-	transform: translateY(2px);
-	pointer-events: initial;
-	margin-left: auto;
-
-	&Hover {
-		display: none;
-		position: absolute;
-		right: 0;
-		margin: $post-padding $post-padding 0;
-	}
-
-	&:hover {
-		color: $primary;
-	}
-}
-
 .goTo {
-	display: none;
+	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 	cursor: pointer;
-	font-size: $nr-xxs-fontsize;
+	font-size: $nr-xs-fontsize;
 	pointer-events: initial;
 	color: $primary;
 	margin-left: 20px;
-	transform: translateY(1px);
-	@include fade-in();
-
-	p {
-		width: fit-content;
-	}
 
 	&Icon {
 		margin-left: 20px;
@@ -63,6 +34,23 @@ $post-padding: 20px;
 	&Thumbnail {
 		position: relative;
 		height: 100%;
+
+		&Bookmark {
+			position: absolute;
+			right: 0;
+			padding: $post-padding;
+			cursor: pointer;
+			color: white;
+			opacity: .8;
+			align-items: center;
+			font-size: 1.1em;
+			transform: translateY(2px);
+			pointer-events: initial;
+
+			&:hover {
+				color: $primary;
+			}
+		}
 
 		&Content {
 			position: absolute;
@@ -163,6 +151,10 @@ $post-padding: 20px;
 						font-size: .9em;
 					}
 				}
+
+				.goTo {
+					opacity: 0;
+				}
 			}
 		}
 
@@ -186,8 +178,8 @@ $post-padding: 20px;
 
 		.goTo {
 			margin-top: 6px;
-			font-size: 1em;
 			display: flex;
+			font-size: $nr-xxs-fontsize;
 
 			p {
 				display: none;
@@ -214,27 +206,9 @@ $post-padding: 20px;
 					}
 
 					&Bottom {
-						.bookmark {
-							display: none;
-						}
-
 						.goTo {
-							display: flex;
+							opacity: 1;
 						}
-					}
-				}
-
-				.bookmark {
-					&Hover {
-						display: initial;
-						@keyframes fade-in-bookmark {
-							from {
-								opacity: 0;
-							} to {
-								opacity: .8;
-							}
-						}
-						animation: fade-in-bookmark 1s;
 					}
 				}
 			}
@@ -253,6 +227,10 @@ $post-padding: 20px;
 
 					&Bottom {
 						margin-top: 10px;
+
+						.goTo {
+							display: none;
+						}
 					}
 				}
 			}
@@ -263,22 +241,6 @@ $post-padding: 20px;
 				&Thumbnail {
 					&Content {
 						&Description {
-							display: none;
-						}
-
-						&Bottom {
-							.bookmark {
-								display: flex;
-							}
-
-							.goTo {
-								display: none;
-							}
-						}
-					}
-
-					.bookmark {
-						&Hover {
 							display: none;
 						}
 					}
@@ -322,13 +284,9 @@ $post-padding: 20px;
 
 			&Bottom {
 				display: block;
-			}
-		}
 
-		&:hover {
-			.bookmark {
-				&Hover {
-					display: none;
+				.goTo {
+					font-size: $nr-xs-fontsize;
 				}
 			}
 		}

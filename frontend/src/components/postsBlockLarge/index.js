@@ -19,7 +19,7 @@ class PostsBlockLarge extends Component {
 		return (
 			<div className={ styles.large }>
 				<div className={ styles.largeThumbnail }>
-					<span className={ `${ styles.bookmark } ${ styles.bookmarkHover }` } onClick={ this.bookmarkPost }>
+					<span className={ styles.largeThumbnailBookmark } onClick={ this.bookmarkPost }>
 						<Icon iconName={ 'Bookmark' } />
 					</span>
 					<div className={ styles.largeThumbnailContent }>
@@ -61,9 +61,6 @@ class PostsBlockLarge extends Component {
 									</p>
 								</div>
 							</div>
-							<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
-								<Icon iconName={ 'Bookmark' } />
-							</span>
 							<a href={ `posts/${ post.path }` } className={ styles.goTo }>
 								<p>
 									Read more
@@ -81,7 +78,7 @@ class PostsBlockLarge extends Component {
 					<h3 className={ styles.largeBottomTitle }>
 						{ post.title }
 					</h3>
-					<a href={ '#' } className={ styles.goTo }>
+					<a href={ `posts/${ post.path }` } className={ styles.goTo }>
 						<p>
 							Read more
 						</p>
