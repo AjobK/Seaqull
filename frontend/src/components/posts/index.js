@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Loader } from '../../components'
 import styles from './posts.scss'
+import { PopUp } from '../../components'
 import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
 import Axios from 'axios'
 

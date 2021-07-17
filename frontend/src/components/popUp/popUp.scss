@@ -1,0 +1,28 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/breakpoints.scss';
+
+.popUpWrapper {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 150;
+
+	> * {
+		transition: .2s ease-in-out;
+	}
+
+	.popUpBackground {
+		width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+	}
+
+	.popUp {
+		@include pop-up();
+	}
+}

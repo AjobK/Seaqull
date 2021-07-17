@@ -32,6 +32,7 @@ import PostLike from './postLike'
 import PostLikesList from './postLikesList'
 import AvatarUpload from './avatarUpload'
 import Dialog from './dialog'
+import PopUp from './popUp'
 
 export {
   Button,
@@ -67,5 +68,6 @@ export {
   ProfileInfo,
   PostLikesList,
   AvatarUpload,
-  Dialog
+  Dialog,
+  PopUp
 }
