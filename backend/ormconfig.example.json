@@ -17,10 +17,10 @@
         "app/subscriber/**/*.ts"
     ],
     "cli": {
-        "entitiesDir": "app/entity",
-        "migrationsDir": "app/migration",
-        "subscribersDir": "app/subscriber"
+        "entitiesDir": "app/entities",
+        "migrationsDir": "app/migrations",
+        "subscribersDir": "app/subscribers"
     },
-    "seeds": ["app/seeder/mainSeeder.ts"],
+    "seeds": ["app/seeders/mainSeeder.ts"],
     "factories": ["app/factories/*.ts"]
 }

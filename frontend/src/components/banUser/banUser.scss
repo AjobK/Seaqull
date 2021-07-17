@@ -5,6 +5,27 @@
 	transition: .2s ease-in-out;
 }
 
+.prompt {
+	background-color: $prompt-background;
+	border: 1px solid $prompt-border-color;
+	border-radius: 13px;
+	padding: 50px 60px;
+	
+	@include mobile-all-portrait {
+		display: flex;
+		background-color: $background-trans-less;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		border: none;
+		border-radius: 0;
+		height: 100%;
+		max-width: 100%;
+		width: 100%;
+		padding: 0;
+	}
+}
+
 .avatarUpload {
 	width: 100%;
 	height: 100%;
@@ -24,11 +45,21 @@
 	&PopUp {
 		@include pop-up();
 		height: auto;
+		max-height: 98%;
+		overflow-y: visible;
 		padding: 50px 0;
 		overflow-x: hidden;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		width: fit-content;
+		min-width: 500px;
+		max-width: 80%;
+
+		@include mobile-sm {
+			min-width: initial;
+			max-width: 95%;
+		}
 
 		.uploadedImgWrapper {
 			display: flex;
@@ -37,10 +68,16 @@
 			height: fit-content;
 			margin-bottom: 30px;
 			width: 100%;
+			padding: 0 5%;
+			background-color: $secondary;
 
 			.uploadedImg {
-				height: 300px;
-				background-color: white;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100px;
+				max-height: 600px;
+				background-color: $secondary;
 
 				&Cropper {
 					* {
@@ -48,7 +85,9 @@
 					}
 
 					img {
-						height: 300px;
+						min-height: 100px;
+						max-height: 600px;
+						object-fit: cover;
 					}
 				}
 

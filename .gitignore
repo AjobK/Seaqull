@@ -38,4 +38,7 @@ package-lock.json
 backend/node_modules
 backend/ormconfig.js
 backend/ormconfig.json
-backend/app/public/profile/*
+backend/app/public/profile/banner/*
+backend/app/public/profile/avatar/*
+!backend/app/public/profile/banner/.gitkeep
+!backend/app/public/profile/avatar/.gitkeep

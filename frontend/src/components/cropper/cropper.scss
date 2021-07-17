@@ -1,0 +1,121 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+
+* {
+	transition: .2s ease-in-out;
+}
+
+.avatarUpload {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 101;
+
+	&Background {
+		width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+		animation: fade-in 0.2s
+	}
+
+	&PopUp {
+		@include pop-up();
+		height: auto;
+		max-height: 98%;
+		overflow-y: visible;
+		padding: 50px 0;
+		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: fit-content;
+		min-width: 500px;
+		max-width: 80%;
+
+		@include mobile-sm {
+			min-width: initial;
+			max-width: 95%;
+		}
+
+		.uploadedImgWrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: fit-content;
+			margin-bottom: 30px;
+			width: 100%;
+			padding: 0 5%;
+			background-color: $secondary;
+
+			.uploadedImg {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100px;
+				max-height: 600px;
+				background-color: $secondary;
+
+				&Cropper {
+					* {
+						transition: none;
+					}
+
+					img {
+						min-height: 100px;
+						max-height: 600px;
+						object-fit: cover;
+					}
+				}
+
+				&CroppedImage {
+					border-radius: 50%;
+					border: $primary 4px solid;
+				}
+			}
+
+			.errorMessageWrapper {
+				.errorMessage {
+					white-space: normal;
+					word-wrap: break-word;
+					text-align: center;
+					padding: 0 30px;
+				}
+			}
+		}
+
+		.uploadedImgWrapperDarkBg {
+			background-color: $secondary;
+		}
+
+		&Btns {
+			display: flex;
+			flex-direction: row;
+
+			&CancelButton {
+				background-color: $secondary;
+				color: $dark;
+
+				&:hover {
+					animation: none;
+					color: black;
+				}
+			}
+
+			&SaveButton {
+				margin-left: 12px;
+			}
+		}
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.5;
+	}
+}

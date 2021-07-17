@@ -102,7 +102,6 @@ class Profile extends App {
   render() {
     const { user, error, isOwner } = this.state
     const { profile } = this.props.store
-    let banButton
 
     if (!user && !error) {
       return (
@@ -117,8 +116,6 @@ class Profile extends App {
         <Error></Error>
       )
     }
-
-
 
     return (
       <Standard>
