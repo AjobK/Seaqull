@@ -1,23 +1,32 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import Axios from 'axios'
-import styles from './avatarUpload.scss'
+import styles from './cropper.scss'
 import { Button } from '../../components'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 
 @inject('store') @observer
-class AvatarUpload extends Component {
+class Cropper extends Component {
     constructor(props) {
         super(props)
 
+        this.BANNER = 'banner'
+        this.AVATAR = 'avatar'
+
+        let crop = {
+            unit: '%',
+            width: 100,
+            aspect: 1
+        }
+
+        if (props.inputType === this.BANNER) {
+            crop.aspect = 16/9
+        }
+
         this.state = {
-            inputAvatar: null,
-            crop: {
-                unit: '%',
-                width: 100,
-                aspect: 1
-            },
+            inputImage: null,
+            crop,
             error: ''
         }
     }
@@ -40,12 +49,12 @@ class AvatarUpload extends Component {
 
     async makeClientCrop(crop) {
         if (this.imageRef && crop.width && crop.height) {
-            const croppedAvatar = await this.getCroppedImg(
+            const croppedImage = await this.getCroppedImg(
                 this.imageRef,
                 crop
             )
 
-            this.setState({ croppedAvatar })
+            this.setState({ croppedImage })
         }
     }
 
@@ -69,14 +78,12 @@ class AvatarUpload extends Component {
             crop.height
         )
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             canvas.toBlob((blob) => {
-                if (!blob) {
-                    reject(new Error('Canvas is empty'))
+                if (!blob)
                     return
-                }
 
-                resolve(new File([blob], "avatar", { type: "image/png" }))
+                resolve(new File([blob], 'cropped', { type: 'image/png' }))
             }, 'image/png')
         })
     }
@@ -92,48 +99,58 @@ class AvatarUpload extends Component {
             return this.setState({
                 error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join(', ')}.`
             })
+
         if (maxFileSizeKB < fileSizeKB)
             return this.setState({
                 error: `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`
             })
 
         this.setState({
-            inputAvatar: img
+            inputImage: img
         })
     }
 
-    saveAvatar = () => {
-        const avatar = this.state.croppedAvatar
+    saveImage = () => {
+        const image = this.state.croppedImage
+
         const fd = new FormData()
+        fd.append('file', image)
 
-        fd.append('file', avatar)
+        const { inputType } = this.props
+        let address = this.props.store.defaultData.backendUrl + '/profile/' + inputType
 
-        Axios.put(`${this.props.store.defaultData.backendUrl}/profile/picture`, 
-        fd, 
-        { withCredentials: true, 'content-type': 'multipart/form-data' })
-        .then((res) => {
-            this.props.changeAvatar(res.data.url) // put in Axios response
-                this.props.closeAvatarUpload()
-        }).catch(err => {
-            if (err.response.status === 401) {
-                this.props.history.push('/login/')
+        Axios.put(address,
+            fd,
+            {
+                'withCredentials': true,
+                'content-type': 'multipart/form-data'
             }
-        })
+        )
+            .then((res) => {
+                this.props.changeImage(res.data.url)
+                this.props.closeCropper()
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    this.props.history.push('/login/')
+                }
+            })
     }
 
     render() {
-        const { crop, inputAvatar, error } = this.state
+        const { crop, inputImage: inputImage, error } = this.state
+        const isCropped = (crop.height > 0 && crop.width > 0)
 
         return (
             <div className={ styles.avatarUpload }>
-                <div className={ styles.avatarUploadBackground } onClick={ this.props.closeAvatarUpload }/>
+                <div className={ styles.avatarUploadBackground } onClick={this.props.closeCropper}/>
                 <section className={ styles.avatarUploadPopUp }>
                     <div className={ `${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}` }>
-                        { !error && inputAvatar && (
+                        { !error && inputImage && (
                             <div className={ styles.uploadedImg }>
                                 <ReactCrop
                                     className={ styles.uploadedImgCropper }
-                                    src={ inputAvatar }
+                                    src={ inputImage }
                                     crop={ crop }
                                     onImageLoaded={ this.onImageLoaded }
                                     onComplete={ this.onCropComplete }
@@ -150,13 +167,13 @@ class AvatarUpload extends Component {
                     <div className={ styles.avatarUploadPopUpBtns }>
                         <Button
                             className={ styles.avatarUploadPopUpBtnsCancelButton } value={ error ? 'Back' : 'Cancel' }
-                            inverted={ true } onClick={ this.props.closeAvatarUpload }
+                            inverted={ true } onClick={ this.props.closeCropper }
                         />
                         { !error && (
                             <Button
                                 className={ styles.avatarUploadPopUpBtnsSaveButton }
-                                value={ 'Save' } disabled={ !inputAvatar }
-                                onClick={ inputAvatar ? this.saveAvatar : undefined }
+                                value={ 'Save' } disabled={ !inputImage || !isCropped }
+                                onClick={ inputImage && isCropped ? this.saveImage : undefined }
                             />
                         )}
                     </div>
@@ -166,4 +183,4 @@ class AvatarUpload extends Component {
     }
 }
 
-export default AvatarUpload
+export default Cropper
