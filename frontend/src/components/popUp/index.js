@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import styles from './popUp.scss'
+import { Button } from '../index'
 
 @inject('store') @observer
 class PopUp extends Component {
@@ -22,19 +23,32 @@ class PopUp extends Component {
     }
 
     render() {
+        const { title, description, actions, close } = this.props
+
         return (
             <div className={ styles.popUpWrapper }>
-                <div className={ styles.popUpBackground } onClick={ this.props.close } />
+                <div className={ styles.popUpBackground } onClick={ close } />
                 <div className={ styles.popUp }>
-                    { this.props.title && (
+                    { title && (
                         <h2 className={ styles.popUpTitle }>
-                            { this.props.title }
+                            { title }
                         </h2>
                     )}
-                    { this.props.description && (
+                    { description && (
                         <p className={ styles.popUpDescription }>
-                            { this.props.description }
+                            { description }
                         </p>
+                    )}
+                    { actions && (
+                        <ul className={ styles.popUpActions }>
+                            {this.props.actions.map((action) => {
+                                return (
+                                    <li className={ styles.popUpActionsAction } key={ action.title }>
+                                        <Button value={ action.title } inverted={ !action.primary } onClick={ action.action } />
+                                    </li>
+                                )
+                            })}
+                        </ul>
                     )}
                     {/*{ this.props.children }*/}
                 </div>
