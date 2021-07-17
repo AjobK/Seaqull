@@ -34,6 +34,10 @@ class AuthorizationController {
 
             const profile = account.profile
 
+            const role = await this.roleDAO.getRoleByUser(profile.display_name)
+
+            profile['role'] = role.name
+
             return res.status(200).json({ loggedIn: true, profile: profile })
         } catch (error) {
             return res.status(401).send({ loggedIn: false })

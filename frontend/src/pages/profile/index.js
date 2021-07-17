@@ -13,8 +13,6 @@ class Profile extends App {
   constructor(props) {
     super(props)
 
-    console.log(this.props.store)
-
     this.state = {
       user: null,
       error: false,
@@ -104,6 +102,7 @@ class Profile extends App {
   render() {
     const { user, error, isOwner } = this.state
     const { profile } = this.props.store
+    let banButton
 
     if (!user && !error) {
       return (
@@ -119,9 +118,11 @@ class Profile extends App {
       )
     }
 
+
+
     return (
       <Standard>
-        <UserBanner user={ user } owner={ isOwner && profile.loggedIn } />
+        <UserBanner role={ profile.role } user={ user } owner={ isOwner && profile.loggedIn } />
         <Section title={ 'DESCRIPTION' }>
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
         </Section>

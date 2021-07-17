@@ -69,6 +69,7 @@ class UserBanner extends Component {
 
   render() {
     const user = this.props.user
+    const role = this.props.role
 
     let fontSize = ''
 
