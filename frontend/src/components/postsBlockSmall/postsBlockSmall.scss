@@ -274,6 +274,8 @@ $post-padding: 10px;
 					}
 
 					.bookmark {
+						@include bookmark();	
+						position: static;
 						display: flex;
 						color: #818193;
 					}

@@ -234,6 +234,10 @@ $post-padding: 20px;
 
 					&Description {
 						font-size: $nr-xs-fontsize;
+						opacity: 1;
+						margin-top: 5px;
+						margin-bottom: 5px;
+						max-height: 500px;
 					}
 
 					&Bottom {
