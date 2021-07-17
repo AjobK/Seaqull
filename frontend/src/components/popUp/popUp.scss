@@ -24,5 +24,15 @@
 
 	.popUp {
 		@include pop-up();
+		height: auto;
+		padding: 20px 40px 50px;
+
+		&Title {
+
+		}
+
+		&Description {
+			white-space: normal;
+		}
 	}
 }

@@ -26,7 +26,17 @@ class PopUp extends Component {
             <div className={ styles.popUpWrapper }>
                 <div className={ styles.popUpBackground } onClick={ this.props.close } />
                 <div className={ styles.popUp }>
-                    { this.props.children }
+                    { this.props.title && (
+                        <h2 className={ styles.popUpTitle }>
+                            { this.props.title }
+                        </h2>
+                    )}
+                    { this.props.description && (
+                        <p className={ styles.popUpDescription }>
+                            { this.props.description }
+                        </p>
+                    )}
+                    {/*{ this.props.children }*/}
                 </div>
             </div>
         )

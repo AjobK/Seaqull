@@ -11,9 +11,9 @@ class Main extends Component {
     return (
       <div className={styles.wrapper}>
           <div className={styles.main}>
-              <PopUp>
-                  <p>EE</p>
-              </PopUp>
+              <PopUp
+                  title={'Er is een probleem'}
+                  description={'oepsie woepsie! de website is stukkie wukkie! we sijn heul hard aan t werk om dit te make mss kan je beter het opnieuw pwoberen owo'} />
             <div className={styles.grid}>
             <Posts />
           </div>
