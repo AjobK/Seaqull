@@ -23,7 +23,6 @@ class FileService {
             .resize(dimensions)
     }
 
-    // Types: banner & avatar
     public async storeImage (file: any, type: string): Promise<string> {
         const today = new Date()
         const day = String(today.getDate()).padStart(2, '0')
