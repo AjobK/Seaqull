@@ -69,9 +69,9 @@ class PostsBlockSmall extends Component {
 							<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
 								<Icon iconName={ 'Bookmark' } />
 							</span>
-							<div className={ styles.smallContentBottomGoTo }>
+							<span className={ styles.smallContentBottomGoTo }>
 								<Icon iconName={ 'ChevronRight' } />
-							</div>
+							</span>
 						</div>
 					</div>
 				</a>

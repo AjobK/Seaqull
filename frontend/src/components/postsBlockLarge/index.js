@@ -78,17 +78,20 @@ class PostsBlockLarge extends Component {
 					</a>
 				</div>
 
-				<div className={ styles.largeBottom }>
+				<a href={ `posts/${ post.path }` } className={ styles.largeBottom }>
 					<h3 className={ styles.largeBottomTitle }>
 						{ post.title }
 					</h3>
-					<a href={ `posts/${ post.path }` } className={ styles.goTo }>
+					<p className={ styles.largeBottomDescription }>
+						{ post.description }
+					</p>
+					<span className={ styles.goTo }>
 						<p>
 							Read more
 						</p>
 						<Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />
-					</a>
-				</div>
+					</span>
+				</a>
 			</div>
 		)
 	}

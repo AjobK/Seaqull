@@ -195,12 +195,6 @@ $post-padding: 10px;
 		.small {
 			&Thumbnail {
 				max-width: $small-thumbnail-width-tablet;
-
-				&Content {
-					&Category {
-						font-size: $nr-xxs-fontsize;
-					}
-				}
 			}
 
 			&Content {
@@ -212,8 +206,6 @@ $post-padding: 10px;
 
 				&Bottom {
 					&Info {
-						font-size: $nr-xxs-fontsize;
-
 						&Text {
 							&Icon {
 								font-size: .8em;

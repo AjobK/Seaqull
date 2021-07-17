@@ -178,16 +178,30 @@ $post-padding: 20px;
 
 	&Bottom {
 		display: none;
+		padding-top: 10px;
 
 		&Title {
-			margin-top: 10px;
+			margin-bottom: 5px;
 			font-size: $nr-xm-fontsize;
 			color: $secondary;
 			white-space: initial;
 		}
 
+		&Description {
+			font-size: $nr-md-fontsize;
+			color: $text;
+			white-space: normal;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			word-break: break-word;
+			-webkit-line-clamp: 3;
+			-o-ellipsis-lastline: 3;
+			-webkit-box-orient: vertical;
+		}
+
 		.goTo {
-			margin-top: 6px;
+			margin-top: 15px;
 			display: flex;
 			font-size: $nr-xxs-fontsize;
 
