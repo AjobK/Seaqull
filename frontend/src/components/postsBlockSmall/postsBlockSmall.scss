@@ -251,7 +251,7 @@ $post-padding: 10px;
 			}
 
 			&Content {
-				padding: 0 0 calc(#{$post-padding} / 2) 0;
+				padding: 0 0 calc(#{$post-padding} / 2) $post-padding;
 
 				&Title {
 					font-size: $nr-sm-fontsize;
