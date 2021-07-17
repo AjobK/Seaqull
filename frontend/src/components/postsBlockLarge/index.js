@@ -39,7 +39,10 @@ class PostsBlockLarge extends Component {
 									<span className={ styles.largeThumbnailContentBottomInfoCategoryBullet }>
 										<Icon iconName={ 'Circle' } />
 									</span>
-									Machine learning
+									<p>
+										Machine learning
+										<span>{/* UNDERLINE */}</span>
+									</p>
 								</a>
 								<span className={ styles.largeThumbnailContentBottomInfoBullet }>
 									&bull;
@@ -64,6 +67,7 @@ class PostsBlockLarge extends Component {
 							<a href={ `posts/${ post.path }` } className={ styles.goTo }>
 								<p>
 									Read more
+									<span>{/* UNDERLINE */}</span>
 								</p>
 								<Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />
 							</a>

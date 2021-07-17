@@ -8,10 +8,6 @@ $small-height-smartphone: 109px;
 $small-thumbnail-width-smartphone: 190px;
 $post-padding: 10px;
 
-* {
-	transition: all .2s ease-in-out;
-}
-
 .bookmark {
 	margin-top: auto;
 	cursor: pointer;
@@ -66,12 +62,23 @@ $post-padding: 10px;
 				}
 
 				&:hover {
-					text-decoration: underline;
+					> p > span {
+						width: 100%;
+					}
+				}
+
+				> p {
+					position: relative;
+
+					> span {			
+						@include fancy-underline(2px, 0);
+					}
 				}
 			}
 
 			.bookmark {
-				position: absolute;
+				@include bookmark();
+				font-size: 1.1em;
 				padding: $post-padding $post-padding calc(#{$post-padding - 3px}) $post-padding;
 				right: 0;
 				bottom: 0;

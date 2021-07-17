@@ -26,6 +26,7 @@ class PostsBlockSmall extends Component {
 							</span>
 							<p>
 								Machine learning
+								<span>{/* UNDERLINE */}</span>
 							</p>
 						</a>
 						<span className={ styles.bookmark } onClick={ this.bookmarkPost }>

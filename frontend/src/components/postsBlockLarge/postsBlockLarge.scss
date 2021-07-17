@@ -2,10 +2,6 @@
 
 $post-padding: 20px;
 
-* {
-	transition: all .2s ease-in-out;
-}
-
 .goTo {
 	display: flex;
 	justify-content: flex-end;
@@ -16,13 +12,22 @@ $post-padding: 20px;
 	color: $primary;
 	margin-left: 20px;
 
-	&Icon {
-		margin-left: 20px;
-		transform: translateY(1px);
+	> p {
+		position: relative;
+		> span {
+			@include fancy-underline;
+		}
 	}
 
 	&:hover {
-		text-decoration: underline;
+		> p > span {
+			width: 100%;
+		}
+	}
+
+	&Icon {
+		margin-left: 20px;
+		margin-top: 1px;
 	}
 }
 
@@ -36,20 +41,8 @@ $post-padding: 20px;
 		height: 100%;
 
 		&Bookmark {
-			position: absolute;
-			right: 0;
 			padding: $post-padding;
-			cursor: pointer;
-			color: white;
-			opacity: .8;
-			align-items: center;
-			font-size: 1.1em;
-			transform: translateY(2px);
-			pointer-events: initial;
-
-			&:hover {
-				color: $primary;
-			}
+			@include bookmark();
 		}
 
 		&Content {
@@ -89,7 +82,7 @@ $post-padding: 20px;
 				-webkit-line-clamp: 3;
 				-o-ellipsis-lastline: 3;
 				-webkit-box-orient: vertical;
-				transition: all .5s ease-in-out, max-height .4s ease-out;
+				transition: 0.1s;
 
 				p {
 					color: $light;
@@ -131,9 +124,19 @@ $post-padding: 20px;
 							display: flex;
 							margin-top: 1px;
 						}
-
+	
 						&:hover {
-							text-decoration: underline;
+							> p > span {
+								width: 100%;
+							}
+						}
+
+						> p {
+							position: relative;
+
+							> span {			
+								@include fancy-underline;
+							}
 						}
 					}
 
