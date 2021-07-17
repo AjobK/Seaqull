@@ -10,9 +10,10 @@ import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../..
 
 @inject('store') @observer
 class Profile extends App {
-
   constructor(props) {
     super(props)
+
+    console.log(this.props.store)
 
     this.state = {
       user: null,

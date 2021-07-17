@@ -64,7 +64,7 @@ class AuthorizationController {
 
             const ban = await this.banDAO.getBanByUser(account)
 
-            if (ban.banned_to > Date.now()) {
+            if (ban && ban.banned_to > Date.now()) {
                 const bannedDateobject = new Date(ban.banned_to * 1)
                 const date = bannedDateobject.getDate() + '-' +
                                 bannedDateobject.getMonth() + '-' +
