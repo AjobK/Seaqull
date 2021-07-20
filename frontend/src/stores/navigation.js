@@ -23,7 +23,7 @@ const NavigationStore = types
       },
       'log in': {
         ref: '/login',
-        icon: 'SingInAlt'
+        icon: 'SignInAlt'
       },
       'sign up': {
         ref: '/signup',
