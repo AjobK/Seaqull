@@ -22,12 +22,17 @@ class PopUp extends Component {
         document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
     }
 
+    closePopUp = () => {
+        this.setScrollDisabled(false)
+        this.props.close()
+    }
+
     render() {
         const { title, description, actions, close } = this.props
 
         return (
             <div className={ styles.popUpWrapper }>
-                <div className={ styles.popUpBackground } onClick={ close } />
+                <div className={ styles.popUpBackground } onClick={ this.closePopUp } />
                 <div className={ styles.popUp }>
                     { title && (
                         <h2 className={ styles.popUpTitle }>
