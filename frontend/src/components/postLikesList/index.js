@@ -29,8 +29,8 @@ class PostLikesList extends Component {
                 res.data.forEach(like => {
                     const userLike = {
                         displayName: like.profile.display_name,
-                        avatarURL: '/src/static/dummy/user/profile.jpg',
-                        title: 'Software Engineer'
+                        avatarURL: 'http://localhost:8000/' + like.profile.avatar_attachment.path,
+                        title: like.profile.title.name
                     }
 
                     likes.push(userLike)

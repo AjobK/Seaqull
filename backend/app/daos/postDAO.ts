@@ -71,7 +71,11 @@ class PostDAO {
         if (!id) return null
         const repository = await DatabaseConnector.getRepository('PostLike')
 
-        return await repository.find({ where: { post: id }, relations: ['post', 'profile'] })
+        // TODO add profile.banner_attachment
+        return await repository.find({
+            where: { post: id },
+            relations: ['post', 'profile', 'profile.avatar_attachment', 'profile.title']
+        })
     }
 
     public async getRecentUserLikesByProfileId(profileId: number, limit): Promise<any> {
