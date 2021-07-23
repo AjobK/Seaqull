@@ -25,10 +25,8 @@ class BanUser extends Component {
             reason: e.target[1].value
         }
 
-        console.log(payload)
       
         Axios.patch('/ban', payload, { withCredentials: true }).then( res => {
-            console.log('succes')
             this.props.closePopup()
         }).catch(err => {
             const { error } = err.response.data

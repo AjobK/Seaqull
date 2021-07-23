@@ -65,7 +65,6 @@ class LoginPrompt extends Component {
     })
     .catch(res => {
       const { error, remainingTime } = res.response.data
-      console.log(res.response.data)
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
       this.setState({

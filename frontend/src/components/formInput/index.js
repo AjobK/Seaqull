@@ -52,7 +52,6 @@ class FormInput extends Component {
 
   render() {
     const { name, className, errors, type } = this.props
-    errors ? console.log(errors) : console.log('no error')
     const { id, toolTipId } = this
     const { passwordVisible } = this.state
     const hasErrors = errors != 'loading' && errors && errors.length > 0,

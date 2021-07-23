@@ -104,15 +104,6 @@ class UserBanner extends Component {
   }
 
   banUser() {
-    /* const payload = {
-      username: this.props.user.username,
-      days: 30,
-      reason: "being a twat"
-    }
-
-    Axios.patch('/ban', payload, { withCredentials: true }).then( res => {
-      console.log('succes')
-    }).catch*/
     this.setState({ banUser: true })
   }
 
