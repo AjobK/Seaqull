@@ -40,27 +40,26 @@ class BanUser extends Component {
         const { error } = this.state
 
         return (
-            <div className={ styles.avatarUpload }>
-                <div className={ styles.avatarUploadBackground } onClick={this.props.closePopup}/>
-                <section className={ styles.avatarUploadPopUp }>
-                    <div className={styles.formWrapper}>
-                        <form onSubmit={this.saveBan.bind(this)} className={styles.form}>
+            <div className={ styles.banUser }>
+                <div className={ styles.banUserBackground } onClick={this.props.closePopup}/>
+                <section className={ styles.banUserPopUp }>
+                    <div>
+                        <form onSubmit={this.saveBan.bind(this)}>
                                 <FormInput errors={this.state.error} name={"Days"} callBack={this.callBack} className={[styles.formGroup]} type="number"></FormInput>
                                 <FormInput errors={this.state.error} name={"Reason"} callBack={this.callBack} className={[styles.formGroup]} type="text"></FormInput>
                                 <div className={styles.submitWrapper}>
                                     <Button
-                                        className={ styles.avatarUploadPopUpBtnsCancelButton } value='Cancel'
+                                        className={ styles.banUserPopUpBtnsCancelButton } value='Cancel'
                                         inverted={ true } onClick={ this.props.closePopup.bind(this) }
                                     />
                                     { (
                                         <Button
-                                            className={ styles.avatarUploadPopUpBtnsSaveButton }
+                                            className={ styles.banUserPopUpBtnsSaveButton }
                                             value={ 'Save' }
                                             type='button'
                                         />
                                     )}
                                 </div>
-
                         </form>
                     </div>
                 </section>

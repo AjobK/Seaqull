@@ -5,47 +5,7 @@
 	transition: .2s ease-in-out;
 }
 
-.prompt {
-	background-color: $prompt-background;
-	border: 1px solid $prompt-border-color;
-	border-radius: 13px;
-	padding: 50px 60px;
-	
-	@include mobile-all-portrait {
-		display: flex;
-		background-color: $background-trans-less;
-		justify-content: center;
-		flex-direction: column;
-		align-items: center;
-		border: none;
-		border-radius: 0;
-		height: 100%;
-		max-width: 100%;
-		width: 100%;
-		padding: 0;
-	}
-}
-
-.form {
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-	width: 100%;
-
-	&Group {
-		margin-top: 20px;
-		
-		@include mobile-all-portrait {
-			margin-top: 30px;
-		}
-
-		@include mobile-sm {
-			margin-top: 20px;
-		}
-	}
-}
-
-.avatarUpload {
+.banUser {
 	width: 100%;
 	height: 100%;
 	left: 0;
@@ -76,56 +36,6 @@
 		@include mobile-sm {
 			min-width: initial;
 			max-width: 95%;
-		}
-
-		.uploadedImgWrapper {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: fit-content;
-			margin-bottom: 30px;
-			width: 100%;
-			padding: 0 5%;
-			background-color: $secondary;
-
-			.uploadedImg {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				min-height: 100px;
-				max-height: 600px;
-				background-color: $secondary;
-
-				&Cropper {
-					* {
-						transition: none;
-					}
-
-					img {
-						min-height: 100px;
-						max-height: 600px;
-						object-fit: cover;
-					}
-				}
-
-				&CroppedImage {
-					border-radius: 50%;
-					border: $primary 4px solid;
-				}
-			}
-
-			.errorMessageWrapper {
-				.errorMessage {
-					white-space: normal;
-					word-wrap: break-word;
-					text-align: center;
-					padding: 0 30px;
-				}
-			}
-		}
-
-		.uploadedImgWrapperDarkBg {
-			background-color: $secondary;
 		}
 
 		&Btns {
