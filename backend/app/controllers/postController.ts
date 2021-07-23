@@ -6,6 +6,7 @@ import AccountDAO from '../daos/accountDAO'
 import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
+import BanDAO from '../daos/banDAO'
 
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -13,10 +14,14 @@ require('dotenv').config()
 class PostController {
     private dao: PostDAO
     private profileDAO: ProfileDAO
+    private banDAO: BanDAO
+    private accountDAO: AccountDAO
 
     constructor() {
         this.dao = new PostDAO()
         this.profileDAO = new ProfileDAO()
+        this.banDAO = new BanDAO()
+        this.accountDAO = new AccountDAO()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -32,6 +37,15 @@ class PostController {
                 posts = await this.dao.getPosts('0', amount)
 
                 return res.status(200).json({ 'message': 'You`ve reached the last post' })
+            }
+        }
+
+        // temporary fix
+        for(let i = 0; i < posts.length -1; i++) {
+            const account = await this.accountDAO.getAccountByUsername(posts[i].profile.display_name)
+            const ban = await this.banDAO.getBanByUser(account)
+            if (ban && ban.banned_to > Date.now()) {
+                posts.splice(i, 1)
             }
         }
 

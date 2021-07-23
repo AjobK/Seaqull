@@ -14,6 +14,7 @@ import attachmentDAO from '../daos/attachmentDAO'
 import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
+import BanDAO from '../daos/banDAO'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -32,6 +33,7 @@ class ProfileController {
     private roleDAO: RoleDao
     private attachmentDAO: attachmentDAO
     private fileService: FileService
+    private banDAO: BanDAO
 
     constructor() {
         this.dao = new ProfileDAO()
@@ -40,6 +42,7 @@ class ProfileController {
         this.roleDAO = new RoleDao()
         this.attachmentDAO = new attachmentDAO()
         this.fileService = new FileService()
+        this.banDAO = new BanDAO()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -104,6 +107,20 @@ class ProfileController {
         const profile = await this.dao.getProfileByUsername(receivedUsername)
 
         if (!profile) return res.status(404).json({ 'message': 'User not found' })
+
+        const account = await this.accountDAO.getAccountByUsername(profile.display_name)
+        const ban = await this.banDAO.getBanByUser(account)
+
+        if (ban && ban.banned_to > Date.now()) {
+            const bannedDateobject = new Date(ban.banned_to * 1)
+            const date = bannedDateobject.getDate() + '-' +
+                            bannedDateobject.getMonth() + '-' +
+                            bannedDateobject.getFullYear() + ' ' +
+                            bannedDateobject.getHours() + ':' +
+                            bannedDateobject.getMinutes()
+
+            return res.status(403).json({ error: ['Account banned up to: ' + date] })
+        }
 
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false

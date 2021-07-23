@@ -16,19 +16,27 @@ class BanUser extends Component {
         }
     }
 
-    saveUser () {
+    saveBan (e) {
+        e.preventDefault()
+
         const payload = {
             username: this.props.user.username,
-            days: 30,
-            reason: "being a twat"
-          }
+            days: e.target[0].value,
+            reason: e.target[1].value
+        }
+
+        console.log(payload)
       
-          Axios.patch('/ban', payload, { withCredentials: true }).then( res => {
+        Axios.patch('/ban', payload, { withCredentials: true }).then( res => {
             console.log('succes')
-          }).catch(err => {
-              console.log(err)
-          })
+            this.props.closePopup()
+        }).catch(err => {
+            const { error } = err.response.data
+            this.setState({ error: error })
+        })
     }
+
+    callBack() {}
 
     render() {
         const { error } = this.state
@@ -37,21 +45,26 @@ class BanUser extends Component {
             <div className={ styles.avatarUpload }>
                 <div className={ styles.avatarUploadBackground } onClick={this.props.closePopup}/>
                 <section className={ styles.avatarUploadPopUp }>
-                    <form onSubmit={this.saveUser} className={styles.form}>      
-                        <div className={ styles.avatarUploadPopUpBtns }>
-                            <Button
-                                className={ styles.avatarUploadPopUpBtnsCancelButton } value={ error ? 'Back' : 'Cancel' }
-                                inverted={ true } onClick={ this.props.closeCropper }
-                            />
-                            { !error && (
-                                <Button
-                                    className={ styles.avatarUploadPopUpBtnsSaveButton }
-                                    value={ 'Save' }
-                                    onClick={ this.saveUser }
-                                />
-                            )}
-                        </div>
-                    </form>
+                    <div className={styles.formWrapper}>
+                        <form onSubmit={this.saveBan.bind(this)} className={styles.form}>
+                                <FormInput errors={this.state.error} name={"Days"} callBack={this.callBack} className={[styles.formGroup]} type="number"></FormInput>
+                                <FormInput errors={this.state.error} name={"Reason"} callBack={this.callBack} className={[styles.formGroup]} type="text"></FormInput>
+                                <div className={styles.submitWrapper}>
+                                    <Button
+                                        className={ styles.avatarUploadPopUpBtnsCancelButton } value='Cancel'
+                                        inverted={ true } onClick={ this.props.closePopup.bind(this) }
+                                    />
+                                    { (
+                                        <Button
+                                            className={ styles.avatarUploadPopUpBtnsSaveButton }
+                                            value={ 'Save' }
+                                            type='button'
+                                        />
+                                    )}
+                                </div>
+
+                        </form>
+                    </div>
                 </section>
             </div>
         )

@@ -172,7 +172,7 @@ class UserBanner extends Component {
                   </div>
                 </div>
             )}
-            { role != 'user' & !this.props.owner && (
+            { role != 'user' & !this.props.owner & this.props.store.profile.loggedIn && (
                 <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                 <input
                     type="submit"
@@ -195,7 +195,7 @@ class UserBanner extends Component {
               <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closePopup} changeImage={this.changeBanner}/>
           )}
           { this.state.banUser && (
-              <BanUser closePopup={this.closePopup}></BanUser>
+              <BanUser user={user} closePopup={this.closePopup}></BanUser>
           )}
         </section>
     )

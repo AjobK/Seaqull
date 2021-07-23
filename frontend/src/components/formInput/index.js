@@ -51,15 +51,15 @@ class FormInput extends Component {
   }
 
   render() {
-    const { name, className, errors, password } = this.props
+    const { name, className, errors, type } = this.props
+    errors ? console.log(errors) : console.log('no error')
     const { id, toolTipId } = this
     const { passwordVisible } = this.state
     const hasErrors = errors != 'loading' && errors && errors.length > 0,
           iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
           iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
-          inputType = password && !passwordVisible ? 'password' : 'text',
           loadingClass = errors == 'loading' ? 'fa-spin' : '',
-          isPassword = password
+          isPassword = type == "password"
 
     return (
       <div className={[...className || ''].join(' ')}>
@@ -71,7 +71,7 @@ class FormInput extends Component {
           <span>{name}</span>
         </label>
         <div className={styles.inputWrapper}>
-          <input id={id} className={styles.input} type={inputType} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
+          <input id={id} className={styles.input} type={type} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
           { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
           {(hasErrors && this.getErrorMessages())}
         </div>

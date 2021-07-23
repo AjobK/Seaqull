@@ -4,11 +4,22 @@ import Profile from '../entities/profile'
 import { PostLike } from '../entities/post_like'
 
 class PostDAO {
-    public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
+    /* public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
         const skipAmount = parseInt(skipSize) * amount
         const postList = repository.find({ take : amount, skip: skipAmount })
 
+        return postList
+    } */
+
+    public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
+        const repository = await DatabaseConnector.getRepository('Post')
+        const postList = await repository
+            .createQueryBuilder('post')
+            .leftJoinAndSelect('post.profile', 'profile')
+            .limit(amount)
+            .offset(skipSize)
+            .getMany();
         return postList
     }
 

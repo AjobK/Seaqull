@@ -15,6 +15,8 @@ class AdminController {
     public tempBanUser = async (req: any, res: Response): Promise<Response> => {
         const user = await this.accountDao.getAccountByUsername(req.body.username)
         const admin = await this.accountDao.getAccountByUsername(req.decoded.username)
+        const existingBan = await this.banDAO.getBanByUser(user)
+        if ( existingBan ) return res.status(400).json({ 'error': ['The user is already banned'] })
         const banTime = req.body.days
 
         const ban = new Ban()
