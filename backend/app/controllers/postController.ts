@@ -39,16 +39,7 @@ class PostController {
                 return res.status(200).json({ 'message': 'You`ve reached the last post' })
             }
         }
-
-        // temporary fix
-        for(let i = 0; i < posts.length -1; i++) {
-            const account = await this.accountDAO.getAccountByUsername(posts[i].profile.display_name)
-            const ban = await this.banDAO.getBanByUser(account)
-            if (ban && ban.banned_to > Date.now()) {
-                posts.splice(i, 1)
-            }
-        }
-
+        
         const count = await this.dao.getAmountPosts()
         const message = { posts, totalPosts: count, per_page: amount }
 

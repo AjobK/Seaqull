@@ -2,24 +2,14 @@ import DatabaseConnector from '../utils/databaseConnector'
 import { Post } from '../entities/post'
 import Profile from '../entities/profile'
 import { PostLike } from '../entities/post_like'
+import { IsNull } from 'typeorm'
 
 class PostDAO {
-    /* public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
-        const repository = await DatabaseConnector.getRepository('Post')
-        const skipAmount = parseInt(skipSize) * amount
-        const postList = repository.find({ take : amount, skip: skipAmount })
-
-        return postList
-    } */
-
     public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const postList = await repository
-            .createQueryBuilder('post')
-            .leftJoinAndSelect('post.profile', 'profile')
-            .limit(amount)
-            .offset(skipSize)
-            .getMany();
+        const skipAmount = parseInt(skipSize) * amount
+        const postList = repository.find({ where: { hidden_at: IsNull() }, take : amount, skip: skipAmount })
+
         return postList
     }
 
@@ -29,7 +19,7 @@ class PostDAO {
         return await repository.count()
     }
 
-    public async getOwnedPosts(profile: Profile): Promise<Post> {
+    public async getOwnedPosts(profile: Profile): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
         const postList = await repository.find({ where: { profile: profile }, relations: ['profile'] })
 
