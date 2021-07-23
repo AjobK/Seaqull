@@ -83,7 +83,7 @@ class Posts extends Component {
 			this.fetchPosts()
 			return
 		}
-		console.log('FETCH MORE')
+
 		this.fetchPosts()
 	}
 
