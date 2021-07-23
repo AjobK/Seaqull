@@ -39,7 +39,7 @@ class PostController {
                 return res.status(200).json({ 'message': 'You`ve reached the last post' })
             }
         }
-        
+
         const count = await this.dao.getAmountPosts()
         const message = { posts, totalPosts: count, per_page: amount }
 
