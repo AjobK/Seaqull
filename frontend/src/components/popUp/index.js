@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import styles from './popUp.scss'
-import { Button } from '../index'
+import {Button, Icon} from '../index'
 
 @inject('store') @observer
 class PopUp extends Component {
@@ -34,11 +34,16 @@ class PopUp extends Component {
             <div className={ styles.popUpWrapper }>
                 <div className={ styles.popUpBackground } onClick={ this.closePopUp } />
                 <div className={ styles.popUp }>
-                    { title && (
-                        <h2 className={ styles.popUpTitle }>
-                            { title }
-                        </h2>
-                    )}
+                    <div className={ styles.popUpHeader }>
+                        { title && (
+                            <h2 className={ styles.popUpHeaderTitle }>
+                                { title }
+                            </h2>
+                        )}
+                        <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
+                            <Icon iconName={ 'Times' } />
+                        </button>
+                    </div>
                     { description && (
                         <p className={ styles.popUpDescription }>
                             { description }
