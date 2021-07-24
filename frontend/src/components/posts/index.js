@@ -39,6 +39,7 @@ class Posts extends Component {
 
 				if (json.message) {
 					this.setEndReached(true)
+
 					return
 				}
 
@@ -80,6 +81,7 @@ class Posts extends Component {
 	fetchMorePosts = () => {
 		if (this.state.endReached) {
 			this.setCurrentPage(0)
+			this.setEndReached(false)
 			this.fetchPosts()
 			return
 		}
