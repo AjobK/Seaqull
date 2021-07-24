@@ -28,8 +28,13 @@
 }
 
 .inverted {
-	background-color: white;
-	color: $primary;
+	background-color: $background;
+	color: $gray;
+
+	&:hover {
+		animation: none;
+		color: $dark;
+	}
 }
 
 .iconWithText {
