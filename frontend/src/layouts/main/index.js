@@ -7,9 +7,13 @@ import { Posts } from '../../components'
 class Main extends Component {
   render() {
     return (
+      <div className={styles.wrapper}>
         <div className={styles.main}>
-            <Posts/>
+          <div className={styles.grid}>
+            <Posts />
+          </div>
         </div>
+      </div>
     )
   }
 }

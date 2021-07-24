@@ -77,14 +77,13 @@
 
 @mixin fade-in () {
 	@keyframes fade-in {
-		from {
+		0% {
 			opacity: 0;
-		} to {
+		}
+		100% {
 			opacity: 1;
 		}
 	}
-
-	animation: fade-in 1s;
 }
 
 @mixin pop-up () {
@@ -106,31 +105,4 @@
 	@include mobile-all {
 		width: 90%;
 	}
-}
-
-@mixin bookmark () {
-	position: absolute;
-	right: 0;
-	cursor: pointer;
-	color: white;
-	opacity: 0.5;
-	align-items: center;
-	font-size: 1.3em;
-	transition: 0.2s;
-
-	&:hover {
-		color: $primary;
-		opacity: 1;
-	}
-}
-
-@mixin fancy-underline ($thickness: 2px, $offset: 2px) {
-	position: absolute;
-	bottom: $offset;
-	left: 0;
-	height: $thickness;
-	transition: 0.2s;
-	width: 0%;
-	background-color: rgba($primary, 0.5);
-	border-radius: 100vh;
 }
