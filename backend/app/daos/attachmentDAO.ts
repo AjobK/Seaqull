@@ -15,6 +15,19 @@ class attachmentDAO {
 
         return attachment
     }
+
+    public async getDefaultAvatarAttachment(): Promise<Attachment> {
+        const repository = await DatabaseConnector.getRepository('Attachment')
+
+        return await repository.findOne({ where: { id: 1 } })
+    }
+
+    public async getDefaultBannerAttachment(): Promise<Attachment> {
+        const repository = await DatabaseConnector.getRepository('Attachment')
+
+        return await repository.findOne({ where: { id: 2 } })
+    }
+
 }
 
 export default attachmentDAO

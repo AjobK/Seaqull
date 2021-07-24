@@ -22,6 +22,9 @@ const isStrongPassword = require('validator/lib/isStrongPassword')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
 
+const BANNER = 'banner'
+const AVATAR = 'avatar'
+
 class ProfileController {
     private dao: ProfileDAO
     private titleDAO: TitleDAO
@@ -44,6 +47,8 @@ class ProfileController {
 
         if (req.decoded.username != updateUser.username) {
             return res.status(401).json({ 'error': 'Unauthorized' })
+        } else if (req.decoded.username && req.file) {
+            return await this.updateProfile(req.decoded.username, req.file)
         }
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
@@ -56,37 +61,27 @@ class ProfileController {
         return res.status(200).json({ 'message': 'Succes' })
     }
 
-    public updateProfilePicture = async (req: any, res: Response): Promise<Response> => {
+    public updateProfileAvatar = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
 
         if (!isImage) {
             return res.status(400).json({ 'error': 'Only images are allowed' })
         } else {
-            const profile = await this.dao.getProfileByUsername(req.decoded.username)
-            const attachment = await this.dao.getProfileAttachment(profile.id)
-            const location = await this.fileService.storeImage(req.file)
+            const avatar = await this.updateAttachment(req.decoded.username, req.file, AVATAR)
 
-            await this.fileService.convertImage(location)
+            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + avatar.path })
+        }
+    }
 
-            let profileAttachment = attachment
+    public updateProfileBanner = async (req: any, res: Response): Promise<Response> => {
+        const isImage = await this.fileService.isImage(req.file)
 
-            if (attachment.path != 'default/default.png') {
-                this.fileService.deleteImage(attachment.path)
-                profileAttachment.path = location
+        if (!isImage) {
+            return res.status(400).json({ 'error': 'Only images are allowed' })
+        } else {
+            const banner = await this.updateAttachment(req.decoded.username, req.file, BANNER)
 
-                this.attachmentDAO.saveAttachment(profileAttachment)
-            } else {
-                const newAttachment = new Attachment()
-                profileAttachment = newAttachment
-                profileAttachment.path = location
-
-                const storedAttachment = await this.attachmentDAO.saveAttachment(profileAttachment)
-                profile.avatar_attachment = storedAttachment
-
-                await this.dao.saveProfile(profile)
-            }
-
-            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + profileAttachment.path })
+            return res.status(200).json({ 'message': 'success' , 'url': 'http://localhost:8000/' + banner.path })
         }
     }
 
@@ -124,7 +119,8 @@ class ProfileController {
 
         if (!isOwner && decodedToken && decodedToken.username) {
             const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
-            profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
+            const followingProfile = await this.dao.getProfileByUsername(decodedToken.username)
+            profileFollowedBy.follower = followingProfile.id
             profileFollowedBy.profile = profile.id
 
             following = await this.dao.isFollowing(profileFollowedBy)
@@ -137,10 +133,13 @@ class ProfileController {
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
-        const attachment = await this.dao.getProfileAttachment(profile.id)
+        const attachments = await this.dao.getProfileAttachments(profile.id)
 
-        if (attachment)
-            payload['avatar'] = 'http://localhost:8000/' + attachment.path
+        if ( attachments.avatar )
+            payload['avatar'] = 'http://localhost:8000/' + attachments.avatar.path
+
+        if ( attachments.banner )
+            payload['banner'] = 'http://localhost:8000/' + attachments.banner.path
 
         return res.status(200).json({ 'profile': payload })
     }
@@ -243,6 +242,46 @@ class ProfileController {
         return res.status(200).json({ message: `Succesfully ${followedProfile ? '' : 'un'}followed profile`, following: followedProfile })
     }
 
+    private updateAttachment = async (username, file, type): Promise<any> => {
+        const profile = await this.dao.getProfileByUsername( username )
+        const attachments = await this.dao.getProfileAttachments(profile.id)
+        const location = await this.fileService.storeImage(file, type)
+
+        let attachment = attachments[type]
+        let dimensions
+        let typeDefaultPath = 'default/'
+
+        if (type === AVATAR) {
+            dimensions = 800
+            typeDefaultPath += 'defaultAvatar.png'
+        } else if (type === BANNER) {
+            dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
+            typeDefaultPath += 'defaultBanner.jpg'
+        }
+
+        await this.fileService.convertImage(location, dimensions)
+
+        if (attachment.path !== typeDefaultPath) {
+            this.fileService.deleteImage(attachment.path)
+            attachment.path = location
+
+            return await this.attachmentDAO.saveAttachment(attachment)
+        }
+
+        let typeField
+        if (type === AVATAR)
+            typeField = 'avatar_attachment'
+        else if (type === BANNER)
+            typeField = 'banner_attachment'
+
+        attachment = new Attachment()
+        attachment.path = location
+        profile[typeField] = await this.attachmentDAO.saveAttachment(attachment)
+        await this.dao.saveProfile(profile)
+
+        return profile[typeField]
+    }
+
     private async checkValidUsername (username: string): Promise<string> {
         if (!matches(username, '^[a-zA-Z0-9_.-]*$')) {
             return 'Invalid characters in username'
@@ -251,6 +290,7 @@ class ProfileController {
         }
 
         const isUsernameTaken = await this.dao.getProfileByUsername(username)
+
         if (isUsernameTaken) {
             return 'Username not available'
         }
@@ -293,7 +333,8 @@ class ProfileController {
 
         let newProfile = new Profile()
 
-        newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)
+        newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
+        newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.custom_path = uuidv4()
@@ -307,7 +348,7 @@ class ProfileController {
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
-        acc.role = await this.roleDAO.getRoleById(1)
+        acc.role = await this.roleDAO.getRoleById(2)
         const createdAccount = await this.accountDAO.saveAccount(acc)
         return createdAccount
     }

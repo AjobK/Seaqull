@@ -35,7 +35,7 @@ class CommentController {
         const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
 
         if (!post || !profile)
-            return res.status(422).json({ message: 'Invalid data' })
+            return res.status(422).json({ message: 'Invalid post or profile given. Likely an attempt to comment on \'new-post\' page.' })
 
         newComment.profile = profile
         newComment.post = post

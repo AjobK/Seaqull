@@ -227,7 +227,7 @@ class Post extends App {
                     />
                 }
                 </Section>
-                <CommentSection/>
+                { !this.props.new && <CommentSection/> }
             </Standard>
         )
     }
