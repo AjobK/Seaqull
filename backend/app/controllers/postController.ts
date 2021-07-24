@@ -66,6 +66,7 @@ class PostController {
         }
 
         const foundPost = await this.dao.getPostByPath(req.params.path)
+
         const { JWT_SECRET } = process.env
         let decodedId
 
@@ -78,6 +79,7 @@ class PostController {
         }
 
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
+
         const postLikesAmount = foundLikes ? foundLikes.length : 0
 
         const profile = await this.fetchProfile(req)
