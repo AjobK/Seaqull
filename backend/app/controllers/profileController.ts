@@ -116,6 +116,7 @@ class ProfileController {
         attachment = new Attachment()
         attachment.path = location
         profile[typeField] = await this.attachmentDAO.saveAttachment(attachment)
+
         await this.dao.saveProfile(profile)
 
         return profile[typeField]
