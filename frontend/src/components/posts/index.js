@@ -39,6 +39,7 @@ class Posts extends Component {
 
 				if (json.message) {
 					this.setEndReached(true)
+
 					return
 				}
 
