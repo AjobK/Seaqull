@@ -104,23 +104,6 @@ class Post extends App {
         })
     }
 
-    loadAuthor = () => {
-        /* TODO
-            display_name doesn't work for some reason (probably because I don't understand store
-            load avatar
-         */
-        const storeProfile = this.props.store.profile
-        const storeUser = this.props.store.user
-        this.setState({
-            author: {
-                name: storeProfile.display_name,
-                bannerURL: storeUser.banner,
-                avatarURL: '/src/static/dummy/user/profile.jpg',
-                title: 'Default Title'
-            }
-        })
-    }
-
     toggleLike = () => {
         // Toggles liked state for all like components
         let newState = this.state
@@ -141,7 +124,6 @@ class Post extends App {
     componentDidMount() {
         if (!this.props.new)
             return this.loadArticle()
-        return this.loadAuthor()
     }
 
     sendToDB(path=null) {
@@ -168,13 +150,20 @@ class Post extends App {
 
     render() {
         // Values change based on initial response from server
+        const { profile, user } = this.props.store
         const { isEditing, isOwner, post, loaded, author } = this.state
+        const ownerAuthor = {
+            name: profile.display_name,
+            bannerURL: user.banner,
+            avatarURL: profile.avatarURL,
+            title: profile.title
+        }
 
         if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner author={author} isOwner={isOwner} />
+                <PostBanner author={isOwner ? ownerAuthor : author} isOwner={isOwner} />
                 <Section noTitle>
                 { !this.props.new &&
                     <div className={styles.likePostWrapper}>
