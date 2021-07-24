@@ -6,6 +6,8 @@ import AccountDAO from '../daos/accountDAO'
 import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
+import PostView from '../entities/post_view'
+import NetworkService from '../utils/networkService'
 
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -206,6 +208,30 @@ class PostController {
         } else {
             return res.status(404).json({ 'message': 'No likes found for that username' })
         }
+    }
+
+    public addViewToPost = async (req: Request, res: Response): Promise<any> => {
+        const ip = NetworkService.getUserIp()
+
+        const postView = new PostView()
+        postView.post = req.body.post
+        postView.ip = ip
+
+        await this.dao.addViewToPost(postView)
+
+        return res.status(200).json({ 'message': 'Post viewed' })
+    }
+
+    public getPostViewCount = async (req: Request, res: Response): Promise<any> => {
+        const foundPost = await this.dao.getPostByPath(req.params.path)
+
+        if(!foundPost) {
+            return res.status(404).json({ 'message': 'Post not found' })
+        }
+
+        const viewCount = await this.dao.getPostViewCount(foundPost)
+
+        return res.status(200).json({ 'count': viewCount })
     }
 
     // TODO Move to another file?

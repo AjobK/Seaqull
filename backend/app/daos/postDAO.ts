@@ -2,8 +2,11 @@ import DatabaseConnector from '../utils/databaseConnector'
 import { Post } from '../entities/post'
 import Profile from '../entities/profile'
 import { PostLike } from '../entities/post_like'
+import { PostView } from '../entities/post_view'
 
 class PostDAO {
+    private postViewRepository = 'PostView'
+
     public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
         const skipAmount = parseInt(skipSize) * amount
@@ -85,6 +88,27 @@ class PostDAO {
         const repository = await DatabaseConnector.getRepository('PostLike')
 
         return await repository.findOne({ where: { post: post.id, profile: profile.id }, relations: ['post', 'profile'] })
+    }
+
+    public async addViewToPost(postView: PostView): Promise<any> {
+        const repository = await DatabaseConnector.getRepository(this.postViewRepository)
+
+        const result = await repository.save(postView).catch(() => {
+            return { error: 'already_viewed' }
+        })
+
+        return result
+    }
+
+    public async getPostViewCount(post: Post): Promise<any> {
+        const repository = await DatabaseConnector.getRepository(this.postViewRepository)
+
+        const viewCount = await repository.count({ where: { post: post } })
+
+        console.log(viewCount)
+
+        return viewCount
+
     }
 }
 
