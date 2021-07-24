@@ -22,6 +22,7 @@ class PostsBlock extends Component {
 			try {
 				post.title = convertFromRaw(JSON.parse(post.title)).getPlainText()
 			} catch (e) { }
+
 			convertedPosts.push(post)
 		})
 		this.setState({
