@@ -8,10 +8,19 @@ import Axios from 'axios'
 class Posts extends Component {
 	constructor(props) {
 		super(props)
+
 		this.data = []
 		this.page = 0
 		this.totalPages = null
 		this.scrolling = false
+
+		this.state = {
+			popup: {
+				title: '',
+				description,
+				actions
+			}
+		}
 	}
 
 	loadArticle = () => {
@@ -104,6 +113,30 @@ class Posts extends Component {
 		return (
 			<div>
 				<ul className={styles.article} />
+				<PopUp
+					title={'Er is een probleem'}
+					description={'oepsie woepsie! de website is stukkie wukkie! we sijn heul hard aan t werk om dit te make mss kan je beter het opnieuw pwoberen owo'}
+					actions={[
+						{
+							title: 'Sluiten',
+							icon: 'ThumbsDown',
+							action: () => {console.log('close')},
+							primary: false
+						},
+						{
+							// title: 'Bevestigen',
+							icon: 'Check',
+							action: () => {console.log('confirm')},
+							primary: true
+						},
+						// {
+						//     title: 'Decision C',
+						//     action: () => {console.log('C')},
+						//     type: 'primary'
+						// },
+					]}
+					close={() => {console.log('close')}}
+				/>
 				<Loader />
 			</div>
 		)

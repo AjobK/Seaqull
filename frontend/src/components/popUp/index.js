@@ -28,7 +28,7 @@ class PopUp extends Component {
     }
 
     render() {
-        const { title, description, actions, close } = this.props
+        const { title, description, actions } = this.props
 
         return (
             <div className={ styles.popUpWrapper }>
@@ -60,7 +60,6 @@ class PopUp extends Component {
                             })}
                         </ul>
                     )}
-                    {/*{ this.props.children }*/}
                 </div>
             </div>
         )
