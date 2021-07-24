@@ -31,9 +31,6 @@ import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
 import Cropper from './cropper'
-import PostsBlock from './postsBlock'
-import PostsBlockLarge from './postsBlockLarge'
-import PostsBlockSmall from './postsBlockSmall'
 import Dialog from './dialog'
 
 export {
@@ -70,8 +67,5 @@ export {
   ProfileInfo,
   PostLikesList,
   Cropper,
-  PostsBlock,
-  PostsBlockLarge,
-  PostsBlockSmall,
   Dialog
 }

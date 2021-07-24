@@ -3,14 +3,37 @@
 .main {
 	position: relative;
 	z-index: 1;
+	margin-top: $header-height;
 	justify-content: center;
 	align-items: center;
-	margin: $header-height auto 0;
-	max-width: $wrapper-width;
+	margin: 0 auto;
 	width: 100%;
-	padding: 0 20px;
+	max-width: $wrapper-width;
 
-	@include mobile-all() {
-		padding: 0 22px;
+	@include mobile-all-portrait {
+		width: 100%;
+	}
+}
+
+.grid {
+	padding: 0 $header-spacing $header-spacing;
+	width: 100%;
+}
+
+.dummyBlock {
+	display: flex;
+	align-items: flex-end;
+	font-size: 1em;
+	height: 35vh;
+	margin-bottom: $header-spacing;
+	padding: $header-spacing * 2;
+	text-transform: capitalize;
+	color: white;
+	background-color: red;
+	&Text {
+		overflow: hidden;
+		width: 100%;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 }

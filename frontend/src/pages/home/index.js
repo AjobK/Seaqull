@@ -1,12 +1,12 @@
 import React from 'react'
 import App from '../App'
-import { Main, Standard } from '../../layouts'
+import { Standard, Main } from '../../layouts'
 
 class Home extends App {
   render() {
     return (
       <Standard>
-        <Main/>
+        <Main />
       </Standard>
     )
   }
