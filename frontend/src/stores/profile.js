@@ -15,16 +15,21 @@ const ProfileStore = types
   
       Axios.get(`/api/login-verify`, { withCredentials: true })
       .then((res) => {
-        const { profile, loggedIn } = res.data
-
-        self.setLoggedIn(loggedIn)
-        self.setDisplayName(profile.display_name)
-        self.setAvatarURL(`http://localhost:8000/${profile.avatar_attachment.path}`)
-        self.setTitle(profile.title.name)
+        this.setProfileData(res.data)
       })
       .catch((e) => {
         self.setLoggedIn(false)
       })
+    },
+    setProfileData(data) {
+      console.log('DATAAA')
+      console.log(data)
+      const { profile, loggedIn } = data
+
+      self.setLoggedIn(loggedIn)
+      self.setDisplayName(profile.display_name)
+      self.setAvatarURL(`http://localhost:8000/${profile.avatar_attachment.path}`)
+      self.setTitle(profile.title.name)
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn

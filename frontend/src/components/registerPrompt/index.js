@@ -45,7 +45,7 @@ class RegisterPrompt extends Component {
 
     Axios.post('/profile/register', payload, {withCredentials: true})
     .then(res => {
-      this.props.store.profile.setLoggedIn(true)
+      this.props.store.profile.loginVerify()
       this.props.store.user.fillUserData(res.data.user)
       this.goToProfile(res.data.user.user_name)
     })
