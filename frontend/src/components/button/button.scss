@@ -31,3 +31,13 @@
 	background-color: white;
 	color: $primary;
 }
+
+.iconWithText {
+	.icon {
+		margin-right: 10px;
+	}
+}
+
+.iconWithoutText {
+	padding: 10px 15px;
+}

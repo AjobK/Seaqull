@@ -17,11 +17,13 @@ class Main extends Component {
                         actions={[
                             {
                                 title: 'Sluiten',
+                                icon: 'ThumbsDown',
                                 action: () => {console.log('close')},
                                 primary: false
                             },
                             {
-                                title: 'Bevestigen',
+                                // title: 'Bevestigen',
+                                icon: 'Check',
                                 action: () => {console.log('confirm')},
                                 primary: true
                             },

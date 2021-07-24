@@ -54,7 +54,7 @@ class PopUp extends Component {
                             {this.props.actions.map((action) => {
                                 return (
                                     <li className={ styles.popUpActionsAction } key={ action.title }>
-                                        <Button value={ action.title } inverted={ !action.primary } onClick={ action.action } />
+                                        <Button icon={ action.icon } value={ action.title } inverted={ !action.primary } onClick={ action.action } />
                                     </li>
                                 )
                             })}
