@@ -57,6 +57,18 @@ class ProfileController {
         return res.status(200).json({ 'message': 'Succes' })
     }
 
+    public updateProfileBanner = async (req: any, res: Response): Promise<Response> => {
+        const isImage = await this.fileService.isImage(req.file)
+
+        if (!isImage) {
+            return res.status(400).json({ 'error': 'Only images are allowed' })
+        } else {
+            const banner = await this.updateAttachment(req.decoded.username, req.file, BANNER)
+
+            return res.status(200).json({ 'message': 'success' , 'url': 'http://localhost:8000/' + banner.path })
+        }
+    }
+
     public updateProfileAvatar = async (req: any, res: Response): Promise<Response> => {
         const isImage = await this.fileService.isImage(req.file)
 
@@ -69,16 +81,45 @@ class ProfileController {
         }
     }
 
-    public updateProfileBanner = async (req: any, res: Response): Promise<Response> => {
-        const isImage = await this.fileService.isImage(req.file)
+    private updateAttachment = async (username, file, type): Promise<any> => {
+        const profile = await this.dao.getProfileByUsername( username )
+        const attachments = await this.dao.getProfileAttachments(profile.id)
+        const location = await this.fileService.storeImage(file, type)
 
-        if (!isImage) {
-            return res.status(400).json({ 'error': 'Only images are allowed' })
-        } else {
-            const banner = await this.updateAttachment(req.decoded.username, req.file, BANNER)
+        let attachment = attachments[type]
+        let dimensions
+        let typeDefaultPath = 'default/'
 
-            return res.status(200).json({ 'message': 'success' , 'url': 'http://localhost:8000/' + banner.path })
+        if (type === AVATAR) {
+            dimensions = 800
+            typeDefaultPath += 'defaultAvatar.jpg'
+        } else if (type === BANNER) {
+            dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
+            typeDefaultPath += 'defaultBanner.jpg'
         }
+
+        await this.fileService.convertImage(location, dimensions)
+
+        if (attachment.path !== typeDefaultPath) {
+            this.fileService.deleteImage(attachment.path)
+            attachment.path = location
+
+            return await this.attachmentDAO.saveAttachment(attachment)
+        }
+
+        let typeField
+        if (type === AVATAR)
+            typeField = 'avatar_attachment'
+        else if (type === BANNER)
+            typeField = 'banner_attachment'
+
+        attachment = new Attachment()
+        attachment.path = location
+        profile[typeField] = await this.attachmentDAO.saveAttachment(attachment)
+
+        await this.dao.saveProfile(profile)
+
+        return profile[typeField]
     }
 
     public getProfile = async (req: Request, res: Response): Promise<Response> => {
@@ -238,46 +279,6 @@ class ProfileController {
         return res.status(200).json({ message: `Succesfully ${followedProfile ? '' : 'un'}followed profile`, following: followedProfile })
     }
 
-    private updateAttachment = async (username, file, type): Promise<any> => {
-        const profile = await this.dao.getProfileByUsername( username )
-        const attachments = await this.dao.getProfileAttachments(profile.id)
-        const location = await this.fileService.storeImage(file, type)
-
-        let attachment = attachments[type]
-        let dimensions
-        let typeDefaultPath = 'default/'
-
-        if (type === AVATAR) {
-            dimensions = 800
-            typeDefaultPath += 'defaultAvatar.jpg'
-        } else if (type === BANNER) {
-            dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
-            typeDefaultPath += 'defaultBanner.jpg'
-        }
-
-        await this.fileService.convertImage(location, dimensions)
-
-        if (attachment.path !== typeDefaultPath) {
-            this.fileService.deleteImage(attachment.path)
-            attachment.path = location
-
-            return await this.attachmentDAO.saveAttachment(attachment)
-        }
-
-        let typeField
-        if (type === AVATAR)
-            typeField = 'avatar_attachment'
-        else if (type === BANNER)
-            typeField = 'banner_attachment'
-
-        attachment = new Attachment()
-        attachment.path = location
-        profile[typeField] = await this.attachmentDAO.saveAttachment(attachment)
-        await this.dao.saveProfile(profile)
-
-        return profile[typeField]
-    }
-
     private async checkValidUsername (username: string): Promise<string> {
         if (!matches(username, '^[a-zA-Z0-9_.-]*$')) {
             return 'Invalid characters in username'
@@ -329,8 +330,7 @@ class ProfileController {
 
         let newProfile = new Profile()
 
-        newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
-        newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
+        newProfile.avatar_attachment = await this.attachmentDAO.getAttachment(1)
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
         newProfile.experience = 0

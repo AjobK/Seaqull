@@ -4,7 +4,7 @@ import multer = require('multer')
 
 const { promisify } = require('util')
 const pipeline = promisify(require('stream').pipeline)
-const sharp = require('sharp')
+const sharp = require('sharp');
 
 class FileService {
     public getUpload (): any {
@@ -18,7 +18,7 @@ class FileService {
         return extensions.indexOf(ext) != -1
     }
 
-    public async convertImage (path: any, dimensions: {}): Promise<void> {
+    public async convertImage (path: any, dimensions: null): Promise<void> {
         sharp(path)
             .resize(dimensions)
     }
