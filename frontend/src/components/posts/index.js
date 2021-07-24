@@ -110,11 +110,13 @@ class Posts extends Component {
 	}
 
 	createPostsBlock = (posts) => {
-		return <div key={Math.random()}>
-			<Suspense fallback={<div>Loading...</div>}>
-				<PostsBlock posts={posts}/>
-			</Suspense>
-		</div>
+		return (
+		    <div key={Math.random()}>
+			    <Suspense fallback={<div>Loading...</div>}>
+				    <PostsBlock posts={posts}/>
+			    </Suspense>
+		    </div>
+		)
 	}
 
 	render() {
