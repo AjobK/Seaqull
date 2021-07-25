@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './postViews.scss'
 import Axios from 'axios'
+import { Icon } from '../../components'
 
 class PostViews extends Component {
     constructor(props) {
@@ -28,7 +29,10 @@ class PostViews extends Component {
         return (
             //TODO: add icon
             <div className={ styles.postViews }>
-                <p className={ styles.postViewsText }>{ this.state.views } { this.state.views === 1 ? 'view' : 'views' }</p>
+                {/* <p className={ styles.postViewsText }>{ this.state.views } { this.state.views === 1 ? 'view' : 'views' }</p> */}
+                <p className={ styles.postViewsText }>
+                    { this.state.views } <Icon iconName={'Eye'} className={styles.viewIcon} />
+                </p>
             </div>
         )
     }
