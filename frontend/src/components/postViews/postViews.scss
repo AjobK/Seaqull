@@ -1,0 +1,15 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+
+.postViews {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+	justify-content: flex-start;
+
+	.postViewsText {
+		height: fit-content;
+		color: $nav-items;
+		margin-right: 8px;
+	}
+}

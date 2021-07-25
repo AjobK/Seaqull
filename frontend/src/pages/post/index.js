@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection } from '../../components'
+import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
@@ -96,6 +96,7 @@ class Post extends App {
                 isEditing: true,
                 author: author
             })
+            this.addViewToDB()
         })
     }
 
@@ -142,6 +143,18 @@ class Post extends App {
         }
     }
 
+    addViewToDB() {
+        if(!this.state.isOwner) {
+            Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
+
+            const payload = {
+                path: this.state.post.path
+            }
+
+            Axios.post(`api/post/view`, payload)
+        } 
+    }
+
     render() {
         // Values change based on initial response from server
         const { isEditing, isOwner, post, loaded, author } = this.state
@@ -163,6 +176,7 @@ class Post extends App {
                     </div>
                 }
                 <div className={styles.renderWrapper}>
+                <PostViews />
                 <PostContent
                     type={'title'}
                     // Saves post title with draftJS content

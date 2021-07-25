@@ -213,10 +213,12 @@ class PostController {
     }
 
     public addViewToPost = async (req: Request, res: Response): Promise<any> => {
+        const foundPost = await this.dao.getPostByPath(req.body.path)
+
         const ip = NetworkService.getUserIp()
 
         const postView = new PostView()
-        postView.post = req.body.post
+        postView.post = foundPost
         postView.ip = ip
 
         await this.dao.addViewToPost(postView)
@@ -233,7 +235,7 @@ class PostController {
 
         const viewCount = await this.dao.getPostViewCount(foundPost)
 
-        return res.status(200).json({ 'count': viewCount })
+        return res.status(200).json({ 'views': viewCount })
     }
 
     // TODO Move to another file?
