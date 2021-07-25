@@ -215,7 +215,7 @@ class PostController {
     public addViewToPost = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.body.path)
 
-        const ip = NetworkService.getUserIp()
+        const ip = NetworkService.getUserIp(req)
 
         const postView = new PostView()
         postView.post = foundPost

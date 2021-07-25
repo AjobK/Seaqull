@@ -1,12 +1,11 @@
-import { networkInterfaces } from 'os'
-
+import { Request } from 'express'
 class NetworkService {
-    public static getUserIp(): string {
-        const ip = [].concat(...Object.values(networkInterfaces()))
-            .filter(details => details.family === 'IPv4' && !details.internal)
-            .pop().address
+    public static getUserIp(req: Request): string {
+        const ip = req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        null;
 
-        return ip
+        return ip[0]
     }
 }
 
