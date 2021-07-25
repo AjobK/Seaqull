@@ -27,7 +27,6 @@ class PostViews extends Component {
 
     render() {
         return (
-            //TODO: add icon
             <div className={ styles.postViews }>
                 {/* <p className={ styles.postViewsText }>{ this.state.views } { this.state.views === 1 ? 'view' : 'views' }</p> */}
                 <p className={ styles.postViewsText }>
