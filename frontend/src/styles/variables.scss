@@ -1,13 +1,15 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Poppins:500,700');
 @import url('https://fonts.googleapis.com/css?family=Sanchez');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
 
 // Colors
 $primary: #ff4040; // Changes color of most elements, including logo
-$primary-light: #ff9d9d;
-$light: #EFEFEF;
-// updated values
+$secondary: #2e2e4c;
+$text: #68677D;
 $textdark: #2b2b2b;
+$light: #efefef;
+$dark-light: #dcdcde;
 $dark: #4e4e4e;
 $darker: #2b2b2b;
 $darkest: #1f1f1f;
@@ -26,16 +28,17 @@ $prompt-background: white;
 $prompt-border-color: whitesmoke;
 $input-text-color: #7f7f7f;
 $gray: gray;
+$light-gray: #aeafb9;
 $mobile-text-login: #fff;
 
 // Fonts
-$mainfont: Poppins;
+$mainfont: Source Sans Pro;
 $sidefont: Sanchez;
-$navigationfont: Poppins;
+$navigationfont: Source Sans Pro;
 $secondaryfont: arial;
 
 // Sizes
-$wrapper-width: 1000px;
+$wrapper-width: 1200px;
 $logo-font-size: 2.5rem;
 $logo-font-size-sm: 2.5rem;
 $header-height: 80px;
@@ -54,10 +57,12 @@ $xl-fontsize: 5vw;
 $xxl-fontsize: 6vw;
 
 // Not responsive
-$nr-xs-fontsize: 12px;
+$nr-xxs-fontsize: 12px;
+$nr-xs-fontsize: 14px;
 $nr-sm-fontsize: 16px;
-$nr-md-fontsize: 24px;
-$nr-lg-fontsize: 30px;
+$nr-md-fontsize: 19px;
+$nr-xm-fontsize: 22px;
+$nr-lg-fontsize: 32px;
 $nr-xl-fontsize: 36px;
 $nr-xxl-fontsize: 48px;
 $nr-logo-fontsize: 94px;
