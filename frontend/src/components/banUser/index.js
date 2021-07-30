@@ -16,13 +16,13 @@ class BanUser extends Component {
         }
     }
 
-    saveBan (e) {
-        e.preventDefault()
+    saveBan (event) {
+        event.preventDefault()
 
         const payload = {
             username: this.props.user.username,
-            days: e.target[0].value,
-            reason: e.target[1].value
+            days: event.target[0].value,
+            reason: event.target[1].value
         }
 
       
@@ -30,6 +30,7 @@ class BanUser extends Component {
             this.props.closePopup()
         }).catch(err => {
             const { error } = err.response.data
+            console.log(error)
             this.setState({ error: error })
         })
     }

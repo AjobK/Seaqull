@@ -6,7 +6,6 @@ import AccountDAO from '../daos/accountDAO'
 import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
-import BanDAO from '../daos/banDAO'
 
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -14,14 +13,10 @@ require('dotenv').config()
 class PostController {
     private dao: PostDAO
     private profileDAO: ProfileDAO
-    private banDAO: BanDAO
-    private accountDAO: AccountDAO
 
     constructor() {
         this.dao = new PostDAO()
         this.profileDAO = new ProfileDAO()
-        this.banDAO = new BanDAO()
-        this.accountDAO = new AccountDAO()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {

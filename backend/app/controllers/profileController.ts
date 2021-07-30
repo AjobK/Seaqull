@@ -14,7 +14,7 @@ import attachmentDAO from '../daos/attachmentDAO'
 import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
-import BanDAO from '../daos/banDAO'
+import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -33,7 +33,7 @@ class ProfileController {
     private roleDAO: RoleDao
     private attachmentDAO: attachmentDAO
     private fileService: FileService
-    private banDAO: BanDAO
+    private banService: BanService
 
     constructor() {
         this.dao = new ProfileDAO()
@@ -42,7 +42,7 @@ class ProfileController {
         this.roleDAO = new RoleDao()
         this.attachmentDAO = new attachmentDAO()
         this.fileService = new FileService()
-        this.banDAO = new BanDAO()
+        this.banService = new BanService()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -109,17 +109,10 @@ class ProfileController {
         if (!profile) return res.status(404).json({ 'message': 'User not found' })
 
         const account = await this.accountDAO.getAccountByUsername(profile.display_name)
-        const ban = await this.banDAO.getBanByUser(account)
+        const ban = await this.banService.checkIfUserIsBanned(account)
 
-        if (ban && ban.banned_to > Date.now()) {
-            const bannedDateobject = new Date(ban.banned_to * 1)
-            const date = bannedDateobject.getDate() + '-' +
-                            bannedDateobject.getMonth() + '-' +
-                            bannedDateobject.getFullYear() + ' ' +
-                            bannedDateobject.getHours() + ':' +
-                            bannedDateobject.getMinutes()
-
-            return res.status(403).json({ error: ['Account banned up to: ' + date] })
+        if (ban) {
+            return res.status(403).json(ban)
         }
 
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null

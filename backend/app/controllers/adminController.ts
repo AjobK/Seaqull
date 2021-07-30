@@ -5,18 +5,20 @@ import PostDAO from '../daos/postDAO'
 import ProfileDAO from '../daos/profileDAO'
 import Ban from '../entities/ban'
 import Post from '../entities/post'
+import BanService from '../utils/banService'
 
 class AdminController {
     private accountDao: AccountDAO
     private banDAO: BanDAO
     private postDAO: PostDAO
     private profileDAO: ProfileDAO
+    private banService: BanService
 
     constructor() {
         this.accountDao = new AccountDAO()
-        this.banDAO = new BanDAO()
         this.postDAO = new PostDAO()
         this.profileDAO = new ProfileDAO()
+        this.banService = new BanService()
     }
 
     public tempBanUser = async (req: any, res: Response): Promise<Response> => {
@@ -26,25 +28,26 @@ class AdminController {
         const user = await this.accountDao.getAccountByUsername(username)
         const admin = await this.accountDao.getAccountByUsername(req.decoded.username)
 
-        const existingBan = await this.banDAO.getBanByUser(user)
-        if ( existingBan ) return res.status(400).json({ 'error': ['The user is already banned'] })
+        if (!user) {
+            res.status(400).json({ error: ['User not found'] })
+        }
+
+        if (!admin) {
+            res.status(400).json({ error: ['Admin not found'] })
+        }
+
+        const existingBan = await this.banService.checkIfUserIsBanned(user)
+        if (existingBan) return res.status(400).json({ 'error': ['The user is already banned'] })
 
         const banTime = parseInt(days)
-        if ( isNaN(banTime) ) return res.status(400).json({ 'error': ['Invalid data'] })
+        if (isNaN(banTime)) return res.status(400).json({ 'error': ['Invalid data'] })
 
-        const ban = new Ban()
-        ban.user_account = user
-        ban.staff_account = admin
-        ban.reason = reason
-        ban.banned_at = new Date()
-        ban.banned_to = new Date().setDate(ban.banned_at.getDate()+banTime)
-        ban.ip_ban = req.connection.remoteAddress
+        const createdBan = await this.banService.banUser(user, admin, reason, req.connection.remoteAddress, banTime)
 
         const userProfile = await this.profileDAO.getProfileByUsername(user.user_name)
         const posts = await this.postDAO.getOwnedPosts(userProfile)
         this.hidePosts(posts)
 
-        const createdBan = await this.banDAO.saveBan(ban)
         return res.status(200).json({ ban: createdBan })
     }
 

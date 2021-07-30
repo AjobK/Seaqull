@@ -3,7 +3,7 @@ import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
 import { Account } from '../entities/account'
-import BanDAO from '../daos/banDAO'
+import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -15,12 +15,12 @@ const { SECURE } = process.env
 class AuthorizationController {
     private accountDAO: AccountDAO
     private roleDAO: RoleDAO
-    private banDAO: BanDAO
+    private banService: BanService
 
     constructor() {
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDAO()
-        this.banDAO = new BanDAO()
+        this.banService = new BanService()
     }
 
     public loginVerify = async (req: Request, res: Response): Promise<any> => {
@@ -28,7 +28,7 @@ class AuthorizationController {
             return res.status(401).json({ loggedIn: false })
 
         try {
-            const account = await this.accountDAO.getAccountByUsername(
+            const account = await this.accountDAO.getAccountByUsername (
                 jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
             )
 
@@ -66,17 +66,10 @@ class AuthorizationController {
 
             if (validation != null) return res.status(400).send(validation)
 
-            const ban = await this.banDAO.getBanByUser(account)
+            const ban = await this.banService.checkIfUserIsBanned(account)
 
-            if (ban && ban.banned_to > Date.now()) {
-                const bannedDateobject = new Date(ban.banned_to * 1)
-                const date = bannedDateobject.getDate() + '-' +
-                                bannedDateobject.getMonth() + '-' +
-                                bannedDateobject.getFullYear() + ' ' +
-                                bannedDateobject.getHours() + ':' +
-                                bannedDateobject.getMinutes()
-
-                return res.status(403).json({ error: ['Account banned up to: ' + date] })
+            if (ban) {
+                return res.status(403).json(ban)
             }
 
             const role = await this.roleDAO.getRoleByUser(username)
