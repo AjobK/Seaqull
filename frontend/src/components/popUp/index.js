@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import styles from './popUp.scss'
 import { Button, Icon } from '../index'
-import { popUpData } from './popUpData'
 
 @inject('store') @observer
 class PopUp extends Component {
@@ -10,13 +9,6 @@ class PopUp extends Component {
         super(props)
 
         this.setScrollDisabled(true)
-
-        this.state = {
-        }
-    }
-
-    componentDidMount() {
-
     }
 
     setScrollDisabled = (scrollDisabled) => {
@@ -25,15 +17,8 @@ class PopUp extends Component {
 
     closePopUp = () => {
         this.setScrollDisabled(false)
-        this.props.content.close()
-    }
 
-    getDefaultConfirmBtn = (confirmAction) => {
-        return {
-            icon: 'Check',
-            action: confirmAction,
-            primary: true
-        }
+        this.props.content.close()
     }
 
     render() {
