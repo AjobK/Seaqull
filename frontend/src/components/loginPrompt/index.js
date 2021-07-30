@@ -81,7 +81,10 @@ class LoginPrompt extends Component {
               },
             ],
             close: this.closePopUp
-          }
+          },
+          username: ['No connection'],
+          password: ['No connection'],
+          loadingTimeout: false
         })
       }
 
