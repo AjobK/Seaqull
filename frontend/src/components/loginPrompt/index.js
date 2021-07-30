@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
-import { Button, FormInput } from '../../components'
+import { Button, FormInput, PopUp } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store') @observer
 class LoginPrompt extends Component {
@@ -18,7 +19,8 @@ class LoginPrompt extends Component {
       remainingTime: null,
       recaptchaToken: null,
       recaptcha: null,
-      loadingTimeout: false
+      loadingTimeout: false,
+      popup: null
     }
 
     window.recaptchaOptions = {
@@ -64,6 +66,25 @@ class LoginPrompt extends Component {
       this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
+      if (res.message === 'Network Error') {
+        return this.setState({
+          popup: {
+            ...popUpData.messages.networkError,
+            actions: [
+              {
+                ...popUpData.actions.close,
+                action: this.closePopUp
+              },
+              {
+                ...popUpData.actions.confirm,
+                action: this.closePopUp
+              },
+            ],
+            close: this.closePopUp
+          }
+        })
+      }
+
       const { error, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
@@ -73,6 +94,12 @@ class LoginPrompt extends Component {
         password: error || [],
         loadingTimeout: false
       })
+    })
+  }
+
+  closePopUp = () => {
+    this.setState({
+      popup: null
     })
   }
 
@@ -124,7 +151,7 @@ class LoginPrompt extends Component {
   }
 
   render() {
-    const { username, password, remainingTime,recaptcha, loadingTimeout } = this.state
+    const { username, password, remainingTime,recaptcha, loadingTimeout, popup } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
@@ -143,6 +170,10 @@ class LoginPrompt extends Component {
           </form>
           <div className={styles.image} />
         </div>
+
+        { popup && (
+            <PopUp content={ popup } />
+        )}
       </div>
     )
   }

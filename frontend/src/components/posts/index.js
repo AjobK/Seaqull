@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Loader } from '../../components'
 import styles from './posts.scss'
-import { PopUp } from '../../components'
 import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
 import Axios from 'axios'
 
@@ -13,14 +12,6 @@ class Posts extends Component {
 		this.page = 0
 		this.totalPages = null
 		this.scrolling = false
-
-		this.state = {
-			popup: {
-				title: '',
-				description,
-				actions
-			}
-		}
 	}
 
 	loadArticle = () => {
@@ -113,30 +104,6 @@ class Posts extends Component {
 		return (
 			<div>
 				<ul className={styles.article} />
-				<PopUp
-					title={'Er is een probleem'}
-					description={'oepsie woepsie! de website is stukkie wukkie! we sijn heul hard aan t werk om dit te make mss kan je beter het opnieuw pwoberen owo'}
-					actions={[
-						{
-							title: 'Sluiten',
-							icon: 'ThumbsDown',
-							action: () => {console.log('close')},
-							primary: false
-						},
-						{
-							// title: 'Bevestigen',
-							icon: 'Check',
-							action: () => {console.log('confirm')},
-							primary: true
-						},
-						// {
-						//     title: 'Decision C',
-						//     action: () => {console.log('C')},
-						//     type: 'primary'
-						// },
-					]}
-					close={() => {console.log('close')}}
-				/>
 				<Loader />
 			</div>
 		)
