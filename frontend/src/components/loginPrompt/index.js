@@ -109,8 +109,8 @@ class LoginPrompt extends Component {
       loadingTimeout: true
     })
     if(!(this.state.loadingTimeout)){
-      // this.recaptchaRef.current.reset()
-      // this.recaptchaRef.current.execute()
+      this.recaptchaRef.current.reset()
+      this.recaptchaRef.current.execute()
     }
   }
 
@@ -136,9 +136,13 @@ class LoginPrompt extends Component {
             <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
+              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
-              {/* <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange}/> */}
+              { <ReCAPTCHA 
+              ref={this.recaptchaRef} 
+              sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
+              size='invisible' 
+              onChange={this.onChange}/> }
             </div>
           </form>
           <div className={styles.image} />

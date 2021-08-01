@@ -141,7 +141,7 @@ class ProfileController {
     }
 
     public register = async (req: any, res: Response): Promise<Response> => {
-        const userRequested = req.body
+        const { username, email, password, recaptcha} = req.body
         const errors = {
             username: [],
             email: [],
@@ -149,30 +149,30 @@ class ProfileController {
             recaptcha: []
         }
 
-        const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
+        const isUsernamNotValid = await this.checkValidUsername(username)
 
         if (isUsernamNotValid) {
             errors.username = [isUsernamNotValid]
         }
 
-        const isEmailNotValid = await this.checkValidEmail(userRequested.email)
+        const isEmailNotValid = await this.checkValidEmail(email)
 
         if (isEmailNotValid) {
             errors.email = [isEmailNotValid]
         }
 
-        const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
+        const isPasswordNotStrong = this.checkPasswordStrength(password)
 
         if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
         }
 
-        const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+        const isRecaptchaNotValid = await this.checkReCAPTCHA(recaptcha)
         if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
             return res.status(401).json({ errors: errors })
         }
 
