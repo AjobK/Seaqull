@@ -44,9 +44,16 @@
 				background: none;
 				font-size: 1.2em;
 				align-items: center;
-				padding: 5px 10px;
+				padding: 7px 10px;
 				transform: translateX(10px);
 				color: $primary;
+				transition: .2s linear;
+				border-radius: 100%;
+
+				&:hover {
+					color: white;
+					background-color: $primary;
+				}
 			}
 		}
 
