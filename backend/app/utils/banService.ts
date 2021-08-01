@@ -26,8 +26,8 @@ class BanService {
 
     async banUser(user: Account, admin: Account, reason: string, adress: string, banTime: number): Promise<Ban> {
         const ban = new Ban()
-        ban.user_account = user
-        ban.staff_account = admin
+        ban.user = user
+        ban.staff= admin
         ban.reason = reason
         ban.banned_at = new Date()
         ban.banned_to = new Date().setDate(ban.banned_at.getDate()+banTime)

@@ -1,6 +1,5 @@
 import { Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
-import BanDAO from '../daos/banDAO'
 import PostDAO from '../daos/postDAO'
 import ProfileDAO from '../daos/profileDAO'
 import Post from '../entities/post'

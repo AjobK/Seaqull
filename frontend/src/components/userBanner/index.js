@@ -120,6 +120,7 @@ class UserBanner extends Component {
     } else if (user.username.length >= 8) {
       fontSize = styles.nameLarge
     }
+    console.log(this.props.store)
 
     return (
         <section className={ styles.wrapper }>

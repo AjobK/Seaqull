@@ -8,11 +8,11 @@ export class Ban extends BaseEntity {
 
     @ManyToOne(() => Account, account => account.id)
     @JoinColumn({ name: 'staff_account_id', referencedColumnName: 'id' })
-    staff_account: Account
+    staff: Account
 
     @OneToOne(() => Account)
-    @JoinColumn({ name: 'user_account', referencedColumnName: 'id' })
-    user_account: Account
+    @JoinColumn({ name: 'user_account_id', referencedColumnName: 'id' })
+    user: Account
 
     @Column({ unique: false })
     reason: string

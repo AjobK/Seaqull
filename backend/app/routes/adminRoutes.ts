@@ -12,7 +12,7 @@ class AdminRoutes implements RouterBase {
 
     constructor() {
         this.adminController = new AdminController()
-        
+
         this.initRoutes()
     }
 

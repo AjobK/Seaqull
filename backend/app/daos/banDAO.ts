@@ -19,7 +19,7 @@ class BanDAO {
 
     public async getBanByUser(acc: Account): Promise<Ban> {
         const repository = await DatabaseConnector.getRepository('Ban')
-        const ban = await repository.findOne({ where: { user_account: acc.id } })
+        const ban = await repository.findOne({ where: { user: acc.id } })
 
         return ban
     }
