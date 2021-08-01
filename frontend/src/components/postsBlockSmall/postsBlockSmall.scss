@@ -27,7 +27,6 @@ $post-padding: 10px;
 
 	&Thumbnail {
 		position: relative;
-		min-width: $small-thumbnail-width-desktop;
 		max-width: $small-thumbnail-width-desktop;
 
 		&Content {
@@ -195,7 +194,6 @@ $post-padding: 10px;
 
 		.small {
 			&Thumbnail {
-				min-width: $small-thumbnail-width-tablet;
 				max-width: $small-thumbnail-width-tablet;
 			}
 
