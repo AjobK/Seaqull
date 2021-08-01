@@ -17,7 +17,7 @@ export default class CreateObjects implements Seeder {
 
     private permissionsModerators = [
         'SEE_REPORTED_USERS',
-        'BAN_USERS',
+        'SHORT_BAN_USERS',
         'UNBAN_USERS',
         'REMOVE_POSTS',
         'RECOVER_POSTS',
@@ -32,6 +32,7 @@ export default class CreateObjects implements Seeder {
     private permissionsAdmins = [
         'PROMOTE_MODERATORS',
         'REMOVE_MODERATORS',
+        'BAN_USERS',
         'PERMA_BAN_USERS',
         'REVIEW_BAN_APPEALS',
         'MACHINE_BAN_USERS'

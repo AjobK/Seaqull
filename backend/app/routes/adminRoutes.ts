@@ -7,6 +7,7 @@ const hasPermission = require('../middlewares/hasPermission.ts')
 
 class AdminRoutes implements RouterBase {
     public ban = '/ban'
+    public shortBan = '/shortBan'
     public router = express.Router()
     private adminController: AdminController
 
@@ -17,7 +18,8 @@ class AdminRoutes implements RouterBase {
     }
 
     public initRoutes(): void {
-        this.router.patch(this.ban, auth, hasPermission('BAN_USERS'), this.adminController.tempBanUser)
+        this.router.patch(this.ban, auth, hasPermission('BAN_USERS'), this.adminController.longBanUser)
+        this.router.patch(this.shortBan, auth, hasPermission('SHORT_BAN_USERS'), this.adminController.shortBanUser)
     }
 }
 

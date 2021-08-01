@@ -25,13 +25,18 @@ class BanUser extends Component {
             reason: event.target[1].value
         }
 
+        let url = 'ban'
+        if ( this.props.store.profile.role == 'moderator') {
+            url = 'shortBan'
+        }
+
       
-        Axios.patch('/ban', payload, { withCredentials: true }).then( res => {
+        Axios.patch(url, payload, { withCredentials: true }).then( res => {
             this.props.closePopup()
         }).catch(err => {
             const { error } = err.response.data
 
-            this.setState({ error: error })
+            this.setState({ error: [error] })
         })
     }
 

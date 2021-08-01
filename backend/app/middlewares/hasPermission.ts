@@ -7,7 +7,6 @@ module.exports = (requiredPermissionName) => {
         const permissionList = await rolePermissionDAO.getRolePermissionsByRole(req.decoded.role)
         let hasPermission = false
 
-        console.log(permissionList)
         permissionList.forEach(permission => {
             if (permission.permission.name == requiredPermissionName) {
                 hasPermission = true
