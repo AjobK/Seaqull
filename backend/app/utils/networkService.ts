@@ -5,7 +5,7 @@ class NetworkService {
         req.connection.remoteAddress ||
         null;
 
-        return ip[0]
+        return ip.toString()
     }
 }
 

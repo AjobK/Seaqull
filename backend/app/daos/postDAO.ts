@@ -30,6 +30,7 @@ class PostDAO {
 
     public async getPostByPath(path: string): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
+
         const foundPost = await repository.findOne({ where: { path: path }, relations: ['profile'] })
 
         return foundPost

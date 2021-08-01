@@ -10,7 +10,6 @@ import PostView from '../entities/post_view'
 import NetworkService from '../utils/networkService'
 
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 
 class PostController {
     private dao: PostDAO
@@ -214,6 +213,10 @@ class PostController {
 
     public addViewToPost = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.body.path)
+
+        if(!foundPost) {
+            return res.status(404).json({ 'message': 'Post not found' })
+        }
 
         const ip = NetworkService.getUserIp(req)
 
