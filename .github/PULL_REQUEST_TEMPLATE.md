@@ -12,49 +12,49 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 
 <br />
 
-**General checklist**
-- [ ] Tested happy flow.
-- [ ] Tested unhappy flow.
-- [ ] No unexpected exceptions.
-- [ ] No code with high complexity. (Big O)
-- [ ] EOF newline.
-- [ ] No floating comma's and spaces.
-- [ ] No unexpected/unhandled errors.
-- [ ] Lines no longer than 'guideline' in IDE.
-- [ ] Correct indentation.
-- [ ] No usage of legacy functionalities.
-- [ ] (JS) Curly braces on the sameline as reserved keywords *(`if () {` instead of `{` on line below)*
-- [ ] (JS) No double quotes.
-- [ ] (JS) Single newline above unique code structures and reserved keywords.
-- [ ] (JS) Variables bundled where possible.
-- [ ] (JS) No semi-colons except where they have a functional necessity, such as for-loops.
+**1. General checklist**
+- [ ] a. Tested happy flow.
+- [ ] b. Tested unhappy flow.
+- [ ] c. No unexpected exceptions.
+- [ ] d. No code with high complexity. (Big O)
+- [ ] e. EOF newline.
+- [ ] f. No floating comma's and spaces.
+- [ ] g. No unexpected/unhandled errors.
+- [ ] h. Lines no longer than 'guideline' in IDE.
+- [ ] i. Correct indentation.
+- [ ] j. No usage of legacy functionalities.
+- [ ] k. (JS) Curly braces on the sameline as reserved keywords *(`if () {` instead of `{` on line below)*
+- [ ] l. (JS) No double quotes.
+- [ ] m. (JS) Single newline above unique code structures and reserved keywords.
+- [ ] n. (JS) Variables bundled where possible.
+- [ ] o. (JS) No semi-colons except where they have a functional necessity, such as for-loops.
 
 <br />
 
-**If relevant, front-end checklist**
-- [ ] Responsive. (Desktop all the way to mobile 320px)
-- [ ] Using SCSS variables where relevant.
-- [ ] Relevant class names
-- [ ] No modified global SCSS properties, except if necessary and fully tested the impact.
-- [ ] Checked [caniuse](https://caniuse.com) for more modern CSS properties.
+**2. If relevant, front-end checklist**
+- [ ] a. Responsive. (Desktop all the way to mobile 320px)
+- [ ] b. Using SCSS variables where relevant.
+- [ ] c. Relevant class names
+- [ ] d. No modified global SCSS properties, except if necessary and fully tested the impact.
+- [ ] e. Checked [caniuse](https://caniuse.com) for more modern CSS properties.
 
 <br />
 
-**If relevant, back-end checklist**
-- [ ] No unhandled promise rejections.
-- [ ] Seeders still functional.
-- [ ] No primary-key violations.
-- [ ] Normalization, atleast [3NF](https://en.wikipedia.org/wiki/Database_normalization).
-- [ ] Used guards (middleware) where necessary and tested if route is guarded.
+**3. If relevant, back-end checklist**
+- [ ] a. No unhandled promise rejections.
+- [ ] b. Seeders still functional.
+- [ ] c. No primary-key violations.
+- [ ] d. Normalization, atleast [3NF](https://en.wikipedia.org/wiki/Database_normalization).
+- [ ] e. Used guards (middleware) where necessary and tested if route is guarded.
 
 <br />
 
-**If relevant, test these browsers**
-- [ ] Chrome
-- [ ] Firefox
-- [ ] Opera
-- [ ] Edge
-- [ ] Safari
+**4. If relevant, test these browsers**
+- [ ] a. Chrome
+- [ ] b. Firefox
+- [ ] c. Opera
+- [ ] d. Edge
+- [ ] e. Safari
 
 ---
 
@@ -64,3 +64,9 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 *3. Assign all reviewers allowed to merge the branch, including yourself.*  
 *4. If relevant to the sprint, put related issue in 'Awaiting Approval' column on project board.*  
 *5. Add to the corresponding [milestone](https://github.com/AjobK/Seaqull/milestones).*
+
+> This form should be filled in by the author of this PR.
+
+**Reviewer info**
+*1. You can use aliases to refer to specific PR checklist items. For example 'Hey @JohnDoe, for this line please check 3.a and 1.d.'*
+*2. Where possible, please use the suggestions feature in github so the author has a better idea of the solution you had in mind.*
