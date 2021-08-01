@@ -5,19 +5,29 @@
 	margin: $grid-block-gap 0;
 	grid-gap: $grid-block-gap;
 	grid-template-columns: repeat(2, calc(50% - #{$grid-block-gap} / 2));
-	grid-template-areas: 'l1 s1' 's2 l2';
 
 	.large1 {
 		grid-area: l1;
 	}
+
 	.large2 {
 		grid-area: l2;
 	}
+
 	.small1 {
 		grid-area: s1;
 	}
+
 	.small2 {
 		grid-area: s2;
+	}
+
+	.small3 {
+		grid-area: s3;
+	}
+
+	.small4 {
+		grid-area: s4;
 	}
 
 	.small {
@@ -32,11 +42,26 @@
 	@include mobile-all() {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto;
-		grid-template-areas: 'l1' 's1' 's2' 'l2';
 
 		.small {
 			grid-template-rows: 1fr;
 			grid-template-columns: auto;
 		}
+	}
+}
+
+.longBlock {
+	grid-template-areas: 'l1 s1' 's3 s4' 's2 l2';
+
+	@include mobile-all() {
+		grid-template-areas: 'l1' 's1' 's3' 's4' 's2' 'l2';
+	}
+}
+
+.shortBlock {
+	grid-template-areas: 'l1 s1' 's2 l2';
+
+	@include mobile-all() {
+		grid-template-areas: 'l1' 's1' 's2' 'l2';
 	}
 }

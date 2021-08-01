@@ -34,8 +34,7 @@ class Posts extends Component {
 	fetchPosts = (maxPosts) => {
 		this.setIsFetching(true)
 
-		Axios.get(`${this.props.store.defaultData.backendUrl}/post/
-			?page=${this.state.page}&amount=${maxPosts}`,
+		Axios.get(`${ this.props.store.defaultData.backendUrl }/post/?page=${ this.state.page }&amount=${ maxPosts }`,
 			{ withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
