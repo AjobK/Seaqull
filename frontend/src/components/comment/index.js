@@ -6,6 +6,7 @@ import { Editor, EditorState, convertFromRaw } from 'draft-js'
 import { CommentForm, CommentChildren, Icon, Dialog } from '../'
 
 import TimeUtil from '../../util/timeUtil'
+import ColorUtil from '../../util/colorUtil'
 import axios from 'axios'
 
 @inject('store') @observer
@@ -28,14 +29,17 @@ class Comment extends Component {
 
     displayAvatar = () => {
         const { defaultData } = this.props.store
-        const { avatar_attachment } = this.props.comment.profile
+        const { avatar_attachment, display_name } = this.props.comment.profile
 
         if (!this.isReply) {
             return(
                 <div className={ styles.comment__avatar }>
-                    <img src={ avatar_attachment.path
-                        ? `${defaultData.backendUrlBase}/${avatar_attachment.path}`
-                        : require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } 
+                    <img 
+                        src={ avatar_attachment.path
+                            ? `${defaultData.backendUrlBase}/${avatar_attachment.path}`
+                            : require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture
+                        }
+                        style={{ backgroundColor: ColorUtil.getUniqueColorBasedOnString(display_name) }}
                     />
                 </div>
             )
@@ -99,7 +103,9 @@ class Comment extends Component {
             return (
                 <article className={ `${ styles.comment } ${ this.isReply && styles.reply }` }>
                     <div className={ `${ styles.comment__body } ${ isReplying ? styles.isReplying : '' }` }>
-                        { this.displayAvatar() }
+                        <Link to={ `/profile/${ comment.profile.display_name }` }>
+                            { this.displayAvatar() }
+                        </Link>
                         <div className={ styles.comment__main }>
                             <div className={ styles.comment_content }>
                                 <div className={ styles.comment__header }>
