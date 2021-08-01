@@ -6,11 +6,12 @@ import styles from './postsBlock.scss'
 class PostsBlock extends Component {
 	constructor(props) {
 		super(props)
+
 		this.state = {
 			posts: props.posts
 		}
 	}
-	
+
 	componentDidMount() {
 		this.convertPosts()
 	}
@@ -25,6 +26,7 @@ class PostsBlock extends Component {
 
 			convertedPosts.push(post)
 		})
+
 		this.setState({
 			...this.state,
 			posts: convertedPosts
@@ -34,15 +36,15 @@ class PostsBlock extends Component {
 	render() {
 		const { posts } = this.props
 		const shortBlock = posts.length <= 9
-		
+
 		return (
 			<div className={`${ styles.postsBlock } ${ shortBlock ? styles.shortBlock : styles.longBlock }`}>
 				{ posts[0] && (
-					<div className={styles.large1}>
+					<div className={ styles.large1 }>
 						<PostsBlockLarge post={ posts[0] }/>
 					</div>
 				)}
-				<div className={`${styles.small} ${styles.small1}`}>
+				<div className={`${ styles.small } ${ styles.small1 }`}>
 					{ posts[1] && (
 						<PostsBlockSmall post={ posts[1] }/>
 					)}
@@ -52,7 +54,7 @@ class PostsBlock extends Component {
 				</div>
 
 				{ !shortBlock && (
-					<div className={`${styles.small} ${styles.small3}`}>
+					<div className={`${ styles.small } ${ styles.small3 }`}>
 						{ posts[6] && (
 							<PostsBlockSmall post={ posts[3] }/>
 						)}
@@ -62,7 +64,7 @@ class PostsBlock extends Component {
 					</div>
 				)}
 				{ !shortBlock && (
-					<div className={`${styles.small} ${styles.small4}`}>
+					<div className={`${ styles.small } ${ styles.small4 }`}>
 						{ posts[8] && (
 							<PostsBlockSmall post={ posts[5] }/>
 						)}
@@ -72,7 +74,7 @@ class PostsBlock extends Component {
 					</div>
 				)}
 
-				<div className={`${styles.small} ${styles.small2}`}>
+				<div className={`${ styles.small } ${ styles.small2 }`}>
 					{ posts[3] && (
 						<PostsBlockSmall post={ posts[shortBlock ? 3 : 7] }/>
 					)}
@@ -81,7 +83,7 @@ class PostsBlock extends Component {
 					)}
 				</div>
 				{ posts[5] && (
-					<div className={styles.large2}>
+					<div className={ styles.large2 }>
 						<PostsBlockLarge post={ posts[shortBlock ? 5 : 9] }/>
 					</div>
 				)}

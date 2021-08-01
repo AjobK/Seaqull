@@ -9,10 +9,10 @@ const PostsBlock = lazy(() => import('../../components/postsBlock'))
 class Posts extends Component {
 	constructor(props) {
 		super(props)
+
 		this.MAX_POSTS_IN_FIRST_BLOCK = 6
 		this.MAX_POSTS_IN_BLOCK = 10
-		this.totalPages = null
-		this.scrolling = false
+
 		this.state = {
 			postsBlocks: [],
 			isFetching: false,
@@ -115,9 +115,9 @@ class Posts extends Component {
 
 	createPostsBlock = (posts) => {
 		return (
-			<div key={Math.random()}>
-				<Suspense fallback={<div>Loading...</div>}>
-					<PostsBlock posts={posts}/>
+			<div key={ Math.random() }>
+				<Suspense fallback={ <div>Loading...</div> }>
+					<PostsBlock posts={ posts }/>
 				</Suspense>
 			</div>
 		)
@@ -128,7 +128,7 @@ class Posts extends Component {
 
 		return (
 			<div>
-				<ul className={styles.posts}>
+				<ul className={ styles.posts }>
 					{ postsBlocks }
 				</ul>
 				{ this.state.isFetching || !this.state.endReached && (
