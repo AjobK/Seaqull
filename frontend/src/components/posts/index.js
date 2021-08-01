@@ -22,7 +22,8 @@ class Posts extends Component {
 	}
 
 	componentDidMount() {
-		this.fetchPosts()
+		this.fetchPosts(this.MAX_POSTS_IN_FIRST_BLOCK)
+
 		window.addEventListener('scroll', this.handleScroll)
 	}
 
@@ -30,10 +31,12 @@ class Posts extends Component {
 		window.removeEventListener('scroll', this.handleScroll)
 	}
 
-	fetchPosts = () => {
+	fetchPosts = (maxPosts) => {
 		this.setIsFetching(true)
 
-		Axios.get(`${this.props.store.defaultData.backendUrl}/post/?page=${this.state.page}&amount=${this.MAX_POSTS_IN_BLOCK}`, { withCredentials: true })
+		Axios.get(`${this.props.store.defaultData.backendUrl}/post/
+			?page=${this.state.page}&amount=${maxPosts}`,
+			{ withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
 				this.setIsFetching(false)
@@ -50,7 +53,7 @@ class Posts extends Component {
 				})
 				this.renderNewPosts(json.posts ? json.posts : [])
 
-				if (json.posts.length < this.MAX_POSTS_IN_FIRST_BLOCK) {
+				if (json.posts.length < maxPosts) {
 					this.setEndReached(true)
 				}
 
@@ -79,8 +82,9 @@ class Posts extends Component {
 		if (this.state.endReached) {
 			return
 		}
+
 		console.log('FETCH MORE')
-		this.fetchPosts()
+		this.fetchPosts(this.MAX_POSTS_IN_BLOCK)
 	}
 
 	handleScroll = () => {
@@ -112,11 +116,11 @@ class Posts extends Component {
 
 	createPostsBlock = (posts) => {
 		return (
-		    <div key={Math.random()}>
-			    <Suspense fallback={<div>Loading...</div>}>
-				    <PostsBlock posts={posts}/>
-			    </Suspense>
-		    </div>
+			<div key={Math.random()}>
+				<Suspense fallback={<div>Loading...</div>}>
+					<PostsBlock posts={posts}/>
+				</Suspense>
+			</div>
 		)
 	}
 
