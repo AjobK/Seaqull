@@ -13,7 +13,7 @@ class HeaderNavigation extends Component {
       <nav className={styles.menu}>
         { profile.loggedIn ? ( // Logged in content
           <ul className={styles.menuUl}>
-            <Link to='/profile' className={styles.menuItem}>
+            <Link to={'/profile/' + profile.display_name} className={styles.menuItem}>
               <li>My profile</li>
             </Link>
             <li onClick={profile.logOut} className={styles.menuItem}>Logout</li>

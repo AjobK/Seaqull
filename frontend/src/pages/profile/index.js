@@ -93,6 +93,10 @@ class Profile extends App {
       )
     }
 
+    if ( this.props.match.params.path != user.username ) {
+      const newProfile = this.fetchProfileData(this.props.match.params.path)
+    } 
+
     if (error) {
       return (
         <Error></Error>
