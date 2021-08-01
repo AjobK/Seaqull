@@ -70,7 +70,7 @@ class FormInput extends Component {
           <span>{name}</span>
         </label>
         <div className={styles.inputWrapper}>
-          <input id={id} className={styles.input} type={type} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
+          <input id={id} className={ styles.input } type={ type } data-tip data-for={ toolTipId } data-event='focus' data-event-off='blur' />
           { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
           {(hasErrors && this.getErrorMessages())}
         </div>
