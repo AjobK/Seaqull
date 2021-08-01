@@ -9,7 +9,8 @@ const PostsBlock = lazy(() => import('../../components/postsBlock'))
 class Posts extends Component {
 	constructor(props) {
 		super(props)
-		this.MAX_POSTS_IN_BLOCK = 6
+		this.MAX_POSTS_IN_FIRST_BLOCK = 6
+		this.MAX_POSTS_IN_BLOCK = 10
 		this.totalPages = null
 		this.scrolling = false
 		this.state = {
@@ -32,7 +33,7 @@ class Posts extends Component {
 	fetchPosts = () => {
 		this.setIsFetching(true)
 
-		Axios.get(`${this.props.store.defaultData.backendUrl}/post/?page=${this.state.page}`, { withCredentials: true })
+		Axios.get(`${this.props.store.defaultData.backendUrl}/post/?page=${this.state.page}&amount=${this.MAX_POSTS_IN_BLOCK}`, { withCredentials: true })
 			.then(response => response.data)
 			.then(json => {
 				this.setIsFetching(false)
@@ -49,7 +50,7 @@ class Posts extends Component {
 				})
 				this.renderNewPosts(json.posts ? json.posts : [])
 
-				if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
+				if (json.posts.length < this.MAX_POSTS_IN_FIRST_BLOCK) {
 					this.setEndReached(true)
 				}
 
