@@ -27,6 +27,7 @@ $post-padding: 10px;
 
 	&Thumbnail {
 		position: relative;
+		width: 100%;
 		max-width: $small-thumbnail-width-desktop;
 
 		&Content {
