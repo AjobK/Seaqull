@@ -44,7 +44,6 @@ class AuthorizationController {
         if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
         let account = await this.accountDAO.getAccountByUsername(username)
-        console.log(account)
 
         if (account == null)
             return res.status(400).json({ error: ['Incorrect username or password'] })

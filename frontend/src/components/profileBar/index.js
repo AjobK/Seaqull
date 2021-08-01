@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './profilebar.scss'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
+import ColorUtil from '../../util/colorUtil'
 
 @inject('store') @observer
 class ProfileBar extends Component {
@@ -9,7 +10,7 @@ class ProfileBar extends Component {
     const { avatar, name, title } = this.props
 
     return (
-      <section className={ styles.profile }>
+      <section className={ styles.profile } style={{ backgroundColor: ColorUtil.getUniqueColorBasedOnString(name) }}>
         <Link to={ '/profile' }>
           <div className={ styles.profilePicture } style={{ backgroundImage: `url('${ avatar }')` }}></div>
         </Link>
