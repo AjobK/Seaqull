@@ -22,8 +22,6 @@ const ProfileStore = types
       })
     },
     setProfileData(data) {
-      console.log('DATAAA')
-      console.log(data)
       const { profile, loggedIn } = data
 
       self.setLoggedIn(loggedIn)

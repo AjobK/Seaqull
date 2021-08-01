@@ -27,11 +27,16 @@ class Comment extends Component {
     }
 
     displayAvatar = () => {
+        const { defaultData } = this.props.store
+        const { avatar_attachment } = this.props.comment.profile
+
         if (!this.isReply) {
             return(
                 <div className={ styles.comment__avatar }>
-                    {/* TODO: replace profile image */}
-                    <img src={ require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } />
+                    <img src={ avatar_attachment.path
+                        ? `${defaultData.backendUrlBase}/${avatar_attachment.path}`
+                        : require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } 
+                    />
                 </div>
             )
         }
@@ -41,7 +46,7 @@ class Comment extends Component {
         if(!this.isReply && this.state.isReplying) {
             return (
                 <div className={ styles.comment__replyForm }>
-                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd } />
+                    <CommentForm type='reply' parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd } />
                 </div>
             )
         }
@@ -143,7 +148,7 @@ class Comment extends Component {
                     { showReplies && <CommentChildren commentChildren={ comment.children } /> }
                     {
                         (this.state.isDeleting) && (
-                            <Dialog header="Deleting comment" body="Are you sure you want to delete this comment?" onConfirmCallback={ this.onDeleteConfirm } onCloseCallback={ this.onDeleteCancelClick } />
+                            <Dialog header='Deleting comment' body='Are you sure you want to delete this comment?' onConfirmCallback={ this.onDeleteConfirm } onCloseCallback={ this.onDeleteCancelClick } />
                         )
                     }
                 </article>

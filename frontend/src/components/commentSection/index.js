@@ -82,14 +82,9 @@ class CommentSection extends Component {
                 <Section noTitle>
                     { this.displayCommentForm() }
                     { this.state.comments && this.state.comments.length > 0
-                        ? this.state.comments.map((comment) => {
-                            console.log('COMMENT RENDER')
-                            console.log(comment)
-
-                            return (
-                                <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd } />
-                            )
-                        })
+                        ? this.state.comments.map((comment) => (
+                            <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd } />
+                        ))
                         : <p className='noComment'>No comments</p>
                     }
                 </Section>

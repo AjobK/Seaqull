@@ -8,8 +8,6 @@ import { Button } from '../../components'
 class HeaderNavigation extends Component {
   render() {
     const { profile } = this.props.store
-    console.log('PROFILE LOGGED IN')
-    console.log(profile.loggedIn)
 
     return (
       <nav className={styles.menu}>
