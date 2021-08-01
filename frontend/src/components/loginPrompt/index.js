@@ -59,11 +59,15 @@ class LoginPrompt extends Component {
 
     Axios.post('/login', payload, {withCredentials: true})
     .then(res => {
+      console.log('RESSS1')
+      console.log(res)
       this.props.store.profile.setProfileData(res.data)
-      this.props.store.user.fillUserData(res.data.user)
-      this.goToProfile(res.data.user.user_name)
+      this.props.store.user.fillUserData(res.data)
+      this.goToProfile(res.data.user_name)
     })
     .catch(res => {
+      console.log('RESSS2')
+      console.log(res)
       const { error, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)

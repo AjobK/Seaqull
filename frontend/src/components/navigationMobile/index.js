@@ -6,8 +6,8 @@ import { ProfileBar, NavDropdown } from '../../components'
 @inject('store') @observer
 class NavigationMobile extends Component {
   render() {
-    const { ui, nav, user } = this.props.store
-    let menuItems = user.loggedIn && nav.menuItemsLoggedIn || nav.menuItemsLoggedOut
+    const { ui, nav, profile } = this.props.store
+    let menuItems = profile.loggedIn && nav.menuItemsLoggedIn || nav.menuItemsLoggedOut
     let arr = []
 
     for (let key in menuItems) {
@@ -31,7 +31,7 @@ class NavigationMobile extends Component {
       ].join(' ')}>
         {!this.props.filler &&
           <div className={styles.menu}>
-            {user.loggedIn && <ProfileBar userName={user.name} userRole={user.role} />}
+            { profile.loggedIn && <ProfileBar name={ profile.display_name } title={ profile.title } avatar={ profile.avatarURL } /> }
             <ul className={styles.menuUl}>
               {arr}
             </ul>

@@ -5,16 +5,14 @@
 	position: relative;
 	display: flex;
 	background-color: $darker;
-	height: 75px;
+	border-bottom: 1px solid black;
 
 	&Picture {
-		border-radius: 15px;
 		background-size: cover;
 		background-position: center;
 		width: 75px;
 		height: 75px;
 		position: relative;
-		border: 8px solid $darker;
 		cursor: pointer;
 	}
 	
