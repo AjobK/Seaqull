@@ -28,6 +28,7 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 - [ ] m. (JS) Single newline above unique code structures and reserved keywords.
 - [ ] n. (JS) Variables bundled where possible.
 - [ ] o. (JS) No semi-colons except where they have a functional necessity, such as for-loops.
+- [ ] p. (JS) No code that is meant exclusively for development, such as console.logs for data preview.
 
 <br />
 
