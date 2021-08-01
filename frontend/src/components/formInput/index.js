@@ -58,7 +58,7 @@ class FormInput extends Component {
           iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
           iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
           loadingClass = errors == 'loading' ? 'fa-spin' : '',
-          isPassword = type == "password"
+          isPassword = type == 'password'
 
     return (
       <div className={[...className || ''].join(' ')}>
