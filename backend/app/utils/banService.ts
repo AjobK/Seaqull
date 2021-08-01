@@ -38,4 +38,4 @@ class BanService {
     }
 }
 
-export default BanService;
+export default BanService
