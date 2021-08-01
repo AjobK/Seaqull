@@ -58,7 +58,7 @@ class FormInput extends Component {
           iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
           iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
           loadingClass = errors == 'loading' ? 'fa-spin' : '',
-          isPassword = type == "password"
+          isPassword = type == 'password'
 
     return (
       <div className={[...className || ''].join(' ')}>
@@ -70,7 +70,7 @@ class FormInput extends Component {
           <span>{name}</span>
         </label>
         <div className={styles.inputWrapper}>
-          <input id={id} className={styles.input} type={type} data-tip data-for={toolTipId} data-event='focus' data-event-off='blur' autoComplete={''} />
+          <input id={id} className={ styles.input } type={ type } data-tip data-for={ toolTipId } data-event='focus' data-event-off='blur' />
           { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
           {(hasErrors && this.getErrorMessages())}
         </div>

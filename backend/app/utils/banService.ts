@@ -19,7 +19,7 @@ class BanService {
                 ${ bannedDateobject.getHours() }:${ bannedDateobject.getMinutes()}
             `
 
-            return { error: ['Account banned up to: ' + date] }
+            return { errors: [`Account banned until ${date}.`] }
         }
         return null
     }

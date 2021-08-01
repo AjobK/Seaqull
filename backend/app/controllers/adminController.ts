@@ -30,7 +30,8 @@ class AdminController {
 
     public banUser = async (req: any, res: Response): Promise<Response> => {
         const { username, days, reason } = req.body
-        if( !username || !days || !reason ) return res.status(400).json({ 'error': ['Invalid data'] })
+        
+        if (!username || !days || !reason) return res.status(400).json({ 'error': ['Invalid data'] })
 
         const user = await this.accountDao.getAccountByUsername(username)
         const admin = await this.accountDao.getAccountByUsername(req.decoded.username)
