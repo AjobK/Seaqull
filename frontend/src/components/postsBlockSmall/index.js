@@ -37,7 +37,10 @@ class PostsBlockSmall extends Component {
 						<img src={ defaultThumbnail } alt={ 'post' } />
 					</a>
 				</div>
-				<a href={ `posts/${ post.path }` } className={ styles.smallContent}>
+				<div className={ styles.smallContent }>
+					<a href={ `posts/${ post.path }` } className={ styles.smallContentClickable }>
+
+					</a>
 					<div>
 						<div>
 							<h4 className={ styles.smallContentTitle }>
@@ -74,7 +77,7 @@ class PostsBlockSmall extends Component {
 							</span>
 						</div>
 					</div>
-				</a>
+				</div>
 			</div>
 		)
 	}
