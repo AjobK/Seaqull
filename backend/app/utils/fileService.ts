@@ -4,7 +4,7 @@ import multer = require('multer')
 
 const { promisify } = require('util')
 const pipeline = promisify(require('stream').pipeline)
-const sharp = require('sharp');
+const sharp = require('sharp')
 
 class FileService {
     public getUpload (): any {
@@ -18,17 +18,18 @@ class FileService {
         return extensions.indexOf(ext) != -1
     }
 
-    public async convertImage (path: any): Promise<void> {
-        sharp(path).resize(800)
+    public async convertImage (path: any, dimensions: {}): Promise<void> {
+        sharp(path)
+            .resize(dimensions)
     }
 
-    public async storeImage (file: any): Promise<string> {
+    public async storeImage (file: any, type: string): Promise<string> {
         const today = new Date()
         const day = String(today.getDate()).padStart(2, '0')
         const month = String(today.getMonth() + 1).padStart(2, '0')
         const year = today.getFullYear()
         const name = uuidv4() + file.detectedFileExtension
-        let newPath = 'app/public/profile/' + year
+        let newPath = 'app/public/profile/' + type + '/' + year
 
         if (!fs.existsSync(newPath)) {
             fs.mkdirSync(newPath)
@@ -44,7 +45,7 @@ class FileService {
         newPath = newPath + '/' + month + '/' + day + '/' + name
         await pipeline(file.stream, fs.createWriteStream(newPath))
 
-        return 'profile/' + year + '/' + month + '/' + day + '/' + name
+        return 'profile/' + type + '/' + year + '/' + month + '/' + day + '/' + name
     }
 
     public deleteImage (path: string): void {

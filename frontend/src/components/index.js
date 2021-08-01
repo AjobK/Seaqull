@@ -30,7 +30,7 @@ import CommentChildren from './commentChildren'
 import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
-import AvatarUpload from './avatarUpload'
+import Cropper from './cropper'
 import Dialog from './dialog'
 import PopUp from './popUp'
 
@@ -67,7 +67,7 @@ export {
   PostLike,
   ProfileInfo,
   PostLikesList,
-  AvatarUpload,
+  Cropper,
   Dialog,
   PopUp
 }
