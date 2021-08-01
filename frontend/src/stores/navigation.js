@@ -7,8 +7,8 @@ const NavigationStore = types
         ref: '/',
         icon: 'Home'
       },
-      personal: {
-        ref: '/',
+      profile: {
+        ref: '/profile',
         icon: 'User'
       },
       logout: {

@@ -8,7 +8,13 @@ class CommentDAO {
     public async getComments(post: Post): Promise<Comment[]> {
         const repository = await DatabaseConnector.getRepository(this.repo)
 
-        const commentList = await repository.find({ where: { post: post, archived_at: null }, relations: ['profile'], order: { id: 'DESC', }, })
+        const commentList = await repository.find({ where: { post: post, archived_at: null }, relations: ['profile', 'avatar_attachment'], order: { id: 'DESC', }, })
+        // const commentList = await repository.createQueryBuilder('post')
+        //     .leftJoinAndSelect('profile', 'profile')
+        //     .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
+        //     .where('archived_at = :archived_at', { archived_at: null })
+        //     .andWhere('post = :post', { post: post })
+        //     .getMany()
 
         return commentList
     }
