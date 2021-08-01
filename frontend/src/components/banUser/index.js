@@ -30,7 +30,7 @@ class BanUser extends Component {
             this.props.closePopup()
         }).catch(err => {
             const { error } = err.response.data
-            console.log(error)
+
             this.setState({ error: error })
         })
     }
