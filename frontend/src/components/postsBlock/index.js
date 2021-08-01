@@ -55,34 +55,34 @@ class PostsBlock extends Component {
 
 				{ !shortBlock && (
 					<div className={`${ styles.small } ${ styles.small3 }`}>
-						{ posts[6] && (
+						{ posts[3] && (
 							<PostsBlockSmall post={ posts[3] }/>
 						)}
-						{ posts[7] && (
+						{ posts[4] && (
 							<PostsBlockSmall post={ posts[4] }/>
 						)}
 					</div>
 				)}
 				{ !shortBlock && (
 					<div className={`${ styles.small } ${ styles.small4 }`}>
-						{ posts[8] && (
+						{ posts[5] && (
 							<PostsBlockSmall post={ posts[5] }/>
 						)}
-						{ posts[9] && (
+						{ posts[6] && (
 							<PostsBlockSmall post={ posts[6] }/>
 						)}
 					</div>
 				)}
 
 				<div className={`${ styles.small } ${ styles.small2 }`}>
-					{ posts[3] && (
+					{ posts[shortBlock ? 3 : 7] && (
 						<PostsBlockSmall post={ posts[shortBlock ? 3 : 7] }/>
 					)}
-					{ posts[4] && (
+					{ posts[shortBlock? 4 : 8] && (
 						<PostsBlockSmall post={ posts[shortBlock? 4 : 8] }/>
 					)}
 				</div>
-				{ posts[5] && (
+				{ posts[shortBlock ? 5 : 9] && (
 					<div className={ styles.large2 }>
 						<PostsBlockLarge post={ posts[shortBlock ? 5 : 9] }/>
 					</div>
