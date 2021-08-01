@@ -65,8 +65,12 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 *4. If relevant to the sprint, put related issue in 'Awaiting Approval' column on project board.*  
 *5. Add to the corresponding [milestone](https://github.com/AjobK/Seaqull/milestones).*
 
-> This form should be filled in by the author of this PR.
+<br />
 
-**Reviewer info**
-*1. You can use aliases to refer to specific PR checklist items. For example 'Hey @JohnDoe, for this line please check 3.a and 1.d.'*
-*2. Where possible, please use the suggestions feature in github so the author has a better idea of the solution you had in mind.*
+**Reviewer info**  
+*1. You can use aliases to refer to specific PR checklist items. For example 'Hey @JohnDoe, for this line please check 3.a and 1.d.'*  
+*2. Where possible, please use the suggestions feature in github so the author has a better idea of the solution you had in mind.*   
+
+<br />
+
+> This form should be filled in by the author of this PR.
