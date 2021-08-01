@@ -14,6 +14,7 @@ class CommentDAO {
             .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
             .where('comment.archived_at IS NULL')
             .andWhere('post.id = :post_id', { post_id: post.id })
+            .orderBy('comment.id', 'DESC')
             .getMany()
 
         return commentList
