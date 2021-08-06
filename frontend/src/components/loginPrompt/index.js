@@ -64,12 +64,13 @@ class LoginPrompt extends Component {
       this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
-      const { error, remainingTime } = res.response.data
+      const { errors, remainingTime } = res.response.data
+
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
       this.setState({
-        username: error || [],
-        password: error || [],
+        username: errors || [],
+        password: errors || [],
         loadingTimeout: false
       })
     })

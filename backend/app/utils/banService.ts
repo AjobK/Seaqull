@@ -14,10 +14,12 @@ class BanService {
 
         if (ban && ban.banned_to > Date.now()) {
             const bannedDateobject = new Date(ban.banned_to * 1)
-            const date = `
-                ${ bannedDateobject.getDate() }-${ bannedDateobject.getMonth() }-${ bannedDateobject.getFullYear() } 
-                ${ bannedDateobject.getHours() }:${ bannedDateobject.getMinutes()}
-            `
+            const date =
+                bannedDateobject.getDate() + '-' +
+                bannedDateobject.getMonth() + '-' +
+                bannedDateobject.getFullYear() + ' ' +
+                bannedDateobject.getHours() + ':' +
+                bannedDateobject.getMinutes()
 
             return { errors: [`Account banned until ${date}.`] }
         }
