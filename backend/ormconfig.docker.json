@@ -1,0 +1,26 @@
+{
+  "type": "postgres",
+  "host": "seaqull-db",
+  "port": 5432,
+  "username": "postgres",
+  "password": "root",
+  "database": "seaqull",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "app/entities/*.ts"
+  ],
+  "migrations": [
+    "app/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "app/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "app/entity",
+    "migrationsDir": "app/migration",
+    "subscribersDir": "app/subscriber"
+  },
+  "seeds": ["app/seeders/mainSeeder.ts"],
+  "factories": ["app/factories/*.ts"]
+}

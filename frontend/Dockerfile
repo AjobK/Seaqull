@@ -6,7 +6,6 @@ FROM node:alpine as build
 # starts up and starts executing the commands under this one
 WORKDIR /app
 
-
 # Make sure image is up to date
 RUN apk update
 RUN apk add --upgrade apk-tools
@@ -29,9 +28,6 @@ FROM nginx:alpine
 
 # Use a folder from the previously generated image
 COPY --from=build /app/dist /usr/share/nginx/html
-
+COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port for serving content
 EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]

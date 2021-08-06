@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  seaqull-frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - application-bridge
+    depends_on:
+      - "seaqull-backend"
+      - "seaqull-db" 
+
+  seaqull-backend:
+    build: ./backend
+    restart: always
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - './backend/.env'
+    networks:
+      - application-bridge
+    depends_on:
+      - "db"
+
+
+  seaqull-db:
+    image: postgres
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    env_file:
+      - "./.env"
+    networks:
+      - application-bridge
+
+networks:
+  application-bridge:
