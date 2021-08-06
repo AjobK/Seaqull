@@ -49,10 +49,10 @@ class AuthorizationController {
         let account = await this.accountDAO.getAccountByUsername(username)
 
         if (account == null)
-            return res.status(400).json({ error: ['Incorrect username or password'] })
+            return res.status(403).json({ error: ['Incorrect username or password'] })
 
         if (account.locked_to - Date.now() > 0) {
-            return res.status(400).send({
+            return res.status(403).send({
                 error: ['cannot login yet'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
