@@ -21,31 +21,9 @@ class LoginPrompt extends Component {
       loadingTimeout: false
     }
 
-    window.recaptchaOptions = {
-      lang: 'en',
-      useRecaptchaNet: true,
-      removeOnUnmount: true
-    }
-
     this.recaptchaRef = React.createRef()
     this.onChange = this.onChange.bind(this)
     this.elId = {}
-  }
-
-  componentDidMount = () => {
-    this.clearCaptcha()
-  }
-
-  componentWillUnmount = () => {
-    this.clearCaptcha()
-  }
-
-  clearCaptcha = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
   }
 
   auth = () => {
@@ -56,13 +34,14 @@ class LoginPrompt extends Component {
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
+    console.log('1')
 
     Axios.post('/login', payload, {withCredentials: true})
     .then(res => {
-      
-      this.props.store.profile.setLoggedIn(true)
-      this.props.store.user.fillUserData(res.data.user);
-      this.goToProfile(res.data.user.user_name)
+      console.log('3')
+      this.props.store.profile.setProfileData(res.data)
+      this.props.store.user.fillUserData(res.data)
+      this.goToProfile(res.data.user_name)
     })
     .catch(res => {
       const { error, remainingTime } = res.response.data

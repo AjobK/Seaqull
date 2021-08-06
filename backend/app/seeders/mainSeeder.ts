@@ -43,12 +43,12 @@ export default class CreateObjects implements Seeder {
     ]
 
     public async run(factory: Factory): Promise<any> {
-        const userRole = await roleSeeder(factory, 'user')
-        const modRole = await roleSeeder(factory, 'moderator')
-        const adminRole = await roleSeeder(factory, 'admin')
-        const headAdminRole = await roleSeeder(factory, 'head-admin')
+        const userRole = await roleSeeder(factory, 'User')
+        const modRole = await roleSeeder(factory, 'Moderator')
+        const adminRole = await roleSeeder(factory, 'Admin')
+        const headAdminRole = await roleSeeder(factory, 'Head-admin')
 
-        const profilePic = await attachmentSeeder(factory, 'default/defaultAvatar.jpg')
+        const profilePic = await attachmentSeeder(factory, 'default/defaultAvatar.png')
         const bannerPic = await attachmentSeeder(factory, 'default/defaultBanner.jpg')
 
         await accountSeeder(factory, userRole, profilePic, bannerPic)

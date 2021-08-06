@@ -6,6 +6,7 @@ import { Editor, EditorState, convertFromRaw } from 'draft-js'
 import { CommentForm, CommentChildren, Icon, Dialog } from '../'
 
 import TimeUtil from '../../util/timeUtil'
+import ColorUtil from '../../util/colorUtil'
 import axios from 'axios'
 
 @inject('store') @observer
@@ -27,14 +28,19 @@ class Comment extends Component {
     }
 
     displayAvatar = () => {
+        const { defaultData } = this.props.store
+        const { avatar_attachment, display_name } = this.props.comment.profile
+
         if (!this.isReply) {
             return(
                 <div className={ styles.comment__avatar }>
-                    {/* TODO: replace profile image */}
-                    <img src={ require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture } />
-                    <div className={ styles.comment__avatarBadge }>
-                        { this.props.comment.profile.experience > 0 ? this.props.comment.profile.experience/1000 : 0 }
-                    </div>
+                    <img 
+                        src={ avatar_attachment.path
+                            ? `${defaultData.backendUrlBase}/${avatar_attachment.path}`
+                            : require('../../static/dummy/user/profile.jpg') } className={ styles.comment__avatarPicture
+                        }
+                        style={{ backgroundColor: ColorUtil.getUniqueColorBasedOnString(display_name) }}
+                    />
                 </div>
             )
         }
@@ -44,7 +50,7 @@ class Comment extends Component {
         if(!this.isReply && this.state.isReplying) {
             return (
                 <div className={ styles.comment__replyForm }>
-                    <CommentForm type="reply" parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd } />
+                    <CommentForm type='reply' parent_comment={ this.props.comment.id } onCommentAdd={ this.onReplyAdd } />
                 </div>
             )
         }
@@ -97,7 +103,9 @@ class Comment extends Component {
             return (
                 <article className={ `${ styles.comment } ${ this.isReply && styles.reply }` }>
                     <div className={ `${ styles.comment__body } ${ isReplying ? styles.isReplying : '' }` }>
-                        { this.displayAvatar() }
+                        <Link to={ `/profile/${ comment.profile.display_name }` }>
+                            { this.displayAvatar() }
+                        </Link>
                         <div className={ styles.comment__main }>
                             <div className={ styles.comment_content }>
                                 <div className={ styles.comment__header }>
@@ -146,7 +154,7 @@ class Comment extends Component {
                     { showReplies && <CommentChildren commentChildren={ comment.children } /> }
                     {
                         (this.state.isDeleting) && (
-                            <Dialog header="Deleting comment" body="Are you sure you want to delete this comment?" onConfirmCallback={ this.onDeleteConfirm } onCloseCallback={ this.onDeleteCancelClick } />
+                            <Dialog header='Deleting comment' body='Are you sure you want to delete this comment?' onConfirmCallback={ this.onDeleteConfirm } onCloseCallback={ this.onDeleteCancelClick } />
                         )
                     }
                 </article>

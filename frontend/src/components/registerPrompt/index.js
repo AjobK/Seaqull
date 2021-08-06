@@ -29,22 +29,6 @@ class RegisterPrompt extends Component {
     this.elId = {}
   }
 
-  componentDidMount = () => {
-    this.clearCaptcha()
-  }
-
-  componentWillUnmount = () => {
-    this.clearCaptcha()
-  }
-
-  clearCaptcha = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
-  }
-
   auth = () => {
     this.setState({
       username: 'loading',
@@ -63,7 +47,7 @@ class RegisterPrompt extends Component {
 
     Axios.post('/profile/register', payload, {withCredentials: true})
     .then(res => {
-      this.props.store.profile.setLoggedIn(true)
+      this.props.store.profile.loginVerify()
       this.props.store.user.fillUserData(res.data.user)
       this.goToProfile(res.data.user.user_name)
     })
@@ -82,15 +66,6 @@ class RegisterPrompt extends Component {
     this.props.history.push('/profile/' + username)
   }
 
-  onSubmit = (e) => {
-    e.preventDefault()
-    this.setState({
-      username: 'loading',
-      email: 'loading',
-      password: 'loading'
-    })
-  }
-
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
@@ -100,16 +75,33 @@ class RegisterPrompt extends Component {
     this.auth()
   }
 
+  onSubmit = (e) => {
+    e.preventDefault()
+
+    if (this.state.remainingTime && this.remainingTimeInterval) return
+
+    this.setState({
+      username: 'loading',
+      password: 'loading',
+      email: 'loading',
+      loadingTimeout: true
+    })
+    if(!(this.state.loadingTimeout)){
+      this.recaptchaRef.current.reset()
+      this.recaptchaRef.current.execute()
+    }
+  }
+
   render() {
     const { username, email, password, recaptcha } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
+    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>
         <div className={styles.logo} />
         <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
         <div className={styles.formWrapper}>
-          <form method='POST' className={styles.form}>
+          <form onSubmit={this.onSubmit} className={styles.form}>
             <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>

@@ -2,7 +2,7 @@
 
 .commentSection {
 	background-color: rgba(0,0,0, 0.1);
-	padding-bottom: 30px;
+	padding-bottom: $header-spacing * 4;
 
 	&__highlightedLink {
 		&:link,
@@ -20,4 +20,8 @@
 			margin-bottom: 10px;
 		}
 	}
+}
+
+.noComment {
+	align-self: center;
 }

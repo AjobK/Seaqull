@@ -29,6 +29,16 @@ class PostDAO {
         const repository = await DatabaseConnector.getRepository('Post')
         const foundPost = await repository.findOne({ where: { path: path }, relations: ['profile'] })
 
+        if (!foundPost) return foundPost
+
+        const profileRepository = await DatabaseConnector.getRepository('Profile')
+        const foundProfile = await profileRepository.findOne({ where: { id: foundPost.profile.id }, relations: ['avatar_attachment', 'title'] })
+
+        if (foundProfile) {
+            foundPost.profile.avatar_attachment = foundProfile.avatar_attachment ? foundProfile.avatar_attachment.path : null
+            foundPost.profile.title = foundProfile.title ? foundProfile.title.name : null
+        }
+
         return foundPost
     }
 
@@ -61,7 +71,11 @@ class PostDAO {
         if (!id) return null
         const repository = await DatabaseConnector.getRepository('PostLike')
 
-        return await repository.find({ where: { post: id }, relations: ['post', 'profile'] })
+        // TODO add profile.banner_attachment
+        return await repository.find({
+            where: { post: id },
+            relations: ['post', 'profile', 'profile.avatar_attachment', 'profile.title']
+        })
     }
 
     public async getRecentUserLikesByProfileId(profileId: number, limit): Promise<any> {

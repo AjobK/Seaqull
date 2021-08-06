@@ -66,31 +66,12 @@ class Profile extends App {
         })
   }
 
-  calcLevel(cXp) {
-    let xp = {
-      current: cXp,
-      base: 20,
-      max: 20
-    }
-
-    let level = 1
-
-    for (let i = 1; xp.current > xp.max; i++) {
-      xp.current -= xp.max
-      xp.max = ~~(xp.max * 1.2)
-      level++
-    }
-
-    return level
-  }
-
   updateProfile(profile) {
     const user = {
       isOwner: profile.isOwner,
       following: profile.isOwner ? false : profile.following,
       username: profile.username,
       title: profile.title,
-      level: this.calcLevel(profile.experience),
       posts: profile.posts,
       banner: profile.banner || '/src/static/dummy/user/banner.jpg',
       picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
@@ -111,6 +92,10 @@ class Profile extends App {
         </Standard>
       )
     }
+
+    if ( this.props.match.params.path != user.username ) {
+      const newProfile = this.fetchProfileData(this.props.match.params.path)
+    } 
 
     if (error) {
       return (

@@ -81,9 +81,7 @@ class AuthorizationController {
             account = this.cleanAccount(account)
 
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
-            res.status(200).json({
-                user: account
-            })
+            res.status(200).json({ ...account, loggedIn: true })
             res.send()
         }
     }
