@@ -1,12 +1,30 @@
+# This file is provided with comments on all the tags at their first appearance
+
+# This defines the syntax version of docker-compose.yml
 version: "3.9"
+
+# Services defines all different containers.
 services:
+
+  # All this tags the container with the name "seaqull-frontend"
   seaqull-frontend:
+
+    # Path to directory with Dockerfile 
     build: ./frontend
+
+    # Restart setting in case of container downtime or crash
     restart: always
+
+    # Expose ports in virtual network and local machine
     ports:
       - "80:80"
+
+    # Defines which networks this container should be part of
     networks:
       - application-bridge
+
+    # This tag states that this container should only be started when the containers defined here have been started.
+    # WARNING: It does not prevent this container from running before the containers defined below.
     depends_on:
       - "seaqull-backend"
       - "seaqull-db" 
@@ -14,10 +32,14 @@ services:
   seaqull-backend:
     build: ./backend
     restart: always
+
+    # Exposing this ports makes port available to containers within the same network at the time of building (instead of at the time of running)
     expose:
       - "8000"
     ports:
       - "8000:8000"
+
+    # Defines a file with environment variables for this container
     env_file:
       - './backend/.env'
     networks:
@@ -27,6 +49,8 @@ services:
 
 
   seaqull-db:
+
+    # This pulls an image called postgres from hub.docker.com, alternative to the build tag.
     image: postgres
     restart: always
     expose:
@@ -38,5 +62,8 @@ services:
     networks:
       - application-bridge
 
+# This defines the networks that are required by the services
 networks:
+
+  # The tag here is the name of the network.
   application-bridge:
