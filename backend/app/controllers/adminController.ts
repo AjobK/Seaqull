@@ -20,7 +20,6 @@ class AdminController {
     }
 
     public longBanUser = async (req: any, res: Response): Promise<Response> => {
-        console.log('test')
         if (parseInt(req.body.days) > 1095 ) {
             return res.status(400).json({ error: ['The max amount of days you can ban a user is 1095 days'] })
         }
@@ -30,7 +29,7 @@ class AdminController {
 
     public banUser = async (req: any, res: Response): Promise<Response> => {
         const { username, days, reason } = req.body
-        
+
         if (!username || !days || !reason) return res.status(400).json({ 'error': ['Invalid data'] })
 
         const user = await this.accountDao.getAccountByUsername(username)
