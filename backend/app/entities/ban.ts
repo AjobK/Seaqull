@@ -20,8 +20,8 @@ export class Ban extends BaseEntity {
     @Column()
     banned_at: Date
 
-    @Column({ type: 'bigint' })
-    banned_to: number
+    @Column()
+    banned_to: Date
 
     @Column({ unique: false })
     ip_ban: string

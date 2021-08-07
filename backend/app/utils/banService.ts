@@ -11,9 +11,12 @@ class BanService {
 
     async checkIfUserIsBanned(account: Account) {
         const ban = await this.banDAO.getBanByUser(account)
+        if(!ban) return null
 
-        if (ban && ban.banned_to > Date.now()) {
-            const bannedDateobject = new Date(ban.banned_to * 1)
+        const bannedToDate = ban.banned_to.getTime()
+
+        if (bannedToDate > Date.now()) {
+            const bannedDateobject = new Date(bannedToDate * 1)
             const date =
                 bannedDateobject.getDate() + '-' +
                 bannedDateobject.getMonth() + '-' +
@@ -28,12 +31,15 @@ class BanService {
 
     async banUser(user: Account, admin: Account, reason: string, adress: string, banTime: number): Promise<Ban> {
         const ban = new Ban()
+
         ban.user = user
         ban.staff= admin
         ban.reason = reason
         ban.banned_at = new Date()
-        ban.banned_to = new Date().setDate(ban.banned_at.getDate()+banTime)
+        ban.banned_to = new Date(new Date().setDate(ban.banned_at.getDate()+banTime))
         ban.ip_ban = adress
+
+        console.log(ban)
 
         return await this.banDAO.saveBan(ban)
     }
