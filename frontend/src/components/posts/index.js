@@ -113,6 +113,10 @@ class Posts extends Component {
 			this.createPostsBlock(posts)
 		)
 
+		postsBlocks.push(
+			this.createTopAuthors()
+		)
+
 		this.setState({
 			...this.state,
 			postsBlocks
@@ -121,11 +125,19 @@ class Posts extends Component {
 
 	createPostsBlock = (posts) => {
 		return (
-			<div key={ Math.random() }>
+			<li key={ Math.random() } className={ styles.postsBlock }>
 				<Suspense fallback={ <div>Loading...</div> }>
 					<PostsBlock posts={ posts }/>
 				</Suspense>
-			</div>
+			</li>
+		)
+	}
+
+	createTopAuthors = () => {
+		return (
+			<li key={ Math.random() } className={ styles.test }>
+				<h1>TEST</h1>
+			</li>
 		)
 	}
 

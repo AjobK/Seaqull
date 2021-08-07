@@ -6,9 +6,7 @@
 	justify-content: center;
 	align-items: center;
 	margin: $header-height auto 0;
-	max-width: $wrapper-width;
 	width: 100%;
-	padding: 0 20px;
 
 	@include mobile-all() {
 		padding: 0 22px;
