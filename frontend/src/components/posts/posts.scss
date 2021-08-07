@@ -12,13 +12,13 @@
 		list-style: none;
 	}
 
-	.postsBlock {
+	> li:not(.fullWidth) {
 		max-width: $wrapper-width;
 		padding: 0 20px;
 		margin: 0 auto;
 	}
 }
 
-.test {
+.fullWidth {
 	background-color: red;
 }

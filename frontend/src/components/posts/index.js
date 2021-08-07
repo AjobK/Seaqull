@@ -135,7 +135,7 @@ class Posts extends Component {
 
 	createTopAuthors = () => {
 		return (
-			<li key={ Math.random() } className={ styles.test }>
+			<li key={ Math.random() } className={ styles.fullWidth }>
 				<h1>TEST</h1>
 			</li>
 		)
