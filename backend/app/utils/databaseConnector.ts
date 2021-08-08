@@ -5,7 +5,7 @@ class DatabaseConnector {
 
     public static getRepository = async (entityName: string): Promise<any> => {
         if (DatabaseConnector.connection == null) {
-            DatabaseConnector.connection = await createConnection('DataAccessConnector')
+            DatabaseConnector.connection = await createConnection()
         }
 
         const repository = DatabaseConnector.connection.getRepository(entityName)
