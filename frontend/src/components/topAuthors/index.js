@@ -39,7 +39,7 @@ class TopAuthors extends Component {
 						</a>
 					</div>
 					<div className={ styles.topAuthorsContentAuthors }>
-						<div className={ styles.topAuthorsContentAuthorsOverlay } />
+						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ styles.overlayFadeRight }` } />
 						<ul className={ styles.topAuthorsContentAuthorsList }>
 							<li>
 								<TopAuthorsAuthor />
