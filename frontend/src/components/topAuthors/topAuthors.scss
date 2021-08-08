@@ -102,4 +102,48 @@
 			}
 		}
 	}
+
+	@include mobile-tablet() {
+
+	}
+
+	@include mobile-all() {
+		.topAuthors {
+			&Content {
+				&Top {
+					&Header {
+						max-width: initial;
+
+						&Title {
+							font-size: $nr-md-fontsize;
+						}
+
+						&Message {
+							font-size: $nr-xl-fontsize;
+							line-height: 44px;
+						}
+					}
+
+					&ViewMore {
+						display: none;
+					}
+				}
+
+				&Authors {
+					&Overlay {
+						display: none;
+					}
+
+					&List {
+						overflow-x: hidden;
+
+						> li {
+							flex: none;
+							width: 250px;
+						}
+					}
+				}
+			}
+		}
+	}
 }

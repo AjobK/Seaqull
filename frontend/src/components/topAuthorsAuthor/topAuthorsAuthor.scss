@@ -5,6 +5,7 @@
 	background-color: #9696ff;
 
 	@include mobile-tablet() {
+		height: 290px;
 
 		.author {
 
