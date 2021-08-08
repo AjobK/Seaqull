@@ -51,7 +51,8 @@ class FormInput extends Component {
   }
 
   render() {
-    const { name, className, errors, type } = this.props
+    const { name, className, errors } = this.props
+    let { type } = this.props
     const { id, toolTipId } = this
     const { passwordVisible } = this.state
     const hasErrors = errors != 'loading' && errors && errors.length > 0,
@@ -59,6 +60,10 @@ class FormInput extends Component {
           iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
           loadingClass = errors == 'loading' ? 'fa-spin' : '',
           isPassword = type == 'password'
+
+    if (type == 'password' && this.state.passwordVisible) {
+      type = 'text'
+    }
 
     return (
       <div className={[...className || ''].join(' ')}>
