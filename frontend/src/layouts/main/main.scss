@@ -8,6 +8,7 @@
 	max-width: $wrapper-width;
 	width: 100%;
 	padding: 0 20px;
+	margin: 0 auto;
 
 	@include mobile-all() {
 		padding: 0 22px;
