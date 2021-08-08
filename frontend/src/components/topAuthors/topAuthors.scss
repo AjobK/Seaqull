@@ -12,6 +12,7 @@
 
 		&Top {
 			display: flex;
+			margin-bottom: 30px;
 
 			&Header {
 				max-width: calc(#{$wrapper-width} / 2);
@@ -58,6 +59,14 @@
 						width: 100%;
 					}
 				}
+			}
+		}
+
+		&Authors {
+			&List {
+				list-style: none;
+				display: flex;
+				justify-content: space-between;
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './topAuthors.scss'
 import { inject, observer } from 'mobx-react'
-import {Icon} from "../index";
+import { Icon, TopAuthorsAuthor } from '../index'
 
 @inject('store') @observer
 class TopAuthors extends Component {
@@ -38,12 +38,23 @@ class TopAuthors extends Component {
 							</span>
 						</a>
 					</div>
-					<div>
+					<div className={ styles.topAuthorsContentAuthors }>
+						<ul className={ styles.topAuthorsContentAuthorsList }>
+							<li>
+								<TopAuthorsAuthor />
+							</li>
+							<li>
+								<TopAuthorsAuthor />
+							</li>
+							<li>
+								<TopAuthorsAuthor />
+							</li>
+							<li>
+								<TopAuthorsAuthor />
+							</li>
+						</ul>
 						<div>
-							authors..
-						</div>
-						<div>
-							page..
+
 						</div>
 					</div>
 				</div>

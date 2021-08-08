@@ -36,6 +36,7 @@ import PostsBlock from './postsBlock'
 import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
 import TopAuthors from './topAuthors'
+import TopAuthorsAuthor from './topAuthorsAuthor'
 
 export {
   Button,
@@ -75,5 +76,6 @@ export {
   PostsBlock,
   PostsBlockLarge,
   PostsBlockSmall,
-  TopAuthors
+  TopAuthors,
+  TopAuthorsAuthor
 }
