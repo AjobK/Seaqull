@@ -22,7 +22,7 @@ $likes-list-padding: 20px;
 		height: inherit;
 		background-color: black;
 		opacity: 0.5;
-		animation: fade-in 0.2s
+		animation: fade-in-half 0.2s
 	}
 
 	.likesListWrapper {
@@ -152,7 +152,7 @@ $likes-list-padding: 20px;
 	}
 }
 
-@keyframes fade-in {
+@keyframes fade-in-half {
 	0% {
 		opacity: 0;
 	}

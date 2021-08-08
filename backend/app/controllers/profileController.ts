@@ -65,7 +65,7 @@ class ProfileController {
         } else {
             const avatar = await this.updateAttachment(req.decoded.username, req.file, AVATAR)
 
-            return res.status(200).json({ 'message': 'succes' , 'url': 'http://localhost:8000/' + avatar.path })
+            return res.status(200).json({ 'message': 'success' , 'url': 'http://localhost:8000/' + avatar.path })
         }
     }
 
