@@ -18,12 +18,6 @@ class RegisterPrompt extends Component {
       recaptchaToken: null
     }
 
-    window.recaptchaOptions = {
-      lang: 'en',
-      useRecaptchaNet: true,
-      removeOnUnmount: true
-    }
-
     this.recaptchaRef = React.createRef()
     this.onChange = this.onChange.bind(this)
     this.elId = {}
