@@ -20,7 +20,7 @@ class LoginPrompt extends Component {
       recaptchaToken: null,
       recaptcha: null,
       loadingTimeout: false,
-      popup: null
+      popupData: null
     }
 
     window.recaptchaOptions = {
@@ -68,7 +68,7 @@ class LoginPrompt extends Component {
     .catch(res => {
       if (res.message === 'Network Error') {
         return this.setState({
-          popup: {
+          popupData: {
             ...popUpData.messages.networkError,
             actions: [
               {
@@ -102,7 +102,7 @@ class LoginPrompt extends Component {
 
   closePopUp = () => {
     this.setState({
-      popup: null
+      popupData: null
     })
   }
 
@@ -154,7 +154,7 @@ class LoginPrompt extends Component {
   }
 
   render() {
-    const { username, password, remainingTime,recaptcha, loadingTimeout, popup } = this.state
+    const { username, password, remainingTime,recaptcha, loadingTimeout, popupData } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
@@ -174,8 +174,8 @@ class LoginPrompt extends Component {
           <div className={styles.image} />
         </div>
 
-        { popup && (
-            <PopUp content={ popup } />
+        { popupData && (
+            <PopUp content={ popupData } />
         )}
       </div>
     )
