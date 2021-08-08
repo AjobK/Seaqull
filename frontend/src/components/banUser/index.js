@@ -4,6 +4,7 @@ import Axios from 'axios'
 import styles from './banUser.scss'
 import { Button } from '../../components'
 import { FormInput } from '../../components'
+import { withRouter } from 'react-router-dom'
 import 'react-image-crop/dist/ReactCrop.css'
 
 @inject('store') @observer
@@ -32,11 +33,12 @@ class BanUser extends Component {
 
       
         Axios.patch(url, payload, { withCredentials: true }).then( res => {
-            this.props.closePopup()
+            this.props.history.push('/')
         }).catch(err => {
             const { error } = err.response.data
 
             this.setState({ error: [error] })
+
         })
     }
 
@@ -74,4 +76,4 @@ class BanUser extends Component {
     }
 }
 
-export default BanUser
+export default withRouter(BanUser)

@@ -5,6 +5,20 @@
 	transition: .2s ease-in-out;
 }
 
+.form {
+	&Group {
+		margin-top: 20px;
+		
+		@include mobile-all-portrait {
+			margin-top: 30px;
+		}
+
+		@include mobile-sm {
+			margin-top: 20px;
+		}
+	}
+}
+
 .banUser {
 	width: 100%;
 	height: 100%;
