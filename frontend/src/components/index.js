@@ -35,6 +35,7 @@ import Dialog from './dialog'
 import PostsBlock from './postsBlock'
 import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
+import TopAuthors from './topAuthors'
 
 export {
   Button,
@@ -74,4 +75,5 @@ export {
   PostsBlock,
   PostsBlockLarge,
   PostsBlockSmall,
+  TopAuthors
 }

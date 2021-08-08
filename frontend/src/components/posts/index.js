@@ -1,8 +1,8 @@
 import React, { Component, lazy, Suspense } from 'react'
 import { inject, observer } from 'mobx-react'
 import Axios from 'axios'
-import { Loader } from '../../components'
 import styles from './posts.scss'
+import { Loader, TopAuthors } from '../../components'
 const PostsBlock = lazy(() => import('../../components/postsBlock'))
 
 @inject('store') @observer
@@ -136,7 +136,7 @@ class Posts extends Component {
 	createTopAuthors = () => {
 		return (
 			<li key={ Math.random() } className={ styles.fullWidth }>
-				<h1>TEST</h1>
+				<TopAuthors />
 			</li>
 		)
 	}
