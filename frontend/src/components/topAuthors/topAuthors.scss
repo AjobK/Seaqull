@@ -1,3 +1,64 @@
 @import '../../styles/index.scss';
 
+.topAuthors {
+	background-color: $light;
+	height: 650px;
+	padding: 30px 0;
 
+	&Content {
+		max-width: $wrapper-width;
+		padding: 0 20px;
+		margin: 0 auto;
+
+		&Top {
+			display: flex;
+
+			&Header {
+				max-width: calc(#{$wrapper-width} / 2);
+
+				&Title {
+					font-size: $nr-lg-fontsize;
+					color: $primary;
+					font-weight: 300;
+					line-height: 31px;
+				}
+
+				&Message {
+					color: $secondary;
+					font-size: $nr-xxl-fontsize;
+					font-weight: 900;
+					white-space: normal;
+					line-height: 54px;
+				}
+			}
+
+			&ViewMore {
+				margin-top: auto;
+				margin-left: auto;
+				display: flex;
+				color: $secondary;
+				font-weight: 300;
+				font-size: $nr-sm-fontsize;
+
+				&Icon {
+					margin: auto 0 auto 10px;
+					font-size: .8em;
+				}
+
+				> p {
+					position: relative;
+
+					> span {
+						@include fancy-underline(2px, 0);
+					}
+				}
+
+				&:hover {
+					> p > span {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}
