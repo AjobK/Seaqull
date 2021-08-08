@@ -5,6 +5,7 @@
    "main": "app.ts",
    "scripts": {
       "start": "nodemon app/app.ts",
+      "start:prod": "ts-node app/app.ts",
       "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
       "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
       "reset": "ts-node ./node_modules/typeorm/cli.js schema:drop && ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"

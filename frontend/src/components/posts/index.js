@@ -7,6 +7,7 @@ import Axios from 'axios'
 class Posts extends Component {
 	constructor(props) {
 		super(props)
+
 		this.data = []
 		this.page = 0
 		this.totalPages = null
