@@ -1,5 +1,5 @@
 # This pulls an image from the docker hub. The alpine variant makes the image as compact as possible
-FROM node:alpine
+FROM node:lts-alpine
 
 # This sets the pwd (present working directory) when the container
 # starts up and starts executing the commands under this one
