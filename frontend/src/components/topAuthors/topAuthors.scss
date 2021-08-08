@@ -89,7 +89,16 @@
 			&List {
 				list-style: none;
 				display: flex;
+				flex-direction: row;
 				justify-content: space-between;
+
+				> li {
+					flex: 1;
+				}
+
+				> li:not(:last-child) {
+					margin-right: 20px;
+				}
 			}
 		}
 	}
