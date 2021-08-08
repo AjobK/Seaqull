@@ -51,7 +51,7 @@ class BanUser extends Component {
                 <section className={ styles.banUserPopUp }>
                     <div>
                         <form onSubmit={this.saveBan.bind(this)}>
-                                <FormInput errors={ this.state.error } name={ 'Days' } callBack={ this.callBack } className={[ styles.formGroup ]} type='number'></FormInput>
+                                <FormInput errors={ this.state.error } name={ 'Days' } callBack={ this.callBack } className={[ styles.formGroup ]} type='number' limit='1'></FormInput>
                                 <FormInput errors={ this.state.error } name={ 'Reason' } callBack={ this.callBack } className={[ styles.formGroup ]} type='text'></FormInput>
                                 <div className={styles.submitWrapper}>
                                     <Button

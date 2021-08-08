@@ -51,7 +51,7 @@ class FormInput extends Component {
   }
 
   render() {
-    const { name, className, errors } = this.props
+    const { name, className, errors, limit } = this.props
     let { type } = this.props
     const { id, toolTipId } = this
     const { passwordVisible } = this.state
@@ -61,7 +61,7 @@ class FormInput extends Component {
           loadingClass = errors == 'loading' ? 'fa-spin' : '',
           isPassword = type == 'password'
 
-    if (type == 'password' && this.state.passwordVisible) {
+    if (type == 'password' && passwordVisible) {
       type = 'text'
     }
 
@@ -75,7 +75,7 @@ class FormInput extends Component {
           <span>{name}</span>
         </label>
         <div className={styles.inputWrapper}>
-          <input id={id} className={ styles.input } type={ type } data-tip data-for={ toolTipId } data-event='focus' data-event-off='blur' min='1' />
+          <input id={id} className={ styles.input } type={ type || 'text' } data-tip data-for={ toolTipId } data-event='focus' data-event-off='blur' min={ limit || '0' } />
           { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
           {(hasErrors && this.getErrorMessages())}
         </div>
