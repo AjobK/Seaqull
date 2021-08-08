@@ -70,16 +70,6 @@ class LoginPrompt extends Component {
         return this.setState({
           popupData: {
             ...popUpData.messages.networkError,
-            actions: [
-              {
-                ...popUpData.actions.close,
-                action: this.closePopUp
-              },
-              {
-                ...popUpData.actions.confirm,
-                action: this.closePopUp
-              },
-            ],
             close: this.closePopUp
           },
           username: ['No connection'],
