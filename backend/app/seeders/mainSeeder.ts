@@ -1,6 +1,6 @@
 import { Factory, Seeder } from 'typeorm-seeding'
-import { Connection } from 'typeorm';
-import Role from '../entities/role';
+import { Connection } from 'typeorm'
+import Role from '../entities/role'
 
 const roleSeeder = require('./roleSeeder')
 const attachmentSeeder = require('./attachmentSeeder')
