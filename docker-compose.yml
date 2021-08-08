@@ -45,7 +45,7 @@ services:
     networks:
       - application-bridge
     depends_on:
-      - "db"
+      - "seaqull-db"
 
 
   seaqull-db:
