@@ -23,4 +23,4 @@ COPY ./ormconfig.docker.json ./ormconfig.json
 RUN npm i
 
 # Start server
-CMD npm run reset && npm run start:prod
+CMD npm run seed:run && npm run start:prod
