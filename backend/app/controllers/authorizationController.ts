@@ -101,23 +101,23 @@ class AuthorizationController {
                     if(account.login_attempts_counts != 2){
                         account.login_attempts_counts++
                         this.accountDAO.updateAccount(account)
-                        return { error: ['Incorrect username or password'] }
+                        return { errors: ['Incorrect username or password'] }
                     } else {
                         // lock account for 30 seconds
                         account.login_attempts_counts = null
                         account.locked_to = Date.now()+30000
                         this.accountDAO.updateAccount(account)
-                        return { error: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
+                        return { errors: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
                     }
                 } else {
                     // if login is successful we return null
                     return null
                 }
             } else {
-                return { error: ['Incorrect username or password'] }
+                return { errors: ['Incorrect username or password'] }
             }
         } catch (error) {
-            return { error: ['Incorrect username or password'] }
+            return { errors: ['Incorrect username or password'] }
         }
     }
 
