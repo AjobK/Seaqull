@@ -78,7 +78,7 @@ class LoginPrompt extends Component {
         })
       }
 
-      const { error, remainingTime } = res.response.data
+      const { errors, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
