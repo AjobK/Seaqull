@@ -9,9 +9,7 @@ class PostsBlockSmall extends Component {
 		super(props)
 	}
 
-	bookmarkPost = () => {
-
-	}
+	bookmarkPost = () => { }
 
 	render() {
 		const { post } = this.props
