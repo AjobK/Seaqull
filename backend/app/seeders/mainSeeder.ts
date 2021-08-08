@@ -1,4 +1,6 @@
 import { Factory, Seeder } from 'typeorm-seeding'
+import { Connection } from 'typeorm'
+import Role from '../entities/role'
 
 const roleSeeder = require('./roleSeeder')
 const attachmentSeeder = require('./attachmentSeeder')
@@ -42,7 +44,19 @@ export default class CreateObjects implements Seeder {
         'DEMOTE_ADMINS'
     ]
 
-    public async run(factory: Factory): Promise<any> {
+    private async checkDatabaseIsSeeded(connection: Connection): Promise<boolean> {
+        const repository = await connection.getRepository('Role')
+        const roles = await repository.find() as Role[]
+
+        return roles.length > 0
+    }
+
+    public async run(factory: Factory, connection: Connection): Promise<any> {
+        if (await this.checkDatabaseIsSeeded(connection)) {
+            console.log(' | Seeding has already occured')
+            return
+        }
+
         const userRole = await roleSeeder(factory, 'user')
         const modRole = await roleSeeder(factory, 'moderator')
         const adminRole = await roleSeeder(factory, 'admin')

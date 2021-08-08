@@ -9,6 +9,7 @@ const PostsBlock = lazy(() => import('../../components/postsBlock'))
 class Posts extends Component {
 	constructor(props) {
 		super(props)
+
 		this.MAX_POSTS_IN_BLOCK = 6
 		this.totalPages = null
 		this.scrolling = false
