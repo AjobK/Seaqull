@@ -34,11 +34,9 @@ class LoginPrompt extends Component {
       password: document.getElementById(this.elId.Password).value,
       recaptcha: this.state.recaptchaToken
     }
-    console.log('1')
 
     Axios.post('/login', payload, {withCredentials: true})
     .then(res => {
-      console.log('3')
       this.props.store.profile.setProfileData(res.data)
       this.props.store.user.fillUserData(res.data)
       this.goToProfile(res.data.user_name)
