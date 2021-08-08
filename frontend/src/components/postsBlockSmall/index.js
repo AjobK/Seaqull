@@ -57,7 +57,7 @@ class PostsBlockSmall extends Component {
 										<Icon iconName={ 'Stopwatch' } />
 									</span>
 									<p>
-										6 min
+										? min
 									</p>
 								</div>
 								<span className={ styles.smallContentBottomInfoBullet }>
