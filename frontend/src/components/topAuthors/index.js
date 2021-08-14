@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './topAuthors.scss'
+import { InView } from 'react-intersection-observer'
 import { inject, observer } from 'mobx-react'
 import { Icon, TopAuthorsAuthor } from '../index'
 
@@ -11,7 +12,9 @@ class TopAuthors extends Component {
 		this.MAX_AUTHORS_IN_PAGE = 4
 
 		this.state = {
-			topAuthors: []
+			topAuthors: [],
+			visibleAuthorsCount: 0,
+			pages: []
 		}
 	}
 
@@ -20,17 +23,40 @@ class TopAuthors extends Component {
 	}
 
 	fetchTopAuthors() {
-		const topAuthors = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+		const topAuthors = [
+			{_id: 1}, {_id: 2}, {_id: 3}, {_id: 4}, {_id: 5}, {_id: 6}, {_id: 7}, {_id: 8}, {_id: 9}
+		]
+
+		this.setState({
+			topAuthors
+		})
+	}
+
+	onAuthorViewportChange = (inView, entry) => {
+		const visibleAuthorsCount = this.state.visibleAuthorsCount + (inView ? 1 : -1)
+		this.setState({
+			...this.state,
+			visibleAuthorsCount
+		})
+
+		if (visibleAuthorsCount > 0) {
+			this.setState({
+				...this.state,
+				pages: this.calculatePages(visibleAuthorsCount)
+			})
+		}
+	}
+
+	calculatePages = (authorsInPage) => {
 		const pages = []
 
 		let pointer = 0
 		let page = []
-		topAuthors.forEach((author) => {
+		this.state.topAuthors.forEach((author) => {
 			pointer++
 			page.push(author)
-			console.log(pointer)
 
-			if (pointer >= this.MAX_AUTHORS_IN_PAGE) {
+			if (pointer >= authorsInPage) {
 				pages.push(page)
 				page = []
 				pointer = 0
@@ -41,16 +67,11 @@ class TopAuthors extends Component {
 			pages.push(page)
 		}
 
-
-		this.setState({
-			topAuthors: [{}, {}, {}, {}, {}, {}, {}, {}]
-		})
+		return pages
 	}
 
-
-
 	render() {
-		const { } = this.props
+		const { topAuthors, pages } = this.state
 
 		return (
 			<div className={ styles.topAuthors }>
@@ -77,14 +98,13 @@ class TopAuthors extends Component {
 					<div className={ styles.topAuthorsContentAuthors }>
 						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ styles.overlayFadeRight }` } />
 						<ul className={ styles.topAuthorsContentAuthorsList }>
-							<li> <TopAuthorsAuthor/> </li>
-							<li> <TopAuthorsAuthor/> </li>
-							<li> <TopAuthorsAuthor/> </li>
-							<li> <TopAuthorsAuthor/> </li>
-							{/*<li> <TopAuthorsAuthor/> </li>*/}
-							{/*<li> <TopAuthorsAuthor/> </li>*/}
-							{/*<li> <TopAuthorsAuthor/> </li>*/}
-							{/*<li> <TopAuthorsAuthor/> </li>*/}
+							{ topAuthors.map(( topAuthor ) => {
+								return <li key={ topAuthor._id }>
+									<InView onChange={ this.onAuthorViewportChange }>
+										<TopAuthorsAuthor/>
+									</InView>
+								</li>
+							})}
 						</ul>
 						<div>
 
