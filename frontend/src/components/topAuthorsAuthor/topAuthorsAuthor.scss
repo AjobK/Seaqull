@@ -2,10 +2,12 @@
 
 .author {
 	height: 360px;
+	width: 285px;
 	background-color: #9696ff;
 
 	@include mobile-tablet() {
-		height: 290px;
+		height: 291px;
+		width: 231px;
 
 		.author {
 

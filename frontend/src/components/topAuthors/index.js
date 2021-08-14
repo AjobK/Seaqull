@@ -13,7 +13,7 @@ class TopAuthors extends Component {
 
 		this.state = {
 			topAuthors: [],
-			visibleAuthorsCount: 0,
+			visibleAuthors: [],
 			pages: []
 		}
 	}
@@ -32,19 +32,24 @@ class TopAuthors extends Component {
 		})
 	}
 
-	onAuthorViewportChange = (inView, entry) => {
-		const visibleAuthorsCount = this.state.visibleAuthorsCount + (inView ? 1 : -1)
+	onAuthorViewportChange = (isVisible, entry) => {
+		let visibleAuthors = this.state.visibleAuthors
+
+		visibleAuthors = isVisible
+			? visibleAuthors.concat(entry.target.id)
+			: visibleAuthors.filter((authorId) => authorId !== entry.target.id)
+
 		this.setState({
-			...this.state,
-			visibleAuthorsCount
+			visibleAuthors
 		})
 
-		if (visibleAuthorsCount > 0) {
-			this.setState({
-				...this.state,
-				pages: this.calculatePages(visibleAuthorsCount)
-			})
-		}
+		if (visibleAuthors.length <= 0)
+			return
+
+		this.setState({
+			...this.state,
+			pages: this.calculatePages(visibleAuthors.length)
+		})
 	}
 
 	calculatePages = (authorsInPage) => {
@@ -100,14 +105,14 @@ class TopAuthors extends Component {
 						<ul className={ styles.topAuthorsContentAuthorsList }>
 							{ topAuthors.map(( topAuthor ) => {
 								return <li key={ topAuthor._id }>
-									<InView onChange={ this.onAuthorViewportChange }>
+									<InView id={ topAuthor._id } onChange={ this.onAuthorViewportChange }>
 										<TopAuthorsAuthor/>
 									</InView>
 								</li>
 							})}
 						</ul>
 						<div>
-
+							1/{pages.length}
 						</div>
 					</div>
 				</div>
