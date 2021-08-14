@@ -111,6 +111,8 @@
 		.topAuthors {
 			&Content {
 				&Top {
+					margin-bottom: 35px;
+
 					&Header {
 						max-width: initial;
 
@@ -135,8 +137,6 @@
 					}
 
 					&List {
-						overflow-x: hidden;
-
 						> li {
 							flex: none;
 							width: 250px;

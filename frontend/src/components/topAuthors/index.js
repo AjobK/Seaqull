@@ -8,10 +8,46 @@ class TopAuthors extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
+		this.MAX_AUTHORS_IN_PAGE = 4
 
+		this.state = {
+			topAuthors: []
 		}
 	}
+
+	componentDidMount() {
+		this.fetchTopAuthors()
+	}
+
+	fetchTopAuthors() {
+		const topAuthors = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+		const pages = []
+
+		let pointer = 0
+		let page = []
+		topAuthors.forEach((author) => {
+			pointer++
+			page.push(author)
+			console.log(pointer)
+
+			if (pointer >= this.MAX_AUTHORS_IN_PAGE) {
+				pages.push(page)
+				page = []
+				pointer = 0
+			}
+		})
+
+		if (page.length > 0) {
+			pages.push(page)
+		}
+
+
+		this.setState({
+			topAuthors: [{}, {}, {}, {}, {}, {}, {}, {}]
+		})
+	}
+
+
 
 	render() {
 		const { } = this.props
@@ -41,18 +77,14 @@ class TopAuthors extends Component {
 					<div className={ styles.topAuthorsContentAuthors }>
 						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ styles.overlayFadeRight }` } />
 						<ul className={ styles.topAuthorsContentAuthorsList }>
-							<li>
-								<TopAuthorsAuthor />
-							</li>
-							<li>
-								<TopAuthorsAuthor />
-							</li>
-							<li>
-								<TopAuthorsAuthor />
-							</li>
-							<li>
-								<TopAuthorsAuthor />
-							</li>
+							<li> <TopAuthorsAuthor/> </li>
+							<li> <TopAuthorsAuthor/> </li>
+							<li> <TopAuthorsAuthor/> </li>
+							<li> <TopAuthorsAuthor/> </li>
+							{/*<li> <TopAuthorsAuthor/> </li>*/}
+							{/*<li> <TopAuthorsAuthor/> </li>*/}
+							{/*<li> <TopAuthorsAuthor/> </li>*/}
+							{/*<li> <TopAuthorsAuthor/> </li>*/}
 						</ul>
 						<div>
 
