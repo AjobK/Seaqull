@@ -17,7 +17,8 @@ class Posts extends Component {
 			postsBlocks: [],
 			isFetching: false,
 			page: 0,
-			endReached: false
+			endReached: false,
+			topAuthorsShowed: false //todo temporary until better fix
 		}
 	}
 
@@ -113,9 +114,14 @@ class Posts extends Component {
 			this.createPostsBlock(posts)
 		)
 
-		postsBlocks.push(
-			this.createTopAuthors()
-		)
+		if (!this.state.topAuthorsShowed) { // todo temporary until better fix
+			postsBlocks.push(
+				this.createTopAuthors()
+			)
+			this.setState({
+				topAuthorsShowed: true
+			})
+		}
 
 		this.setState({
 			...this.state,
