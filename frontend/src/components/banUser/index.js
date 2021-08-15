@@ -49,9 +49,28 @@ class BanUser extends Component {
             <div className={ styles.banUser }>
                 <div className={ styles.banUserBackground } onClick={this.props.closePopup}/>
                 <section className={ styles.banUserPopUp }>
+                    <h2> Ban user </h2>
+                    <h3> &apos;{ this.props.user.username || 'No user found' }&apos; </h3>
                     <form onSubmit={this.saveBan.bind(this)} className={ styles.form }>
-                            <FormInput errors={ this.state.error } name={ 'Days' } callBack={ this.callBack } className={[ styles.formGroup ]} type='number' limit='1'></FormInput>
-                            <FormInput errors={ this.state.error } name={ 'Reason' } callBack={ this.callBack } className={[ styles.formGroup ]} type='text'></FormInput>
+                            <FormInput
+                                toolTipDirection={ 'bottom' }
+                                customIconName={ 'Clock' }
+                                errors={ this.state.error }
+                                name={ 'Days' }
+                                callBack={ this.callBack }
+                                className={[ styles.formGroup ]}
+                                type='number'
+                                limit='1'
+                            />
+                            <FormInput
+                                toolTipDirection={ 'bottom' }
+                                customIconName={ 'CommentAlt' }
+                                errors={ this.state.error }
+                                name={ 'Reason' }
+                                callBack={ this.callBack }
+                                className={[ styles.formGroup ]}
+                                type='text'
+                            />
                             <div className={ styles.submitWrapper }>
                                 <Button
                                     className={ styles.banUserPopUpBtnsCancelButton }

@@ -33,10 +33,10 @@ class FormInput extends Component {
 
   getErrorMessages = () => {
     const { toolTipId } = this
-    const { errors } = this.props
+    const { errors, toolTipDirection } = this.props
 
     return (
-      <ReactTooltip id={toolTipId} effect={'solid'} place={'right'} className={styles.toolTip}>
+      <ReactTooltip id={toolTipId} effect={'solid'} place={ toolTipDirection || 'right' } className={styles.toolTip}>
         <ul className={styles.toolTipUl}>
           {(errors != 'loading') && errors.map((message, i) => <li key={i} className={styles.toolTipLi}>{message}</li>)}
         </ul>
@@ -52,12 +52,12 @@ class FormInput extends Component {
 
   render() {
     const { name, className, errors, limit } = this.props
-    let { type } = this.props
+    let { type, customIconName } = this.props
     const { id, toolTipId } = this
     const { passwordVisible } = this.state
     const hasErrors = errors != 'loading' && errors && errors.length > 0,
           iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
-          iconName = (errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
+          iconName = customIconName || ((errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle')),
           loadingClass = errors == 'loading' ? 'fa-spin' : '',
           isPassword = type == 'password'
 
