@@ -45,8 +45,6 @@ class BanUser extends Component {
     callBack() {}
 
     render() {
-        const { error } = this.state
-
         return (
             <div className={ styles.banUser }>
                 <div className={ styles.banUserBackground } onClick={this.props.closePopup}/>
