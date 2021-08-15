@@ -79,7 +79,7 @@ class Posts extends Component {
 		if (this.state.endReached) {
 			return
 		}
-		console.log('FETCH MORE')
+
 		this.fetchPosts()
 	}
 
