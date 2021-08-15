@@ -56,19 +56,19 @@
 	animation: load 1.5s infinite;
 }
 
-@mixin pulse () {
+@mixin pulse ($color) {
 	@keyframes pulse {
 		0% {
-			-moz-box-shadow: 0 0 0 0 rgba($primary, 0.5);
-			box-shadow: 0 0 0 0 rgba($primary, 0.5);
+			-moz-box-shadow: 0 0 0 0 rgba($color, 0.5);
+			box-shadow: 0 0 0 0 rgba($color, 0.5);
 		}
 		70% {
-			-moz-box-shadow: 0 0 0 10px rgba($primary, 0);
-			box-shadow: 0 0 0 10px rgba($primary, 0);
+			-moz-box-shadow: 0 0 0 10px rgba($color, 0);
+			box-shadow: 0 0 0 10px rgba($color, 0);
 		}
 		100% {
-			-moz-box-shadow: 0 0 0 0 rgba($primary, 0);
-			box-shadow: 0 0 0 0 rgba($primary, 0);
+			-moz-box-shadow: 0 0 0 0 rgba($color, 0);
+			box-shadow: 0 0 0 0 rgba($color, 0);
 		}
 	}
 
@@ -77,13 +77,14 @@
 
 @mixin fade-in () {
 	@keyframes fade-in {
-		0% {
+		from {
 			opacity: 0;
-		}
-		100% {
+		} to {
 			opacity: 1;
 		}
 	}
+
+	animation: fade-in 1s;
 }
 
 @mixin pop-up () {
@@ -105,4 +106,35 @@
 	@include mobile-all {
 		width: 90%;
 	}
+}
+
+@mixin bookmark () {
+	position: absolute;
+	right: 0;
+	cursor: pointer;
+	color: white;
+	opacity: 0.5;
+	align-items: center;
+	font-size: 1.3em;
+	transition: 0.2s linear;
+
+	&:hover {
+		color: $primary;
+		opacity: 1;
+	}
+}
+
+@mixin fancy-underline ($thickness: 2px, $offset: 2px) {
+	position: absolute;
+	bottom: $offset;
+	left: 0;
+	height: $thickness;
+	transition: 0.2s;
+	width: 0%;
+	background-color: rgba($primary, 0.5);
+	border-radius: 100vh;
+}
+
+@mixin tooltip {
+	padding: 0;
 }

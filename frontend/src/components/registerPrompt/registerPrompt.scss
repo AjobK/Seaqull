@@ -198,7 +198,7 @@
 
 	&:hover {
 		transition: 0.2s;
-		@include pulse();
+		@include pulse($primary);
 	}
 
 	@include mobile-all-portrait {
