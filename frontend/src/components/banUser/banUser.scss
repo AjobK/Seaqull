@@ -34,20 +34,16 @@
 		height: inherit;
 		background-color: black;
 		opacity: 0.5;
-		animation: fade-in 0.2s
 	}
 
 	&PopUp {
 		@include pop-up();
 		height: auto;
 		max-height: 98%;
-		overflow-y: visible;
 		padding: 30px 30px;
-		overflow: visible;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		width: fit-content;
 
 		@include mobile-sm {
 			min-width: initial;
@@ -67,17 +63,15 @@
 			}
 
 			&SaveButton {
-				margin-top: 10px;
+				margin-left: 10px;
 			}
 		}
 	}
 }
 
-@keyframes fade-in {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 0.5;
-	}
+.submitWrapper {
+	margin-top: $header-spacing;
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
