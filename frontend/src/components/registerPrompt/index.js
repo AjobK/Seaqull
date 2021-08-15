@@ -52,6 +52,7 @@ class RegisterPrompt extends Component {
         username: username || [],
         email: email || [],
         password: password || [],
+        loadingTimeout: false
       })
     })
   }
@@ -80,6 +81,7 @@ class RegisterPrompt extends Component {
       email: 'loading',
       loadingTimeout: true
     })
+
     if(!(this.state.loadingTimeout)){
       this.recaptchaRef.current.reset()
       this.recaptchaRef.current.execute()
@@ -105,6 +107,7 @@ class RegisterPrompt extends Component {
               ref={this.recaptchaRef} 
               sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
               size='invisible' 
+              badge='bottomright'
               onChange={this.onChange}/> }
             </div>
           </form>

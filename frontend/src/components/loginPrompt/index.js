@@ -115,12 +115,12 @@ class LoginPrompt extends Component {
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
-              { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
               { <ReCAPTCHA 
               ref={this.recaptchaRef} 
               sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
               size='invisible' 
               onChange={this.onChange}/> }
+              { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
             </div>
           </form>
           <div className={styles.image} />

@@ -146,6 +146,7 @@ class ProfileController {
 
     public register = async (req: any, res: Response): Promise<Response> => {
         const { username, email, password, recaptcha} = req.body
+
         const errors = {
             username: [],
             email: [],
