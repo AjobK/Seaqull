@@ -1,13 +1,15 @@
 @import '../../styles/index.scss';
 @import '../../styles/variables.scss';
 
-* {
-	transition: .2s ease-in-out;
-}
-
 .form {
+	width: 100%;
+
 	&Group {
 		margin-top: 20px;
+
+		&:first-child {
+			margin-top: 0;
+		}
 		
 		@include mobile-all-portrait {
 			margin-top: 30px;
