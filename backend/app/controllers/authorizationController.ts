@@ -1,9 +1,9 @@
-/* eslint-disable indent */
 import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
 import { Account } from '../entities/account'
+import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -15,10 +15,12 @@ const { SECURE } = process.env
 class AuthorizationController {
     private accountDAO: AccountDAO
     private roleDAO: RoleDAO
+    private banService: BanService
 
     constructor() {
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDAO()
+        this.banService = new BanService()
     }
 
     public loginVerify = async (req: Request, res: Response): Promise<any> => {
@@ -26,11 +28,15 @@ class AuthorizationController {
             return res.status(401).json({ loggedIn: false })
 
         try {
-            const account = await this.accountDAO.getAccountByUsername(
+            const account = await this.accountDAO.getAccountByUsername (
                 jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
             )
 
             const profile = account.profile
+
+            const role = await this.roleDAO.getRoleByUser(profile.display_name)
+
+            profile['role'] = role.name
 
             return res.status(200).json({ loggedIn: true, profile: profile })
         } catch (error) {
@@ -46,11 +52,11 @@ class AuthorizationController {
         let account = await this.accountDAO.getAccountByUsername(username)
 
         if (account == null)
-            return res.status(400).json({ error: ['Incorrect username or password'] })
+            return res.status(400).json({ errors: ['Incorrect username or password'] })
 
         if (account.locked_to - Date.now() > 0) {
             return res.status(400).send({
-                error: ['cannot login yet'],
+                errors: ['cannot login yet'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
         } else {
@@ -59,6 +65,12 @@ class AuthorizationController {
             const validation = this.validateAccountRequest(account, username, password)
 
             if (validation != null) return res.status(400).send(validation)
+
+            const ban = await this.banService.checkIfUserIsBanned(account)
+
+            if (ban) {
+                return res.status(403).json(ban)
+            }
 
             const role = await this.roleDAO.getRoleByUser(username)
             const payload = {
@@ -89,23 +101,23 @@ class AuthorizationController {
                     if(account.login_attempts_counts != 2){
                         account.login_attempts_counts++
                         this.accountDAO.updateAccount(account)
-                        return { error: ['Incorrect username or password'] }
+                        return { errors: ['Incorrect username or password'] }
                     } else {
                         // lock account for 30 seconds
                         account.login_attempts_counts = null
                         account.locked_to = Date.now()+30000
                         this.accountDAO.updateAccount(account)
-                        return { error: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
+                        return { errors: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
                     }
                 } else {
                     // if login is successful we return null
                     return null
                 }
             } else {
-                return { error: ['Incorrect username or password'] }
+                return { errors: ['Incorrect username or password'] }
             }
         } catch (error) {
-            return { error: ['Incorrect username or password'] }
+            return { errors: ['Incorrect username or password'] }
         }
     }
 
@@ -125,11 +137,11 @@ class AuthorizationController {
         // if cookie is there remove it
         if (req.cookies['token']) {
             res
-            .clearCookie('token')
-            .status(200)
-            .json({
-                message: 'You have logged out'
-            })
+                .clearCookie('token')
+                .status(200)
+                .json({
+                    message: 'You have logged out'
+                })
         } else {
             res.status(401).json({
                 error: 'Invalid jwt'

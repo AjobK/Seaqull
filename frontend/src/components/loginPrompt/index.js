@@ -78,13 +78,13 @@ class LoginPrompt extends Component {
         })
       }
 
-      const { error, remainingTime } = res.response.data
+      const { errors, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
       this.setState({
-        username: error || [],
-        password: error || [],
+        username: errors || [],
+        password: errors || [],
         loadingTimeout: false
       })
     })
@@ -153,8 +153,8 @@ class LoginPrompt extends Component {
         <p className={styles.text}> Welcome back!</p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type="text"/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}

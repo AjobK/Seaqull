@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 const ProfileStore = types
   .model('ProfileStore', {
-    loaded: types.optional(types.string, 'Nooooo'),
+    role: types.optional(types.string, 'user'),
     loggedIn: types.optional(types.boolean, false),
     display_name: types.optional(types.string, 'Emily Washington')
 
@@ -15,11 +15,15 @@ const ProfileStore = types
       Axios.get(`/api/login-verify`, { withCredentials: true })
       .then((res) => {
         self.setLoggedIn(true)
+        self.setRole(res.data.profile.role)
         self.setDisplayName(res.data.profile.display_name)
       })
       .catch((e) => {
         self.setLoggedIn(false)
       })
+    },
+    setRole(role) {
+      self.role = role
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn

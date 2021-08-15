@@ -19,7 +19,7 @@ export default class CreateObjects implements Seeder {
 
     private permissionsModerators = [
         'SEE_REPORTED_USERS',
-        'BAN_USERS',
+        'SHORT_BAN_USERS',
         'UNBAN_USERS',
         'REMOVE_POSTS',
         'RECOVER_POSTS',
@@ -34,6 +34,7 @@ export default class CreateObjects implements Seeder {
     private permissionsAdmins = [
         'PROMOTE_MODERATORS',
         'REMOVE_MODERATORS',
+        'BAN_USERS',
         'PERMA_BAN_USERS',
         'REVIEW_BAN_APPEALS',
         'MACHINE_BAN_USERS'
@@ -57,10 +58,10 @@ export default class CreateObjects implements Seeder {
             return
         }
 
-        const userRole = await roleSeeder(factory, 'user')
-        const modRole = await roleSeeder(factory, 'moderator')
-        const adminRole = await roleSeeder(factory, 'admin')
-        const headAdminRole = await roleSeeder(factory, 'head-admin')
+        const userRole = await roleSeeder(factory, 'User')
+        const modRole = await roleSeeder(factory, 'Moderator')
+        const adminRole = await roleSeeder(factory, 'Admin')
+        const headAdminRole = await roleSeeder(factory, 'Head-admin')
 
         const profilePic = await attachmentSeeder(factory, 'default/defaultAvatar.jpg')
         const bannerPic = await attachmentSeeder(factory, 'default/defaultBanner.jpg')
