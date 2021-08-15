@@ -1,0 +1,302 @@
+@import '../../styles/index.scss';
+
+$small-height-desktop: 158px;
+$small-thumbnail-width-desktop: 260px;
+$small-height-tablet: 127px;
+$small-thumbnail-width-tablet: 210px;
+$small-height-smartphone: 109px;
+$small-thumbnail-width-smartphone: 190px;
+$post-padding: 10px;
+
+.bookmark {
+	margin-top: auto;
+	cursor: pointer;
+	color: white;
+	opacity: .8;
+	align-items: center;
+	font-size: 1.1em;
+
+	&:hover {
+		color: $primary;
+	}
+}
+
+.small {
+	display: flex;
+	height: $small-height-desktop;
+
+	&Thumbnail {
+		position: relative;
+		width: 100%;
+		max-width: $small-thumbnail-width-desktop;
+
+		&Content {
+			display: flex;
+			position: absolute;
+			justify-content: space-between;
+			bottom: 0;
+			width: 100%;
+			padding: 30px $post-padding $post-padding;
+			pointer-events: none;
+			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
+			min-height: 35%;
+
+			> * {
+				pointer-events: initial;
+			}
+
+			&Category {
+				margin-top: auto;
+				color: $primary;
+				display: flex;
+				align-items: center;
+				font-size: $nr-xs-fontsize;
+				overflow: hidden;
+				white-space: pre-line;
+
+				&Bullet {
+					display: flex;
+					align-items: center;
+					margin-top: 2px;
+					font-size: .4em;
+					margin-right: 7px;
+				}
+
+				&:hover {
+					> p > span {
+						width: 100%;
+					}
+				}
+
+				> p {
+					position: relative;
+
+					> span {
+						@include fancy-underline(2px, 0);
+					}
+				}
+			}
+
+			.bookmark {
+				@include bookmark();
+				font-size: 1.1em;
+				padding: $post-padding $post-padding calc(#{$post-padding - 3px}) $post-padding;
+				right: 0;
+				bottom: 0;
+			}
+		}
+
+		&Link {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&Content {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		position: relative;
+
+		> div {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			min-height: calc(100% - #{$post-padding});
+			padding-left: $post-padding;
+		}
+
+		&Clickable {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+		&Title {
+			font-size: $nr-md-fontsize;
+			line-height: 22px;
+			white-space: pre-line;
+			color: $secondary;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			word-break: break-word;
+			-webkit-line-clamp: 3;
+			-o-ellipsis-lastline: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			margin-bottom: calc(#{$post-padding} - 5px);
+		}
+
+		&Description {
+			white-space: pre-line;
+			color: $text;
+			font-size: $nr-xs-fontsize;
+			line-height: 1.29;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-o-ellipsis-lastline: 3;
+			-webkit-box-orient: vertical;
+		}
+
+		&Bottom {
+			margin-top: auto;
+			display: flex;
+			justify-content: space-between;
+			min-height: $nr-sm-fontsize;
+
+			&Info {
+				display: flex;
+				align-items: center;
+				font-size: $nr-xs-fontsize;
+				font-weight: 300;
+				overflow: hidden;
+
+				& > * {
+					margin-right: $post-padding;
+				}
+
+				&Text {
+					color: $primary;
+					opacity: .6;
+					display: flex;
+
+					&Icon {
+						font-size: .7em;
+						margin-right: 6px;
+						display: flex;
+						align-items: center;
+						transform: translateY(1px);
+					}
+				}
+
+				&Bullet {
+					color: $light-gray;
+					opacity: .3;
+				}
+			}
+
+			&GoTo {
+				pointer-events: none;
+				margin-top: 4px;
+				color: $primary;
+				opacity: .8;
+				font-size: .8em;
+			}
+
+			.bookmark {
+				display: none;
+			}
+		}
+	}
+
+	@include mobile-tablet() {
+		height: $small-height-tablet;
+
+		.small {
+			&Thumbnail {
+				max-width: $small-thumbnail-width-tablet;
+			}
+
+			&Content {
+				&Description {
+					margin-top: calc(#{$post-padding} / 2);
+					-webkit-line-clamp: 2;
+					-o-ellipsis-lastline: 2;
+				}
+
+				&Bottom {
+					&Info {
+						&Text {
+							&Icon {
+								font-size: .8em;
+							}
+						}
+					}
+
+					&GoTo {
+						font-size: .7em;
+					}
+				}
+			}
+		}
+	}
+
+	@include mobile-all() {
+		max-height: $small-height-smartphone;
+
+		.small {
+			&Thumbnail {
+				max-width: $small-thumbnail-width-smartphone;
+				width: 100vw;
+
+				&Content {
+					padding: 30px 10px 12px;
+
+					&Category {
+						&Bullet {
+							margin-right: 8px;
+						}
+					}
+
+					.bookmark {
+						display: none;
+					}
+				}
+
+				img {
+					max-width: 100%;
+					min-width: initial;
+				}
+			}
+
+			&Content {
+				> div {
+					padding: 0 0 calc(#{$post-padding} / 2) $post-padding;
+				}
+
+				&Title {
+					font-size: $nr-sm-fontsize;
+				}
+
+				&Description {
+					display: none;
+				}
+
+				&Bottom {
+					transform: translateY($post-padding);
+					pointer-events: none;
+
+					&Info {
+						display: none;
+					}
+
+					.bookmark {
+						@include bookmark();
+						transform: translateX(-$post-padding);
+						pointer-events: initial;
+						padding: $post-padding;
+						box-sizing: border-box;
+						position: static;
+						display: flex;
+						color: #818193;
+					}
+
+					&GoTo {
+						margin-left: auto;
+						font-size: $nr-xs-fontsize;
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+}
