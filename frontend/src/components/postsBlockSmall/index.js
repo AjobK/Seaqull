@@ -30,10 +30,10 @@ class PostsBlockSmall extends Component {
 								<span>{/* UNDERLINE */}</span>
 							</p>
 						</a>
-						<span className={ styles.bookmark } onClick={ this.bookmarkPost } data-tip data-for={'largeBookmarkTooltip'}>
+						<span className={ styles.bookmark } onClick={ this.bookmarkPost } data-tip data-for={'smallBookmarkTooltip'}>
 							<Icon iconName={ 'Bookmark' } />
 						</span>
-						<ReactTooltip id={'largeBookmarkTooltip'} effect={'solid'} place={'bottom'} className={styles.toolTip}>
+						<ReactTooltip id={'smallBookmarkTooltip'} effect={'solid'} place={'bottom'} className={styles.toolTip}>
 							Work in progress
 						</ReactTooltip>
 					</div>
