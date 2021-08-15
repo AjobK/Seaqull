@@ -336,7 +336,6 @@ class ProfileController {
         const u = req.body
 
         let newProfile = new Profile()
-
         newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
         newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
@@ -354,7 +353,9 @@ class ProfileController {
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
         acc.role = await this.roleDAO.getRoleById(1)
+
         const createdAccount = await this.accountDAO.saveAccount(acc)
+
         return createdAccount
     }
 

@@ -18,7 +18,6 @@ class BanService {
 
         if (bannedToDate > Date.now()) {
             const bannedDateobject = new Date(bannedToDate * 1)
-
             const date =
                 bannedDateobject.getDate() + '-' +
                 bannedDateobject.toLocaleString('default', { month: 'long' }) + '-' +
@@ -28,12 +27,12 @@ class BanService {
 
             return { errors: [`Account banned until ${date}.`] }
         }
+
         return null
     }
 
     async banUser(user: Account, admin: Account, reason: string, adress: string, banTime: number): Promise<Ban> {
         const ban = new Ban()
-
         ban.user = user
         ban.staff= admin
         ban.reason = reason

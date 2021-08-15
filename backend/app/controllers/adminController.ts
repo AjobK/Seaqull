@@ -53,8 +53,6 @@ class AdminController {
 
         const createdBan = await this.banService.banUser(user, admin, reason, req.connection.remoteAddress, banTime)
 
-        console.log(createdBan)
-
         return res.status(200).json({ ban: createdBan })
     }
 }

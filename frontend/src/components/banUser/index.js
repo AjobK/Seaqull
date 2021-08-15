@@ -27,6 +27,7 @@ class BanUser extends Component {
         }
 
         let url = 'ban'
+        
         if ( this.props.store.profile.role == 'moderator') {
             url = 'shortBan'
         }
