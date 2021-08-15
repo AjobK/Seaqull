@@ -18,11 +18,10 @@ class BanService {
 
         if (bannedToDate > Date.now()) {
             const bannedDateobject = new Date(bannedToDate * 1)
-            const month = bannedDateobject.getMonth()+1
 
             const date =
                 bannedDateobject.getDate() + '-' +
-                month + '-' +
+                bannedDateobject.toLocaleString('default', { month: 'long' }) + '-' +
                 bannedDateobject.getFullYear() + ' ' +
                 bannedDateobject.getHours() + ':' +
                 bannedDateobject.getMinutes()
