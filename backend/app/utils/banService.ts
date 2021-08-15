@@ -20,13 +20,13 @@ class BanService {
             const bannedDateobject = new Date(bannedToDate * 1)
 
             const date =
-                bannedDateobject.getDate() + '-' +
-                bannedDateobject.toLocaleString('default', { month: 'long' }) + '-' +
+                bannedDateobject.getDate() + ' ' +
+                bannedDateobject.toLocaleString('default', { month: 'long' }) + ' ' +
                 bannedDateobject.getFullYear() + ' ' +
-                bannedDateobject.getHours() + ':' +
-                bannedDateobject.getMinutes()
+                (bannedDateobject.getHours() > 9 ? '' : '0') + bannedDateobject.getHours() + ':' +
+                (bannedDateobject.getMinutes() > 9 ? '' : '0') + bannedDateobject.getMinutes()
 
-            return { errors: [`Account banned until ${date}.`] }
+            return { errors: [`Account banned until ${date}`] }
         }
         return null
     }
