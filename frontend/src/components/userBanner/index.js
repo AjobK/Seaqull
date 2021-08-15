@@ -111,6 +111,8 @@ class UserBanner extends Component {
     const user = this.props.user
     const role = this.props.role
 
+    console.log(role)
+
     let fontSize = ''
 
     if (user.username.length >= 22) {
@@ -163,7 +165,7 @@ class UserBanner extends Component {
                   </div>
                 </div>
             )}
-            { role != 'user' & !this.props.owner & this.props.store.profile.loggedIn && (
+            { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
                 <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                 <input
                     type="submit"
