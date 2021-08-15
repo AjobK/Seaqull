@@ -11,15 +11,18 @@ class BanService {
 
     async checkIfUserIsBanned(account: Account) {
         const ban = await this.banDAO.getBanByUser(account)
-        if(!ban) return null
+
+        if (!ban) return null
 
         const bannedToDate = ban.banned_to.getTime()
 
         if (bannedToDate > Date.now()) {
             const bannedDateobject = new Date(bannedToDate * 1)
+            const month = bannedDateobject.getMonth()+1
+
             const date =
                 bannedDateobject.getDate() + '-' +
-                bannedDateobject.getMonth() + '-' +
+                month + '-' +
                 bannedDateobject.getFullYear() + ' ' +
                 bannedDateobject.getHours() + ':' +
                 bannedDateobject.getMinutes()

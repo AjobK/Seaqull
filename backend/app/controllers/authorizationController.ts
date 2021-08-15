@@ -69,6 +69,7 @@ class AuthorizationController {
             const ban = await this.banService.checkIfUserIsBanned(account)
 
             if (ban) {
+                console.log(ban)
                 return res.status(403).json(ban)
             }
 
