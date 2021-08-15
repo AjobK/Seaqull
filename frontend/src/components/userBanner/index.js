@@ -159,8 +159,11 @@ class UserBanner extends Component {
                       type="file" accept="image/png, image/jpeg" value={''}
                       onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
                   />
-                  <div className={ `${ styles.bannerEditActionBtn }` }>
-                    <Icon iconName={ 'Pen' } />
+                  <div className={ styles.bannerEditActionBtn }>
+                    <p className={ styles.bannerEditActionBtnText }>
+                      <span>EDIT BANNER</span>
+                      <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
+                    </p>
                   </div>
                 </div>
             )}
@@ -173,8 +176,11 @@ class UserBanner extends Component {
                     onDragLeave={ this.onBannerDragLeave }
                     onClick={ this.banUser.bind(this) }
                 />
-                <div className={ `${ styles.bannerEditActionBtn }` }>
-                  <Icon iconName={ 'Ban' } />
+                <div className={ styles.bannerEditActionBtn }>
+                  <p className={ styles.bannerEditActionBtnText }>
+                    <span>BAN USER</span>
+                    <Icon iconName={ 'Ban' } className={ styles.bannerEditActionBtnIcon } />
+                  </p>
                 </div>
               </div>
             )}

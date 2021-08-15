@@ -49,25 +49,43 @@ class BanUser extends Component {
             <div className={ styles.banUser }>
                 <div className={ styles.banUserBackground } onClick={this.props.closePopup}/>
                 <section className={ styles.banUserPopUp }>
-                    <div>
-                        <form onSubmit={this.saveBan.bind(this)}>
-                                <FormInput errors={ this.state.error } name={ 'Days' } callBack={ this.callBack } className={[ styles.formGroup ]} type='number' limit='1'></FormInput>
-                                <FormInput errors={ this.state.error } name={ 'Reason' } callBack={ this.callBack } className={[ styles.formGroup ]} type='text'></FormInput>
-                                <div className={styles.submitWrapper}>
+                    <h2> Ban user </h2>
+                    <h3> &apos;{ this.props.user.username || 'No user found' }&apos; </h3>
+                    <form onSubmit={this.saveBan.bind(this)} className={ styles.form }>
+                            <FormInput
+                                toolTipDirection={ 'bottom' }
+                                customIconName={ 'Clock' }
+                                errors={ this.state.error }
+                                name={ 'Days' }
+                                callBack={ this.callBack }
+                                className={[ styles.formGroup ]}
+                                type='number'
+                                limit='1'
+                            />
+                            <FormInput
+                                toolTipDirection={ 'bottom' }
+                                customIconName={ 'CommentAlt' }
+                                errors={ this.state.error }
+                                name={ 'Reason' }
+                                callBack={ this.callBack }
+                                className={[ styles.formGroup ]}
+                                type='text'
+                            />
+                            <div className={ styles.submitWrapper }>
+                                <Button
+                                    className={ styles.banUserPopUpBtnsCancelButton }
+                                    value='Cancel'
+                                    inverted={ true } onClick={ this.props.closePopup.bind(this) }
+                                />
+                                { (
                                     <Button
-                                        className={ styles.banUserPopUpBtnsCancelButton } value='Cancel'
-                                        inverted={ true } onClick={ this.props.closePopup.bind(this) }
+                                        className={ styles.banUserPopUpBtnsSaveButton }
+                                        value={ 'Save' }
+                                        type='button'
                                     />
-                                    { (
-                                        <Button
-                                            className={ styles.banUserPopUpBtnsSaveButton }
-                                            value={ 'Save' }
-                                            type='button'
-                                        />
-                                    )}
-                                </div>
-                        </form>
-                    </div>
+                                )}
+                            </div>
+                    </form>
                 </section>
             </div>
         )
