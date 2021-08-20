@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './button.scss'
-import {Icon} from "../index"
+import {Icon} from '../index'
 
 class Button extends Component {
 	render() {
