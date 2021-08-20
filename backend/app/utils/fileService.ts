@@ -19,8 +19,7 @@ class FileService {
     }
 
     public async convertImage (path: string, dimensions: Record<number, number>): Promise<void> {
-        sharp(path)
-            .resize(dimensions)
+        sharp(path).resize(dimensions)
     }
 
     public async storeImage (file: multer.file, type: string): Promise<string> {
