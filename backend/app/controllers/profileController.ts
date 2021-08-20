@@ -111,7 +111,7 @@ class ProfileController {
         const account = await this.accountDAO.getAccountByUsername(profile.display_name)
         const ban = await this.banService.checkIfUserIsBanned(account)
 
-        if (ban) return res.status(403).json(ban)
+        if (ban) return res.status(403).json({ 'errors': [ban] })
 
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
@@ -359,7 +359,6 @@ class ProfileController {
         return createdAccount
     }
 
-    // function removes all unnecessary data
     private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at

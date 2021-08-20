@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './statistics.scss'
 import StatisticImage from '../../static/statistic.svg'
-import { Icon } from '..';
+import { Icon } from '..'
 
 class Statistic extends Component {
   /**

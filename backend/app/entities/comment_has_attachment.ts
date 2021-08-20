@@ -2,7 +2,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, Pri
 import attachment from './attachment'
 import comment from './comment'
 
-@Entity('comment_has_attatchment')
+@Entity('comment_has_attachment')
 export class CommentHasAttachment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number

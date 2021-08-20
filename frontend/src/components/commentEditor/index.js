@@ -42,7 +42,7 @@ class CommentEditor extends Component {
 
     
     onChange = (editorState) => {
-        this.setState({editorState, formError: null});
+        this.setState({editorState, formError: null})
 
         if (this.props.onCommentChangeCallback)
             this.props.onCommentChangeCallback(convertToRaw(editorState.getCurrentContent()))
