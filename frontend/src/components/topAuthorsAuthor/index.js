@@ -15,23 +15,25 @@ class TopAuthorsAuthor extends Component {
 
 		return (
 			<div className={ styles.author }>
-				<img src={ defaultThumbnail } alt={ 'author' }/>
-				<div className={ styles.authorContent }>
-					<p className={ styles.authorContentName }>
-						Sidney Goossens
-					</p>
-					<p className={ styles.authorContentDescription }>
-						Software Engineer and just an overall nice guy
-					</p>
-					<div className={ styles.authorContentBottom }>
-						<p className={ styles.authorContentBottomPosts }>
-							? posts
+				<a href={''}>
+					<img className={ styles.authorAvatar } src={ defaultThumbnail } alt={ 'author' }/>
+					<div className={ styles.authorContent }>
+						<p className={ styles.authorContentName }>
+							Sidney Goossens
 						</p>
-						<span className={ styles.authorContentBottomGoTo }>
+						<p className={ styles.authorContentDescription }>
+							Software Engineer and just an overall nice guy
+						</p>
+						<div className={ styles.authorContentBottom }>
+							<p className={ styles.authorContentBottomPosts }>
+								? posts
+							</p>
+							<span className={ styles.authorContentBottomGoTo }>
 							<Icon iconName={ 'ChevronRight' } className={ styles.authorContentBottomGoToIcon } />
 						</span>
+						</div>
 					</div>
-				</div>
+				</a>
 			</div>
 		)
 	}

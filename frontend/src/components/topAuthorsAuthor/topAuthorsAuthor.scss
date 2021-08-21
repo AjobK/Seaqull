@@ -6,7 +6,7 @@
 	background-color: #9696ff;
 	position: relative;
 
-	> img {
+	&Avatar {
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -21,7 +21,7 @@
 		bottom: 0;
 		width: 100%;
 		max-width: inherit;
-		height: 60%;
+		height: 65%;
 		background: $secondary;
 		background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 		padding: 0 20px 20px;
