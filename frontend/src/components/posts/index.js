@@ -84,6 +84,7 @@ class Posts extends Component {
 			this.setCurrentPage(0)
 			this.setEndReached(false)
 			this.fetchPosts()
+			
 			return
 		}
 
