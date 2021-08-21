@@ -105,6 +105,14 @@ class TopAuthors extends Component {
 		})
 	}
 
+	toPage = (newPage) => {
+		console.log(newPage.target)
+		this.setState({
+			...this.state,
+			activePage: newPage
+		})
+	}
+
 	render() {
 		const { topAuthors, pages, activePage, authorCardWidth } = this.state
 
@@ -145,8 +153,12 @@ class TopAuthors extends Component {
 					</div>
 					<div className={ styles.topAuthorsContentPages }>
 						<div className={ styles.topAuthorsContentPagesTop }>
-							<div className={ `${ styles.topAuthorsContentPagesTopPage }` }/>
-							<div className={ `${ styles.topAuthorsContentPagesTopPage } ${ styles.activePage }` }/>
+							{ pages.map(( page, i ) => {
+								return <div key={ i }
+											className={ `${ styles.topAuthorsContentPagesTopPage } ${ activePage === i + 1 ? styles.activePage : '' }` }
+											onClick={ () => this.toPage(i + 1) }
+								/>
+							})}
 						</div>
 						<div className={ styles.topAuthorsContentPagesBottom }>
 							<span onClick={ this.pageBack } className={ styles.topAuthorsContentPagesBottomNavigator }>
@@ -155,7 +167,7 @@ class TopAuthors extends Component {
 							<p className={ styles.topAuthorsContentPagesBottomPageCounter }>
 								{ activePage }/{ pages.length }
 							</p>
-							<span onClick={ this.pageForward  } className={ styles.topAuthorsContentPagesBottomNavigator }>
+							<span onClick={ this.pageForward } className={ styles.topAuthorsContentPagesBottomNavigator }>
 								<Icon iconName={ 'ChevronRight' } className={ styles.topAuthorsContentPagesBottomNavigatorIcon } />
 							</span>
 						</div>
