@@ -4,6 +4,63 @@
 	height: 360px;
 	width: 285px;
 	background-color: #9696ff;
+	position: relative;
+
+	> img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	&Content {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		bottom: 0;
+		width: 100%;
+		max-width: inherit;
+		height: 60%;
+		background: $secondary;
+		background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
+		padding: 0 20px 20px;
+		line-height: 22px;
+		pointer-events: none;
+
+		&Name {
+			font-size: $nr-md-fontsize;
+			color: $primary;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+
+		&Description {
+			font-size: $nr-xm-fontsize;
+			color: white;
+			font-weight: 700;
+			white-space: normal;
+		}
+
+		&Bottom {
+			color: white;
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+
+			&Posts {
+				font-size: $nr-sm-fontsize;
+				font-weight: 300;
+				color: $dark-light;
+			}
+
+			&GoTo {
+				&Icon {
+					font-size: .8em;
+				}
+			}
+		}
+	}
 
 	@include mobile-tablet() {
 		height: 291px;
