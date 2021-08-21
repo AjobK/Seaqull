@@ -9,6 +9,7 @@ const PostsBlock = lazy(() => import('../../components/postsBlock'))
 class Posts extends Component {
 	constructor(props) {
 		super(props)
+
 		this.MAX_POSTS_IN_BLOCK = 6
 		this.totalPages = null
 		this.scrolling = false
@@ -117,11 +118,13 @@ class Posts extends Component {
 	}
 
 	createPostsBlock = (posts) => {
-		return <div key={Math.random()}>
-			<Suspense fallback={<div>Loading...</div>}>
-				<PostsBlock posts={posts}/>
-			</Suspense>
-		</div>
+		return (
+		    <div key={Math.random()}>
+			    <Suspense fallback={<div>Loading...</div>}>
+				    <PostsBlock posts={posts}/>
+			    </Suspense>
+		    </div>
+		)
 	}
 
 	render() {

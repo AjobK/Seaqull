@@ -21,7 +21,7 @@ class PostController {
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
         let posts
-        const amount = 6
+        const amount = 7
 
         if (req.query.page == null) {
             posts = await this.dao.getPosts('0', amount)

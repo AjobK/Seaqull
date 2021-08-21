@@ -3,6 +3,7 @@ import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, Cropper } from '..'
 import Axios from 'axios'
+import BanUser from '../banUser/index'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -14,7 +15,8 @@ class UserBanner extends Component {
       upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false,
-      following: this.props.user.following || false
+      following: this.props.user.following || false,
+      banUser: false
     }
   }
 
@@ -76,11 +78,12 @@ class UserBanner extends Component {
     this.props.user.banner = newBanner
   }
 
-  closeCropper = () => {
+  closePopup = () => {
     this.setScrollEnabled(true)
     this.setState({
       upAvatar: null,
-      upBanner: null
+      upBanner: null,
+      banUser: false
     })
   }
 
@@ -100,8 +103,14 @@ class UserBanner extends Component {
         })
   }
 
+  banUser() {
+    this.setState({ banUser: true })
+  }
+
   render() {
     const user = this.props.user
+    const role = this.props.role
+
 
     let fontSize = ''
 
@@ -150,18 +159,41 @@ class UserBanner extends Component {
                       type="file" accept="image/png, image/jpeg" value={''}
                       onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
                   />
-                  <div className={ `${ styles.bannerEditActionBtn }` }>
-                    <Icon iconName={ 'Pen' } />
+                  <div className={ styles.bannerEditActionBtn }>
+                    <p className={ styles.bannerEditActionBtnText }>
+                      <span>EDIT BANNER</span>
+                      <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
+                    </p>
                   </div>
                 </div>
+            )}
+            { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
+                <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
+                <input
+                    type="submit"
+                    onChange={ this.onEditBanner } 
+                    onDragEnter={ this.onBannerDragEnter } 
+                    onDragLeave={ this.onBannerDragLeave }
+                    onClick={ this.banUser.bind(this) }
+                />
+                <div className={ styles.bannerEditActionBtn }>
+                  <p className={ styles.bannerEditActionBtnText }>
+                    <span>BAN USER</span>
+                    <Icon iconName={ 'Ban' } className={ styles.bannerEditActionBtnIcon } />
+                  </p>
+                </div>
+              </div>
             )}
           </div>
 
           { this.state.upAvatar && (
-              <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closeCropper} changeImage={this.changeAvatar}/>
+              <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closePopup} changeImage={this.changeAvatar}/>
           )}
           { this.state.upBanner && (
-              <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closeCropper} changeImage={this.changeBanner}/>
+              <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closePopup} changeImage={this.changeBanner}/>
+          )}
+          { this.state.banUser && (
+              <BanUser user={user} closePopup={this.closePopup}></BanUser>
           )}
         </section>
     )

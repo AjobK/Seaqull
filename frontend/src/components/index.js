@@ -31,10 +31,11 @@ import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
 import PostLikesList from './postLikesList'
 import Cropper from './cropper'
+import Dialog from './dialog'
 import PostsBlock from './postsBlock'
 import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
-import Dialog from './dialog'
+import PopUp from './popUp'
 
 export {
   Button,
@@ -70,8 +71,9 @@ export {
   ProfileInfo,
   PostLikesList,
   Cropper,
+  Dialog,
   PostsBlock,
   PostsBlockLarge,
   PostsBlockSmall,
-  Dialog
+  PopUp
 }

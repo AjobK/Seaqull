@@ -8,16 +8,14 @@ export class Ban extends BaseEntity {
 
     @ManyToOne(() => Account, account => account.id)
     @JoinColumn({ name: 'staff_account_id', referencedColumnName: 'id' })
-    staff_account: Account
+    staff: Account
 
     @OneToOne(() => Account)
-    user_account: Account
+    @JoinColumn({ name: 'user_account_id', referencedColumnName: 'id' })
+    user: Account
 
-    @Column()
+    @Column({ unique: false })
     reason: string
-
-    @Column()
-    description: string
 
     @Column()
     banned_at: Date
@@ -25,8 +23,8 @@ export class Ban extends BaseEntity {
     @Column()
     banned_to: Date
 
-    @Column()
-    ip_ban: number
+    @Column({ unique: false })
+    ip_ban: string
 }
 
 export default Ban

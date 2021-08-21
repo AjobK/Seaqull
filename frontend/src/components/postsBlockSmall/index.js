@@ -9,9 +9,7 @@ class PostsBlockSmall extends Component {
 		super(props)
 	}
 
-	bookmarkPost = () => {
-
-	}
+	bookmarkPost = () => { }
 
 	render() {
 		const { post } = this.props
@@ -37,7 +35,10 @@ class PostsBlockSmall extends Component {
 						<img src={ defaultThumbnail } alt={ 'post' } />
 					</a>
 				</div>
-				<a href={ `posts/${ post.path }` } className={ styles.smallContent}>
+				<div className={ styles.smallContent }>
+					<a href={ `posts/${ post.path }` } className={ styles.smallContentClickable }>
+
+					</a>
 					<div>
 						<div>
 							<h4 className={ styles.smallContentTitle }>
@@ -54,7 +55,7 @@ class PostsBlockSmall extends Component {
 										<Icon iconName={ 'Stopwatch' } />
 									</span>
 									<p>
-										6 min
+										? min
 									</p>
 								</div>
 								<span className={ styles.smallContentBottomInfoBullet }>
@@ -74,7 +75,7 @@ class PostsBlockSmall extends Component {
 							</span>
 						</div>
 					</div>
-				</a>
+				</div>
 			</div>
 		)
 	}

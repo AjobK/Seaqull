@@ -10,7 +10,6 @@ class PostsBlockLarge extends Component {
 	}
 
 	bookmarkPost = () => {
-
 	}
 
 	render() {
@@ -52,7 +51,7 @@ class PostsBlockLarge extends Component {
 										<Icon iconName={ 'Stopwatch' } />
 									</span>
 									<p>
-										6 min
+										? min
 									</p>
 								</div>
 								<span className={ styles.largeThumbnailContentBottomInfoBullet }>

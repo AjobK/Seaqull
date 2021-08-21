@@ -17,10 +17,12 @@ class PostsBlock extends Component {
 
 	convertPosts() {
 		let convertedPosts = []
+
 		this.state.posts.forEach((post) => {
 			try {
 				post.title = convertFromRaw(JSON.parse(post.title)).getPlainText()
 			} catch (e) { }
+
 			convertedPosts.push(post)
 		})
 		this.setState({

@@ -56,19 +56,19 @@
 	animation: load 1.5s infinite;
 }
 
-@mixin pulse () {
+@mixin pulse ($color) {
 	@keyframes pulse {
 		0% {
-			-moz-box-shadow: 0 0 0 0 rgba($primary, 0.5);
-			box-shadow: 0 0 0 0 rgba($primary, 0.5);
+			-moz-box-shadow: 0 0 0 0 rgba($color, 0.5);
+			box-shadow: 0 0 0 0 rgba($color, 0.5);
 		}
 		70% {
-			-moz-box-shadow: 0 0 0 10px rgba($primary, 0);
-			box-shadow: 0 0 0 10px rgba($primary, 0);
+			-moz-box-shadow: 0 0 0 10px rgba($color, 0);
+			box-shadow: 0 0 0 10px rgba($color, 0);
 		}
 		100% {
-			-moz-box-shadow: 0 0 0 0 rgba($primary, 0);
-			box-shadow: 0 0 0 0 rgba($primary, 0);
+			-moz-box-shadow: 0 0 0 0 rgba($color, 0);
+			box-shadow: 0 0 0 0 rgba($color, 0);
 		}
 	}
 
@@ -117,6 +117,7 @@
 	align-items: center;
 	font-size: 1.3em;
 	transition: 0.2s;
+	user-select: none;
 
 	&:hover {
 		color: $primary;

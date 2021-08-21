@@ -27,6 +27,7 @@ $post-padding: 10px;
 
 	&Thumbnail {
 		position: relative;
+		width: 100%;
 		max-width: $small-thumbnail-width-desktop;
 
 		&Content {
@@ -40,7 +41,7 @@ $post-padding: 10px;
 			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 			min-height: 35%;
 
-			& > * {
+			> * {
 				pointer-events: initial;
 			}
 
@@ -70,7 +71,7 @@ $post-padding: 10px;
 				> p {
 					position: relative;
 
-					> span {			
+					> span {
 						@include fancy-underline(2px, 0);
 					}
 				}
@@ -101,14 +102,21 @@ $post-padding: 10px;
 	&Content {
 		width: 100%;
 		display: flex;
-		padding-left: $post-padding;
 		align-items: center;
+		position: relative;
 
-		& > div {
+		> div {
 			width: 100%;
 			display: flex;
 			flex-direction: column;
 			min-height: calc(100% - #{$post-padding});
+			padding-left: $post-padding;
+		}
+
+		&Clickable {
+			position: absolute;
+			width: 100%;
+			height: 100%;
 		}
 
 		&Title {
@@ -177,6 +185,7 @@ $post-padding: 10px;
 			}
 
 			&GoTo {
+				pointer-events: none;
 				margin-top: 4px;
 				color: $primary;
 				opacity: .8;
@@ -250,7 +259,9 @@ $post-padding: 10px;
 			}
 
 			&Content {
-				padding: 0 0 calc(#{$post-padding} / 2) $post-padding;
+				> div {
+					padding: 0 0 calc(#{$post-padding} / 2) $post-padding;
+				}
 
 				&Title {
 					font-size: $nr-sm-fontsize;
@@ -261,12 +272,19 @@ $post-padding: 10px;
 				}
 
 				&Bottom {
+					transform: translateY($post-padding);
+					pointer-events: none;
+
 					&Info {
 						display: none;
 					}
 
 					.bookmark {
-						@include bookmark();	
+						@include bookmark();
+						transform: translateX(-$post-padding);
+						pointer-events: initial;
+						padding: $post-padding;
+						box-sizing: border-box;
 						position: static;
 						display: flex;
 						color: #818193;

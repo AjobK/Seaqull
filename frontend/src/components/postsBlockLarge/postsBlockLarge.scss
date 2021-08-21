@@ -33,12 +33,11 @@ $post-padding: 20px;
 
 .large {
 	position: relative;
-	height: 336px;
 	max-width: 100%;
 
 	&Thumbnail {
 		position: relative;
-		height: 100%;
+		height: 336px;
 
 		&Bookmark {
 			padding: $post-padding;
@@ -237,10 +236,10 @@ $post-padding: 20px;
 	}
 
 	@include mobile-tablet() {
-		height: 274px;
-
 		.large {
 			&Thumbnail {
+				height: 274px;
+
 				&Content {
 					&Title {
 						font-size: $nr-xm-fontsize;
@@ -280,10 +279,10 @@ $post-padding: 20px;
 	}
 
 	@include mobile-all() {
-		height: fit-content;
-
 		.large {
 			&Thumbnail {
+				height: auto;
+
 				&Content {
 					padding: 50px calc(#{$post-padding} / 2) 0;
 
