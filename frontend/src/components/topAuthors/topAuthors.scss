@@ -96,6 +96,7 @@
 
 				> li {
 					flex: 1;
+					transition: all .8s ease-in;
 				}
 
 				> li:not(:last-child) {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, createRef, useRef} from 'react'
 import styles from './topAuthors.scss'
 import { InView } from 'react-intersection-observer'
 import { inject, observer } from 'mobx-react'
@@ -9,12 +9,14 @@ class TopAuthors extends Component {
 	constructor(props) {
 		super(props)
 
-		this.MAX_AUTHORS_IN_PAGE = 4
+		this.authorCardListRef = createRef()
 
 		this.state = {
 			topAuthors: [],
 			visibleAuthors: [],
-			pages: []
+			pages: [],
+			activePage: 1,
+			authorCardWidth: 0
 		}
 	}
 
@@ -28,6 +30,7 @@ class TopAuthors extends Component {
 		]
 
 		this.setState({
+			...this.state,
 			topAuthors
 		})
 	}
@@ -46,10 +49,15 @@ class TopAuthors extends Component {
 		if (visibleAuthors.length <= 0)
 			return
 
+		const authorCardListWidth = this.authorCardListRef.current.getBoundingClientRect().width
+
 		this.setState({
 			...this.state,
-			pages: this.calculatePages(visibleAuthors.length)
+			pages: this.calculatePages(visibleAuthors.length),
+			authorCardWidth: authorCardListWidth / visibleAuthors.length
 		})
+
+		console.log(authorCardListWidth / visibleAuthors.length)
 	}
 
 	calculatePages = (authorsInPage) => {
@@ -75,8 +83,30 @@ class TopAuthors extends Component {
 		return pages
 	}
 
+	pageForward = () => {
+		let newActivePage = this.state.activePage + 1
+
+		this.setState({
+			...this.state,
+			activePage: newActivePage > this.state.pages.length
+				? 0
+				: newActivePage
+		})
+	}
+
+	pageBack = () => {
+		let newActivePage = this.state.activePage - 1
+
+		this.setState({
+			...this.state,
+			activePage: newActivePage <= 0
+				? this.state.pages.length
+				: newActivePage
+		})
+	}
+
 	render() {
-		const { topAuthors, pages } = this.state
+		const { topAuthors, pages, activePage, authorCardWidth } = this.state
 
 		return (
 			<div className={ styles.topAuthors }>
@@ -102,9 +132,10 @@ class TopAuthors extends Component {
 					</div>
 					<div className={ styles.topAuthorsContentAuthors }>
 						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ styles.overlayFadeRight }` } />
-						<ul className={ styles.topAuthorsContentAuthorsList }>
+						{/* Add InView here? */}
+						<ul className={ styles.topAuthorsContentAuthorsList } ref={ this.authorCardListRef }>
 							{ topAuthors.map(( topAuthor ) => {
-								return <li key={ topAuthor._id }>
+								return <li key={ topAuthor._id } style={{ transform: `translateX(-${activePage * authorCardWidth}px)` }}>
 									<InView id={ topAuthor._id } onChange={ this.onAuthorViewportChange }>
 										<TopAuthorsAuthor/>
 									</InView>
@@ -112,7 +143,9 @@ class TopAuthors extends Component {
 							})}
 						</ul>
 						<div>
-							1/{pages.length}
+							<span onClick={ this.pageBack }> back </span>
+							{ activePage }/{ pages.length }
+							<span onClick={ this.pageForward }> forward </span>
 						</div>
 					</div>
 				</div>
