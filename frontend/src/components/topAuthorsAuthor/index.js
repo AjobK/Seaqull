@@ -15,7 +15,7 @@ class TopAuthorsAuthor extends Component {
 
 		return (
 			<div className={ styles.author }>
-				<a href={''}>
+				<a href={'#'}>
 					<img className={ styles.authorAvatar } src={ defaultThumbnail } alt={ 'author' }/>
 					<div className={ styles.authorContent }>
 						<p className={ styles.authorContentName }>

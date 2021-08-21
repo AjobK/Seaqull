@@ -142,10 +142,22 @@ class TopAuthors extends Component {
 								</li>
 							})}
 						</ul>
-						<div>
-							<span onClick={ this.pageBack }> back </span>
-							{ activePage }/{ pages.length }
-							<span onClick={ this.pageForward }> forward </span>
+					</div>
+					<div className={ styles.topAuthorsContentPages }>
+						<div className={ styles.topAuthorsContentPagesTop }>
+							<div className={ `${ styles.topAuthorsContentPagesTopPage }` }/>
+							<div className={ `${ styles.topAuthorsContentPagesTopPage } ${ styles.activePage }` }/>
+						</div>
+						<div className={ styles.topAuthorsContentPagesBottom }>
+							<span onClick={ this.pageBack } className={ styles.topAuthorsContentPagesBottomNavigator }>
+								<Icon iconName={ 'ChevronLeft' } className={ styles.topAuthorsContentPagesBottomNavigatorIcon } />
+							</span>
+							<p className={ styles.topAuthorsContentPagesBottomPageCounter }>
+								{ activePage }/{ pages.length }
+							</p>
+							<span onClick={ this.pageForward  } className={ styles.topAuthorsContentPagesBottomNavigator }>
+								<Icon iconName={ 'ChevronRight' } className={ styles.topAuthorsContentPagesBottomNavigatorIcon } />
+							</span>
 						</div>
 					</div>
 				</div>

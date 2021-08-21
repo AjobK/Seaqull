@@ -104,6 +104,61 @@
 				}
 			}
 		}
+
+		&Pages {
+			padding-top: 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			&Top {
+				display: flex;
+
+				&Page {
+					background-color: #2e2e4c;
+					width: 50px;
+					height: 4px;
+					opacity: .2;
+					margin: 0 5px;
+					cursor: pointer;
+					transition: opacity .2s linear;
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+
+				.activePage {
+					opacity: 1;
+				}
+			}
+
+			&Bottom {
+				margin-top: 15px;
+				display: flex;
+
+				&PageCounter {
+					margin: 2px 0;
+					font-size: $nr-xs-fontsize;
+				}
+
+				&Navigator {
+					cursor: pointer;
+					padding: 0 20px;
+					color: $secondary;
+					opacity: .2;
+					transition: opacity .2s linear;
+
+					&Icon {
+						font-size: .7em;
+					}
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+		}
 	}
 
 	@include mobile-tablet() {

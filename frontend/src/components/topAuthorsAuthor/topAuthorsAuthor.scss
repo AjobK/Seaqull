@@ -3,7 +3,6 @@
 .author {
 	height: 360px;
 	width: 285px;
-	background-color: #9696ff;
 	position: relative;
 
 	&Avatar {
@@ -21,7 +20,7 @@
 		bottom: 0;
 		width: 100%;
 		max-width: inherit;
-		height: 65%;
+		height: 60%;
 		background: $secondary;
 		background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 		padding: 0 20px 20px;
