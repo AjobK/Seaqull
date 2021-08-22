@@ -111,18 +111,9 @@ class TopAuthors extends Component {
 	}
 
 	getXToMove = () => {
-		const { activePage, authorCardWidth, pages, topAuthors } = this.state
-		let xToMove
+		const { activePage, authorCardWidth, visibleAuthors } = this.state
 
-		if (activePage <= 1) {
-			xToMove = 0
-		} else if (activePage >= pages.length) {
-			xToMove = (topAuthors.length - (topAuthors.length / pages.length)) * authorCardWidth
-		} else {
-			xToMove = activePage * authorCardWidth
-		}
-
-		return xToMove
+		return ((activePage - 1) * visibleAuthors.length) * authorCardWidth
 	}
 
 	render() {
