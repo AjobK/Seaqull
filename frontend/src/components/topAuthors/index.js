@@ -116,7 +116,7 @@ class TopAuthors extends Component {
 
 		xToMove = activePage > 1
 			? ((activePage - 1) * visibleAuthors.length) * authorCardWidth
-			: 0
+			: 1
 
 		return xToMove
 	}
