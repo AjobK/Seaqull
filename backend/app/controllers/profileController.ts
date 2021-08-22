@@ -14,6 +14,7 @@ import attachmentDAO from '../daos/attachmentDAO'
 import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
+import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -32,6 +33,7 @@ class ProfileController {
     private roleDAO: RoleDao
     private attachmentDAO: attachmentDAO
     private fileService: FileService
+    private banService: BanService
 
     constructor() {
         this.dao = new ProfileDAO()
@@ -40,6 +42,7 @@ class ProfileController {
         this.roleDAO = new RoleDao()
         this.attachmentDAO = new attachmentDAO()
         this.fileService = new FileService()
+        this.banService = new BanService()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -108,6 +111,11 @@ class ProfileController {
         const profile = await this.dao.getProfileByUsername(receivedUsername)
 
         if (!profile) return res.status(404).json({ 'message': 'User not found' })
+
+        const account = await this.accountDAO.getAccountByUsername(profile.display_name)
+        const ban = await this.banService.checkIfUserIsBanned(account)
+
+        if (ban) return res.status(403).json({ 'errors': [ban] })
 
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
@@ -333,7 +341,6 @@ class ProfileController {
         const u = req.body
 
         let newProfile = new Profile()
-
         newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
         newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
@@ -349,12 +356,13 @@ class ProfileController {
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
-        acc.role = await this.roleDAO.getRoleById(2)
+        acc.role = await this.roleDAO.getRoleById(1)
+
         const createdAccount = await this.accountDAO.saveAccount(acc)
+
         return createdAccount
     }
 
-    // function removes all unnecessary data
     private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at

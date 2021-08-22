@@ -23,7 +23,7 @@ class Comment extends Component {
         }
 
         if (this.props.comment && this.props.comment.parent_comment_id) {
-            this.isReply = true;
+            this.isReply = true
         }
     }
 

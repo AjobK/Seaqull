@@ -11,7 +11,7 @@ export class ProfileActivity extends BaseEntity {
     profile_id: number
 
     @Column()
-    previos_password: string
+    previous_password: string
 
     @Column()
     type: string

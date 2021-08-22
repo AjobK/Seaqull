@@ -10,7 +10,6 @@ import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../..
 
 @inject('store') @observer
 class Profile extends App {
-
   constructor(props) {
     super(props)
 
@@ -105,7 +104,7 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner user={ user } owner={ isOwner && profile.loggedIn } />
+        <UserBanner role={ profile.role } user={ user } owner={ isOwner && profile.loggedIn } />
         <Section title={ 'DESCRIPTION' }>
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
         </Section>

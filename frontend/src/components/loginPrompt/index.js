@@ -61,9 +61,9 @@ class LoginPrompt extends Component {
 
     Axios.post('/login', payload, {withCredentials: true})
     .then(res => {
-      this.props.store.profile.setProfileData(res.data)
-      this.props.store.user.fillUserData(res.data)
-      this.goToProfile(res.data.user_name)
+      this.props.store.profile.setLoggedIn(true)
+      this.props.store.user.fillUserData(res.data.user)
+      this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
       if (res.message === 'Network Error') {
@@ -78,13 +78,13 @@ class LoginPrompt extends Component {
         })
       }
 
-      const { error, remainingTime } = res.response.data
+      const { errors, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
       this.setState({
-        username: error || [],
-        password: error || [],
+        username: errors || [],
+        password: errors || [],
         loadingTimeout: false
       })
     })
@@ -153,8 +153,8 @@ class LoginPrompt extends Component {
         <p className={styles.text}> Welcome back!</p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type='text'/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}

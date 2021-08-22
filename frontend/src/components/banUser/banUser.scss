@@ -1,0 +1,87 @@
+@import '../../styles/index.scss';
+@import '../../styles/variables.scss';
+
+.form {
+	width: 100%;
+
+	&Group {
+		margin-top: 20px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+		
+		@include mobile-all-portrait {
+			margin-top: 30px;
+		}
+
+		@include mobile-sm {
+			margin-top: 20px;
+		}
+	}
+}
+
+.banUser {
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 101;
+
+	&Background {
+		width: inherit;
+		height: inherit;
+		background-color: black;
+		opacity: 0.5;
+	}
+
+	&PopUp {
+		@include pop-up();
+		height: auto;
+		max-height: 98%;
+		padding: 30px 30px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		overflow: hidden;
+
+		@include mobile-sm {
+			min-width: initial;
+			max-width: 95%;
+		}
+
+		> h2 {
+			margin-bottom: 5px;
+		}
+
+		> h3 {
+			margin-bottom: $header-spacing;
+			color: $primary;
+		}
+
+		&Btns {
+			display: flex;
+
+			&CancelButton {
+				display: inline-block;
+
+				&:hover {
+					animation: none;
+					color: black;
+				}
+			}
+
+			&SaveButton {
+				margin-left: 10px;
+			}
+		}
+	}
+}
+
+.submitWrapper {
+	margin-top: $header-spacing;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
