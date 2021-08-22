@@ -167,7 +167,15 @@
 	}
 
 	@include mobile-tablet() {
-
+		.topAuthors {
+			&Content {
+				&Pages {
+					&Bottom {
+						margin-top: 10px;
+					}
+				}
+			}
+		}
 	}
 
 	@include mobile-all() {
