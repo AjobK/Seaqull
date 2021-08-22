@@ -26,7 +26,7 @@ class PostBanner extends Component {
         <div className={ styles.backdrop}/>
         <div className={ styles.innerWrapper }>
           <div className={ styles.info }>
-            <Link to={isOwner ? '/profile/' : `/profile/${author.name}`} className={ styles.profileLink }>
+            <Link to={`/profile/${author.name}`} className={ styles.profileLink }>
               <div className={ styles.infoInner }>
                 <div className={ styles.picture} style={{ backgroundImage: `url(${author.avatarURL || ''})`, backgroundColor: uniqueAvatarColorBasedOnHash }} />
                 <div className={ styles.user_info }>
