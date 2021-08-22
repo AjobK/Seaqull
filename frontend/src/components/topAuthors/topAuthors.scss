@@ -116,7 +116,7 @@
 			flex-direction: column;
 			align-items: center;
 
-			&Top {
+			&TopNavigator {
 				display: flex;
 
 				&Page {
@@ -139,27 +139,45 @@
 			}
 
 			&Bottom {
-				margin-top: 15px;
-				display: flex;
-
-				&PageCounter {
-					margin: 2px 0;
-					font-size: $nr-xs-fontsize;
-				}
-
 				&Navigator {
-					cursor: pointer;
-					padding: 0 20px;
-					color: $secondary;
-					opacity: .2;
-					transition: opacity .2s linear;
+					margin-top: 15px;
+					display: flex;
 
-					&Icon {
-						font-size: .7em;
+					&PageCounter {
+						margin: 2px 0;
+						font-size: $nr-xs-fontsize;
 					}
 
-					&:hover {
-						opacity: 1;
+					&Arrow {
+						cursor: pointer;
+						padding: 0 20px;
+						color: $secondary;
+						opacity: .2;
+						transition: opacity .2s linear;
+						user-select: none;
+
+						&Icon {
+							font-size: .7em;
+						}
+
+						&:hover {
+							opacity: 1;
+						}
+					}
+				}
+
+				&ViewMore {
+					display: none;
+					margin-top: auto;
+					color: $secondary;
+					font-weight: 300;
+					font-size: $nr-sm-fontsize;
+					opacity: .8;
+
+					&Icon {
+						margin: auto 0 2px 10px;
+						font-size: .7em;
+						opacity: .8;
 					}
 				}
 			}
@@ -211,6 +229,29 @@
 						> li {
 							flex: none;
 							width: 250px;
+						}
+					}
+				}
+
+				&Pages {
+					align-items: initial;
+					padding-top: 10px;
+
+					&TopNavigator {
+						display: none;
+					}
+
+					&Bottom {
+						margin-top: 0;
+						display: flex;
+						justify-content: space-between;
+
+						&Navigator {
+							transform: translateX(-20px);
+						}
+
+						&ViewMore {
+							display: flex;
 						}
 					}
 				}

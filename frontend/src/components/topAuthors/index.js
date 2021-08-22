@@ -104,7 +104,6 @@ class TopAuthors extends Component {
 	}
 
 	toPage = (newPage) => {
-		console.log(newPage.target)
 		this.setState({
 			...this.state,
 			activePage: newPage
@@ -151,24 +150,34 @@ class TopAuthors extends Component {
 						</ul>
 					</div>
 					<div className={ styles.topAuthorsContentPages }>
-						<div className={ styles.topAuthorsContentPagesTop }>
+						<div className={ styles.topAuthorsContentPagesTopNavigator }>
 							{ pages.map(( page, i ) => {
 								return <div key={ i }
-											className={ `${ styles.topAuthorsContentPagesTopPage } ${ activePage === i + 1 ? styles.activePage : '' }` }
+											className={ `${ styles.topAuthorsContentPagesTopNavigatorPage } ${ activePage === i + 1 ? styles.activePage : '' }` }
 											onClick={ () => this.toPage(i + 1) }
 								/>
 							})}
 						</div>
 						<div className={ styles.topAuthorsContentPagesBottom }>
-							<span onClick={ this.pageBack } className={ styles.topAuthorsContentPagesBottomNavigator }>
-								<Icon iconName={ 'ChevronLeft' } className={ styles.topAuthorsContentPagesBottomNavigatorIcon } />
-							</span>
-							<p className={ styles.topAuthorsContentPagesBottomPageCounter }>
-								{ activePage }/{ pages.length }
-							</p>
-							<span onClick={ this.pageForward } className={ styles.topAuthorsContentPagesBottomNavigator }>
-								<Icon iconName={ 'ChevronRight' } className={ styles.topAuthorsContentPagesBottomNavigatorIcon } />
-							</span>
+							<div className={ styles.topAuthorsContentPagesBottomNavigator }>
+								<span onClick={ this.pageBack } className={ styles.topAuthorsContentPagesBottomNavigatorArrow }>
+									<Icon iconName={ 'ChevronLeft' } className={ styles.topAuthorsContentPagesBottomNavigatorArrowIcon } />
+								</span>
+								<p className={ styles.topAuthorsContentPagesBottomNavigatorPageCounter }>
+									{ activePage }/{ pages.length }
+								</p>
+								<span onClick={ this.pageForward } className={ styles.topAuthorsContentPagesBottomNavigatorArrow }>
+									<Icon iconName={ 'ChevronRight' } className={ styles.topAuthorsContentPagesBottomNavigatorArrowIcon } />
+								</span>
+							</div>
+							<a href={'#'} className={ styles.topAuthorsContentPagesBottomViewMore }>
+								<p>
+									View more authors
+								</p>
+								<span className={ styles.topAuthorsContentPagesBottomViewMoreIcon }>
+									<Icon iconName={ 'ChevronRight' } />
+								</span>
+							</a>
 						</div>
 					</div>
 				</div>
