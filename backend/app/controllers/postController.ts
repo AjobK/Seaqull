@@ -227,13 +227,14 @@ class PostController {
 
     public archivePost = async (req: Request, res: Response): Promise<any> => {
         const { path } = req.body
-
         const post = await this.dao.getPostByPath(path)
+
         if (!post) res.status(404).json({ error: 'Not found' })
 
         post.archived_at = Date.now()
-        this.dao.updatePost(post)
 
+        const newPost = await this.dao.updatePost(post)
+        if (!newPost) return res.status(500).json({ error: 'Could not archive post' })
 
         return res.status(200).json({ message: 'status' })
     }

@@ -21,14 +21,14 @@ class PostDAO {
 
     public async getOwnedPosts(profile: Profile): Promise<Post[]> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const postList = await repository.find({ where: { profile: profile }, relations: ['profile'] })
+        const postList = await repository.find({ where: { profile: profile, archived_at: IsNull() }, relations: ['profile'] })
 
         return postList
     }
 
     public async getPostByPath(path: string): Promise<Post> {
         const repository = await DatabaseConnector.getRepository('Post')
-        const foundPost = await repository.findOne({ where: { path: path }, relations: ['profile'] })
+        const foundPost = await repository.findOne({ where: { path: path, archived_at: IsNull() }, relations: ['profile'] })
 
         return foundPost
     }
