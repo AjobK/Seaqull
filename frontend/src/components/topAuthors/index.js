@@ -107,7 +107,7 @@ class TopAuthors extends Component {
 				...this.state,
 				sensorEnabled: true
 			})
-		}, 799)
+		}, 800)
 	}
 
 	getXToMove = () => {

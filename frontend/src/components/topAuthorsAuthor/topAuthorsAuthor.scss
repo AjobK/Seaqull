@@ -41,9 +41,10 @@
 			white-space: normal;
 		}
 
-		&Bottom {
+		&BottomDesktop {
+			display: none;
 			color: white;
-			display: flex;
+			//display: flex;
 			justify-content: space-between;
 			margin-top: 20px;
 
@@ -57,6 +58,37 @@
 				&Icon {
 					font-size: .8em;
 				}
+			}
+		}
+
+		&BottomSmartphone {
+			border-top: white 1px solid;
+			padding-top: 20px;
+			margin-top: 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			&Stat {
+				display: flex;
+				flex-direction: column;
+				color: white;
+				align-items: center;
+
+				&Data {
+					font-size: $nr-sm-fontsize;
+					font-weight: 600;
+				}
+
+				&Title {
+					font-size: $nr-xs-fontsize;
+					opacity: .8;
+				}
+			}
+
+			&GoTo {
+				color: $primary;
+				font-size: .9em;
 			}
 		}
 	}
@@ -81,6 +113,21 @@
 	}
 
 	@include mobile-all() {
+		height: 315px;
+		width: 250px;
 
+		.author {
+			&Content {
+				&Name {
+					color: white;
+				}
+
+				&Description {
+					font-size: $nr-xs-fontsize;
+					opacity: .6;
+					font-weight: normal;
+				}
+			}
+		}
 	}
 }

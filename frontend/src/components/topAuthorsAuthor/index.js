@@ -24,13 +24,42 @@ class TopAuthorsAuthor extends Component {
 						<p className={ styles.authorContentDescription }>
 							Software Engineer and just an overall nice guy
 						</p>
-						<div className={ styles.authorContentBottom }>
-							<p className={ styles.authorContentBottomPosts }>
+						<div className={ styles.authorContentBottomDesktop }>
+							<p className={ styles.authorContentBottomDesktopPosts }>
 								? posts
 							</p>
-							<span className={ styles.authorContentBottomGoTo }>
-							<Icon iconName={ 'ChevronRight' } className={ styles.authorContentBottomGoToIcon } />
-						</span>
+							<span className={ styles.authorContentBottomDesktopGoTo }>
+								<Icon iconName={ 'ChevronRight' } className={ styles.authorContentBottomDesktopGoToIcon } />
+							</span>
+						</div>
+						<div className={ styles.authorContentBottomSmartphone }>
+							<div className={ styles.authorContentBottomSmartphoneStat }>
+								<p className={ styles.authorContentBottomSmartphoneStatData }>
+									10K
+								</p>
+								<p className={ styles.authorContentBottomSmartphoneStatTitle }>
+									Followers
+								</p>
+							</div>
+							<div className={ styles.authorContentBottomSmartphoneStat }>
+								<p className={ styles.authorContentBottomSmartphoneStatData }>
+									103
+								</p>
+								<p className={ styles.authorContentBottomSmartphoneStatTitle }>
+									Following
+								</p>
+							</div>
+							<div className={ styles.authorContentBottomSmartphoneStat }>
+								<p className={ styles.authorContentBottomSmartphoneStatData }>
+									214
+								</p>
+								<p className={ styles.authorContentBottomSmartphoneStatTitle }>
+									Posts
+								</p>
+							</div>
+							<span className={ styles.authorContentBottomSmartphoneGoTo }>
+								<Icon iconName={ 'ChevronRight' } className={ styles.authorContentBottomSmartphoneGoToIcon } />
+							</span>
 						</div>
 					</div>
 				</a>
