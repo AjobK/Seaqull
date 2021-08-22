@@ -224,6 +224,17 @@ class PostController {
 
         return null
     }
+
+    private archivePost = async (req: Request, res: Response): Promise<any> => {
+        const { path } = req
+
+        const post = await this.dao.getPostByPath(path)
+        post.archived_at = Date.now()
+        this.dao.updatePost(post)
+
+
+        return res.status(200).json({ message: 'status' })
+    }
 }
 
 export default PostController

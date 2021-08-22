@@ -1,10 +1,14 @@
 import * as express from 'express'
 import PostService from '../controllers/postController'
 import RouterBase from '../interfaces/RouterBase'
+
 const auth = require('../middlewares/isAuth.ts')
+const hasPermission = require('../middlewares/hasPermission.ts')
+
 
 class PostRoutes implements RouterBase {
     public post = '/post'
+    public archivePost = '/archive'
     public router = express.Router()
     private postService: PostService
 
@@ -23,6 +27,7 @@ class PostRoutes implements RouterBase {
 
         this.router.post(this.post + '/like/:path', auth, this.postService.likePost)
         this.router.delete(this.post + '/like/:path', auth, this.postService.unlikePost)
+        this.router.delete(this.archivePost, auth, hasPermission('REMOVE_POSTS'), )
         this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
         this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
         this.router.put(this.post + '/:path', auth, this.postService.updatePost)
