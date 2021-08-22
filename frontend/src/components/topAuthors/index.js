@@ -10,19 +10,22 @@ class TopAuthors extends Component {
 		super(props)
 
 		this.authorCardListRef = createRef()
+		this.didResize = true
 
 		this.state = {
 			topAuthors: [],
 			visibleAuthors: [],
 			pages: [],
 			activePage: 1,
-			authorCardWidth: 0,
-			sensorEnabled: true
+			authorCardWidth: 0
 		}
 	}
 
 	componentDidMount() {
 		this.fetchTopAuthors()
+		window.addEventListener('resize', () => {
+			this.didResize = true
+		})
 	}
 
 	fetchTopAuthors() {
@@ -37,7 +40,7 @@ class TopAuthors extends Component {
 	}
 
 	onAuthorViewportChange = (isVisible, entry) => {
-		if (!this.state.sensorEnabled)
+		if (!this.didResize)
 			return
 
 		let visibleAuthors = this.state.visibleAuthors
@@ -60,6 +63,8 @@ class TopAuthors extends Component {
 			pages: this.calculatePages(visibleAuthors.length),
 			authorCardWidth
 		})
+
+		this.didResize = false
 	}
 
 	calculatePages = (authorsInPage) => {
@@ -98,16 +103,8 @@ class TopAuthors extends Component {
 	toPage = (newPage) => {
 		this.setState({
 			...this.state,
-			activePage: newPage,
-			sensorEnabled: false
+			activePage: newPage
 		})
-
-		setTimeout(() => {
-			this.setState({
-				...this.state,
-				sensorEnabled: true
-			})
-		}, 800)
 	}
 
 	getXToMove = () => {
