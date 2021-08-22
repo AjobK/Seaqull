@@ -56,6 +56,10 @@ class ProfileController {
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
 
+        for (let i = 0; i < Object.keys(updateUser).length; i++) {
+            profile[Object.keys(updateUser)[i]] = updateUser[Object.keys(updateUser)[i]]
+        }
+
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
     }
@@ -123,7 +127,8 @@ class ProfileController {
 
         if (!isOwner && decodedToken && decodedToken.username) {
             const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
-            profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
+            const followingProfile = await this.dao.getProfileByUsername(decodedToken.username)
+            profileFollowedBy.follower = followingProfile.id
             profileFollowedBy.profile = profile.id
 
             following = await this.dao.isFollowing(profileFollowedBy)
@@ -133,7 +138,6 @@ class ProfileController {
             isOwner: isOwner,
             following: following,
             username: receivedUsername,
-            experience: profile.experience,
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
@@ -257,7 +261,7 @@ class ProfileController {
 
         if (type === AVATAR) {
             dimensions = 800
-            typeDefaultPath += 'defaultAvatar.jpg'
+            typeDefaultPath += 'defaultAvatar.png'
         } else if (type === BANNER) {
             dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
             typeDefaultPath += 'defaultBanner.jpg'
@@ -308,6 +312,7 @@ class ProfileController {
         }
 
         const isEmailTaken = await this.dao.getUserByEmail(email)
+
         if (isEmailTaken) {
             return 'Email not available'
         }
@@ -340,7 +345,6 @@ class ProfileController {
         newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
-        newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
         newProfile.description = 'Welcome to my profile!'

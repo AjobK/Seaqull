@@ -26,7 +26,7 @@ class ProfileDAO {
         const repositoryAccount = await DatabaseConnector.getRepository('Account')
         const account = await repositoryAccount.findOne({ email: email })
 
-        return !account ? null : account.profile
+        return account
     }
 
     public async saveProfile(u: Profile): Promise<Profile>{

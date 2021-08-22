@@ -7,13 +7,13 @@ import { Button } from '../../components'
 @inject('store') @observer
 class HeaderNavigation extends Component {
   render() {
-    const { user, profile } = this.props.store
+    const { profile } = this.props.store
 
     return (
       <nav className={styles.menu}>
-        {profile.loggedIn ? ( // Logged in content
+        { profile.loggedIn ? ( // Logged in content
           <ul className={styles.menuUl}>
-            <Link to='/profile' className={styles.menuItem}>
+            <Link to={'/profile/' + profile.display_name} className={styles.menuItem}>
               <li>My profile</li>
             </Link>
             <li onClick={profile.logOut} className={styles.menuItem}>Logout</li>

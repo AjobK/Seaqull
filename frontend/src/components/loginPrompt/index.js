@@ -63,7 +63,7 @@ class LoginPrompt extends Component {
     .then(res => {
       this.props.store.profile.setLoggedIn(true)
       this.props.store.user.fillUserData(res.data.user)
-      this.goToProfile(res.data.user.user_name)
+      this.goToProfile(res.data.user_name)
     })
     .catch(res => {
       if (res.message === 'Network Error') {

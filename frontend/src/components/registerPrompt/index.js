@@ -45,7 +45,7 @@ class RegisterPrompt extends Component {
 
     Axios.post('/profile/register', payload, {withCredentials: true})
     .then(res => {
-      this.props.store.profile.setLoggedIn(true)
+      this.props.store.profile.loginVerify()
       this.props.store.user.fillUserData(res.data.user)
       this.goToProfile(res.data.user.user_name)
     })
@@ -122,7 +122,7 @@ class RegisterPrompt extends Component {
 
   render() {
     const { username, email, password, recaptcha } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Register'
+    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
 
     return (
       <div className={[styles.prompt, this.props.className].join(' ')}>

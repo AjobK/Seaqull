@@ -188,7 +188,7 @@ class PostController {
         if (req.params.path && foundLikes)
             return res.status(200).json(foundLikes.reverse())
         else
-            return res.status(404).json({ 'message': 'No likes found for that post id' })
+            return res.status(204).json([])
     }
 
     public getRecentUserLikes = async (req: Request, res: Response): Promise<any> => {
