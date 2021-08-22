@@ -61,7 +61,12 @@ class PostLikesList extends Component {
                             return <li key={index} className={`${styles.likesListItem}`}>
                                 <Link to={`/profile/${like.displayName}`} className={styles.profileLikeLink}>
                                     <div className={`${styles.profileAvatarWrapper}`}>
-                                        <div className={`${styles.avatar}`} style={{ backgroundImage: `url(${like.avatarURL || ''})`, backgroundColor: uniqueAvatarColorBasedOnHash }} />
+                                        <div
+                                            className={`${styles.avatar}`}
+                                            style={{
+                                                backgroundImage: `url(${like.avatarURL || ''})`,
+                                                backgroundColor: uniqueAvatarColorBasedOnHash
+                                            }} />
                                     </div>
                                     <div className={`${styles.profileTextWrapper}`}>
                                         <p className={`${styles.profileDisplayName}`}>{like.displayName}</p>
