@@ -49,13 +49,12 @@ class TopAuthors extends Component {
 		if (visibleAuthors.length <= 0)
 			return
 
-		const authorCardListWidth = this.authorCardListRef.current.getBoundingClientRect().width
-		console.log(authorCardListWidth / visibleAuthors.length)
+		const authorCardWidth = this.authorCardListRef.current.children[0].getBoundingClientRect().width
 
 		this.setState({
 			...this.state,
 			pages: this.calculatePages(visibleAuthors.length),
-			authorCardWidth: authorCardListWidth / visibleAuthors.length
+			authorCardWidth
 		})
 	}
 
