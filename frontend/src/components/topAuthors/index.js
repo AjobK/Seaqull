@@ -16,7 +16,8 @@ class TopAuthors extends Component {
 			visibleAuthors: [],
 			pages: [],
 			activePage: 1,
-			authorCardWidth: 0
+			authorCardWidth: 0,
+			sensorEnabled: true
 		}
 	}
 
@@ -36,6 +37,9 @@ class TopAuthors extends Component {
 	}
 
 	onAuthorViewportChange = (isVisible, entry) => {
+		if (!this.state.sensorEnabled)
+			return
+
 		let visibleAuthors = this.state.visibleAuthors
 
 		visibleAuthors = isVisible
@@ -83,35 +87,46 @@ class TopAuthors extends Component {
 
 	pageForward = () => {
 		let newActivePage = this.state.activePage + 1
-
-		this.setState({
-			...this.state,
-			activePage: newActivePage > this.state.pages.length
-				? 0
-				: newActivePage
-		})
+		this.toPage(newActivePage > this.state.pages.length ? 0 : newActivePage)
 	}
 
 	pageBack = () => {
 		let newActivePage = this.state.activePage - 1
-
-		this.setState({
-			...this.state,
-			activePage: newActivePage <= 0
-				? this.state.pages.length
-				: newActivePage
-		})
+		this.toPage(newActivePage <= 0 ? this.state.pages.length : newActivePage)
 	}
 
 	toPage = (newPage) => {
 		this.setState({
 			...this.state,
-			activePage: newPage
+			activePage: newPage,
+			sensorEnabled: false
 		})
+
+		setTimeout(() => {
+			this.setState({
+				...this.state,
+				sensorEnabled: true
+			})
+		}, 1000)
+	}
+
+	getXToMove = () => {
+		const { activePage, authorCardWidth, pages, topAuthors } = this.state
+		let xToMove = 0
+
+		if (activePage <= 1) {
+			xToMove = 0
+		} else if (activePage >= pages.length) {
+			xToMove = topAuthors * authorCardWidth
+		} else {
+			xToMove = activePage * authorCardWidth
+		}
+
+		return xToMove
 	}
 
 	render() {
-		const { topAuthors, pages, activePage, authorCardWidth } = this.state
+		const { topAuthors, pages, activePage } = this.state
 
 		return (
 			<div className={ styles.topAuthors }>
@@ -141,7 +156,7 @@ class TopAuthors extends Component {
 						{/* Add InView here? */}
 						<ul className={ styles.topAuthorsContentAuthorsList } ref={ this.authorCardListRef }>
 							{ topAuthors.map(( topAuthor ) => {
-								return <li key={ topAuthor._id } style={{ transform: `translateX(-${activePage * authorCardWidth}px)` }}>
+								return <li key={ topAuthor._id } style={{ transform: `translateX(-${this.getXToMove()}px)` }}>
 									<InView id={ topAuthor._id } onChange={ this.onAuthorViewportChange }>
 										<TopAuthorsAuthor/>
 									</InView>
