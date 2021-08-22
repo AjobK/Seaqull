@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { Icon } from '..';
 import { Link } from 'react-router-dom'
 import PopUp from '../popUp';
+import Axios from 'axios'
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -15,31 +16,27 @@ class PostBanner extends Component {
     }
   }
 
-  deletePost() {
-    console.log("delete")
-  }
-
   updatePopup() {
     this.setState({
-      popUpOpen: true
+      popUpOpen: !this.state.popUpOpen
     })
   }
 
   render() {
     const { author, isOwner } = this.props
     const content = {
-      title: '',
-      description: '',
-      actions: [{
-        title: 'confirm',
-        action: this.deletePost,
-        primary: true
-      }],
+      title: 'Delete Post',
+      description: 'Are you sure you want to delete this post?',
+      close: this.updatePopup.bind(this),
       actions: [{
         title: 'cancel',
-        action: this.deletePost,
+        action: this.updatePopup.bind(this),
         primary: false
-      }]
+      }, {
+        title: 'confirm',
+        action: this.props.archivePost,
+        primary: true
+      }],
     }
 
     return (

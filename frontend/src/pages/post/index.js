@@ -142,6 +142,22 @@ class Post extends App {
         }
     }
 
+
+  archivePost() {
+    const payload = {
+        path: this.post.path
+    }
+
+    Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
+        this.props.history.push('/')
+    }).catch(err => {
+        console.log(err)
+        const { error } = err.response.data
+
+        this.setState({ error: [error] })
+    })
+  }
+
     render() {
         // Values change based on initial response from server
         const { isEditing, isOwner, post, loaded, author } = this.state
@@ -150,7 +166,7 @@ class Post extends App {
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner author={author} isOwner={isOwner} />
+                <PostBanner archivePost={this.archivePost.bind(this)} author={author} isOwner={isOwner} />
                 <Section noTitle>
                 { !this.props.new &&
                     <div className={styles.likePostWrapper}>
