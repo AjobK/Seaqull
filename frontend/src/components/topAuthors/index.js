@@ -10,22 +10,23 @@ class TopAuthors extends Component {
 		super(props)
 
 		this.authorCardListRef = createRef()
-		this.didResize = true
+		this.initialVisibilityArray = []
 
 		this.state = {
 			topAuthors: [],
-			visibleAuthors: [],
 			pages: [],
 			activePage: 1,
-			authorCardWidth: 0
+			authorCardWidth: 0,
+			sensorEnabled: true,
 		}
+
+		window.addEventListener('resize', () => {
+			this.setState({ pages: new Array(this.calculatePages()) })
+		})
 	}
 
 	componentDidMount() {
 		this.fetchTopAuthors()
-		window.addEventListener('resize', () => {
-			this.didResize = true
-		})
 	}
 
 	fetchTopAuthors() {
@@ -35,59 +36,64 @@ class TopAuthors extends Component {
 
 		this.setState({
 			...this.state,
+			pages: [],
 			topAuthors
+		}, () => {
+			this.initialVisibilityArray = new Array(topAuthors.length).fill(null)
 		})
 	}
 
 	onAuthorViewportChange = (isVisible, entry) => {
-		if (!this.didResize)
+		if (!this.state.sensorEnabled)
 			return
 
-		let visibleAuthors = this.state.visibleAuthors
+		let authorcount = entry.target.getAttribute('authorcount') * 1
+		console.log('AUTHOR COUNT?')
+		console.log(authorcount)
 
-		visibleAuthors = isVisible
-			? visibleAuthors.concat(entry.target.id)
-			: visibleAuthors.filter((authorId) => authorId !== entry.target.id)
+		if (this.initialVisibilityArray[authorcount] == null)
+			this.initialVisibilityArray[authorcount] = isVisible
 
-		this.setState({
-			visibleAuthors
-		})
+		if (this.state.pages.length == 0 && !this.initialVisibilityArray.some(i => i == null))
+			this.setState({ pages: new Array(this.calculatePages()) })
 
-		if (visibleAuthors.length <= 0)
-			return
+		console.log('\n--- Should I calculate? ---')
+		console.log('AUTHOR COUNT ' + authorcount)
+		console.log('INVIS ARRAY')
+		console.log(this.initialVisibilityArray)
 
 		const authorCardWidth = this.authorCardListRef.current.children[0].getBoundingClientRect().width
 
 		this.setState({
 			...this.state,
-			pages: this.calculatePages(visibleAuthors.length),
 			authorCardWidth
 		})
-
-		this.didResize = false
 	}
 
-	calculatePages = (authorsInPage) => {
-		const pages = []
-
-		let pointer = 0
-		let page = []
-		this.state.topAuthors.forEach((author) => {
-			pointer++
-			page.push(author)
-
-			if (pointer >= authorsInPage) {
-				pages.push(page)
-				page = []
-				pointer = 0
-			}
+	calculatePagesResized = () => {
+		console.log('CALC RESIZED')
+		let visibleCount = 0
+		console.log(this.initialVisibilityArray)
+		this.initialVisibilityArray.forEach((item, index) => {
+			if (item == null)
+				visibleCount = index
 		})
 
-		if (page.length > 0) {
-			pages.push(page)
-		}
+		return Math.ceil(
+			this.initialVisibilityArray.length / visibleCount
+		)
+	}
 
-		return pages
+	calculatePages = () => {
+		console.log('CALCULATINGGGG')
+		let visibleCount = this.initialVisibilityArray.filter(
+			i => i == true
+		).length
+		console.log(visibleCount)
+
+		return Math.ceil(
+			this.initialVisibilityArray.length / visibleCount
+		)
 	}
 
 	pageForward = () => {
@@ -103,22 +109,31 @@ class TopAuthors extends Component {
 	toPage = (newPage) => {
 		this.setState({
 			...this.state,
-			activePage: newPage
+			activePage: newPage,
+			sensorEnabled: false
 		})
+
+		setTimeout(() => {
+			this.setState({
+				...this.state,
+				sensorEnabled: true
+			})
+		}, 800)
 	}
 
 	getXToMove = () => {
-		const { activePage, authorCardWidth, visibleAuthors } = this.state
+		const { activePage, authorCardWidth } = this.state
 		let xToMove
 
 		xToMove = activePage > 1
-			? ((activePage - 1) * visibleAuthors.length) * authorCardWidth
-			: 1
+			? ((activePage - 1) * this.initialVisibilityArray.filter((i) => i == true).length * authorCardWidth)
+			: 0
 
 		return xToMove
 	}
 
 	render() {
+		console.log('Rerendering!!')
 		const { topAuthors, pages, activePage } = this.state
 
 		return (
@@ -148,13 +163,13 @@ class TopAuthors extends Component {
 						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ activePage < pages.length ? styles.overlayFadeRight : styles.overlayHidden }` } />
 						{/* Add InView here? */}
 						<ul className={ styles.topAuthorsContentAuthorsList } ref={ this.authorCardListRef }>
-							{ topAuthors.map(( topAuthor ) => {
-								return <li key={ topAuthor._id } style={{ transform: `translateX(-${this.getXToMove()}px)` }}>
-									<InView id={ topAuthor._id } onChange={ this.onAuthorViewportChange }>
+							{ topAuthors.map(( topAuthor, i ) => (
+								<li key={ topAuthor._id } style={{ transform: `translateX(-${this.getXToMove()}px)` }}>
+									<InView id={ topAuthor._id } onChange={ this.onAuthorViewportChange } authorcount={i}>
 										<TopAuthorsAuthor/>
 									</InView>
 								</li>
-							})}
+							))}
 						</ul>
 					</div>
 					<div className={ styles.topAuthorsContentPages }>
