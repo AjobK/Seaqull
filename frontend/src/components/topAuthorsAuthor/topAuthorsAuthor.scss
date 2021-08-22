@@ -24,29 +24,28 @@
 		background: $secondary;
 		background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 		padding: 0 20px 20px;
-		line-height: 22px;
 		pointer-events: none;
 
 		&Name {
 			font-size: $nr-md-fontsize;
 			color: $primary;
 			font-weight: 600;
-			margin-bottom: 10px;
+			margin-bottom: 5px;
 		}
 
 		&Description {
 			font-size: $nr-xm-fontsize;
 			color: white;
+			line-height: 1.09;
 			font-weight: 700;
 			white-space: normal;
 		}
 
 		&BottomDesktop {
-			display: none;
+			display: flex;
 			color: white;
-			//display: flex;
 			justify-content: space-between;
-			margin-top: 20px;
+			margin-top: 25px;
 
 			&Posts {
 				font-size: $nr-sm-fontsize;
@@ -62,10 +61,10 @@
 		}
 
 		&BottomSmartphone {
+			display: none;
 			border-top: white 1px solid;
 			padding-top: 20px;
 			margin-top: 20px;
-			display: flex;
 			justify-content: space-between;
 			align-items: center;
 
@@ -82,6 +81,7 @@
 
 				&Title {
 					font-size: $nr-xs-fontsize;
+					font-weight: 200;
 					opacity: .8;
 				}
 			}
@@ -102,11 +102,12 @@
 				height: 75%;
 
 				&Name {
-					margin-bottom: 1px;
+					margin-bottom: 5px;
 				}
 
 				&Description {
 					font-size: $nr-sm-fontsize;
+					line-height: 1.06;
 				}
 			}
 		}
@@ -118,14 +119,24 @@
 
 		.author {
 			&Content {
+				height: 80%;
+
 				&Name {
 					color: white;
 				}
 
 				&Description {
 					font-size: $nr-xs-fontsize;
-					opacity: .6;
-					font-weight: normal;
+					opacity: .7;
+					font-weight: 200;
+				}
+
+				&BottomDesktop {
+					display: none;
+				}
+
+				&BottomSmartphone {
+					display: flex;
 				}
 			}
 		}
