@@ -107,17 +107,17 @@ class TopAuthors extends Component {
 				...this.state,
 				sensorEnabled: true
 			})
-		}, 1000)
+		}, 799)
 	}
 
 	getXToMove = () => {
 		const { activePage, authorCardWidth, pages, topAuthors } = this.state
-		let xToMove = 0
+		let xToMove
 
 		if (activePage <= 1) {
 			xToMove = 0
 		} else if (activePage >= pages.length) {
-			xToMove = topAuthors * authorCardWidth
+			xToMove = (topAuthors.length - (topAuthors.length / pages.length)) * authorCardWidth
 		} else {
 			xToMove = activePage * authorCardWidth
 		}
