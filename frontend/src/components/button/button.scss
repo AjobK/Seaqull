@@ -19,7 +19,7 @@
 .pulse {
 	&:hover {
 		transition: 0.2s;
-		@include pulse();
+		@include pulse($primary);
 	}
 }
 
@@ -28,6 +28,21 @@
 }
 
 .inverted {
-	background-color: white;
-	color: $primary;
+	background-color: $background;
+	color: $gray;
+
+	&:hover {
+		animation: none;
+		color: $dark;
+	}
+}
+
+.iconWithText {
+	.icon {
+		margin-right: 10px;
+	}
+}
+
+.iconWithoutText {
+	padding: 10px 15px;
 }

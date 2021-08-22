@@ -7,6 +7,7 @@ import AuthorizationRoutes from './routes/authorizationRoutes'
 import CommentRoutes from './routes/commentRoutes'
 import ProfileRoutes from './routes/profileRoutes'
 import RoleRoutes from './routes/roleRoute'
+import AdminRoutes from './routes/adminRoutes'
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
@@ -19,14 +20,15 @@ const backend = new serverConstructor({
         new AuthorizationRoutes(),
         new CommentRoutes(),
         new ProfileRoutes(),
-        new RoleRoutes()
+        new RoleRoutes(),
+        new AdminRoutes()
     ],
     middleWares: [
         cookieParser(),
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
         cors({
-            origin: [FRONTEND_URL, 'http://localhost:8080', 'http://localhost:3000'],
+            origin: [FRONTEND_URL, 'http://localhost:8080', 'http://localhost:3000', 'http://localhost'],
             credentials: true
         }),
     ]

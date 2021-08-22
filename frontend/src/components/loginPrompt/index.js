@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
-import { Button, FormInput } from '../../components'
+import { Button, FormInput, PopUp } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store') @observer
 class LoginPrompt extends Component {
@@ -18,7 +19,8 @@ class LoginPrompt extends Component {
       remainingTime: null,
       recaptchaToken: null,
       recaptcha: null,
-      loadingTimeout: false
+      loadingTimeout: false,
+      popupData: null
     }
 
     window.recaptchaOptions = {
@@ -64,15 +66,33 @@ class LoginPrompt extends Component {
       this.goToProfile(res.data.user.user_name)
     })
     .catch(res => {
-      const { error, remainingTime } = res.response.data
+      if (res.message === 'Network Error') {
+        return this.setState({
+          popupData: {
+            ...popUpData.messages.networkError,
+            close: this.closePopUp
+          },
+          username: ['No connection'],
+          password: ['No connection'],
+          loadingTimeout: false
+        })
+      }
+
+      const { errors, remainingTime } = res.response.data
 
       if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
       this.setState({
-        username: error || [],
-        password: error || [],
+        username: errors || [],
+        password: errors || [],
         loadingTimeout: false
       })
+    })
+  }
+
+  closePopUp = () => {
+    this.setState({
+      popupData: null
     })
   }
 
@@ -124,7 +144,7 @@ class LoginPrompt extends Component {
   }
 
   render() {
-    const { username, password, remainingTime,recaptcha, loadingTimeout } = this.state
+    const { username, password, remainingTime,recaptcha, loadingTimeout, popupData } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
@@ -133,8 +153,8 @@ class LoginPrompt extends Component {
         <p className={styles.text}> Welcome back!</p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type="text"/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
@@ -143,6 +163,10 @@ class LoginPrompt extends Component {
           </form>
           <div className={styles.image} />
         </div>
+
+        { popupData && (
+            <PopUp content={ popupData } />
+        )}
       </div>
     )
   }
