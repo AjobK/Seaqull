@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './statistics.scss'
-import { Statistic } from '..';
+import { Statistic } from '..'
 
 class Statistics extends Component {
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon } from '..';
+import { Icon } from '..'
 import styles from './styleButton.scss'
 
 class StyleButton extends Component {
@@ -7,7 +7,7 @@ class StyleButton extends Component {
     super()
     this.onToggle = (e) => {
       e.preventDefault()
-      this.props.onToggle(this.props.style);
+      this.props.onToggle(this.props.style)
     }
   }
 

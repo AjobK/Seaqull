@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon } from '..';
+import { Icon } from '..'
 import { Link } from 'react-router-dom'
 
 @inject('store') @observer

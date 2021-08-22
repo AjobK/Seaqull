@@ -11,19 +11,18 @@ class FileService {
         return multer({ limits: { fieldSize: 2 * 1024 * 1024 } })
     }
 
-    public async isImage (file: any): Promise<boolean> {
+    public async isImage (file: multer.file): Promise<boolean> {
         const ext = file.detectedFileExtension
         const extensions = ['.png', '.jpg', '.gif', '.jpeg']
 
         return extensions.indexOf(ext) != -1
     }
 
-    public async convertImage (path: any, dimensions: {}): Promise<void> {
-        sharp(path)
-            .resize(dimensions)
+    public async convertImage (path: string, dimensions: Record<number, number>): Promise<void> {
+        sharp(path).resize(dimensions)
     }
 
-    public async storeImage (file: any, type: string): Promise<string> {
+    public async storeImage (file: multer.file, type: string): Promise<string> {
         const today = new Date()
         const day = String(today.getDate()).padStart(2, '0')
         const month = String(today.getMonth() + 1).padStart(2, '0')

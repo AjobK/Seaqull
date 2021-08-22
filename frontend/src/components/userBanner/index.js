@@ -131,7 +131,7 @@ class UserBanner extends Component {
                   <span className={ `${ styles.pictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }` }>
                   <Icon iconName={ 'Pen' } />
                   <input
-                      type="file" accept="image/png, image/jpeg" value={''}
+                      type='file' accept='image/png, image/jpeg' value={''}
                       onChange={ this.onEditAvatar } onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
                   />
                 </span>
@@ -156,7 +156,7 @@ class UserBanner extends Component {
             { this.props.owner && (
                 <div className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                   <input
-                      type="file" accept="image/png, image/jpeg" value={''}
+                      type='file' accept='image/png, image/jpeg' value={''}
                       onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
                   />
                   <div className={ styles.bannerEditActionBtn }>
@@ -170,7 +170,7 @@ class UserBanner extends Component {
             { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
                 <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                 <input
-                    type="submit"
+                    type='submit'
                     onChange={ this.onEditBanner } 
                     onDragEnter={ this.onBannerDragEnter } 
                     onDragLeave={ this.onBannerDragLeave }
