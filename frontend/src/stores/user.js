@@ -34,13 +34,13 @@ const UserStore = types
       }
     },
     setPosts(posts) {
-      self.posts = posts;
+      self.posts = posts
     },
     setName(name) {
-      self.name = name;
+      self.name = name
     },
     setTitle(title) {
-      self.title = title;
+      self.title = title
     },
   }))
 

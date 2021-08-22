@@ -312,7 +312,7 @@ class ProfileController {
         }
 
         const isEmailTaken = await this.dao.getUserByEmail(email)
-        console.log(isEmailTaken)
+
         if (isEmailTaken) {
             return 'Email not available'
         }
