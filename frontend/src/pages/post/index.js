@@ -167,6 +167,7 @@ class Post extends App {
                 <Section noTitle>
                 { !this.props.new &&
                     <div className={styles.likePostWrapper}>
+                        <PostViews />
                         <PostLike
                             likesAmount={this.state.post.likes.amount || 0}
                             liked={this.state.post.likes.userLiked}
@@ -176,7 +177,6 @@ class Post extends App {
                     </div>
                 }
                 <div className={styles.renderWrapper}>
-                <PostViews />
                 <PostContent
                     type={'title'}
                     // Saves post title with draftJS content

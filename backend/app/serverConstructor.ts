@@ -12,6 +12,7 @@ class serverConstructor {
         this.port = appInit.port
         this.middlewares(appInit.middleWares)
         this.routes(appInit.routes)
+        this.app.set('trust proxy', true)
         this.listen()
     }
 

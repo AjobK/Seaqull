@@ -108,7 +108,6 @@ class PostDAO {
         const viewCount = await repository.count({ where: { post: post } })
 
         return viewCount
-
     }
 }
 
