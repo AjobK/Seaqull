@@ -50,14 +50,13 @@ class TopAuthors extends Component {
 			return
 
 		const authorCardListWidth = this.authorCardListRef.current.getBoundingClientRect().width
+		console.log(authorCardListWidth / visibleAuthors.length)
 
 		this.setState({
 			...this.state,
 			pages: this.calculatePages(visibleAuthors.length),
 			authorCardWidth: authorCardListWidth / visibleAuthors.length
 		})
-
-		console.log(authorCardListWidth / visibleAuthors.length)
 	}
 
 	calculatePages = (authorsInPage) => {
@@ -139,7 +138,8 @@ class TopAuthors extends Component {
 						</a>
 					</div>
 					<div className={ styles.topAuthorsContentAuthors }>
-						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ styles.overlayFadeRight }` } />
+						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ activePage > 1 ? styles.overlayFadeLeft : styles.overlayHidden }` } />
+						<div className={ `${ styles.topAuthorsContentAuthorsOverlay } ${ activePage < pages.length ? styles.overlayFadeRight : styles.overlayHidden }` } />
 						{/* Add InView here? */}
 						<ul className={ styles.topAuthorsContentAuthorsList } ref={ this.authorCardListRef }>
 							{ topAuthors.map(( topAuthor ) => {
