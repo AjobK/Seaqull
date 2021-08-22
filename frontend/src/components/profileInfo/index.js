@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import styles from './profileInfo.scss'
-import Plus from '../../static/icons/plus.svg'
-import { PreviewPost } from '../../components'
 import { inject, observer } from 'mobx-react'
-import { Icon } from '..';
-import { Link } from 'react-router-dom'
+import { Icon } from '..'
 import {Editor, EditorState, ContentState, convertFromRaw, convertToRaw} from 'draft-js'
 import Axios from 'axios'
 

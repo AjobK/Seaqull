@@ -9,7 +9,7 @@ class BanService {
         this.banDAO = new BanDAO()
     }
 
-    async checkIfUserIsBanned(account: Account) {
+    async checkIfUserIsBanned(account: Account): Promise<string> {
         const ban = await this.banDAO.getBanByUser(account)
 
         if (!ban) return null
@@ -25,7 +25,7 @@ class BanService {
                 (bannedDateobject.getHours() > 9 ? '' : '0') + bannedDateobject.getHours() + ':' +
                 (bannedDateobject.getMinutes() > 9 ? '' : '0') + bannedDateobject.getMinutes()
 
-            return { errors: [`Account banned until ${date}`] }
+            return `Account banned until ${date}`
         }
 
         return null

@@ -132,7 +132,7 @@ class RegisterPrompt extends Component {
           <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
             <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput toolTipDirection={ 'bottom' } name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} />
               <ReCaptcha

@@ -69,7 +69,7 @@ class AuthorizationController {
             const ban = await this.banService.checkIfUserIsBanned(account)
 
             if (ban) {
-                return res.status(403).json(ban)
+                return res.status(403).json({ 'errors': [ban] } )
             }
 
             const role = await this.roleDAO.getRoleByUser(username)
@@ -93,24 +93,19 @@ class AuthorizationController {
 
     private validateAccountRequest = (account: Account, username, password): any => {
         try {
-            // check username
             if (username === account.user_name) {
-                //check password
                 if (!bcrypt.compareSync(password, account.password)){
-                    // check if the user attempted more then 3 logins
                     if(account.login_attempts_counts != 2){
                         account.login_attempts_counts++
                         this.accountDAO.updateAccount(account)
                         return { errors: ['Incorrect username or password'] }
                     } else {
-                        // lock account for 30 seconds
                         account.login_attempts_counts = null
                         account.locked_to = Date.now()+30000
                         this.accountDAO.updateAccount(account)
                         return { errors: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
                     }
                 } else {
-                    // if login is successful we return null
                     return null
                 }
             } else {
@@ -121,7 +116,6 @@ class AuthorizationController {
         }
     }
 
-    // function removes all unnecessary data
     private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at
@@ -132,9 +126,7 @@ class AuthorizationController {
         return account
     }
 
-    // function user for logout
     public logout = (req: Request, res: Response): void => {
-        // if cookie is there remove it
         if (req.cookies['token']) {
             res
                 .clearCookie('token')
