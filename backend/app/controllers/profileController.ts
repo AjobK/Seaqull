@@ -18,7 +18,7 @@ import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
-const isStrongPassword = require('validator/lib/isStrongPassword')
+const isLength = require('validator/lib/isLength')
 
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
@@ -316,10 +316,18 @@ class ProfileController {
     }
 
     private checkPasswordStrength(password: string): string {
-        if (!isStrongPassword(password, { minSymbols: 0 })) {
-            return 'Password is too weak.\nUse lowercase letter(s), uppercase letter(s) and number(s).\nShould be atleast 8 characters long.'
+        let error = ''
+
+        if (!isLength(password, { min: 8, max: 20 })) {
+            error = error + 'should be atleast 8 characters long \n'
+        } else if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
+            error = error + 'use a lowercase and uppercase letter \n'
+        } else if (password.search(/\d/) < 1) {
+            error = error + 'use a number \n'
         }
-        return null
+
+        error == '' ? error = null : error = 'Password is too weak, \n' + error
+        return error
     }
 
     private async checkReCAPTCHA(token: string): Promise<string> {

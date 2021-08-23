@@ -111,7 +111,6 @@ class UserBanner extends Component {
     const user = this.props.user
     const role = this.props.role
 
-
     let fontSize = ''
 
     if (user.username.length >= 22) {
