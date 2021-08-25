@@ -5,10 +5,10 @@ import { Profile } from './profile'
 @Entity('profile_comment_like')
 export class ProfileCommentLike extends BaseEntity {
     @PrimaryColumn()
-    id: number;
+    id: number
 
     @ManyToOne(() => Profile, Profile => Profile.id)
-    @JoinColumn({ name: 'Profile', referencedColumnName: 'id' })
+    @JoinColumn({ name: 'profile', referencedColumnName: 'id' })
     profile: number
 
     @ManyToOne(() => comment, comment => comment.id)

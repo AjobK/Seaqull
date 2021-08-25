@@ -62,8 +62,8 @@ class LoginPrompt extends Component {
     Axios.post('/login', payload, {withCredentials: true})
     .then(res => {
       this.props.store.profile.setLoggedIn(true)
-      this.props.store.user.fillUserData(res.data.user);
-      this.goToProfile(res.data.user.user_name)
+      this.props.store.user.fillUserData(res.data.user)
+      this.goToProfile(res.data.user_name)
     })
     .catch(res => {
       if (res.message === 'Network Error') {
@@ -153,8 +153,8 @@ class LoginPrompt extends Component {
         <p className={styles.text}> Welcome back!</p>
         <div className={styles.formWrapper}>
           <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type="text"/>
-            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type='text'/>
+            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}

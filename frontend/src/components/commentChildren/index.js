@@ -14,7 +14,7 @@ class CommentChildren extends Component {
         if (this.state.data) {
             return this.state.data.map((comment) => {
                 return (
-                    <Comment key={ comment.id } comment={ comment } type="reply" />
+                    <Comment key={ comment.id } comment={ comment } type='reply' />
                 )
             })
         }

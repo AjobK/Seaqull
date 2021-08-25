@@ -42,7 +42,7 @@ class CommentEditor extends Component {
 
     
     onChange = (editorState) => {
-        this.setState({editorState, formError: null});
+        this.setState({editorState, formError: null})
 
         if (this.props.onCommentChangeCallback)
             this.props.onCommentChangeCallback(convertToRaw(editorState.getCurrentContent()))
@@ -129,12 +129,12 @@ class CommentEditor extends Component {
                             editorState={ this.state.editorState }
                             ref={ this.editorInput }
                             onChange={ this.onChange }
-                            placeholder="Leave a comment..."
+                            placeholder='Leave a comment...'
                             keyBindingFn={ this.keyBindingFn }
                             handleKeyCommand={ this.handleKeyCommand }                     
                         />
                     </div>
-                    <Button value={ this.buttonText } className={ styles.editorForm__button } type="button" onClick={ this.onSubmit } />
+                    <Button value={ this.buttonText } className={ styles.editorForm__button } type='button' onClick={ this.onSubmit } />
                 </div>
             </section>
         )

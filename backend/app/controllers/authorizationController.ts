@@ -52,11 +52,11 @@ class AuthorizationController {
         let account = await this.accountDAO.getAccountByUsername(username)
 
         if (account == null)
-            return res.status(400).json({ errors: ['Incorrect username or password'] })
+            return res.status(403).json({ errors: ['Incorrect username or password'] })
 
         if (account.locked_to - Date.now() > 0) {
-            return res.status(400).send({
-                errors: ['cannot login yet'],
+            return res.status(403).send({
+                errors: ['Too many login attempts'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
         } else {
@@ -69,7 +69,7 @@ class AuthorizationController {
             const ban = await this.banService.checkIfUserIsBanned(account)
 
             if (ban) {
-                return res.status(403).json(ban)
+                return res.status(403).json({ 'errors': [ban] } )
             }
 
             const role = await this.roleDAO.getRoleByUser(username)
@@ -84,33 +84,29 @@ class AuthorizationController {
             account = this.cleanAccount(account)
 
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
-            res.status(200).json({
-                user: account
-            })
+            res.status(200).json({ ...account, loggedIn: true })
             res.send()
         }
     }
 
     private validateAccountRequest = (account: Account, username, password): any => {
         try {
-            // check username
             if (username === account.user_name) {
-                //check password
                 if (!bcrypt.compareSync(password, account.password)){
-                    // check if the user attempted more then 3 logins
                     if(account.login_attempts_counts != 2){
                         account.login_attempts_counts++
                         this.accountDAO.updateAccount(account)
+
                         return { errors: ['Incorrect username or password'] }
                     } else {
-                        // lock account for 30 seconds
                         account.login_attempts_counts = null
                         account.locked_to = Date.now()+30000
                         this.accountDAO.updateAccount(account)
-                        return { errors: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
+                        const remainingTime = Math.floor((account.locked_to - Date.now())/1000)
+
+                        return { errors: ['Too many login attempts'], remainingTime: remainingTime }
                     }
                 } else {
-                    // if login is successful we return null
                     return null
                 }
             } else {
@@ -121,7 +117,6 @@ class AuthorizationController {
         }
     }
 
-    // function removes all unnecessary data
     private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at
@@ -132,9 +127,7 @@ class AuthorizationController {
         return account
     }
 
-    // function user for logout
     public logout = (req: Request, res: Response): void => {
-        // if cookie is there remove it
         if (req.cookies['token']) {
             res
                 .clearCookie('token')

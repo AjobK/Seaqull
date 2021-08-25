@@ -3,6 +3,7 @@ import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, Cropper } from '..'
 import Axios from 'axios'
+import ColorUtil from '../../util/colorUtil'
 import BanUser from '../banUser/index'
 
 @inject('store') @observer
@@ -122,17 +123,22 @@ class UserBanner extends Component {
       fontSize = styles.nameLarge
     }
 
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(user.username)
+
     return (
         <section className={ styles.wrapper }>
           <div className={ styles.innerWrapper }>
-            <div className={ styles.picture } style={{ backgroundImage: `url(${user.picture})` }}>
-              <span className={ styles.levelMobile }>{ user.level || '' }</span>
+            <div
+              className={ styles.picture }
+              style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
+            >
               { this.props.owner && (
                   <span className={ `${ styles.pictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }` }>
                   <Icon iconName={ 'Pen' } />
                   <input
-                      type="file" accept="image/png, image/jpeg" value={''}
+                      type='file' accept='image/png, image/jpeg' value={''}
                       onChange={ this.onEditAvatar } onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
+                      style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
                   />
                 </span>
               )}
@@ -146,7 +152,6 @@ class UserBanner extends Component {
             <div className={ styles.info }>
               <h2 className={ [styles.name, fontSize].join(' ') }>{ user.username || '' }</h2>
               <div className={ styles.achieved }>
-                <span className={ styles.level }>{ user.level || '' }</span>
                 <h3 className={ styles.role }>{ user.title || '' }</h3>
               </div>
             </div>
@@ -156,7 +161,7 @@ class UserBanner extends Component {
             { this.props.owner && (
                 <div className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                   <input
-                      type="file" accept="image/png, image/jpeg" value={''}
+                      type='file' accept='image/png, image/jpeg' value={''}
                       onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
                   />
                   <div className={ styles.bannerEditActionBtn }>
@@ -170,7 +175,7 @@ class UserBanner extends Component {
             { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
                 <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                 <input
-                    type="submit"
+                    type='submit'
                     onChange={ this.onEditBanner } 
                     onDragEnter={ this.onBannerDragEnter } 
                     onDragLeave={ this.onBannerDragLeave }

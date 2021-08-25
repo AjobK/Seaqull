@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './postEditHeading.scss'
-import { Icon } from '..';
+import { Icon } from '..'
 import { inject, observer } from 'mobx-react'
 
 @inject('store') @observer
