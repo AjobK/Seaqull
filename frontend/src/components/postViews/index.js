@@ -29,8 +29,9 @@ class PostViews extends Component {
         return (
             <div className={ styles.postViews }>
                 {/* <p className={ styles.postViewsText }>{ this.state.views } { this.state.views === 1 ? 'view' : 'views' }</p> */}
+                <Icon iconName={'Eye'} className={styles.viewIcon} />
                 <p className={ styles.postViewsText }>
-                    <Icon iconName={'Eye'} className={styles.viewIcon} /> { this.state.views } { this.state.views === 1 ? 'view' : 'views' }
+                     { this.state.views } { this.state.views === 1 ? 'view' : 'views' }
                 </p>
             </div>
         )

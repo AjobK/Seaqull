@@ -6,15 +6,22 @@
 	align-items: center;
 	margin-bottom: 10px;
 	justify-content: flex-start;
+	color: $nav-items;
 
 	.postViewsText {
-		height: fit-content;
-		color: $nav-items;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-align-items: center;
+		align-items: center;
+		-webkit-justify-content: center;
+		justify-content: center;
+		height: 100%;
 		margin-left: 8px;
-		vertical-align: top;
+		vertical-align: middle;
 	}
 
 	.viewIcon {
 		font-size: 1.2em;
+		vertical-align: middle;
 	}
 }
