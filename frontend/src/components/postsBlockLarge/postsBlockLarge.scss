@@ -40,7 +40,8 @@ $post-padding: 20px;
 		height: 336px;
 
 		&Bookmark {
-			padding: $post-padding;
+			padding: 4px;
+			margin: $post-padding - 4px;
 			@include bookmark();
 		}
 
@@ -324,4 +325,8 @@ $post-padding: 20px;
 			}
 		}
 	}
+}
+
+.toolTip {
+	@include tooltip();
 }
