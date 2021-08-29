@@ -94,7 +94,7 @@ class Post extends App {
                 path: `/profile/${post.profile.display_name}`,
                 title: post.profile.title || 'No title'
             }
-            
+
             this.setState({
                 post: this.post,
                 loaded: true,
