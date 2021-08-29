@@ -161,10 +161,10 @@ class ProfileController {
             recaptcha: []
         }
 
-        const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
+        const isUsernameNotValid = await this.checkValidUsername(userRequested.username)
 
-        if (isUsernamNotValid) {
-            errors.username = [isUsernamNotValid]
+        if (isUsernameNotValid) {
+            errors.username = [isUsernameNotValid]
         }
 
         const isEmailNotValid = await this.checkValidEmail(userRequested.email)
@@ -173,18 +173,17 @@ class ProfileController {
             errors.email = [isEmailNotValid]
         }
 
-        const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
+        const passwordStrengthErrors = this.getPasswordStrengthErrors(userRequested.password)
 
-        if (isPasswordNotStrong) {
-            errors.password = [isPasswordNotStrong]
-        }
+        errors.password = passwordStrengthErrors
 
         const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+
         if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong) {
+        if (isUsernameNotValid || isEmailNotValid || passwordStrengthErrors.length > 0) {
             return res.status(401).json({ errors: errors })
         }
 
@@ -302,6 +301,7 @@ class ProfileController {
         if (isUsernameTaken) {
             return 'Username not available'
         }
+
         return null
     }
 
@@ -320,32 +320,19 @@ class ProfileController {
         return null
     }
 
-    private checkPasswordStrength(password: string): string {
-        let error = ''
+    private getPasswordStrengthErrors(password: string): Array<string> {
+        const errors = []
 
-        if (!isLength(password, { min: 8, max: 20 })) {
-            error = error + 'atleast 8 characters'
-        }
+        if (!isLength(password, { min: 8, max: 20 }))
+            errors.push('Must be between 8 and 20 characters long')
 
-        if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
-            const warningCasing = 'lowercase and uppercase letters'
+        if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1)
+            errors.push('Lowercase and uppercase letters')
 
-            if (error != '') error = error + ', '
+        if (password.search(/\d/) < 1)
+            errors.push('Atleast one numeric character')
 
-            error = error + warningCasing
-        }
-
-        if (password.search(/\d/) < 1) {
-            const warningNumber = 'use a number'
-
-            if (error != '') error = error + ' and a '
-
-            error = error + warningNumber
-        }
-
-        error == '' ? error = null : error = 'You should use ' + error
-
-        return error
+        return errors
     }
 
     private async checkReCAPTCHA(token: string): Promise<string> {
@@ -355,6 +342,7 @@ class ProfileController {
         if (!verificationResult.isHuman) {
             return 'Invalid captcha'
         }
+
         return null
     }
 
