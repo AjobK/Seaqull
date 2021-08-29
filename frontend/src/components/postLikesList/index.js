@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Icon } from '../../components'
 import ColorUtil from '../../util/colorUtil'
-import urlUtil from '../../util/urlUtil'
+import URLUtil from '../../util/URLUtil'
 
 @inject('store') @observer
 class PostLikesList extends Component {
@@ -22,7 +22,7 @@ class PostLikesList extends Component {
     }
 
     loadLikes = () => {
-        const path = urlUtil.getLastPathArgument()
+        const path = URLUtil.getLastPathArgument()
 
         Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/${path}`)
             .then(res => {

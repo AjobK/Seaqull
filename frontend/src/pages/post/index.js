@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
-import urlUtil from '../../util/urlUtil'
+import URLUtil from '../../util/URLUtil'
 
 @inject('store') @observer
 class Post extends App {
@@ -41,7 +41,7 @@ class Post extends App {
     }
 
     loadArticle = () => {
-        let path = urlUtil.getLastPathArgument()
+        let path = URLUtil.getLastPathArgument()
 
         const { defaultData } = this.props.store
 

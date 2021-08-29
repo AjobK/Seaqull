@@ -3,7 +3,7 @@ import Axios from 'axios'
 import styles from './commentForm.scss'
 
 import { CommentEditor } from '../'
-import urlUtil from '../../util/urlUtil'
+import URLUtil from '../../util/URLUtil'
 
 class CommentForm extends Component {
 
@@ -11,7 +11,7 @@ class CommentForm extends Component {
         super(props)
 
         this.comment = {
-            path: urlUtil.getLastPathArgument(),
+            path: URLUtil.getLastPathArgument(),
             content: null,
             parent_comment_id: this.props.parent_comment
         }

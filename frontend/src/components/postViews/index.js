@@ -3,7 +3,7 @@ import styles from './postViews.scss'
 import Axios from 'axios'
 import { Icon } from '../../components'
 import unitFormatterUtil from '../../util/unitFormatterUtil'
-import urlUtil from '../../util/urlUtil'
+import URLUtil from '../../util/URLUtil'
 
 class PostViews extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class PostViews extends Component {
     }
 
     loadViews() {
-        const path = urlUtil.getLastPathArgument()
+        const path = URLUtil.getLastPathArgument()
         const url = `http://localhost:8000/api/post/view/${path}`
 
         Axios.get(url).then((response) => {

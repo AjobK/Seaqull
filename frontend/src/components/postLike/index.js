@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
 import unitFormatterUtil from '../../util/unitFormatterUtil'
-import urlUtil from '../../util/urlUtil'
+import URLUtil from '../../util/URLUtil'
 
 @inject('store') @observer
 class PostLike extends Component {
@@ -23,7 +23,7 @@ class PostLike extends Component {
     }
 
     postLike = () => {
-        const path = urlUtil.getLastPathArgument()
+        const path = URLUtil.getLastPathArgument()
 
         Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, {withCredentials: true})
             .then(() => {
@@ -38,7 +38,7 @@ class PostLike extends Component {
     }
 
     postUnlike = () => {
-        const path = urlUtil.getLastPathArgument()
+        const path = URLUtil.getLastPathArgument()
 
         Axios.delete(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {withCredentials: true})
             .then(() => {
