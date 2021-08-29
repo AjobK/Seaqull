@@ -5,7 +5,9 @@ const ProfileStore = types
   .model('ProfileStore', {
     role: types.optional(types.string, 'user'),
     loggedIn: types.optional(types.boolean, false),
-    display_name: types.optional(types.string, 'Emily Washington')
+    display_name: types.optional(types.string, 'NONE'),
+    title: types.optional(types.string, 'NONE'),
+    avatarURL: types.optional(types.string, 'NONE')
 
   })
   .actions((self) => ({
@@ -30,6 +32,12 @@ const ProfileStore = types
     },
     setDisplayName(display_name) {
       self.display_name = display_name
+    },
+    setAvatarURL(avatarURL) {
+      self.avatarURL = avatarURL
+    },
+    setTitle(title) {
+      self.title = title
     },
     logOut() {
       Axios.defaults.baseURL = 'http://localhost:8000'

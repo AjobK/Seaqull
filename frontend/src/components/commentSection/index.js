@@ -85,7 +85,7 @@ class CommentSection extends Component {
                         ? this.state.comments.map((comment) => (
                             <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd } />
                         ))
-                        : <p>No comments</p>
+                        : <p className='noComment'>No comments</p>
                     }
                 </Section>
             </div>

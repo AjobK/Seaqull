@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import Post from './post'
 import Profile from './profile'
 
 @Entity('comment')
@@ -10,8 +11,9 @@ export class Comment extends BaseEntity {
     @JoinColumn({ name: 'profile', referencedColumnName: 'id' })
     profile: Profile
 
-    @Column()
-    path: string
+    @ManyToOne(() => Post, post => post.id)
+    @JoinColumn({ name: 'post', referencedColumnName: 'id' })
+    post: Post
 
     @Column()
     content: string

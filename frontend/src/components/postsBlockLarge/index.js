@@ -10,6 +10,7 @@ class PostsBlockLarge extends Component {
 	}
 
 	bookmarkPost = () => {
+		// TODO: Add bookmark functionality
 	}
 
 	render() {

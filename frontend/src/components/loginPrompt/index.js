@@ -23,31 +23,9 @@ class LoginPrompt extends Component {
       popupData: null
     }
 
-    window.recaptchaOptions = {
-      lang: 'en',
-      useRecaptchaNet: true,
-      removeOnUnmount: true
-    }
-
     this.recaptchaRef = React.createRef()
     this.onChange = this.onChange.bind(this)
     this.elId = {}
-  }
-
-  componentDidMount = () => {
-    this.clearCaptcha()
-  }
-
-  componentWillUnmount = () => {
-    this.clearCaptcha()
-  }
-
-  clearCaptcha = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach(element => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
   }
 
   auth = () => {
@@ -129,8 +107,8 @@ class LoginPrompt extends Component {
       loadingTimeout: true
     })
     if(!(this.state.loadingTimeout)){
-      // this.recaptchaRef.current.reset()
-      // this.recaptchaRef.current.execute()
+      this.recaptchaRef.current.reset()
+      this.recaptchaRef.current.execute()
     }
   }
 
@@ -156,9 +134,13 @@ class LoginPrompt extends Component {
             <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type='text'/>
             <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} onClick={this.auth} />
+              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
+              { <ReCAPTCHA 
+              ref={this.recaptchaRef} 
+              sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
+              size='invisible' 
+              onChange={this.onChange}/> }
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
-              {/* <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange}/> */}
             </div>
           </form>
           <div className={styles.image} />

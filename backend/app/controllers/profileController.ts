@@ -14,7 +14,6 @@ import attachmentDAO from '../daos/attachmentDAO'
 import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
-import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -33,7 +32,6 @@ class ProfileController {
     private roleDAO: RoleDao
     private attachmentDAO: attachmentDAO
     private fileService: FileService
-    private banService: BanService
 
     constructor() {
         this.dao = new ProfileDAO()
@@ -42,7 +40,6 @@ class ProfileController {
         this.roleDAO = new RoleDao()
         this.attachmentDAO = new attachmentDAO()
         this.fileService = new FileService()
-        this.banService = new BanService()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -55,6 +52,10 @@ class ProfileController {
         }
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
+
+        for (let i = 0; i < Object.keys(updateUser).length; i++) {
+            profile[Object.keys(updateUser)[i]] = updateUser[Object.keys(updateUser)[i]]
+        }
 
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
@@ -108,11 +109,6 @@ class ProfileController {
 
         if (!profile) return res.status(404).json({ 'message': 'User not found' })
 
-        const account = await this.accountDAO.getAccountByUsername(profile.display_name)
-        const ban = await this.banService.checkIfUserIsBanned(account)
-
-        if (ban) return res.status(403).json({ 'errors': [ban] })
-
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
         let isOwner = false
 
@@ -123,7 +119,8 @@ class ProfileController {
 
         if (!isOwner && decodedToken && decodedToken.username) {
             const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
-            profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
+            const followingProfile = await this.dao.getProfileByUsername(decodedToken.username)
+            profileFollowedBy.follower = followingProfile.id
             profileFollowedBy.profile = profile.id
 
             following = await this.dao.isFollowing(profileFollowedBy)
@@ -133,7 +130,6 @@ class ProfileController {
             isOwner: isOwner,
             following: following,
             username: receivedUsername,
-            experience: profile.experience,
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
@@ -149,7 +145,8 @@ class ProfileController {
     }
 
     public register = async (req: any, res: Response): Promise<Response> => {
-        const userRequested = req.body
+        const { username, email, password, recaptcha} = req.body
+
         const errors = {
             username: [],
             email: [],
@@ -157,30 +154,30 @@ class ProfileController {
             recaptcha: []
         }
 
-        const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
+        const isUsernamNotValid = await this.checkValidUsername(username)
 
         if (isUsernamNotValid) {
             errors.username = [isUsernamNotValid]
         }
 
-        const isEmailNotValid = await this.checkValidEmail(userRequested.email)
+        const isEmailNotValid = await this.checkValidEmail(email)
 
         if (isEmailNotValid) {
             errors.email = [isEmailNotValid]
         }
 
-        const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
+        const isPasswordNotStrong = this.checkPasswordStrength(password)
 
         if (isPasswordNotStrong) {
             errors.password = [isPasswordNotStrong]
         }
 
-        const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+        const isRecaptchaNotValid = await this.checkReCAPTCHA(recaptcha)
         if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
             return res.status(401).json({ errors: errors })
         }
 
@@ -257,7 +254,7 @@ class ProfileController {
 
         if (type === AVATAR) {
             dimensions = 800
-            typeDefaultPath += 'defaultAvatar.jpg'
+            typeDefaultPath += 'defaultAvatar.png'
         } else if (type === BANNER) {
             dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
             typeDefaultPath += 'defaultBanner.jpg'
@@ -308,6 +305,7 @@ class ProfileController {
         }
 
         const isEmailTaken = await this.dao.getUserByEmail(email)
+
         if (isEmailTaken) {
             return 'Email not available'
         }
@@ -336,11 +334,11 @@ class ProfileController {
         const u = req.body
 
         let newProfile = new Profile()
+
         newProfile.avatar_attachment = await this.attachmentDAO.getDefaultAvatarAttachment()
         newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
-        newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
         newProfile.description = 'Welcome to my profile!'
@@ -352,13 +350,12 @@ class ProfileController {
         acc.email = u.email
         acc.password = await bcrypt.hash(u.password, 10)
         acc.user_name = u.username
-        acc.role = await this.roleDAO.getRoleById(1)
-
+        acc.role = await this.roleDAO.getRoleById(2)
         const createdAccount = await this.accountDAO.saveAccount(acc)
-
         return createdAccount
     }
 
+    // function removes all unnecessary data
     private cleanAccount = (account: Account): Account => {
         delete account.password
         delete account.changed_pw_at

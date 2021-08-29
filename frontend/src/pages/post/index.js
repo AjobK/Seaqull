@@ -28,12 +28,11 @@ class Post extends App {
             isOwner: true,
             isEditing: true,
             author: {
-                name: 'Emily Washington',                                   // Display name
-                bannerURL: '/src/static/dummy/user/banner.jpg',     // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',    // Avatar URL from ID
-                path: '/profile',                                   // Custom path
-                level: 0,                                           // Level of user
-                title: 'Software Engineer'                          // Currently selected title by ID
+                name: '',
+                bannerURL: '',
+                avatarURL: '',
+                path: '/profile/',
+                title: ''
             },
             loaded: false,
             post: this.post
@@ -43,56 +42,62 @@ class Post extends App {
     loadArticle = () => {
         let path = window.location.pathname.split('/').filter(i => i != '').pop()
 
-        Axios.get(`${this.props.store.defaultData.backendUrl}/post/${path}`, {withCredentials: true})
+        const { defaultData } = this.props.store
+
+        Axios.get(`${defaultData.backendUrl}/post/${path}`, {withCredentials: true})
         .then(res => {
+
+            const { post, likes, isOwner } = res.data
+
             this.post = {
-                title: res.data.post.title,
-                content: res.data.post.content,
-                description: res.data.post.description,
+                title: post.title,
+                content: post.content,
+                description: post.description,
                 path: path,
                 likes: {
-                    amount: res.data.likes.amount,
-                    userLiked: res.data.likes.userLiked
+                    amount: likes.amount,
+                    userLiked: likes.userLiked
                 }
             }
 
             try {
                 this.post = {
-                    title: convertFromRaw(JSON.parse(res.data.post.title)),
-                    content: convertFromRaw(JSON.parse(res.data.post.content)),
+                    title: convertFromRaw(JSON.parse(post.title)),
+                    content: convertFromRaw(JSON.parse(post.content)),
                     description: '',
                     path: path,
                     likes: {
-                        amount: res.data.likes.amount,
-                        userLiked: res.data.likes.userLiked
+                        amount: likes.amount,
+                        userLiked: likes.userLiked
                     }
                 }
             } catch (e) {
                 this.post = {
-                    title: res.data.post.title,
-                    content: res.data.post.content,
-                    description: res.data.post.description,
+                    title: post.title,
+                    content: post.content,
+                    description: post.description,
                     path: path,
                     likes: {
-                        amount: res.data.likes.amount,
-                        userLiked: res.data.likes.userLiked
+                        amount: likes.amount,
+                        userLiked: likes.userLiked
                     }
                 }
             }
 
             let author = {
-                name: res.data.post.profile.display_name,               // Display name
-                bannerURL: '/src/static/dummy/user/banner.jpg',         // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',        // Avatar URL from ID
-                path: `/profile/${res.data.post.profile.display_name}`, // Custom path
-                level: 1,                                               // Level of user
-                title: 'Default Title'                                  // Currently selected title by ID
+                name: post.profile.display_name,
+                bannerURL: '/src/static/dummy/user/banner.jpg',
+                avatarURL: post.profile.avatar_attachment 
+                    ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
+                    : '/src/static/dummy/user/profile.jpg',
+                path: `/profile/${post.profile.display_name}`,
+                title: post.profile.title || 'No title'
             }
 
             this.setState({
                 post: this.post,
                 loaded: true,
-                isOwner: res.data.isOwner,
+                isOwner: isOwner,
                 isEditing: true,
                 author: author
             })
@@ -117,7 +122,8 @@ class Post extends App {
     }
 
     componentDidMount() {
-        if (!this.props.new) this.loadArticle()
+        if (!this.props.new)
+            return this.loadArticle()
     }
 
     sendToDB(path=null) {
@@ -142,31 +148,23 @@ class Post extends App {
         }
     }
 
-
-  archivePost() {
-    const payload = {
-        path: this.post.path
-    }
-
-    Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
-        this.props.history.push('/')
-    }).catch(err => {
-        console.log(err)
-        const { error } = err.response.data
-
-        this.setState({ error: [error] })
-    })
-  }
-
     render() {
         // Values change based on initial response from server
+        const { profile, user } = this.props.store
         const { isEditing, isOwner, post, loaded, author } = this.state
+
+        const ownerAuthor = {
+            name: profile.display_name,
+            bannerURL: user.banner,
+            avatarURL: profile.avatarURL,
+            title: profile.title
+        }
 
         if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner archivePost={this.archivePost.bind(this)} author={author} isOwner={isOwner} />
+                <PostBanner author={isOwner ? ownerAuthor : author} isOwner={isOwner} />
                 <Section noTitle>
                 { !this.props.new &&
                     <div className={styles.likePostWrapper}>
@@ -219,7 +217,7 @@ class Post extends App {
                     />
                 }
                 </Section>
-                <CommentSection/>
+                { !this.props.new && <CommentSection/> }
             </Standard>
         )
     }

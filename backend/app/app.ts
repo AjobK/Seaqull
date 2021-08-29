@@ -10,10 +10,10 @@ import RoleRoutes from './routes/roleRoute'
 import AdminRoutes from './routes/banRoutes'
 const cookieParser = require('cookie-parser')
 
-const { FRONTEND_URL } = process.env
+const { FRONTEND_URL, PORT } = process.env
 
 const backend = new serverConstructor({
-    port: 8000,
+    port: parseInt(PORT),
     routes: [
         new PostRoutes(),
         new AuthorizationRoutes(),
@@ -27,7 +27,7 @@ const backend = new serverConstructor({
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
         cors({
-            origin: [FRONTEND_URL, 'http://localhost:8080', 'http://localhost:3000', 'http://localhost'],
+            origin: [FRONTEND_URL],
             credentials: true
         }),
     ]

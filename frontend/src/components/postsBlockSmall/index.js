@@ -3,13 +3,16 @@ import { Icon } from '../../components'
 import TimeUtil from '../../util/timeUtil'
 import styles from './postsBlockSmall.scss'
 import defaultThumbnail from '../../static/images/default-thumbnail.jpg'
+import ReactTooltip from 'react-tooltip'
 
 class PostsBlockSmall extends Component {
 	constructor(props) {
 		super(props)
 	}
 
-	bookmarkPost = () => { }
+	bookmarkPost = () => {
+		// TODO: Add bookmark functionality
+	}
 
 	render() {
 		const { post } = this.props
@@ -27,9 +30,12 @@ class PostsBlockSmall extends Component {
 								<span>{/* UNDERLINE */}</span>
 							</p>
 						</a>
-						<span className={ styles.bookmark } onClick={ this.bookmarkPost }>
+						<span className={ styles.bookmark } onClick={ this.bookmarkPost } data-tip data-for={'largeBookmarkTooltip'}>
 							<Icon iconName={ 'Bookmark' } />
 						</span>
+						<ReactTooltip id={'largeBookmarkTooltip'} effect={'solid'} place={'bottom'} className={styles.toolTip}>
+							Work in progress
+						</ReactTooltip>
 					</div>
 					<a href={ `posts/${ post.path }` }>
 						<img src={ defaultThumbnail } alt={ 'post' } />
