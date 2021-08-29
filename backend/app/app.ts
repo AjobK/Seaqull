@@ -9,6 +9,7 @@ import ProfileRoutes from './routes/profileRoutes'
 import RoleRoutes from './routes/roleRoute'
 import AdminRoutes from './routes/adminRoutes'
 const cookieParser = require('cookie-parser')
+require('dotenv').config()
 
 const { FRONTEND_URL } = process.env
 

@@ -26,6 +26,9 @@ class PostRoutes implements RouterBase {
         this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
         this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
         this.router.put(this.post + '/:path', auth, this.postService.updatePost)
+
+        this.router.post(this.post + '/view', this.postService.addViewToPost)
+        this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
     }
 }
 

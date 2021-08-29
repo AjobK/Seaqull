@@ -5,6 +5,8 @@ import Axios from 'axios'
 import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
+import unitFormatterUtil from '../../util/unitFormatterUtil'
+import URLUtil from '../../util/URLUtil'
 
 @inject('store') @observer
 class PostLike extends Component {
@@ -21,7 +23,7 @@ class PostLike extends Component {
     }
 
     postLike = () => {
-        const path = window.location.pathname.split('/').filter(i => i != '').pop()
+        const path = URLUtil.getLastPathArgument()
 
         Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, {withCredentials: true})
             .then(() => {
@@ -36,7 +38,7 @@ class PostLike extends Component {
     }
 
     postUnlike = () => {
-        const path = window.location.pathname.split('/').filter(i => i != '').pop()
+        const path = URLUtil.getLastPathArgument()
 
         Axios.delete(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {withCredentials: true})
             .then(() => {
@@ -77,7 +79,7 @@ class PostLike extends Component {
                     <p className={`${styles.postLikesAmount}`}>0 likes</p>
                 )}
                 { likesAmount > 0 && (
-                    <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{likesAmount} {likesAmount === 1 ? 'like' : 'likes'}</p>
+                    <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={ this.openLikesList }>{ unitFormatterUtil.getNumberSuffix(likesAmount) } {likesAmount === 1 ? 'like' : 'likes'}</p>
                 )}
                 { !isOwner && (
                     <button onClick={ this.likeClicked }>

@@ -2,11 +2,12 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection } from '../../components'
+import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
+import URLUtil from '../../util/URLUtil'
 
 @inject('store') @observer
 class Post extends App {
@@ -40,7 +41,7 @@ class Post extends App {
     }
 
     loadArticle = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop()
+        let path = URLUtil.getLastPathArgument()
 
         const { defaultData } = this.props.store
 
@@ -100,7 +101,7 @@ class Post extends App {
                 isOwner: isOwner,
                 isEditing: true,
                 author: author
-            })
+            }, this.addViewToDB)
         })
     }
 
@@ -148,6 +149,18 @@ class Post extends App {
         }
     }
 
+    addViewToDB() {
+        if (!this.state.isOwner) {
+            Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
+
+            const payload = {
+                path: this.state.post.path
+            }
+
+            Axios.post(`api/post/view`, payload)
+        }
+    }
+
     render() {
         // Values change based on initial response from server
         const { profile, user } = this.props.store
@@ -168,6 +181,7 @@ class Post extends App {
                 <Section noTitle>
                 { !this.props.new &&
                     <div className={styles.likePostWrapper}>
+                        <PostViews />
                         <PostLike
                             likesAmount={this.state.post.likes.amount || 0}
                             liked={this.state.post.likes.userLiked}
