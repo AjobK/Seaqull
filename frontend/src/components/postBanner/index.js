@@ -25,6 +25,7 @@ class PostBanner extends Component {
 
   render() {
     const { author, isOwner } = this.props
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
 
     const content = {
       title: 'Delete Post',
@@ -67,7 +68,7 @@ class PostBanner extends Component {
           <div className={ styles.info }>
             <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
               <div className={ styles.infoInner }>
-                <div className={ styles.picture } style={ { backgroundImage: `url(${ author.avatarURL || '' })` } } />
+              <div className={ styles.picture} style={{ backgroundImage: `url(${author.avatarURL || ''})`, backgroundColor: uniqueAvatarColorBasedOnHash }} />
                 <div className={ styles.user_info }>
                   <h2 className={ [styles.name].join(' ') }>{ author.name || '' }</h2>
                   <div className={ styles.achieved }>
