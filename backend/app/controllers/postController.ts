@@ -212,7 +212,7 @@ class PostController {
     public addViewToPost = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.body.path)
 
-        if(!foundPost) {
+        if (!foundPost) {
             return res.status(404).json({ 'message': 'Post not found' })
         }
 
