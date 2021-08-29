@@ -117,7 +117,6 @@ class PostDAO {
 
     public async getPostViewCount(post: Post): Promise<any> {
         const repository = await DatabaseConnector.getRepository(this.postViewRepository)
-
         const viewCount = await repository.count({ where: { post: post } })
 
         return viewCount

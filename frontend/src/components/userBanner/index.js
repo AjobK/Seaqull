@@ -5,6 +5,7 @@ import { Icon, Cropper } from '..'
 import Axios from 'axios'
 import ColorUtil from '../../util/colorUtil'
 import BanUser from '../banUser/index'
+import urlUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -93,7 +94,7 @@ class UserBanner extends Component {
   }
 
   follow = () => {
-    const username = window.location.pathname.split('/').filter(i => i != '').pop()
+    const username = urlUtil.getLastPathArgument()
 
     Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
         .then((res) => {

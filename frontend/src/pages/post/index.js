@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
+import urlUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class Post extends App {
@@ -40,7 +41,7 @@ class Post extends App {
     }
 
     loadArticle = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop()
+        let path = urlUtil.getLastPathArgument()
 
         const { defaultData } = this.props.store
 
@@ -149,12 +150,13 @@ class Post extends App {
     }
 
     addViewToDB() {
-        if(!this.state.isOwner) {
+        if (!this.state.isOwner) {
             Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
 
             const payload = {
                 path: this.state.post.path
             }
+
             Axios.post(`api/post/view`, payload)
         }
     }

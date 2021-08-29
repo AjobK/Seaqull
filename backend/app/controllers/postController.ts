@@ -78,9 +78,7 @@ class PostController {
         }
 
         const foundLikes = await this.dao.getPostLikesById(foundPost.id)
-
         const postLikesAmount = foundLikes ? foundLikes.length : 0
-
         const profile = await this.fetchProfile(req)
         const userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
 
@@ -232,7 +230,7 @@ class PostController {
     public getPostViewCount = async (req: Request, res: Response): Promise<any> => {
         const foundPost = await this.dao.getPostByPath(req.params.path)
 
-        if(!foundPost) {
+        if (!foundPost) {
             return res.status(404).json({ 'message': 'Post not found' })
         }
 

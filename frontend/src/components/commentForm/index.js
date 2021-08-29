@@ -3,6 +3,7 @@ import Axios from 'axios'
 import styles from './commentForm.scss'
 
 import { CommentEditor } from '../'
+import urlUtil from '../../util/urlUtil'
 
 class CommentForm extends Component {
 
@@ -10,7 +11,7 @@ class CommentForm extends Component {
         super(props)
 
         this.comment = {
-            path: window.location.pathname.split('/').filter(i => i != '').pop(),
+            path: urlUtil.getLastPathArgument(),
             content: null,
             parent_comment_id: this.props.parent_comment
         }

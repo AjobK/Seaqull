@@ -8,6 +8,8 @@ import styles from './commentSection.scss'
 import { Section } from '../../layouts'
 import { Comment } from '../'
 import { CommentForm } from '../'
+import urlUtil from '../../util/urlUtil'
+
 @inject('store') @observer
 class CommentSection extends Component {
     constructor(props) {
@@ -16,7 +18,7 @@ class CommentSection extends Component {
     }
 
     loadComments() {
-        const path = window.location.pathname.split('/').filter(i => i != '').pop()
+        const path = urlUtil.getLastPathArgument()
         const url = `http://localhost:8000/api/comment/${path}`
 
         Axios.get(url)
