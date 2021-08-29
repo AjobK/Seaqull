@@ -1,9 +1,8 @@
 import { Request } from 'express'
+
 class NetworkService {
     public static getUserIp(req: Request): string {
-        const ip = req.ip ||
-        req.socket.remoteAddress
-        null;
+        const ip = req.ip || req.socket.remoteAddress;
 
         return ip.toString()
     }
