@@ -319,11 +319,23 @@ class ProfileController {
         let error = ''
 
         if (!isLength(password, { min: 8, max: 20 })) {
-            error = error + 'should be atleast 8 characters long \n'
-        } else if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
-            error = error + 'use a lowercase and uppercase letter \n'
-        } else if (password.search(/\d/) < 1) {
-            error = error + 'use a number \n'
+            error = error + 'should be atleast 8 characters long'
+        }
+
+        if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
+            const warningCasing = 'use a lowercase and uppercase letter'
+
+            if (error != '') error = error + ', '
+
+            error = error + warningCasing
+        }
+
+        if (password.search(/\d/) < 1) {
+            const warningNumber = 'use a number'
+
+            if (error != '') error = error + ', '
+
+            error = error + warningNumber
         }
 
         error == '' ? error = null : error = 'Password is too weak, \n' + error
