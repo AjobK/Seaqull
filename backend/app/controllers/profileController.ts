@@ -324,7 +324,7 @@ class ProfileController {
         let error = ''
 
         if (!isLength(password, { min: 8, max: 20 })) {
-            error = error + 'atleast 8 characters'
+            error = error + 'at least 8 characters'
         }
 
         if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
@@ -336,9 +336,9 @@ class ProfileController {
         }
 
         if (password.search(/\d/) < 1) {
-            const warningNumber = 'use a number'
+            const warningNumber = 'at least one number'
 
-            if (error != '') error = error + ' and a '
+            if (error != '') error = error + ' and '
 
             error = error + warningNumber
         }
