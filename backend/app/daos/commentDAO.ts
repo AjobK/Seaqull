@@ -1,13 +1,21 @@
 import DatabaseConnector from '../utils/databaseConnector'
 import { Comment } from '../entities/comment'
+import Post from '../entities/post'
 
 class CommentDAO {
     private repo = 'Comment'
 
-    public async getComments(path: string): Promise<Comment[]> {
+    public async getComments(post: Post): Promise<Comment[]> {
         const repository = await DatabaseConnector.getRepository(this.repo)
 
-        const commentList = await repository.find({ where: { path: path, archived_at: null }, relations: ['profile'], order: { id: 'DESC', }, })
+        const commentList = await repository.createQueryBuilder('comment')
+            .leftJoinAndSelect('comment.post', 'post')
+            .leftJoinAndSelect('comment.profile', 'profile')
+            .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
+            .where('comment.archived_at IS NULL')
+            .andWhere('post.id = :post_id', { post_id: post.id })
+            .orderBy('comment.id', 'DESC')
+            .getMany()
 
         return commentList
     }

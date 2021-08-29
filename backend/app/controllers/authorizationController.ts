@@ -52,11 +52,11 @@ class AuthorizationController {
         let account = await this.accountDAO.getAccountByUsername(username)
 
         if (account == null)
-            return res.status(400).json({ errors: ['Incorrect username or password'] })
+            return res.status(403).json({ errors: ['Incorrect username or password'] })
 
         if (account.locked_to - Date.now() > 0) {
-            return res.status(400).send({
-                errors: ['cannot login yet'],
+            return res.status(403).send({
+                errors: ['Too many login attempts'],
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
         } else {
@@ -84,9 +84,7 @@ class AuthorizationController {
             account = this.cleanAccount(account)
 
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${+new Date(new Date().getTime()+86409000).toUTCString()}; path=/`)
-            res.status(200).json({
-                user: account
-            })
+            res.status(200).json({ ...account, loggedIn: true })
             res.send()
         }
     }
@@ -98,12 +96,15 @@ class AuthorizationController {
                     if(account.login_attempts_counts != 2){
                         account.login_attempts_counts++
                         this.accountDAO.updateAccount(account)
+
                         return { errors: ['Incorrect username or password'] }
                     } else {
                         account.login_attempts_counts = null
                         account.locked_to = Date.now()+30000
                         this.accountDAO.updateAccount(account)
-                        return { errors: ['Tried to many times to login'], remainingTime:  (account.locked_to - Date.now())/1000 }
+                        const remainingTime = Math.floor((account.locked_to - Date.now())/1000)
+
+                        return { errors: ['Too many login attempts'], remainingTime: remainingTime }
                     }
                 } else {
                     return null

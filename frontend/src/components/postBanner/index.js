@@ -3,8 +3,9 @@ import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon } from '..'
 import { Link } from 'react-router-dom'
-import PopUp from '../popUp';
+import PopUp from '../popUp'
 import Axios from 'axios'
+import ColorUtil from '../../util/colorUtil'
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -24,6 +25,7 @@ class PostBanner extends Component {
 
   render() {
     const { author, isOwner } = this.props
+
     const content = {
       title: 'Delete Post',
       description: 'Are you sure you want to delete this post?',
@@ -40,12 +42,14 @@ class PostBanner extends Component {
     }
 
     return (
-      <section className={`${styles.wrapper} ${isOwner ? styles.owner : ''}`}>
-        <div className={styles.background} style={{ backgroundImage: `url(${author.bannerURL || ''})` }} />
-        {this.props.isOwner &&
-          <div className={styles.wrapperEditContainer}>
-            <span className={styles.wrapperEdit}>
-              <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
+      <section className={`${ styles.wrapper} ${isOwner ? styles.owner : ''}` }>
+        <div
+          className={ styles.background}
+          style={{ backgroundImage: `url(${ author.bannerURL })` }} />
+        { false && this.props.isOwner && // TODO: Remove 'false && ' and make it possible to change post banner
+          <div className={ styles.wrapperEditContainer }>
+            <span className={ styles.wrapperEdit }>
+              <span className={ styles.wrapperEditContent }>Click to edit</span> <Icon iconName={'Pen'} />
             </span>
           </div>
         }

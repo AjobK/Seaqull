@@ -56,6 +56,10 @@ class ProfileController {
 
         const profile = await this.dao.getProfileByUsername(updateUser.username)
 
+        for (let i = 0; i < Object.keys(updateUser).length; i++) {
+            profile[Object.keys(updateUser)[i]] = updateUser[Object.keys(updateUser)[i]]
+        }
+
         await this.dao.saveProfile(profile)
         return res.status(200).json({ 'message': 'Succes' })
     }
@@ -123,7 +127,8 @@ class ProfileController {
 
         if (!isOwner && decodedToken && decodedToken.username) {
             const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
-            profileFollowedBy.follower = (await this.dao.getProfileByUsername(decodedToken.username)).id
+            const followingProfile = await this.dao.getProfileByUsername(decodedToken.username)
+            profileFollowedBy.follower = followingProfile.id
             profileFollowedBy.profile = profile.id
 
             following = await this.dao.isFollowing(profileFollowedBy)
@@ -133,7 +138,6 @@ class ProfileController {
             isOwner: isOwner,
             following: following,
             username: receivedUsername,
-            experience: profile.experience,
             title: title ? title.name : 'Title not found...',
             description: profile.description
         }
@@ -257,7 +261,7 @@ class ProfileController {
 
         if (type === AVATAR) {
             dimensions = 800
-            typeDefaultPath += 'defaultAvatar.jpg'
+            typeDefaultPath += 'defaultAvatar.png'
         } else if (type === BANNER) {
             dimensions = { width: +(800 * (16/9)).toFixed(), height: 800 }
             typeDefaultPath += 'defaultBanner.jpg'
@@ -308,6 +312,7 @@ class ProfileController {
         }
 
         const isEmailTaken = await this.dao.getUserByEmail(email)
+
         if (isEmailTaken) {
             return 'Email not available'
         }
@@ -319,11 +324,11 @@ class ProfileController {
         let error = ''
 
         if (!isLength(password, { min: 8, max: 20 })) {
-            error = error + 'should be atleast 8 characters long'
+            error = error + 'atleast 8 characters'
         }
 
         if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
-            const warningCasing = 'use a lowercase and uppercase letter'
+            const warningCasing = 'lowercase and uppercase letters'
 
             if (error != '') error = error + ', '
 
@@ -333,12 +338,13 @@ class ProfileController {
         if (password.search(/\d/) < 1) {
             const warningNumber = 'use a number'
 
-            if (error != '') error = error + ', '
+            if (error != '') error = error + ' and a '
 
             error = error + warningNumber
         }
 
-        error == '' ? error = null : error = 'Password is too weak, \n' + error
+        error == '' ? error = null : error = 'You should use ' + error
+
         return error
     }
 
@@ -360,7 +366,6 @@ class ProfileController {
         newProfile.banner_attachment = await this.attachmentDAO.getDefaultBannerAttachment()
         newProfile.title = await this.titleDAO.getTitleByTitleId(1)
         newProfile.display_name = u.username
-        newProfile.experience = 0
         newProfile.custom_path = uuidv4()
         newProfile.rows_scrolled = 0
         newProfile.description = 'Welcome to my profile!'

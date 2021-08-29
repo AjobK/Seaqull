@@ -3,6 +3,7 @@ import TimeUtil from '../../util/timeUtil'
 import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
 import defaultThumbnail from '../../static/images/default-thumbnail.jpg'
+import ReactTooltip from 'react-tooltip'
 
 class PostsBlockLarge extends Component {
 	constructor(props) {
@@ -10,6 +11,7 @@ class PostsBlockLarge extends Component {
 	}
 
 	bookmarkPost = () => {
+		// TODO: Add bookmark functionality
 	}
 
 	render() {
@@ -18,9 +20,12 @@ class PostsBlockLarge extends Component {
 		return (
 			<div className={ styles.large }>
 				<div className={ styles.largeThumbnail }>
-					<span className={ styles.largeThumbnailBookmark } onClick={ this.bookmarkPost }>
+					<span className={ styles.largeThumbnailBookmark } onClick={ this.bookmarkPost } data-tip data-for={ 'largeBookmarkTooltip' }>
 						<Icon iconName={ 'Bookmark' } />
 					</span>
+					<ReactTooltip id={ 'largeBookmarkTooltip' } effect={ 'solid' } place={ 'bottom' } className={styles.toolTip}>
+						Work in progress
+					</ReactTooltip>
 					<div className={ styles.largeThumbnailContent }>
 						<a href={ `posts/${ post.path }` }>
 							<h3 className={ styles.largeThumbnailContentTitle }>
