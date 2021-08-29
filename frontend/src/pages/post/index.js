@@ -157,8 +157,7 @@ class Post extends App {
     Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
         this.props.history.push('/')
     }).catch(err => {
-        console.log(err)
-        const { error } = err.response.data
+=        const { error } = err.response.data
 
         this.setState({ error: [error] })
     })
