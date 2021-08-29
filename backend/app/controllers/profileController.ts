@@ -176,10 +176,11 @@ class ProfileController {
         const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
 
         if (isPasswordNotStrong) {
-            errors.password = [isPasswordNotStrong]
+            errors.password = isPasswordNotStrong
         }
 
         const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+
         if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
@@ -302,6 +303,7 @@ class ProfileController {
         if (isUsernameTaken) {
             return 'Username not available'
         }
+
         return null
     }
 
@@ -320,32 +322,19 @@ class ProfileController {
         return null
     }
 
-    private checkPasswordStrength(password: string): string {
-        let error = ''
+    private checkPasswordStrength(password: string): Array<string> {
+        const errors = []
 
-        if (!isLength(password, { min: 8, max: 20 })) {
-            error = error + 'at least 8 characters'
-        }
+        if (!isLength(password, { min: 8, max: 20 }))
+            errors.push('Must be between 8 and 20 characters long.')
 
-        if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) {
-            const warningCasing = 'lowercase and uppercase letters'
+        if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1)
+            errors.push('Lowercase and uppercase letters.')
 
-            if (error != '') error = error + ', '
+        if (password.search(/\d/) < 1)
+            errors.push('Atleast one numeric character.')
 
-            error = error + warningCasing
-        }
-
-        if (password.search(/\d/) < 1) {
-            const warningNumber = 'at least one number'
-
-            if (error != '') error = error + ' and '
-
-            error = error + warningNumber
-        }
-
-        error == '' ? error = null : error = 'You should use ' + error
-
-        return error
+        return errors
     }
 
     private async checkReCAPTCHA(token: string): Promise<string> {
@@ -355,6 +344,7 @@ class ProfileController {
         if (!verificationResult.isHuman) {
             return 'Invalid captcha'
         }
+
         return null
     }
 
