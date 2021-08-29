@@ -31,15 +31,17 @@ class PostBanner extends Component {
       description: 'Are you sure you want to delete this post?',
       close: this.updatePopup.bind(this),
       actions: [{
-        title: 'cancel',
+        title: 'Cancel',
         action: this.updatePopup.bind(this),
         primary: false
       }, {
-        title: 'confirm',
+        title: 'Confirm',
         action: this.props.archivePost,
         primary: true
       }],
     }
+
+    const canBanUser = this.props.store.profile.role != 'User' && this.props.store.profile.role != 'user'
 
     return (
       <section className={`${ styles.wrapper} ${isOwner ? styles.owner : ''}` }>
@@ -53,7 +55,7 @@ class PostBanner extends Component {
             </span>
           </div>
         }
-        {this.props.store.profile.role != 'User' && 
+        {canBanUser  && 
         <div className={ styles.backdrop } onClick={ this.updatePopup.bind(this) }>
           <p className={ styles.bannerText }>
             Delete Post 
@@ -69,7 +71,6 @@ class PostBanner extends Component {
                 <div className={ styles.user_info }>
                   <h2 className={ [styles.name].join(' ') }>{ author.name || '' }</h2>
                   <div className={ styles.achieved }>
-                    <span className={ styles.level }>{ Number.isSafeInteger(author.level) ? author.level : '-1' }</span>
                     <h3 className={ styles.role }>{ author.title || '' }</h3>
                   </div>
                 </div>
