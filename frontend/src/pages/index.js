@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { initStore } from '../stores'
 import { Provider } from 'mobx-react'
 import { popUpData } from '../components/popUp/popUpData'
-import { onSnapshot } from 'mobx-state-tree'
-import { PopUp } from '../components'
+import { GlobalNotification } from '../components'
 import Home from './home'
 import Profile from './profile'
 import Post from './post'
@@ -19,22 +18,6 @@ class AppRouter extends Component {
     this.store = initStore(true)
     this.store.profile.loginVerify()
     this.verifyCookies()
-
-    this.state = {
-      isNotificationVisible: this.store.notification.visible
-    }
-
-    this.initNotificationSnapshot()
-  }
-
-  initNotificationSnapshot = () => {
-    onSnapshot(this.store.notification, (notification) => {
-      if (notification.visible !== this.state.isNotificationVisible) {
-        this.setState({
-          isNotificationVisible: notification.visible
-        })
-      }
-    })
   }
 
   verifyCookies = () => {
@@ -46,7 +29,6 @@ class AppRouter extends Component {
       if (new Date() - SEVEN_DAYS >= Date.parse(cookiesAcceptedAt)) {
         localStorage.removeItem('cookiesAcceptedAt')
       } else {
-
         return
       }
     }
@@ -62,13 +44,7 @@ class AppRouter extends Component {
     return (
       <Provider store={this.store}>
         <div>
-          { this.state.isNotificationVisible && (
-              <PopUp content={{
-                ...this.store.notification.getTitleAndDescriptionJSON(),
-                actions: this.store.notification.actionsData,
-                close: () => this.store.notification.close()
-              }}/>
-          )}
+          <GlobalNotification />
           <Router>
             <Switch>
               <Route path='/' exact component={Home} />

@@ -30,7 +30,7 @@ const NotificationStore = types
         setCustomClose(customClose) {
             self.customClose = customClose
         },
-        getTitleAndDescriptionJSON() {
+        getContentJSON() {
             return {
                 title: self.title,
                 description: self.description
