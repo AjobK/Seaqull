@@ -17,18 +17,33 @@ class AppRouter extends Component {
     super(props)
     this.store = initStore(true)
     this.store.profile.loginVerify()
-    this.store.user.verifyCookies()
+    this.verifyCookies()
 
     this.state = {
-      isCookiesAccepted: this.store.user.isCookiesAccepted
+      isNotificationVisible: this.store.notification.visible
     }
 
-    onSnapshot(this.store.user, (user) => {
-      if (user.isCookiesAccepted !== this.state.isCookiesAccepted) {
+    onSnapshot(this.store.notification, (notification) => {
+      if (notification.visible !== this.state.isNotificationVisible) {
         this.setState({
-          isCookiesAccepted: user.isCookiesAccepted
+          isNotificationVisible: notification.visible
         })
       }
+    })
+  }
+
+  verifyCookies() {
+    const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
+
+    // todo check date
+
+    if (cookiesAcceptedAt)
+      return
+
+    this.store.notification.setContent(popUpData.messages.cookies)
+    this.store.notification.setCustomClose(() => {
+      localStorage.setItem('cookiesAcceptedAt', new Date().toString())
+      self.isCookiesAccepted = true
     })
   }
 
@@ -36,10 +51,10 @@ class AppRouter extends Component {
     return (
       <Provider store={this.store}>
         <div>
-          { !this.state.isCookiesAccepted && (
+          { this.state.isNotificationVisible && (
               <PopUp content={{
-                ...popUpData.messages.cookies,
-                close: () => this.store.user.acceptCookies()
+                ...this.store.notification.getTitleAndDescriptionJSON(),
+                close: () => this.store.notification.close()
               }}/>
           )}
           <Router>

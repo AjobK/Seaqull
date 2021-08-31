@@ -1,4 +1,5 @@
-import { types } from 'mobx-state-tree'
+import {getParent, types} from 'mobx-state-tree'
+import { functionType } from './customTypes/functionType'
 
 const Posts = types
   .model('Posts', {
@@ -12,8 +13,7 @@ const UserStore = types
     role: types.optional(types.string, 'Software Engineer'),
     picture: types.optional(types.string, '/src/static/dummy/user/mood_default.png'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
-    percentage: types.optional(types.number, 10),
-    isCookiesAccepted: types.optional(types.boolean, false)
+    percentage: types.optional(types.number, 10)
   })
   .actions(self => ({
     logOut() {
@@ -42,18 +42,7 @@ const UserStore = types
     },
     setTitle(title) {
       self.title = title
-    },
-    verifyCookies() {
-        const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
-
-        // TODO check 7 days
-
-        self.isCookiesAccepted = !!cookiesAcceptedAt
-    },
-    acceptCookies() {
-        localStorage.setItem('cookiesAcceptedAt', new Date().toString())
-        self.isCookiesAccepted = true
-    },
+    }
   }))
 
 export default UserStore
