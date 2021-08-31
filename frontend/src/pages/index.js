@@ -24,6 +24,10 @@ class AppRouter extends Component {
       isNotificationVisible: this.store.notification.visible
     }
 
+    this.initNotificationSnapshot()
+  }
+
+  initNotificationSnapshot = () => {
     onSnapshot(this.store.notification, (notification) => {
       if (notification.visible !== this.state.isNotificationVisible) {
         this.setState({
@@ -33,7 +37,7 @@ class AppRouter extends Component {
     })
   }
 
-  verifyCookies() {
+  verifyCookies = () => {
     const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
 
     const SEVEN_DAYS = 60 * 60 * 1000 * 24 * 7
@@ -42,11 +46,13 @@ class AppRouter extends Component {
       if (new Date() - SEVEN_DAYS >= Date.parse(cookiesAcceptedAt)) {
         localStorage.removeItem('cookiesAcceptedAt')
       } else {
+
         return
       }
     }
 
     this.store.notification.setContent(popUpData.messages.cookies)
+
     this.store.notification.setCustomClose(() => {
       localStorage.setItem('cookiesAcceptedAt', new Date().toString())
     })

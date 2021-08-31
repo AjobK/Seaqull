@@ -5,7 +5,7 @@ const Action = types.model({
     title: types.optional(types.string, ''),
     icon: types.optional(types.string, ''),
     primary: types.optional(types.boolean, false),
-    action: functionType
+    action: types.optional(functionType, null)
 })
 
 const NotificationStore = types
@@ -16,7 +16,7 @@ const NotificationStore = types
         actionsData: types.optional(types.array(Action), []),
     })
     .volatile(self => ({
-        customClose: functionType
+        customClose: types.optional(functionType, null)
     }))
     .actions(self => ({
         setContent(content) {
@@ -37,7 +37,9 @@ const NotificationStore = types
             }
         },
         close() {
-            self.customClose()
+            if (self.customClose instanceof Function) {
+                self.customClose()
+            }
 
             self.visible = false
             self.title = ''
