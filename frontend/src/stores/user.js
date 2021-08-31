@@ -13,6 +13,7 @@ const UserStore = types
     picture: types.optional(types.string, '/src/static/dummy/user/mood_default.png'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg'),
     percentage: types.optional(types.number, 10),
+    isCookiesAccepted: types.optional(types.boolean, false)
   })
   .actions(self => ({
     logOut() {
@@ -41,6 +42,17 @@ const UserStore = types
     },
     setTitle(title) {
       self.title = title
+    },
+    verifyCookies() {
+        const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
+
+        // TODO check 7 days
+
+        self.isCookiesAccepted = !!cookiesAcceptedAt
+    },
+    acceptCookies() {
+        localStorage.setItem('cookiesAcceptedAt', new Date().toString())
+        self.isCookiesAccepted = true
     },
   }))
 
