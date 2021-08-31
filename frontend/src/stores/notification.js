@@ -1,13 +1,19 @@
 import { types } from 'mobx-state-tree'
 import { functionType } from './customTypes/functionType'
 
+const Action = types.model({
+    title: types.optional(types.string, ''),
+    icon: types.optional(types.string, ''),
+    primary: types.optional(types.boolean, false),
+    action: functionType
+})
+
 const NotificationStore = types
     .model('UserStore', {
         visible: types.optional(types.boolean, false),
         title: types.optional(types.string, ''),
         description: types.optional(types.string, ''),
-        functions: types.optional(types.array(functionType), []),
-        functionsTitles: types.optional(types.array(types.string), []),
+        actionsData: types.optional(types.array(Action), []),
     })
     .volatile(self => ({
         customClose: functionType
@@ -18,8 +24,11 @@ const NotificationStore = types
             self.title = content.title
             self.description = content.description
         },
-        setFunctions(functions) {
-            self.functions = functions
+        setActions(actions) {
+            self.actionsData = actions
+        },
+        setCustomClose(customClose) {
+            self.customClose = customClose
         },
         getTitleAndDescriptionJSON() {
             return {
@@ -27,20 +36,13 @@ const NotificationStore = types
                 description: self.description
             }
         },
-        getFunctionsWithTitles() {
-
-        },
-        setCustomClose(customClose) {
-            self.customClose = customClose
-        },
         close() {
             self.customClose()
 
             self.visible = false
             self.title = ''
             self.description = ''
-            self.functions = []
-            self.functionsTitles = []
+            self.actionsData = []
             self.customClose = null
         },
     }))

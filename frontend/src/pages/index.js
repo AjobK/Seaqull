@@ -15,6 +15,7 @@ import Register from'./register'
 class AppRouter extends Component {
   constructor(props) {
     super(props)
+
     this.store = initStore(true)
     this.store.profile.loginVerify()
     this.verifyCookies()
@@ -35,15 +36,19 @@ class AppRouter extends Component {
   verifyCookies() {
     const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
 
-    // todo check date
+    const SEVEN_DAYS = 60 * 60 * 1000 * 24 * 7
 
-    if (cookiesAcceptedAt)
-      return
+    if (cookiesAcceptedAt) {
+      if (new Date() - SEVEN_DAYS >= Date.parse(cookiesAcceptedAt)) {
+        localStorage.removeItem('cookiesAcceptedAt')
+      } else {
+        return
+      }
+    }
 
     this.store.notification.setContent(popUpData.messages.cookies)
     this.store.notification.setCustomClose(() => {
       localStorage.setItem('cookiesAcceptedAt', new Date().toString())
-      self.isCookiesAccepted = true
     })
   }
 
@@ -54,6 +59,7 @@ class AppRouter extends Component {
           { this.state.isNotificationVisible && (
               <PopUp content={{
                 ...this.store.notification.getTitleAndDescriptionJSON(),
+                actions: this.store.notification.actionsData,
                 close: () => this.store.notification.close()
               }}/>
           )}
