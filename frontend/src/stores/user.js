@@ -1,10 +1,4 @@
-import {getParent, types} from 'mobx-state-tree'
-import { functionType } from './customTypes/functionType'
-
-const Posts = types
-  .model('Posts', {
-    title: types.string
-  })
+import { types } from 'mobx-state-tree'
 
 const UserStore = types
   .model('UserStore', {

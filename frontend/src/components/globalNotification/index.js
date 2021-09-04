@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { onSnapshot } from 'mobx-state-tree'
 import { PopUp } from '../../components'
-import {popUpData} from "../popUp/popUpData";
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store') @observer
 class GlobalNotification extends Component {
