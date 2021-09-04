@@ -17,27 +17,6 @@ class AppRouter extends Component {
 
     this.store = initStore(true)
     this.store.profile.loginVerify()
-    this.verifyCookies()
-  }
-
-  verifyCookies = () => {
-    const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
-
-    const SEVEN_DAYS = 60 * 60 * 1000 * 24 * 7
-
-    if (cookiesAcceptedAt) {
-      if (new Date() - SEVEN_DAYS >= Date.parse(cookiesAcceptedAt)) {
-        localStorage.removeItem('cookiesAcceptedAt')
-      } else {
-        return
-      }
-    }
-
-    this.store.notification.setContent(popUpData.messages.cookies)
-
-    this.store.notification.setCustomClose(() => {
-      localStorage.setItem('cookiesAcceptedAt', new Date().toString())
-    })
   }
 
   render () {
