@@ -9,12 +9,15 @@ class GlobalNotification extends Component {
 	constructor(props) {
 		super(props)
 
-		this.initNotificationListener()
-		this.verifyCookies()
-
 		this.state = {
 			isNotificationVisible: this.props.store.notification.visible
 		}
+	}
+
+	componentDidMount = () => {
+		this.initNotificationListener()
+
+		this.verifyCookies()
 	}
 
 	initNotificationListener = () => {
@@ -33,16 +36,18 @@ class GlobalNotification extends Component {
 		const SEVEN_DAYS = 60 * 60 * 1000 * 24 * 7
 
 		if (cookiesAcceptedAt) {
-			if (new Date() - SEVEN_DAYS >= Date.parse(cookiesAcceptedAt)) {
+			const parsedCookiesDate = Date.parse(cookiesAcceptedAt)
+
+			if (new Date() - SEVEN_DAYS >= parsedCookiesDate || !parsedCookiesDate) {
 				localStorage.removeItem('cookiesAcceptedAt')
 			} else {
 				return
 			}
 		}
 
-		this.store.notification.setContent(popUpData.messages.cookies)
+		this.props.store.notification.setContent(popUpData.messages.cookies)
 
-		this.store.notification.setCustomClose(() => {
+		this.props.store.notification.setCustomClose(() => {
 			localStorage.setItem('cookiesAcceptedAt', new Date().toString())
 		})
 	}
