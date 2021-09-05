@@ -236,7 +236,7 @@ class Post extends App {
                         <div>
                             {
                                 isOwner && isEditing && !this.props.new &&
-                                <span className={ styles.icon }>
+                                <span className={ styles.delete }>
                                     <Icon iconName={ 'Trash' } />
                                 </span>
                             }
