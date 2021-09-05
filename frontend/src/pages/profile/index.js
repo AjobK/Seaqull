@@ -17,7 +17,7 @@ class Profile extends App {
       error: false,
       posts: [],
       likes: [],
-      followerCount: [],
+      followerCount: 0,
       isOwner: false
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
