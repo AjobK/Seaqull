@@ -65,8 +65,6 @@ class GlobalNotification extends Component {
     notification.setCustomClose(() => {
       localStorage.setItem('cookiesAcceptedAt', new Date().toString())
     })
-
-
   }
 
   render() {
