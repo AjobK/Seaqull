@@ -5,7 +5,7 @@ import { Icon, Cropper } from '..'
 import Axios from 'axios'
 import ColorUtil from '../../util/colorUtil'
 import BanUser from '../banUser/index'
-import URLUtil from '../../util/URLUtil'
+import URLUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -112,7 +112,6 @@ class UserBanner extends Component {
   render() {
     const user = this.props.user
     const role = this.props.role
-
 
     let fontSize = ''
 

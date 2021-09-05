@@ -18,7 +18,7 @@ import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
-const isStrongPassword = require('validator/lib/isStrongPassword')
+const isLength = require('validator/lib/isLength')
 
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 const { SECURE } = process.env
@@ -165,10 +165,10 @@ class ProfileController {
             recaptcha: []
         }
 
-        const isUsernamNotValid = await this.checkValidUsername(userRequested.username)
+        const isUsernameNotValid = await this.checkValidUsername(userRequested.username)
 
-        if (isUsernamNotValid) {
-            errors.username = [isUsernamNotValid]
+        if (isUsernameNotValid) {
+            errors.username = [isUsernameNotValid]
         }
 
         const isEmailNotValid = await this.checkValidEmail(userRequested.email)
@@ -177,18 +177,17 @@ class ProfileController {
             errors.email = [isEmailNotValid]
         }
 
-        const isPasswordNotStrong = this.checkPasswordStrength(userRequested.password)
+        const passwordStrengthErrors = this.getPasswordStrengthErrors(userRequested.password)
 
-        if (isPasswordNotStrong) {
-            errors.password = [isPasswordNotStrong]
-        }
+        errors.password = passwordStrengthErrors
 
         const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+
         if (isRecaptchaNotValid) {
             errors.recaptcha = [isRecaptchaNotValid]
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong) {
+        if (isUsernameNotValid || isEmailNotValid || passwordStrengthErrors.length > 0) {
             return res.status(401).json({ errors: errors })
         }
 
@@ -306,6 +305,7 @@ class ProfileController {
         if (isUsernameTaken) {
             return 'Username not available'
         }
+
         return null
     }
 
@@ -324,11 +324,19 @@ class ProfileController {
         return null
     }
 
-    private checkPasswordStrength(password: string): string {
-        if (!isStrongPassword(password, { minSymbols: 0 })) {
-            return 'Password is too weak.\nUse lowercase letter(s), uppercase letter(s) and number(s).\nShould be atleast 8 characters long.'
-        }
-        return null
+    private getPasswordStrengthErrors(password: string): Array<string> {
+        const errors = []
+
+        if (!isLength(password, { min: 8, max: 20 }))
+            errors.push('Must be between 8 and 20 characters long')
+
+        if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1)
+            errors.push('Lowercase and uppercase letters')
+
+        if (password.search(/\d/) < 1)
+            errors.push('Atleast one numeric character')
+
+        return errors
     }
 
     private async checkReCAPTCHA(token: string): Promise<string> {
@@ -338,6 +346,7 @@ class ProfileController {
         if (!verificationResult.isHuman) {
             return 'Invalid captcha'
         }
+
         return null
     }
 

@@ -6,18 +6,24 @@ import AccountDAO from '../daos/accountDAO'
 import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
-import PostView from '../entities/post_view'
+import ArchivedPost from '../entities/archivedPost'
+import archivedPostDAO from '../daos/archivedPostDAO'
 import NetworkService from '../utils/networkService'
+import PostView from '../entities/post_view'
 
 const jwt = require('jsonwebtoken')
 
 class PostController {
     private dao: PostDAO
     private profileDAO: ProfileDAO
+    private accountDAO: AccountDAO
+    private archivedPostDao: archivedPostDAO
 
     constructor() {
         this.dao = new PostDAO()
         this.profileDAO = new ProfileDAO()
+        this.accountDAO = new AccountDAO()
+        this.archivedPostDao = new archivedPostDAO()
     }
 
     public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -254,6 +260,33 @@ class PostController {
         }
 
         return null
+    }
+
+    public archivePost = async (req: any, res: Response): Promise<any> => {
+        const { path } = req.body
+        const post = await this.dao.getPostByPath(path)
+
+        if (!post) res.status(404).json({ error: 'Not found' })
+
+        const currentDate = Date.now()
+        post.archived_at = currentDate
+
+        const admin = await this.accountDAO.getAccountByUsername(req.decoded.username)
+
+        if (!admin) {
+            res.status(400).json({ error: ['Admin not found'] })
+        }
+
+        const archivedPost = new ArchivedPost()
+        archivedPost.archived_at = currentDate
+        archivedPost.staff = admin
+
+        await this.archivedPostDao.saveArchivedPost(archivedPost)
+
+        const newPost = await this.dao.updatePost(post)
+        if (!newPost) return res.status(500).json({ error: 'Could not archive post' })
+
+        return res.status(200).json({ message: 'status' })
     }
 }
 
