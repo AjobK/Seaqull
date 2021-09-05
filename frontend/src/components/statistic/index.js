@@ -77,11 +77,6 @@ class Statistic extends Component {
         color: '#66ff86',
         icon: 'Clock',
         func: this.timeFormat
-      },
-      'followers': {
-        color: '#66ff86',
-        icon: 'Clock',
-        func: this.numberFormat
       }
     }
 
