@@ -139,7 +139,7 @@ class Post extends App {
         if (!path) {
             Axios.post('/post', payload, { withCredentials: true })
             .then(res => {
-                this.props.history.push('/')
+                this.props.history.push(`/posts/${res.data.path}`)
             })
         } else if (typeof path == 'string') {
             Axios.put(`/post/${path}`, payload, { withCredentials: true })

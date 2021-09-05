@@ -124,7 +124,10 @@ class PostController {
             return res.status(200).json({ message: 'Invalid jwt' })
         }
 
-        return res.status(200).json({ message: 'Post added!' })
+        return res.status(200).json({
+            message: 'Post added!',
+            path: newPost.path
+        })
     }
 
     public updatePost = async (req: Request, res: Response): Promise<any> => {
