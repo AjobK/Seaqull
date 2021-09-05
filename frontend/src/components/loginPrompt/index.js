@@ -92,7 +92,7 @@ class LoginPrompt extends Component {
   }
 
   goToProfile = (username) => {
-    this.props.history.push('/profile/' + username)
+    setTimeout( () => this.props.history.push('/profile/' + username), 500)
   }
 
   onSubmit = (e) => {
