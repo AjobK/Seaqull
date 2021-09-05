@@ -13,4 +13,4 @@ class URLUtil {
     }
 }
 
-export default urlUtil
+export default URLUtil
