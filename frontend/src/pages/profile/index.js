@@ -4,7 +4,6 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
 import Error from '../error'
-import styles from './profile.scss'
 import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 
 
@@ -18,6 +17,7 @@ class Profile extends App {
       error: false,
       posts: [],
       likes: [],
+      followerCount: [],
       isOwner: false
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -74,7 +74,8 @@ class Profile extends App {
       posts: profile.posts,
       banner: profile.banner || '/src/static/dummy/user/banner.jpg',
       picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
-      description: profile.description
+      description: profile.description,
+      followerCount: profile.followerCount
     }
 
     this.setState({ user })
@@ -94,7 +95,7 @@ class Profile extends App {
 
     if ( this.props.match.params.path != user.username ) {
       const newProfile = this.fetchProfileData(this.props.match.params.path)
-    } 
+    }
 
     if (error) {
       return (
@@ -115,7 +116,7 @@ class Profile extends App {
           <PostsPreview posts={ this.state.likes } />
         </Section>
         <Section title={ 'STATISTICS' }>
-          <Statistics />
+          <Statistics statisticsData={{views: 0, likes: 0, posts: 0, followerCount: user.followerCount}}/>
         </Section>
       </Standard>
     )

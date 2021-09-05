@@ -4,6 +4,14 @@ import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 
 class ProfileDAO {
+    public async getFollowersCount(profile_id: number): Promise<number> {
+        const repositoryProfile = await DatabaseConnector.getRepository('ProfileFollowedBy')
+
+        const amountOfFollowers = await repositoryProfile.count({ where: { profile: profile_id } })
+
+        return amountOfFollowers
+    }
+
     public async getProfileByUsername(username: string): Promise<Profile> {
         const repositoryAccount = await DatabaseConnector.getRepository('Account')
         const account = await repositoryAccount.findOne({ where: { user_name: username }, relations: ['profile'] })
