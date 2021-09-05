@@ -39,7 +39,7 @@ class PostsBlock extends Component {
 			const parsedText = JSON.parse(metadata)
 
 			return convertFromRaw(parsedText).getPlainText()
-		} catch (e) { 
+		} catch (e) {
 			return metadata
 		}
 	}
