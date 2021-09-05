@@ -21,16 +21,27 @@ class PostsBlock extends Component {
 
 		this.state.posts.forEach((post) => {
 			try {
-				post.readTime = TextUtil.getReadTimeFromText(post.content)
-				post.title = convertFromRaw(JSON.parse(post.title)).getPlainText()
+				post.title = this.getRawContentFromPostMetadata(post.title)
+				post.readTime = TextUtil.getReadTimeFromText(this.getRawContentFromPostMetadata(post.content))
 			} catch (e) { }
 
 			convertedPosts.push(post)
 		})
+
 		this.setState({
-			...this.state,
 			posts: convertedPosts
 		})
+	}
+
+	//TODO: add to util
+	getRawContentFromPostMetadata (metadata) {
+		try {
+			const parsedText = JSON.parse(metadata)
+
+			return convertFromRaw(parsedText).getPlainText()
+		} catch (e) { 
+			return metadata
+		}
 	}
 
 	render() {

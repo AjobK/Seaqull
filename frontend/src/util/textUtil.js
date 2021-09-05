@@ -9,15 +9,11 @@ class TextUtil {
     }
 
     static getHumanizedReadingTimeFromText(wordTime) {
-        if (wordTime < 0.5) {
-            return 'less than a minute'
+        if (wordTime < 1) {
+            return '< 1 min'
         }
 
-        if (time >= 0.5 && time < 1.5) {
-            return '1 minute'
-        }
-
-        return `${ Math.ceil(time) } minutes`
+        return `${ Math.ceil(wordTime) } min`
     }
 
     static getCalculatedWordReadTimeFromText(text, wordsPerMin = this.WORDS_PER_MIN) {
