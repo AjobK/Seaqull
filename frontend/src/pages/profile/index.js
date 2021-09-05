@@ -121,7 +121,6 @@ class Profile extends App {
                 <p>{ user.followerCount } follower{ user.followerCount === 1 ? '' : 's' } </p>
             </div>
         </section>
-
         <Section title={ 'DESCRIPTION' }>
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
         </Section>
