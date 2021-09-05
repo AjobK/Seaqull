@@ -22,21 +22,27 @@ class PopUp extends Component {
   }
 
   render() {
-    const { title, description, actions } = this.props.content
+    const { title, description, titleIcon, actions, canCloseWithClick } = this.props.content
 
     return (
       <div className={ styles.popUpWrapper }>
-        <div className={ styles.popUpBackground } onClick={ this.closePopUp } />
+        <div className={ styles.popUpBackground } onClick={ canCloseWithClick ? this.closePopUp : undefined } />
         <div className={ styles.popUp }>
           <div className={ styles.popUpHeader }>
             { title && (
               <h2 className={ styles.popUpHeaderTitle }>
+                { titleIcon && (
+                  <Icon className={ styles.popUpHeaderTitleIcon } iconName={ titleIcon } />
+                )}
                 { title }
               </h2>
             )}
-            <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
-              <Icon iconName={ 'Times' } />
-            </button>
+            { }
+            { canCloseWithClick &&
+              <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
+                <Icon iconName={ 'Times' } />
+              </button>
+            }
           </div>
           { description && (
             <p className={ styles.popUpDescription }>

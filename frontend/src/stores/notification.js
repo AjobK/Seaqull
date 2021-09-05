@@ -12,8 +12,10 @@ const NotificationStore = types
   .model('UserStore', {
     visible: types.optional(types.boolean, false),
     title: types.optional(types.string, ''),
+    titleIcon: types.optional(types.string, ''),
     description: types.optional(types.string, ''),
     actionsData: types.optional(types.array(Action), []),
+    canCloseWithClick: types.optional(types.boolean, true)
   })
   .volatile(self => ({
     customClose: types.optional(functionType, null)
@@ -22,6 +24,7 @@ const NotificationStore = types
     setContent(content) {
       self.visible = true
       self.title = content.title
+      self.titleIcon = content.titleIcon
       self.description = content.description
     },
     setActions(actions) {
@@ -33,8 +36,12 @@ const NotificationStore = types
     getContentJSON() {
       return {
         title: self.title,
+        titleIcon: self.titleIcon,
         description: self.description
       }
+    },
+    setCanCloseWithClick(canCloseWithClick) {
+      self.canCloseWithClick = canCloseWithClick
     },
     close() {
       if (self.customClose instanceof Function) {
@@ -43,8 +50,10 @@ const NotificationStore = types
 
       self.visible = false
       self.title = ''
+      self.titleIcon = ''
       self.description = ''
       self.actionsData = []
+      self.canCloseWithClick = true
       self.customClose = null
     },
   }))

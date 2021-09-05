@@ -31,6 +31,8 @@ class GlobalNotification extends Component {
   }
 
   verifyCookies = () => {
+    const { notification } = this.props.store
+
     const cookiesAcceptedAt = localStorage.getItem('cookiesAcceptedAt')
 
     const SEVEN_DAYS = 60 * 60 * 1000 * 24 * 7
@@ -40,26 +42,44 @@ class GlobalNotification extends Component {
 
       if (new Date() - SEVEN_DAYS >= parsedCookiesDate || !parsedCookiesDate) {
         localStorage.removeItem('cookiesAcceptedAt')
-      } else {
+    } else {
         return
       }
     }
 
-    this.props.store.notification.setContent(popUpData.messages.cookies)
+    notification.setContent(popUpData.messages.cookies)
 
-    this.props.store.notification.setCustomClose(() => {
+    notification.setActions([
+      {
+        title: 'OK',
+        icon: 'Check',
+        primary: true,
+        action: () => {
+          notification.close()
+        }
+      }
+    ])
+
+    notification.setCanCloseWithClick(false)
+
+    notification.setCustomClose(() => {
       localStorage.setItem('cookiesAcceptedAt', new Date().toString())
     })
+
+
   }
 
   render() {
+    const { notification } = this.props.store
+
     return (
       <div>
         { this.state.isNotificationVisible && (
           <PopUp content={{
-            ...this.props.store.notification.getContentJSON(),
-            actions: this.props.store.notification.actionsData,
-            close: () => this.props.store.notification.close()
+            ...notification.getContentJSON(),
+            actions: notification.actionsData,
+            close: () => notification.close(),
+            canCloseWithClick: notification.canCloseWithClick
           }}/>
         )}
       </div>
