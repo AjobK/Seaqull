@@ -17,7 +17,6 @@ class LoginPrompt extends Component {
       password: null,
       remainingTimeInterval: null,
       remainingTime: null,
-      recaptchaToken: null,
       recaptcha: null,
       loadingTimeout: false,
       popupData: null
@@ -34,7 +33,7 @@ class LoginPrompt extends Component {
     const payload = {
       username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken
+      recaptcha: this.recaptchaRef.current.getValue()
     }
 
     Axios.post('/login', payload, {withCredentials: true})
@@ -106,9 +105,12 @@ class LoginPrompt extends Component {
       password: 'loading',
       loadingTimeout: true
     })
-    if(!(this.state.loadingTimeout)){
+    
+    if (!this.recaptchaRef.current.getValue()) {
       this.recaptchaRef.current.reset()
       this.recaptchaRef.current.execute()
+    } else {
+      this.auth()
     }
   }
 
@@ -116,8 +118,7 @@ class LoginPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
-  onChange = (recaptchaToken) => {
-    this.setState( { recaptchaToken } )
+  onChange = () => {
     this.auth()
   }
 
@@ -139,7 +140,9 @@ class LoginPrompt extends Component {
               ref={this.recaptchaRef} 
               sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
               size='invisible' 
-              onChange={this.onChange}/> }
+              onChange={this.onChange}
+              hl='en'/>
+              }
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
             </div>
           </form>
