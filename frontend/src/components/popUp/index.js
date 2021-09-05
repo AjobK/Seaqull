@@ -54,7 +54,11 @@ class PopUp extends Component {
               { actions.map((action) => {
                 return (
                   <li className={ styles.popUpActionsAction } key={ Math.random() }>
-                    <Button icon={ action.icon } value={ action.title } inverted={ !action.primary } onClick={ action.action } />
+                    <Button
+                      icon={ action.icon }
+                      value={ action.title }
+                      inverted={ !action.primary }
+                      onClick={ action.action } />
                   </li>
                 )
               })}
