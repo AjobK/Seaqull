@@ -28,11 +28,8 @@ export class Post extends BaseEntity {
     @UpdateDateColumn({ nullable: true })
     updated_at: Date
 
-    @Column({ nullable: true })
-    archived_at: Date
-
     @Column({ nullable: true, type: 'bigint' })
-    hidden_at: number
+    archived_at: number
 
     @Column()
     published_at: Date

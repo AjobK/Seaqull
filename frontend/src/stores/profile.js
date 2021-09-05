@@ -29,6 +29,7 @@ const ProfileStore = types
       self.setDisplayName(profile.display_name)
       self.setAvatarURL(`http://localhost:8000/${profile.avatar_attachment.path}`)
       self.setTitle(profile.title.name)
+      self.setRole(profile.role)
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn
@@ -41,6 +42,9 @@ const ProfileStore = types
     },
     setTitle(title) {
       self.title = title
+    },
+    setRole(role) {
+      self.role = role
     },
     logOut() {
       Axios.defaults.baseURL = 'http://localhost:8000'
