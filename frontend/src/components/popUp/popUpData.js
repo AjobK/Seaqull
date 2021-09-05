@@ -27,9 +27,9 @@ export const popUpData = {
       "primary": true
     },
     "confirmWithText": {
-      "title": "Confirm",
+      "title": "OK",
       "icon": "Check",
-      "primary": true
+      "primary": true,
     }
   }
 }

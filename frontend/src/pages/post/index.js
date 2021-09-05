@@ -2,12 +2,13 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
+import styles from './post.scss'
+import { popUpData } from '../../components/popUp/popUpData'
+import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
 
 @inject('store') @observer
 class Post extends App {
@@ -176,8 +177,21 @@ class Post extends App {
         }
     }
 
-    deletePost = () => {
+    deletePostClicked = () => {
+        const { notification } = this.props.store
 
+        notification.setContent(popUpData.messages.deletePostConfirmation)
+
+        notification.setActions([
+            {
+                ...popUpData.actions.confirmWithText,
+                action: this.deletePost
+            }
+        ])
+    }
+
+    deletePost = () => {
+        console.log('delete')
     }
 
     render() {
@@ -259,7 +273,7 @@ class Post extends App {
                         <div className={ styles.postActionButtonsRight }>
                             {
                                 isOwner && isEditing && !this.props.new &&
-                                <span className={ styles.delete } onClick={ this.deletePost }>
+                                <span className={ styles.delete } onClick={ this.deletePostClicked }>
                                     <Icon iconName={ 'Trash' } />
                                 </span>
                             }
