@@ -1,1 +1,15 @@
 @import '../../styles/index.scss';
+
+.tempFollowerIndicator {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+	padding: 15px 0 5px 0;
+	color: #808080;
+
+	p {
+		margin-left: 5px;
+	}
+}

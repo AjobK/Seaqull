@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
+import { PostBanner, PostContent, Button, PostLike, CommentSection, PostViews } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
@@ -88,7 +88,7 @@ class Post extends App {
             let author = {
                 name: post.profile.display_name,
                 bannerURL: '/src/static/dummy/user/banner.jpg',
-                avatarURL: post.profile.avatar_attachment 
+                avatarURL: post.profile.avatar_attachment
                     ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
                     : '/src/static/dummy/user/profile.jpg',
                 path: `/profile/${post.profile.display_name}`,
@@ -154,12 +154,12 @@ class Post extends App {
         const payload = {
             path: this.post.path
         }
-    
+
         Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
             this.props.history.push('/')
         }).catch(err => {
             const { error } = err.response.data
-    
+
             this.setState({ error: [error] })
         })
     }

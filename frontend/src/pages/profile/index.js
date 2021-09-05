@@ -5,6 +5,8 @@ import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
 import Error from '../error'
 import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
+import Icon from "../../components/icon";
+import styles from './profile.scss';
 
 
 @inject('store') @observer
@@ -12,12 +14,13 @@ class Profile extends App {
   constructor(props) {
     super(props)
 
+    this.changeFollowerCount = this.changeFollowerCount.bind(this)
+
     this.state = {
       user: null,
       error: false,
       posts: [],
       likes: [],
-      followerCount: 0,
       isOwner: false
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -81,6 +84,12 @@ class Profile extends App {
     this.setState({ user })
   }
 
+  changeFollowerCount(amount) {
+      const user = this.state.user
+      user.followerCount += amount
+      this.setState({ user })
+  }
+
   render() {
     const { user, error, isOwner } = this.state
     const { profile } = this.props.store
@@ -105,7 +114,14 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner role={ profile.role } user={ user } owner={ isOwner && profile.loggedIn } />
+        <UserBanner changeFollowerCount={ this.changeFollowerCount } role={ profile.role } user={ user } owner={ isOwner && profile.loggedIn } />
+        <section>
+            <div className={[styles.tempFollowerIndicator]}>
+                <Icon iconName={ 'UserFriends' }/>
+                <p>{ user.followerCount } follower{ user.followerCount === 1 ? '' : 's' } </p>
+            </div>
+        </section>
+
         <Section title={ 'DESCRIPTION' }>
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
         </Section>
@@ -116,7 +132,7 @@ class Profile extends App {
           <PostsPreview posts={ this.state.likes } />
         </Section>
         <Section title={ 'STATISTICS' }>
-          <Statistics statisticsData={{views: 0, likes: 0, posts: 0, followerCount: user.followerCount}}/>
+          <Statistics statisticsData={{views: 0, likes: 0, posts: 0}}/>
         </Section>
       </Standard>
     )
