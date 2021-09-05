@@ -41,7 +41,7 @@ class PostBanner extends Component {
         primary: true
       }],
     }
-
+    
     const canBanUser = this.props.store.profile.role != 'User' && this.props.store.profile.role != 'user'
 
     return (
