@@ -3,7 +3,7 @@ import { types } from 'mobx-state-tree'
 const parseFunction = (value) => {
   try {
     return Function(`'use strict'; return (${value});`)()
-  } catch(e) {
+  } catch (e) {
     throw new Error(`${value} is not a valid function`)
   }
 }
