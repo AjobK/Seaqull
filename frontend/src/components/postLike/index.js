@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
 import unitFormatterUtil from '../../util/unitFormatterUtil'
-import URLUtil from '../../util/URLUtil'
+import URLUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class PostLike extends Component {

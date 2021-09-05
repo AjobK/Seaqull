@@ -3,7 +3,7 @@ import styles from './postViews.scss'
 import Axios from 'axios'
 import { Icon } from '../../components'
 import unitFormatterUtil from '../../util/unitFormatterUtil'
-import URLUtil from '../../util/URLUtil'
+import URLUtil from '../../util/urlUtil'
 
 class PostViews extends Component {
     constructor(props) {

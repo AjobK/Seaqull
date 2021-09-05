@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
-import URLUtil from '../../util/URLUtil'
+import URLUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class Post extends App {
@@ -144,9 +144,24 @@ class Post extends App {
         } else if (typeof path == 'string') {
             Axios.put(`/post/${path}`, payload, { withCredentials: true })
             .then(res => {
+                // TODO: change to a popup to confirm that a post is updated
                 this.props.history.push('/profile')
             })
         }
+    }
+
+    archivePost() {
+        const payload = {
+            path: this.post.path
+        }
+    
+        Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
+            this.props.history.push('/')
+        }).catch(err => {
+            const { error } = err.response.data
+    
+            this.setState({ error: [error] })
+        })
     }
 
     addViewToDB() {
@@ -181,7 +196,11 @@ class Post extends App {
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner author={isOwner ? ownerAuthor : author} isOwner={isOwner} />
+                <PostBanner
+                    archivePost={ this.archivePost.bind(this) }
+                    author={ this.props.new ? ownerAuthor : author }
+                    isOwner={ isOwner }
+                />
                 <Section noTitle>
                     { !this.props.new &&
                         <div className={styles.likePostWrapper}>

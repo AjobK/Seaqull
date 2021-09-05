@@ -39,7 +39,6 @@ class BanUser extends Component {
             const { error } = err.response.data
 
             this.setState({ error: [error] })
-
         })
     }
 

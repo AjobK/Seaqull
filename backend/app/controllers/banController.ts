@@ -2,7 +2,7 @@ import { Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import BanService from '../utils/banService'
 
-class AdminController {
+class BanController {
     private accountDao: AccountDAO
     private banService: BanService
 
@@ -57,4 +57,4 @@ class AdminController {
     }
 }
 
-export default AdminController
+export default BanController

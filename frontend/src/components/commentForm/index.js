@@ -3,7 +3,7 @@ import Axios from 'axios'
 import styles from './commentForm.scss'
 
 import { CommentEditor } from '../'
-import URLUtil from '../../util/URLUtil'
+import URLUtil from '../../util/urlUtil'
 
 class CommentForm extends Component {
 
