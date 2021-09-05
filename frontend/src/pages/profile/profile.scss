@@ -5,8 +5,11 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	margin: $header-spacing auto;
+	margin: auto;
 	color: #808080;
+	padding: 20px;
+	background-color: rgba(0,0,0,0.05);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
 
 	p {
 		margin-left: 5px;
