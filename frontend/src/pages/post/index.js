@@ -144,6 +144,7 @@ class Post extends App {
         } else if (typeof path == 'string') {
             Axios.put(`/post/${path}`, payload, { withCredentials: true })
             .then(res => {
+                // TODO: change to a popup to confirm that a post is updated
                 this.props.history.push('/profile')
             })
         }
