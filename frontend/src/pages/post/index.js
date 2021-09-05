@@ -89,7 +89,7 @@ class Post extends App {
             let author = {
                 name: post.profile.display_name,
                 bannerURL: '/src/static/dummy/user/banner.jpg',
-                avatarURL: post.profile.avatar_attachment 
+                avatarURL: post.profile.avatar_attachment
                     ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
                     : '/src/static/dummy/user/profile.jpg',
                 path: `/profile/${post.profile.display_name}`,
@@ -155,12 +155,12 @@ class Post extends App {
         const payload = {
             path: this.post.path
         }
-    
+
         Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
             this.props.history.push('/')
         }).catch(err => {
             const { error } = err.response.data
-    
+
             this.setState({ error: [error] })
         })
     }
