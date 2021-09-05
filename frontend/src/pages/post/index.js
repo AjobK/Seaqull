@@ -192,7 +192,11 @@ class Post extends App {
 
         return (
             <Standard className={[styles.stdBgWhite]}>
-                <PostBanner archivePost={ this.archivePost.bind(this) } author={author} isOwner={isOwner} />
+                <PostBanner
+                    archivePost={ this.archivePost.bind(this) }
+                    author={ this.props.new ? ownerAuthor : author }
+                    isOwner={ isOwner }
+                />
                 <Section noTitle>
                 { !this.props.new &&
                     <div className={styles.likePostWrapper}>
