@@ -161,6 +161,10 @@ class Post extends App {
         }
     }
 
+    deletePost = () => {
+
+    }
+
     render() {
         // Values change based on initial response from server
         const { profile, user } = this.props.store
@@ -215,7 +219,7 @@ class Post extends App {
                         />
                     </div>
                     <div className={ styles.postActionButtons }>
-                        <div>
+                        <div className={ styles.postActionButtonsLeft }>
                             {
                                 isOwner && this.props.new &&
                                 <Button
@@ -233,10 +237,10 @@ class Post extends App {
                                 />
                             }
                         </div>
-                        <div>
+                        <div className={ styles.postActionButtonsRight }>
                             {
                                 isOwner && isEditing && !this.props.new &&
-                                <span className={ styles.delete }>
+                                <span className={ styles.delete } onClick={ this.deletePost }>
                                     <Icon iconName={ 'Trash' } />
                                 </span>
                             }
