@@ -100,7 +100,7 @@ class RegisterPrompt extends Component {
           <form onSubmit={this.onSubmit} className={styles.form}>
             <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} password/>
+            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
             <div to='/' className={styles.submitWrapper}>
               <Button value={buttonClass} className={styles.submit} />
               { <ReCAPTCHA 
@@ -108,7 +108,9 @@ class RegisterPrompt extends Component {
               sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
               size='invisible' 
               badge='bottomright'
-              onChange={this.onChange}/> }
+              onChange={this.onChange}
+              hl="en" />
+              }
             </div>
           </form>
           <div className={styles.image} />
