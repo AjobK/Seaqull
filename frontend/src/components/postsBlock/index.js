@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { convertFromRaw } from 'draft-js'
 import { PostsBlockLarge, PostsBlockSmall } from '../../components'
 import styles from './postsBlock.scss'
+import TextUtil from '../../util/textUtil'
 
 class PostsBlock extends Component {
 	constructor(props) {
@@ -20,6 +21,7 @@ class PostsBlock extends Component {
 
 		this.state.posts.forEach((post) => {
 			try {
+				post.readTime = TextUtil.getReadTimeFromText(post.content)
 				post.title = convertFromRaw(JSON.parse(post.title)).getPlainText()
 			} catch (e) { }
 
