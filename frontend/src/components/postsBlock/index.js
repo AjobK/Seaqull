@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { convertFromRaw } from 'draft-js'
 import { PostsBlockLarge, PostsBlockSmall } from '../../components'
 import styles from './postsBlock.scss'
+import TextUtil from '../../util/textUtil'
 
 class PostsBlock extends Component {
 	constructor(props) {
@@ -20,15 +21,29 @@ class PostsBlock extends Component {
 
 		this.state.posts.forEach((post) => {
 			try {
-				post.title = convertFromRaw(JSON.parse(post.title)).getPlainText()
+				post.title = this.getRawContentFromPostData(post.title)
+				post.readTime = TextUtil.getReadTimeFromText(
+					this.getRawContentFromPostData(post.content)
+				)
 			} catch (e) { }
 
 			convertedPosts.push(post)
 		})
+
 		this.setState({
-			...this.state,
 			posts: convertedPosts
 		})
+	}
+
+	//TODO: add to util
+	getRawContentFromPostData(data) {
+		try {
+			const parsedText = JSON.parse(data)
+
+			return convertFromRaw(parsedText).getPlainText()
+		} catch (e) {
+			return data
+		}
 	}
 
 	render() {
