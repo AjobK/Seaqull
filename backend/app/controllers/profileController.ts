@@ -119,7 +119,7 @@ class ProfileController {
 
         const title: Title = await this.titleDAO.getTitleByUserId(profile.id) || null
 
-        const followerCount = await this.dao.getFollowersCount(profile.id);
+        const followerCount = await this.dao.getFollowersCount(profile.id)
 
         let isOwner = false
 
