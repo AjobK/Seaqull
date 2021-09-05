@@ -8,12 +8,11 @@ const ProfileStore = types
     display_name: types.optional(types.string, 'NONE'),
     title: types.optional(types.string, 'NONE'),
     avatarURL: types.optional(types.string, 'NONE')
-
   })
   .actions((self) => ({
     loginVerify() {
       Axios.defaults.baseURL = 'http://localhost:8000'
-  
+
       Axios.get(`/api/login-verify`, { withCredentials: true })
       .then((res) => {
         this.setProfileData(res.data)
