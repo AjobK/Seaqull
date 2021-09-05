@@ -179,57 +179,65 @@ class Post extends App {
             <Standard className={[styles.stdBgWhite]}>
                 <PostBanner author={isOwner ? ownerAuthor : author} isOwner={isOwner} />
                 <Section noTitle>
-                { !this.props.new &&
-                    <div className={styles.likePostWrapper}>
-                        <PostViews />
-                        <PostLike
-                            likesAmount={this.state.post.likes.amount || 0}
-                            liked={this.state.post.likes.userLiked}
-                            toggleLike={this.toggleLike}
-                            isOwner={isOwner}
+                    { !this.props.new &&
+                        <div className={styles.likePostWrapper}>
+                            <PostViews />
+                            <PostLike
+                                likesAmount={this.state.post.likes.amount || 0}
+                                liked={this.state.post.likes.userLiked}
+                                toggleLike={this.toggleLike}
+                                isOwner={isOwner}
+                            />
+                        </div>
+                    }
+                    <div className={styles.renderWrapper}>
+                        <PostContent
+                            type={'title'}
+                            // Saves post title with draftJS content
+                            callBackSaveData={(data) => {
+                                this.post.title = data
+
+                                this.setState({ post: this.post })
+                            }}
+                            readOnly={!isOwner || !isEditing}
+                            value={post.title} // Initial no content, should be prefilled by API
+                        />
+                        <PostContent
+                            type={'content'}
+                            // Saves post content with draftJS content
+                            callBackSaveData={(data) => {
+                                this.post.content = data
+
+                                this.setState({ post: this.post })
+                            }}
+                            readOnly={!isOwner || !isEditing}
+                            value={post.content} // Initial no content, should be prefilled by API
                         />
                     </div>
-                }
-                <div className={styles.renderWrapper}>
-                <PostContent
-                    type={'title'}
-                    // Saves post title with draftJS content
-                    callBackSaveData={(data) => {
-                        this.post.title = data
-
-                        this.setState({ post: this.post })
-                    }}
-                    readOnly={!isOwner || !isEditing}
-                    value={post.title} // Initial no content, should be prefilled by API
-                />
-                <PostContent
-                    type={'content'}
-                    // Saves post content with draftJS content
-                    callBackSaveData={(data) => {
-                        this.post.content = data
-
-                        this.setState({ post: this.post })
-                    }}
-                    readOnly={!isOwner || !isEditing}
-                    value={post.content} // Initial no content, should be prefilled by API
-                />
-                </div>
-                {
-                    isOwner && this.props.new &&
-                    <Button
-                        className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
-                        value={'Create'}
-                        onClick={() => this.sendToDB()}
-                    />
-                }
-                {
-                    isOwner && isEditing && !this.props.new &&
-                    <Button
-                        className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
-                        value={'Update'}
-                        onClick={() => this.sendToDB(this.post.path)}
-                    />
-                }
+                    <div>
+                        {
+                            isOwner && this.props.new &&
+                            <Button
+                                className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+                                value={'Create'}
+                                onClick={() => this.sendToDB()}
+                            />
+                        }
+                        {
+                            isOwner && isEditing && !this.props.new &&
+                            <Button
+                                className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+                                value={'Update'}
+                                onClick={() => this.sendToDB(this.post.path)}
+                            />
+                        }
+                        {
+                            isOwner && isEditing && !this.props.new &&
+                            <span className={ styles.icon }>
+                                <Icon iconName={ 'Trash' } />
+                            </span>
+                        }
+                    </div>
                 </Section>
                 { !this.props.new && <CommentSection/> }
             </Standard>
