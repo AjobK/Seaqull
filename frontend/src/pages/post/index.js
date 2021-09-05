@@ -214,29 +214,33 @@ class Post extends App {
                             value={post.content} // Initial no content, should be prefilled by API
                         />
                     </div>
-                    <div>
-                        {
-                            isOwner && this.props.new &&
-                            <Button
-                                className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
-                                value={'Create'}
-                                onClick={() => this.sendToDB()}
-                            />
-                        }
-                        {
-                            isOwner && isEditing && !this.props.new &&
-                            <Button
-                                className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
-                                value={'Update'}
-                                onClick={() => this.sendToDB(this.post.path)}
-                            />
-                        }
-                        {
-                            isOwner && isEditing && !this.props.new &&
-                            <span className={ styles.icon }>
-                                <Icon iconName={ 'Trash' } />
-                            </span>
-                        }
+                    <div className={ styles.postActionButtons }>
+                        <div>
+                            {
+                                isOwner && this.props.new &&
+                                <Button
+                                    className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+                                    value={'Create'}
+                                    onClick={() => this.sendToDB()}
+                                />
+                            }
+                            {
+                                isOwner && isEditing && !this.props.new &&
+                                <Button
+                                    className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+                                    value={'Update'}
+                                    onClick={() => this.sendToDB(this.post.path)}
+                                />
+                            }
+                        </div>
+                        <div>
+                            {
+                                isOwner && isEditing && !this.props.new &&
+                                <span className={ styles.icon }>
+                                    <Icon iconName={ 'Trash' } />
+                                </span>
+                            }
+                        </div>
                     </div>
                 </Section>
                 { !this.props.new && <CommentSection/> }
