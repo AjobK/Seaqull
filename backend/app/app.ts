@@ -7,7 +7,7 @@ import AuthorizationRoutes from './routes/authorizationRoutes'
 import CommentRoutes from './routes/commentRoutes'
 import ProfileRoutes from './routes/profileRoutes'
 import RoleRoutes from './routes/roleRoute'
-import AdminRoutes from './routes/adminRoutes'
+import AdminRoutes from './routes/banRoutes'
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
