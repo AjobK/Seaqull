@@ -24,7 +24,7 @@ class TextUtil {
     }
 
     static getWordCountFromText(text) {
-        this.getTrimmedText(text)
+        text = this.getTrimmedText(text)
 
         const pattern = '\\w+'
         const reg = new RegExp(pattern, 'g')
