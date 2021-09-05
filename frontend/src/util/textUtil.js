@@ -5,7 +5,9 @@ class TextUtil {
     static WORDS_PER_MIN = 265
 
     static getReadTimeFromText(text) {
-        return this.getHumanizedReadingTimeFromText(this.getCalculatedWordReadTimeFromText(text))
+        return this.getHumanizedReadingTimeFromText(
+            this.getCalculatedWordReadTimeFromText(text)
+        )
     }
 
     static getHumanizedReadingTimeFromText(wordTime) {
