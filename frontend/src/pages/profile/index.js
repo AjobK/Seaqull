@@ -114,7 +114,8 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner changeFollowerCount={ this.changeFollowerCount } role={ profile.role } user={ user } owner={ isOwner && profile.loggedIn } />
+        <UserBanner changeFollowerCount={ this.changeFollowerCount } role={ profile.role } user={ user }
+                    owner={ isOwner && profile.loggedIn } />
         <section className={[styles.infoWrapper]}>
             <div className={[styles.tempFollowerIndicator]}>
                 <Icon iconName={ 'UserFriends' }/>
