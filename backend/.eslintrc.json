@@ -1,20 +1,19 @@
+// eslint-disable-next-line no-undef
 {
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "modules": true
-    },
-    "compilerOptions": {
-      "experimentalDecorators": true
-    }
+  "env": {
+    "browser": false,
+    "es2021": true
   },
-  "plugins": ["react"],
-  "extends": ["plugin:react/recommended"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "quotes": [2, "single", { "avoidEscape": false }],
+    "@typescript-eslint/no-explicit-any": "off",
     "no-trailing-spaces": "error",
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
@@ -22,13 +21,11 @@
     "no-multi-spaces": "error",
     "no-unused-vars": "error",
     "func-style": ["error", "expression"],
-    "indent": ["error", 2],
+    "indent": ["error", 4],
+    "@typescript-eslint/no-var-requires": 0,
     "comma-dangle": 0,
-    "react/jsx-uses-vars": 0,
-    "react/display-name": 0,
     "no-console": 0,
     "no-unexpected-multiline": 0,
-    "react/prop-types": 0,
     "constructor-super": 0,
     "for-direction": 0,
     "getter-return": 0,
@@ -76,30 +73,11 @@
     "use-isnan": 0,
     "valid-typeof": 0,
     "array-bracket-newline": 0,
-    "jsx-quotes": [0, "prefer-single"],
     "newline-before-return": 0,
     "newline-after-var": 0,
     "no-empty-function": 0,
     "no-duplicate-imports": 0,
     "no-useless-constructor": 0,
     "no-var": 0
-  },
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "15.6.1"
-    }
-  },
-  "env": {
-    "browser": true,
-    "amd": true,
-    "node": true,
-    "jest": true,
-    "mongo": true,
-    "es6": true
-  },
-  "globals": {
-    "document": true,
-    "node": true
   }
 }
