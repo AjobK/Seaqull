@@ -42,7 +42,7 @@ class GlobalNotification extends Component {
 
       if (new Date() - SEVEN_DAYS >= parsedCookiesDate || !parsedCookiesDate) {
         localStorage.removeItem('cookiesAcceptedAt')
-    } else {
+      } else {
         return
       }
     }

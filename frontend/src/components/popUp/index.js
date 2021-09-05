@@ -37,7 +37,6 @@ class PopUp extends Component {
                 { title }
               </h2>
             )}
-            { }
             { canCloseWithClick &&
               <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
                 <Icon iconName={ 'Times' } />
