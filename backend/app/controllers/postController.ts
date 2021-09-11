@@ -262,6 +262,7 @@ class PostController {
         return null
     }
 
+    // TODO: should user & admins share the same route for this?
     public archivePost = async (req: any, res: Response): Promise<any> => {
         const { path } = req.body
         const post = await this.dao.getPostByPath(path)
@@ -271,15 +272,15 @@ class PostController {
         const currentDate = Date.now()
         post.archived_at = currentDate
 
-        const admin = await this.accountDAO.getAccountByUsername(req.decoded.username)
+        const user = await this.accountDAO.getAccountByUsername(req.decoded.username)
 
-        if (!admin) {
-            res.status(400).json({ error: ['Admin not found'] })
+        if (!user) {
+            res.status(400).json({ error: ['User not found'] })
         }
 
         const archivedPost = new ArchivedPost()
         archivedPost.archived_at = currentDate
-        archivedPost.staff = admin
+        archivedPost.staff = user
 
         await this.archivedPostDao.saveArchivedPost(archivedPost)
 

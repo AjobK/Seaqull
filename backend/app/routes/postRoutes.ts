@@ -3,8 +3,7 @@ import PostService from '../controllers/postController'
 import RouterBase from '../interfaces/RouterBase'
 
 const auth = require('../middlewares/isAuth.ts')
-const hasPermission = require('../middlewares/hasPermission.ts')
-
+const hasPostPermission = require('../middlewares/hasPostPermission.ts')
 
 class PostRoutes implements RouterBase {
     public post = '/post'
@@ -30,7 +29,7 @@ class PostRoutes implements RouterBase {
         this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
         this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
         this.router.put(this.post + '/:path', auth, this.postService.updatePost)
-        this.router.put(this.archivePost, auth, hasPermission('REMOVE_POSTS'), this.postService.archivePost)
+        this.router.put(this.archivePost, auth, hasPostPermission, this.postService.archivePost)
         this.router.post(this.post + '/view', this.postService.addViewToPost)
         this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
     }
