@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
-import { Button, FormInput, PopUp } from '../../components'
+import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -19,8 +19,7 @@ class LoginPrompt extends Component {
       remainingTime: null,
       recaptchaToken: null,
       recaptcha: null,
-      loadingTimeout: false,
-      popupData: null
+      loadingTimeout: false
     }
 
     window.recaptchaOptions = {
@@ -67,11 +66,9 @@ class LoginPrompt extends Component {
     })
     .catch(res => {
       if (res.message === 'Network Error') {
+        this.props.store.notification.setContent(popUpData.messages.networkError)
+
         return this.setState({
-          popupData: {
-            ...popUpData.messages.networkError,
-            close: this.closePopUp
-          },
           username: ['No connection'],
           password: ['No connection'],
           loadingTimeout: false
@@ -87,12 +84,6 @@ class LoginPrompt extends Component {
         password: errors || [],
         loadingTimeout: false
       })
-    })
-  }
-
-  closePopUp = () => {
-    this.setState({
-      popupData: null
     })
   }
 
@@ -144,7 +135,7 @@ class LoginPrompt extends Component {
   }
 
   render() {
-    const { username, password, remainingTime,recaptcha, loadingTimeout, popupData } = this.state
+    const { username, password, remainingTime,recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
@@ -163,10 +154,6 @@ class LoginPrompt extends Component {
           </form>
           <div className={styles.image} />
         </div>
-
-        { popupData && (
-            <PopUp content={ popupData } />
-        )}
       </div>
     )
   }

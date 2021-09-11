@@ -98,10 +98,11 @@ class UserBanner extends Component {
 
     Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
         .then((res) => {
-          this.setState({ following: res.data.following || false })
+          this.setState({ following: res.data.following || false },
+              this.props.changeFollowerCount(res.data.following ? 1 : -1))
         })
         .catch(err => {
-          console.log('Something went wrong')
+          console.log(err)
         })
   }
 
@@ -176,8 +177,8 @@ class UserBanner extends Component {
                 <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
                 <input
                     type='submit'
-                    onChange={ this.onEditBanner } 
-                    onDragEnter={ this.onBannerDragEnter } 
+                    onChange={ this.onEditBanner }
+                    onDragEnter={ this.onBannerDragEnter }
                     onDragLeave={ this.onBannerDragLeave }
                     onClick={ this.banUser.bind(this) }
                 />

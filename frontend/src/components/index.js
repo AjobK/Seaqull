@@ -37,6 +37,7 @@ import PostsBlock from './postsBlock'
 import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
 import PopUp from './popUp'
+import GlobalNotification from './globalNotification'
 
 export {
   Button,
@@ -77,5 +78,6 @@ export {
   PostsBlock,
   PostsBlockLarge,
   PostsBlockSmall,
-  PopUp
+  PopUp,
+  GlobalNotification
 }
