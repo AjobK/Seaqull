@@ -7,7 +7,6 @@ import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
-import { popUpData } from '../../components/popUp/popUpData'
 import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
 
 @inject('store') @observer

@@ -51,13 +51,14 @@ class PostBanner extends Component {
             </span>
           </div>
         }
-        {canBanUser  && 
-        <div className={ styles.backdrop }>
-          <p className={ styles.bannerText } onClick={ this.archivePost }>
-            Delete Post 
-            <Icon className={ styles.icon } iconName={ 'Trash' } />
-          </p>
-        </div> }
+        { (canBanUser || isOwner) &&
+          <div className={ styles.backdrop }>
+            <p className={ styles.bannerText } onClick={ this.archivePost }>
+              Delete Post
+              <Icon className={ styles.icon } iconName={ 'Trash' } />
+            </p>
+          </div>
+        }
         <div className={ styles.innerWrapper }>
           <div className={ styles.info }>
             <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
