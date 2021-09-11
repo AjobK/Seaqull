@@ -54,9 +54,7 @@ class GlobalNotification extends Component {
         title: 'OK',
         icon: 'Check',
         primary: true,
-        action: () => {
-          notification.close()
-        }
+        action: notification.close
       }
     ])
 
