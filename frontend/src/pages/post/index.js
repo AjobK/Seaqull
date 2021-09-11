@@ -178,20 +178,17 @@ class Post extends App {
     }
 
     deletePostClicked = () => {
-        const { notification } = this.props.store
-
-        notification.setContent(popUpData.messages.deletePostConfirmation)
-
-        notification.setActions([
-            {
-                ...popUpData.actions.confirmWithText,
-                action: this.deletePost
-            }
-        ])
-    }
-
-    deletePost = () => {
-        console.log('delete')
+        // TODO: delete? apparently there's a delete function already
+        // const { notification } = this.props.store
+        //
+        // notification.setContent(popUpData.messages.deletePostConfirmation)
+        //
+        // notification.setActions([
+        //     {
+        //         ...popUpData.actions.confirmWithText,
+        //         action: this.deletePost
+        //     }
+        // ])
     }
 
     render() {

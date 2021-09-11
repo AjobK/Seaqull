@@ -12,8 +12,8 @@ export const popUpData = {
         "of these cookies."
     },
     "deletePostConfirmation": {
-      "title": "Delete post",
-      "description": "Thou art about to fordid this post. Arth thee c'rtain?"
+      "title": "Delete Post",
+      "description": "Are you sure you want to delete this post?"
     }
   },
   "actions": {
@@ -30,6 +30,10 @@ export const popUpData = {
       "title": "OK",
       "icon": "Check",
       "primary": true,
+    },
+    "cancel": {
+      "title": "Cancel",
+      "primary": false
     }
   }
 }
