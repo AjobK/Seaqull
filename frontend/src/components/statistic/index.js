@@ -52,7 +52,6 @@ class Statistic extends Component {
     }
 
     return timeFormat.join(' ')
-
   }
 
   render() {
