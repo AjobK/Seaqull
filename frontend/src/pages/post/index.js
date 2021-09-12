@@ -5,6 +5,7 @@ import { Standard, Section } from '../../layouts'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
+import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
@@ -262,11 +263,14 @@ class Post extends App {
                         </div>
                         <div className={ styles.postActionButtonsRight }>
                             { !this.props.new && (this.canBanUser || isOwner) &&
-                                <span className={ styles.delete } onClick={ this.onDeletePostClicked }>
+                                <span className={ styles.delete } data-tip data-for={'postDeleteTooltip'} onClick={ this.onDeletePostClicked }>
                                     <Icon iconName={ 'Trash' } />
                                 </span>
                             }
                         </div>
+                        <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={styles.toolTip}>
+                            Delete
+                        </ReactTooltip>
                     </div>
                 </Section>
                 { !this.props.new && <CommentSection/> }
