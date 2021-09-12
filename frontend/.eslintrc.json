@@ -38,6 +38,7 @@
     ],
     "semi-spacing": "error",
     "space-infix-ops": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
     "no-eval": "error",
     "no-multi-spaces": "error",
     "no-unused-vars": "off",
