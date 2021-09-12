@@ -25,7 +25,7 @@ class PostDAO {
     public async getOwnedPosts(profile: Profile): Promise<Post[]> {
       const repository = await DatabaseConnector.getRepository('Post')
 
-      const postList2 = await repository.createQueryBuilder('post')
+      const postList = await repository.createQueryBuilder('post')
         .leftJoinAndSelect('post.profile', 'profile')
         .where('post.profile = :profileId', { profileId: profile.id })
         .andWhere('post.archived_at IS NULL')
@@ -34,7 +34,7 @@ class PostDAO {
         })
         .getMany()
 
-      return postList2
+      return postList
     }
 
     public async getPostByPath(path: string): Promise<Post> {
