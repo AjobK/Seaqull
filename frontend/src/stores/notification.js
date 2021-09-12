@@ -17,10 +17,10 @@ const NotificationStore = types
     actionsData: types.optional(types.array(Action), []),
     canCloseWithClick: types.optional(types.boolean, true)
   })
-  .volatile(self => ({
+  .volatile(() => ({
     customClose: types.optional(functionType, null)
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setContent(content) {
       self.visible = true
       self.title = content.title

@@ -14,24 +14,24 @@ require('dotenv').config()
 const { FRONTEND_URL } = process.env
 
 const backend = new serverConstructor({
-    port: 8000,
-    routes: [
-        new PostRoutes(),
-        new AuthorizationRoutes(),
-        new CommentRoutes(),
-        new ProfileRoutes(),
-        new RoleRoutes(),
-        new AdminRoutes()
-    ],
-    middleWares: [
-        cookieParser(),
-        bodyParser.json(),
-        bodyParser.urlencoded({ extended: true }),
-        cors({
-            origin: [FRONTEND_URL, 'http://localhost:8080', 'http://localhost:3000', 'http://localhost'],
-            credentials: true
-        }),
-    ]
+  port: 8000,
+  routes: [
+    new PostRoutes(),
+    new AuthorizationRoutes(),
+    new CommentRoutes(),
+    new ProfileRoutes(),
+    new RoleRoutes(),
+    new AdminRoutes()
+  ],
+  middleWares: [
+    cookieParser(),
+    bodyParser.json(),
+    bodyParser.urlencoded({ extended: true }),
+    cors({
+      origin: [FRONTEND_URL, 'http://localhost:8080', 'http://localhost:3000', 'http://localhost'],
+      credentials: true
+    }),
+  ]
 })
 
 export default backend

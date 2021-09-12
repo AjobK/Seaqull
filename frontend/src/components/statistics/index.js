@@ -14,13 +14,14 @@ class Statistics extends Component {
 
   render() {
     const { views, likes, posts } = this.state
+
     return (
-      <section className={styles.wrapper}>
-        <div className={styles.innerWrapper}>
-          <Statistic type={'views'} count={views} />
-          <Statistic type={'likes'} count={likes} />
-          <Statistic type={'posts'} count={posts} />
-          <Statistic type={'time'} count={0} />
+      <section className={ styles.wrapper }>
+        <div className={ styles.innerWrapper }>
+          <Statistic type={ 'views' } count={ views } />
+          <Statistic type={ 'likes' } count={ likes } />
+          <Statistic type={ 'posts' } count={ posts } />
+          <Statistic type={ 'time' } count={ 0 } />
         </div>
       </section>
     )

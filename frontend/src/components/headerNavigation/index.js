@@ -10,21 +10,21 @@ class HeaderNavigation extends Component {
     const { profile } = this.props.store
 
     return (
-      <nav className={styles.menu}>
+      <nav className={ styles.menu }>
         { profile.loggedIn ? ( // Logged in content
-          <ul className={styles.menuUl}>
-            <Link to={'/profile/' + profile.display_name} className={styles.menuItem}>
+          <ul className={ styles.menuUl }>
+            <Link to={ '/profile/' + profile.display_name } className={ styles.menuItem }>
               <li>My profile</li>
             </Link>
-            <li onClick={profile.logOut} className={styles.menuItem}>Logout</li>
+            <li onClick={ profile.logOut } className={ styles.menuItem }>Logout</li>
           </ul>
         ) : ( // Logged out content
-          <ul className={styles.menuUl}>
-            <Link to='/login' className={styles.menuItem}>
+          <ul className={ styles.menuUl }>
+            <Link to='/login' className={ styles.menuItem }>
               <li>Log in</li>
             </Link>
             <Link to='/register'>
-              <Button value='Sign Up' className={styles.button} />
+              <Button value='Sign Up' className={ styles.button } />
             </Link>
           </ul>
         )}
