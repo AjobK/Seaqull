@@ -12,6 +12,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "eol-last": "error",
     "quotes": [2, "single", { "avoidEscape": false }],
     "@typescript-eslint/no-explicit-any": "off",
     "no-trailing-spaces": "error",
