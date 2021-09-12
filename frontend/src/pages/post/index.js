@@ -13,35 +13,36 @@ import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostVi
 
 @inject('store') @observer
 class Post extends App {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
     this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
 
     this.postPath = URLUtil.getLastPathArgument()
 
     this.state = {
-        isOwner: true,
-        isEditing: true,
-        author: {
-            name: '',
-            bannerURL: '',
-            avatarURL: '',
-            path: '/profile/',
-            title: ''
-        },
-        loaded: false,
-        post: {
-            title: '',
-            description: '',
-            content: '',
-            path: '',
-            likes: {
-                amount: 0,
-                userLiked: false
-            }
+      isOwner: true,
+      isEditing: true,
+      author: {
+        name: '',
+        bannerURL: '',
+        avatarURL: '',
+        path: '/profile/',
+        title: ''
+      },
+      loaded: false,
+      post: {
+        title: '',
+        description: '',
+        content: '',
+        path: '',
+        likes: {
+          amount: 0,
+          userLiked: false
         }
+      }
     }
+  }
 
     loadArticle = () => {
       const { defaultData } = this.props.store
@@ -113,12 +114,12 @@ class Post extends App {
       this.setState(newState)
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
       if (!this.props.new)
         return this.loadArticle()
     }
 
-    sendToDB(path = null) {
+    sendToDB = (path = null) => {
       Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
       const payload = {
@@ -129,12 +130,12 @@ class Post extends App {
 
       if (!path) {
         Axios.post('/post', payload, { withCredentials: true })
-          .then((res) => {
+          .then(() => {
             this.props.history.push('/posts/${res.data.path}')
           })
       } else if (typeof path == 'string') {
         Axios.put(`/post/${path}`, payload, { withCredentials: true })
-          .then((res) => {
+          .then(() => {
             // TODO: change to a popup to confirm that a post is updated
             this.props.history.push('/profile')
           })
@@ -171,7 +172,7 @@ class Post extends App {
       }).catch((_err) => { })
     }
 
-    addViewToDB() {
+    addViewToDB = () => {
       if (!this.state.isOwner) {
         Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
 
@@ -183,7 +184,7 @@ class Post extends App {
       }
     }
 
-    render() {
+    render = () => {
       // Values change based on initial response from server
       const { profile, user } = this.props.store
       const { isEditing, isOwner, post, loaded, author } = this.state
