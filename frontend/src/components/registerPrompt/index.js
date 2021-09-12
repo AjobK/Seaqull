@@ -180,4 +180,5 @@ class RegisterPrompt extends Component {
     )
   }
 }
+
 export default withRouter(RegisterPrompt)

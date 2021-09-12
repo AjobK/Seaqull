@@ -9,7 +9,8 @@ import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class Post extends App {
   constructor(props) {
     super(props)
@@ -21,8 +22,8 @@ class Post extends App {
       path: '',
       likes: {
         amount: 0,
-        userLiked: false
-      }
+        userLiked: false,
+      },
     }
 
     this.state = {
@@ -33,10 +34,10 @@ class Post extends App {
         bannerURL: '',
         avatarURL: '',
         path: '/profile/',
-        title: ''
+        title: '',
       },
       loaded: false,
-      post: this.post
+      post: this.post,
     }
   }
 
@@ -45,10 +46,32 @@ class Post extends App {
 
     const { defaultData } = this.props.store
 
-    Axios.get(`${defaultData.backendUrl}/post/${path}`, { withCredentials: true })
-      .then(res => {
-        const { post, likes, isOwner } = res.data
+    Axios.get(`${defaultData.backendUrl}/post/${path}`, { withCredentials: true }).then((res) => {
+      const { post, likes, isOwner } = res.data
 
+      this.post = {
+        title: post.title,
+        content: post.content,
+        description: post.description,
+        path: path,
+        likes: {
+          amount: likes.amount,
+          userLiked: likes.userLiked,
+        },
+      }
+
+      try {
+        this.post = {
+          title: convertFromRaw(JSON.parse(post.title)),
+          content: convertFromRaw(JSON.parse(post.content)),
+          description: '',
+          path: path,
+          likes: {
+            amount: likes.amount,
+            userLiked: likes.userLiked,
+          },
+        }
+      } catch (e) {
         this.post = {
           title: post.title,
           content: post.content,
@@ -56,52 +79,32 @@ class Post extends App {
           path: path,
           likes: {
             amount: likes.amount,
-            userLiked: likes.userLiked
-          }
+            userLiked: likes.userLiked,
+          },
         }
+      }
 
-        try {
-          this.post = {
-            title: convertFromRaw(JSON.parse(post.title)),
-            content: convertFromRaw(JSON.parse(post.content)),
-            description: '',
-            path: path,
-            likes: {
-              amount: likes.amount,
-              userLiked: likes.userLiked
-            }
-          }
-        } catch (e) {
-          this.post = {
-            title: post.title,
-            content: post.content,
-            description: post.description,
-            path: path,
-            likes: {
-              amount: likes.amount,
-              userLiked: likes.userLiked
-            }
-          }
-        }
+      let author = {
+        name: post.profile.display_name,
+        bannerURL: '/src/static/dummy/user/banner.jpg',
+        avatarURL: post.profile.avatar_attachment
+          ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
+          : '/src/static/dummy/user/profile.jpg',
+        path: `/profile/${post.profile.display_name}`,
+        title: post.profile.title || 'No title',
+      }
 
-        let author = {
-          name: post.profile.display_name,
-          bannerURL: '/src/static/dummy/user/banner.jpg',
-          avatarURL: post.profile.avatar_attachment
-            ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
-            : '/src/static/dummy/user/profile.jpg',
-          path: `/profile/${post.profile.display_name}`,
-          title: post.profile.title || 'No title'
-        }
-
-        this.setState({
+      this.setState(
+        {
           post: this.post,
           loaded: true,
           isOwner: isOwner,
           isEditing: true,
-          author: author
-        }, this.addViewToDB)
-      })
+          author: author,
+        },
+        this.addViewToDB
+      )
+    })
   }
 
   toggleLike = () => {
@@ -123,45 +126,44 @@ class Post extends App {
   }
 
   componentDidMount() {
-    if (!this.props.new)
-      return this.loadArticle()
+    if (!this.props.new) return this.loadArticle()
   }
 
-  sendToDB(path=null) {
+  sendToDB(path = null) {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
       title: this.state.post.title,
       description: 'None',
-      content: this.state.post.content
+      content: this.state.post.content,
     }
 
     if (!path) {
-      Axios.post('/post', payload, { withCredentials: true })
-        .then(res => {
-          this.props.history.push('/')
-        })
+      Axios.post('/post', payload, { withCredentials: true }).then((_res) => {
+        this.props.history.push('/')
+      })
     } else if (typeof path == 'string') {
-      Axios.put(`/post/${path}`, payload, { withCredentials: true })
-        .then(() => {
-          // TODO: change to a popup to confirm that a post is updated
-          this.props.history.push('/profile')
-        })
+      Axios.put(`/post/${path}`, payload, { withCredentials: true }).then(() => {
+        // TODO: change to a popup to confirm that a post is updated
+        this.props.history.push('/profile')
+      })
     }
   }
 
   archivePost() {
     const payload = {
-      path: this.post.path
+      path: this.post.path,
     }
 
-    Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
-      this.props.history.push('/')
-    }).catch(err => {
-      const { error } = err.response.data
+    Axios.put('/api/archive', payload, { withCredentials: true })
+      .then((_res) => {
+        this.props.history.push('/')
+      })
+      .catch((err) => {
+        const { error } = err.response.data
 
-      this.setState({ error: [error] })
-    })
+        this.setState({ error: [error] })
+      })
   }
 
   addViewToDB() {
@@ -169,7 +171,7 @@ class Post extends App {
       Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
 
       const payload = {
-        path: this.state.post.path
+        path: this.state.post.path,
       }
 
       Axios.post('api/post/view', payload)
@@ -185,20 +187,20 @@ class Post extends App {
       name: profile.display_name,
       bannerURL: user.banner,
       avatarURL: profile.avatarURL,
-      title: profile.title
+      title: profile.title,
     }
 
-    if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
+    if (!loaded && !this.props.new) return <h1>Not loaded</h1>
 
     return (
       <Standard className={[styles.stdBgWhite]}>
         <PostBanner
-          archivePost={ this.archivePost.bind(this) }
-          author={ this.props.new ? ownerAuthor : author }
-          isOwner={ isOwner }
+          archivePost={this.archivePost.bind(this)}
+          author={this.props.new ? ownerAuthor : author}
+          isOwner={isOwner}
         />
         <Section noTitle>
-          { !this.props.new &&
+          {!this.props.new && (
             <div className={styles.likePostWrapper}>
               <PostViews />
               <PostLike
@@ -208,7 +210,7 @@ class Post extends App {
                 isOwner={isOwner}
               />
             </div>
-          }
+          )}
           <div className={styles.renderWrapper}>
             <PostContent
               type={'title'}
@@ -233,24 +235,22 @@ class Post extends App {
               value={post.content} // Initial no content, should be prefilled by API
             />
           </div>
-          {
-            isOwner && this.props.new &&
+          {isOwner && this.props.new && (
             <Button
-              className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+              className={[styles.publishButton, /* isPublished ? styles.published : */ ''].join(' ')}
               value={'Create'}
               onClick={() => this.sendToDB()}
             />
-          }
-          {
-            isOwner && isEditing && !this.props.new &&
+          )}
+          {isOwner && isEditing && !this.props.new && (
             <Button
-              className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
+              className={[styles.publishButton, /* isPublished ? styles.published : */ ''].join(' ')}
               value={'Update'}
               onClick={() => this.sendToDB(this.post.path)}
             />
-          }
+          )}
         </Section>
-        { !this.props.new && <CommentSection/> }
+        {!this.props.new && <CommentSection />}
       </Standard>
     )
   }

@@ -15,8 +15,8 @@ class previewPost extends Component {
     let { post, className } = this.props
 
     try {
-        // DraftJS content and regular text
-        post.title = JSON.parse(post.title).blocks[0].text
+      // DraftJS content and regular text
+      post.title = JSON.parse(post.title).blocks[0].text
     } catch (e) { }
 
     if(this.props.filler) {
@@ -24,27 +24,31 @@ class previewPost extends Component {
     }
 
     return (
-        <Link to={post.path ? `/posts/${post.path}` : '#'} className={[styles.article, ...className || ''].join(' ')} style={{
-            backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
-        }}>
-            <div className={styles.articleWrapper}>
-            <div className={styles.articleWrapperStats}>
-                {post.likes > 0 && <div className={styles.articleWrapperStatsLikes}>
+      <Link to={post.path ? `/posts/${post.path}` : '#'} className={[styles.article, ...className || ''].join(' ')} style={{
+        backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
+      }}>
+        <div className={styles.articleWrapper}>
+          <div className={styles.articleWrapperStats}>
+            { post.likes > 0 &&
+              <div className={styles.articleWrapperStatsLikes }>
                 <Icon iconName='FeatherAlt' />
-                <p className={styles.articleWrapperStatsLikesText}>{post.likes}</p>
-                </div>}
+                <p className={styles.articleWrapperStatsLikesText}>
+                  {post.likes}
+                </p>
+              </div>
+            }
+          </div>
+          { post.title &&
+            <div className={styles.articleWrapperText}>
+              <p className={styles.articleWrapperTextTitle}>
+                {post.title}
+              </p>
             </div>
-                {post.title && 
-                    <div className={styles.articleWrapperText}>
-                        <p className={styles.articleWrapperTextTitle}>
-                        {post.title}
-                        </p>
-                    </div>
-                }
-            </div>
-        </Link>
-        )
-    }
+          }
+        </div>
+      </Link>
+    )
+  }
 }
 
 export default previewPost

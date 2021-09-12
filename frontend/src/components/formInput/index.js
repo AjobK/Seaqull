@@ -13,7 +13,7 @@ class FormInput extends Component {
     this.toolTipId = this.getElId(`${name}ToolTip`)
 
     this.state = {
-      passwordVisible: false
+      passwordVisible: false,
     }
 
     callBack(this, this.id)
@@ -22,10 +22,8 @@ class FormInput extends Component {
   // Unique keys to avoid botting
   getElId = (param) => {
     if (!this.elId[param]) {
-      this.elId[param] = param + '-' + (
-        Math.random().toString(36).substring(2, 15) +
-        Math.random().toString(36).substring(2, 15)
-      )
+      this.elId[param] =
+        param + '-' + (Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
     }
 
     return this.elId[param]
@@ -36,9 +34,14 @@ class FormInput extends Component {
     const { errors, toolTipDirection } = this.props
 
     return (
-      <ReactTooltip id={toolTipId} effect={'solid'} place={ toolTipDirection || 'right' } className={styles.toolTip}>
+      <ReactTooltip id={toolTipId} effect={'solid'} place={toolTipDirection || 'right'} className={styles.toolTip}>
         <ul className={styles.toolTipUl}>
-          {(errors != 'loading') && errors.map((message, i) => <li key={i} className={styles.toolTipLi}>{message}</li>)}
+          {errors != 'loading' &&
+            errors.map((message, i) => (
+              <li key={i} className={styles.toolTipLi}>
+                {message}
+              </li>
+            ))}
         </ul>
       </ReactTooltip>
     )
@@ -56,28 +59,46 @@ class FormInput extends Component {
     const { id, toolTipId } = this
     const { passwordVisible } = this.state
     const hasErrors = errors != 'loading' && errors && errors.length > 0,
-          iconClassName = ((errors == null || errors == 'loading') && 'noClass') || (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
-          iconName = customIconName || ((errors == null && 'MinusCircle') || (errors == 'loading' && 'Cog') || (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle')),
-          loadingClass = errors == 'loading' ? 'fa-spin' : '',
-          isPassword = type == 'password'
+      iconClassName =
+        ((errors == null || errors == 'loading') && 'noClass') ||
+        (errors.length <= 0 ? styles.iconCheck : styles.iconTimes),
+      iconName =
+        customIconName ||
+        (errors == null && 'MinusCircle') ||
+        (errors == 'loading' && 'Cog') ||
+        (errors.length <= 0 ? 'CheckCircle' : 'TimesCircle'),
+      loadingClass = errors == 'loading' ? 'fa-spin' : '',
+      isPassword = type == 'password'
 
     if (type == 'password' && passwordVisible) {
       type = 'text'
     }
 
     return (
-      <div className={[...className || ''].join(' ')}>
+      <div className={[...(className || '')].join(' ')}>
         <label htmlFor={id} className={styles.label}>
-          <Icon
-            className={`${styles.icon} ${iconClassName} ${loadingClass}`}
-            iconName={iconName}
-          />
+          <Icon className={`${styles.icon} ${iconClassName} ${loadingClass}`} iconName={iconName} />
           <span>{name}</span>
         </label>
         <div className={styles.inputWrapper}>
-          <input id={id} className={ styles.input } type={ type || 'text' } data-tip data-for={ toolTipId } data-event='focus' data-event-off='blur' min={ limit || '0' } />
-          { isPassword && <Icon className={`${styles.icon} ${styles.iconPassword}`} iconName={'Eye'} onClick={this.togglePasswordVisible} />}
-          {(hasErrors && this.getErrorMessages())}
+          <input
+            id={id}
+            className={styles.input}
+            type={type || 'text'}
+            data-tip
+            data-for={toolTipId}
+            data-event="focus"
+            data-event-off="blur"
+            min={limit || '0'}
+          />
+          {isPassword && (
+            <Icon
+              className={`${styles.icon} ${styles.iconPassword}`}
+              iconName={'Eye'}
+              onClick={this.togglePasswordVisible}
+            />
+          )}
+          {hasErrors && this.getErrorMessages()}
         </div>
       </div>
     )

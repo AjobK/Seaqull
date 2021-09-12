@@ -7,9 +7,9 @@ import { Posts } from '../../components'
 class Main extends Component {
   render() {
     return (
-        <div className={styles.main}>
-            <Posts/>
-        </div>
+      <div className={styles.main}>
+        <Posts/>
+      </div>
     )
   }
 }
