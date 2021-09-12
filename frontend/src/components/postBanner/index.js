@@ -51,7 +51,7 @@ class PostBanner extends Component {
             </span>
           </div>
         }
-        { (canBanUser || isOwner) &&
+        { !this.props.new && (canBanUser || isOwner) &&
           <div className={ styles.backdrop }>
             <p className={ styles.bannerText } onClick={ this.archivePost }>
               Delete Post
