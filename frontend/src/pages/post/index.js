@@ -198,7 +198,6 @@ class Post extends App {
                     archivePost={ this.archivePost.bind(this) }
                     author={ this.props.new ? ownerAuthor : author }
                     isOwner={ isOwner }
-                    new = { this.props.new }
                 />
                 <Section noTitle>
                     { !this.props.new &&
