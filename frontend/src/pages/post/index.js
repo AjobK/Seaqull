@@ -148,7 +148,7 @@ class Post extends App {
         notification.setActions([
             {
                 ...popUpData.actions.cancel,
-                action: notification.close
+                action: () => { notification.close() }
             },
             {
                 ...popUpData.actions.confirmWithText,
