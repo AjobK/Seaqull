@@ -11,14 +11,14 @@ class ProfileBar extends Component {
     const { avatar, name, title } = this.props
 
     return (
-      <section className={styles.profile} style={{ backgroundColor: ColorUtil.getUniqueColorBasedOnString(name) }}>
-        <Link to={'/profile'}>
-          <div className={styles.profilePicture} style={{ backgroundImage: `url('${avatar}')` }}></div>
+      <section className={ styles.profile } style={ { backgroundColor: ColorUtil.getUniqueColorBasedOnString(name) } }>
+        <Link to={ '/profile' }>
+          <div className={ styles.profilePicture } style={ { backgroundImage: `url('${avatar}')` } }></div>
         </Link>
-        <div className={styles.profileInfo}>
-          <div className={styles.profileInfoWrapper}>
-            <h2 className={styles.profileInfoUserName}>{name || 'Username'}</h2>
-            <p className={styles.profileInfoUserRole}>{title || 'Developer'}</p>
+        <div className={ styles.profileInfo }>
+          <div className={ styles.profileInfoWrapper }>
+            <h2 className={ styles.profileInfoUserName }>{name || 'Username'}</h2>
+            <p className={ styles.profileInfoUserRole }>{title || 'Developer'}</p>
           </div>
         </div>
       </section>

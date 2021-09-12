@@ -101,7 +101,7 @@ class UserBanner extends Component {
         this.setState({ following: res.data.following || false },
           this.props.changeFollowerCount(res.data.following ? 1 : -1))
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
       })
   }
@@ -131,7 +131,7 @@ class UserBanner extends Component {
         <div className={ styles.innerWrapper }>
           <div
             className={ styles.picture }
-            style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
+            style={ { backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash } }
           >
             { this.props.owner && (
               <span
@@ -141,11 +141,11 @@ class UserBanner extends Component {
               >
                 <Icon iconName={ 'Pen' } />
                 <input
-                  type='file' accept='image/png, image/jpeg' value={''}
+                  type='file' accept='image/png, image/jpeg' value={ '' }
                   onChange={ this.onEditAvatar }
                   onDragEnter={ this.onAvatarDragEnter }
                   onDragLeave={ this.onAvatarDragLeave }
-                  style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
+                  style={ { backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash } }
                 />
               </span>
             )}
@@ -167,7 +167,7 @@ class UserBanner extends Component {
           </div>
         </div>
         <div className={ styles.banner }>
-          <div className={ styles.bannerImage } style={{ backgroundImage: `url(${ user.banner })` }} />
+          <div className={ styles.bannerImage } style={ { backgroundImage: `url(${ user.banner })` } } />
           { this.props.owner && (
             <div
               className={
@@ -175,7 +175,7 @@ class UserBanner extends Component {
               }
             >
               <input
-                type='file' accept='image/png, image/jpeg' value={''}
+                type='file' accept='image/png, image/jpeg' value={ '' }
                 onChange={ this.onEditBanner }
                 onDragEnter={ this.onBannerDragEnter }
                 onDragLeave={ this.onBannerDragLeave }
@@ -215,23 +215,23 @@ class UserBanner extends Component {
 
         { this.state.upAvatar && (
           <Cropper
-            inputType={'avatar'}
-            img={this.state.upAvatar}
+            inputType={ 'avatar' }
+            img={ this.state.upAvatar }
             closeCropper={ this.closePopup }
             changeImage={ this.changeAvatar }
           />
         )}
         { this.state.upBanner && (
           <Cropper
-            inputType={'banner'}
-            img={this.state.upBanner}
+            inputType={ 'banner' }
+            img={ this.state.upBanner }
             closeCropper={ this.closePopup }
             changeImage={ this.changeBanner }
           />
         )}
         { this.state.banUser && (
           <BanUser
-            user={user}
+            user={ user }
             closePopup={ this.closePopup }
           />
         )}

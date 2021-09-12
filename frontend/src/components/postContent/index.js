@@ -95,23 +95,23 @@ class PostContent extends Component {
     return (
       <div>
         <PostContentBlock
-          heading={`${type == 'content' ? 'Your' : ''} ${type}`}
-          noHeading={readOnly}
+          heading={ `${type == 'content' ? 'Your' : ''} ${type}` }
+          noHeading={ readOnly }
           // onClick={this.focusOnEditor}
-          className={[style]}
+          className={ [style] }
         >
           <Editor
-            editorState={this.state.editorState}
-            ref={this.editorInput}
-            onChange={this.onChange}
-            readOnly={readOnly != undefined ? readOnly : false}
+            editorState={ this.state.editorState }
+            ref={ this.editorInput }
+            onChange={ this.onChange }
+            readOnly={ readOnly != undefined ? readOnly : false }
             // onFocus={this.onFocus}
             // onBlur={this.onBlur}
-            spellCheck={true}
-            placeholder={type == 'title' ? 'Title' : 'Write your story...'}
-            handleBeforeInput={this.handleBeforeInput}
-            handlePastedText={this.handlePastedText}
-            blockStyleFn={() => `${styles.postContent} ${styles[type]}`}
+            spellCheck={ true }
+            placeholder={ type == 'title' ? 'Title' : 'Write your story...' }
+            handleBeforeInput={ this.handleBeforeInput }
+            handlePastedText={ this.handlePastedText }
+            blockStyleFn={ () => `${styles.postContent} ${styles[type]}` }
           />
           {/* { type != 'title' && this.inlineStyleControls()} */}
         </PostContentBlock>

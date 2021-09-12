@@ -99,7 +99,8 @@ class Cropper extends Component {
 
     if (maxFileSizeKB < fileSizeKB)
       return this.setState({
-        error: `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`,
+        error:
+        `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`,
       })
 
     this.setState({
@@ -136,41 +137,41 @@ class Cropper extends Component {
     const isCropped = crop.height > 0 && crop.width > 0
 
     return (
-      <div className={styles.avatarUpload}>
-        <div className={styles.avatarUploadBackground} onClick={this.props.closeCropper} />
-        <section className={styles.avatarUploadPopUp}>
-          <div className={`${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}`}>
+      <div className={ styles.avatarUpload }>
+        <div className={ styles.avatarUploadBackground } onClick={ this.props.closeCropper } />
+        <section className={ styles.avatarUploadPopUp }>
+          <div className={ `${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}` }>
             {!error && inputImage && (
-              <div className={styles.uploadedImg}>
+              <div className={ styles.uploadedImg }>
                 <ReactCrop
-                  className={styles.uploadedImgCropper}
-                  src={inputImage}
-                  crop={crop}
-                  onImageLoaded={this.onImageLoaded}
-                  onComplete={this.onCropComplete}
-                  onChange={this.onCropChange}
+                  className={ styles.uploadedImgCropper }
+                  src={ inputImage }
+                  crop={ crop }
+                  onImageLoaded={ this.onImageLoaded }
+                  onComplete={ this.onCropComplete }
+                  onChange={ this.onCropChange }
                 />
               </div>
             )}
             {error && (
-              <div className={styles.errorMessageWrapper}>
-                <p className={styles.errorMessage}>{error}</p>
+              <div className={ styles.errorMessageWrapper }>
+                <p className={ styles.errorMessage }>{error}</p>
               </div>
             )}
           </div>
-          <div className={styles.avatarUploadPopUpBtns}>
+          <div className={ styles.avatarUploadPopUpBtns }>
             <Button
-              className={styles.avatarUploadPopUpBtnsCancelButton}
-              value={error ? 'Back' : 'Cancel'}
-              inverted={true}
-              onClick={this.props.closeCropper}
+              className={ styles.avatarUploadPopUpBtnsCancelButton }
+              value={ error ? 'Back' : 'Cancel' }
+              inverted={ true }
+              onClick={ this.props.closeCropper }
             />
             {!error && (
               <Button
-                className={styles.avatarUploadPopUpBtnsSaveButton}
-                value={'Save'}
-                disabled={!inputImage || !isCropped}
-                onClick={inputImage && isCropped ? this.saveImage : undefined}
+                className={ styles.avatarUploadPopUpBtnsSaveButton }
+                value={ 'Save' }
+                disabled={ !inputImage || !isCropped }
+                onClick={ inputImage && isCropped ? this.saveImage : undefined }
               />
             )}
           </div>

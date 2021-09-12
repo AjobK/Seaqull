@@ -90,15 +90,19 @@ class Statistic extends Component {
       thisType = types[type]
 
     return (
-      <div className={styles.statistic}>
-        <div className={styles.statisticWrapper}>
-          <img draggable={false} className={styles.statisticImage} src={StatisticImage} />
-          <div className={styles.statisticContent}>
-            <p className={styles.statisticCounter}>{thisType.func(count) || 0}</p>
-            <Icon iconName={thisType['icon'] || ''} className={styles.statisticIcon} style={{ color: thisType['color'] }}/>
+      <div className={ styles.statistic }>
+        <div className={ styles.statisticWrapper }>
+          <img draggable={ false } className={ styles.statisticImage } src={ StatisticImage } />
+          <div className={ styles.statisticContent }>
+            <p className={ styles.statisticCounter }>{thisType.func(count) || 0}</p>
+            <Icon
+              iconName={ thisType['icon'] || '' }
+              className={ styles.statisticIcon }
+              style={ { color: thisType['color'] } }
+            />
           </div>
         </div>
-        <p className={styles.statisticType}>{type || 'NONE'}</p>
+        <p className={ styles.statisticType }>{type || 'NONE'}</p>
       </div>
     )
   }

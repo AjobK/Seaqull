@@ -34,9 +34,9 @@ class PostEditHeading extends Component {
     let editingClass = [styles.edit, manualEditing || editing ? styles.editing : ''].join(' ')
 
     return (
-      <label className={editingClass}>
+      <label className={ editingClass }>
         <span>
-          <Icon iconName={'Pen'} className={styles.icon} /> {heading || 'Text'}{' '}
+          <Icon iconName={ 'Pen' } className={ styles.icon } /> {heading || 'Text'}{' '}
           {(manualEditing || editing) && '- Editing'}
         </span>
       </label>

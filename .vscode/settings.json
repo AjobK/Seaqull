@@ -1,6 +1,6 @@
 {
-    "eslint.workingDirectories": [
-        "./backend",
-        "./frontend"
-    ],
+  "eslint.workingDirectories": ["./backend", "./frontend"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

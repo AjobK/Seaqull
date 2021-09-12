@@ -10,12 +10,12 @@ class RoleRoutes implements RouterBase {
     public roleController: RoleController
 
     constructor() {
-        this.roleController = new RoleController()
-        this.initRoutes()
+      this.roleController = new RoleController()
+      this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.get (this.route, auth, this.roleController.getRole)
+      this.router.get (this.route, auth, this.roleController.getRole)
     }
 }
 

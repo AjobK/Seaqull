@@ -31,9 +31,9 @@ class PostViews extends Component {
 
   render() {
     return (
-      <div className={styles.postViews}>
-        <Icon iconName={'Eye'} className={styles.viewIcon} />
-        <p className={styles.postViewsText}>
+      <div className={ styles.postViews }>
+        <Icon iconName={ 'Eye' } className={ styles.viewIcon } />
+        <p className={ styles.postViewsText }>
           {`${unitFormatterUtil.getNumberSuffix(this.state.views)} 
                     ${this.state.views === 1 ? 'view' : 'views'}`}
         </p>

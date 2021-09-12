@@ -20,7 +20,7 @@ const NotificationStore = types
   .volatile(() => ({
     customClose: types.optional(functionType, null)
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setContent(content) {
       self.visible = true
       self.title = content.title

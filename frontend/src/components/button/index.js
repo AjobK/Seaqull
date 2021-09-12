@@ -8,20 +8,20 @@ class Button extends Component {
 
     return (
       <button
-        className={[
+        className={ [
           className,
           disabled ? styles.disabled : styles.pulse,
           !noStyle && styles.button,
           !noStyle && inverted && styles.inverted,
           value && icon ? styles.iconWithText : styles.iconWithoutText,
-        ].join(' ')}
-        onClick={onClick}
-        onSubmit={onSubmit}
-        type={submit && 'submit'}
+        ].join(' ') }
+        onClick={ onClick }
+        onSubmit={ onSubmit }
+        type={ submit && 'submit' }
       >
         {icon && (
-          <span className={styles.icon}>
-            <Icon iconName={icon} />
+          <span className={ styles.icon }>
+            <Icon iconName={ icon } />
           </span>
         )}
         {value && value}

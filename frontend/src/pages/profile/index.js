@@ -108,30 +108,30 @@ class Profile extends App {
     return (
       <Standard>
         <UserBanner
-          changeFollowerCount={this.changeFollowerCount}
-          role={profile.role}
-          user={user}
-          owner={isOwner && profile.loggedIn}
+          changeFollowerCount={ this.changeFollowerCount }
+          role={ profile.role }
+          user={ user }
+          owner={ isOwner && profile.loggedIn }
         />
-        <section className={[styles.infoWrapper]}>
-          <div className={[styles.tempFollowerIndicator]}>
-            <Icon iconName={'UserFriends'} />
+        <section className={ [styles.infoWrapper] }>
+          <div className={ [styles.tempFollowerIndicator] }>
+            <Icon iconName={ 'UserFriends' } />
             <p>
               {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
             </p>
           </div>
         </section>
-        <Section title={'DESCRIPTION'}>
-          <ProfileInfo user={user} loggedIn={profile.loggedIn} />
+        <Section title={ 'DESCRIPTION' }>
+          <ProfileInfo user={ user } loggedIn={ profile.loggedIn } />
         </Section>
-        <Section title={'CREATED POSTS'}>
-          <PostsPreview posts={this.state.posts} create={isOwner && profile.loggedIn} />
+        <Section title={ 'CREATED POSTS' }>
+          <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } />
         </Section>
-        <Section title={'LIKED POSTS'}>
-          <PostsPreview posts={this.state.likes} />
+        <Section title={ 'LIKED POSTS' }>
+          <PostsPreview posts={ this.state.likes } />
         </Section>
-        <Section title={'STATISTICS'}>
-          <Statistics statisticsData={{ views: 0, likes: 0, posts: 0 }} />
+        <Section title={ 'STATISTICS' }>
+          <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
       </Standard>
     )

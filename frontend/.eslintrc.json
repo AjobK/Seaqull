@@ -14,6 +14,7 @@
   "plugins": ["react", "unused-imports"],
   "extends": ["plugin:react/recommended"],
   "rules": {
+    "max-len": ["error", { "code": 120, "comments": 120 }],
     "eol-last": "error",
     "quotes": [2, "single", { "avoidEscape": false }],
     "no-trailing-spaces": "error",
@@ -26,12 +27,23 @@
     "indent": ["error", 2],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "react/display-name": 0,
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "warn",
       { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
     ],
+    "jsx-quotes": [0, "prefer-single"],
+    "react/jsx-curly-spacing": [
+      2,
+      {
+        "when": "always"
+      }
+    ],
+    "lines-between-class-members": "error",
+    "newline-before-return": "error",
+    "arrow-parens": "error",
+    "arrow-spacing": "error",
+    "react/display-name": 0,
     "comma-dangle": 0,
     "no-console": 0,
     "no-unexpected-multiline": 0,
@@ -83,8 +95,6 @@
     "use-isnan": 0,
     "valid-typeof": 0,
     "array-bracket-newline": 0,
-    "jsx-quotes": [0, "prefer-single"],
-    "newline-before-return": 0,
     "newline-after-var": 0,
     "no-empty-function": 0,
     "no-duplicate-imports": 0,

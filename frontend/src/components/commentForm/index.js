@@ -41,16 +41,16 @@ class CommentForm extends Component {
     const { className } = this.props
 
     return (
-      <div className={className ? className : ''}>
+      <div className={ className ? className : '' }>
         <CommentEditor
-          type={this.props.type}
-          onCommentChangeCallback={(data) => {
+          type={ this.props.type }
+          onCommentChangeCallback={ (data) => {
             this.comment.content = data
 
             this.setState({ comment: this.comment })
-          }}
-          value={this.state.comment.content}
-          onSubmitCallback={this.onCommentSubmit}
+          } }
+          value={ this.state.comment.content }
+          onSubmitCallback={ this.onCommentSubmit }
         />
       </div>
     )

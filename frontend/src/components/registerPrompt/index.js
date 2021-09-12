@@ -100,6 +100,7 @@ class RegisterPrompt extends Component {
     //   })
     // }, 3000);
   }
+
   onLoadRecaptcha = () => {
     if (this.captcha) {
       this.captcha.reset()
@@ -125,54 +126,54 @@ class RegisterPrompt extends Component {
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
 
     return (
-      <div className={[styles.prompt, this.props.className].join(' ')}>
-        <div className={styles.logo} />
-        <p className={styles.text}>
-          Join our community <Icon className={styles.textIcon} iconName={'Crow'} />
+      <div className={ [styles.prompt, this.props.className].join(' ') }>
+        <div className={ styles.logo } />
+        <p className={ styles.text }>
+          Join our community <Icon className={ styles.textIcon } iconName={ 'Crow' } />
         </p>
-        <div className={styles.formWrapper}>
-          <form method="POST" className={styles.form} onSubmit={this.onSubmit}>
+        <div className={ styles.formWrapper }>
+          <form method="POST" className={ styles.form } onSubmit={ this.onSubmit }>
             <FormInput
-              toolTipDirection={'bottom'}
-              name={'Username'}
-              errors={username}
-              className={[styles.formGroup]}
-              callBack={this.setElId}
+              toolTipDirection={ 'bottom' }
+              name={ 'Username' }
+              errors={ username }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
             />
             <FormInput
-              toolTipDirection={'bottom'}
-              name={'Email'}
-              errors={email}
-              className={[styles.formGroup]}
-              callBack={this.setElId}
+              toolTipDirection={ 'bottom' }
+              name={ 'Email' }
+              errors={ email }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
             />
             <FormInput
-              toolTipDirection={'bottom'}
-              name={'Password'}
-              errors={password}
-              className={[styles.formGroup]}
-              callBack={this.setElId}
+              toolTipDirection={ 'bottom' }
+              name={ 'Password' }
+              errors={ password }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
               type="password"
             />
-            <div to="/" className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} />
+            <div to="/" className={ styles.submitWrapper }>
+              <Button value={ buttonClass } className={ styles.submit } />
               <ReCaptcha
-                ref={(el) => {
+                ref={ (el) => {
                   this.captcha = el
-                }}
+                } }
                 size="invisible"
                 render="explicit"
                 sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
-                onloadCallback={this.onLoadRecaptcha}
-                verifyCallback={this.verifyCallback}
+                onloadCallback={ this.onLoadRecaptcha }
+                verifyCallback={ this.verifyCallback }
               />
             </div>
           </form>
-          <div className={styles.image} />
+          <div className={ styles.image } />
         </div>
-        <p className={styles.textFooter}>
+        <p className={ styles.textFooter }>
           By proceeding I confirm that I have read and agree to the{' '}
-          <a className={styles.textFooterLink} href="#">
+          <a className={ styles.textFooterLink } href="#">
             Terms of service
           </a>
         </p>

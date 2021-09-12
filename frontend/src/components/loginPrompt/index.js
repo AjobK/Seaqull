@@ -139,39 +139,43 @@ class LoginPrompt extends Component {
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
-      <div className={[styles.prompt, this.props.className].join(' ')}>
-        <div className={styles.logo} />
-        <p className={styles.text}> Welcome back!</p>
-        <div className={styles.formWrapper}>
-          <form onSubmit={this.onSubmit} className={styles.form}>
+      <div className={ [styles.prompt, this.props.className].join(' ') }>
+        <div className={ styles.logo } />
+        <p className={ styles.text }> Welcome back!</p>
+        <div className={ styles.formWrapper }>
+          <form onSubmit={ this.onSubmit } className={ styles.form }>
             <FormInput
-              toolTipDirection={'bottom'}
-              name={'Username'}
-              errors={username}
-              className={[styles.formGroup]}
-              callBack={this.setElId}
+              toolTipDirection={ 'bottom' }
+              name={ 'Username' }
+              errors={ username }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
               type="text"
             />
             <FormInput
-              toolTipDirection={'bottom'}
-              name={'Password'}
-              errors={password}
-              className={[styles.formGroup]}
-              callBack={this.setElId}
+              toolTipDirection={ 'bottom' }
+              name={ 'Password' }
+              errors={ password }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
               type="password"
             />
-            <div to="/" className={styles.submitWrapper}>
+            <div to="/" className={ styles.submitWrapper }>
               <Button
-                value={buttonClass}
-                className={styles.submit}
-                disabled={!!remainingTime || loadingTimeout}
-                onClick={this.auth}
+                value={ buttonClass }
+                className={ styles.submit }
+                disabled={ !!remainingTime || loadingTimeout }
+                onClick={ this.auth }
               />
-              {remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
-              {/* <ReCAPTCHA ref={this.recaptchaRef} sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' size='invisible' onChange={this.onChange}/> */}
+              {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
+              {/* <ReCAPTCHA
+                ref={this.recaptchaRef}
+                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
+                size='invisible' onChange={this.onChange}
+              /> */}
             </div>
           </form>
-          <div className={styles.image} />
+          <div className={ styles.image } />
         </div>
       </div>
     )

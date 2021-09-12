@@ -112,9 +112,9 @@ class Posts extends Component {
 
   createPostsBlock = (posts) => {
     return (
-      <div key={Math.random()}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <PostsBlock posts={posts} />
+      <div key={ Math.random() }>
+        <Suspense fallback={ <div>Loading...</div> }>
+          <PostsBlock posts={ posts } />
         </Suspense>
       </div>
     )
@@ -125,7 +125,7 @@ class Posts extends Component {
 
     return (
       <div>
-        <ul className={styles.posts}>{postsBlocks}</ul>
+        <ul className={ styles.posts }>{postsBlocks}</ul>
         {this.state.isFetching || (!this.state.endReached && <Loader />)}
       </div>
     )

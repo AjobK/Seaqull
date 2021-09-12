@@ -14,18 +14,18 @@ class PostsPreview extends Component {
     let arr = []
 
     for (let i = 0; i < (posts.length > 9 ? posts.length : 9); i++) {
-      arr.push(<PreviewPost post={posts[i] || {}} key={i} />)
+      arr.push(<PreviewPost post={ posts[i] || {} } key={ i } />)
     }
 
     return (
-      <section className={styles.wrapper}>
+      <section className={ styles.wrapper }>
         {this.props.create && (
-          <Link to="/new-post" className={styles.add}>
-            <img className={styles.addIcon} src={Plus} draggable={false} />
+          <Link to="/new-post" className={ styles.add }>
+            <img className={ styles.addIcon } src={ Plus } draggable={ false } />
           </Link>
         )}
         {arr}
-        <div className={`${styles.article} ${styles.fillerMobile}`} />
+        <div className={ `${styles.article} ${styles.fillerMobile}` } />
       </section>
     )
   }

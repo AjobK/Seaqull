@@ -34,11 +34,16 @@ class FormInput extends Component {
     const { errors, toolTipDirection } = this.props
 
     return (
-      <ReactTooltip id={toolTipId} effect={'solid'} place={toolTipDirection || 'right'} className={styles.toolTip}>
-        <ul className={styles.toolTipUl}>
+      <ReactTooltip
+        id={ toolTipId }
+        effect={ 'solid' }
+        place={ toolTipDirection || 'right' }
+        className={ styles.toolTip }
+      >
+        <ul className={ styles.toolTipUl }>
           {errors != 'loading' &&
             errors.map((message, i) => (
-              <li key={i} className={styles.toolTipLi}>
+              <li key={ i } className={ styles.toolTipLi }>
                 {message}
               </li>
             ))}
@@ -75,27 +80,27 @@ class FormInput extends Component {
     }
 
     return (
-      <div className={[...(className || '')].join(' ')}>
-        <label htmlFor={id} className={styles.label}>
-          <Icon className={`${styles.icon} ${iconClassName} ${loadingClass}`} iconName={iconName} />
+      <div className={ [...(className || '')].join(' ') }>
+        <label htmlFor={ id } className={ styles.label }>
+          <Icon className={ `${styles.icon} ${iconClassName} ${loadingClass}` } iconName={ iconName } />
           <span>{name}</span>
         </label>
-        <div className={styles.inputWrapper}>
+        <div className={ styles.inputWrapper }>
           <input
-            id={id}
-            className={styles.input}
-            type={type || 'text'}
+            id={ id }
+            className={ styles.input }
+            type={ type || 'text' }
             data-tip
-            data-for={toolTipId}
+            data-for={ toolTipId }
             data-event="focus"
             data-event-off="blur"
-            min={limit || '0'}
+            min={ limit || '0' }
           />
           {isPassword && (
             <Icon
-              className={`${styles.icon} ${styles.iconPassword}`}
-              iconName={'Eye'}
-              onClick={this.togglePasswordVisible}
+              className={ `${styles.icon} ${styles.iconPassword}` }
+              iconName={ 'Eye' }
+              onClick={ this.togglePasswordVisible }
             />
           )}
           {hasErrors && this.getErrorMessages()}

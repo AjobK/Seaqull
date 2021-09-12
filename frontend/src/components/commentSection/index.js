@@ -46,13 +46,13 @@ class CommentSection extends Component {
     const { profile } = this.props.store
 
     if (profile.loggedIn) {
-      return <CommentForm onCommentAdd={this.onCommentAdd} className={styles.commentForm} />
+      return <CommentForm onCommentAdd={ this.onCommentAdd } className={ styles.commentForm } />
     }
 
     return (
       <p>
         Please{' '}
-        <Link to="/login" className={styles.commentSection__highlightedLink}>
+        <Link to="/login" className={ styles.commentSection__highlightedLink }>
           log in
         </Link>{' '}
         to comment to this post
@@ -86,12 +86,12 @@ class CommentSection extends Component {
 
   render() {
     return (
-      <div className={styles.commentSection}>
+      <div className={ styles.commentSection }>
         <Section noTitle>
           {this.displayCommentForm()}
           {this.state.comments && this.state.comments.length > 0 ? (
             this.state.comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} onReplyAdd={this.onCommentAdd} />
+              <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd } />
             ))
           ) : (
             <p className="noComment">No comments</p>

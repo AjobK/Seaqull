@@ -73,19 +73,19 @@ class PostLike extends Component {
     const { likesAmount, isOwner } = this.props
 
     return (
-      <div className={`${styles.postLike} ${this.props.liked ? styles.liked : ''}`}>
-        {likesAmount <= 0 && <p className={`${styles.postLikesAmount}`}>0 likes</p>}
+      <div className={ `${styles.postLike} ${this.props.liked ? styles.liked : ''}` }>
+        {likesAmount <= 0 && <p className={ `${styles.postLikesAmount}` }>0 likes</p>}
         {likesAmount > 0 && (
-          <p className={`${styles.postLikesAmount} ${styles.clickableLikes}`} onClick={this.openLikesList}>
+          <p className={ `${styles.postLikesAmount} ${styles.clickableLikes}` } onClick={ this.openLikesList }>
             {unitFormatterUtil.getNumberSuffix(likesAmount)} {likesAmount === 1 ? 'like' : 'likes'}
           </p>
         )}
         {!isOwner && (
-          <button onClick={this.likeClicked}>
-            <Icon iconName={'Heart'} className={styles.likeIcon} />
+          <button onClick={ this.likeClicked }>
+            <Icon iconName={ 'Heart' } className={ styles.likeIcon } />
           </button>
         )}
-        {this.state.showLikes && <PostLikesList closeLikesList={this.closeLikesList} />}
+        {this.state.showLikes && <PostLikesList closeLikesList={ this.closeLikesList } />}
       </div>
     )
   }

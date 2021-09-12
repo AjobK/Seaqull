@@ -10,21 +10,21 @@ class Dialog extends Component {
 
   render() {
     return (
-      <div className={styles.dialog}>
-        <div className={styles.dialogBackground} onClick={this.props.onCloseCallback} />
-        <div className={styles.dialogWrapper}>
-          <div className={styles.dialogHeader}>
+      <div className={ styles.dialog }>
+        <div className={ styles.dialogBackground } onClick={ this.props.onCloseCallback } />
+        <div className={ styles.dialogWrapper }>
+          <div className={ styles.dialogHeader }>
             <h2>{this.props.header}</h2>
           </div>
-          <div className={styles.dialogBody}>
+          <div className={ styles.dialogBody }>
             <p>{this.props.body}</p>
           </div>
-          <div className={styles.dialogButtons}>
-            <Button className={styles.dialogCancelButton} onClick={this.props.onCloseCallback} value="Cancel" />
+          <div className={ styles.dialogButtons }>
+            <Button className={ styles.dialogCancelButton } onClick={ this.props.onCloseCallback } value="Cancel" />
             <Button
-              className={styles.dialogConfirmButton}
-              onClick={this.props.onConfirmCallback}
-              value={this.props.confirmText || 'Confirm'}
+              className={ styles.dialogConfirmButton }
+              onClick={ this.props.onConfirmCallback }
+              value={ this.props.confirmText || 'Confirm' }
             />
           </div>
         </div>

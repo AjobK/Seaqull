@@ -20,27 +20,30 @@ class previewPost extends Component {
     } catch (e) { }
 
     if(this.props.filler) {
-      return <article className={[styles.article, styles.filler].join(' ')}></article>
+      return <article className={ [styles.article, styles.filler].join(' ') }></article>
     }
 
     return (
-      <Link to={post.path ? `/posts/${post.path}` : '#'} className={[styles.article, ...className || ''].join(' ')} style={{
-        backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
-      }}>
-        <div className={styles.articleWrapper}>
-          <div className={styles.articleWrapperStats}>
+      <Link
+        to={ post.path ? `/posts/${post.path}` : '#' }
+        className={ [styles.article, ...className || ''].join(' ') }
+        style={ {
+          backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
+        } }>
+        <div className={ styles.articleWrapper }>
+          <div className={ styles.articleWrapperStats }>
             { post.likes > 0 &&
-              <div className={styles.articleWrapperStatsLikes }>
+              <div className={ styles.articleWrapperStatsLikes }>
                 <Icon iconName='FeatherAlt' />
-                <p className={styles.articleWrapperStatsLikesText}>
+                <p className={ styles.articleWrapperStatsLikesText }>
                   {post.likes}
                 </p>
               </div>
             }
           </div>
           { post.title &&
-            <div className={styles.articleWrapperText}>
-              <p className={styles.articleWrapperTextTitle}>
+            <div className={ styles.articleWrapperText }>
+              <p className={ styles.articleWrapperTextTitle }>
                 {post.title}
               </p>
             </div>

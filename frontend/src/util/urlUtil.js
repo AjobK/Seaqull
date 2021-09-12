@@ -6,7 +6,7 @@ class URLUtil {
   }
 
   static getLastPathArgument () {
-    const path = this.getPathArguments().filter(i => i != '').pop()
+    const path = this.getPathArguments().filter((i) => i != '').pop()
 
     return path
   }

@@ -48,40 +48,40 @@ class PostBanner extends Component {
     const canBanUser = this.props.store.profile.role != 'User' && this.props.store.profile.role != 'user'
 
     return (
-      <section className={`${styles.wrapper} ${isOwner ? styles.owner : ''}`}>
-        <div className={styles.background} style={{ backgroundImage: `url(${author.bannerURL})` }} />
+      <section className={ `${styles.wrapper} ${isOwner ? styles.owner : ''}` }>
+        <div className={ styles.background } style={ { backgroundImage: `url(${author.bannerURL})` } } />
         {/** // TODO: Uncomment code below and make it possible to change post banner **/}
         {this.props.isOwner && (
-          <div className={styles.wrapperEditContainer}>
-            <span className={styles.wrapperEdit}>
-              <span className={styles.wrapperEditContent}>Click to edit</span> <Icon iconName={'Pen'} />
+          <div className={ styles.wrapperEditContainer }>
+            <span className={ styles.wrapperEdit }>
+              <span className={ styles.wrapperEditContent }>Click to edit</span> <Icon iconName={ 'Pen' } />
             </span>
           </div>
         )}
         {canBanUser && (
-          <div className={styles.backdrop} onClick={this.updatePopup.bind(this)}>
-            <p className={styles.bannerText}>
+          <div className={ styles.backdrop } onClick={ this.updatePopup.bind(this) }>
+            <p className={ styles.bannerText }>
               Delete Post
-              <Icon className={styles.icon} iconName={'Trash'} />
+              <Icon className={ styles.icon } iconName={ 'Trash' } />
             </p>
           </div>
         )}
-        {this.state.popUpOpen && <PopUp content={content}></PopUp>}
-        <div className={styles.innerWrapper}>
-          <div className={styles.info}>
-            <Link to={`/profile/${author.name}`} className={styles.profileLink}>
-              <div className={styles.infoInner}>
+        {this.state.popUpOpen && <PopUp content={ content }></PopUp>}
+        <div className={ styles.innerWrapper }>
+          <div className={ styles.info }>
+            <Link to={ `/profile/${author.name}` } className={ styles.profileLink }>
+              <div className={ styles.infoInner }>
                 <div
-                  className={styles.picture}
-                  style={{
+                  className={ styles.picture }
+                  style={ {
                     backgroundImage: `url(${author.avatarURL || ''})`,
                     backgroundColor: uniqueAvatarColorBasedOnHash,
-                  }}
+                  } }
                 />
-                <div className={styles.user_info}>
-                  <h2 className={[styles.name].join(' ')}>{author.name || ''}</h2>
-                  <div className={styles.achieved}>
-                    <h3 className={styles.role}>{author.title || ''}</h3>
+                <div className={ styles.user_info }>
+                  <h2 className={ [styles.name].join(' ') }>{author.name || ''}</h2>
+                  <div className={ styles.achieved }>
+                    <h3 className={ styles.role }>{author.title || ''}</h3>
                   </div>
                 </div>
               </div>

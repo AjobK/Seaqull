@@ -31,7 +31,7 @@ const NavigationStore = types
       }
     })
   })
-  .actions(self => ({
+  .actions((self) => ({
     reset() {
       self.menuItemsLoggedIn = [{}],
       self.menuItemsLoggedOut = [{}]

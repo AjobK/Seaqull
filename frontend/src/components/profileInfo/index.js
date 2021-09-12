@@ -94,23 +94,23 @@ class ProfileInfo extends Component {
     let currentOption = ''
 
     if (this.props.loggedIn && this.state.user.isOwner) {
-      icon = <Icon iconName={this.state.icon} className={styles.icon} />
+      icon = <Icon iconName={ this.state.icon } className={ styles.icon } />
 
       this.state.editing ? currentOption = 'SAVE' : currentOption = 'EDIT'
     }
 
     return (
-      <section className={styles.wrapper}>
-        <section className={styles.editor}>
+      <section className={ styles.wrapper }>
+        <section className={ styles.editor }>
           <Editor
-            readOnly={!this.state.editing}
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            onBlur={() => this.changeEditingState()}
-            spellCheck={true}
+            readOnly={ !this.state.editing }
+            editorState={ this.state.editorState }
+            onChange={ this.onChange }
+            onBlur={ () => this.changeEditingState() }
+            spellCheck={ true }
           />
         </section>
-        <section className={styles.iconContainer} onClick={() => this.changeEditingState()}>
+        <section className={ styles.iconContainer } onClick={ () => this.changeEditingState() }>
           <section>
             { icon }
           </section>

@@ -91,6 +91,7 @@ class CommentEditor extends Component {
   handleKeyCommand = (command) => {
     if (command === 'enter-pressed') {
       this.onSubmit()
+
       return 'handled'
     }
 
@@ -99,15 +100,15 @@ class CommentEditor extends Component {
 
   displayError = () => {
     if (this.state.formError) {
-      return <div className={styles.error}>{this.state.formError}</div>
+      return <div className={ styles.error }>{this.state.formError}</div>
     }
   }
 
   displayHeader = () => {
     if (this.showHeader) {
       return (
-        <div className={styles.editorLabel}>
-          <span className={styles.editorLabel__title}>Comment section</span>
+        <div className={ styles.editorLabel }>
+          <span className={ styles.editorLabel__title }>Comment section</span>
         </div>
       )
     }
@@ -118,18 +119,23 @@ class CommentEditor extends Component {
       <section>
         {this.displayHeader()}
         {this.displayError()}
-        <div className={styles.editorForm}>
-          <div onClick={this.focusOnEditor} className={styles.editorForm__editor}>
+        <div className={ styles.editorForm }>
+          <div onClick={ this.focusOnEditor } className={ styles.editorForm__editor }>
             <Editor
-              editorState={this.state.editorState}
-              ref={this.editorInput}
-              onChange={this.onChange}
+              editorState={ this.state.editorState }
+              ref={ this.editorInput }
+              onChange={ this.onChange }
               placeholder="Leave a comment..."
-              keyBindingFn={this.keyBindingFn}
-              handleKeyCommand={this.handleKeyCommand}
+              keyBindingFn={ this.keyBindingFn }
+              handleKeyCommand={ this.handleKeyCommand }
             />
           </div>
-          <Button value={this.buttonText} className={styles.editorForm__button} type="button" onClick={this.onSubmit} />
+          <Button
+            value={ this.buttonText }
+            className={ styles.editorForm__button }
+            type="button"
+            onClick={ this.onSubmit }
+          />
         </div>
       </section>
     )

@@ -46,36 +46,36 @@ class PostLikesList extends Component {
 
   render() {
     return (
-      <div className={`${styles.postLikesListWrapper}`}>
-        <div className={`${styles.likesBackground}`} onClick={this.props.closeLikesList} />
-        <div className={`${styles.likesListWrapper}`}>
-          <div className={styles.likesListHeader}>
-            <div className={`${styles.likesListTitle}`}>
+      <div className={ `${styles.postLikesListWrapper}` }>
+        <div className={ `${styles.likesBackground}` } onClick={ this.props.closeLikesList } />
+        <div className={ `${styles.likesListWrapper}` }>
+          <div className={ styles.likesListHeader }>
+            <div className={ `${styles.likesListTitle}` }>
               <h2>
-                <Icon iconName={'Heart'} className={styles.like} /> Liked by{' '}
+                <Icon iconName={ 'Heart' } className={ styles.like } /> Liked by{' '}
               </h2>
             </div>
-            <Icon iconName={'TimesCircle'} className={styles.closeLikes} onClick={this.props.closeLikesList} />
+            <Icon iconName={ 'TimesCircle' } className={ styles.closeLikes } onClick={ this.props.closeLikesList } />
           </div>
-          <ul className={`${styles.likesList}`}>
+          <ul className={ `${styles.likesList}` }>
             {this.state.likes.map((like, index) => {
               const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(like.displayName)
 
               return (
-                <li key={index} className={`${styles.likesListItem}`}>
-                  <Link to={`/profile/${like.displayName}`} className={styles.profileLikeLink}>
-                    <div className={`${styles.profileAvatarWrapper}`}>
+                <li key={ index } className={ `${styles.likesListItem}` }>
+                  <Link to={ `/profile/${like.displayName}` } className={ styles.profileLikeLink }>
+                    <div className={ `${styles.profileAvatarWrapper}` }>
                       <div
-                        className={`${styles.avatar}`}
-                        style={{
+                        className={ `${styles.avatar}` }
+                        style={ {
                           backgroundImage: `url(${like.avatarURL || ''})`,
                           backgroundColor: uniqueAvatarColorBasedOnHash,
-                        }}
+                        } }
                       />
                     </div>
-                    <div className={`${styles.profileTextWrapper}`}>
-                      <p className={`${styles.profileDisplayName}`}>{like.displayName}</p>
-                      <p className={`${styles.profileTitle}`}>{like.title}</p>
+                    <div className={ `${styles.profileTextWrapper}` }>
+                      <p className={ `${styles.profileDisplayName}` }>{like.displayName}</p>
+                      <p className={ `${styles.profileTitle}` }>{like.title}</p>
                     </div>
                   </Link>
                 </li>

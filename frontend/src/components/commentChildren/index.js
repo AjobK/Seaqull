@@ -13,13 +13,13 @@ class CommentChildren extends Component {
   displayChildren = () => {
     if (this.state.data) {
       return this.state.data.map((comment) => {
-        return <Comment key={comment.id} comment={comment} type="reply" />
+        return <Comment key={ comment.id } comment={ comment } type="reply" />
       })
     }
   }
 
   render() {
-    return <div className={styles.childrenWrapper}>{this.displayChildren()}</div>
+    return <div className={ styles.childrenWrapper }>{this.displayChildren()}</div>
   }
 }
 

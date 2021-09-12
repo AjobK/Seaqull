@@ -1,5 +1,6 @@
 class TextUtil {
   // REF:
+  // eslint-disable-next-line max-len
   // https://www.freecodecamp.org/news/how-to-more-accurately-estimate-read-time-for-medium-articles-in-javascript-fb563ff0282a/
 
   static WORDS_PER_MIN = 265
