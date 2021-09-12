@@ -97,13 +97,13 @@ class UserBanner extends Component {
     const username = URLUtil.getLastPathArgument()
 
     Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
-        .then((res) => {
-          this.setState({ following: res.data.following || false },
-              this.props.changeFollowerCount(res.data.following ? 1 : -1))
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then((res) => {
+        this.setState({ following: res.data.following || false },
+          this.props.changeFollowerCount(res.data.following ? 1 : -1))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   banUser() {

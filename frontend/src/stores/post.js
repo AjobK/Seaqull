@@ -12,12 +12,9 @@ const PostStore = types
     percentage: types.optional(types.number, 8),
     isOwner: true // This singular line will be used in production. It tells us if the currently viewed post is owned by the user
   })
-  .actions(self => ({
+  .actions(() => ({
     setEditingElement(element) {
       this.editingElement = element
-    },
-    getPostByPath(path) {
-    
     }
   }))
 

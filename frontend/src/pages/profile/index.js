@@ -4,8 +4,7 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
 import Error from '../error'
-import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
-import Icon from "../../components/icon";
+import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import styles from './profile.scss';
 
 
@@ -36,7 +35,7 @@ class Profile extends App {
   fetchProfileData(path) {
     let token = localStorage.getItem('token')
 
-    Axios.get(`/profile/${path}`,  {withCredentials: true})
+    Axios.get(`/profile/${path}`, { withCredentials: true })
       .then((response) => {
         this.updateProfile(response.data.profile)
         this.fetchOwnedPosts(this.state.user.username)
@@ -61,11 +60,10 @@ class Profile extends App {
 
   fetchLikedPosts(username) {
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
-        .then((json) => {
-          this.setState({ likes: json.data })
-        })
-        .catch(() => {
-        })
+      .then((json) => {
+        this.setState({ likes: json.data })
+      })
+      .catch(() => { })
   }
 
   updateProfile(profile) {
@@ -85,9 +83,9 @@ class Profile extends App {
   }
 
   changeFollowerCount(amount) {
-      const user = this.state.user
-      user.followerCount += amount
-      this.setState({ user })
+    const user = this.state.user
+    user.followerCount += amount
+    this.setState({ user })
   }
 
   render() {
@@ -115,16 +113,16 @@ class Profile extends App {
     return (
       <Standard>
         <UserBanner
-            changeFollowerCount={ this.changeFollowerCount }
-            role={ profile.role }
-            user={ user }
-            owner={ isOwner && profile.loggedIn }
+          changeFollowerCount={ this.changeFollowerCount }
+          role={ profile.role }
+          user={ user }
+          owner={ isOwner && profile.loggedIn }
         />
         <section className={[styles.infoWrapper]}>
-            <div className={[styles.tempFollowerIndicator]}>
-                <Icon iconName={ 'UserFriends' }/>
-                <p>{ user.followerCount } follower{ user.followerCount === 1 ? '' : 's' } </p>
-            </div>
+          <div className={[styles.tempFollowerIndicator]}>
+            <Icon iconName={ 'UserFriends' }/>
+            <p>{ user.followerCount } follower{ user.followerCount === 1 ? '' : 's' } </p>
+          </div>
         </section>
         <Section title={ 'DESCRIPTION' }>
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
@@ -136,7 +134,7 @@ class Profile extends App {
           <PostsPreview posts={ this.state.likes } />
         </Section>
         <Section title={ 'STATISTICS' }>
-          <Statistics statisticsData={{views: 0, likes: 0, posts: 0}}/>
+          <Statistics statisticsData={{ views: 0, likes: 0, posts: 0 }}/>
         </Section>
       </Standard>
     )

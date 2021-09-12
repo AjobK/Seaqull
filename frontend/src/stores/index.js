@@ -20,7 +20,7 @@ const Store = types
     notification: types.optional(NotificationStore, {}),
   })
 
-export function initStore(isServer, snapshot = null) {
+const initStore = (isServer, snapshot = null) => {
   if (isServer) {
     store = Store.create({})
   }
@@ -33,3 +33,5 @@ export function initStore(isServer, snapshot = null) {
 
   return store
 }
+
+export { initStore }

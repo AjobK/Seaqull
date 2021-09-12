@@ -12,7 +12,7 @@ const UserStore = types
     logOut() {
       self.loggedIn = false
       self.name = ''
-      Axios.get('/logout', payload, {withCredentials: true})
+      Axios.get('/logout', payload, { withCredentials: true })
     },
     logIn() {
       self.loggedIn = true
