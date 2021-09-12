@@ -12,6 +12,11 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 
 <br />
 
+ **Additional notes**  
+Things to keep in mind regarding the PR that don't fit in the previous two headings. 
+
+<br />
+
 **1. General checklist**
 - [ ] a. Tested happy flow.
 - [ ] b. Tested unhappy flow.
