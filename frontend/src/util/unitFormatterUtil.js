@@ -3,7 +3,7 @@ class unitFormatterUtil {
     if (value === undefined)
       return ''
 
-    const suffixes = ['', 'K', 'M', 'B','T']
+    const suffixes = ['', 'K', 'M', 'B', 'T']
     let newValue = value
     let suffixNum = 0
 

@@ -7,8 +7,8 @@ import Home from './home'
 import Profile from './profile'
 import Post from './post'
 import Error from './error'
-import Login from'./login'
-import Register from'./register'
+import Login from './login'
+import Register from './register'
 
 class AppRouter extends Component {
   constructor(props) {
