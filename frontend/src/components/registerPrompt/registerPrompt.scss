@@ -20,6 +20,24 @@
 		padding: 0;
 	}
 }
+.recaptcha{
+	z-index: 100;
+}
+
+.backgroundRecaptcha {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+}
+
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	visibility: hidden;
+}
 
 .text {
 	word-break: break-word;

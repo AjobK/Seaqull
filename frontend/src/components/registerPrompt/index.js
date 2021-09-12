@@ -58,7 +58,7 @@ class RegisterPrompt extends Component {
   }
 
   goToProfile = (username) => {
-    this.props.history.push('/profile/' + username)
+    setTimeout( () => this.props.history.push('/profile/' + username), 500)
   }
 
   setElId = (item, id) => {
@@ -83,8 +83,24 @@ class RegisterPrompt extends Component {
     })
 
     if(!(this.state.loadingTimeout)){
-      this.recaptchaRef.current.reset()
-      this.recaptchaRef.current.execute()
+      try {
+        this.recaptchaRef.current.reset()
+        this.recaptchaRef.current.execute()
+      } catch (error) {
+        this.setRecaptchaError()
+      }
+    }
+  }
+
+  setRecaptchaError() {
+    console.log('test')
+    if (this.state.loadingTimeout) {
+      this.setState({
+        username: 'Recaptcha failed, Please try again',
+        password: 'Recaptcha failed, Please try again',
+        email: 'Recaptcha failed, Please try again',
+        loadingTimeout: false
+      })
     }
   }
 
@@ -101,16 +117,21 @@ class RegisterPrompt extends Component {
             <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
             <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
-            <div to='/' className={styles.submitWrapper}>
+            <div>
               <Button value={buttonClass} className={styles.submit} />
+            </div>
+            <div className={[styles.backgroundRecaptcha, 
+              this.state.loadingTimeout ? styles.visible : styles.invisible]} 
+              onClick={this.setRecaptchaError.bind(this)}>
               { <ReCAPTCHA 
-              ref={this.recaptchaRef} 
-              sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
-              size='invisible' 
-              badge='bottomright'
-              onChange={this.onChange}
-              hl="en" />
-              }
+                ref={this.recaptchaRef} 
+                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
+                size='invisible' 
+                badge='bottomright'
+                onChange={this.onChange}
+                hl="en"
+                onErrored={this.setRecaptchaError} />
+                }
             </div>
           </form>
           <div className={styles.image} />
