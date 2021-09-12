@@ -8,6 +8,7 @@ import Axios from 'axios'
 import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
+import { popUpData } from '../../components/popUp/popUpData'
 
 @inject('store') @observer
 class Post extends App {
@@ -138,14 +139,15 @@ class Post extends App {
 
         if (!path) {
             Axios.post('/post', payload, { withCredentials: true })
-            .then(res => {
+            .then(() => {
                 this.props.history.push('/')
             })
         } else if (typeof path == 'string') {
             Axios.put(`/post/${path}`, payload, { withCredentials: true })
-            .then(res => {
-                // TODO: change to a popup to confirm that a post is updated
-                this.props.history.push('/profile')
+            .then(() => {
+                const { notification } = this.props.store
+
+                notification.setContent(popUpData.messages.updatePostNotification)
             })
         }
     }
