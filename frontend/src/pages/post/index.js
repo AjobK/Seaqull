@@ -7,7 +7,7 @@ import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
-import { PostBanner, PostContent, Button, PostLike, CommentSection, PostViews } from '../../components'
+import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews } from '../../components'
 
 @inject('store') @observer
 class Post extends App {
@@ -24,6 +24,8 @@ class Post extends App {
                 userLiked: false
             }
         }
+
+        this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
 
         this.state = {
             isOwner: true,
@@ -251,6 +253,13 @@ class Post extends App {
                                     value={'Update'}
                                     onClick={() => this.sendToDB(this.post.path)}
                                 />
+                            }
+                        </div>
+                        <div className={ styles.postActionButtonsRight }>
+                            { !this.props.new && (this.canBanUser || isOwner) &&
+                                <span className={ styles.delete } onClick={ this.archivePost }>
+                                    <Icon iconName={ 'Trash' } />
+                                </span>
                             }
                         </div>
                     </div>

@@ -37,8 +37,6 @@ class PostBanner extends Component {
 
     const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
 
-    const canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
-
     return (
       <section className={`${ styles.wrapper} ${isOwner ? styles.owner : ''}` }>
         <div
@@ -49,14 +47,6 @@ class PostBanner extends Component {
             <span className={ styles.wrapperEdit }>
               <span className={ styles.wrapperEditContent }>Click to edit</span> <Icon iconName={'Pen'} />
             </span>
-          </div>
-        }
-        { !this.props.new && (canBanUser || isOwner) &&
-          <div className={ styles.backdrop }>
-            <p className={ styles.bannerText } onClick={ this.archivePost }>
-              Delete Post
-              <Icon className={ styles.icon } iconName={ 'Trash' } />
-            </p>
           </div>
         }
         <div className={ styles.innerWrapper }>
