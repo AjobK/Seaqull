@@ -52,7 +52,7 @@ class GlobalNotification extends Component {
     notification.setActions([
       {
         ...popUpData.actions.confirmWithText,
-        action: notification.close()
+        action: notification.close
       }
     ])
 

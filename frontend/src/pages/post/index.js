@@ -13,36 +13,35 @@ import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostVi
 
 @inject('store') @observer
 class Post extends App {
-  constructor(props) {
-    super(props)
+    constructor(props) {
+        super(props)
 
     this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
 
     this.postPath = URLUtil.getLastPathArgument()
 
     this.state = {
-      isOwner: true,
-      isEditing: true,
-      author: {
-        name: '',
-        bannerURL: '',
-        avatarURL: '',
-        path: '/profile/',
-        title: ''
-      },
-      loaded: false,
-      post: {
-        title: '',
-        description: '',
-        content: '',
-        path: '',
-        likes: {
-          amount: 0,
-          userLiked: false
+        isOwner: true,
+        isEditing: true,
+        author: {
+            name: '',
+            bannerURL: '',
+            avatarURL: '',
+            path: '/profile/',
+            title: ''
+        },
+        loaded: false,
+        post: {
+            title: '',
+            description: '',
+            content: '',
+            path: '',
+            likes: {
+                amount: 0,
+                userLiked: false
+            }
         }
-      }
     }
-  }
 
     loadArticle = () => {
       const { defaultData } = this.props.store
@@ -130,12 +129,12 @@ class Post extends App {
 
       if (!path) {
         Axios.post('/post', payload, { withCredentials: true })
-          .then((_res) => {
-            this.props.history.push('/')
+          .then((res) => {
+            this.props.history.push('/posts/${res.data.path}')
           })
       } else if (typeof path == 'string') {
         Axios.put(`/post/${path}`, payload, { withCredentials: true })
-          .then((_res) => {
+          .then((res) => {
             // TODO: change to a popup to confirm that a post is updated
             this.props.history.push('/profile')
           })
