@@ -29,6 +29,15 @@ class PostBanner extends Component {
             </span>
           </div>
         }
+        {/* TODO: Use this in the future for editing post banner */}
+        {/*{ true &&*/}
+        {/*<div className={ styles.backdrop }>*/}
+        {/*  <p className={ styles.bannerText } onClick={ this.archivePost }>*/}
+        {/*    Delete Post*/}
+        {/*    <Icon className={ styles.icon } iconName={ 'Trash' } />*/}
+        {/*  </p>*/}
+        {/*</div>*/}
+        {/*}*/}
         <div className={ styles.innerWrapper }>
           <div className={ styles.info }>
             <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
