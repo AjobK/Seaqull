@@ -25,7 +25,7 @@ class PopUp extends Component {
     return (
       <div className={ styles.popUpWrapper }>
         <div className={ styles.popUpBackground }
-             onClick={ canCloseWithClick ? this.props.content.close : undefined } />
+          onClick={ canCloseWithClick ? this.props.content.close : undefined } />
         <div className={ styles.popUp }>
           <div className={ styles.popUpHeader }>
             { title && (
