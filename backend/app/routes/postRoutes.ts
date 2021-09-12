@@ -3,8 +3,8 @@ import PostService from '../controllers/postController'
 import RouterBase from '../interfaces/RouterBase'
 
 const auth = require('../middlewares/isAuth.ts')
-const hasPermission = require('../middlewares/hasPermission.ts')
 
+const hasPermission = require('../middlewares/hasPermission.ts')
 
 class PostRoutes implements RouterBase {
     public post = '/post'
@@ -12,7 +12,7 @@ class PostRoutes implements RouterBase {
     public router = express.Router()
     private postService: PostService
 
-    constructor(){
+    constructor() {
       this.postService = new PostService()
       this.initRoutes()
     }
