@@ -262,7 +262,6 @@ class PostController {
         return null
     }
 
-    // TODO: should user & admins share the same route for this?
     public archivePost = async (req: any, res: Response): Promise<any> => {
         const { path } = req.body
         const post = await this.dao.getPostByPath(path)
@@ -280,7 +279,7 @@ class PostController {
 
         const archivedPost = new ArchivedPost()
         archivedPost.archived_at = currentDate
-        archivedPost.staff = user
+        archivedPost.archivist = user
 
         await this.archivedPostDao.saveArchivedPost(archivedPost)
 
