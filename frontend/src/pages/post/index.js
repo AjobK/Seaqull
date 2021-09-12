@@ -5,6 +5,7 @@ import { Standard, Section } from '../../layouts'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
+import { popUpData } from '../../components/popUp/popUpData'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
 import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews } from '../../components'
@@ -14,18 +15,9 @@ class Post extends App {
     constructor(props) {
         super(props)
 
-        this.post = {
-            title: '',
-            description: '',
-            content: '',
-            path: '',
-            likes: {
-                amount: 0,
-                userLiked: false
-            }
-        }
-
         this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
+
+        this.postPath = URLUtil.getLastPathArgument()
 
         this.state = {
             isOwner: true,
@@ -38,25 +30,32 @@ class Post extends App {
                 title: ''
             },
             loaded: false,
-            post: this.post
+            post: {
+                title: '',
+                description: '',
+                content: '',
+                path: '',
+                likes: {
+                    amount: 0,
+                    userLiked: false
+                }
+            }
         }
     }
 
     loadArticle = () => {
-        let path = URLUtil.getLastPathArgument()
-
         const { defaultData } = this.props.store
 
-        Axios.get(`${defaultData.backendUrl}/post/${path}`, {withCredentials: true})
+        Axios.get(`${defaultData.backendUrl}/post/${this.postPath}`, {withCredentials: true})
         .then(res => {
-
             const { post, likes, isOwner } = res.data
+            let newPost
 
-            this.post = {
+            newPost = {
                 title: post.title,
                 content: post.content,
                 description: post.description,
-                path: path,
+                path: this.postPath,
                 likes: {
                     amount: likes.amount,
                     userLiked: likes.userLiked
@@ -64,27 +63,13 @@ class Post extends App {
             }
 
             try {
-                this.post = {
-                    title: convertFromRaw(JSON.parse(post.title)),
-                    content: convertFromRaw(JSON.parse(post.content)),
-                    description: '',
-                    path: path,
-                    likes: {
-                        amount: likes.amount,
-                        userLiked: likes.userLiked
-                    }
+                newPost = {
+                    ...newPost,
+                    title: convertFromRaw(JSON.parse(newPost.title)),
+                    content: convertFromRaw(JSON.parse(newPost.content)),
                 }
             } catch (e) {
-                this.post = {
-                    title: post.title,
-                    content: post.content,
-                    description: post.description,
-                    path: path,
-                    likes: {
-                        amount: likes.amount,
-                        userLiked: likes.userLiked
-                    }
-                }
+
             }
 
             let author = {
@@ -97,8 +82,10 @@ class Post extends App {
                 title: post.profile.title || 'No title'
             }
 
+            this.post = newPost
+
             this.setState({
-                post: this.post,
+                post: newPost,
                 loaded: true,
                 isOwner: isOwner,
                 isEditing: true,
@@ -152,26 +139,46 @@ class Post extends App {
         }
     }
 
-    archivePost() {
+    onDeletePostClicked = () => {
+        const { notification } = this.props.store
+
+        notification.setContent(popUpData.messages.deletePostConfirmation)
+
+        notification.setActions([
+            {
+                ...popUpData.actions.cancel,
+                action: notification.close
+            },
+            {
+                ...popUpData.actions.confirmWithText,
+                action: () => {
+                    this.deletePost()
+                    notification.close()
+                }
+            }
+        ])
+    }
+
+    deletePost = () => {
         const payload = {
-            path: this.post.path
+            path: this.postPath
         }
 
         Axios.put('/api/archive', payload, { withCredentials: true }).then( res => {
             this.props.history.push('/')
         }).catch(err => {
             const { error } = err.response.data
-
-            this.setState({ error: [error] })
         })
     }
+
+
 
     addViewToDB() {
         if (!this.state.isOwner) {
             Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
 
             const payload = {
-                path: this.state.post.path
+                path: this.postPath
             }
 
             Axios.post(`api/post/view`, payload)
@@ -195,7 +202,6 @@ class Post extends App {
         return (
             <Standard className={[styles.stdBgWhite]}>
                 <PostBanner
-                    archivePost={ this.archivePost.bind(this) }
                     author={ this.props.new ? ownerAuthor : author }
                     isOwner={ isOwner }
                 />
@@ -216,9 +222,9 @@ class Post extends App {
                             type={'title'}
                             // Saves post title with draftJS content
                             callBackSaveData={(data) => {
-                                this.post.title = data
+                                post.title = data
 
-                                this.setState({ post: this.post })
+                                this.setState({ post: post })
                             }}
                             readOnly={!isOwner || !isEditing}
                             value={post.title} // Initial no content, should be prefilled by API
@@ -227,9 +233,9 @@ class Post extends App {
                             type={'content'}
                             // Saves post content with draftJS content
                             callBackSaveData={(data) => {
-                                this.post.content = data
+                                post.content = data
 
-                                this.setState({ post: this.post })
+                                this.setState({ post: post })
                             }}
                             readOnly={!isOwner || !isEditing}
                             value={post.content} // Initial no content, should be prefilled by API
@@ -250,13 +256,13 @@ class Post extends App {
                                 <Button
                                     className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
                                     value={'Update'}
-                                    onClick={() => this.sendToDB(this.post.path)}
+                                    onClick={() => this.sendToDB(post.path)}
                                 />
                             }
                         </div>
                         <div className={ styles.postActionButtonsRight }>
                             { !this.props.new && (this.canBanUser || isOwner) &&
-                                <span className={ styles.delete } onClick={ this.archivePost }>
+                                <span className={ styles.delete } onClick={ this.onDeletePostClicked }>
                                     <Icon iconName={ 'Trash' } />
                                 </span>
                             }

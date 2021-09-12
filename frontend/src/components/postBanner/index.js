@@ -12,26 +12,6 @@ class PostBanner extends Component {
     super(props)
   }
 
-  archivePost = () => {
-    const { notification } = this.props.store
-
-    notification.setContent(popUpData.messages.deletePostConfirmation)
-
-    notification.setActions([
-      {
-        ...popUpData.actions.cancel,
-        action: notification.close
-      },
-      {
-        ...popUpData.actions.confirmWithText,
-        action: () => {
-          this.props.archivePost()
-          notification.close()
-        }
-      }
-    ])
-  }
-
   render() {
     const { author, isOwner } = this.props
 
