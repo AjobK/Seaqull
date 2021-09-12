@@ -7,7 +7,7 @@ import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
-import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection, PostViews } from '../../components'
+import { PostBanner, PostContent, Button, PostLike, CommentSection, PostViews } from '../../components'
 
 @inject('store') @observer
 class Post extends App {
@@ -176,20 +176,6 @@ class Post extends App {
         }
     }
 
-    deletePostClicked = () => {
-        // TODO: delete? apparently there's a delete function already
-        // const { notification } = this.props.store
-        //
-        // notification.setContent(popUpData.messages.deletePostConfirmation)
-        //
-        // notification.setActions([
-        //     {
-        //         ...popUpData.actions.confirmWithText,
-        //         action: this.deletePost
-        //     }
-        // ])
-    }
-
     render() {
         // Values change based on initial response from server
         const { profile, user } = this.props.store
@@ -264,14 +250,6 @@ class Post extends App {
                                     value={'Update'}
                                     onClick={() => this.sendToDB(this.post.path)}
                                 />
-                            }
-                        </div>
-                        <div className={ styles.postActionButtonsRight }>
-                            {
-                                isOwner && isEditing && !this.props.new &&
-                                <span className={ styles.delete } onClick={ this.deletePostClicked }>
-                                    <Icon iconName={ 'Trash' } />
-                                </span>
                             }
                         </div>
                     </div>
