@@ -11,21 +11,28 @@
       "experimentalDecorators": true
     }
   },
-  "plugins": ["react"],
+  "plugins": ["react", "unused-imports"],
   "extends": ["plugin:react/recommended"],
   "rules": {
+    "eol-last": "error",
     "quotes": [2, "single", { "avoidEscape": false }],
     "no-trailing-spaces": "error",
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "no-eval": "error",
     "no-multi-spaces": "error",
-    "no-unused-vars": "error",
+    "no-unused-vars": "off",
     "func-style": ["error", "expression"],
     "indent": ["error", 2],
-    "comma-dangle": 0,
-    "react/jsx-uses-vars": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "react/display-name": 0,
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    "comma-dangle": 0,
     "no-console": 0,
     "no-unexpected-multiline": 0,
     "react/prop-types": 0,
