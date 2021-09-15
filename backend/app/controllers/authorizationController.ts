@@ -8,7 +8,6 @@ import BanService from '../utils/banService'
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 
-
 require('dotenv').config()
 const { SECURE } = process.env
 
