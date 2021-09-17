@@ -88,9 +88,11 @@ class Profile extends App {
   }
 
   openFollowersList = () => {
-    this.setState({
-      showFollowers: true
-    })
+    if (this.state.user.followerCount > 0) {
+      this.setState({
+        showFollowers: true
+      })
+    }
   }
 
   closeFollowersList = () => {
@@ -130,7 +132,10 @@ class Profile extends App {
         <section className={ [styles.infoWrapper] }>
           <div className={ [styles.tempFollowerIndicator] }>
             <Icon iconName={ 'UserFriends' } />
-            <p onClick={ this.openFollowersList }>
+            <p
+              className={ this.state.user.followerCount > 0 ? `${styles.clickableFollowers}` : '' }
+              onClick={ this.openFollowersList }
+            >
               {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
             </p>
           </div>
@@ -147,7 +152,7 @@ class Profile extends App {
         <Section title={ 'STATISTICS' }>
           <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
-        {this.state.showFollowers &&
+        {this.state.showFollowers && this.state.user.followerCount > 0 &&
         <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
         }
       </Standard>

@@ -20,12 +20,14 @@
 		margin-left: 5px;
 	}
 
-	svg {
-		font-size: 1.2em
+	.clickableFollowers {
+		&:hover {
+			text-decoration: underline;
+			cursor: pointer;
+		}
 	}
 
-	&:hover {
-		cursor: pointer;
-		text-decoration: underline;
+	svg {
+		font-size: 1.2em
 	}
 }
