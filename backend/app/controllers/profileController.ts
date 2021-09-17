@@ -15,9 +15,12 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
+import { type } from 'os';
 
 const jwt = require('jsonwebtoken')
+
 const matches = require('validator/lib/matches')
+
 const isLength = require('validator/lib/isLength')
 
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -43,6 +46,44 @@ class ProfileController {
     this.attachmentDAO = new attachmentDAO()
     this.fileService = new FileService()
     this.banService = new BanService()
+  }
+
+  public getFollowers = async (req: Request, res: Response): Promise<Response> => {
+    const { token } = req.cookies
+    let decodedToken: any
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+      decodedToken = null
+    }
+
+    let receivedUsername = req.params.username
+
+    if (!receivedUsername) {
+      if (decodedToken && decodedToken.username) {
+        receivedUsername = decodedToken.username
+      } else {
+        return res.status(404).json({ error: 'No username was given' })
+      }
+    }
+
+    const profile = await this.dao.getProfileByUsername(receivedUsername)
+    const followersById = await this.dao.getFollowersByProfileId(profile.id)
+
+    const payload = {
+      followers: []
+    }
+
+    followersById.forEach((entry) => {
+      payload.followers.push(entry.follower)
+    })
+
+    if (payload.followers.length < 1) {
+      return res.status(204)
+    }
+
+    return res.status(200).json(payload)
   }
 
   public updateProfile = async (req: any, res: Response): Promise<Response> => {

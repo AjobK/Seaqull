@@ -23,4 +23,9 @@
 	svg {
 		font-size: 1.2em
 	}
+
+	&:hover {
+		cursor: pointer;
+		text-decoration: underline;
+	}
 }
