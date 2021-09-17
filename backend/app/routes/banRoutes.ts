@@ -12,14 +12,14 @@ class BanRoutes implements RouterBase {
     private banController: BanController
 
     constructor() {
-        this.banController = new BanController()
+      this.banController = new BanController()
 
-        this.initRoutes()
+      this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.patch(this.ban, auth, hasPermission('BAN_USERS'), this.banController.longBanUser)
-        this.router.patch(this.shortBan, auth, hasPermission('SHORT_BAN_USERS'), this.banController.shortBanUser)
+      this.router.patch(this.ban, auth, hasPermission('BAN_USERS'), this.banController.longBanUser)
+      this.router.patch(this.shortBan, auth, hasPermission('SHORT_BAN_USERS'), this.banController.shortBanUser)
     }
 }
 

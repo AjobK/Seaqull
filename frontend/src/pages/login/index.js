@@ -8,9 +8,9 @@ class Login extends App {
   render() {
     return (
       <Standard>
-        <div className={styles.container}>
-          <div className={styles.background} />
-          <LoginPrompt className={styles.prompt} />
+        <div className={ styles.container }>
+          <div className={ styles.background } />
+          <LoginPrompt className={ styles.prompt } />
         </div>
       </Standard>
     )

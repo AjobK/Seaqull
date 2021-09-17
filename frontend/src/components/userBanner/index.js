@@ -97,13 +97,13 @@ class UserBanner extends Component {
     const username = URLUtil.getLastPathArgument()
 
     Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
-        .then((res) => {
-          this.setState({ following: res.data.following || false },
-              this.props.changeFollowerCount(res.data.following ? 1 : -1))
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then((res) => {
+        this.setState({ following: res.data.following || false },
+          this.props.changeFollowerCount(res.data.following ? 1 : -1))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   banUser() {
@@ -127,81 +127,115 @@ class UserBanner extends Component {
     const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(user.username)
 
     return (
-        <section className={ styles.wrapper }>
-          <div className={ styles.innerWrapper }>
-            <div
-              className={ styles.picture }
-              style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
-            >
-              { this.props.owner && (
-                  <span className={ `${ styles.pictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }` }>
-                  <Icon iconName={ 'Pen' } />
-                  <input
-                      type='file' accept='image/png, image/jpeg' value={''}
-                      onChange={ this.onEditAvatar } onDragEnter={ this.onAvatarDragEnter } onDragLeave={ this.onAvatarDragLeave }
-                      style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
-                  />
-                </span>
-              )}
-              { this.props.store.profile.loggedIn && !user.isOwner &&
-              <button className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` } onClick={ this.follow }>
-                <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
-                <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
-              </button>
-              }
-            </div>
-            <div className={ styles.info }>
-              <h2 className={ [styles.name, fontSize].join(' ') }>{ user.username || '' }</h2>
-              <div className={ styles.achieved }>
-                <h3 className={ styles.role }>{ user.title || '' }</h3>
-              </div>
-            </div>
-          </div>
-          <div className={ styles.banner }>
-            <div className={ styles.bannerImage } style={{ backgroundImage: `url(${ user.banner })` }} />
+      <section className={ styles.wrapper }>
+        <div className={ styles.innerWrapper }>
+          <div
+            className={ styles.picture }
+            style={ { backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash } }
+          >
             { this.props.owner && (
-                <div className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
-                  <input
-                      type='file' accept='image/png, image/jpeg' value={''}
-                      onChange={ this.onEditBanner } onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave }
-                  />
-                  <div className={ styles.bannerEditActionBtn }>
-                    <p className={ styles.bannerEditActionBtnText }>
-                      <span>EDIT BANNER</span>
-                      <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
-                    </p>
-                  </div>
-                </div>
-            )}
-            { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
-                <div onDragEnter={ this.onBannerDragEnter } onDragLeave={ this.onBannerDragLeave } className={ `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }` }>
+              <span
+                className={
+                  `${ styles.pictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }`
+                }
+              >
+                <Icon iconName={ 'Pen' } />
                 <input
-                    type='submit'
-                    onChange={ this.onEditBanner }
-                    onDragEnter={ this.onBannerDragEnter }
-                    onDragLeave={ this.onBannerDragLeave }
-                    onClick={ this.banUser.bind(this) }
+                  type='file' accept='image/png, image/jpeg' value={ '' }
+                  onChange={ this.onEditAvatar }
+                  onDragEnter={ this.onAvatarDragEnter }
+                  onDragLeave={ this.onAvatarDragLeave }
+                  style={ { backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash } }
                 />
-                <div className={ styles.bannerEditActionBtn }>
-                  <p className={ styles.bannerEditActionBtnText }>
-                    <span>BAN USER</span>
-                    <Icon iconName={ 'Ban' } className={ styles.bannerEditActionBtnIcon } />
-                  </p>
-                </div>
-              </div>
+              </span>
             )}
+            { this.props.store.profile.loggedIn && !user.isOwner &&
+            <button
+              className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` }
+              onClick={ this.follow }
+            >
+              <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
+              <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
+            </button>
+            }
           </div>
+          <div className={ styles.info }>
+            <h2 className={ [styles.name, fontSize].join(' ') }>{ user.username || '' }</h2>
+            <div className={ styles.achieved }>
+              <h3 className={ styles.role }>{ user.title || '' }</h3>
+            </div>
+          </div>
+        </div>
+        <div className={ styles.banner }>
+          <div className={ styles.bannerImage } style={ { backgroundImage: `url(${ user.banner })` } } />
+          { this.props.owner && (
+            <div
+              className={
+                `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }`
+              }
+            >
+              <input
+                type='file' accept='image/png, image/jpeg' value={ '' }
+                onChange={ this.onEditBanner }
+                onDragEnter={ this.onBannerDragEnter }
+                onDragLeave={ this.onBannerDragLeave }
+              />
+              <div className={ styles.bannerEditActionBtn }>
+                <p className={ styles.bannerEditActionBtnText }>
+                  <span>EDIT BANNER</span>
+                  <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
+                </p>
+              </div>
+            </div>
+          )}
+          { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
+            <div
+              onDragEnter={ this.onBannerDragEnter }
+              onDragLeave={ this.onBannerDragLeave }
+              className={
+                `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }`
+              }
+            >
+              <input
+                type='submit'
+                onChange={ this.onEditBanner }
+                onDragEnter={ this.onBannerDragEnter }
+                onDragLeave={ this.onBannerDragLeave }
+                onClick={ this.banUser.bind(this) }
+              />
+              <div className={ styles.bannerEditActionBtn }>
+                <p className={ styles.bannerEditActionBtnText }>
+                  <span>BAN USER</span>
+                  <Icon iconName={ 'Ban' } className={ styles.bannerEditActionBtnIcon } />
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
 
-          { this.state.upAvatar && (
-              <Cropper inputType={'avatar'} img={this.state.upAvatar} closeCropper={this.closePopup} changeImage={this.changeAvatar}/>
-          )}
-          { this.state.upBanner && (
-              <Cropper inputType={'banner'} img={this.state.upBanner} closeCropper={this.closePopup} changeImage={this.changeBanner}/>
-          )}
-          { this.state.banUser && (
-              <BanUser user={user} closePopup={this.closePopup}></BanUser>
-          )}
-        </section>
+        { this.state.upAvatar && (
+          <Cropper
+            inputType={ 'avatar' }
+            img={ this.state.upAvatar }
+            closeCropper={ this.closePopup }
+            changeImage={ this.changeAvatar }
+          />
+        )}
+        { this.state.upBanner && (
+          <Cropper
+            inputType={ 'banner' }
+            img={ this.state.upBanner }
+            closeCropper={ this.closePopup }
+            changeImage={ this.changeBanner }
+          />
+        )}
+        { this.state.banUser && (
+          <BanUser
+            user={ user }
+            closePopup={ this.closePopup }
+          />
+        )}
+      </section>
     )
   }
 }

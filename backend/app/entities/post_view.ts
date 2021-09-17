@@ -7,7 +7,7 @@ export class PostView extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Post, post => post.id)
+    @ManyToOne(() => Post, (post) => post.id)
     @JoinColumn({ name: 'post', referencedColumnName: 'id' })
     post: Post
 

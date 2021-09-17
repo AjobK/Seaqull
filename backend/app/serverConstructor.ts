@@ -23,18 +23,17 @@ class serverConstructor {
     }
 
     private middlewares(middleWares) {
-        middleWares.forEach(middleWare => {
-            this.app.use(middleWare)
-        })
-        this.app.use(express.static(__dirname + '/public'))
+      middleWares.forEach((middleWare) => {
+        this.app.use(middleWare)
+      })
+      this.app.use(express.static(__dirname + '/public'))
 
     }
 
     private routes(controllers) {
-        controllers.forEach(controller => {
-            this.app.use('/api/', controller.router)
-        })
-    }
+      controllers.forEach((controller) => {
+        this.app.use('/api/', controller.router)
+      })
 
     private swagger() {
         expressOasGenerator.handleResponses(this.app, {
@@ -47,10 +46,10 @@ class serverConstructor {
     }
 
     public listen(): void {
-        this.server = this.app.listen(this.port, () => {
-            this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-            console.log(`App listening on http://localhost:${this.port}`)
-        })
+      this.server = this.app.listen(this.port, () => {
+        console.log(`App listening on http://localhost:${this.port}`)
+      })
+
     }
 }
 

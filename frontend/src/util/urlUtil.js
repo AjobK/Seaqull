@@ -1,16 +1,15 @@
 class URLUtil {
+  static getPathArguments () {
+    const path = window.location.pathname.split('/')
 
-    static getPathArguments () {
-        const path = window.location.pathname.split('/')
+    return path
+  }
 
-        return path
-    }
+  static getLastPathArgument () {
+    const path = this.getPathArguments().filter((i) => i != '').pop()
 
-    static getLastPathArgument () {
-        const path = this.getPathArguments().filter(i => i != '').pop()
-
-        return path
-    }
+    return path
+  }
 }
 
 export default URLUtil
