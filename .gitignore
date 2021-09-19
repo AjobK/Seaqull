@@ -32,8 +32,8 @@ package-lock.json
 /package-lock.json
 
 #VScode
-/*.code-workspace
-/.vscode
+*.code-workspace
+.vscode
 
 # nodejs
 backend/node_modules
