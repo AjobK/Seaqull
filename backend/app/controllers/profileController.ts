@@ -357,6 +357,10 @@ class ProfileController {
       return 'Invalid email adress'
     }
 
+    if (email.endsWith('@seaqull.com')) {
+      return 'No permission to use this e-mail'
+    }
+
     const isEmailTaken = await this.dao.getUserByEmail(email)
 
     if (isEmailTaken) {
