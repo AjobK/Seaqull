@@ -30,10 +30,10 @@ class LoginPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     if (!this.state.recaptchaToken) {
-      this.setState( {
+      this.setState({
         username: ['invalid recaptcha'],
         password: ['invalid recaptcha'],
-      } )
+      })
     }
 
     const payload = {
@@ -65,18 +65,18 @@ class LoginPrompt extends Component {
 
         if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
-        this.setState( {
+        this.setState({
           username: errors || [],
           password: errors || [],
           loadingTimeout: false,
-        } )
+        })
     	})
   }
 
   setRemainingTimeInterval = (remainingTime) => {
     if (this.remainingTimeInterval) clearInterval(this.remainingTimeInterval)
 
-    this.setState( { remainingTime } )
+    this.setState({ remainingTime })
 
     this.remainingTimeInterval = setInterval(() => {
       let nextTime = this.state.remainingTime - 1
@@ -86,9 +86,9 @@ class LoginPrompt extends Component {
         nextTime = null
       }
 
-      this.setState( {
+      this.setState({
         remainingTime: nextTime,
-      } )
+      })
     }, 1000)
   }
 
@@ -101,10 +101,10 @@ class LoginPrompt extends Component {
 
     if (this.state.remainingTime && this.remainingTimeInterval) return
 
-    this.setState( {
+    this.setState({
       username: 'loading',
       password: 'loading'
-    } )
+    })
 
     this.auth()
   }
@@ -114,9 +114,9 @@ class LoginPrompt extends Component {
   }
 
   setRecaptcha(recaptcha) {
-    this.setState( {
+    this.setState({
       recaptchaToken: recaptcha
-    } )
+    })
   }
 
   render() {

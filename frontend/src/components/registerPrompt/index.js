@@ -70,7 +70,7 @@ class RegisterPrompt extends Component {
   }
 
   onChange = (recaptchaToken) => {
-    this.setState( { recaptchaToken } )
+    this.setState({ recaptchaToken })
     this.auth()
   }
 
