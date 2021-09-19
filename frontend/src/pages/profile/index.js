@@ -6,6 +6,7 @@ import Axios from 'axios'
 import Error from '../error'
 import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import styles from './profile.scss'
+import ProfileFollowerList from '../../components/profileFollowerList'
 
 @inject('store')
 @observer
@@ -21,6 +22,7 @@ class Profile extends App {
       posts: [],
       likes: [],
       isOwner: false,
+      showFollowers: false,
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
@@ -85,6 +87,20 @@ class Profile extends App {
     this.setState({ user })
   }
 
+  openFollowersList = () => {
+    if (this.state.user.followerCount > 0) {
+      this.setState({
+        showFollowers: true
+      })
+    }
+  }
+
+  closeFollowersList = () => {
+    this.setState({
+      showFollowers: false
+    })
+  }
+
   render() {
     const { user, error, isOwner } = this.state
     const { profile } = this.props.store
@@ -116,8 +132,11 @@ class Profile extends App {
         <section className={ [styles.infoWrapper] }>
           <div className={ [styles.tempFollowerIndicator] }>
             <Icon iconName={ 'UserFriends' } />
-            <p>
-              {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
+            <p
+              className={ this.state.user.followerCount > 0 ? `${styles.clickableFollowers}` : '' }
+              onClick={ this.openFollowersList }
+            >
+              { user.followerCount } follower{ user.followerCount === 1 ? '' : 's' }{ ' ' }
             </p>
           </div>
         </section>
@@ -133,6 +152,9 @@ class Profile extends App {
         <Section title={ 'STATISTICS' }>
           <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
+        { (this.state.showFollowers && this.state.user.followerCount > 0) &&
+          <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
+        }
       </Standard>
     )
   }
