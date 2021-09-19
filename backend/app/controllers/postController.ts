@@ -268,7 +268,7 @@ class PostController {
     public archivePost = async (req: any, res: Response): Promise<any> => {
         const post = await this.dao.getPostByPath(req.params.path)
 
-        if (!post) res.status(404).json({ error: 'Not found' })
+        if (!post) return res.status(404).json({ error: 'Not found' })
 
         const currentDate = Date.now()
         post.archived_at = currentDate
@@ -276,7 +276,7 @@ class PostController {
         const user = await this.accountDAO.getAccountByUsername(req.decoded.username)
 
         if (!user) {
-            res.status(400).json({ error: ['User not found'] })
+            return res.status(400).json({ error: ['User not found'] })
         }
 
         const archivedPost = new ArchivedPost()
