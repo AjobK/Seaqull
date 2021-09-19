@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
-import URLUtil from '../../util/urlUtil'
+import { URLUtil } from '../../util/'
 import { popUpData } from '../../components/popUp/popUpData'
 
 @inject('store')

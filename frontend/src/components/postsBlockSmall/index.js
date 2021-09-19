@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from '../../components'
-import TimeUtil from '../../util/timeUtil'
+import { TimeUtil } from '../../util/'
 import styles from './postsBlockSmall.scss'
 import defaultThumbnail from '../../static/images/default-thumbnail.jpg'
 import ReactTooltip from 'react-tooltip'

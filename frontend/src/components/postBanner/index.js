@@ -4,8 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { Cropper, Icon } from '..'
 import { Link } from 'react-router-dom'
 import PopUp from '../popUp'
-import ColorUtil from '../../util/colorUtil'
-import InputUtil from '../../util/inputUtil'
+import { ColorUtil, InputUtil } from '../../util/'
 
 @inject('store')
 @observer
