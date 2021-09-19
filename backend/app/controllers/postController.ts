@@ -176,7 +176,6 @@ class PostController {
     }
   }
 
-
   public unlikePost = async (req: Request, res: Response): Promise<Response> => {
     const profile = await this.fetchProfile(req)
     const foundPost = await this.dao.getPostByPath(req.params.path)
@@ -257,7 +256,7 @@ class PostController {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
 
         return await this.profileDAO.getProfileByUsername(decodedToken.username)
-      } catch(err) {
+      } catch (err) {
         return null
       }
     }
@@ -288,7 +287,7 @@ class PostController {
     const newPost = await this.dao.updatePost(post)
     if (!newPost) return res.status(500).json({ error: 'Could not archive post' })
 
-    return res.status(200).json({ message: 'status' })
+    return res.status(200).json({ message: 'Post archived!' })
   }
 }
 
