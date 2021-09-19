@@ -4,8 +4,8 @@ import styles from './loginPrompt.scss'
 import { Button, FormInput, PopUp } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
 import { popUpData } from '../popUp/popUpData'
+import Recaptcha from '../recaptcha'
 
 @inject('store') @observer
 class LoginPrompt extends Component {
@@ -17,23 +17,28 @@ class LoginPrompt extends Component {
       password: null,
       remainingTimeInterval: null,
       remainingTime: null,
-      recaptcha: null,
       loadingTimeout: false,
-      popupData: null
+      popupData: null,
+      recaptchaToken: null
     }
 
-    this.recaptchaRef = React.createRef()
-    this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
 
   auth = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
+    if (!this.state.recaptchaToken) {
+      this.setState({
+        username: ["invalid recaptcha"],
+        password: ["invalid recaptcha"],
+      })
+    }
+    
     const payload = {
       username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.recaptchaRef.current.getValue()
+      recaptcha: this.state.recaptchaToken
     }
 
     Axios.post('/login', payload, {withCredentials: true})
@@ -102,24 +107,20 @@ class LoginPrompt extends Component {
 
     this.setState({
       username: 'loading',
-      password: 'loading',
-      loadingTimeout: true
+      password: 'loading'
     })
-    
-    if (!this.recaptchaRef.current.getValue()) {
-      this.recaptchaRef.current.reset()
-      this.recaptchaRef.current.execute()
-    } else {
-      this.auth()
-    }
+
+    this.auth()
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
-  onChange = () => {
-    this.auth()
+  setRecaptcha(recaptcha) {
+    this.setState({
+      recaptchaToken: recaptcha
+    })
   }
 
   render() {
@@ -135,14 +136,10 @@ class LoginPrompt extends Component {
             <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type='text'/>
             <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
             <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
-              { <ReCAPTCHA 
-              ref={this.recaptchaRef} 
-              sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S' 
-              size='invisible' 
-              onChange={this.onChange}
-              hl='en'/>
+              {
+                <Recaptcha setRecaptcha={this.setRecaptcha.bind(this)}/>
               }
+              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
               { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
             </div>
           </form>

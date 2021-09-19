@@ -4,6 +4,7 @@ import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
+import ReCaptchaService from '../utils/ReCaptchaService'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -16,11 +17,13 @@ class AuthorizationController {
     private accountDAO: AccountDAO
     private roleDAO: RoleDAO
     private banService: BanService
+    private reCaptchaService: ReCaptchaService;
 
     constructor() {
         this.accountDAO = new AccountDAO()
         this.roleDAO = new RoleDAO()
         this.banService = new BanService()
+        this.reCaptchaService = new ReCaptchaService()
     }
 
     public loginVerify = async (req: Request, res: Response): Promise<any> => {
@@ -45,7 +48,7 @@ class AuthorizationController {
     }
 
     public login = async (req: Request, res: Response): Promise<any> => {
-        const { username, password } = req.body
+        const { username, password, recaptcha } = req.body
 
         if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
@@ -60,6 +63,11 @@ class AuthorizationController {
                 remainingTime:  Math.floor((account.locked_to - Date.now())/1000)
             })
         } else {
+            const isRecaptchaValid = await this.reCaptchaService.isCaptchaValid(recaptcha)
+            if (!isRecaptchaValid) {
+                return res.status(400).json({ errors: ['ReCaptcha invalid'] })
+            }
+
             if (req.cookies['token']) res.clearCookie('token')
 
             const validation = this.validateAccountRequest(account, username, password)

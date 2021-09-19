@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser'
 
 import serverConstructor from './serverConstructor'
 import PostRoutes from './routes/postRoutes'
-import AuthorizationRoutes from './routes/authorizationRoutes'
+import AuthorizationRoutes from './routes/authenticationRoutes'
 import CommentRoutes from './routes/commentRoutes'
 import ProfileRoutes from './routes/profileRoutes'
 import RoleRoutes from './routes/roleRoute'

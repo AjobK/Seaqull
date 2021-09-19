@@ -36,6 +36,7 @@ import PostsBlock from './postsBlock'
 import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
 import PopUp from './popUp'
+import Recaptcha from './recaptcha'
 
 export {
   Button,
@@ -61,6 +62,7 @@ export {
   StyleButton,
   LoginPrompt,
   RegisterPrompt,
+  Recaptcha,
   FormInput,
   CommentSection,
   Comment,

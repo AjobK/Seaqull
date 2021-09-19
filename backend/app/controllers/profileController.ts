@@ -14,6 +14,7 @@ import attachmentDAO from '../daos/attachmentDAO'
 import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
+import ReCaptchaService from '../utils/ReCaptchaService'
 
 const jwt = require('jsonwebtoken')
 const matches = require('validator/lib/matches')
@@ -32,6 +33,7 @@ class ProfileController {
     private roleDAO: RoleDao
     private attachmentDAO: attachmentDAO
     private fileService: FileService
+    private reCaptchaService: ReCaptchaService
 
     constructor() {
         this.dao = new ProfileDAO()
@@ -40,6 +42,7 @@ class ProfileController {
         this.roleDAO = new RoleDao()
         this.attachmentDAO = new attachmentDAO()
         this.fileService = new FileService()
+        this.reCaptchaService = new ReCaptchaService()
     }
 
     public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -172,12 +175,12 @@ class ProfileController {
             errors.password = [isPasswordNotStrong]
         }
 
-        const isRecaptchaNotValid = await this.checkReCAPTCHA(recaptcha)
-        if (isRecaptchaNotValid) {
-            errors.recaptcha = [isRecaptchaNotValid]
+        const isRecaptchaValid = await this.reCaptchaService.isCaptchaValid(recaptcha)
+        if (isRecaptchaValid) {
+            errors.recaptcha = ['Invalid recaptcha']
         }
 
-        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaNotValid) {
+        if (isUsernamNotValid || isEmailNotValid || isPasswordNotStrong || isRecaptchaValid) {
             return res.status(401).json({ errors: errors })
         }
 
@@ -316,16 +319,6 @@ class ProfileController {
     private checkPasswordStrength(password: string): string {
         if (!isStrongPassword(password, { minSymbols: 0 })) {
             return 'Password is too weak.\nUse lowercase letter(s), uppercase letter(s) and number(s).\nShould be atleast 8 characters long.'
-        }
-        return null
-    }
-
-    private async checkReCAPTCHA(token: string): Promise<string> {
-        const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
-        const verificationResult = await reCaptcha.verify(token)
-
-        if (!verificationResult.isHuman) {
-            return 'Invalid captcha'
         }
         return null
     }
