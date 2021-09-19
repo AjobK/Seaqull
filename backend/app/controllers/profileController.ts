@@ -177,7 +177,7 @@ class ProfileController {
 
       const isRecaptchaValid = await this.reCaptchaService.isCaptchaValid(userRequested.recaptcha)
 
-      if (isRecaptchaValid) {
+      if (!isRecaptchaValid) {
         errors.recaptcha = ['Invalid recaptcha']
       }
 

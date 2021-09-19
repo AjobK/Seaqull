@@ -52,9 +52,9 @@ class RegisterPrompt extends Component {
         const { username, email, password, recaptcha } = res.response.data.errors
 
         this.setState({
-          username: username || [],
-          email: email || [],
-          password: password || [],
+          username: username || recaptcha || [],
+          email: email || recaptcha || [],
+          password: password || recaptcha || [],
           recaptcha: recaptcha || [],
           recaptchaToken: null,
         })

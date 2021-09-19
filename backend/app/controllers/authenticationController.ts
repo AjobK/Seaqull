@@ -64,7 +64,7 @@ class AuthenticationController {
     } else {
       const isRecaptchaValid = await this.reCaptchaService.isCaptchaValid(recaptcha)
 
-      if (isRecaptchaValid) {
+      if (!isRecaptchaValid) {
         return res.status(400).json({ errors: ['ReCaptcha invalid'] })
       }
 

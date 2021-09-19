@@ -1,16 +1,16 @@
 import * as express from 'express'
 import RouterBase from '../interfaces/RouterBase'
-import AuthorizationController from '../controllers/authenticationController'
+import AuthenticationController from '../controllers/authenticationController'
 
 class AuthenticationRoutes implements RouterBase {
     public login = '/login'
     public loginVerify = '/login-verify'
     public logout = '/logout'
     public router = express.Router()
-    private authController: AuthorizationController
+    private authController: AuthenticationController
 
     constructor() {
-      this.authController = new AuthorizationController()
+      this.authController = new AuthenticationController()
       this.initRoutes()
     }
 
