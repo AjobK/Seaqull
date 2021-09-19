@@ -11,7 +11,8 @@ import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
 import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews } from '../../components'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class Post extends App {
   constructor(props) {
     super(props)
@@ -95,52 +96,50 @@ class Post extends App {
         })
     }
 
-    toggleLike = () => {
-      // Toggles liked state for all like components
-      let newState = this.state
+  toggleLike = () => {
+    // Toggles liked state for all like components
+    let newState = this.state
 
-      // Increment/decrement likes locally
-      let newLikesAmount
+    // Increment/decrement likes locally
+    let newLikesAmount
 
-      if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
-        newLikesAmount = this.state.post.likes.amount - 1
-      } else {
-        newLikesAmount = this.state.post.likes.amount + 1
-      }
-
-      newState.post.likes.amount = newLikesAmount
-      this.state.post.likes.userLiked = !this.state.post.likes.userLiked
-
-      this.setState(newState)
+    if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
+      newLikesAmount = this.state.post.likes.amount - 1
+    } else {
+      newLikesAmount = this.state.post.likes.amount + 1
     }
+
+    newState.post.likes.amount = newLikesAmount
+    this.state.post.likes.userLiked = !this.state.post.likes.userLiked
+
+    this.setState(newState)
+  }
 
     componentDidMount = () => {
-      if (!this.props.new)
-        return this.loadArticle()
+      if (!this.props.new) return this.loadArticle()
     }
 
-    sendToDB = (path = null) => {
-      Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+  sendToDB = (path = null) => {
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
-      const payload = {
-        title: this.state.post.title,
-        description: 'None',
-        content: this.state.post.content
-      }
-
-      if (!path) {
-        Axios.post('/post', payload, { withCredentials: true })
-          .then((res) => {
-            this.props.history.push(`/posts/${res.data.path}`)
-          })
-      } else if (typeof path == 'string') {
-        Axios.put(`/post/${path}`, payload, { withCredentials: true })
-          .then(() => {
-            // TODO: change to a popup to confirm that a post is updated
-            this.props.history.push('/profile')
-          })
-      }
+    const payload = {
+      title: this.state.post.title,
+      description: 'None',
+      content: this.state.post.content,
     }
+
+    if (!path) {
+      Axios.post('/post', payload, { withCredentials: true }).then((res) => {
+        this.props.history.push(`/posts/${res.data.path}`)
+      })
+    } else if (typeof path == 'string') {
+      Axios.put(`/post/${path}`, payload, { withCredentials: true }).then(() => {
+        const { notification } = this.props.store
+
+        notification.setContent(popUpData.messages.updatePostNotification)
+      })
+    }
+  }
 
     onDeletePostClicked = () => {
       const { notification } = this.props.store
