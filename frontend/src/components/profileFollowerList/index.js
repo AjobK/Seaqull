@@ -45,7 +45,7 @@ class ProfileFollowerList extends Component {
     render() {
       return (
         <div className={ `${styles.postLikesListWrapper}` }>
-          <div className={ `${styles.likesBackground}` } onClick={ this.props.closeLikesList } />
+          <div className={ `${styles.likesBackground}` } onClick={ this.props.closeFollowersList } />
           <div className={ `${styles.likesListWrapper}` }>
             <div className={ styles.likesListHeader }>
               <div className={ `${styles.likesListTitle}` }>
