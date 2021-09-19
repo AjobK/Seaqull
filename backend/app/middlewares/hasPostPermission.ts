@@ -12,11 +12,13 @@ module.exports = async (req, res, next) => {
   const post = await postDAO.getPostByPath(req.params.path)
   const user = await accountDAO.getAccountByUsername(req.decoded.username)
 
-  if (!post) {
-    return res.status(404).json({ 'error': 'Post not found.' })
-  }
+  if (!user)
+    return res.status(401).json({ 'error': 'You need to be logged in to delete posts.' })
 
-  if (post.profile.id === user.id) {
+  if (!post)
+    return res.status(404).json({ 'error': 'Post not found.' })
+
+  if (post.profile && post.profile.id === user.id) {
     hasPermission = true
   } else {
     const permissionList = await rolePermissionDAO.getRolePermissionsByRole(req.decoded.role)
