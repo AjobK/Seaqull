@@ -11,7 +11,7 @@
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-end;
-	
+
 	&Edit {
 		background-color: rgba(0,0,0,0.4);
 		color: white;
@@ -84,40 +84,7 @@
 	height: 100%;
 	width: 100%;
 	opacity: 0;
-	background-color: rgba(0,0,0,0.35);
-
-	&:hover {
-		opacity: 1;
-		cursor: pointer;
-	
-		.bannerText {
-			visibility: visible;
-		}
-	}
-
-	.icon {
-		margin-left: 10px
-	}
-	
-	.bannerText {
-		visibility: none;
-		color: white;
-		vertical-align: middle;
-		text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-		padding: $header-spacing;
-		justify-content: center;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		display: flex;
-		text-transform: uppercase;
-		font-weight: bold;
-		font-size: 1rem;
-		margin-right: 10px;
-		letter-spacing: 1px;
-	}
+	background-color: rgba(0,0,0,0.6);
 }
 
 .picture {

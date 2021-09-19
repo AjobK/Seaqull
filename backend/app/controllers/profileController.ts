@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import isEmail from 'validator/lib/isEmail'
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
 import * as bcrypt from 'bcrypt'
 import Account from '../entities/account'
 import Profile from '../entities/profile'

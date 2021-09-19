@@ -18,6 +18,8 @@ class RegisterPrompt extends Component {
       loadRecaptcha: false
     }
 
+    this.recaptchaRef = React.createRef()
+    this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
 
@@ -65,6 +67,15 @@ class RegisterPrompt extends Component {
     this.elId[item.props.name] = id
   }
   
+
+  setElId = (item, id) => {
+    this.elId[item.props.name] = id
+  }
+  
+  onChange = (recaptchaToken) => {
+    this.setState( { recaptchaToken } )
+    this.auth()
+  }
 
   onSubmit = (e) => {
     e.preventDefault()

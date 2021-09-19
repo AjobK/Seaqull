@@ -64,6 +64,7 @@ class AuthorizationController {
             })
         } else {
             const isRecaptchaValid = await this.reCaptchaService.isCaptchaValid(recaptcha)
+            console.log(isRecaptchaValid)
             if (!isRecaptchaValid) {
                 return res.status(400).json({ errors: ['ReCaptcha invalid'] })
             }

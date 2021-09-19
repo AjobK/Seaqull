@@ -3,7 +3,6 @@ import Axios from 'axios'
 
 const ProfileStore = types
   .model('ProfileStore', {
-    role: types.optional(types.string, 'user'),
     loggedIn: types.optional(types.boolean, false),
     display_name: types.optional(types.string, 'NONE'),
     title: types.optional(types.string, 'NONE'),
