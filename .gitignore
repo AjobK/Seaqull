@@ -33,6 +33,7 @@ package-lock.json
 
 #VScode
 /*.code-workspace
+/.vscode
 
 # nodejs
 backend/node_modules
