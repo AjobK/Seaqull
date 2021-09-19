@@ -66,8 +66,7 @@ class Profile extends App {
   updateProfile(profile) {
     const user = profile
 
-    user.banner = user.banner || '/src/static/dummy/user/banner.jpg'
-    user.picture = user.picture || '/src/static/dummy/user/profile.jpg'
+    user.picture = profile.avatar
 
     this.setState({ user })
   }
