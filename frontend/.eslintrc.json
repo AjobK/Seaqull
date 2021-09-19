@@ -39,6 +39,7 @@
         "when": "always"
       }
     ],
+    "semi": ["error", "never"],
     "lines-between-class-members": "error",
     "newline-before-return": "error",
     "arrow-parens": "error",

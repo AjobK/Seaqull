@@ -27,6 +27,7 @@
     "newline-before-return": "error",
     "arrow-parens": "error",
     "arrow-spacing": "error",
+    "semi": ["error", "never"],
     "@typescript-eslint/no-var-requires": 0,
     "comma-dangle": 0,
     "no-console": 0,
