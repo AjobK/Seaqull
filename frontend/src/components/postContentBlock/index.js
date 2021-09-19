@@ -28,9 +28,13 @@ class PostContentBlock extends Component {
     const { children, heading, className, onClick, noHeading } = this.props
 
     return (
-      <section className={styles.paragraphWrapper} onClick={onClick}>
-        {!noHeading && <PostEditHeading editing={this.state.editing} heading={heading} />}
-        <div className={[styles.paragraph, ...className || ''].join(' ')} onFocus={this.edit} onBlur={this.quitEdit}>
+      <section className={ styles.paragraphWrapper } onClick={ onClick }>
+        {!noHeading && <PostEditHeading editing={ this.state.editing } heading={ heading } />}
+        <div
+          className={ [styles.paragraph, ...className || ''].join(' ') }
+          onFocus={ this.edit }
+          onBlur={ this.quitEdit }
+        >
           {
             children || <p> NO CONTENT </p>
           }

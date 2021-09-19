@@ -3,26 +3,26 @@ import Ban from '../entities/ban'
 import Account from '../entities/account'
 
 class BanDAO {
-    public async saveBan(ban: Ban): Promise<Ban> {
-        const repository = await DatabaseConnector.getRepository('Ban')
-        const createdBan = await repository.save(ban)
+  public async saveBan(ban: Ban): Promise<Ban> {
+    const repository = await DatabaseConnector.getRepository('Ban')
+    const createdBan = await repository.save(ban)
 
-        return createdBan
-    }
+    return createdBan
+  }
 
-    public async getBan(id: number): Promise<Ban> {
-        const repository = await DatabaseConnector.getRepository('Ban')
-        const ban = await repository.findOne({ where: { id: id } })
+  public async getBan(id: number): Promise<Ban> {
+    const repository = await DatabaseConnector.getRepository('Ban')
+    const ban = await repository.findOne({ where: { id: id } })
 
-        return ban
-    }
+    return ban
+  }
 
-    public async getBanByUser(acc: Account): Promise<Ban> {
-        const repository = await DatabaseConnector.getRepository('Ban')
-        const ban = await repository.findOne({ where: { user: acc.id } })
+  public async getBanByUser(acc: Account): Promise<Ban> {
+    const repository = await DatabaseConnector.getRepository('Ban')
+    const ban = await repository.findOne({ where: { user: acc.id } })
 
-        return ban
-    }
+    return ban
+  }
 }
 
 export default BanDAO

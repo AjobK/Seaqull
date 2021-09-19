@@ -6,7 +6,7 @@ export class ArchivedPost extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Account, account => account.id)
+    @ManyToOne(() => Account, (account) => account.id)
     @JoinColumn({ name: 'staff_account_id', referencedColumnName: 'id' })
     staff: Account
 

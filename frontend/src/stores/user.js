@@ -8,11 +8,11 @@ const UserStore = types
     picture: types.optional(types.string, '/src/static/dummy/user/mood_default.png'),
     banner: types.optional(types.string, '/src/static/dummy/user/banner.jpg')
   })
-  .actions(self => ({
+  .actions((self) => ({
     logOut() {
       self.loggedIn = false
       self.name = ''
-      Axios.get('/logout', payload, {withCredentials: true})
+      Axios.get('/logout', payload, { withCredentials: true })
     },
     logIn() {
       self.loggedIn = true

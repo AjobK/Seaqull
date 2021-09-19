@@ -27,15 +27,20 @@ class Section extends Component {
     const { title, children, editable, noTitle, className } = this.props
 
     return (
-      <VisibilitySensor minTopValue={window.innerHeight * 0.2} partialVisibility onChange={this.onChange} active={this.state.sensorActive}>
-        <section className={`${styles.wrapper} ${this.state.visibleClass} ${className || ''}`}>
+      <VisibilitySensor
+        minTopValue={ window.innerHeight * 0.2 }
+        partialVisibility
+        onChange={ this.onChange }
+        active={ this.state.sensorActive }
+      >
+        <section className={ `${styles.wrapper} ${this.state.visibleClass} ${className || ''}` }>
           { editable && (
-            <PostContentBlock heading={'title'}>
-              <Title value={title} />
+            <PostContentBlock heading={ 'title' }>
+              <Title value={ title } />
             </PostContentBlock>)
           }
-          {!noTitle && <Title value={title} center />}
-          <div className={styles.content}>
+          {!noTitle && <Title value={ title } center />}
+          <div className={ styles.content }>
             { children }
           </div>
         </section>

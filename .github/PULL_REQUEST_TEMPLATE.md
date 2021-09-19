@@ -12,23 +12,18 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 
 <br />
 
+ **Additional notes**  
+Things to keep in mind regarding the PR that don't fit in the previous two headings. 
+
+<br />
+
 **1. General checklist**
 - [ ] a. Tested happy flow.
 - [ ] b. Tested unhappy flow.
 - [ ] c. No unexpected exceptions.
 - [ ] d. No code with high complexity. (Big O)
 - [ ] e. EOF newline.
-- [ ] f. No floating comma's and spaces.
-- [ ] g. No unexpected/unhandled errors.
-- [ ] h. Lines no longer than 'guideline' in IDE.
-- [ ] i. Correct indentation.
-- [ ] j. No usage of legacy functionalities.
-- [ ] k. (JS) Curly braces on the sameline as reserved keywords *(`if () {` instead of `{` on line below)*
-- [ ] l. (JS) No double quotes.
-- [ ] m. (JS) Single newline above unique code structures and reserved keywords.
-- [ ] n. (JS) Variables bundled where possible.
-- [ ] o. (JS) No semi-colons except where they have a functional necessity, such as for-loops.
-- [ ] p. (JS) No code that is meant exclusively for development, such as console.logs for data preview.
+- [ ] f. No linter warnings or errors.
 
 <br />
 
@@ -45,7 +40,7 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 - [ ] a. No unhandled promise rejections.
 - [ ] b. Seeders still functional.
 - [ ] c. No primary-key violations.
-- [ ] d. Normalization, atleast [3NF](https://en.wikipedia.org/wiki/Database_normalization).
+- [ ] d. Normalization, at least [3NF](https://en.wikipedia.org/wiki/Database_normalization).
 - [ ] e. Used guards (middleware) where necessary and tested if route is guarded.
 
 <br />
@@ -61,7 +56,7 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 
 **PR Rules**  
 *1. Add relevant labels.*  
-*2. Select atleast two reviewers.*  
+*2. Select at least two reviewers.*  
 *3. Assign all reviewers allowed to merge the branch, including yourself.*  
 *4. If relevant to the sprint, put related issue in 'Awaiting Approval' column on project board.*  
 *5. Add to the corresponding [milestone](https://github.com/AjobK/Seaqull/milestones).*

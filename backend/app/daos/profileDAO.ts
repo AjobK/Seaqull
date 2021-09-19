@@ -4,66 +4,77 @@ import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 
 class ProfileDAO {
-    public async getFollowersCount(profile_id: number): Promise<number> {
-        const repositoryProfile = await DatabaseConnector.getRepository('ProfileFollowedBy')
+  public async getFollowersCount(profileId: number): Promise<number> {
+    const repositoryProfile = await DatabaseConnector.getRepository('ProfileFollowedBy')
 
-        const amountOfFollowers = await repositoryProfile.count({ where: { profile: profile_id } })
+    const amountOfFollowers = await repositoryProfile.count({ where: { profile: profileId } })
 
-        return amountOfFollowers
+    return amountOfFollowers
+  }
+
+  public async getProfileByUsername(username: string): Promise<Profile> {
+    const repositoryAccount = await DatabaseConnector.getRepository('Account')
+    const account = await repositoryAccount.findOne({ where: { user_name: username }, relations: ['profile'] })
+
+    return !account ? null : account.profile
+  }
+
+  public async getProfileAttachments(profileId: number): Promise<{ avatar: Attachment, banner: Attachment }> {
+    const repositoryProfile = await DatabaseConnector.getRepository('Profile')
+    const avatar = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['avatar_attachment'] })
+    const banner = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['banner_attachment'] })
+
+    return {
+      avatar: avatar.avatar_attachment,
+      banner: banner.banner_attachment
     }
+  }
 
-    public async getProfileByUsername(username: string): Promise<Profile> {
-        const repositoryAccount = await DatabaseConnector.getRepository('Account')
-        const account = await repositoryAccount.findOne({ where: { user_name: username }, relations: ['profile'] })
+  public async getFollowersByProfileId(profileId: number): Promise<ProfileFollowedBy[]> {
+    const repositoryProfile = await DatabaseConnector.getRepository('ProfileFollowedBy')
 
-        return !account ? null : account.profile
-    }
+    const followers = await repositoryProfile.find({
+      where: { profile: profileId },
+      relations: ['follower', 'follower.avatar_attachment', 'follower.title']
+    })
 
-    public async getProfileAttachments(profileId: number): Promise<{ avatar: Attachment, banner: Attachment }> {
-        const repositoryProfile = await DatabaseConnector.getRepository('Profile')
-        const avatar = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['avatar_attachment'] })
-        const banner = await repositoryProfile.findOne({ where: { id: profileId }, relations: ['banner_attachment'] })
+    return followers;
+  }
 
-        return {
-            avatar: avatar.avatar_attachment,
-            banner: banner.banner_attachment
-        }
-    }
+  public async getUserByEmail(email: string): Promise<Profile> {
+    const repositoryAccount = await DatabaseConnector.getRepository('Account')
+    const account = await repositoryAccount.find({ email: email })
 
-    public async getUserByEmail(email: string): Promise<Profile> {
-        const repositoryAccount = await DatabaseConnector.getRepository('Account')
-        const account = await repositoryAccount.findOne({ email: email })
+    return account
+  }
 
-        return account
-    }
+  public async saveProfile(u: Profile): Promise<Profile> {
+    const repositoryProfile = await DatabaseConnector.getRepository('Profile')
+    const profile = await repositoryProfile.save(u)
 
-    public async saveProfile(u: Profile): Promise<Profile>{
-        const repositoryProfile = await DatabaseConnector.getRepository('Profile')
-        const profile = await repositoryProfile.save(u)
+    return profile
+  }
 
-        return profile
-    }
+  public async follow(profileFollowedBy: ProfileFollowedBy): Promise<any> {
+    const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
 
-    public async follow(profileFollowedBy: ProfileFollowedBy): Promise<any> {
-        const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+    const foundFollow = await repository.findOne(profileFollowedBy)
 
-        const foundFollow = await repository.findOne(profileFollowedBy)
+    if (!foundFollow)
+      await repository.save(profileFollowedBy)
+    else
+      await repository.delete(profileFollowedBy)
 
-        if (!foundFollow)
-            await repository.save(profileFollowedBy)
-        else
-            await repository.delete(profileFollowedBy)
+    return !foundFollow
+  }
 
-        return !foundFollow
-    }
+  public async isFollowing(profileFollowedBy: ProfileFollowedBy): Promise<any> {
+    const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
 
-    public async isFollowing(profileFollowedBy: ProfileFollowedBy): Promise<any> {
-        const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+    const foundFollow = await repository.findOne(profileFollowedBy)
 
-        const foundFollow = await repository.findOne(profileFollowedBy)
-
-        return !!foundFollow
-    }
+    return !!foundFollow
+  }
 }
 
 export default ProfileDAO

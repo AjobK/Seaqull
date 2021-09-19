@@ -18,13 +18,13 @@ class Standard extends Component {
     const { className } = this.props
 
     return (
-      <section className={[styles.wrapper, ...(className ? className : [''])].join(' ')}>
+      <section className={ [styles.wrapper, ...(className ? className : [''])].join(' ') }>
         <Header />
-        <aside className={styles.higherOrder}>
+        <aside className={ styles.higherOrder }>
           <NavigationMobile />
         </aside>
         <NavigationMobile filler /> {/* Filler aligns content */}
-        <div className={styles.innerWrapper} onClick={this.props.store.ui.closeSubNav}>
+        <div className={ styles.innerWrapper } onClick={ this.props.store.ui.closeSubNav }>
           { this.props.children }
         </div>
       </section>

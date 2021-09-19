@@ -71,12 +71,12 @@ class GlobalNotification extends Component {
     return (
       <div>
         { this.state.isNotificationVisible && (
-          <PopUp content={{
+          <PopUp content={ {
             ...notification.getContentJSON(),
             actions: notification.actionsData,
             close: () => notification.close(),
             canCloseWithClick: notification.canCloseWithClick
-          }}/>
+          } }/>
         )}
       </div>
     )
