@@ -18,6 +18,7 @@ class UserBanner extends Component {
       draggingOverAvatar: false,
       draggingOverBanner: false,
       following: this.props.user.following || false,
+      followsYou: this.props.user.followsYou || false,
       banUser: false
     }
   }
@@ -111,7 +112,13 @@ class UserBanner extends Component {
   }
 
   getFollowText = () => {
-    return this.state.following ? 'unfollow' : 'follow'
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'Unfriend' : 'Follow back'
+    } else {
+      return following ? 'Unfollow' : 'Follow'
+    }
   }
 
   render() {

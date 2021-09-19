@@ -67,6 +67,7 @@ class Profile extends App {
     const user = {
       isOwner: profile.isOwner,
       following: profile.isOwner ? false : profile.following,
+      followsYou: profile.isOwner ? false : profile.followsYou,
       username: profile.username,
       title: profile.title,
       posts: profile.posts,
