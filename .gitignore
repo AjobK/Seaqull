@@ -32,7 +32,7 @@ package-lock.json
 /package-lock.json
 
 #VScode
-/*.code-workspace
+*.code-workspace
 .vscode
 
 # nodejs
