@@ -51,12 +51,8 @@ class GlobalNotification extends Component {
 
     notification.setActions([
       {
-        title: 'OK',
-        icon: 'Check',
-        primary: true,
-        action: () => {
-          notification.close()
-        }
+        ...popUpData.actions.confirmWithText,
+        action: notification.close
       }
     ])
 
