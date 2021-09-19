@@ -64,9 +64,9 @@ class ProfileFollowerList extends Component {
                 const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(follower.displayName)
 
                 return (
-                  <li key={ index } className={ `${styles.likesListItem}` }>
+                  <li key={ index } className={ `${styles.likesListItem}` } onClick={ this.props.closeFollowersList }>
                     <Link to={ `/profile/${follower.displayName}` } className={ styles.profileLikeLink }>
-                      <div className={ `${styles.profileAvatarWrapper}` } onClick={ this.props.closeFollowersList }>
+                      <div className={ `${styles.profileAvatarWrapper}` }>
                         <div
                           className={ `${styles.avatar}` }
                           style={ {
