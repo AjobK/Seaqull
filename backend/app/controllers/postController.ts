@@ -266,8 +266,7 @@ class PostController {
     }
 
     public archivePost = async (req: any, res: Response): Promise<any> => {
-        const { path } = req.body
-        const post = await this.dao.getPostByPath(path)
+        const post = await this.dao.getPostByPath(req.params.path)
 
         if (!post) res.status(404).json({ error: 'Not found' })
 

@@ -7,11 +7,9 @@ const postDAO = new PostDAO
 const accountDAO = new AccountDAO
 
 module.exports = async (req, res, next) => {
-    const { path } = req.body
-
     let hasPermission = false
 
-    const post = await postDAO.getPostByPath(path)
+    const post = await postDAO.getPostByPath(req.params.path)
     const user = await accountDAO.getAccountByUsername(req.decoded.username)
 
     if (post.profile.id === user.id) {
@@ -19,7 +17,7 @@ module.exports = async (req, res, next) => {
     } else {
         const permissionList = await rolePermissionDAO.getRolePermissionsByRole(req.decoded.role)
 
-        if (permissionList.some(permissionItem => permissionItem.permission.name === 'REMOVE_POSTS')) {
+        if (permissionList.some((permissionItem) => permissionItem.permission.name === 'REMOVE_POSTS')) {
             hasPermission = true
         }
     }
