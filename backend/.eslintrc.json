@@ -33,7 +33,8 @@
       { "blankLine": "always", "prev": "*", "next": "continue" },
       { "blankLine": "always", "prev": "continue", "next": "*" },
       { "blankLine": "always", "prev": "*", "next": "break" },
-      { "blankLine": "always", "prev": "break", "next": "*" }
+      { "blankLine": "always", "prev": "break", "next": "*" },
+      { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
     ],
     "semi-spacing": "error",
     "space-infix-ops": "error",
@@ -46,6 +47,7 @@
     "newline-before-return": "error",
     "arrow-parens": "error",
     "arrow-spacing": "error",
+    "semi": ["error", "never"],
     "@typescript-eslint/no-var-requires": 0,
     "comma-dangle": 0,
     "no-console": 0,
