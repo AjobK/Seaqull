@@ -16,7 +16,7 @@ class PostDAO {
       return postList
     }
 
-    public async getAmountPosts(): Promise<number>{
+    public async getAmountPosts(): Promise<number> {
       const repository = await DatabaseConnector.getRepository('Post')
 
       return await repository.count()
@@ -24,10 +24,15 @@ class PostDAO {
 
     public async getOwnedPosts(profile: Profile): Promise<Post[]> {
       const repository = await DatabaseConnector.getRepository('Post')
-      const postList = await repository.find({
-        where: { profile: profile, archived_at: IsNull() },
-        relations: ['profile']
-      })
+
+      const postList = await repository.createQueryBuilder('post')
+        .leftJoinAndSelect('post.profile', 'profile')
+        .where('post.profile = :profileId', { profileId: profile.id })
+        .andWhere('post.archived_at IS NULL')
+        .orderBy({
+          'post.updated_at': 'DESC'
+        })
+        .getMany()
 
       return postList
     }
