@@ -13,13 +13,13 @@ const ProfileStore = types
     loginVerify() {
       Axios.defaults.baseURL = 'http://localhost:8000'
 
-      Axios.get(`/api/login-verify`, { withCredentials: true })
-      .then((res) => {
-        this.setProfileData(res.data)
-      })
-      .catch((e) => {
-        self.setLoggedIn(false)
-      })
+      Axios.get('/api/login-verify', { withCredentials: true })
+        .then((res) => {
+          this.setProfileData(res.data)
+        })
+        .catch(() => {
+          self.setLoggedIn(false)
+        })
     },
     setProfileData(data) {
       const { profile, loggedIn } = data
@@ -49,9 +49,9 @@ const ProfileStore = types
       Axios.defaults.baseURL = 'http://localhost:8000'
 
       Axios.get('/api/logout', { withCredentials: true })
-      .then(() => {
-        self.setLoggedIn(false)
-      })
+        .then(() => {
+          self.setLoggedIn(false)
+        })
     }
   }))
 

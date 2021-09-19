@@ -2,15 +2,15 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js'
+import { EditorState, Editor, convertToRaw, ContentState } from 'draft-js'
 import '../../DraftFallback.css'
-import { StyleButton } from '../../components'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class PostContent extends Component {
   constructor(props) {
     super(props)
-    const { type, value } = this.props
+    const { type } = this.props
 
     this.type = type || 'content'
     this.selected = false
@@ -28,8 +28,8 @@ class PostContent extends Component {
         bottom: -9999,
         left: -9999,
         right: -9999,
-        display: 'none'
-      }
+        display: 'none',
+      },
     }
   }
 
@@ -56,14 +56,14 @@ class PostContent extends Component {
   onFocus = () => {
     this.focused = true
     this.setState({
-      focused: true
+      focused: true,
     })
   }
-  
+
   onBlur = () => {
     this.focused = false
     this.setState({
-      focused: false
+      focused: false,
     })
 
     this.selected = false
@@ -75,9 +75,10 @@ class PostContent extends Component {
   }
 
   componentDidMount() {
-    let eState = typeof this.props.value == 'string'
-      ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
-      : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+    let eState =
+      typeof this.props.value == 'string'
+        ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
+        : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
 
     try {
       eState = EditorState.createWithContent(this.props.value)
@@ -94,22 +95,23 @@ class PostContent extends Component {
     return (
       <div>
         <PostContentBlock
-          heading={`${type == 'content' ? 'Your' : ''} ${type}`}
-          noHeading={readOnly}
+          heading={ `${type == 'content' ? 'Your' : ''} ${type}` }
+          noHeading={ readOnly }
           // onClick={this.focusOnEditor}
-          className={[style]}>
+          className={ [style] }
+        >
           <Editor
-            editorState={this.state.editorState}
-            ref={this.editorInput}
-            onChange={this.onChange}
-            readOnly={readOnly != undefined ? readOnly : false}
+            editorState={ this.state.editorState }
+            ref={ this.editorInput }
+            onChange={ this.onChange }
+            readOnly={ readOnly != undefined ? readOnly : false }
             // onFocus={this.onFocus}
             // onBlur={this.onBlur}
-            spellCheck={true}
-            placeholder={type == 'title' ? 'Title' : 'Write your story...'}
-            handleBeforeInput={this.handleBeforeInput}
-            handlePastedText={this.handlePastedText}
-            blockStyleFn={() => (`${styles.postContent} ${styles[type]}`)}
+            spellCheck={ true }
+            placeholder={ type == 'title' ? 'Title' : 'Write your story...' }
+            handleBeforeInput={ this.handleBeforeInput }
+            handlePastedText={ this.handlePastedText }
+            blockStyleFn={ () => `${styles.postContent} ${styles[type]}` }
           />
           {/* { type != 'title' && this.inlineStyleControls()} */}
         </PostContentBlock>

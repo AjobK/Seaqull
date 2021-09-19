@@ -8,11 +8,11 @@ export class PostLike extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Profile, profile => profile.id)
+    @ManyToOne(() => Profile, (profile) => profile.id)
     @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
     profile: Profile
 
-    @ManyToOne(() => Post, post => post.id)
+    @ManyToOne(() => Post, (post) => post.id)
     @JoinColumn({ name: 'post_id', referencedColumnName: 'id' })
     post: Post
 

@@ -14,25 +14,29 @@ class NavigationMobile extends Component {
       if (menuItems.hasOwnProperty(key)) {
         arr.push(
           <NavDropdown
-            title={key}
-            icon={menuItems[key].icon}
-            key={Math.random()}
-            value={menuItems[key].children
+            title={ key }
+            icon={ menuItems[key].icon }
+            key={ Math.random() }
+            value={ menuItems[key].children
             } />
         )
       }
     }
 
     return (
-      <section className={[
+      <section className={ [
         styles.navigation,
         ui.subNavOpen && styles.sNavOpen,
         this.props.filler && styles.filler
-      ].join(' ')}>
+      ].join(' ') }>
         {!this.props.filler &&
-          <div className={styles.menu}>
-            { profile.loggedIn && <ProfileBar name={ profile.display_name } title={ profile.title } avatar={ profile.avatarURL } /> }
-            <ul className={styles.menuUl}>
+          <div className={ styles.menu }>
+            { profile.loggedIn && <ProfileBar
+              name={ profile.display_name }
+              title={ profile.title }
+              avatar={ profile.avatarURL }
+            /> }
+            <ul className={ styles.menuUl }>
               {arr}
             </ul>
           </div>}

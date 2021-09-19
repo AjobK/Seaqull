@@ -2,16 +2,18 @@ import DatabaseConnector from '../utils/databaseConnector'
 import { Title } from '../entities/title'
 
 class TitleDAO {
-    public async getTitleByTitleId(id: number): Promise<Title> {
-        const repository = await DatabaseConnector.getRepository('Title')
-        const title = await repository.findOne({ id: id })
-        return title
-    }
-    public async getTitleByUserId(id: number): Promise<Title> {
-        const repository = await DatabaseConnector.getRepository('Profile')
-        const user = await repository.findOne({ where: { id: id }, relations: ['title'] })
-        return !user ? null : user.title
-    }
+  public async getTitleByTitleId(id: number): Promise<Title> {
+    const repository = await DatabaseConnector.getRepository('Title')
+    const title = await repository.findOne({ id: id })
+
+    return title
+  }
+  public async getTitleByUserId(id: number): Promise<Title> {
+    const repository = await DatabaseConnector.getRepository('Profile')
+    const user = await repository.findOne({ where: { id: id }, relations: ['title'] })
+
+    return !user ? null : user.title
+  }
 
 }
 

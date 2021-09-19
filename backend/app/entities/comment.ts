@@ -1,4 +1,13 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 import Post from './post'
 import Profile from './profile'
 
@@ -7,11 +16,11 @@ export class Comment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Profile, profile => profile.id)
+    @ManyToOne(() => Profile, (profile) => profile.id)
     @JoinColumn({ name: 'profile', referencedColumnName: 'id' })
     profile: Profile
 
-    @ManyToOne(() => Post, post => post.id)
+    @ManyToOne(() => Post, (post) => post.id)
     @JoinColumn({ name: 'post', referencedColumnName: 'id' })
     post: Post
 
@@ -19,7 +28,7 @@ export class Comment extends BaseEntity {
     content: string
 
     @Column({ nullable: true })
-    @ManyToOne(() => Comment, comment => comment.id)
+    @ManyToOne(() => Comment, (comment) => comment.id)
     @JoinColumn({ name: 'parent_comment_id', referencedColumnName: 'id' })
     parent_comment_id: Comment
 

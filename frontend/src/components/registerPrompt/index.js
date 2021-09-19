@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
@@ -15,7 +16,7 @@ class RegisterPrompt extends Component {
       email: null,
       password: null,
       recaptcha: null,
-      recaptchaToken: null
+      recaptchaToken: null,
     }
 
     this.elId = {}
@@ -30,7 +31,7 @@ class RegisterPrompt extends Component {
     this.setState({
       username: 'loading',
       email: 'loading',
-      password: 'loading'
+      password: 'loading',
     })
 
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
@@ -39,27 +40,26 @@ class RegisterPrompt extends Component {
       username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken
+      recaptcha: this.state.recaptchaToken,
     }
 
-
-    Axios.post('/profile/register', payload, {withCredentials: true})
-    .then(res => {
-      this.props.store.profile.loginVerify()
-      this.props.store.user.fillUserData(res.data.user)
-      this.goToProfile(res.data.user.user_name)
-    })
-    .catch(res => {
-      const { username, email, password, recaptcha } = res.response.data.errors
-
-      this.setState({
-        username: username || [],
-        email: email || [],
-        password: password || [],
-        recaptcha: recaptcha || [],
-        recaptchaToken: null
+    Axios.post('/profile/register', payload, { withCredentials: true })
+      .then((res) => {
+        this.props.store.profile.loginVerify()
+        this.props.store.user.fillUserData(res.data.user)
+        this.goToProfile(res.data.user.user_name)
       })
-    })
+      .catch((res) => {
+        const { username, email, password, recaptcha } = res.response.data.errors
+
+        this.setState({
+          username: username || [],
+          email: email || [],
+          password: password || [],
+          recaptcha: recaptcha || [],
+          recaptchaToken: null,
+        })
+      })
   }
 
   goToProfile = (username) => {
@@ -71,13 +71,13 @@ class RegisterPrompt extends Component {
     this.setState({
       username: 'loading',
       email: 'loading',
-      password: 'loading'
+      password: 'loading',
     })
 
     //checking if recaptcha is already loaded
-    if(!(this.captcha.state.ready)){
+    if (!this.captcha.state.ready) {
       this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
-    }else{
+    } else {
       this.loadCaptchaOnSubmit()
     }
   }
@@ -86,12 +86,12 @@ class RegisterPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
-  loadCaptchaOnSubmit = () =>{
+  loadCaptchaOnSubmit = () => {
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
     }
-    // setTimeout( () => { 
+    // setTimeout( () => {
     //   this.setState({
     //     user_name: null,
     //     email: null,
@@ -100,21 +100,22 @@ class RegisterPrompt extends Component {
     //   })
     // }, 3000);
   }
+
   onLoadRecaptcha = () => {
     if (this.captcha) {
       this.captcha.reset()
       this.captcha.execute()
     }
-  //   setTimeout( () => { 
-  //     this.setState({
-  //       user_name: null,
-  //       email: null,
-  //       password: null,
-  //       recaptcha: null,
-  //     })
-  // }, 3000);
+    //   setTimeout( () => {
+    //     this.setState({
+    //       user_name: null,
+    //       email: null,
+    //       password: null,
+    //       recaptcha: null,
+    //     })
+    // }, 3000);
   }
-  
+
   verifyCallback = (recaptchaToken) => {
     this.setState({ recaptchaToken })
     this.auth()
@@ -125,33 +126,60 @@ class RegisterPrompt extends Component {
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
 
     return (
-      <div className={[styles.prompt, this.props.className].join(' ')}>
-        <div className={styles.logo} />
-        <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
-        <div className={styles.formWrapper}>
-          <form method='POST' className={styles.form} onSubmit={this.onSubmit}>
-            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput toolTipDirection={ 'bottom' } name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
-            <div to='/' className={styles.submitWrapper}>
-              <Button value={buttonClass} className={styles.submit} />
+      <div className={ [styles.prompt, this.props.className].join(' ') }>
+        <div className={ styles.logo } />
+        <p className={ styles.text }>
+          Join our community <Icon className={ styles.textIcon } iconName={ 'Crow' } />
+        </p>
+        <div className={ styles.formWrapper }>
+          <form method="POST" className={ styles.form } onSubmit={ this.onSubmit }>
+            <FormInput
+              toolTipDirection={ 'bottom' }
+              name={ 'Username' }
+              errors={ username }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
+            />
+            <FormInput
+              toolTipDirection={ 'bottom' }
+              name={ 'Email' }
+              errors={ email }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
+            />
+            <FormInput
+              toolTipDirection={ 'bottom' }
+              name={ 'Password' }
+              errors={ password }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
+              type="password"
+            />
+            <div to="/" className={ styles.submitWrapper }>
+              <Button value={ buttonClass } className={ styles.submit } />
               <ReCaptcha
-                ref={(el) => {this.captcha = el}}
-                size='invisible'
-                render='explicit'
-                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                onloadCallback={this.onLoadRecaptcha}
-                verifyCallback={this.verifyCallback}
+                ref={ (el) => {
+                  this.captcha = el
+                } }
+                size="invisible"
+                render="explicit"
+                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
+                onloadCallback={ this.onLoadRecaptcha }
+                verifyCallback={ this.verifyCallback }
               />
             </div>
           </form>
-          <div className={styles.image} />
+          <div className={ styles.image } />
         </div>
-        <p className={styles.textFooter}>
-          By proceeding I confirm that I have read and agree to the <a className={styles.textFooterLink}href='#'>Terms of service</a>
+        <p className={ styles.textFooter }>
+          By proceeding I confirm that I have read and agree to the{' '}
+          <a className={ styles.textFooterLink } href="#">
+            Terms of service
+          </a>
         </p>
       </div>
     )
   }
 }
+
 export default withRouter(RegisterPrompt)
