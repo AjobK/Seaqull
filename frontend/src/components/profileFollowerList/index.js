@@ -66,7 +66,7 @@ class ProfileFollowerList extends Component {
                 return (
                   <li key={ index } className={ `${styles.likesListItem}` }>
                     <Link to={ `/profile/${follower.displayName}` } className={ styles.profileLikeLink }>
-                      <div className={ `${styles.profileAvatarWrapper}` }>
+                      <div className={ `${styles.profileAvatarWrapper}` } onClick={ this.props.closeFollowersList }>
                         <div
                           className={ `${styles.avatar}` }
                           style={ {
