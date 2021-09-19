@@ -7,6 +7,7 @@ const auth = require('../middlewares/isAuth.ts')
 
 class ProfileRoutes implements RouterBase {
     public profile = '/profile/:username?'
+    public followers = '/profile/:username?/followers'
     public register = '/profile/register'
     public profileAvatar = '/profile/avatar'
     public profileBanner = '/profile/banner'
@@ -23,6 +24,7 @@ class ProfileRoutes implements RouterBase {
 
     public initRoutes(): void {
       this.router.get(this.profile, this.profileController.getProfile)
+      this.router.get(this.followers, this.profileController.getFollowers)
       this.router.post(this.follow, this.profileController.follow)
       this.router.post(this.register, this.profileController.register)
       this.router.put(this.profileAvatar, auth, this.upload.single('file'), this.profileController.updateProfileAvatar)
