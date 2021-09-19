@@ -1,10 +1,10 @@
-import { inject, observer } from 'mobx-react';
-import React, { Component } from 'react';
-import Axios from 'axios';
-import styles from '../postLikesList/postLikesList.scss';
-import { Icon } from '../index';
-import ColorUtil from '../../util/colorUtil';
-import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react'
+import React, { Component } from 'react'
+import Axios from 'axios'
+import styles from '../postLikesList/postLikesList.scss'
+import { Icon } from '../index'
+import ColorUtil from '../../util/colorUtil'
+import { Link } from 'react-router-dom'
 
 @inject('store')
 @observer
@@ -60,7 +60,7 @@ class ProfileFollowerList extends Component {
               />
             </div>
             <ul className={ `${styles.likesList}` }>
-              {this.state.followers.map((follower, index) => {
+              { this.state.followers.map((follower, index) => {
                 const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(follower.displayName)
 
                 return (
@@ -76,8 +76,8 @@ class ProfileFollowerList extends Component {
                         />
                       </div>
                       <div className={ `${styles.profileTextWrapper}` }>
-                        <p className={ `${styles.profileDisplayName}` }>{follower.displayName}</p>
-                        <p className={ `${styles.profileTitle}` }>{follower.title}</p>
+                        <p className={ `${styles.profileDisplayName}` }> {follower.displayName }</p>
+                        <p className={ `${styles.profileTitle}` }>{ follower.title }</p>
                       </div>
                     </Link>
                   </li>

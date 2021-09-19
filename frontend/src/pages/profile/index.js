@@ -6,7 +6,7 @@ import Axios from 'axios'
 import Error from '../error'
 import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import styles from './profile.scss'
-import ProfileFollowerList from '../../components/profileFollowerList';
+import ProfileFollowerList from '../../components/profileFollowerList'
 
 @inject('store')
 @observer
@@ -152,8 +152,8 @@ class Profile extends App {
         <Section title={ 'STATISTICS' }>
           <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
-        {this.state.showFollowers && this.state.user.followerCount > 0 &&
-        <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
+        { this.state.showFollowers && this.state.user.followerCount > 0 &&
+          <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
         }
       </Standard>
     )

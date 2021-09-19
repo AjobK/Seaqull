@@ -15,7 +15,6 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
-import { type } from 'os';
 
 const jwt = require('jsonwebtoken')
 
