@@ -136,7 +136,7 @@ class Profile extends App {
               className={ this.state.user.followerCount > 0 ? `${styles.clickableFollowers}` : '' }
               onClick={ this.openFollowersList }
             >
-              {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
+              { user.followerCount } follower{ user.followerCount === 1 ? '' : 's' }{ ' ' }
             </p>
           </div>
         </section>
@@ -152,7 +152,7 @@ class Profile extends App {
         <Section title={ 'STATISTICS' }>
           <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
-        { this.state.showFollowers && this.state.user.followerCount > 0 &&
+        { (this.state.showFollowers && this.state.user.followerCount > 0) &&
           <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
         }
       </Standard>
