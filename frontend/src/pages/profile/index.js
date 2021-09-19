@@ -4,22 +4,24 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
 import Error from '../error'
+import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import styles from './profile.scss'
-import { UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 
-
-@inject('store') @observer
+@inject('store')
+@observer
 class Profile extends App {
 
   constructor(props) {
     super(props)
+
+    this.changeFollowerCount = this.changeFollowerCount.bind(this)
 
     this.state = {
       user: null,
       error: false,
       posts: [],
       likes: [],
-      isOwner: false
+      isOwner: false,
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
@@ -32,9 +34,7 @@ class Profile extends App {
   }
 
   fetchProfileData(path) {
-    let token = localStorage.getItem('token')
-
-    Axios.get(`/profile/${path}`,  {withCredentials: true})
+    Axios.get(`/profile/${path}`, { withCredentials: true })
       .then((response) => {
         this.updateProfile(response.data.profile)
         this.fetchOwnedPosts(this.state.user.username)
@@ -53,17 +53,15 @@ class Profile extends App {
       .then((json) => {
         this.setState({ posts: json.data })
       })
-      .catch(() => {
-      })
+      .catch(() => {})
   }
 
   fetchLikedPosts(username) {
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
-        .then((json) => {
-          this.setState({ likes: json.data })
-        })
-        .catch(() => {
-        })
+      .then((json) => {
+        this.setState({ likes: json.data })
+      })
+      .catch(() => {})
   }
 
   updateProfile(profile) {
@@ -75,9 +73,16 @@ class Profile extends App {
       posts: profile.posts,
       banner: profile.banner || '/src/static/dummy/user/banner.jpg',
       picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
-      description: profile.description
+      description: profile.description,
+      followerCount: profile.followerCount,
     }
 
+    this.setState({ user })
+  }
+
+  changeFollowerCount(amount) {
+    const user = this.state.user
+    user.followerCount += amount
     this.setState({ user })
   }
 
@@ -93,21 +98,32 @@ class Profile extends App {
       )
     }
 
-    if ( this.props.match.params.path != user.username ) {
-      const newProfile = this.fetchProfileData(this.props.match.params.path)
-    } 
+    if (this.props.match.params.path != user.username) {
+      this.fetchProfileData(this.props.match.params.path)
+    }
 
     if (error) {
-      return (
-        <Error></Error>
-      )
+      return <Error></Error>
     }
 
     return (
       <Standard>
-        <UserBanner user={ user } owner={ isOwner && profile.loggedIn } />
+        <UserBanner
+          changeFollowerCount={ this.changeFollowerCount }
+          role={ profile.role }
+          user={ user }
+          owner={ isOwner && profile.loggedIn }
+        />
+        <section className={ [styles.infoWrapper] }>
+          <div className={ [styles.tempFollowerIndicator] }>
+            <Icon iconName={ 'UserFriends' } />
+            <p>
+              {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
+            </p>
+          </div>
+        </section>
         <Section title={ 'DESCRIPTION' }>
-          <ProfileInfo user={ user } loggedIn={ profile.loggedIn }/>
+          <ProfileInfo user={ user } loggedIn={ profile.loggedIn } />
         </Section>
         <Section title={ 'CREATED POSTS' }>
           <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } />
@@ -116,7 +132,7 @@ class Profile extends App {
           <PostsPreview posts={ this.state.likes } />
         </Section>
         <Section title={ 'STATISTICS' }>
-          <Statistics />
+          <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
       </Standard>
     )

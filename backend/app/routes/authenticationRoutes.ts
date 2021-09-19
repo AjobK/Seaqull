@@ -10,14 +10,14 @@ class AuthorizationRoutes implements RouterBase {
     private authController: AuthorizationController
 
     constructor() {
-        this.authController = new AuthorizationController()
-        this.initRoutes()
+      this.authController = new AuthorizationController()
+      this.initRoutes()
     }
 
     public initRoutes(): void {
-        this.router.get(this.loginVerify, this.authController.loginVerify)
-        this.router.post(this.login, this.authController.login)
-        this.router.get(this.logout, this.authController.logout)
+      this.router.get(this.loginVerify, this.authController.loginVerify)
+      this.router.post(this.login, this.authController.login)
+      this.router.get(this.logout, this.authController.logout)
     }
 }
 

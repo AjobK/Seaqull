@@ -12,23 +12,18 @@ Explain how can test your branch as specifically as possible. Mention the page, 
 
 <br />
 
+ **Additional notes**  
+Things to keep in mind regarding the PR that don't fit in the previous two headings. 
+
+<br />
+
 **1. General checklist**
 - [ ] a. Tested happy flow.
 - [ ] b. Tested unhappy flow.
 - [ ] c. No unexpected exceptions.
 - [ ] d. No code with high complexity. (Big O)
 - [ ] e. EOF newline.
-- [ ] f. No floating comma's and spaces.
-- [ ] g. No unexpected/unhandled errors.
-- [ ] h. Lines no longer than 'guideline' in IDE.
-- [ ] i. Correct indentation.
-- [ ] j. No usage of legacy functionalities.
-- [ ] k. (JS) Curly braces on the sameline as reserved keywords *(`if () {` instead of `{` on line below)*
-- [ ] l. (JS) No double quotes.
-- [ ] m. (JS) Single newline above unique code structures and reserved keywords.
-- [ ] n. (JS) Variables bundled where possible.
-- [ ] o. (JS) No semi-colons except where they have a functional necessity, such as for-loops.
-- [ ] p. (JS) No code that is meant exclusively for development, such as console.logs for data preview.
+- [ ] f. No linter warnings or errors.
 
 <br />
 

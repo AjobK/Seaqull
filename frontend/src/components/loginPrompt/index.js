@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
-import { Button, FormInput, PopUp } from '../../components'
+import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import { popUpData } from '../popUp/popUpData'
 import Recaptcha from '../recaptcha'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class LoginPrompt extends Component {
   constructor(props) {
     super(props)
@@ -29,75 +30,70 @@ class LoginPrompt extends Component {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     if (!this.state.recaptchaToken) {
-      this.setState({
-        username: ["invalid recaptcha"],
-        password: ["invalid recaptcha"],
-      })
+      this.setState( {
+        username: ['invalid recaptcha'],
+        password: ['invalid recaptcha'],
+      } )
     }
-    
+
     const payload = {
       username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken
+      recaptcha: this.state.recaptchaToken,
     }
 
-    Axios.post('/login', payload, {withCredentials: true})
-    .then(res => {
-      this.props.store.profile.setLoggedIn(true)
-      this.props.store.user.fillUserData(res.data.user)
-      this.goToProfile(res.data.user_name)
-    })
-    .catch(res => {
-      if (res.message === 'Network Error') {
-        return this.setState({
-          popupData: {
-            ...popUpData.messages.networkError,
-            close: this.closePopUp
-          },
-          username: ['No connection'],
-          password: ['No connection'],
-          loadingTimeout: false
-        })
-      }
-
-      const { errors, remainingTime } = res.response.data
-
-      if (remainingTime) this.setRemainingTimeInterval(remainingTime)
-
-      this.setState({
-        username: errors || [],
-        password: errors || [],
-        loadingTimeout: false
+    Axios.post('/login', payload, { withCredentials: true })
+      .then((res) => {
+        this.props.store.profile.setLoggedIn(true)
+        this.props.store.user.fillUserData(res.data.user)
+        this.goToProfile(res.data.user_name)
       })
-    })
-  }
+      .catch((res) => {
+        if (res.message === 'Network Error') {
+          return this.setState({
+            popupData: {
+              ...popUpData.messages.networkError,
+              close: this.closePopUp
+            },
+            username: ['No connection'],
+            password: ['No connection'],
+            loadingTimeout: false
+          })
+        }
 
-  closePopUp = () => {
-    this.setState({
-      popupData: null
-    })
+        const { errors, remainingTime } = res.response.data
+
+        if (remainingTime) this.setRemainingTimeInterval(remainingTime)
+
+        this.setState( {
+          username: errors || [],
+          password: errors || [],
+          loadingTimeout: false,
+        } )
+    	})
   }
 
   setRemainingTimeInterval = (remainingTime) => {
     if (this.remainingTimeInterval) clearInterval(this.remainingTimeInterval)
 
-    this.setState({ remainingTime })
+    this.setState( { remainingTime } )
 
     this.remainingTimeInterval = setInterval(() => {
-      let nextTime = this.state.remainingTime-1
+      let nextTime = this.state.remainingTime - 1
 
       if (this.state.remainingTime <= 1) {
         clearInterval(this.remainingTimeInterval)
         nextTime = null
       }
-      this.setState({
-        remainingTime: nextTime
-      })
+
+      this.setState( {
+        remainingTime: nextTime,
+      } )
     }, 1000)
   }
 
   goToProfile = (username) => {
-    setTimeout( () => this.props.history.push('/profile/' + username), 500)
+    this.props.history.push('/profile/' + username)
   }
 
   onSubmit = (e) => {
@@ -105,10 +101,10 @@ class LoginPrompt extends Component {
 
     if (this.state.remainingTime && this.remainingTimeInterval) return
 
-    this.setState({
+    this.setState( {
       username: 'loading',
       password: 'loading'
-    })
+    } )
 
     this.auth()
   }
@@ -118,37 +114,48 @@ class LoginPrompt extends Component {
   }
 
   setRecaptcha(recaptcha) {
-    this.setState({
+    this.setState( {
       recaptchaToken: recaptcha
-    })
+    } )
   }
 
   render() {
-    const { username, password, remainingTime,recaptcha, loadingTimeout, popupData } = this.state
+    const { username, password, remainingTime, recaptcha, loadingTimeout } = this.state
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
 
     return (
-      <div className={[styles.prompt, this.props.className].join(' ')}>
-        <div className={styles.logo} />
-        <p className={styles.text}> Welcome back!</p>
-        <div className={styles.formWrapper}>
-          <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput toolTipDirection={ 'bottom' } name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId} type='text'/>
-            <FormInput toolTipDirection={ 'bottom' } name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type='password'/>
-            <div to='/' className={styles.submitWrapper}>
+      <div className={ [styles.prompt, this.props.className].join(' ') }>
+        <div className={ styles.logo } />
+        <p className={ styles.text }> Welcome back!</p>
+        <div className={ styles.formWrapper }>
+          <form onSubmit={ this.onSubmit } className={ styles.form }>
+            <FormInput toolTipDirection={ 'bottom' }
+						  name={ 'Username' }
+						  errors={ username }
+						  className={ [styles.formGroup] }
+						  callBack={ this.setElId }
+						  type='text'
+					  />
+            <FormInput toolTipDirection={ 'bottom' }
+						  name={ 'Password' }
+						  errors={ password }
+						  className={ [styles.formGroup] }
+						  callBack={ this.setElId }
+						  type='password'
+					  />
+            <div to='/' className={ styles.submitWrapper }>
               {
-                <Recaptcha setRecaptcha={this.setRecaptcha.bind(this)}/>
+                <Recaptcha setRecaptcha={ this.setRecaptcha.bind(this) }/>
               }
-              <Button value={buttonClass} className={styles.submit} disabled={!!remainingTime || loadingTimeout} />
-              { remainingTime && <p className={styles.counter}>{`${remainingTime}s left`}</p>}
+              <Button value={ buttonClass }
+                className={ styles.submit }
+                disabled={ !!remainingTime || loadingTimeout }
+              />
+              { remainingTime && <p className={ styles.counter }>{ `${ remainingTime }s left` }</p>}
             </div>
           </form>
-          <div className={styles.image} />
+          <div className={ styles.image } />
         </div>
-
-        { popupData && (
-            <PopUp content={ popupData } />
-        )}
       </div>
     )
   }

@@ -6,238 +6,282 @@ import AccountDAO from '../daos/accountDAO'
 import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
+import ArchivedPost from '../entities/archivedPost'
+import archivedPostDAO from '../daos/archivedPostDAO'
+import NetworkService from '../utils/networkService'
+import PostView from '../entities/post_view'
 
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 
 class PostController {
-    private dao: PostDAO
-    private profileDAO: ProfileDAO
+  private dao: PostDAO
+  private profileDAO: ProfileDAO
+  private accountDAO: AccountDAO
+  private archivedPostDao: archivedPostDAO
 
-    constructor() {
-        this.dao = new PostDAO()
-        this.profileDAO = new ProfileDAO()
+  constructor() {
+    this.dao = new PostDAO()
+    this.profileDAO = new ProfileDAO()
+    this.accountDAO = new AccountDAO()
+    this.archivedPostDao = new archivedPostDAO()
+  }
+
+  public getPosts = async (req: Request, res: Response): Promise<Response> => {
+    let posts
+    const amount = 6
+
+    if (req.query.page == null) {
+      posts = await this.dao.getPosts('0', amount)
+    } else {
+      posts = await this.dao.getPosts(String(req.query.page), amount)
+
+      if (posts.length <= 0) {
+        posts = await this.dao.getPosts('0', amount)
+
+        return res.status(200).json({ message: 'You`ve reached the last post' })
+      }
     }
 
-    public getPosts = async (req: Request, res: Response): Promise<Response> => {
-        let posts
-        const amount = 6
+    const count = await this.dao.getAmountPosts()
+    const message = { posts, totalPosts: count, per_page: amount }
 
-        if (req.query.page == null) {
-            posts = await this.dao.getPosts('0', amount)
-        } else {
-            posts = await this.dao.getPosts(String(req.query.page), amount)
+    return res.status(200).json(message)
+  }
 
-            if (posts.length <= 0 ) {
-                posts = await this.dao.getPosts('0', amount)
+  public getOwnedPosts = async (req: Request, res: Response): Promise<Response> => {
+    let account = null
 
-                return res.status(200).json({ 'message': 'You`ve reached the last post' })
-            }
-        }
-
-        const count = await this.dao.getAmountPosts()
-        const message = { posts, totalPosts: count, per_page: amount }
-
-        return res.status(200).json(message)
+    try {
+      account = await new AccountDAO().getAccountByUsername(req.params.username)
+    } catch (e) {
+      return res.status(404).json([])
     }
 
-    public getOwnedPosts = async (req: Request, res: Response): Promise<Response> => {
-        let account = null
+    const posts = await this.dao.getOwnedPosts(account.profile)
 
-        try {
-            account = await new AccountDAO().getAccountByUsername(req.params.username)
-        } catch (e) { return res.status(404).json([]) }
+    return res.status(200).json(posts)
+  }
 
-        const posts = await this.dao.getOwnedPosts(account.profile)
-
-        return res.status(200).json(posts)
+  public getPostByPath = async (req: Request, res: Response): Promise<any> => {
+    const response = {
+      post: null,
+      likes: {
+        amount: 0,
+        userLiked: false,
+      },
+      isOwner: false,
     }
 
-    public getPostByPath = async (req: Request, res: Response): Promise<any> => {
-        const response = {
-            post: null,
-            likes: {
-                amount: 0,
-                userLiked: false
-            },
-            isOwner: false
-        }
+    const foundPost = await this.dao.getPostByPath(req.params.path)
 
-        const foundPost = await this.dao.getPostByPath(req.params.path)
-        const { JWT_SECRET } = process.env
-        let decodedId
+    const { JWT_SECRET } = process.env
+    let decodedId
 
-        try {
-            const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
-            const account = await new AccountDAO().getAccountByUsername(decodedToken.username)
-            decodedId = account.profile.id
-        } catch (e) {
-            decodedId = -1
-        }
-
-        const foundLikes = await this.dao.getPostLikesById(foundPost.id)
-        const postLikesAmount = foundLikes ? foundLikes.length : 0
-
-        const profile = await this.fetchProfile(req)
-        const userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
-
-        response.post = foundPost
-        response.likes = {
-            amount: postLikesAmount,
-            userLiked: userLiked
-        }
-        response.isOwner = foundPost.profile.id == decodedId
-
-        if (req.params.path && foundPost)
-            return res.status(200).json(response)
-        else
-            return res.status(404).json({ 'message': 'No post found on that path' })
+    try {
+      const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
+      const account = await new AccountDAO().getAccountByUsername(decodedToken.username)
+      decodedId = account.profile.id
+    } catch (e) {
+      decodedId = -1
     }
 
-    public createPost = async (req: Request, res: Response): Promise<Response> => {
-        const { JWT_SECRET } = process.env
-        const newPost = new Post()
-        const { title, description, content } = req.body
+    const foundLikes = await this.dao.getPostLikesById(foundPost.id)
+    const postLikesAmount = foundLikes ? foundLikes.length : 0
+    const profile = await this.fetchProfile(req)
+    const userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
 
-        newPost.title = title
-        newPost.description = description
-        newPost.content = content
-        newPost.path = uuidv4()
-        newPost.published_at = new Date()
-        newPost.created_at = new Date()
+    response.post = foundPost
+    response.likes = {
+      amount: postLikesAmount,
+      userLiked: userLiked,
+    }
+    response.isOwner = foundPost.profile.id == decodedId
 
-        const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
+    if (req.params.path && foundPost) return res.status(200).json(response)
+    else return res.status(404).json({ message: 'No post found on that path' })
+  }
 
-        if (decodedToken.username != null) {
-            const profile = await this.profileDAO.getProfileByUsername(decodedToken.username)
-            newPost.profile = profile
+  public createPost = async (req: Request, res: Response): Promise<Response> => {
+    const { JWT_SECRET } = process.env
+    const newPost = new Post()
+    const { title, description, content } = req.body
 
-            await this.dao.createPost(newPost)
-        } else {
-            return res.status(200).json({ message: 'Invalid jwt' })
-        }
+    newPost.title = title
+    newPost.description = description
+    newPost.content = content
+    newPost.path = uuidv4()
+    newPost.published_at = new Date()
+    newPost.created_at = new Date()
 
-        return res.status(200).json({ message: 'Post added!' })
+    const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
+
+    if (decodedToken.username != null) {
+      const profile = await this.profileDAO.getProfileByUsername(decodedToken.username)
+      newPost.profile = profile
+
+      await this.dao.createPost(newPost)
+    } else {
+      return res.status(200).json({ message: 'Invalid jwt' })
     }
 
-    public updatePost = async (req: Request, res: Response): Promise<any> => {
-        const post = await this.dao.getPostByPath(req.params.path)
-        const { JWT_SECRET } = process.env
-        const { title, description, content } = req.body
+    return res.status(200).json({ message: 'Post added!' })
+  }
 
-        post.title = title
-        post.description = description
-        post.content = content
+  public updatePost = async (req: Request, res: Response): Promise<any> => {
+    const post = await this.dao.getPostByPath(req.params.path)
+    const { JWT_SECRET } = process.env
+    const { title, description, content } = req.body
 
-        const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
+    post.title = title
+    post.description = description
+    post.content = content
 
-        if (post.profile.display_name != decodedToken.username)
-            return res.status(405).json({ 'error': 'Not allowed' })
+    const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
 
-        if (!post)
-            return res.status(404).json({ 'message': 'Post not found' })
+    if (post.profile.display_name != decodedToken.username) return res.status(405).json({ error: 'Not allowed' })
 
-        const updatedPost = await this.dao.updatePost(post)
+    if (!post) return res.status(404).json({ message: 'Post not found' })
 
-        if (!updatedPost)
-            return res.status(404).json({ 'message': 'Could not update post' })
+    const updatedPost = await this.dao.updatePost(post)
 
-        return res.status(200).json({ 'message': 'Post has been updated!' })
+    if (!updatedPost) return res.status(404).json({ message: 'Could not update post' })
+
+    return res.status(200).json({ message: 'Post has been updated!' })
+  }
+
+  public likePost = async (req: Request, res: Response): Promise<Response> => {
+    const profile = await this.fetchProfile(req)
+    const foundPost = await this.dao.getPostByPath(req.params.path)
+
+    if (profile.id === foundPost.profile.id)
+      return res.status(400).json({ error: 'Post owners cannot like their posts.' })
+
+    const postLike = new PostLike()
+    postLike.profile = profile
+    postLike.post = foundPost
+    postLike.liked_at = new Date()
+
+    try {
+      await this.dao.likePost(postLike)
+
+      return res.status(200).json({ message: 'Post liked!' })
+    } catch (e) {
+      return res.status(400).json({ error: 'Post could not be liked.' })
+    }
+  }
+
+  public unlikePost = async (req: Request, res: Response): Promise<Response> => {
+    const profile = await this.fetchProfile(req)
+    const foundPost = await this.dao.getPostByPath(req.params.path)
+
+    const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
+    const removedLike = await this.dao.unlikePost(foundLike)
+
+    if (removedLike && removedLike.affected > 0) {
+      return res.status(200).json({ message: 'Like removed!' })
+    } else {
+      return res.status(404).json({ message: 'Like to remove could not be found' })
+    }
+  }
+
+  public getPostLikes = async (req: Request, res: Response): Promise<any> => {
+    const foundPost = await this.dao.getPostByPath(req.params.path)
+    const foundLikes = await this.dao.getPostLikesById(foundPost.id)
+
+    if (req.params.path && foundLikes) return res.status(200).json(foundLikes.reverse())
+    else return res.status(204).json([])
+  }
+
+  public getRecentUserLikes = async (req: Request, res: Response): Promise<any> => {
+    const foundUser = await this.profileDAO.getProfileByUsername(req.params.username)
+    const foundLikes = await this.dao.getRecentUserLikesByProfileId(foundUser.id, 8)
+
+    if (req.params.username && foundLikes) {
+      const likes = []
+
+      foundLikes.forEach((like) => {
+        likes.push(like.post)
+      })
+
+      return res.status(200).json(likes)
+    } else {
+      return res.status(404).json({ message: 'No likes found for that username' })
+    }
+  }
+
+  public addViewToPost = async (req: Request, res: Response): Promise<any> => {
+    const foundPost = await this.dao.getPostByPath(req.body.path)
+
+    if (!foundPost) {
+      return res.status(404).json({ message: 'Post not found' })
     }
 
-    public likePost = async (req: Request, res: Response): Promise<Response> => {
-        const profile = await this.fetchProfile(req)
-        const foundPost = await this.dao.getPostByPath(req.params.path)
+    const ip = NetworkService.getUserIp(req)
 
-        if (profile.id === foundPost.profile.id)
-            return res.status(400).json({ 'error': 'Post owners cannot like their posts.' })
+    const postView = new PostView()
+    postView.post = foundPost
+    postView.ip = ip
 
-        const postLike = new PostLike()
-        postLike.profile = profile
-        postLike.post = foundPost
-        postLike.liked_at = new Date()
+    await this.dao.addViewToPost(postView)
 
-        try {
-            await this.dao.likePost(postLike)
+    return res.status(200).json({ message: 'Post viewed' })
+  }
 
-            return res.status(200).json({ 'message': 'Post liked!' })
-        } catch (e) {
-            return res.status(400).json({ 'error': 'Post could not be liked.' })
-        }
+  public getPostViewCount = async (req: Request, res: Response): Promise<any> => {
+    const foundPost = await this.dao.getPostByPath(req.params.path)
+
+    if (!foundPost) {
+      return res.status(404).json({ message: 'Post not found' })
     }
 
+    const viewCount = await this.dao.getPostViewCount(foundPost)
 
-    public unlikePost = async (req: Request, res: Response): Promise<Response> => {
-        const profile = await this.fetchProfile(req)
-        const foundPost = await this.dao.getPostByPath(req.params.path)
+    return res.status(200).json({ views: viewCount })
+  }
 
-        const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
-        const removedLike = await this.dao.unlikePost(foundLike)
+  // TODO Move to another file?
+  private fetchProfile = async (req: Request): Promise<Profile> => {
+    const { token } = req.cookies
 
-        if (removedLike && removedLike.affected > 0) {
-            return res.status(200).json({ 'message': 'Like removed!' })
-        } else {
-            return res.status(404).json({ 'message': 'Like to remove could not be found' })
-        }
-    }
+    if (token) {
+      try {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
 
-    public getPostLikes = async (req: Request, res: Response): Promise<any> => {
-        const foundPost = await this.dao.getPostByPath(req.params.path)
-        const foundLikes = await this.dao.getPostLikesById(foundPost.id)
-
-        if (req.params.path && foundLikes)
-            return res.status(200).json(foundLikes.reverse())
-        else
-            return res.status(204).json([])
-    }
-
-    public getRecentUserLikes = async (req: Request, res: Response): Promise<any> => {
-        const foundUser = await this.profileDAO.getProfileByUsername(req.params.username)
-        const foundLikes = await this.dao.getRecentUserLikesByProfileId(foundUser.id, 8)
-
-        if (req.params.username && foundLikes) {
-            const likes = []
-
-            foundLikes.forEach((like) => {
-                likes.push(like.post)
-            })
-
-            return res.status(200).json(likes)
-        } else {
-            return res.status(404).json({ 'message': 'No likes found for that username' })
-        }
-    }
-
-    // TODO Move to another file?
-    private fetchProfile = async (req: Request): Promise<Profile> => {
-        const { token } = req.cookies
-
-        if (token) {
-            try {
-                const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
-                return await this.profileDAO.getProfileByUsername(decodedToken.username)
-            } catch(err) {
-                return null
-            }
-        }
-
+        return await this.profileDAO.getProfileByUsername(decodedToken.username)
+      } catch (err) {
         return null
+      }
     }
 
-    public archivePost = async (req: Request, res: Response): Promise<any> => {
-        const { path } = req.body
-        const post = await this.dao.getPostByPath(path)
+    return null
+  }
 
-        if (!post) res.status(404).json({ error: 'Not found' })
+  public archivePost = async (req: any, res: Response): Promise<any> => {
+    const { path } = req.body
+    const post = await this.dao.getPostByPath(path)
 
-        post.archived_at = Date.now()
+    if (!post) res.status(404).json({ error: 'Not found' })
 
-        const newPost = await this.dao.updatePost(post)
-        if (!newPost) return res.status(500).json({ error: 'Could not archive post' })
+    const currentDate = Date.now()
+    post.archived_at = currentDate
 
-        return res.status(200).json({ message: 'status' })
+    const admin = await this.accountDAO.getAccountByUsername(req.decoded.username)
+
+    if (!admin) {
+      res.status(400).json({ error: ['Admin not found'] })
     }
+
+    const archivedPost = new ArchivedPost()
+    archivedPost.archived_at = currentDate
+    archivedPost.staff = admin
+
+    await this.archivedPostDao.saveArchivedPost(archivedPost)
+
+    const newPost = await this.dao.updatePost(post)
+    if (!newPost) return res.status(500).json({ error: 'Could not archive post' })
+
+    return res.status(200).json({ message: 'status' })
+  }
 }
 
 export default PostController

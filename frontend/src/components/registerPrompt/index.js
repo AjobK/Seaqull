@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import Recaptcha from '../recaptcha'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
@@ -28,9 +29,9 @@ class RegisterPrompt extends Component {
 
     if (!this.state.recaptchaToken) {
       this.setState({
-        username: ["invalid recaptcha"],
-        password: ["invalid recaptcha"],
-        email: ["invalid recaptcha"]
+        username: ['invalid recaptcha'],
+        password: ['invalid recaptcha'],
+        email: ['invalid recaptcha']
       })
     }
 
@@ -38,40 +39,40 @@ class RegisterPrompt extends Component {
       username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken
+      recaptcha: this.state.recaptchaToken,
     }
 
-    Axios.post('/profile/register', payload, {withCredentials: true})
-    .then(res => {
-      this.props.store.profile.loginVerify()
-      this.props.store.user.fillUserData(res.data.user)
-      this.goToProfile(res.data.user.user_name)
-    })
-    .catch(res => {
-      const { username, email, password } = res.response.data.errors
-
-      this.setState({
-        username: username || [],
-        email: email || [],
-        password: password || [],
-        loadingTimeout: false
+    Axios.post('/profile/register', payload, { withCredentials: true })
+      .then((res) => {
+        this.props.store.profile.loginVerify()
+        this.props.store.user.fillUserData(res.data.user)
+        this.goToProfile(res.data.user.user_name)
       })
-    })
+      .catch((res) => {
+        const { username, email, password, recaptcha } = res.response.data.errors
+
+        this.setState({
+          username: username || [],
+          email: email || [],
+          password: password || [],
+          recaptcha: recaptcha || [],
+          recaptchaToken: null,
+        })
+      })
   }
 
   goToProfile = (username) => {
-    setTimeout( () => this.props.history.push('/profile/' + username), 500)
+    this.props.history.push('/profile/' + username)
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
-  
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
-  
+
   onChange = (recaptchaToken) => {
     this.setState( { recaptchaToken } )
     this.auth()
@@ -87,7 +88,7 @@ class RegisterPrompt extends Component {
       password: 'loading',
       email: 'loading'
     })
-    
+
     this.auth()
   }
 
@@ -102,28 +103,42 @@ class RegisterPrompt extends Component {
     let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
 
     return (
-      <div className={[styles.prompt, this.props.className].join(' ')}>
-        <div className={styles.logo} />
-        <p className={styles.text}>Join our community <Icon className={styles.textIcon} iconName={'Crow'} /></p>
-        <div className={styles.formWrapper}>
-          <form onSubmit={this.onSubmit} className={styles.form}>
-            <FormInput name={'Username'} errors={username} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput name={'Email'} errors={email} className={[styles.formGroup]} callBack={this.setElId}/>
-            <FormInput name={'Password'} errors={password} className={[styles.formGroup]} callBack={this.setElId} type="password"/>
-            <div className={styles.submitWrapper}>
-              { 
-                <Recaptcha setRecaptcha={this.setRecaptcha.bind(this)}/>
+      <div className={ [styles.prompt, this.props.className].join(' ') } >
+        <div className={ styles.logo } />
+        <p className={ styles.text }>Join our community <Icon className={ styles.textIcon } iconName={ 'Crow' } /></p>
+        <div className={ styles.formWrapper }>
+          <form onSubmit={ this.onSubmit } className={ styles.form }>
+            <FormInput name={ 'Username' }
+              errors={ username }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }/>
+            <FormInput name={ 'Email' }
+              errors={ email }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }/>
+            <FormInput name={ 'Password' }
+              errors={ password }
+              className={ [styles.formGroup] }
+              callBack={ this.setElId }
+              type='password'/>
+            <div className={ styles.submitWrapper }>
+              {
+                <Recaptcha setRecaptcha={ this.setRecaptcha.bind(this) }/>
               }
-              <Button value={buttonClass} className={styles.submit} />
+              <Button value={ buttonClass } className={ styles.submit } />
             </div>
           </form>
-          <div className={styles.image} />
+          <div className={ styles.image } />
         </div>
-        <p className={styles.textFooter}>
-          By proceeding I confirm that I have read and agree to the <a className={styles.textFooterLink}href='#'>Terms of service</a>
+        <p className={ styles.textFooter }>
+          By proceeding I confirm that I have read and agree to the{' '}
+          <a className={ styles.textFooterLink } href='#'>
+            Terms of service
+          </a>
         </p>
       </div>
     )
   }
 }
+
 export default withRouter(RegisterPrompt)

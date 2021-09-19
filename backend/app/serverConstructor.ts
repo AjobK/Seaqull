@@ -8,32 +8,33 @@ class serverConstructor {
     public port: number
 
     constructor(appInit: { port: number; middleWares: any; routes: any; }) {
-        this.app = express()
-        this.port = appInit.port
-        this.middlewares(appInit.middleWares)
-        this.routes(appInit.routes)
-        this.listen()
+      this.app = express()
+      this.port = appInit.port
+      this.middlewares(appInit.middleWares)
+      this.routes(appInit.routes)
+      this.app.set('trust proxy', true)
+      this.listen()
     }
 
     private middlewares(middleWares) {
-        middleWares.forEach(middleWare => {
-            this.app.use(middleWare)
-        })
-        this.app.use(express.static(__dirname + '/public'))
+      middleWares.forEach((middleWare) => {
+        this.app.use(middleWare)
+      })
+      this.app.use(express.static(__dirname + '/public'))
 
     }
 
     private routes(controllers) {
-        controllers.forEach(controller => {
-            this.app.use('/api/', controller.router)
-        })
+      controllers.forEach((controller) => {
+        this.app.use('/api/', controller.router)
+      })
 
     }
 
     public listen(): void {
-        this.server = this.app.listen(this.port, () => {
-            console.log(`App listening on http://localhost:${this.port}`)
-        })
+      this.server = this.app.listen(this.port, () => {
+        console.log(`App listening on http://localhost:${this.port}`)
+      })
 
     }
 }

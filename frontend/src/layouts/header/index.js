@@ -15,19 +15,19 @@ class Header extends Component {
     const { ui } = this.props.store
 
     let headerContent = (
-      <section className={styles.headerContent}>
-        <Hamburger onClick={this.hamburgerClick.bind(this)} active={ui.subNavOpen} className={styles.hamburger} />
+      <section className={ styles.headerContent }>
+        <Hamburger onClick={ this.hamburgerClick.bind(this) } active={ ui.subNavOpen } className={ styles.hamburger } />
         <Logo />
         <HeaderNavigation />
       </section>
     )
 
     return (
-      <div className={[
+      <div className={ [
         styles.headerWrap,
         ui.subNavOpen && styles.sNavOpen
-      ].join(' ')}>
-        <header className={[styles.header].join(' ')}>
+      ].join(' ') }>
+        <header className={ [styles.header].join(' ') }>
           {headerContent}
         </header>
       </div>

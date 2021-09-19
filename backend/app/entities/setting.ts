@@ -6,7 +6,7 @@ export class Setting extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Profile, Profile => Profile.id)
+    @ManyToOne(() => Profile, (Profile) => Profile.id)
     @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
     profile: Profile
 

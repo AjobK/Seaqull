@@ -5,7 +5,7 @@ const UIStore = types
     subNavOpen: types.optional(types.boolean, false),
     currentOpenTab: types.optional(types.string, 'home')
   })
-  .actions(self => ({
+  .actions((self) => ({
     reset() {
       self.subNavOpen = false
       self.currentOpenTab = 'home'
