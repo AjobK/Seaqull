@@ -40,7 +40,7 @@ Things to keep in mind regarding the PR that don't fit in the previous two headi
 - [ ] a. No unhandled promise rejections.
 - [ ] b. Seeders still functional.
 - [ ] c. No primary-key violations.
-- [ ] d. Normalization, atleast [3NF](https://en.wikipedia.org/wiki/Database_normalization).
+- [ ] d. Normalization, at least [3NF](https://en.wikipedia.org/wiki/Database_normalization).
 - [ ] e. Used guards (middleware) where necessary and tested if route is guarded.
 
 <br />
@@ -56,7 +56,7 @@ Things to keep in mind regarding the PR that don't fit in the previous two headi
 
 **PR Rules**  
 *1. Add relevant labels.*  
-*2. Select atleast two reviewers.*  
+*2. Select at least two reviewers.*  
 *3. Assign all reviewers allowed to merge the branch, including yourself.*  
 *4. If relevant to the sprint, put related issue in 'Awaiting Approval' column on project board.*  
 *5. Add to the corresponding [milestone](https://github.com/AjobK/Seaqull/milestones).*
