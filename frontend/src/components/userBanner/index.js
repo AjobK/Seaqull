@@ -106,8 +106,12 @@ class UserBanner extends Component {
       })
   }
 
-  banUser() {
+  banUser = () => {
     this.setState({ banUser: true })
+  }
+
+  getFollowText = () => {
+    return this.state.following ? 'unfollow' : 'follow'
   }
 
   render() {
@@ -154,7 +158,7 @@ class UserBanner extends Component {
               className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` }
               onClick={ this.follow }
             >
-              <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
+              <p>{ this.getFollowText() }</p>
               <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
             </button>
             }
