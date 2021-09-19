@@ -163,11 +163,13 @@ class Post extends App {
     }
 
     deletePost = () => {
+      Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
       const payload = {
         path: this.postPath
       }
 
-      Axios.put('/api/archive', payload, { withCredentials: true }).then((_res) => {
+      Axios.put('/archive', payload, { withCredentials: true }).then((_res) => {
         this.props.history.push('/')
       }).catch((_err) => { })
     }
