@@ -64,18 +64,10 @@ class Profile extends App {
   }
 
   updateProfile(profile) {
-    const user = {
-      isOwner: profile.isOwner,
-      following: profile.isOwner ? false : profile.following,
-      followsYou: profile.isOwner ? false : profile.followsYou,
-      username: profile.username,
-      title: profile.title,
-      posts: profile.posts,
-      banner: profile.banner || '/src/static/dummy/user/banner.jpg',
-      picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
-      description: profile.description,
-      followerCount: profile.followerCount,
-    }
+    const user = profile
+
+    user.banner = user.banner || '/src/static/dummy/user/banner.jpg'
+    user.picture = user.picture || '/src/static/dummy/user/profile.jpg'
 
     this.setState({ user })
   }
