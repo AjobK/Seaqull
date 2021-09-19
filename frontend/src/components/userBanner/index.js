@@ -3,9 +3,8 @@ import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, Cropper } from '..'
 import Axios from 'axios'
-import ColorUtil from '../../util/colorUtil'
+import { ColorUtil, URLUtil, InputUtil } from '../../util/'
 import BanUser from '../banUser/index'
-import URLUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -23,29 +22,21 @@ class UserBanner extends Component {
   }
 
   onEditAvatar = (input) => {
-    this.handleInput(input, 'upAvatar')
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upAvatar: result
+      })
+    })
     this.onAvatarDragLeave()
   }
 
   onEditBanner = (input) => {
-    this.handleInput(input, 'upBanner')
-    this.onBannerDragLeave()
-  }
-
-  handleInput = (input, stateVar) => {
-    input.value = ''
-
-    if (input.target.files && input.target.files.length > 0) {
-      this.setScrollEnabled(false)
-      const reader = new FileReader()
-
-      reader.addEventListener('load', () => {
-        this.setState({
-          [stateVar]: reader.result
-        })
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upBanner: result
       })
-      reader.readAsDataURL(input.target.files[0])
-    }
+    })
+    this.onBannerDragLeave()
   }
 
   onAvatarDragEnter = () => {
@@ -81,16 +72,11 @@ class UserBanner extends Component {
   }
 
   closeCropper = () => {
-    this.setScrollEnabled(true)
     this.setState({
       upAvatar: null,
       upBanner: null,
       banUser: false
     })
-  }
-
-  setScrollEnabled = (scrollEnabled) => {
-    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
   follow = () => {

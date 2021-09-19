@@ -34,6 +34,11 @@ class Cropper extends Component {
 
   componentDidMount() {
     this.validateImage(this.props.img)
+    this.setScrollEnabled(false)
+  }
+
+  componentWillUnmount() {
+    this.setScrollEnabled(true)
   }
 
   onImageLoaded = (image) => {
@@ -130,6 +135,10 @@ class Cropper extends Component {
           this.props.history.push('/login/')
         }
       })
+  }
+
+  setScrollEnabled = (scrollEnabled) => {
+    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
   render() {
