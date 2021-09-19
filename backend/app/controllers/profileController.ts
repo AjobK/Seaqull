@@ -181,7 +181,7 @@ class ProfileController {
         errors.recaptcha = ['Invalid recaptcha']
       }
 
-      if (isUsernamNotValid || isEmailNotValid || passwordStrengthErrors.length > 0 || isRecaptchaValid) {
+      if (isUsernamNotValid || isEmailNotValid || passwordStrengthErrors.length > 0 || !isRecaptchaValid) {
         return res.status(401).json({ errors: errors })
       }
 

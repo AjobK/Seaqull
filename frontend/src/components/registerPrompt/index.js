@@ -69,10 +69,6 @@ class RegisterPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
-  setElId = (item, id) => {
-    this.elId[item.props.name] = id
-  }
-
   onChange = (recaptchaToken) => {
     this.setState( { recaptchaToken } )
     this.auth()

@@ -13,7 +13,9 @@ class Recaptcha extends Component {
   componentDidMount() {
     const script = document.createElement('script')
     script.src =
-      'https://www.google.com/recaptcha/api.js?render=6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S&hl=en&onload=hide'
+      'http://www.google.com/recaptcha/api.js?render=6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S&hl=en&onload=hide'
+    script.async = true
+
     document.body.appendChild(script)
   }
 

@@ -3,6 +3,7 @@ import PostService from '../controllers/postController'
 import RouterBase from '../interfaces/RouterBase'
 
 const auth = require('../middlewares/isAuth.ts')
+
 const hasPermission = require('../middlewares/hasPermission.ts')
 
 class PostRoutes implements RouterBase {
