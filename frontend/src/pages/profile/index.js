@@ -4,7 +4,7 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
 import Error from '../error'
-import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
+import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo, ProfileCard } from '../../components'
 import styles from './profile.scss'
 
 @inject('store')
@@ -113,6 +113,7 @@ class Profile extends App {
           user={ user }
           owner={ isOwner && profile.loggedIn }
         />
+        <ProfileCard />
         <section className={ [styles.infoWrapper] }>
           <div className={ [styles.tempFollowerIndicator] }>
             <Icon iconName={ 'UserFriends' } />
