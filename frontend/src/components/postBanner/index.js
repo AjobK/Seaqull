@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon } from '..'
+import { Cropper, Icon } from '..'
 import { Link } from 'react-router-dom'
 import PopUp from '../popUp'
 import ColorUtil from '../../util/colorUtil'
+import InputUtil from '../../util/inputUtil'
 
 @inject('store')
 @observer
@@ -14,12 +15,46 @@ class PostBanner extends Component {
 
     this.state = {
       popUpOpen: false,
+      draggingOverThumbnail: true
     }
   }
 
   updatePopup() {
     this.setState({
       popUpOpen: !this.state.popUpOpen,
+    })
+  }
+
+  onThumbnailDragEnter = () => {
+    this.setState({
+      draggingOverThumbnail: true
+    })
+  }
+
+  onThumbnailDragLeave = () => {
+    this.setState({
+      draggingOverThumbnail: false
+    })
+  }
+
+  onEditThumbnail = (input) => {
+    // this.handleInput(input, 'upThumbnail')
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upThumbnail: result
+      })
+    })
+    this.onThumbnailDragLeave()
+  }
+
+  changeThumbnail = (newThumbnail) => {
+    // TODO change to thumbnail
+    this.props.user.picture = newThumbnail
+  }
+
+  closeCropper = () => {
+    this.setState({
+      upThumbnail: null
     })
   }
 
@@ -49,8 +84,13 @@ class PostBanner extends Component {
 
     return (
       <section className={ `${styles.wrapper} ${isOwner ? styles.owner : ''}` }>
+        <input
+          type='file' accept='image/png, image/jpeg' value={ '' }
+          onChange={ this.onEditThumbnail }
+          onDragEnter={ this.onThumbnailDragEnter }
+          onDragLeave={ this.onThumbnailDragLeave }
+        />
         <div className={ styles.background } style={ { backgroundImage: `url(${author.bannerURL})` } } />
-        {/** // TODO: Uncomment code below and make it possible to change post banner **/}
         {this.props.isOwner && (
           <div className={ styles.wrapperEditContainer }>
             <span className={ styles.wrapperEdit }>
@@ -87,6 +127,14 @@ class PostBanner extends Component {
               </div>
             </Link>
           </div>
+          { this.state.upThumbnail && (
+            <Cropper
+              inputType={ 'thumbnail' }
+              img={ this.state.upThumbnail }
+              closeCropper={ this.closeCropper }
+              changeImage={ this.changeThumbnail }
+            />
+          )}
         </div>
       </section>
     )

@@ -80,7 +80,7 @@ class UserBanner extends Component {
     this.props.user.banner = newBanner
   }
 
-  closePopup = () => {
+  closeCropper = () => {
     this.setScrollEnabled(true)
     this.setState({
       upAvatar: null,
@@ -217,7 +217,7 @@ class UserBanner extends Component {
           <Cropper
             inputType={ 'avatar' }
             img={ this.state.upAvatar }
-            closeCropper={ this.closePopup }
+            closeCropper={ this.closeCropper }
             changeImage={ this.changeAvatar }
           />
         )}
@@ -225,14 +225,14 @@ class UserBanner extends Component {
           <Cropper
             inputType={ 'banner' }
             img={ this.state.upBanner }
-            closeCropper={ this.closePopup }
+            closeCropper={ this.closeCropper }
             changeImage={ this.changeBanner }
           />
         )}
         { this.state.banUser && (
           <BanUser
             user={ user }
-            closePopup={ this.closePopup }
+            closePopup={ this.closeCropper }
           />
         )}
       </section>

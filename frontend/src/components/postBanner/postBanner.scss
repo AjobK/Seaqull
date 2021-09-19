@@ -59,6 +59,11 @@
 	background-color: white;
 }
 
+input {
+	// TODO remove
+	z-index: 2;
+}
+
 .innerWrapper {
 	z-index: 1;
 	background: rgba(0,0,0,0.5);
