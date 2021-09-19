@@ -10,6 +10,11 @@ export const popUpData = {
       'description':  'Our platform uses cookies to store a minimal amount of basic (but necessary) information.' +
                       'This ensures that everything works to your expectations! By using our platform you consent ' +
                       'to the usage of these cookies.'
+    },
+    'updatePostNotification': {
+      'title': 'Post Updated',
+      'titleIcon': 'Pen',
+      'description':  'Your post has been updated successfully.'
     }
   },
   'actions': {
