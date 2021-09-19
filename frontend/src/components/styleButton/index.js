@@ -5,6 +5,7 @@ import styles from './styleButton.scss'
 class StyleButton extends Component {
   constructor() {
     super()
+
     this.onToggle = (e) => {
       e.preventDefault()
       this.props.onToggle(this.props.style)

@@ -119,6 +119,7 @@ class Post extends App {
     } else {
       newLikesAmount = this.state.post.likes.amount + 1
     }
+
     newState.post.likes.amount = newLikesAmount
     this.state.post.likes.userLiked = !this.state.post.likes.userLiked
 

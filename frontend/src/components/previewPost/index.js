@@ -19,7 +19,7 @@ class previewPost extends Component {
       post.title = JSON.parse(post.title).blocks[0].text
     } catch (e) { }
 
-    if(this.props.filler) {
+    if (this.props.filler) {
       return <article className={ [styles.article, styles.filler].join(' ') }></article>
     }
 

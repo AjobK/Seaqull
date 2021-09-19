@@ -24,9 +24,11 @@ const initStore = (isServer, snapshot = null) => {
   if (isServer) {
     store = Store.create({})
   }
+
   if (store === null) {
     store = Store.create({})
   }
+
   if (snapshot) {
     applySnapshot(store, snapshot)
   }

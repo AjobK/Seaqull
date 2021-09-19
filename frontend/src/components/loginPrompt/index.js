@@ -99,6 +99,7 @@ class LoginPrompt extends Component {
         clearInterval(this.remainingTimeInterval)
         nextTime = null
       }
+
       this.setState({
         remainingTime: nextTime,
       })
@@ -119,6 +120,7 @@ class LoginPrompt extends Component {
       password: 'loading',
       loadingTimeout: true,
     })
+
     if (!this.state.loadingTimeout) {
       // this.recaptchaRef.current.reset()
       // this.recaptchaRef.current.execute()

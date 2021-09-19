@@ -11,6 +11,7 @@ class TimeUtil {
   static getDuration = (timeAgoInSeconds) => {
     for (const epoch in this.epochs) {
       const interval = Math.floor(timeAgoInSeconds / this.epochs[epoch])
+
       if (interval >= 1) {
         return {
           interval: interval,
@@ -22,6 +23,7 @@ class TimeUtil {
 
   static timeAgo = (date) => {
     const timeAgoInSeconds = Math.floor((new Date() - new Date(date)) / 1000)
+
     if (timeAgoInSeconds > 0) {
       const { interval, epoch } = this.getDuration(timeAgoInSeconds)
       const suffix = interval === 1 ? '' : 's'
