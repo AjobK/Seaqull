@@ -4,7 +4,8 @@ import { Statistic } from '..'
 
 class Statistics extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+
     this.state = {
       views: this.props.statisticsData.views,
       likes: this.props.statisticsData.likes,
