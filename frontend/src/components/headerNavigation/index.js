@@ -27,7 +27,7 @@ class HeaderNavigation extends Component {
               <Button value='Sign Up' className={ styles.button } />
             </Link>
           </ul>
-        )}
+        ) }
       </nav>
     )
   }

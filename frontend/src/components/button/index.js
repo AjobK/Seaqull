@@ -19,12 +19,12 @@ class Button extends Component {
         onSubmit={ onSubmit }
         type={ submit && 'submit' }
       >
-        {icon && (
+        { icon && (
           <span className={ styles.icon }>
             <Icon iconName={ icon } />
           </span>
-        )}
-        {value && value}
+        ) }
+        { value && value }
       </button>
     )
   }

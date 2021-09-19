@@ -52,7 +52,7 @@ class BanUser extends Component {
         <div className={ styles.banUserBackground } onClick={ this.props.closePopup } />
         <section className={ styles.banUserPopUp }>
           <h2> Ban user </h2>
-          <h3> &apos;{this.props.user.username || 'No user found'}&apos; </h3>
+          <h3> &apos;{ this.props.user.username || 'No user found' }&apos; </h3>
           <form onSubmit={ this.saveBan.bind(this) } className={ styles.form }>
             <FormInput
               toolTipDirection={ 'bottom' }
@@ -80,7 +80,7 @@ class BanUser extends Component {
                 inverted={ true }
                 onClick={ this.props.closePopup.bind(this) }
               />
-              {<Button className={ styles.banUserPopUpBtnsSaveButton } value={ 'Save' } type="button" />}
+              { <Button className={ styles.banUserPopUpBtnsSaveButton } value={ 'Save' } type="button" /> }
             </div>
           </form>
         </section>

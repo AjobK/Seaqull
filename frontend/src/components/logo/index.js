@@ -51,7 +51,7 @@ class Logo extends Component {
             transform="translate(0 -0.02)"
           />
         </svg>
-        {!onlyIcon && <h1 className={ styles.logoText }>{defaultData.projectName}</h1>}
+        { !onlyIcon && <h1 className={ styles.logoText }>{ defaultData.projectName }</h1> }
       </Link>
     )
   }

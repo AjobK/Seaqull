@@ -34,8 +34,8 @@ class PostViews extends Component {
       <div className={ styles.postViews }>
         <Icon iconName={ 'Eye' } className={ styles.viewIcon } />
         <p className={ styles.postViewsText }>
-          {`${unitFormatterUtil.getNumberSuffix(this.state.views)} 
-                    ${this.state.views === 1 ? 'view' : 'views'}`}
+          { `${unitFormatterUtil.getNumberSuffix(this.state.views)} 
+                    ${this.state.views === 1 ? 'view' : 'views'}` }
         </p>
       </div>
     )

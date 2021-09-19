@@ -7,7 +7,7 @@ class Title extends Component {
 
     return (
       <h2 className={ [styles.title, center ? styles.center : '', ...(className || '')].join(' ') }>
-        {value || 'Sample title'}
+        { value || 'Sample title' }
       </h2>
     )
   }

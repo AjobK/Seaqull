@@ -41,12 +41,12 @@ class FormInput extends Component {
         className={ styles.toolTip }
       >
         <ul className={ styles.toolTipUl }>
-          {errors != 'loading' &&
+          { errors != 'loading' &&
             errors.map((message, i) => (
               <li key={ i } className={ styles.toolTipLi }>
-                {message}
+                { message }
               </li>
-            ))}
+            )) }
         </ul>
       </ReactTooltip>
     )
@@ -83,7 +83,7 @@ class FormInput extends Component {
       <div className={ [...(className || '')].join(' ') }>
         <label htmlFor={ id } className={ styles.label }>
           <Icon className={ `${styles.icon} ${iconClassName} ${loadingClass}` } iconName={ iconName } />
-          <span>{name}</span>
+          <span>{ name }</span>
         </label>
         <div className={ styles.inputWrapper }>
           <input
@@ -96,14 +96,14 @@ class FormInput extends Component {
             data-event-off="blur"
             min={ limit || '0' }
           />
-          {isPassword && (
+          { isPassword && (
             <Icon
               className={ `${styles.icon} ${styles.iconPassword}` }
               iconName={ 'Eye' }
               onClick={ this.togglePasswordVisible }
             />
-          )}
-          {hasErrors && this.getErrorMessages()}
+          ) }
+          { hasErrors && this.getErrorMessages() }
         </div>
       </div>
     )

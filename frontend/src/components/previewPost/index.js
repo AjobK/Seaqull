@@ -27,16 +27,16 @@ class previewPost extends Component {
       <Link
         to={ post.path ? `/posts/${post.path}` : '#' }
         className={ [styles.article, ...className || ''].join(' ') }
-        style={ {
+        style={{
           backgroundColor: post.title && post ? rgb : 'rgb(0,0,0,0.15)'
-        } }>
+        }}>
         <div className={ styles.articleWrapper }>
           <div className={ styles.articleWrapperStats }>
             { post.likes > 0 &&
               <div className={ styles.articleWrapperStatsLikes }>
                 <Icon iconName='FeatherAlt' />
                 <p className={ styles.articleWrapperStatsLikesText }>
-                  {post.likes}
+                  { post.likes }
                 </p>
               </div>
             }
@@ -44,7 +44,7 @@ class previewPost extends Component {
           { post.title &&
             <div className={ styles.articleWrapperText }>
               <p className={ styles.articleWrapperTextTitle }>
-                {post.title}
+                { post.title }
               </p>
             </div>
           }

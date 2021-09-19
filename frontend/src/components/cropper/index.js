@@ -141,7 +141,7 @@ class Cropper extends Component {
         <div className={ styles.avatarUploadBackground } onClick={ this.props.closeCropper } />
         <section className={ styles.avatarUploadPopUp }>
           <div className={ `${styles.uploadedImgWrapper} ${!error ? styles.uploadedImgWrapperDarkBg : ''}` }>
-            {!error && inputImage && (
+            { !error && inputImage && (
               <div className={ styles.uploadedImg }>
                 <ReactCrop
                   className={ styles.uploadedImgCropper }
@@ -152,12 +152,12 @@ class Cropper extends Component {
                   onChange={ this.onCropChange }
                 />
               </div>
-            )}
-            {error && (
+            ) }
+            { error && (
               <div className={ styles.errorMessageWrapper }>
-                <p className={ styles.errorMessage }>{error}</p>
+                <p className={ styles.errorMessage }>{ error }</p>
               </div>
-            )}
+            ) }
           </div>
           <div className={ styles.avatarUploadPopUpBtns }>
             <Button
@@ -166,14 +166,14 @@ class Cropper extends Component {
               inverted={ true }
               onClick={ this.props.closeCropper }
             />
-            {!error && (
+            { !error && (
               <Button
                 className={ styles.avatarUploadPopUpBtnsSaveButton }
                 value={ 'Save' }
                 disabled={ !inputImage || !isCropped }
                 onClick={ inputImage && isCropped ? this.saveImage : undefined }
               />
-            )}
+            ) }
           </div>
         </section>
       </div>

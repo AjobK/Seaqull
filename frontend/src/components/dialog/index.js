@@ -14,10 +14,10 @@ class Dialog extends Component {
         <div className={ styles.dialogBackground } onClick={ this.props.onCloseCallback } />
         <div className={ styles.dialogWrapper }>
           <div className={ styles.dialogHeader }>
-            <h2>{this.props.header}</h2>
+            <h2>{ this.props.header }</h2>
           </div>
           <div className={ styles.dialogBody }>
-            <p>{this.props.body}</p>
+            <p>{ this.props.body }</p>
           </div>
           <div className={ styles.dialogButtons }>
             <Button className={ styles.dialogCancelButton } onClick={ this.props.onCloseCallback } value="Cancel" />

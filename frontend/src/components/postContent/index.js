@@ -113,7 +113,7 @@ class PostContent extends Component {
             handlePastedText={ this.handlePastedText }
             blockStyleFn={ () => `${styles.postContent} ${styles[type]}` }
           />
-          {/* { type != 'title' && this.inlineStyleControls()} */}
+          { /* { type != 'title' && this.inlineStyleControls()} */ }
         </PostContentBlock>
       </div>
     )

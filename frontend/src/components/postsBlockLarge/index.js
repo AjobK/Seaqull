@@ -38,9 +38,9 @@ class PostsBlockLarge extends Component {
           </ReactTooltip>
           <div className={ styles.largeThumbnailContent }>
             <a href={ `posts/${post.path}` }>
-              <h3 className={ styles.largeThumbnailContentTitle }>{post.title}</h3>
+              <h3 className={ styles.largeThumbnailContentTitle }>{ post.title }</h3>
               <div className={ styles.largeThumbnailContentDescription }>
-                <p>{post.description}</p>
+                <p>{ post.description }</p>
               </div>
             </a>
             <div className={ styles.largeThumbnailContentBottom }>
@@ -51,7 +51,7 @@ class PostsBlockLarge extends Component {
                   </span>
                   <p>
                     Machine learning
-                    <span>{/* UNDERLINE */}</span>
+                    <span>{ /* UNDERLINE */ }</span>
                   </p>
                 </a>
                 <span className={ styles.largeThumbnailContentBottomInfoBullet }>&bull;</span>
@@ -59,17 +59,17 @@ class PostsBlockLarge extends Component {
                   <span className={ styles.largeThumbnailContentBottomInfoTextIcon }>
                     <Icon iconName={ 'Stopwatch' } />
                   </span>
-                  <p>{post.readTime}</p>
+                  <p>{ post.readTime }</p>
                 </div>
                 <span className={ styles.largeThumbnailContentBottomInfoBullet }>&bull;</span>
                 <div className={ styles.largeThumbnailContentBottomInfoText }>
-                  <p>{TimeUtil.timeAgo(new Date(post.created_at))}</p>
+                  <p>{ TimeUtil.timeAgo(new Date(post.created_at)) }</p>
                 </div>
               </div>
               <a href={ `posts/${post.path}` } className={ styles.goTo }>
                 <p>
                   Read more
-                  <span>{/* UNDERLINE */}</span>
+                  <span>{ /* UNDERLINE */ }</span>
                 </p>
                 <Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />
               </a>
@@ -81,8 +81,8 @@ class PostsBlockLarge extends Component {
         </div>
 
         <a href={ `posts/${post.path}` } className={ styles.largeBottom }>
-          <h3 className={ styles.largeBottomTitle }>{post.title}</h3>
-          <p className={ styles.largeBottomDescription }>{post.description}</p>
+          <h3 className={ styles.largeBottomTitle }>{ post.title }</h3>
+          <p className={ styles.largeBottomDescription }>{ post.description }</p>
           <span className={ styles.goTo }>
             <p>Read more</p>
             <Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />

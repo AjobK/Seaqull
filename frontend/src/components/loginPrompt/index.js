@@ -169,12 +169,12 @@ class LoginPrompt extends Component {
                 disabled={ !!remainingTime || loadingTimeout }
                 onClick={ this.auth }
               />
-              {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
-              {/* <ReCAPTCHA
+              { remainingTime && <p className={ styles.counter }>{ `${remainingTime}s left` }</p> }
+              { /* <ReCAPTCHA
                 ref={this.recaptchaRef}
                 sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
                 size='invisible' onChange={this.onChange}
-              /> */}
+              /> */ }
             </div>
           </form>
           <div className={ styles.image } />

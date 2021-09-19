@@ -28,7 +28,7 @@ class Header extends Component {
         ui.subNavOpen && styles.sNavOpen
       ].join(' ') }>
         <header className={ [styles.header].join(' ') }>
-          {headerContent}
+          { headerContent }
         </header>
       </div>
     )

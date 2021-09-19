@@ -172,7 +172,7 @@ class RegisterPrompt extends Component {
           <div className={ styles.image } />
         </div>
         <p className={ styles.textFooter }>
-          By proceeding I confirm that I have read and agree to the{' '}
+          By proceeding I confirm that I have read and agree to the{ ' ' }
           <a className={ styles.textFooterLink } href="#">
             Terms of service
           </a>

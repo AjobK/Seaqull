@@ -29,7 +29,7 @@ class NavigationMobile extends Component {
         ui.subNavOpen && styles.sNavOpen,
         this.props.filler && styles.filler
       ].join(' ') }>
-        {!this.props.filler &&
+        { !this.props.filler &&
           <div className={ styles.menu }>
             { profile.loggedIn && <ProfileBar
               name={ profile.display_name }
@@ -37,9 +37,9 @@ class NavigationMobile extends Component {
               avatar={ profile.avatarURL }
             /> }
             <ul className={ styles.menuUl }>
-              {arr}
+              { arr }
             </ul>
-          </div>}
+          </div> }
       </section>
     )
   }

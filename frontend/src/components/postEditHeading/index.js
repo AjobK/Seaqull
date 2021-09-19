@@ -36,8 +36,8 @@ class PostEditHeading extends Component {
     return (
       <label className={ editingClass }>
         <span>
-          <Icon iconName={ 'Pen' } className={ styles.icon } /> {heading || 'Text'}{' '}
-          {(manualEditing || editing) && '- Editing'}
+          <Icon iconName={ 'Pen' } className={ styles.icon } /> { heading || 'Text' }{ ' ' }
+          { (manualEditing || editing) && '- Editing' }
         </span>
       </label>
     )

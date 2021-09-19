@@ -33,10 +33,10 @@ class PopUp extends Component {
               <h2 className={ styles.popUpHeaderTitle }>
                 { titleIcon && (
                   <Icon className={ styles.popUpHeaderTitleIcon } iconName={ titleIcon } />
-                )}
+                ) }
                 { title }
               </h2>
-            )}
+            ) }
             { canCloseWithClick &&
               <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
                 <Icon iconName={ 'Times' } />
@@ -47,7 +47,7 @@ class PopUp extends Component {
             <p className={ styles.popUpDescription }>
               { description }
             </p>
-          )}
+          ) }
           { actions && (
             <ul className={ styles.popUpActions }>
               { actions.map((action) => {
@@ -60,9 +60,9 @@ class PopUp extends Component {
                       onClick={ action.action } />
                   </li>
                 )
-              })}
+              }) }
             </ul>
-          )}
+          ) }
         </div>
       </div>
     )

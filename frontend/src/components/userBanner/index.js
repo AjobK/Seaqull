@@ -131,7 +131,7 @@ class UserBanner extends Component {
         <div className={ styles.innerWrapper }>
           <div
             className={ styles.picture }
-            style={ { backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash } }
+            style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
           >
             { this.props.owner && (
               <span
@@ -145,10 +145,10 @@ class UserBanner extends Component {
                   onChange={ this.onEditAvatar }
                   onDragEnter={ this.onAvatarDragEnter }
                   onDragLeave={ this.onAvatarDragLeave }
-                  style={ { backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash } }
+                  style={{ backgroundImage: `url(${ user.picture })`, backgroundColor: uniqueAvatarColorBasedOnHash }}
                 />
               </span>
-            )}
+            ) }
             { this.props.store.profile.loggedIn && !user.isOwner &&
             <button
               className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` }
@@ -167,7 +167,7 @@ class UserBanner extends Component {
           </div>
         </div>
         <div className={ styles.banner }>
-          <div className={ styles.bannerImage } style={ { backgroundImage: `url(${ user.banner })` } } />
+          <div className={ styles.bannerImage } style={{ backgroundImage: `url(${ user.banner })` }} />
           { this.props.owner && (
             <div
               className={
@@ -187,7 +187,7 @@ class UserBanner extends Component {
                 </p>
               </div>
             </div>
-          )}
+          ) }
           { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
             <div
               onDragEnter={ this.onBannerDragEnter }
@@ -210,7 +210,7 @@ class UserBanner extends Component {
                 </p>
               </div>
             </div>
-          )}
+          ) }
         </div>
 
         { this.state.upAvatar && (
@@ -220,7 +220,7 @@ class UserBanner extends Component {
             closeCropper={ this.closePopup }
             changeImage={ this.changeAvatar }
           />
-        )}
+        ) }
         { this.state.upBanner && (
           <Cropper
             inputType={ 'banner' }
@@ -228,13 +228,13 @@ class UserBanner extends Component {
             closeCropper={ this.closePopup }
             changeImage={ this.changeBanner }
           />
-        )}
+        ) }
         { this.state.banUser && (
           <BanUser
             user={ user }
             closePopup={ this.closePopup }
           />
-        )}
+        ) }
       </section>
     )
   }

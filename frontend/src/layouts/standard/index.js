@@ -23,7 +23,7 @@ class Standard extends Component {
         <aside className={ styles.higherOrder }>
           <NavigationMobile />
         </aside>
-        <NavigationMobile filler /> {/* Filler aligns content */}
+        <NavigationMobile filler /> { /* Filler aligns content */ }
         <div className={ styles.innerWrapper } onClick={ this.props.store.ui.closeSubNav }>
           { this.props.children }
         </div>

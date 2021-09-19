@@ -51,10 +51,10 @@ class CommentSection extends Component {
 
     return (
       <p>
-        Please{' '}
+        Please{ ' ' }
         <Link to="/login" className={ styles.commentSection__highlightedLink }>
           log in
-        </Link>{' '}
+        </Link>{ ' ' }
         to comment to this post
       </p>
     )
@@ -88,14 +88,14 @@ class CommentSection extends Component {
     return (
       <div className={ styles.commentSection }>
         <Section noTitle>
-          {this.displayCommentForm()}
-          {this.state.comments && this.state.comments.length > 0 ? (
+          { this.displayCommentForm() }
+          { this.state.comments && this.state.comments.length > 0 ? (
             this.state.comments.map((comment) => (
               <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd } />
             ))
           ) : (
             <p className="noComment">No comments</p>
-          )}
+          ) }
         </Section>
       </div>
     )

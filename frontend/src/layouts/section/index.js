@@ -39,7 +39,7 @@ class Section extends Component {
               <Title value={ title } />
             </PostContentBlock>)
           }
-          {!noTitle && <Title value={ title } center />}
+          { !noTitle && <Title value={ title } center /> }
           <div className={ styles.content }>
             { children }
           </div>

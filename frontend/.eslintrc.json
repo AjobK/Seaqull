@@ -56,7 +56,11 @@
     "react/jsx-curly-spacing": [
       2,
       {
-        "when": "always"
+        "when": "always",
+				"children": true,
+				"spacing": {
+					"objectLiterals": "never"
+				}
       }
     ],
     "semi": ["error", "never"],

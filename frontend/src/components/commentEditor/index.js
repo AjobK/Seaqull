@@ -100,7 +100,7 @@ class CommentEditor extends Component {
 
   displayError = () => {
     if (this.state.formError) {
-      return <div className={ styles.error }>{this.state.formError}</div>
+      return <div className={ styles.error }>{ this.state.formError }</div>
     }
   }
 
@@ -117,8 +117,8 @@ class CommentEditor extends Component {
   render() {
     return (
       <section>
-        {this.displayHeader()}
-        {this.displayError()}
+        { this.displayHeader() }
+        { this.displayError() }
         <div className={ styles.editorForm }>
           <div onClick={ this.focusOnEditor } className={ styles.editorForm__editor }>
             <Editor

@@ -52,13 +52,13 @@ class PostLikesList extends Component {
           <div className={ styles.likesListHeader }>
             <div className={ `${styles.likesListTitle}` }>
               <h2>
-                <Icon iconName={ 'Heart' } className={ styles.like } /> Liked by{' '}
+                <Icon iconName={ 'Heart' } className={ styles.like } /> Liked by{ ' ' }
               </h2>
             </div>
             <Icon iconName={ 'TimesCircle' } className={ styles.closeLikes } onClick={ this.props.closeLikesList } />
           </div>
           <ul className={ `${styles.likesList}` }>
-            {this.state.likes.map((like, index) => {
+            { this.state.likes.map((like, index) => {
               const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(like.displayName)
 
               return (
@@ -67,20 +67,20 @@ class PostLikesList extends Component {
                     <div className={ `${styles.profileAvatarWrapper}` }>
                       <div
                         className={ `${styles.avatar}` }
-                        style={ {
+                        style={{
                           backgroundImage: `url(${like.avatarURL || ''})`,
                           backgroundColor: uniqueAvatarColorBasedOnHash,
-                        } }
+                        }}
                       />
                     </div>
                     <div className={ `${styles.profileTextWrapper}` }>
-                      <p className={ `${styles.profileDisplayName}` }>{like.displayName}</p>
-                      <p className={ `${styles.profileTitle}` }>{like.title}</p>
+                      <p className={ `${styles.profileDisplayName}` }>{ like.displayName }</p>
+                      <p className={ `${styles.profileTitle}` }>{ like.title }</p>
                     </div>
                   </Link>
                 </li>
               )
-            })}
+            }) }
           </ul>
         </div>
       </div>

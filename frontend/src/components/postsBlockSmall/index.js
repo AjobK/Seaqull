@@ -27,7 +27,7 @@ class PostsBlockSmall extends Component {
               </span>
               <p>
                 Machine learning
-                <span>{/* UNDERLINE */}</span>
+                <span>{ /* UNDERLINE */ }</span>
               </p>
             </a>
             <span
@@ -54,8 +54,8 @@ class PostsBlockSmall extends Component {
           <a href={ `posts/${post.path}` } className={ styles.smallContentClickable }></a>
           <div>
             <div>
-              <h4 className={ styles.smallContentTitle }>{post.title}</h4>
-              <p className={ styles.smallContentDescription }>{post.description}</p>
+              <h4 className={ styles.smallContentTitle }>{ post.title }</h4>
+              <p className={ styles.smallContentDescription }>{ post.description }</p>
             </div>
             <div className={ styles.smallContentBottom }>
               <div className={ styles.smallContentBottomInfo }>
@@ -63,11 +63,11 @@ class PostsBlockSmall extends Component {
                   <span className={ styles.smallContentBottomInfoTextIcon }>
                     <Icon iconName={ 'Stopwatch' } />
                   </span>
-                  <p>{post.readTime}</p>
+                  <p>{ post.readTime }</p>
                 </div>
                 <span className={ styles.smallContentBottomInfoBullet }>&bull;</span>
                 <div className={ styles.smallContentBottomInfoText }>
-                  <p>{TimeUtil.timeAgo(new Date(post.created_at))}</p>
+                  <p>{ TimeUtil.timeAgo(new Date(post.created_at)) }</p>
                 </div>
               </div>
               <span className={ styles.bookmark } onClick={ this.bookmarkPost }>

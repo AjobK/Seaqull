@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={ this.store }>
-        {this.props.children}
+        { this.props.children }
       </Provider>
     )
   }

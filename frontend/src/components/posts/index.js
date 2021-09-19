@@ -125,8 +125,8 @@ class Posts extends Component {
 
     return (
       <div>
-        <ul className={ styles.posts }>{postsBlocks}</ul>
-        {this.state.isFetching || (!this.state.endReached && <Loader />)}
+        <ul className={ styles.posts }>{ postsBlocks }</ul>
+        { this.state.isFetching || (!this.state.endReached && <Loader />) }
       </div>
     )
   }

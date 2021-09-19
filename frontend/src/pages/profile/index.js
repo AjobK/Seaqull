@@ -117,7 +117,7 @@ class Profile extends App {
           <div className={ [styles.tempFollowerIndicator] }>
             <Icon iconName={ 'UserFriends' } />
             <p>
-              {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
+              { user.followerCount } follower{ user.followerCount === 1 ? '' : 's' }{ ' ' }
             </p>
           </div>
         </section>
@@ -131,7 +131,7 @@ class Profile extends App {
           <PostsPreview posts={ this.state.likes } />
         </Section>
         <Section title={ 'STATISTICS' }>
-          <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
+          <Statistics statisticsData={{ views: 0, likes: 0, posts: 0 }} />
         </Section>
       </Standard>
     )

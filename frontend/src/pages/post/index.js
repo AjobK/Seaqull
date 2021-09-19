@@ -203,7 +203,7 @@ class Post extends App {
           isOwner={ isOwner }
         />
         <Section noTitle>
-          {!this.props.new && (
+          { !this.props.new && (
             <div className={ styles.likePostWrapper }>
               <PostViews />
               <PostLike
@@ -213,7 +213,7 @@ class Post extends App {
                 isOwner={ isOwner }
               />
             </div>
-          )}
+          ) }
           <div className={ styles.renderWrapper }>
             <PostContent
               type={ 'title' }
@@ -238,22 +238,22 @@ class Post extends App {
               value={ post.content } // Initial no content, should be prefilled by API
             />
           </div>
-          {isOwner && this.props.new && (
+          { isOwner && this.props.new && (
             <Button
               className={ [styles.publishButton, /* isPublished ? styles.published : */ ''].join(' ') }
               value={ 'Create' }
               onClick={ () => this.sendToDB() }
             />
-          )}
-          {isOwner && isEditing && !this.props.new && (
+          ) }
+          { isOwner && isEditing && !this.props.new && (
             <Button
               className={ [styles.publishButton, /* isPublished ? styles.published : */ ''].join(' ') }
               value={ 'Update' }
               onClick={ () => this.sendToDB(this.post.path) }
             />
-          )}
+          ) }
         </Section>
-        {!this.props.new && <CommentSection />}
+        { !this.props.new && <CommentSection /> }
       </Standard>
     )
   }

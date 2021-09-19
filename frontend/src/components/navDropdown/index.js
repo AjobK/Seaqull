@@ -25,7 +25,7 @@ class NavDropdown extends Component {
         arr.push(
           <li className={ styles.ItemSub } key={ Math.random() }>
             <a className={ styles.ItemSubLink } href={ value[key].ref }>
-              {value[key].title}
+              { value[key].title }
             </a>
           </li>
         )
@@ -36,18 +36,18 @@ class NavDropdown extends Component {
       <li className={ styles.Item } key={ index }>
         <p className={ styles.ItemHeading } onClick={ this.toggleSubMenu }>
           <Icon iconName={ icon } className={ styles.icon } />
-          {title}
+          { title }
           <Icon iconName={ this.state.open ? 'caret-up' : 'caret-down' } className={ styles.arrow } />
         </p>
         <ul className={ [styles.ItemList, !this.state.open && styles.ItemListClosed].join(' ') }>
-          {arr}
+          { arr }
         </ul>
       </li>
     ) || (
       <li className={ styles.Item } key={ index }>
         <p className={ styles.ItemHeading }>
           <Icon iconName={ icon } className={ styles.icon } />
-          {title}
+          { title }
         </p>
       </li>
     )
