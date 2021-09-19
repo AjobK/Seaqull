@@ -37,7 +37,7 @@ class ProfileDAO {
     return account
   }
 
-  public async saveProfile(u: Profile): Promise<Profile>{
+  public async saveProfile(u: Profile): Promise<Profile> {
     const repositoryProfile = await DatabaseConnector.getRepository('Profile')
     const profile = await repositoryProfile.save(u)
 
