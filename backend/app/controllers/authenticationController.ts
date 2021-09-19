@@ -13,7 +13,7 @@ const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
 require('dotenv').config()
 const { SECURE } = process.env
 
-class AuthorizationController {
+class AuthenticationController {
     private accountDAO: AccountDAO
     private roleDAO: RoleDAO
     private banService: BanService
@@ -64,7 +64,7 @@ class AuthorizationController {
     } else {
       const isRecaptchaValid = await this.reCaptchaService.isCaptchaValid(recaptcha)
 
-      if (!isRecaptchaValid) {
+      if (isRecaptchaValid) {
         return res.status(400).json({ errors: ['ReCaptcha invalid'] })
       }
 
@@ -153,4 +153,4 @@ class AuthorizationController {
   }
 }
 
-export default AuthorizationController
+export default AuthenticationController

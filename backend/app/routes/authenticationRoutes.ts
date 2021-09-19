@@ -2,7 +2,7 @@ import * as express from 'express'
 import RouterBase from '../interfaces/RouterBase'
 import AuthorizationController from '../controllers/authenticationController'
 
-class AuthorizationRoutes implements RouterBase {
+class AuthenticationRoutes implements RouterBase {
     public login = '/login'
     public loginVerify = '/login-verify'
     public logout = '/logout'
@@ -21,4 +21,4 @@ class AuthorizationRoutes implements RouterBase {
     }
 }
 
-export default AuthorizationRoutes
+export default AuthenticationRoutes
