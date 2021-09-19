@@ -203,15 +203,15 @@ class Post extends App {
         />
         <Section noTitle>
           { !this.props.new &&
-            <div className={ styles.likePostWrapper }>
-              <PostViews />
-              <PostLike
-                likesAmount={ this.state.post.likes.amount || 0 }
-                liked={ this.state.post.likes.userLiked }
-                toggleLike={ this.toggleLike }
-                isOwner={ isOwner }
-              />
-            </div>
+          <div className={ styles.likePostWrapper }>
+            <PostViews />
+            <PostLike
+              likesAmount={ this.state.post.likes.amount || 0 }
+              liked={ this.state.post.likes.userLiked }
+              toggleLike={ this.toggleLike }
+              isOwner={ isOwner }
+            />
+          </div>
           }
           <div className={ styles.renderWrapper }>
             <PostContent
@@ -258,17 +258,17 @@ class Post extends App {
             </div>
             <div className={ styles.postActionButtonsRight }>
               { !this.props.new && (this.canBanUser || isOwner) &&
-                <span
-                  className={ styles.delete }
-                  data-tip data-for={ 'postDeleteTooltip' }
-                  onClick={ this.onDeletePostClicked }
-                >
-                  <Icon iconName={ 'Trash' } />
-                </span>
+              <span
+                className={ styles.delete }
+                data-tip data-for={ 'postDeleteTooltip' }
+                onClick={ this.onDeletePostClicked }
+              >
+                <Icon iconName={ 'Trash' } />
+              </span>
               }
             </div>
             <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
-                          Delete
+              Delete
             </ReactTooltip>
           </div>
         </Section>
