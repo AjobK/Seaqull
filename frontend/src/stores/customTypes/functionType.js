@@ -14,7 +14,7 @@ export const functionType = types.custom({
     return parseFunction(value)
   },
   toSnapshot(value) {
-    return value.toString()
+    return value ? value.toString() : null
   },
   getValidationMessage(value) {
     try {
