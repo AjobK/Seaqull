@@ -35,7 +35,6 @@ class PostBanner extends Component {
   }
 
   onEditThumbnail = (input) => {
-    // this.handleInput(input, 'upThumbnail')
     InputUtil.handleInput(input, (result) => {
       this.setState({
         upThumbnail: result
@@ -45,8 +44,9 @@ class PostBanner extends Component {
   }
 
   changeThumbnail = (newThumbnail) => {
-    // TODO change to thumbnail
-    this.props.user.picture = newThumbnail
+    this.setState({
+      thumbnail: newThumbnail
+    })
   }
 
   closeCropper = () => {
@@ -62,31 +62,28 @@ class PostBanner extends Component {
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
-        <input
-          type='file' accept='image/png, image/jpeg' value={ '' }
-          onChange={ this.onEditThumbnail }
-          onDragEnter={ this.onThumbnailDragEnter }
-          onDragLeave={ this.onThumbnailDragLeave }
-        />
+        { this.props.isOwner && (
+          <div className={ styles.wrapperThumbnailEdit }>
+            <input
+              type='file' accept='image/png, image/jpeg' value={ '' }
+              onChange={ this.onEditThumbnail }
+              onDragEnter={ this.onThumbnailDragEnter }
+              onDragLeave={ this.onThumbnailDragLeave }
+            />
+
+            <div className={ styles.wrapperThumbnailEditButtonContainer }>
+              <span className={ styles.wrapperThumbnailEditButton }>
+                <span className={ styles.wrapperThumbnailEditButtonContent }>Click to edit</span>
+                <Icon iconName={ 'Pen' } />
+              </span>
+            </div>
+          </div>
+        ) }
         <div
           className={ styles.background }
-          style={ { backgroundImage: `url(${ author.bannerURL })` } } />
-        { false && this.props.isOwner && // TODO: Remove 'false && ' and make it possible to change post banner
-          <div className={ styles.wrapperEditContainer }>
-            <span className={ styles.wrapperEdit }>
-              <span className={ styles.wrapperEditContent }>Click to edit</span> <Icon iconName={ 'Pen' } />
-            </span>
-          </div>
-        }
-        {/* TODO: Use this in the future for editing post banner */}
-        {/*{ true &&*/}
-        {/*<div className={ styles.backdrop }>*/}
-        {/*  <p className={ styles.bannerText } onClick={ this.archivePost }>*/}
-        {/*    Delete Post*/}
-        {/*    <Icon className={ styles.icon } iconName={ 'Trash' } />*/}
-        {/*  </p>*/}
-        {/*</div>*/}
-        {/*}*/}
+          style={ { backgroundImage: `url(${ author.bannerURL })` } }
+        />
+
         <div className={ styles.innerWrapper }>
           <div className={ styles.info }>
             <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
