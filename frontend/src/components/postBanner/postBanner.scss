@@ -89,7 +89,7 @@
 	&:hover {
 		opacity: 1;
 		cursor: pointer;
-	
+
 		.bannerText {
 			visibility: visible;
 		}
@@ -98,9 +98,9 @@
 	.icon {
 		margin-left: 10px
 	}
-	
+
 	.bannerText {
-		visibility: none;
+		visibility: hidden;
 		color: white;
 		vertical-align: middle;
 		text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
