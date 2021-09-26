@@ -1,6 +1,6 @@
 ---
 name: Feature
-about: Used for new functionalities and features in Seaqull
+about: Used for new functionalities and features.
 title: "[000] Issue Title"
 labels: Backlog
 assignees: ''
