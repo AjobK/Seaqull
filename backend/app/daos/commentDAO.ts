@@ -1,6 +1,8 @@
 import DatabaseConnector from '../utils/databaseConnector'
 import { Comment } from '../entities/comment'
 import Post from '../entities/post'
+import Profile from '../entities/profile'
+import ProfileCommentLike from "../entities/profile_comment_like";
 
 class CommentDAO {
     private repo = 'Comment'
@@ -52,7 +54,7 @@ class CommentDAO {
       return repository.save(comment)
     }
 
-    public async getCommentLikes(id: number) {
+    public async getCommentLikes(id: number): Promise<ProfileCommentLike[]> {
       const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
 
       const profileCommentLikes = await repository.createQueryBuilder('commentLike')
@@ -61,6 +63,24 @@ class CommentDAO {
         .getMany()
 
       return profileCommentLikes
+    }
+
+    public async createCommentLike(comment: Comment, profile: Profile): Promise<void> {
+      const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
+
+      const commentLike = {
+        profile: profile,
+        comment: comment,
+        liked_At: new Date(),
+      }
+
+      repository.save(commentLike)
+    }
+
+    async deleteCommentLike(comment: Comment, profile: Profile): Promise<any> {
+      const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
+
+      return repository.delete({ where: { profile: profile.id, comment: comment } })
     }
 }
 

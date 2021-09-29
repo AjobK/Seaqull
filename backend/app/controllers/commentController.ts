@@ -32,6 +32,38 @@ class CommentController {
     else return res.status(204).json([])
   }
 
+  public createCommentLike = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+    const comment = await this.dao.getComment(id)
+
+    if (!comment || !profile) return res.status(404).json({ message: 'Invalid profile or comment id given' })
+
+    await this.dao.createCommentLike(comment, profile)
+
+    return res.status(200).json({ message: 'Succesfully added commentLike' })
+  }
+
+  public deleteCommentLike = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+    const comment = await this.dao.getComment(id)
+
+    if (!comment || !profile) return res.status(404).json({ message: 'Invalid profile or comment id given' })
+
+    const result = await this.dao.deleteCommentLike(comment, profile)
+
+    if (result.affected < 1) {
+      return res.status(404).json(
+        { message: 'No comment found with given comment id and profile, therefore none were deleted' }
+      )
+    }
+
+    return res.status(200).json({ message: 'Succesfully added commentLike' })
+  }
+
   public createComment = async (req: Request | any, res: Response): Promise<Response> => {
     const newComment = new Comment()
     const { path, content, parent_comment_id } = req.body

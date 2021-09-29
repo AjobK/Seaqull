@@ -1,10 +1,10 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import comment from './comment'
 import { Profile } from './profile'
 
 @Entity('profile_comment_like')
 export class ProfileCommentLike extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number
 
     @ManyToOne(() => Profile, (Profile) => Profile.id)

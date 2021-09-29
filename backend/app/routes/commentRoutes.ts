@@ -18,6 +18,8 @@ class CommentRoutes implements RouterBase {
       this.router.get(this.comment + '/:path', this.commentController.getComments)
       this.router.get(this.comment + '/likes/:id', this.commentController.getCommentLikes)
       this.router.post(this.comment, isAuth, this.commentController.createComment)
+      this.router.post(this.comment + '/likes/:id', isAuth, this.commentController.createCommentLike)
+      this.router.delete(this.comment + '/likes/:id', isAuth, this.commentController.deleteCommentLike)
       this.router.delete(this.comment + '/:id', isAuth, this.commentController.deleteComment)
     }
 }
