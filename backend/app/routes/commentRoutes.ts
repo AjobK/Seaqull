@@ -1,6 +1,7 @@
 import RouterBase from '../interfaces/RouterBase'
 import * as express from 'express'
 import CommentController from '../controllers/commentController'
+
 const isAuth = require('../middlewares/isAuth')
 
 class CommentRoutes implements RouterBase {
@@ -15,6 +16,7 @@ class CommentRoutes implements RouterBase {
 
     public initRoutes(): void {
       this.router.get(this.comment + '/:path', this.commentController.getComments)
+      this.router.get(this.comment + '/likes/:id', this.commentController.getCommentLikes)
       this.router.post(this.comment, isAuth, this.commentController.createComment)
       this.router.delete(this.comment + '/:id', isAuth, this.commentController.deleteComment)
     }

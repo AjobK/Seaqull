@@ -15,18 +15,28 @@ import URLUtil from '../../util/urlUtil'
 class CommentSection extends Component {
   constructor(props) {
     super(props)
-    this.state = { comments: [] }
+    this.state = { comments: [], commentLikes: [] }
   }
 
   loadComments() {
     const path = URLUtil.getLastPathArgument()
-    const url = `http://localhost:8000/api/comment/${path}`
+    const postCommentsUrl = `http://localhost:8000/api/comment/${path}`
+    const profileLikeCommentsUrl = 'http://localhost:8000/api/comment/likes/'
 
-    Axios.get(url)
+    Axios.get(postCommentsUrl)
       .then((response) => {
         // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
         this.setState({ comments: [] }, () => {
-          this.setState({ comments: this.nestComments(response.data) })
+          response.data.forEach((comment) => {
+            Axios.get(profileLikeCommentsUrl + comment.id)
+              .then((response) => {
+                comment.likes = response.data
+                const comments = this.state.comments
+                comments.push(comment)
+                this.setState({ comments: this.nestComments(comments) })
+              })
+          })
+
         })
       })
       .catch((err) => {
@@ -91,7 +101,7 @@ class CommentSection extends Component {
           {this.displayCommentForm()}
           {this.state.comments && this.state.comments.length > 0 ? (
             this.state.comments.map((comment) => (
-              <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd } />
+              <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd }/>
             ))
           ) : (
             <p className="noComment">No comments</p>

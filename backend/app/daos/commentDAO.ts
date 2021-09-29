@@ -41,7 +41,7 @@ class CommentDAO {
 
       comment.archived_at = archiveDate
 
-      if(children) {
+      if (children) {
         children.forEach((child) => {
           child.archived_at = archiveDate
         })
@@ -50,6 +50,17 @@ class CommentDAO {
       }
 
       return repository.save(comment)
+    }
+
+    public async getCommentLikes(id: number) {
+      const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
+
+      const profileCommentLikes = await repository.createQueryBuilder('commentLike')
+        .leftJoinAndSelect('commentLike.profile', 'profile')
+        .where('commentLike.id = :id', { id })
+        .getMany()
+
+      return profileCommentLikes
     }
 }
 

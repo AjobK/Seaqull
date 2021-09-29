@@ -23,6 +23,15 @@ class CommentController {
     else return res.status(404).json({ message: 'No comments found on that path' })
   }
 
+  public getCommentLikes = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const foundCommentLikes = await this.dao.getCommentLikes(Number(id))
+
+    if (id && foundCommentLikes) return res.status(200).json(foundCommentLikes)
+    else return res.status(204).json([])
+  }
+
   public createComment = async (req: Request | any, res: Response): Promise<Response> => {
     const newComment = new Comment()
     const { path, content, parent_comment_id } = req.body

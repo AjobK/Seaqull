@@ -15,6 +15,7 @@ class Comment extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      likes: props.comment.likes,
       editorState:
         props.comment.content != null
           ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.comment.content)))
@@ -90,6 +91,25 @@ class Comment extends Component {
     this.setState({ isDeleting: false })
   }
 
+  onLikeClick = () => {
+    const { profile } = this.props.store
+    let profileHasLiked = false
+
+    this.state.likes.forEach((like) => {
+      // if user has liked set true else keep false
+    })
+
+    profileHasLiked ? this.onLikeComment() : this.onUnlikeComment()
+  }
+
+  onLikeComment = () => {
+
+  }
+
+  onUnlikeComment = () => {
+    // delete entry from likes
+  }
+
   displayReplyButton = () => {
     if (!this.isReply) {
       return (
@@ -141,6 +161,15 @@ class Comment extends Component {
                 )}
                 {profile.loggedIn && comment.profile.display_name === profile.display_name && (
                   <>
+                    <div className={ styles.like__wrapper }>
+                      <Icon
+                        iconName={ 'Heart' }
+                        className={ styles.comment__likeButtonIcon }
+                        onClick={ this.onLikeClick }
+                      />
+                      <p>{ this.state.likes.length }</p>
+                    </div>
+                    <span className={ styles.seperator }></span>
                     <Icon
                       iconName={ 'Trash' }
                       className={ styles.comment__deleteButtonIcon }

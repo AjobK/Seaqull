@@ -154,6 +154,7 @@
 		color: $textdark;
 		font-size: 1.2rem;
 		margin-right: 10px;
+
 		&:hover {
 			color: $primary;
 			cursor: pointer;
@@ -208,6 +209,28 @@
 	border: none;
 
 	@include noselect;
+}
+
+.like__wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	.comment__likeButtonIcon {
+		color: $textdark;
+		font-size: 1.2rem;
+		margin-right: 10px;
+
+		&:hover {
+			color: $primary;
+			cursor: pointer;
+		}
+	}
+
+	p {
+		font-size: 1.2rem;
+		margin-right: 10px;
+	}
 }
 
 .isReplying {
