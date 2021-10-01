@@ -300,20 +300,23 @@ class ProfileController {
   private updateAttachment = async (username, file, type): Promise<any> => {
     const profile = await this.dao.getProfileByUsername(username)
     const attachments = await this.dao.getProfileAttachments(profile.id)
-    const location = await this.fileService.storeImage(file, type)
 
     let attachment = attachments[type]
     let dimensions
     let typeDefaultPath = 'default/'
+    let filePath
 
     if (type === AVATAR) {
       dimensions = 800
+      filePath = 'profile/avatar'
       typeDefaultPath += 'defaultAvatar.png'
     } else if (type === BANNER) {
       dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
+      filePath = 'profile/banner'
       typeDefaultPath += 'defaultBanner.jpg'
     }
 
+    const location = await this.fileService.storeImage(file, filePath)
     await this.fileService.convertImage(location, dimensions)
 
     if (attachment.path !== typeDefaultPath) {

@@ -39,7 +39,7 @@ class Cropper extends Component {
   getCrop = () => {
     let aspect
 
-    switch (props.inputType) {
+    switch (this.props.inputType) {
       case this.AVATAR:
         aspect = this.AVATAR_ASPECT
 
@@ -139,8 +139,22 @@ class Cropper extends Component {
     const fd = new FormData()
     fd.append('file', image)
 
-    const { inputType } = this.props
-    let address = this.props.store.defaultData.backendUrl + '/profile/' + inputType
+    const { inputType, store } = this.props
+    let address = store.defaultData.backendUrl
+
+    switch (inputType) {
+      case this.AVATAR:
+      case this.BANNER:
+        address = address + '/profile/' + inputType
+
+        break
+      case this.THUMBNAIL:
+        address = address + '/post/' + inputType
+
+        break
+    }
+
+    console.log(address)
 
     Axios.put(address, fd, {
       withCredentials: true,
