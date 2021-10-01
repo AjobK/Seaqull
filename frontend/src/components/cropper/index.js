@@ -12,22 +12,17 @@ class Cropper extends Component {
   constructor(props) {
     super(props)
 
-    this.BANNER = 'banner'
     this.AVATAR = 'avatar'
+    this.BANNER = 'banner'
+    this.THUMBNAIL = 'thumbnail'
 
-    let crop = {
-      unit: '%',
-      width: 100,
-      aspect: 1,
-    }
-
-    if (props.inputType === this.BANNER) {
-      crop.aspect = 16 / 9
-    }
+    this.BANNER_ASPECT = 16 / 9
+    this.AVATAR_ASPECT = 1
+    this.THUMBNAIL_ASPECT = 16 / 9
 
     this.state = {
       inputImage: null,
-      crop,
+      crop: this.getCrop(),
       error: '',
     }
   }
@@ -39,6 +34,31 @@ class Cropper extends Component {
 
   componentWillUnmount() {
     this.setScrollEnabled(true)
+  }
+
+  getCrop = () => {
+    let aspect
+
+    switch (props.inputType) {
+      case this.AVATAR:
+        aspect = this.AVATAR_ASPECT
+
+        break
+      case this.BANNER:
+        aspect = this.BANNER_ASPECT
+
+        break
+      case this.THUMBNAIL:
+        aspect = this.THUMBNAIL_ASPECT
+
+        break
+    }
+
+    return {
+      unit: '%',
+      width: 100,
+      aspect,
+    }
   }
 
   onImageLoaded = (image) => {
