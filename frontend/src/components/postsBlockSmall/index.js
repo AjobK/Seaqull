@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Icon } from '../../components'
 import { TimeUtil } from '../../util/'
 import styles from './postsBlockSmall.scss'
-import defaultThumbnail from '../../static/images/default-thumbnail.jpg'
 import ReactTooltip from 'react-tooltip'
 
 class PostsBlockSmall extends Component {
@@ -47,7 +46,7 @@ class PostsBlockSmall extends Component {
             </ReactTooltip>
           </div>
           <a href={ `posts/${post.path}` }>
-            <img src={ defaultThumbnail } alt={ 'post' } />
+            <img src={ post.thumbnail } alt={ 'post' } />
           </a>
         </div>
         <div className={ styles.smallContent }>

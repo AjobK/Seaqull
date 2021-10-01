@@ -66,11 +66,12 @@ export default class CreateObjects implements Seeder {
 
       const profilePic = await attachmentSeeder(factory, 'default/defaultAvatar.png')
       const bannerPic = await attachmentSeeder(factory, 'default/defaultBanner.jpg')
+      const thumbnailPic = await attachmentSeeder(factory, 'default/defaultThumbnail.jpg')
 
-      await accountSeeder(factory, userRole, profilePic, bannerPic)
-      await accountSeeder(factory, modRole, profilePic, bannerPic)
-      await accountSeeder(factory, adminRole, profilePic, bannerPic)
-      await accountSeeder(factory, headAdminRole, profilePic, bannerPic)
+      await accountSeeder(factory, userRole, profilePic, bannerPic, thumbnailPic)
+      await accountSeeder(factory, modRole, profilePic, bannerPic, thumbnailPic)
+      await accountSeeder(factory, adminRole, profilePic, bannerPic, thumbnailPic)
+      await accountSeeder(factory, headAdminRole, profilePic, bannerPic, thumbnailPic)
 
       const userPermissionsObjects = await permissionSeeder(
         this.permissionsUsers,

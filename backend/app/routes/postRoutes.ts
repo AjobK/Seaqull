@@ -1,6 +1,7 @@
 import * as express from 'express'
 import PostService from '../controllers/postController'
 import RouterBase from '../interfaces/RouterBase'
+import FileService from '../utils/fileService'
 
 const auth = require('../middlewares/isAuth.ts')
 const hasPostPermission = require('../middlewares/hasPostPermission.ts')
@@ -9,9 +10,11 @@ class PostRoutes implements RouterBase {
   public post = '/post'
   public router = express.Router()
   private postService: PostService
+  private upload
 
   constructor() {
     this.postService = new PostService()
+    this.upload = new FileService().getUpload()
     this.initRoutes()
   }
 
@@ -31,6 +34,11 @@ class PostRoutes implements RouterBase {
     this.router.put(this.post + '/archive/:path', auth, hasPostPermission, this.postService.archivePost)
     this.router.post(this.post + '/view', this.postService.addViewToPost)
     this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
+    this.router.put(
+      this.post + '/thumbnail/:path',
+      auth, hasPostPermission, this.upload.single('file'),
+      this.postService.updatePostThumbnail
+    )
   }
 }
 
