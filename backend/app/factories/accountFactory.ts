@@ -18,7 +18,7 @@ define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attach
   acc.profile = createdUser
   acc.role = createdRole
   acc.user_name = name
-  acc.email = name + '@gmail.com'
+  acc.email = name.toLocaleLowerCase() + '@seaqull.com'
   acc.last_ip = '127.0.0.1'
   acc.login_attempts_counts = 0
   acc.locked_to = null
