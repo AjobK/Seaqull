@@ -199,6 +199,7 @@ class Post extends App {
       <Standard className={ [styles.stdBgWhite] }>
         <PostBanner
           author={ this.props.new ? ownerAuthor : author }
+          post={ this.state.post }
           isOwner={ isOwner }
         />
         <Section noTitle>

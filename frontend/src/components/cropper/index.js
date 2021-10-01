@@ -149,7 +149,7 @@ class Cropper extends Component {
 
         break
       case this.THUMBNAIL:
-        address = address + '/post/' + inputType
+        address = address + '/post/' + inputType + '/' + this.props.entityId
 
         break
     }

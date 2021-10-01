@@ -108,6 +108,7 @@ class PostBanner extends Component {
             <Cropper
               inputType={ 'thumbnail' }
               img={ this.state.upThumbnail }
+              entityId={ this.props.post.path }
               closeCropper={ this.closeCropper }
               changeImage={ this.changeThumbnail }
             />
