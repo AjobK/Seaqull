@@ -154,8 +154,6 @@ class Cropper extends Component {
         break
     }
 
-    console.log(address)
-
     Axios.put(address, fd, {
       withCredentials: true,
       'content-type': 'multipart/form-data',

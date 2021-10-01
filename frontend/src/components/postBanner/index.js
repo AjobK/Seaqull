@@ -11,6 +11,7 @@ class PostBanner extends Component {
     super(props)
 
     this.state = {
+      thumbnail: this.props.post.thumbnail,
       popUpOpen: false,
       draggingOverThumbnail: true
     }
@@ -81,7 +82,7 @@ class PostBanner extends Component {
         ) }
         <div
           className={ styles.background }
-          style={ { backgroundImage: `url(${ author.bannerURL })` } }
+          style={ { backgroundImage: `url(${ this.state.thumbnail })` } }
         />
 
         <div className={ styles.innerWrapper }>

@@ -58,9 +58,7 @@ class Post extends App {
         let newPost
 
         newPost = {
-          title: post.title,
-          content: post.content,
-          description: post.description,
+          ...post,
           path: this.postPath,
           likes: {
             amount: likes.amount,
@@ -71,8 +69,8 @@ class Post extends App {
         try {
           newPost = {
             ...newPost,
-            title: convertFromRaw(JSON.parse(newPost.title)),
-            content: convertFromRaw(JSON.parse(newPost.content)),
+            title: convertFromRaw(JSON.parse(post.title)),
+            content: convertFromRaw(JSON.parse(post.content)),
           }
         } catch (e) {
 

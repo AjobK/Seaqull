@@ -286,6 +286,7 @@ class PostController {
     return null
   }
 
+  // TODO: delete post thumbnail?
   public archivePost = async (req: any, res: Response): Promise<any> => {
     const post = await this.dao.getPostByPath(req.params.path)
 
@@ -335,10 +336,7 @@ class PostController {
     await this.fileService.convertImage(location, dimensions)
 
     if (attachment.path !== typeDefaultPath) {
-      this.fileService.deleteImage(attachment.path)
-      attachment.path = location
-
-      return await this.attachmentDAO.saveAttachment(attachment)
+      return await this.deleteThumbnailAttachment(attachment, location)
     }
 
     const typeField = 'thumbnail_attachment'
@@ -349,6 +347,13 @@ class PostController {
     await this.dao.updatePost(post)
 
     return post[typeField]
+  }
+
+  private deleteThumbnailAttachment = async (attachment: Attachment, location: string) => {
+    this.fileService.deleteImage(attachment.path)
+    attachment.path = location
+
+    return await this.attachmentDAO.saveAttachment(attachment)
   }
 
   private getPostThumbnailURL = async (postId: number) => {
