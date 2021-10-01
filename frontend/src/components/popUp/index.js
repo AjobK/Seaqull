@@ -11,14 +11,12 @@ class PopUp extends Component {
     this.setScrollDisabled(true)
   }
 
-  setScrollDisabled = (scrollDisabled) => {
-    document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
+  componentWillUnmount() {
+    this.setScrollDisabled(false)
   }
 
-  closePopUp = () => {
-    this.setScrollDisabled(false)
-
-    this.props.content.close()
+  setScrollDisabled = (scrollDisabled) => {
+    document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
   }
 
   render() {
@@ -26,7 +24,8 @@ class PopUp extends Component {
 
     return (
       <div className={ styles.popUpWrapper }>
-        <div className={ styles.popUpBackground } onClick={ canCloseWithClick ? this.closePopUp : undefined } />
+        <div className={ styles.popUpBackground }
+          onClick={ canCloseWithClick ? this.props.content.close : undefined } />
         <div className={ styles.popUp }>
           <div className={ styles.popUpHeader }>
             { title && (
@@ -38,7 +37,7 @@ class PopUp extends Component {
               </h2>
             )}
             { canCloseWithClick &&
-              <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
+              <button className={ styles.popUpHeaderClose } onClick={ this.props.content.close }>
                 <Icon iconName={ 'Times' } />
               </button>
             }

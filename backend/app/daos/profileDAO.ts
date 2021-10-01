@@ -38,12 +38,12 @@ class ProfileDAO {
       relations: ['follower', 'follower.avatar_attachment', 'follower.title']
     })
 
-    return followers;
+    return followers
   }
 
   public async getUserByEmail(email: string): Promise<Profile> {
     const repositoryAccount = await DatabaseConnector.getRepository('Account')
-    const account = await repositoryAccount.find({ email: email })
+    const account = await repositoryAccount.findOne({ email: email })
 
     return account
   }
