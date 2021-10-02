@@ -17,10 +17,10 @@ class UserBanner extends Component {
       upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false,
-      following: this.props.user.following || false,
-      followsYou: this.props.user.followsYou || false,
       banUser: false
     }
+
+    console.log(this.props.user + '')
   }
 
   onEditAvatar = (input) => {
@@ -112,7 +112,8 @@ class UserBanner extends Component {
   }
 
   getFollowText = () => {
-    const { followsYou, following } = this.state
+    const followsYou = this.props.user.followsYou
+    const following = this.props.user.following
 
     if (followsYou) {
       return following ? 'Unfriend' : 'Follow back'
