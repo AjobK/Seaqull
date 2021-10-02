@@ -50,7 +50,6 @@ class PostController {
       }
     }
 
-    // TODO: Is it fine to repeat this DAO request for each post?
     for (const post of posts) {
       post.thumbnail = await this.getPostThumbnailURL(post.id)
     }
