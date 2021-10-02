@@ -63,6 +63,11 @@ class PostBanner extends Component {
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
+        <div
+          className={ styles.background }
+          style={ { backgroundImage: `url(${ this.state.thumbnail })` } }
+        />
+
         { this.props.isOwner && (
           <div className={ styles.wrapperThumbnailEdit }>
             <input
@@ -80,10 +85,6 @@ class PostBanner extends Component {
             </div>
           </div>
         ) }
-        <div
-          className={ styles.background }
-          style={ { backgroundImage: `url(${ this.state.thumbnail })` } }
-        />
 
         <div className={ styles.innerWrapper }>
           <div className={ styles.info }>

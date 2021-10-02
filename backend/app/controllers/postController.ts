@@ -286,7 +286,6 @@ class PostController {
     return null
   }
 
-  // TODO: delete post thumbnail?
   public archivePost = async (req: any, res: Response): Promise<any> => {
     const post = await this.dao.getPostByPath(req.params.path)
 
