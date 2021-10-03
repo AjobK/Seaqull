@@ -49,7 +49,7 @@
       "express-oas-generator": "^1.0.41",
       "file-type": "^16.3.0",
       "jsonwebtoken": "^8.5.1",
-      "multer": "^2.0.0-rc.1",
+      "multer": "2.0.0-rc.2",
       "node-grecaptcha-verify": "^2.0.1",
       "nodemon": "^2.0.6",
       "npm-watch": "^0.7.0",
