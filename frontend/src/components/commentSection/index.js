@@ -15,7 +15,7 @@ import URLUtil from '../../util/urlUtil'
 class CommentSection extends Component {
   constructor(props) {
     super(props)
-    this.state = { comments: [], commentLikes: [] }
+    this.state = { isPostOwner: props.isPostOwner, comments: [], commentLikes: [] }
   }
 
   loadComments() {
@@ -95,7 +95,24 @@ class CommentSection extends Component {
       return comment.parent_comment_id === null
     })
 
-    return filteredComments
+    const pinnedComments = []
+    const unpinnedComments = []
+
+    filteredComments.forEach((comment) => {
+      if (comment.is_pinned) {
+        pinnedComments.push(comment)
+      } else {
+        unpinnedComments.push(comment)
+      }
+    })
+
+    const filteredSortedComments = pinnedComments.sort((a, b) => {
+      return a.likes.length < b.likes.length ? 1 : -1
+    }).concat(unpinnedComments.sort((a, b) => {
+      return a.likes.length < b.likes.length ? 1 : -1
+    }))
+
+    return filteredSortedComments
   }
 
   render() {
@@ -105,7 +122,12 @@ class CommentSection extends Component {
           {this.displayCommentForm()}
           {this.state.comments && this.state.comments.length > 0 ? (
             this.state.comments.map((comment) => (
-              <Comment key={ comment.id } comment={ comment } onReplyAdd={ this.onCommentAdd }/>
+              <Comment
+                key={ comment.id }
+                isPostOwner={ this.state.isPostOwner }
+                comment={ comment }
+                onReplyAdd={ this.onCommentAdd }
+              />
             ))
           ) : (
             <p className="noComment">No comments</p>

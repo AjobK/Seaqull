@@ -41,7 +41,7 @@ export class Comment extends BaseEntity {
     @Column({ nullable: true })
     archived_at: Date
 
-    @Column({ nullable: true })
+    @Column({ default: false })
     is_pinned: boolean
 }
 

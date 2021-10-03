@@ -15,7 +15,9 @@ class Comment extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isPinned: props.comment.is_pinned,
       likes: props.comment.likes,
+      isPostOwner: props.isPostOwner,
       editorState:
         props.comment.content != null
           ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.comment.content)))
@@ -92,7 +94,7 @@ class Comment extends Component {
   }
 
   onLikeClick = () => {
-    const url = `http://localhost:8000/api/comment/likes/${this.props.comment.id}`
+    const url = `http://localhost:8000/api/comment/likes/${this.props.comment.id}/`
     this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
   }
 
@@ -119,6 +121,17 @@ class Comment extends Component {
             profileHasLiked: false,
             length: this.state.likes.length - 1
           }
+        })
+      })
+  }
+
+  onPinClick = () => {
+    const url = `http://localhost:8000/api/comment/${this.props.comment.id}/${this.state.isPinned ? 'un' : ''}pin`
+
+    axios.patch(url, null, { withCredentials: true })
+      .then(() => {
+        this.setState({
+          isPinned: !this.state.isPinned
         })
       })
   }
@@ -151,6 +164,17 @@ class Comment extends Component {
                       {comment.profile.display_name}
                     </Link>
                   </div>
+                  { this.state.isPinned && (
+                      <>
+                      <div className={ styles.comment__headerIsPinned }>
+                        <Icon
+                          iconName={ 'MapMarker' }
+                          className={ styles.comment__headerPinIcon }
+                        />
+                        <p>Pinned by the author</p>
+                      </div>
+                    </>
+                  ) }
                   <div className={ styles.comment__headerPublishedTime }>
                     {TimeUtil.timeAgo(new Date(comment.created_at))}
                   </div>
@@ -172,8 +196,21 @@ class Comment extends Component {
                     <span className={ styles.seperator }></span>
                   </>
                 )}
-                {profile.loggedIn && comment.profile.display_name === profile.display_name && (
+                { profile.loggedIn && comment.profile.display_name === profile.display_name && (
                   <>
+                  { this.state.isPostOwner && (
+                    <>
+                    <Icon
+                      iconName={ 'MapMarker' }
+                      className={ `
+                        ${styles.comment__pinButtonIcon} 
+                        ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                      ` }
+                      onClick={ this.onPinClick }
+                    />
+                    <span className={ styles.seperator }></span>
+                    </>
+                  ) }
                     <div className={ styles.like__wrapper }>
                       <Icon
                         iconName={ 'Heart' }
@@ -193,16 +230,16 @@ class Comment extends Component {
                       className={ styles.comment__deleteButtonIcon }
                       onClick={ this.onDeleteClick }
                     />
-                    {!this.isReply && <span className={ styles.seperator }></span>}
+                    { !this.isReply && <span className={ styles.seperator }></span> }
                   </>
-                )}
-                {profile.loggedIn && this.displayReplyButton()}
+                ) }
+                { profile.loggedIn && this.displayReplyButton() }
               </div>
             </div>
           </div>
-          {profile.loggedIn && this.displayCommentForm()}
-          {showReplies && <CommentChildren commentChildren={ comment.children } />}
-          {this.state.isDeleting && (
+          { profile.loggedIn && this.displayCommentForm() }
+          { showReplies && <CommentChildren commentChildren={ comment.children } /> }
+          { this.state.isDeleting && (
             <Dialog
               header="Deleting comment"
               body="Are you sure you want to delete this comment?"

@@ -3,7 +3,6 @@ import Comment from '../entities/comment'
 import ProfileDAO from '../daos/profileDAO'
 import CommentDAO from '../daos/commentDAO'
 import PostDAO from '../daos/postDAO'
-import Profile from '../entities/profile'
 
 class CommentController {
   private dao: CommentDAO
@@ -22,6 +21,44 @@ class CommentController {
 
     if (path && foundComments) return res.status(200).json(foundComments)
     else return res.status(404).json({ message: 'No comments found on that path' })
+  }
+
+  public pinComment = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const post = await this.postDAO.getPostByPath(await this.dao.getPostPathByCommentId(id))
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+
+    if (profile.id === post.profile.id) {
+      await this.dao.pinComment(id)
+
+      return res.status(200).json({ message: 'Succesfully pinned comment' })
+    }
+
+    if (!post) {
+      return res.status(404).json({ message: 'Comment or post not found' })
+    }
+
+    return res.status(401).json({ message: 'Invalid user' })
+  }
+
+  public unpinComment = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const post = await this.postDAO.getPostByPath(await this.dao.getPostPathByCommentId(id))
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+
+    if (profile.id === post.profile.id) {
+      await this.dao.unpinComment(id)
+
+      return res.status(200).json({ message: 'Succesfully unpinned comment' })
+    }
+
+    if (!post) {
+      return res.status(404).json({ message: 'Comment or post not found' })
+    }
+
+    return res.status(401).json({ message: 'Invalid user' })
   }
 
   public getCommentLikes = async (req: Request, res: Response): Promise<Response> => {
@@ -97,6 +134,7 @@ class CommentController {
     newComment.parent_comment_id = parent_comment_id
     newComment.created_at = new Date()
     newComment.updated_at = new Date()
+    newComment.is_pinned = false
 
     await this.dao.createComment(newComment)
 

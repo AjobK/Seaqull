@@ -65,10 +65,18 @@ class CommentDAO {
       return profileCommentLikes
     }
 
+    public async getPostPathByCommentId(id: number): Promise<string> {
+      const repository = await DatabaseConnector.getRepository('Comment')
+
+      const comment = await repository.findOne({ where: { id: id }, relations: ['post'] })
+
+      return comment.post.path
+    }
+
     public async createCommentLike(comment: Comment, profile: Profile): Promise<void> {
       const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
 
-      if ((await repository.find({ profile: profile.id })).length > 0) {
+      if ((await repository.find({ profile: profile.id, comment: comment.id })).length > 0) {
         return
       }
 
@@ -87,6 +95,26 @@ class CommentDAO {
       const result = await repository.delete({ profile: profile.id, comment: comment.id })
 
       return result
+    }
+
+    async pinComment(id: number): Promise<void> {
+      const repository = await DatabaseConnector.getRepository('Comment')
+
+      const comment = await repository.findOne(id)
+
+      comment.is_pinned = true
+
+      repository.save(comment)
+    }
+
+    async unpinComment(id: number): Promise<void> {
+      const repository = await DatabaseConnector.getRepository('Comment')
+
+      const comment = await repository.findOne(id)
+
+      comment.is_pinned = false
+
+      repository.save(comment)
     }
 }
 

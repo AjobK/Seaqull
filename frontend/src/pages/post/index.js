@@ -272,7 +272,7 @@ class Post extends App {
             </ReactTooltip>
           </div>
         </Section>
-        { !this.props.new && <CommentSection/> }
+        { !this.props.new && <CommentSection isPostOwner={ this.state.isOwner } /> }
       </Standard>
     )
   }
