@@ -377,7 +377,7 @@ class ProfileController {
 
     if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) errors.push('Lowercase and uppercase letters')
 
-    if (password.search(/\d/) < 1) errors.push('Atleast one numeric character')
+    if (password.search(/\d/) < 0) errors.push('Atleast one numeric character')
 
     return errors
   }
