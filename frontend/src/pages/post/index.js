@@ -9,7 +9,7 @@ import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
-import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews } from '../../components'
+import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews, Loader } from '../../components'
 
 @inject('store')
 @observer
@@ -97,6 +97,23 @@ class Post extends App {
           isEditing: true,
           author: author
         }, this.addViewToDB)
+      })
+      .catch((e) => {
+        let { name, message } = e.toJSON()
+
+        if (e?.response?.data?.message) {
+          message = e.response.data.message
+        } else if (e?.response?.statusText) {
+          message = e.response.statusText
+        }
+
+        this.props.history.push({
+          pathname: '/error',
+          state: {
+            title: e.response ? e.response.status : name,
+            sub: message
+          }
+        })
       })
   }
 
@@ -193,7 +210,8 @@ class Post extends App {
       title: profile.title
     }
 
-    if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
+    if (!loaded && !this.props.new)
+      return <Loader />
 
     return (
       <Standard className={ [styles.stdBgWhite] }>
@@ -272,7 +290,7 @@ class Post extends App {
             </ReactTooltip>
           </div>
         </Section>
-        { !this.props.new && <CommentSection/> }
+        { !this.props.new && <CommentSection isPostOwner={ this.state.isOwner } /> }
       </Standard>
     )
   }
