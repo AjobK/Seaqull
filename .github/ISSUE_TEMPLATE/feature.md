@@ -1,23 +1,26 @@
 ---
 name: Feature
-about: Suggest an idea for Seaqull
-title: ''
-labels: ''
+about: Used for new functionalities and features.
+title: "[000] Issue Title"
+labels: Backlog
 assignees: ''
 
- ---
+---
 
- **Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Current state**
+Describe the state of the application before this issue would be completed.
 
- **Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Expected state**
+Describe the state of the application after this issue would be completed.
 
- **Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**TO DO**
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+- [ ] Task ...
 
- **Additional context**
-Add any other context or designs about the feature request here.
+**Necessities**
+#0
 
- **D.O.D.**
-Describe when your feature would be complete!
+**Branch**
+<issue-number>-<issue-name>

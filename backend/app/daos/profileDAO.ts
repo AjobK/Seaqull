@@ -38,7 +38,7 @@ class ProfileDAO {
       relations: ['follower', 'follower.avatar_attachment', 'follower.title']
     })
 
-    return followers;
+    return followers
   }
 
   public async getUserByEmail(email: string): Promise<Profile> {
