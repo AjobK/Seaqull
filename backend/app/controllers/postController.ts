@@ -181,7 +181,8 @@ class PostController {
     const foundPost = await this.dao.getPostByPath(req.params.path)
 
     const foundLike = await this.dao.findLikeByPostAndProfile(foundPost, profile)
-    const removedLike = await this.dao.unlikePost(foundLike)
+
+    const removedLike = foundLike ? await this.dao.unlikePost(foundLike) : null
 
     if (removedLike && removedLike.affected > 0) {
       return res.status(200).json({ 'message': 'Like removed!' })
