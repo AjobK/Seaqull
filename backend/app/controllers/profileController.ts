@@ -249,8 +249,9 @@ class ProfileController {
         new Date().getTime() + 86409000
       ).toUTCString()}; path=/`
     )
+
     res.status(200).json({
-      user: newAccount,
+      user: newAccount
     })
     res.send()
 
@@ -377,7 +378,7 @@ class ProfileController {
 
     if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) errors.push('Lowercase and uppercase letters')
 
-    if (password.search(/\d/) < 1) errors.push('Atleast one numeric character')
+    if (password.search(/\d/) < 0) errors.push('Atleast one numeric character')
 
     return errors
   }
@@ -420,6 +421,11 @@ class ProfileController {
   }
 
   private cleanAccount = (account: Account): Account => {
+    /** TODO: (Ajob) This REALLY needs to be fixed.
+    / *       If we were to add more fields with sensitive
+    / *       information, it is easy to forget to add in the
+    / *       delete list. Whitelist instead of blocklist.
+    / * */
     delete account.password
     delete account.changed_pw_at
     delete account.login_attempts_counts

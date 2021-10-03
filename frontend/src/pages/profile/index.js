@@ -3,10 +3,10 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
-import Error from '../error'
 import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
 import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
+import { withRouter } from 'react-router'
 
 @inject('store')
 @observer
@@ -18,7 +18,6 @@ class Profile extends App {
 
     this.state = {
       user: null,
-      error: false,
       posts: [],
       likes: [],
       isOwner: false,
@@ -44,8 +43,16 @@ class Profile extends App {
       .then(() => {
         this.fetchLikedPosts(this.state.user.username)
       })
-      .catch(() => {
-        this.setState({ error: true })
+      .catch((e) => {
+        const { name, message } = e.toJSON()
+
+        this.props.history.push({
+          pathname: '/error',
+          state: {
+            title: e.response ? e.response.status : name,
+            sub: e.response ? e.response.statusText : message
+          }
+        })
       })
   }
 
@@ -102,10 +109,10 @@ class Profile extends App {
   }
 
   render() {
-    const { user, error, isOwner } = this.state
+    const { user, isOwner } = this.state
     const { profile } = this.props.store
 
-    if (!user && !error) {
+    if (!user) {
       return (
         <Standard>
           <Loader />
@@ -115,10 +122,6 @@ class Profile extends App {
 
     if (this.props.match.params.path != user.username) {
       this.fetchProfileData(this.props.match.params.path)
-    }
-
-    if (error) {
-      return <Error></Error>
     }
 
     return (
@@ -160,4 +163,4 @@ class Profile extends App {
   }
 }
 
-export default Profile
+export default withRouter(Profile)
