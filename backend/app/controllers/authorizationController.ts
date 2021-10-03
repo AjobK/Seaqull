@@ -38,6 +38,15 @@ class AuthorizationController {
 
       return res.status(200).json({ loggedIn: true, profile: profile })
     } catch (error) {
+      if (req.cookies && req.cookies.token) {
+        /**
+         * TODO:  (Ajob) Added this to prevent token errors after `npm run reset`.
+         *        However, this needs to be fixed in a better way because you have
+         *        to refresh pages for this to work.
+         * */
+        this.logout(req, res)
+      }
+
       return res.status(401).send({ loggedIn: false })
     }
   }
