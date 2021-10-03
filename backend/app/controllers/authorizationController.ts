@@ -95,7 +95,10 @@ class AuthorizationController {
           new Date().getTime() + 86409000
         ).toUTCString()}; path=/`
       )
-      res.status(200).json({ ...account, loggedIn: true })
+
+      res.status(200).json({
+        user: account
+      })
       res.send()
     }
   }
