@@ -43,5 +43,6 @@ backend/ormconfig.docker.json
 backend/app/public/profile/banner/*
 backend/app/public/profile/avatar/*
 backend/app/public/post/thumbnail/*
+!backend/app/public/post/thumbnail/.gitkeep
 !backend/app/public/profile/banner/.gitkeep
 !backend/app/public/profile/avatar/.gitkeep
