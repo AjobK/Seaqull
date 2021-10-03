@@ -89,7 +89,7 @@
 				bottom: 0;
 				left: 0;
 				height: 2px;
-				width: 0%;
+				width: 0;
 				background-color: $primary;
 			}
 
@@ -114,6 +114,10 @@
 		margin-bottom: 10px;
 
 		&Author {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			height: 30px;
 			font-size: 1.2rem;
 			font-weight: 600;
 			&:link,
@@ -174,11 +178,13 @@
 	}
 
 	&__isPinned {
-		color: $primary;
+		background-color: $primary;
+		color: #FFFFFF;
 	}
 
 	&__isUnpinned {
-		color: $textdark;
+		background-color: $light-gray;
+		color: #FFFFFF;
 	}
 
 	&__deleteButtonIcon {
@@ -193,11 +199,18 @@
 	}
 
 	&__pinButtonIcon {
+		transform: rotate(45deg);
+		height: 25px;
+		width: 25px !important;
+		padding: 6px 5px 5px 5px;
+		border-radius: 20px;
 		font-size: 1.2rem;
 		margin-right: 10px;
+		transition: .2s ease-in-out;
 
 		&:hover {
-			color: $primary;
+
+			background-color: $primary;
 			cursor: pointer;
 		}
 	}

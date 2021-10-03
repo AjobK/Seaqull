@@ -160,21 +160,34 @@ class Comment extends Component {
               <div className={ styles.comment_content }>
                 <div className={ styles.comment__header }>
                   <div className={ styles.comment__headerAuthor }>
+                    { profile.loggedIn && this.state.isPostOwner && (
+                        <>
+                          <Icon
+                            iconName={ 'Thumbtack' }
+                            className={ `
+                              ${styles.comment__pinButtonIcon} 
+                              ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                            ` }
+                            onClick={ this.onPinClick }
+                          />
+                        </>
+                    ) }
+                    { this.state.isPinned && !this.state.isPostOwner || !profile.loggedIn && this.state.isPinned && (
+                        <>
+                          <Icon
+                            iconName={ 'Thumbtack' }
+                            className={ `
+                              ${styles.comment__pinButtonIcon} 
+                              ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                            ` }
+                            onClick={ this.onPinClick }
+                          />
+                        </>
+                    ) }
                     <Link to={ `/profile/${comment.profile.display_name}` } className={ styles.comment__headerAuthor }>
                       {comment.profile.display_name}
                     </Link>
                   </div>
-                  { this.state.isPinned && (
-                      <>
-                      <div className={ styles.comment__headerIsPinned }>
-                        <Icon
-                          iconName={ 'MapMarker' }
-                          className={ styles.comment__headerPinIcon }
-                        />
-                        <p>Pinned by the author</p>
-                      </div>
-                    </>
-                  ) }
                   <div className={ styles.comment__headerPublishedTime }>
                     {TimeUtil.timeAgo(new Date(comment.created_at))}
                   </div>
@@ -198,19 +211,6 @@ class Comment extends Component {
                 )}
                 { profile.loggedIn && comment.profile.display_name === profile.display_name && (
                   <>
-                  { this.state.isPostOwner && (
-                    <>
-                    <Icon
-                      iconName={ 'MapMarker' }
-                      className={ `
-                        ${styles.comment__pinButtonIcon} 
-                        ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
-                      ` }
-                      onClick={ this.onPinClick }
-                    />
-                    <span className={ styles.seperator }></span>
-                    </>
-                  ) }
                     <div className={ styles.like__wrapper }>
                       <Icon
                         iconName={ 'Heart' }
