@@ -50,12 +50,11 @@ class CommentSection extends Component {
     }
 
     return (
-      <p>
-        Please{' '}
+      <p className={ styles.loginToComment }>
         <Link to="/login" className={ styles.commentSection__highlightedLink }>
-          log in
-        </Link>{' '}
-        to comment to this post
+          Log in{ ' ' }
+        </Link>
+        to comment on this post
       </p>
     )
   }
