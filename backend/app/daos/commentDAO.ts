@@ -41,7 +41,7 @@ class CommentDAO {
 
       comment.archived_at = archiveDate
 
-      if(children) {
+      if (children) {
         children.forEach((child) => {
           child.archived_at = archiveDate
         })
