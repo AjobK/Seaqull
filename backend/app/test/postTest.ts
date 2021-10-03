@@ -25,7 +25,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('Should login because data is valid', (done) => {
+  it('login so we can test the user crud', (done) => {
     agent
       .post('/login')
       .send({
@@ -82,6 +82,24 @@ describe('testing crud post', () => {
       .get('/post/' + post.path)
       .end((err, res) => {
         assert.equal(res.body.post.title, id)
+        done()
+      })
+  })
+
+  it('archiving post', (done) => {
+    agent
+      .put('/post/archive/' + post.path)
+      .end((err, res) => {
+        assert.equal(res.status, 200)
+        done()
+      })
+  })
+
+  it('Checking if post is removed', (done) => {
+    agent
+      .get('/post/owned-by/User')
+      .end((err, res) => {
+        assert.notEqual(res.body[0].title, true)
         done()
       })
   })
