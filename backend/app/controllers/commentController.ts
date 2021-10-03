@@ -3,6 +3,7 @@ import Comment from '../entities/comment'
 import ProfileDAO from '../daos/profileDAO'
 import CommentDAO from '../daos/commentDAO'
 import PostDAO from '../daos/postDAO'
+import Profile from '../entities/profile'
 
 class CommentController {
   private dao: CommentDAO
@@ -28,8 +29,22 @@ class CommentController {
 
     const foundCommentLikes = await this.dao.getCommentLikes(Number(id))
 
-    if (id && foundCommentLikes) return res.status(200).json(foundCommentLikes)
+    if (foundCommentLikes) return res.status(200).json(foundCommentLikes)
     else return res.status(204).json([])
+  }
+
+  public getProfileLikedComment = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+    const foundCommentLikes = await this.dao.getCommentLikes(Number(id))
+    let profileHasLikedComment = false
+
+    foundCommentLikes.forEach((commentLike: any) => {
+      if (commentLike.profile.id === profile.id) profileHasLikedComment = true
+    })
+
+    return res.status(200).json(profileHasLikedComment)
   }
 
   public createCommentLike = async (req: Request | any, res: Response): Promise<Response> => {

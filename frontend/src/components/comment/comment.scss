@@ -216,8 +216,15 @@
 	flex-direction: row;
 	align-items: center;
 
-	.comment__likeButtonIcon {
+	.comment__hasLikedComment {
+		color: $primary;
+	}
+
+	.comment__hasNotLikedComment {
 		color: $textdark;
+	}
+
+	.comment__likeButtonIcon {
 		font-size: 1.2rem;
 		margin-right: 10px;
 

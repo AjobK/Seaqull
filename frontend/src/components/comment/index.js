@@ -92,22 +92,35 @@ class Comment extends Component {
   }
 
   onLikeClick = () => {
-    const { profile } = this.props.store
-    let profileHasLiked = false
-
-    this.state.likes.forEach((like) => {
-      // if user has liked set true else keep false
-    })
-
-    profileHasLiked ? this.onLikeComment() : this.onUnlikeComment()
+    const url = `http://localhost:8000/api/comment/likes/${this.props.comment.id}`
+    this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
   }
 
-  onLikeComment = () => {
+  onLikeComment = (url) => {
+    axios.post(url, undefined, { withCredentials: true })
+      .then(() => {
+        this.setState({
+          likes: {
+            commentLikes: this.state.likes.commentLikes,
+            profileHasLiked: true,
+            length: this.state.likes.length + 1
+          }
+        })
+      })
 
   }
 
-  onUnlikeComment = () => {
-    // delete entry from likes
+  onUnlikeComment = (url) => {
+    axios.delete(url, { withCredentials: true })
+      .then(() => {
+        this.setState({
+          likes: {
+            commentLikes: this.state.likes.commentLikes,
+            profileHasLiked: false,
+            length: this.state.likes.length - 1
+          }
+        })
+      })
   }
 
   displayReplyButton = () => {
@@ -164,7 +177,12 @@ class Comment extends Component {
                     <div className={ styles.like__wrapper }>
                       <Icon
                         iconName={ 'Heart' }
-                        className={ styles.comment__likeButtonIcon }
+                        className={ `
+                          ${styles.comment__likeButtonIcon}
+                          ${this.state.likes.profileHasLiked ?
+                          styles.comment__hasLikedComment :
+                          styles.comment__hasNotLikedComment}
+                        ` }
                         onClick={ this.onLikeClick }
                       />
                       <p>{ this.state.likes.length }</p>

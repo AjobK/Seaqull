@@ -22,6 +22,7 @@ class CommentSection extends Component {
     const path = URLUtil.getLastPathArgument()
     const postCommentsUrl = `http://localhost:8000/api/comment/${path}`
     const profileLikeCommentsUrl = 'http://localhost:8000/api/comment/likes/'
+    const profileHasLikedCommentUrl = 'http://localhost:8000/api/comment/likes/profileHasLiked/'
 
     Axios.get(postCommentsUrl)
       .then((response) => {
@@ -30,13 +31,16 @@ class CommentSection extends Component {
           response.data.forEach((comment) => {
             Axios.get(profileLikeCommentsUrl + comment.id)
               .then((response) => {
-                comment.likes = response.data
-                const comments = this.state.comments
-                comments.push(comment)
-                this.setState({ comments: this.nestComments(comments) })
+                const commentLikes = response.data
+                Axios.get(profileHasLikedCommentUrl + comment.id, { withCredentials: true })
+                  .then((response) => {
+                    comment.likes = { commentLikes, profileHasLiked: response.data, length: commentLikes.length }
+                    const comments = this.state.comments
+                    comments.push(comment)
+                    this.setState({ comments: this.nestComments(comments) })
+                  })
               })
           })
-
         })
       })
       .catch((err) => {
