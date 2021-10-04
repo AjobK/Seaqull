@@ -76,7 +76,9 @@ class CommentDAO {
     public async createCommentLike(comment: Comment, profile: Profile): Promise<void> {
       const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
 
-      if ((await repository.find({ profile: profile.id, comment: comment.id })).length > 0) {
+      const commentLikes = await repository.find({ profile: profile.id, comment: comment.id })
+
+      if (commentLikes.length > 0) {
         return
       }
 
@@ -101,7 +103,6 @@ class CommentDAO {
       const repository = await DatabaseConnector.getRepository('Comment')
 
       const comment = await repository.findOne(id)
-
       comment.is_pinned = true
 
       repository.save(comment)
@@ -111,7 +112,6 @@ class CommentDAO {
       const repository = await DatabaseConnector.getRepository('Comment')
 
       const comment = await repository.findOne(id)
-
       comment.is_pinned = false
 
       repository.save(comment)

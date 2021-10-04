@@ -20,9 +20,10 @@ class CommentSection extends Component {
 
   loadComments() {
     const path = URLUtil.getLastPathArgument()
-    const postCommentsUrl = `http://localhost:8000/api/comment/${path}`
-    const profileLikeCommentsUrl = 'http://localhost:8000/api/comment/likes/'
-    const profileHasLikedCommentUrl = 'http://localhost:8000/api/comment/likes/profileHasLiked/'
+    const { backendUrl } = this.props.store.defaultData
+    const postCommentsUrl = `${backendUrl}/comment/${path}`
+    const profileLikeCommentsUrl = `${backendUrl}/comment/likes/`
+    const profileHasLikedCommentUrl = `${backendUrl}/comment/likes/profileHasLiked/`
 
     Axios.get(postCommentsUrl)
       .then((response) => {
@@ -105,10 +106,10 @@ class CommentSection extends Component {
       }
     })
 
-    const filteredSortedComments = pinnedComments.sort((a, b) => {
-      return a.likes.length < b.likes.length ? 1 : -1
-    }).concat(unpinnedComments.sort((a, b) => {
-      return a.likes.length < b.likes.length ? 1 : -1
+    const filteredSortedComments = pinnedComments.sort((firstComparedPinnedComment, secondComparedPinnedComment) => {
+      return firstComparedPinnedComment.likes.length < secondComparedPinnedComment.likes.length ? 1 : -1
+    }).concat(unpinnedComments.sort((firstComparedComment, secondComparedComment) => {
+      return firstComparedComment.likes.length < secondComparedComment.likes.length ? 1 : -1
     }))
 
     return filteredSortedComments

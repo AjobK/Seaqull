@@ -216,9 +216,10 @@ class Comment extends Component {
                         iconName={ 'Heart' }
                         className={ `
                           ${styles.comment__likeButtonIcon}
-                          ${this.state.likes.profileHasLiked ?
-                          styles.comment__hasLikedComment :
-                          styles.comment__hasNotLikedComment}
+                          ${
+                            this.state.likes.profileHasLiked ?
+                              styles.comment__hasLikedComment : styles.comment__hasNotLikedComment
+                          }
                         ` }
                         onClick={ this.onLikeClick }
                       />

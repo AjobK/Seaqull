@@ -20,7 +20,7 @@ class CommentRoutes implements RouterBase {
       this.router.get(
         this.comment + '/likes/profileHasLiked/:id',
         isAuth,
-        this.commentController.getProfileLikedComment
+        this.commentController.getHasProfileLikedComment
       )
       this.router.post(this.comment, isAuth, this.commentController.createComment)
       this.router.post(this.comment + '/likes/:id', isAuth, this.commentController.createCommentLike)
