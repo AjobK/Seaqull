@@ -98,19 +98,19 @@ class Post extends App {
           author: author
         }, this.addViewToDB)
       })
-      .catch((e) => {
-        let { name, message } = e.toJSON()
+      .catch((error) => {
+        let { name, message } = error.toJSON()
 
-        if (e?.response?.data?.message) {
-          message = e.response.data.message
-        } else if (e?.response?.statusText) {
-          message = e.response.statusText
+        if (error?.response?.data?.message) {
+          message = error.response.data.message
+        } else if (error?.response?.statusText) {
+          message = error.response.statusText
         }
 
         this.props.history.push({
           pathname: '/error',
           state: {
-            title: e.response ? e.response.status : name,
+            title: error.response ? error.response.status : name,
             sub: message
           }
         })
