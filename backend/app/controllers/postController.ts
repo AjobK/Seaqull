@@ -72,6 +72,9 @@ class PostController {
 
     const foundPost = await this.dao.getPostByPath(req.params.path)
 
+    if (!foundPost)
+      return res.status(404).json({ 'message': 'No post found on that path' })
+
     const { JWT_SECRET } = process.env
     let decodedId
 
@@ -82,9 +85,6 @@ class PostController {
     } catch (e) {
       decodedId = -1
     }
-
-    if (!foundPost)
-      return res.status(404).json({ 'message': 'No post found on that path' })
 
     const foundLikes = await this.dao.getPostLikesById(foundPost.id)
     const postLikesAmount = foundLikes ? foundLikes.length : 0
