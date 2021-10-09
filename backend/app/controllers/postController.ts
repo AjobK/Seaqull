@@ -354,17 +354,14 @@ class PostController {
     let attachment = await this.dao.getPostAttachment(post.id)
     const location = await this.fileService.storeImage(file, 'post/thumbnail')
 
-    const dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
     const typeDefaultPath = 'default/defaultThumbnail.jpg'
-
-    await this.fileService.convertImage(location, dimensions)
 
     if (attachment.path !== typeDefaultPath) {
       return await this.deleteThumbnailAttachment(attachment, location)
     }
 
-    attachment = new Attachment()
-    attachment.path = location
+    attachment = await this.convertThumbnailToAttachment(location)
+
     post.thumbnail_attachment = await this.attachmentDAO.saveAttachment(attachment)
 
     await this.dao.updatePost(post)
@@ -375,12 +372,7 @@ class PostController {
   private createThumbnailAttachment = async (postPath, file): Promise<any> => {
     const location = await this.fileService.storeImage(file, 'post/thumbnail')
 
-    const dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
-
-    await this.fileService.convertImage(location, dimensions)
-
-    const attachment = new Attachment()
-    attachment.path = location
+    const attachment = await this.convertThumbnailToAttachment(location)
 
     return await this.attachmentDAO.saveAttachment(attachment)
   }
@@ -396,6 +388,17 @@ class PostController {
     const attachment = await this.dao.getPostAttachment(postId)
 
     return 'http://localhost:8000/' + attachment.path
+  }
+
+  private convertThumbnailToAttachment = async (location) => {
+    const dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
+
+    await this.fileService.convertImage(location, dimensions)
+
+    const attachment = new Attachment()
+    attachment.path = location
+
+    return attachment
   }
 }
 
