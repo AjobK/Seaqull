@@ -7,13 +7,13 @@ import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
 import AttachmentDAO from '../daos/attachmentDAO'
+import attachmentDAO from '../daos/attachmentDAO'
 import ArchivedPost from '../entities/archivedPost'
 import ArchivedPostDAO from '../daos/archivedPostDAO'
 import NetworkService from '../utils/networkService'
 import PostView from '../entities/post_view'
 import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
-import attachmentDAO from '../daos/attachmentDAO'
 
 const jwt = require('jsonwebtoken')
 
@@ -121,18 +121,32 @@ class PostController {
       return res.status(404).json({ 'message': 'No post found on that path' })
   }
 
-  public createPost = async (req: Request, res: Response): Promise<Response> => {
+  public createPost = async (req: any, res: Response): Promise<Response> => {
     const { JWT_SECRET } = process.env
     const newPost = new Post()
     const { title, description, content } = req.body
+    let thumbnailAttachment = null
+
+    newPost.path = uuidv4()
+
+    if (req.file) {
+      const isImage = await this.fileService.isImage(req.file)
+
+      if (!isImage) {
+        return res.status(400).json({ error: 'Only images are allowed' })
+      }
+
+      thumbnailAttachment = await this.createThumbnailAttachment(newPost.path, req.file)
+    } else {
+      thumbnailAttachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
+    }
 
     newPost.title = title
     newPost.description = description
     newPost.content = content
-    newPost.path = uuidv4()
     newPost.published_at = new Date()
     newPost.created_at = new Date()
-    newPost.thumbnail_attachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
+    newPost.thumbnail_attachment = thumbnailAttachment
 
     const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
 
@@ -349,14 +363,26 @@ class PostController {
       return await this.deleteThumbnailAttachment(attachment, location)
     }
 
-    const typeField = 'thumbnail_attachment'
-
     attachment = new Attachment()
     attachment.path = location
-    post[typeField] = await this.attachmentDAO.saveAttachment(attachment)
+    post.thumbnail_attachment = await this.attachmentDAO.saveAttachment(attachment)
+
     await this.dao.updatePost(post)
 
-    return post[typeField]
+    return post.thumbnail_attachment
+  }
+
+  private createThumbnailAttachment = async (postPath, file): Promise<any> => {
+    const location = await this.fileService.storeImage(file, 'post/thumbnail')
+
+    const dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
+
+    await this.fileService.convertImage(location, dimensions)
+
+    const attachment = new Attachment()
+    attachment.path = location
+
+    return await this.attachmentDAO.saveAttachment(attachment)
   }
 
   private deleteThumbnailAttachment = async (attachment: Attachment, location: string) => {

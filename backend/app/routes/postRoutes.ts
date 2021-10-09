@@ -22,7 +22,7 @@ class PostRoutes implements RouterBase {
     this.router.get(this.post, this.postService.getPosts)
     this.router.get(this.post + '/:path', this.postService.getPostByPath)
     this.router.put(this.post + '/:path', auth, this.postService.updatePost)
-    this.router.post(this.post, auth, this.postService.createPost)
+    this.router.post(this.post, auth, this.upload.single('file'), this.postService.createPost)
 
     this.router.get(this.post + '/owned-by/:username', this.postService.getOwnedPosts)
 
@@ -34,8 +34,7 @@ class PostRoutes implements RouterBase {
     this.router.put(this.post + '/archive/:path', auth, hasPostPermission, this.postService.archivePost)
     this.router.post(this.post + '/view', this.postService.addViewToPost)
     this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
-    this.router.put(
-      this.post + '/thumbnail/:path',
+    this.router.put(this.post + '/thumbnail/:path',
       auth, hasPostPermission, this.upload.single('file'),
       this.postService.updatePostThumbnail
     )

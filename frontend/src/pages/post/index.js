@@ -21,6 +21,8 @@ class Post extends App {
 
     this.postPath = URLUtil.getLastPathArgument()
 
+    this.addedThumbnail = null
+
     this.state = {
       isOwner: true,
       isEditing: true,
@@ -120,23 +122,44 @@ class Post extends App {
   sendToDB = (path = null) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
+    if (!path) {
+      this.createPostDB()
+    } else if (typeof path == 'string') {
+      this.updatePostDB()
+    }
+  }
+
+  createPostDB = () => {
+    const fd = new FormData()
+
+    fd.append('file', this.addedThumbnail)
+    fd.append('title', JSON.stringify(this.state.post.title))
+    fd.append('description', JSON.stringify('None'))
+    fd.append('content', JSON.stringify(this.state.post.content))
+
+    Axios.post('/post', fd, {
+      withCredentials: true, 'content-type': 'multipart/form-data'
+    }).then((res) => {
+      this.props.history.push(`/posts/${res.data.path}`)
+    })
+  }
+
+  updatePostDB = () => {
     const payload = {
       title: this.state.post.title,
       description: 'None',
       content: this.state.post.content,
     }
 
-    if (!path) {
-      Axios.post('/post', payload, { withCredentials: true }).then((res) => {
-        this.props.history.push(`/posts/${res.data.path}`)
-      })
-    } else if (typeof path == 'string') {
-      Axios.put(`/post/${path}`, payload, { withCredentials: true }).then(() => {
-        const { notification } = this.props.store
+    Axios.put(`/post/${path}`, payload, { withCredentials: true }).then(() => {
+      const { notification } = this.props.store
 
-        notification.setContent(popUpData.messages.updatePostNotification)
-      })
-    }
+      notification.setContent(popUpData.messages.updatePostNotification)
+    })
+  }
+
+  onThumbnailAdded = (thumbnail) => {
+    this.addedThumbnail = thumbnail
   }
 
   onDeletePostClicked = () => {
@@ -198,6 +221,8 @@ class Post extends App {
           author={ this.props.new ? ownerAuthor : author }
           post={ this.state.post }
           isOwner={ isOwner }
+          isNew={ this.props.new }
+          onThumbnailAdded={ this.onThumbnailAdded }
         />
         <Section noTitle>
           { !this.props.new &&

@@ -20,7 +20,7 @@ class PostBanner extends Component {
   }
 
   componentDidMount() {
-    if (!this.state.thumbnail) {
+    if (this.props.isNew) {
       this.fetchDefaultThumbnail()
     }
   }
@@ -53,9 +53,23 @@ class PostBanner extends Component {
   }
 
   changeThumbnail = (newThumbnail) => {
-    this.setState({
-      thumbnail: newThumbnail
+    if (!this.props.isNew) {
+      this.setState({
+        thumbnail: newThumbnail
+      })
+
+      return
+    }
+
+    this.props.onThumbnailAdded(newThumbnail)
+
+    const reader = new FileReader()
+    reader.addEventListener('load', () => {
+      this.setState({
+        thumbnail: reader.result
+      })
     })
+    reader.readAsDataURL(newThumbnail)
   }
 
   fetchDefaultThumbnail = () => {
@@ -135,6 +149,7 @@ class PostBanner extends Component {
               entityId={ this.props.post.path }
               closeCropper={ this.closeCropper }
               changeImage={ this.changeThumbnail }
+              returnOnSave={ this.props.isNew }
             />
           )}
         </div>

@@ -136,6 +136,26 @@ class Cropper extends Component {
   saveImage = () => {
     const image = this.state.croppedImage
 
+    if (this.props.returnOnSave) {
+      this.props.changeImage(image)
+      this.props.closeCropper()
+
+      return
+    }
+
+    this.sendImageToDb(image)
+      .then((res) => {
+        this.props.changeImage(res.data.url)
+        this.props.closeCropper()
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          this.props.history.push('/login/')
+        }
+      })
+  }
+
+  sendImageToDb = async (image) => {
     const fd = new FormData()
     fd.append('file', image)
 
@@ -154,19 +174,10 @@ class Cropper extends Component {
         break
     }
 
-    Axios.put(address, fd, {
+    return Axios.put(address, fd, {
       withCredentials: true,
       'content-type': 'multipart/form-data',
     })
-      .then((res) => {
-        this.props.changeImage(res.data.url)
-        this.props.closeCropper()
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          this.props.history.push('/login/')
-        }
-      })
   }
 
   setScrollEnabled = (scrollEnabled) => {
