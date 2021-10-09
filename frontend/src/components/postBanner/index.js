@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react'
 import { Cropper, Icon } from '..'
 import { Link } from 'react-router-dom'
 import { ColorUtil, InputUtil } from '../../util/'
+import Axios from 'axios'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -14,6 +16,12 @@ class PostBanner extends Component {
       thumbnail: this.props.post.thumbnail,
       popUpOpen: false,
       draggingOverThumbnail: true
+    }
+  }
+
+  componentDidMount() {
+    if (!this.state.thumbnail) {
+      this.fetchDefaultThumbnail()
     }
   }
 
@@ -50,6 +58,20 @@ class PostBanner extends Component {
     })
   }
 
+  fetchDefaultThumbnail = () => {
+    const { defaultData, notification } = this.props.store
+
+    Axios.get(`${defaultData.backendUrl}/post/thumbnail/default`)
+      .then((res) => {
+        this.setState({
+          thumbnail: res.data.thumbnail
+        })
+      })
+      .catch(() => {
+        notification.setContent(popUpData.messages.networkError)
+      })
+  }
+
   closeCropper = () => {
     this.setState({
       upThumbnail: null
@@ -68,7 +90,7 @@ class PostBanner extends Component {
           style={ { backgroundImage: `url(${ this.state.thumbnail })` } }
         />
 
-        { this.props.isOwner && (
+        { isOwner && (
           <div className={ styles.wrapperThumbnailEdit }>
             <input
               type='file' accept='image/png, image/jpeg' value={ '' }

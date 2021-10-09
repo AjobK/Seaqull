@@ -181,12 +181,11 @@ class Post extends App {
 
   render = () => {
     // Values change based on initial response from server
-    const { profile, user } = this.props.store
+    const { profile } = this.props.store
     const { isEditing, isOwner, post, loaded, author } = this.state
 
     const ownerAuthor = {
       name: profile.display_name,
-      bannerURL: user.banner,
       avatarURL: profile.avatarURL,
       title: profile.title
     }
