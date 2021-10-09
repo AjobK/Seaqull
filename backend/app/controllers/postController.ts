@@ -268,6 +268,18 @@ class PostController {
     return res.status(200).json({ 'views': viewCount })
   }
 
+  public getPostDefaultThumbnailURL = async (req: Request, res: Response): Promise<any> => {
+    const foundAttachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
+
+    if (!foundAttachment) {
+      return res.status(404).json({ 'message': 'Attachment not found' })
+    }
+
+    const attachmentURL = 'http://localhost:8000/' + foundAttachment.path
+
+    return res.status(200).json({ 'thumbnail': attachmentURL })
+  }
+
   // TODO Move to another file?
   private fetchProfile = async (req: Request): Promise<Profile> => {
     const { token } = req.cookies

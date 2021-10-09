@@ -39,6 +39,7 @@ class PostRoutes implements RouterBase {
       auth, hasPostPermission, this.upload.single('file'),
       this.postService.updatePostThumbnail
     )
+    this.router.get(this.post + '/thumbnail/default', this.postService.getPostDefaultThumbnailURL)
   }
 }
 
