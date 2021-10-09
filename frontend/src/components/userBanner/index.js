@@ -17,10 +17,19 @@ class UserBanner extends Component {
       upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false,
+      following: this.props.user.following,
+      followsYou: this.props.user.followsYou,
       banUser: false
     }
+  }
 
-    console.log(this.props.user + '')
+  componentDidUpdate(prevProps) {
+    if (this.props.user.username !== prevProps.user.username) {
+      this.setState({
+        following: this.props.user.following,
+        followsYou: this.props.user.followsYou
+      })
+    }
   }
 
   onEditAvatar = (input) => {
@@ -112,8 +121,7 @@ class UserBanner extends Component {
   }
 
   getFollowText = () => {
-    const followsYou = this.props.user.followsYou
-    const following = this.props.user.following
+    const { followsYou, following } = this.state
 
     if (followsYou) {
       return following ? 'Unfriend' : 'Follow back'
