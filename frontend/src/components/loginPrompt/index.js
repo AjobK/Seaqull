@@ -61,8 +61,8 @@ class LoginPrompt extends Component {
     Axios.post('/login', payload, { withCredentials: true })
       .then((res) => {
         this.props.store.profile.setLoggedIn(true)
-        this.props.store.user.fillUserData(res.data.user)
-        this.goToProfile(res.data.user_name)
+        this.props.store.profile.setProfileData(res.data.user)
+        this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((res) => {
         if (res.message === 'Network Error') {
