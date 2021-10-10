@@ -17,36 +17,10 @@ class LoginPrompt extends Component {
       password: null,
       remainingTimeInterval: null,
       remainingTime: null,
-      recaptchaToken: null,
-      recaptcha: null,
       loadingTimeout: false,
     }
 
-    window.recaptchaOptions = {
-      lang: 'en',
-      useRecaptchaNet: true,
-      removeOnUnmount: true,
-    }
-
-    this.recaptchaRef = React.createRef()
-    this.onChange = this.onChange.bind(this)
     this.elId = {}
-  }
-
-  componentDidMount = () => {
-    this.clearCaptcha()
-  }
-
-  componentWillUnmount = () => {
-    this.clearCaptcha()
-  }
-
-  clearCaptcha = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach((element) => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
   }
 
   auth = () => {
@@ -54,8 +28,7 @@ class LoginPrompt extends Component {
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
-      password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken,
+      password: document.getElementById(this.elId.Password).value
     }
 
     Axios.post('/login', payload, { withCredentials: true })
@@ -121,24 +94,15 @@ class LoginPrompt extends Component {
       loadingTimeout: true,
     })
 
-    if (!this.state.loadingTimeout) {
-      // this.recaptchaRef.current.reset()
-      // this.recaptchaRef.current.execute()
-    }
+    this.auth()
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
-  onChange = (recaptchaToken) => {
-    this.setState({ recaptchaToken })
-    this.auth()
-  }
-
   render() {
-    const { username, password, remainingTime, recaptcha, loadingTimeout } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
+    const { username, password, remainingTime, loadingTimeout } = this.state
 
     return (
       <div className={ [styles.prompt, this.props.className].join(' ') }>
@@ -164,17 +128,12 @@ class LoginPrompt extends Component {
             />
             <div to="/" className={ styles.submitWrapper }>
               <Button
-                value={ buttonClass }
+                value={ 'Log In' }
                 className={ styles.submit }
                 disabled={ !!remainingTime || loadingTimeout }
                 onClick={ this.auth }
               />
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
-              {/* <ReCAPTCHA
-                ref={this.recaptchaRef}
-                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                size='invisible' onChange={this.onChange}
-              /> */}
             </div>
           </form>
           <div className={ styles.image } />

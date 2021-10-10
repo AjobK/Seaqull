@@ -200,7 +200,7 @@ class ProfileController {
       username: [],
       email: [],
       password: [],
-      recaptcha: [],
+      // recaptcha: [],
     }
 
     const isUsernameNotValid = await this.checkValidUsername(userRequested.username)
@@ -219,11 +219,11 @@ class ProfileController {
 
     errors.password = passwordStrengthErrors
 
-    const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
-
-    if (isRecaptchaNotValid) {
-      errors.recaptcha = [isRecaptchaNotValid]
-    }
+    // const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+    //
+    // if (isRecaptchaNotValid) {
+    //   errors.recaptcha = [isRecaptchaNotValid]
+    // }
 
     if (isUsernameNotValid || isEmailNotValid || passwordStrengthErrors.length > 0) {
       return res.status(401).json({ errors: errors })
