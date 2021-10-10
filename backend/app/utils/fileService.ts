@@ -3,7 +3,9 @@ import fs = require('fs')
 import multer = require('multer')
 
 const { promisify } = require('util')
+
 const pipeline = promisify(require('stream').pipeline)
+
 const sharp = require('sharp')
 
 class FileService {

@@ -1,5 +1,47 @@
 @import '../../styles/index.scss';
 
 .wrapper {
-	background-color: red;
+	position: absolute;
+	background-color: white;
+	min-width: 262px;
+}
+
+.profilePictureWrapper {
+	max-width: 150px;
+	margin: 0 auto;
+
+	.profilePicture {
+		border-radius: 100%;
+		position: relative;
+		background-size: cover;
+		background-position: center;
+		background-color: $darkest;
+		display: flex;
+		justify-content: center;
+		min-width: 150px;
+		min-height: 150px;
+		pointer-events: initial;
+	}
+}
+
+.profileInfo {
+
+}
+
+.profileNameWrapper {
+	display: flex;
+	justify-content: center;
+	color: $primary;
+}
+
+.profileInfoBadge {
+	font-size: $nr-lg-fontsize;
+	vertical-align: middle;
+	height: auto;
+}
+
+.profileInfoUsername {
+	text-align: center;
+	color: $secondary;
+	font-size: $nr-lg-fontsize;
 }

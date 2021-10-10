@@ -15,6 +15,7 @@ class PostLikesList extends Component {
 
     this.state = {
       likes: [],
+      user: this.props
     }
   }
 

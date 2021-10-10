@@ -1,31 +1,23 @@
 import React, { Component } from 'react'
-import { observer, inject } from 'mobx-react'
-import { styles } from './profileCard.scss'
+import styles from './profileCard.scss'
+import { Icon } from '../'
 
-@inject('store') @observer
 class ProfileCard extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      user: props.user,
-      //   editing: false,
-      //   editorState: EditorState.createEmpty(),
-      //   changedContent: false,
-      //   icon: 'Pen',
-      loggedIn: this.props.loggedIn
-    }
-
-    this.changeStateLock = null
-    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
-  }
 
   render() {
     const user = this.props.user
 
     return (
       <section className={ styles.wrapper }>
-
+        <div className={ styles.profilePictureWrapper }>
+          <div className={ styles.profilePicture } style={ { backgroundImage: `url(${ user.picture })` } }></div>
+        </div>
+        <div className={ styles.profileInfo }>
+          <div className={ styles.profileNameWrapper }>
+            <Icon className={ styles.profileInfoBadge } iconName={ 'At' }/>
+            <h2 className={ styles.profileInfoUsername }>{ user.username || 'Username' }</h2>
+          </div>
+        </div>
       </section>
     )
   }

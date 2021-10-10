@@ -3,9 +3,10 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
-import Error from '../error'
 import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo, ProfileCard } from '../../components'
 import styles from './profile.scss'
+import ProfileFollowerList from '../../components/profileFollowerList'
+import { withRouter } from 'react-router'
 
 @inject('store')
 @observer
@@ -17,10 +18,10 @@ class Profile extends App {
 
     this.state = {
       user: null,
-      error: false,
       posts: [],
       likes: [],
       isOwner: false,
+      showFollowers: false,
     }
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
     this.loadDataFromBackend()
@@ -42,8 +43,16 @@ class Profile extends App {
       .then(() => {
         this.fetchLikedPosts(this.state.user.username)
       })
-      .catch(() => {
-        this.setState({ error: true })
+      .catch((e) => {
+        const { name, message } = e.toJSON()
+
+        this.props.history.push({
+          pathname: '/error',
+          state: {
+            title: e.response ? e.response.status : name,
+            sub: e.response ? e.response.statusText : message
+          }
+        })
       })
   }
 
@@ -85,11 +94,25 @@ class Profile extends App {
     this.setState({ user })
   }
 
+  openFollowersList = () => {
+    if (this.state.user.followerCount > 0) {
+      this.setState({
+        showFollowers: true
+      })
+    }
+  }
+
+  closeFollowersList = () => {
+    this.setState({
+      showFollowers: false
+    })
+  }
+
   render() {
-    const { user, error, isOwner } = this.state
+    const { user, isOwner } = this.state
     const { profile } = this.props.store
 
-    if (!user && !error) {
+    if (!user) {
       return (
         <Standard>
           <Loader />
@@ -101,10 +124,6 @@ class Profile extends App {
       this.fetchProfileData(this.props.match.params.path)
     }
 
-    if (error) {
-      return <Error></Error>
-    }
-
     return (
       <Standard>
         <UserBanner
@@ -113,12 +132,15 @@ class Profile extends App {
           user={ user }
           owner={ isOwner && profile.loggedIn }
         />
-        <ProfileCard />
+        <ProfileCard user={ user } />
         <section className={ [styles.infoWrapper] }>
           <div className={ [styles.tempFollowerIndicator] }>
             <Icon iconName={ 'UserFriends' } />
-            <p>
-              {user.followerCount} follower{user.followerCount === 1 ? '' : 's'}{' '}
+            <p
+              className={ this.state.user.followerCount > 0 ? `${styles.clickableFollowers}` : '' }
+              onClick={ this.openFollowersList }
+            >
+              { user.followerCount } follower{ user.followerCount === 1 ? '' : 's' }{ ' ' }
             </p>
           </div>
         </section>
@@ -134,9 +156,12 @@ class Profile extends App {
         <Section title={ 'STATISTICS' }>
           <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
         </Section>
+        { (this.state.showFollowers && this.state.user.followerCount > 0) &&
+          <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
+        }
       </Standard>
     )
   }
 }
 
-export default Profile
+export default withRouter(Profile)

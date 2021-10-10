@@ -17,7 +17,9 @@ import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
 
 const jwt = require('jsonwebtoken')
+
 const matches = require('validator/lib/matches')
+
 const isLength = require('validator/lib/isLength')
 
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -43,6 +45,44 @@ class ProfileController {
     this.attachmentDAO = new attachmentDAO()
     this.fileService = new FileService()
     this.banService = new BanService()
+  }
+
+  public getFollowers = async (req: Request, res: Response): Promise<Response> => {
+    const { token } = req.cookies
+    let decodedToken: any
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+      decodedToken = null
+    }
+
+    let receivedUsername = req.params.username
+
+    if (!receivedUsername) {
+      if (decodedToken && decodedToken.username) {
+        receivedUsername = decodedToken.username
+      } else {
+        return res.status(404).json({ error: 'No username was given' })
+      }
+    }
+
+    const profile = await this.dao.getProfileByUsername(receivedUsername)
+    const followersById = await this.dao.getFollowersByProfileId(profile.id)
+
+    const payload = {
+      followers: []
+    }
+
+    followersById.forEach((entry) => {
+      payload.followers.push(entry.follower)
+    })
+
+    if (payload.followers.length < 1) {
+      return res.status(204)
+    }
+
+    return res.status(200).json(payload)
   }
 
   public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -209,8 +249,9 @@ class ProfileController {
         new Date().getTime() + 86409000
       ).toUTCString()}; path=/`
     )
+
     res.status(200).json({
-      user: newAccount,
+      user: newAccount
     })
     res.send()
 
@@ -317,6 +358,10 @@ class ProfileController {
       return 'Invalid email adress'
     }
 
+    if (email.endsWith('@seaqull.com')) {
+      return 'No permission to use this e-mail'
+    }
+
     const isEmailTaken = await this.dao.getUserByEmail(email)
 
     if (isEmailTaken) {
@@ -333,7 +378,7 @@ class ProfileController {
 
     if (password.search(/[A-Z]/) < 1 && password.search(/[a-z]/) < 1) errors.push('Lowercase and uppercase letters')
 
-    if (password.search(/\d/) < 1) errors.push('Atleast one numeric character')
+    if (password.search(/\d/) < 0) errors.push('Atleast one numeric character')
 
     return errors
   }
@@ -376,6 +421,11 @@ class ProfileController {
   }
 
   private cleanAccount = (account: Account): Account => {
+    /** TODO: (Ajob) This REALLY needs to be fixed.
+    / *       If we were to add more fields with sensitive
+    / *       information, it is easy to forget to add in the
+    / *       delete list. Whitelist instead of blocklist.
+    / * */
     delete account.password
     delete account.changed_pw_at
     delete account.login_attempts_counts
