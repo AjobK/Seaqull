@@ -5,10 +5,17 @@ import { Link } from 'react-router-dom'
 
 class Error extends App {
   render() {
+    let { title, sub, location } = this.props
+
+    if (location && location.state) {
+      title = title || location.state.title
+      sub = sub || location.state.sub
+    }
+
     return (
       <section className={ styles.wrapper }>
-        <h1 className={ styles.title }>{this.props.title || '404'}</h1>
-        <h3>{this.props.sub || 'Page not found'}</h3>
+        <h1 className={ styles.title }>{ title || '500' }</h1>
+        <h3>{ sub || 'Something went wrong' }</h3>
         <Link to='/'>Go home</Link>
       </section>
     )
