@@ -11,7 +11,7 @@ describe('testing crud post', () => {
   let id = uuidv4()
   let post: Post
 
-  it('Not creating a post when a user is not logged in', (done) => {
+  it('Checks if you can\'t create a post when a user is not logged in', (done) => {
     agent
       .post('/post')
       .send({
@@ -38,7 +38,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('creaing post', (done) => {
+  it('Checking if you can create a post', (done) => {
     agent
       .post('/post')
       .send({
@@ -52,7 +52,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('Getting created posts and checking the post that was created last', (done) => {
+  it('Checking if the last created post can be found on the users page', (done) => {
     agent
       .get('/post/owned-by/User')
       .end((err, res) => {
@@ -62,7 +62,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('Updating post', (done) => {
+  it('Checking if a user can update a post', (done) => {
     id = uuidv4()
     agent
       .put('/post/' + post.path)
@@ -77,7 +77,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('Getting individual post', (done) => {
+  it('Checking if you can request the post and if the title is updated', (done) => {
     agent
       .get('/post/' + post.path)
       .end((err, res) => {
@@ -86,7 +86,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('archiving post', (done) => {
+  it('Checking if you can archive a post', (done) => {
     agent
       .put('/post/archive/' + post.path)
       .end((err, res) => {

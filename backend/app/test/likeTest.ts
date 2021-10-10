@@ -19,7 +19,7 @@ describe('testing liking posts', () => {
       })
   })
 
-  it('liking a post without being logged in', (done) => {
+  it('Checking if you can\'t like a post without being logged in', (done) => {
     agent
       .post('/post/like/' + post.path)
       .end((err, res) => {
@@ -41,7 +41,7 @@ describe('testing liking posts', () => {
       })
   })
 
-  it('liking a post', (done) => {
+  it('Checking if you can like a post while being logged in', (done) => {
     agent
       .post('/post/like/' + post.path)
       .end((err, res) => {
@@ -50,7 +50,7 @@ describe('testing liking posts', () => {
       })
   })
 
-  it('Getting updated amount of likes', (done) => {
+  it('Checking if the user has liked the post', (done) => {
     agent
       .get('/post/liked-by/recent/User')
       .end((err, res) => {
@@ -59,7 +59,7 @@ describe('testing liking posts', () => {
       })
   })
 
-  it('Trying to like a post twice', (done) => {
+  it('Checking if you can\'t like a post twice', (done) => {
     agent
       .post('/post/like/' + post.path)
       .end((err, res) => {
@@ -68,7 +68,7 @@ describe('testing liking posts', () => {
       })
   })
 
-  it('deleting like on a post when the post is liked by the logged in user', (done) => {
+  it('Checking if you can delete a post', (done) => {
     agent
       .delete('/post/like/' + post.path)
       .end((err, res) => {
@@ -91,12 +91,25 @@ describe('testing liking posts', () => {
       })
   })
 
-  it('deleting like on a post when the post isn\'t liked by the logged in user', (done) => {
+  it('Checking if you can\'t unlike a post when you haven\'t liked it', (done) => {
     agent
       .delete('/post/like/' + post.path)
       .end((err, res) => {
         assert.equal(res.status, 404)
         done()
+      })
+  })
+
+  it('Checking if a user can\t like his own post', (done) => {
+    agent
+      .get('/post/owned-by/User')
+      .end((err, res) => {
+        agent
+          .post('/post/like/' + res.body[0].path)
+          .end((err, res) => {
+            assert.equal(res.status, 400)
+            done()
+          })
       })
   })
 })
