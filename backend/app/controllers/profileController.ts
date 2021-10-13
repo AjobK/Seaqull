@@ -79,7 +79,7 @@ class ProfileController {
     })
 
     if (payload.followers.length < 1) {
-      return res.status(204)
+      return res.status(204).json(payload)
     }
 
     return res.status(200).json(payload)

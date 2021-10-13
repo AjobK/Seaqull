@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 chai.use(chaiHttp)
 
-describe('testing banning a user', () => {
+describe('Testing banning a user', () => {
   const agent = chai.request.agent('http://localhost:8000/api')
   const userToShortBan = uuidv4()
   const userToLongBan = uuidv4()
@@ -24,7 +24,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if the profile loads correctly', (done) => {
+  it('Checking if the profile loads correctly', (done) => {
     agent
       .get('/profile/' + userToShortBan)
       .end((err, res) => {
@@ -33,7 +33,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('Loging in as user so we cant test if banning is blocked correctly', (done) => {
+  it('Login as user so we cant test if banning is blocked correctly', (done) => {
     agent
       .post('/login')
       .send({
@@ -46,7 +46,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking is request is not allowed', (done) => {
+  it('Checking is request is not allowed', (done) => {
     agent
       .patch('/shortBan')
       .send({
@@ -73,7 +73,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if we cant ban users longterm', (done) => {
+  it('Checking if we cant ban users longterm', (done) => {
     agent
       .patch('/ban')
       .send({
@@ -87,7 +87,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if we can ban users for a short time', (done) => {
+  it('Checking if we can ban users for a short time', (done) => {
     agent
       .patch('/shortBan')
       .send({
@@ -101,7 +101,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if the profile can not be found anymore', (done) => {
+  it('Checking if the profile can not be found anymore', (done) => {
     agent
       .get('/profile/' + userToShortBan)
       .end((err, res) => {
@@ -110,7 +110,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if the profile can not be found anymore', (done) => {
+  it('Checking if the profile can not be found anymore', (done) => {
     agent
       .get('/profile/' + userToShortBan)
       .end((err, res) => {
@@ -133,7 +133,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('Loging in as admin so we can ban users', (done) => {
+  it('Login as admin so we can ban users', (done) => {
     agent
       .post('/login')
       .send({
@@ -146,7 +146,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if we can ban users longterm', (done) => {
+  it('Checking if we can ban users longterm', (done) => {
     agent
       .patch('/ban')
       .send({
@@ -160,7 +160,7 @@ describe('testing banning a user', () => {
       })
   })
 
-  it('checking if the profile loads correctly', (done) => {
+  it('Checking if the profile loads correctly', (done) => {
     agent
       .get('/profile/' + userToLongBan)
       .end((err, res) => {

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 chai.use(chaiHttp)
 
-describe('user login and register test', () => {
+describe('Testing the login/register', () => {
   const id = uuidv4()
   const agent = chai.request.agent('http://localhost:8000/api')
 

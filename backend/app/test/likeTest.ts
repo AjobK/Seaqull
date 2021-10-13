@@ -5,7 +5,7 @@ import Post from '../entities/post'
 
 chai.use(chaiHttp)
 
-describe('testing liking posts', () => {
+describe('Testing liking posts', () => {
   const agent = chai.request.agent('http://localhost:8000/api')
   let post: Post
 

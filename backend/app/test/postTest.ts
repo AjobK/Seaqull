@@ -6,7 +6,7 @@ import Post from '../entities/post'
 
 chai.use(chaiHttp)
 
-describe('testing crud post', () => {
+describe('Testing the post crud', () => {
   const agent = chai.request.agent('http://localhost:8000/api')
   let id = uuidv4()
   let post: Post
@@ -25,7 +25,7 @@ describe('testing crud post', () => {
       })
   })
 
-  it('login so we can test the user crud', (done) => {
+  it('Login so we can test the user crud', (done) => {
     agent
       .post('/login')
       .send({

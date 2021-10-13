@@ -6,7 +6,7 @@ import Comment from '../entities/comment'
 
 chai.use(chaiHttp)
 
-describe('testing comment section on posts', () => {
+describe('Testing comment section on posts', () => {
   const agent = chai.request.agent('http://localhost:8000/api')
   let post: Post
   let comment: Comment
