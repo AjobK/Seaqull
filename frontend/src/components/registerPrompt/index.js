@@ -14,7 +14,8 @@ class RegisterPrompt extends Component {
     this.state = {
       username: null,
       email: null,
-      password: null
+      password: null,
+      generalError: null
     }
 
     this.elId = {}
@@ -55,7 +56,7 @@ class RegisterPrompt extends Component {
           username: username || [],
           email: email || [],
           password: password || [],
-          recaptcha: recaptcha || [],
+          generalError: recaptcha || [],
           recaptchaToken: null,
         })
       })
@@ -84,6 +85,12 @@ class RegisterPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
+  getError = (credentialError) => {
+    const generalError = this.state.generalError
+
+    return generalError?.length > 0 ? generalError : credentialError
+  }
+
   render() {
     const { username, email, password } = this.state
 
@@ -98,21 +105,21 @@ class RegisterPrompt extends Component {
             <FormInput
               toolTipDirection={ 'bottom' }
               name={ 'Username' }
-              errors={ username }
+              errors={ this.getError(username) }
               className={ [styles.formGroup] }
               callBack={ this.setElId }
             />
             <FormInput
               toolTipDirection={ 'bottom' }
               name={ 'Email' }
-              errors={ email }
+              errors={ this.getError(email) }
               className={ [styles.formGroup] }
               callBack={ this.setElId }
             />
             <FormInput
               toolTipDirection={ 'bottom' }
               name={ 'Password' }
-              errors={ password }
+              errors={ this.getError(password) }
               className={ [styles.formGroup] }
               callBack={ this.setElId }
               type="password"
