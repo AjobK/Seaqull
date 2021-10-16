@@ -5,6 +5,7 @@ import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import { popUpData } from '../popUp/popUpData'
+import RecaptchaUtil from '../../util/recaptchaUtil'
 
 @inject('store')
 @observer
@@ -24,30 +25,7 @@ class LoginPrompt extends Component {
   }
 
   componentDidMount() {
-    const loadScriptByURL = (id, url, callback) => {
-      const isScriptExist = document.getElementById(id)
-
-      if (!isScriptExist) {
-        const script = document.createElement('script')
-        script.type = 'text/javascript'
-        script.src = url
-        script.id = id
-
-        script.onload = function () {
-          if (callback) callback()
-        }
-
-        document.body.appendChild(script)
-      }
-
-      if (isScriptExist && callback) callback()
-    }
-
-    const recaptchaScriptUrl =
-      `https://www.google.com/recaptcha/api.js?render=${this.props.store.defaultData.recaptchaSiteKey}`
-
-    // load the script by passing the URL
-    loadScriptByURL('recaptcha-key', recaptchaScriptUrl, () => {
+    RecaptchaUtil.loadRecaptchaScript(this.props.store.defaultData.recaptchaSiteKey, () => {
       console.log('Script loaded!')
     })
   }
@@ -124,13 +102,10 @@ class LoginPrompt extends Component {
       loadingTimeout: true,
     })
 
-    window.grecaptcha.ready(() => {
-      window.grecaptcha.execute(
-        this.props.store.defaultData.recaptchaSiteKey, { action: 'submit' })
-        .then((token) => {
-          this.auth(token)
-        })
-    })
+    RecaptchaUtil.executeRecaptcha(this.props.store.defaultData.recaptchaSiteKey)
+      .then((token) => {
+        this.auth(token)
+      })
   }
 
   setElId = (item, id) => {
