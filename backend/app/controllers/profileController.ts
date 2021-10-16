@@ -15,6 +15,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
+import RecaptchaService from '../utils/recaptchaService'
 
 const jwt = require('jsonwebtoken')
 
@@ -195,37 +196,38 @@ class ProfileController {
   }
 
   public register = async (req: any, res: Response): Promise<Response> => {
-    const userRequested = req.body
+    const { username, email, password, recaptcha } = req.body
+
     const errors = {
       username: [],
       email: [],
       password: [],
-      // recaptcha: [],
+      recaptcha: [],
     }
 
-    const isUsernameNotValid = await this.checkValidUsername(userRequested.username)
+    const isUsernameNotValid = await this.checkValidUsername(username)
 
     if (isUsernameNotValid) {
       errors.username = [isUsernameNotValid]
     }
 
-    const isEmailNotValid = await this.checkValidEmail(userRequested.email)
+    const isEmailNotValid = await this.checkValidEmail(email)
 
     if (isEmailNotValid) {
       errors.email = [isEmailNotValid]
     }
 
-    const passwordStrengthErrors = this.getPasswordStrengthErrors(userRequested.password)
+    const passwordStrengthErrors = this.getPasswordStrengthErrors(password)
 
     errors.password = passwordStrengthErrors
 
-    // const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
-    //
-    // if (isRecaptchaNotValid) {
-    //   errors.recaptcha = [isRecaptchaNotValid]
-    // }
+    const isRecaptchaValid = await RecaptchaService.verifyReCAPTCHA(recaptcha)
 
-    if (isUsernameNotValid || isEmailNotValid || passwordStrengthErrors.length > 0) {
+    if (!isRecaptchaValid) {
+      errors.recaptcha = ['We could not confirm you are not a robot']
+    }
+
+    if (isUsernameNotValid || isEmailNotValid || !isRecaptchaValid || passwordStrengthErrors.length > 0) {
       return res.status(401).json({ errors: errors })
     }
 

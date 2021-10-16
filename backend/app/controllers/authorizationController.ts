@@ -5,7 +5,6 @@ import * as bcrypt from 'bcrypt'
 import RecaptchaService from '../utils/recaptchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
