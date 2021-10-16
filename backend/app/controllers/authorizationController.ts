@@ -4,6 +4,7 @@ import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
+import { ReCAPTCHA } from 'node-grecaptcha-verify'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -52,7 +53,7 @@ class AuthorizationController {
   }
 
   public login = async (req: Request, res: Response): Promise<any> => {
-    const { username, password } = req.body
+    const { username, password, recaptcha } = req.body
 
     if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
@@ -66,6 +67,14 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
+      const isRecaptchaValid = await this.verifyReCAPTCHA(recaptcha)
+
+      if (!isRecaptchaValid) {
+        return res.status(403).send({
+          errors: ['We could not confirm you are not a robot']
+        })
+      }
+
       if (req.cookies['token']) res.clearCookie('token')
 
       const validation = this.validateAccountRequest(account, username, password)
@@ -151,6 +160,14 @@ class AuthorizationController {
         error: 'Invalid jwt',
       })
     }
+  }
+
+  // TODO: move to static file
+  private async verifyReCAPTCHA(token: string): Promise<boolean> {
+    const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
+    const verificationResult = await reCaptcha.verify(token)
+
+    return verificationResult.isHuman
   }
 }
 

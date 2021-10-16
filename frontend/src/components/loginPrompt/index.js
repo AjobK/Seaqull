@@ -21,14 +21,42 @@ class LoginPrompt extends Component {
     }
 
     this.elId = {}
+    this.SITE_KEY = '6LcuZr8cAAAAAHCABYqkNkzqLMoj84wGoTFYdp1f'
   }
 
-  auth = () => {
+  componentDidMount() {
+    const loadScriptByURL = (id, url, callback) => {
+      const isScriptExist = document.getElementById(id)
+
+      if (!isScriptExist) {
+        const script = document.createElement('script')
+        script.type = 'text/javascript'
+        script.src = url
+        script.id = id
+
+        script.onload = function () {
+          if (callback) callback()
+        }
+
+        document.body.appendChild(script)
+      }
+
+      if (isScriptExist && callback) callback()
+    }
+
+    // load the script by passing the URL
+    loadScriptByURL('recaptcha-key', `https://www.google.com/recaptcha/api.js?render=${this.SITE_KEY}`, function () {
+      console.log('Script loaded!')
+    })
+  }
+
+  auth = (recaptchaToken) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
-      password: document.getElementById(this.elId.Password).value
+      password: document.getElementById(this.elId.Password).value,
+      recaptcha: recaptchaToken
     }
 
     Axios.post('/login', payload, { withCredentials: true })
@@ -94,7 +122,11 @@ class LoginPrompt extends Component {
       loadingTimeout: true,
     })
 
-    this.auth()
+    window.grecaptcha.ready(() => {
+      window.grecaptcha.execute(this.SITE_KEY, { action: 'submit' }).then((token) => {
+        this.auth(token)
+      })
+    })
   }
 
   setElId = (item, id) => {
@@ -131,7 +163,6 @@ class LoginPrompt extends Component {
                 value={ 'Log In' }
                 className={ styles.submit }
                 disabled={ !!remainingTime || loadingTimeout }
-                onClick={ this.auth }
               />
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
             </div>
