@@ -21,7 +21,6 @@ class LoginPrompt extends Component {
     }
 
     this.elId = {}
-    this.SITE_KEY = '6LcuZr8cAAAAAHCABYqkNkzqLMoj84wGoTFYdp1f'
   }
 
   componentDidMount() {
@@ -44,8 +43,11 @@ class LoginPrompt extends Component {
       if (isScriptExist && callback) callback()
     }
 
+    const recaptchaScriptUrl =
+      `https://www.google.com/recaptcha/api.js?render=${this.props.store.defaultData.recaptchaSiteKey}`
+
     // load the script by passing the URL
-    loadScriptByURL('recaptcha-key', `https://www.google.com/recaptcha/api.js?render=${this.SITE_KEY}`, function () {
+    loadScriptByURL('recaptcha-key', recaptchaScriptUrl, () => {
       console.log('Script loaded!')
     })
   }
@@ -123,9 +125,11 @@ class LoginPrompt extends Component {
     })
 
     window.grecaptcha.ready(() => {
-      window.grecaptcha.execute(this.SITE_KEY, { action: 'submit' }).then((token) => {
-        this.auth(token)
-      })
+      window.grecaptcha.execute(
+        this.props.store.defaultData.recaptchaSiteKey, { action: 'submit' })
+        .then((token) => {
+          this.auth(token)
+        })
     })
   }
 
