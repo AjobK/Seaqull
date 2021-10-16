@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
+import RecaptchaService from '../utils/recaptchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
 import { ReCAPTCHA } from 'node-grecaptcha-verify'
@@ -67,7 +68,7 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
-      const isRecaptchaValid = await this.verifyReCAPTCHA(recaptcha)
+      const isRecaptchaValid = await RecaptchaService.verifyReCAPTCHA(recaptcha)
 
       if (!isRecaptchaValid) {
         return res.status(403).send({
@@ -160,14 +161,6 @@ class AuthorizationController {
         error: 'Invalid jwt',
       })
     }
-  }
-
-  // TODO: move to static file
-  private async verifyReCAPTCHA(token: string): Promise<boolean> {
-    const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
-    const verificationResult = await reCaptcha.verify(token)
-
-    return verificationResult.isHuman
   }
 }
 
