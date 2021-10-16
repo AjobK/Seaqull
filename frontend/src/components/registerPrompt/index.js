@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { Icon, FormInput, Button } from '../'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
+import RecaptchaUtil from '../../util/recaptchaUtil'
 
 @inject('store')
 @observer
@@ -14,20 +14,19 @@ class RegisterPrompt extends Component {
     this.state = {
       username: null,
       email: null,
-      password: null,
-      recaptcha: null,
-      recaptchaToken: null,
+      password: null
     }
 
     this.elId = {}
   }
 
   componentDidMount() {
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
-    this.verifyCallback = this.verifyCallback.bind(this)
+    RecaptchaUtil.loadRecaptchaScript(this.props.store.defaultData.recaptchaSiteKey, () => {
+      console.log('Script loaded!')
+    })
   }
 
-  auth = () => {
+  auth = (recaptchaToken) => {
     this.setState({
       username: 'loading',
       email: 'loading',
@@ -40,7 +39,7 @@ class RegisterPrompt extends Component {
       username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken,
+      recaptcha: recaptchaToken,
     }
 
     Axios.post('/profile/register', payload, { withCredentials: true })
@@ -68,62 +67,25 @@ class RegisterPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
+
     this.setState({
       username: 'loading',
       email: 'loading',
       password: 'loading',
     })
 
-    //checking if recaptcha is already loaded
-    if (!this.captcha.state.ready) {
-      this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
-    } else {
-      this.loadCaptchaOnSubmit()
-    }
+    RecaptchaUtil.executeRecaptcha(this.props.store.defaultData.recaptchaSiteKey)
+      .then((token) => {
+        this.auth(token)
+      })
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
-  loadCaptchaOnSubmit = () => {
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
-    }
-    // setTimeout( () => {
-    //   this.setState({
-    //     user_name: null,
-    //     email: null,
-    //     password: null,
-    //     recaptcha: null,
-    //   })
-    // }, 3000);
-  }
-
-  onLoadRecaptcha = () => {
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
-    }
-    //   setTimeout( () => {
-    //     this.setState({
-    //       user_name: null,
-    //       email: null,
-    //       password: null,
-    //       recaptcha: null,
-    //     })
-    // }, 3000);
-  }
-
-  verifyCallback = (recaptchaToken) => {
-    this.setState({ recaptchaToken })
-    this.auth()
-  }
-
   render() {
-    const { username, email, password, recaptcha } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
+    const { username, email, password } = this.state
 
     return (
       <div className={ [styles.prompt, this.props.className].join(' ') }>
@@ -156,17 +118,7 @@ class RegisterPrompt extends Component {
               type="password"
             />
             <div to="/" className={ styles.submitWrapper }>
-              <Button value={ buttonClass } className={ styles.submit } />
-              <ReCaptcha
-                ref={ (el) => {
-                  this.captcha = el
-                } }
-                size="invisible"
-                render="explicit"
-                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
-                onloadCallback={ this.onLoadRecaptcha }
-                verifyCallback={ this.verifyCallback }
-              />
+              <Button value={ 'Sign Up' } className={ styles.submit } />
             </div>
           </form>
           <div className={ styles.image } />
