@@ -132,7 +132,7 @@ class Profile extends App {
           user={ user }
           owner={ isOwner && profile.loggedIn }
         />
-        <ProfileCard user={ user } />
+        <ProfileCard user={ user } profile={ profile } posts={ this.state.posts } />
         <section className={ [styles.infoWrapper] }>
           <div className={ [styles.tempFollowerIndicator] }>
             <Icon iconName={ 'UserFriends' } />

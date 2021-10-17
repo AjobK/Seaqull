@@ -1,9 +1,8 @@
 @import '../../styles/index.scss';
 
 .wrapper {
-	position: absolute;
 	background-color: white;
-	min-width: 262px;
+	width: 262px;
 }
 
 .profilePictureWrapper {
@@ -25,7 +24,7 @@
 }
 
 .profileInfo {
-
+	margin-top: 10px;
 }
 
 .profileNameWrapper {
@@ -38,10 +37,51 @@
 	font-size: $nr-lg-fontsize;
 	vertical-align: middle;
 	height: auto;
+	color: $primary;
 }
 
 .profileInfoUsername {
 	text-align: center;
 	color: $secondary;
 	font-size: $nr-lg-fontsize;
+}
+
+.profileCardFlexSection {
+	margin-top: 25px;
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}
+
+.profileStatisticNumber {
+	font-weight: 600;
+	font-size: $nr-md-fontsize;
+}
+
+.profileStatisticMetric {
+	opacity: 0.8;
+	font-size: $nr-sm-fontsize;
+}
+
+.followButton {
+	border-radius: 0;
+	width: 210px;
+}
+
+.chatButton {
+	border-radius: 0;
+	color: $primary;
+	background-color: transparent;
+	border: 1px solid $primary;
+}
+
+.profileCardBio {
+	width: 100%;
+}
+
+.editor {
+	background-color: rgba(255, 255, 255, 0.1); 
+	border-radius: 5px;
+	margin-top: 30px;
+	width: 100%;
 }
