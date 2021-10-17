@@ -26,6 +26,14 @@ class RecaptchaUtil {
     document.body.appendChild(script)
   }
 
+  static unloadRecaptchaScript = () => {
+    //TODO not working yet
+    const scriptList = document.querySelectorAll('script[type=\'text/javascript\']')
+    const convertedNodeList = Array.from(scriptList)
+    const script = convertedNodeList.find((script) => script.id === 'recaptcha-key')
+    document.body.removeChild(script)
+  }
+
   static executeRecaptcha = async (recaptchaSiteKey) => {
     return window.grecaptcha.execute(recaptchaSiteKey, { action: 'submit' })
   }

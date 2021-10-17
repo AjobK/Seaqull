@@ -30,6 +30,10 @@ class LoginPrompt extends Component {
     })
   }
 
+  componentWillUnmount() {
+    RecaptchaUtil.unloadRecaptchaScript()
+  }
+
   auth = (recaptchaToken) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 

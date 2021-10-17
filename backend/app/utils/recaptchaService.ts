@@ -5,6 +5,8 @@ class RecaptchaService {
       const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, .6)
       const verificationResult = await reCaptcha.verify(token)
 
+      console.log(verificationResult)
+
       return verificationResult.isHuman
     }
 }
