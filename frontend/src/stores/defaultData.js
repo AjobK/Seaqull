@@ -5,7 +5,7 @@ const DefaultDataStore = types
     projectName: types.optional(types.string, 'Seaqull'),
     backendUrl: types.optional(types.string, 'http://localhost:8000/api'),
     backendUrlBase: types.optional(types.string, 'http://localhost:8000'),
-    recaptchaSiteKey: types.optional(types.string, '6LcuZr8cAAAAAHCABYqkNkzqLMoj84wGoTFYdp1f')
+    recaptchaSiteKey: types.optional(types.string, '6LftMdccAAAAAP7p-cvb9c68hz0ss_bkBB68yv5c')
   })
   .actions((self) => ({
     reset() {
