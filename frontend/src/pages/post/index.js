@@ -151,7 +151,7 @@ class Post extends App {
       content: this.state.post.content,
     }
 
-    Axios.put(`/post/${path}`, payload, { withCredentials: true }).then(() => {
+    Axios.put(`/post/${this.state.post.path}`, payload, { withCredentials: true }).then(() => {
       const { notification } = this.props.store
 
       notification.setContent(popUpData.messages.updatePostNotification)
