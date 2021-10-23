@@ -151,7 +151,7 @@ class PostBanner extends Component {
               changeImage={ this.changeThumbnail }
               returnOnSave={ this.props.isNew }
             />
-          )}
+          ) }
         </div>
       </section>
     )
