@@ -64,6 +64,7 @@ class PostBanner extends Component {
     this.props.onThumbnailAdded(newThumbnail)
 
     const reader = new FileReader()
+    
     reader.addEventListener('load', () => {
       this.setState({
         thumbnail: reader.result
