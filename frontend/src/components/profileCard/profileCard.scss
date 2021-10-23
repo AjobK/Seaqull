@@ -6,6 +6,7 @@
 }
 
 .profilePictureWrapper {
+	position: relative;
 	max-width: 150px;
 	margin: 0 auto;
 
@@ -20,6 +21,57 @@
 		min-width: 150px;
 		min-height: 150px;
 		pointer-events: initial;
+
+		@include mobile-all-portrait {
+			overflow: visible;
+			min-width: 150px;
+			min-height: 150px;
+			width: 20vh;
+			height: 20vh;
+			max-width: 80vw;
+			max-height: 80vw;
+		}
+		@include box-shadow;
+
+		&Edit {
+			transition: 0.2s;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(0,0,0,0.75);
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2rem;
+			border-radius: 50%;
+	
+			&:hover {
+				transition: 0.2s;
+				opacity: 1;
+			}
+	
+			@include mobile-all-portrait {
+				border-radius: 100%;
+			}
+	
+			input {
+				cursor: pointer;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				opacity: 0;
+			}
+		}
+	
+		&DraggingOver {
+			cursor: pointer;
+			transition: 0.2s;
+			opacity: 1;
+		}
 	}
 }
 

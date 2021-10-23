@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './profileCard.scss'
 import { observer, inject } from 'mobx-react'
-import { Icon, Button } from '../'
+import { Icon, Button, Cropper } from '../'
 import Axios from 'axios'
 import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js'
 
@@ -16,6 +16,9 @@ class ProfileCard extends Component {
       profile: props.profile,
       posts: props.posts,
       loggedIn: this.props.loggedIn,
+      following: this.props.user.following || false,
+      upAvatar: null,
+      draggingOverAvatar: false,
       editingBio: false,
       editorState: EditorState.createEmpty(),
       changedContent: false,
@@ -24,6 +27,60 @@ class ProfileCard extends Component {
 
     this.changeStateLock = null
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+  }
+
+  componentDidMount = () => {
+    this.setDescription()
+  }
+
+  onEditAvatar = (input) => {
+    this.handleInput(input, 'upAvatar')
+    this.onAvatarDragLeave()
+  }
+
+  handleInput = (input, stateVar) => {
+    input.value = ''
+
+    if (input.target.files && input.target.files.length > 0) {
+      this.setScrollEnabled(false)
+      const reader = new FileReader()
+
+      reader.addEventListener('load', () => {
+        this.setState({
+          [stateVar]: reader.result
+        })
+      })
+      reader.readAsDataURL(input.target.files[0])
+    }
+  }
+
+  onAvatarDragEnter = () => {
+    this.setState({
+      draggingOverAvatar: true
+    })
+  }
+
+  onAvatarDragLeave = () => {
+    this.setState({
+      draggingOverAvatar: false
+    })
+  }
+
+  changeAvatar = (newAvatar) => {
+    this.props.user.picture = newAvatar
+  }
+
+  closePopup = () => {
+    this.setScrollEnabled(true)
+    this.setState({
+      upAvatar: null,
+      upBanner: null,
+      banUser: false
+    })
+  }
+
+  setScrollEnabled = (scrollEnabled) => {
+    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
   onChangeBio = (editorState) => {
@@ -36,10 +93,6 @@ class ProfileCard extends Component {
       editorState,
       changedContent: true
     })
-  }
-
-  componentDidMount = () => {
-    this.setDescription()
   }
 
   setDescription = () => {
@@ -95,6 +148,7 @@ class ProfileCard extends Component {
   render() {
 
     let editButtonValue = this.state.editingBio ? 'Save' : 'Edit'
+    let followButtonValue = this.state.following ? 'Following' : 'Follow'
     const posts = this.props.posts
 
     return (
@@ -102,6 +156,25 @@ class ProfileCard extends Component {
         <div className={ styles.profilePictureWrapper }>
           <div className={ styles.profilePicture } style={ { backgroundImage: `url(${ this.state.user.picture })` } }>
           </div>
+          { this.state.user.isOwner && (
+            <span
+              className={
+                `${ styles.profilePictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }`
+              }
+            >
+              <Icon iconName={ 'Pen' } />
+              <input
+                type='file' accept='image/png, image/jpeg' value={ '' }
+                onChange={ this.onEditAvatar }
+                onDragEnter={ this.onAvatarDragEnter }
+                onDragLeave={ this.onAvatarDragLeave }
+                style={ {
+                  backgroundImage: `url(${ this.state.user.picture })`,
+                  // backgroundColor: uniqueAvatarColorBasedOnHash
+                } }
+              />
+            </span>
+          )}
         </div>
         <div className={ styles.profileInfo }>
           <div className={ styles.profileNameWrapper }>
@@ -131,7 +204,7 @@ class ProfileCard extends Component {
                 value={ editButtonValue }
                 className={ styles.followButton }
                 onClick={ () => this.changeEditingState() } />) :
-              (<Button value='Follow' className={ styles.followButton } />) }
+              (<Button value={ followButtonValue } className={ styles.followButton } />) }
             <Button icon='CommentAlt' className={ styles.chatButton } />
           </div>
           <div className={ styles.profileCardBio }>
@@ -146,6 +219,14 @@ class ProfileCard extends Component {
             </section>
           </div>
         </div>
+        { this.state.upAvatar && (
+          <Cropper
+            inputType={ 'avatar' }
+            img={ this.state.upAvatar }
+            closeCropper={ this.closePopup }
+            changeImage={ this.changeAvatar }
+          />
+        )}
       </section>
     )
   }
