@@ -7,7 +7,6 @@ import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
 import AttachmentDAO from '../daos/attachmentDAO'
-import attachmentDAO from '../daos/attachmentDAO'
 import ArchivedPost from '../entities/archivedPost'
 import ArchivedPostDAO from '../daos/archivedPostDAO'
 import NetworkService from '../utils/networkService'
@@ -22,7 +21,7 @@ class PostController {
   private profileDAO: ProfileDAO
   private accountDAO: AccountDAO
   private archivedPostDao: ArchivedPostDAO
-  private attachmentDAO: attachmentDAO
+  private attachmentDAO: AttachmentDAO
   private fileService: FileService
 
   constructor() {

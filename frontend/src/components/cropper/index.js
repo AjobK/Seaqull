@@ -133,7 +133,7 @@ class Cropper extends Component {
     })
   }
 
-  saveImage = () => {
+  onSave = () => {
     const image = this.state.croppedImage
 
     if (this.props.returnOnSave) {
@@ -143,7 +143,7 @@ class Cropper extends Component {
       return
     }
 
-    this.sendImageToDb(image)
+    this.saveImage(image)
       .then((res) => {
         this.props.changeImage(res.data.url)
         this.props.closeCropper()
@@ -155,7 +155,7 @@ class Cropper extends Component {
       })
   }
 
-  sendImageToDb = async (image) => {
+  saveImage = async (image) => {
     const fd = new FormData()
     fd.append('file', image)
 
@@ -223,7 +223,7 @@ class Cropper extends Component {
                 className={ styles.avatarUploadPopUpBtnsSaveButton }
                 value={ 'Save' }
                 disabled={ !inputImage || !isCropped }
-                onClick={ inputImage && isCropped ? this.saveImage : undefined }
+                onClick={ inputImage && isCropped ? this.onSave : undefined }
               />
             )}
           </div>

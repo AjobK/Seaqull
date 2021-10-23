@@ -119,17 +119,17 @@ class Post extends App {
     this.setState(newState)
   }
 
-  sendToDB = (path = null) => {
+  save = (path = null) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     if (!path) {
-      this.createPostDB()
+      this.createPost()
     } else if (typeof path == 'string') {
-      this.updatePostDB()
+      this.updatePost()
     }
   }
 
-  createPostDB = () => {
+  createPost = () => {
     const fd = new FormData()
 
     fd.append('file', this.addedThumbnail)
@@ -144,7 +144,7 @@ class Post extends App {
     })
   }
 
-  updatePostDB = () => {
+  updatePost = () => {
     const payload = {
       title: this.state.post.title,
       description: 'None',
@@ -267,7 +267,7 @@ class Post extends App {
                 <Button
                   className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
                   value={ 'Create' }
-                  onClick={ () => this.sendToDB(post.path) }
+                  onClick={ () => this.save(post.path) }
                 />
               }
               {
@@ -275,7 +275,7 @@ class Post extends App {
                 <Button
                   className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
                   value={ 'Update' }
-                  onClick={ () => this.sendToDB(post.path) }
+                  onClick={ () => this.save(post.path) }
                 />
               }
             </div>
