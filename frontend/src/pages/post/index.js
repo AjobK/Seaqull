@@ -7,9 +7,9 @@ import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
+import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
-import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews } from '../../components'
-import { URLUtil } from '../../util/'
+import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews, Loader } from '../../components'
 
 @inject('store')
 @observer
@@ -97,6 +97,23 @@ class Post extends App {
           isEditing: true,
           author: author
         }, this.addViewToDB)
+      })
+      .catch((error) => {
+        let { name, message } = error.toJSON()
+
+        if (error?.response?.data?.message) {
+          message = error.response.data.message
+        } else if (error?.response?.statusText) {
+          message = error.response.statusText
+        }
+
+        this.props.history.push({
+          pathname: '/error',
+          state: {
+            title: error.response ? error.response.status : name,
+            sub: message
+          }
+        })
       })
   }
 
@@ -213,7 +230,8 @@ class Post extends App {
       title: profile.title
     }
 
-    if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
+    if (!loaded && !this.props.new)
+      return <Loader />
 
     return (
       <Standard className={ [styles.stdBgWhite] }>
