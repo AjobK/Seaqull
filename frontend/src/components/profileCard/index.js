@@ -4,6 +4,8 @@ import { observer, inject } from 'mobx-react'
 import { Icon, Button, Cropper } from '../'
 import Axios from 'axios'
 import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js'
+import URLUtil from '../../util/urlUtil'
+import ColorUtil from '../../util/colorUtil'
 
 @inject('store')
 @observer
@@ -83,6 +85,19 @@ class ProfileCard extends Component {
     document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
+  follow = () => {
+    const username = URLUtil.getLastPathArgument()
+
+    Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
+      .then((res) => {
+        this.setState({ following: res.data.following || false },
+          this.props.changeFollowerCount(res.data.following ? 1 : -1))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   onChangeBio = (editorState) => {
     const user = this.state.user
 
@@ -151,10 +166,18 @@ class ProfileCard extends Component {
     let followButtonValue = this.state.following ? 'Following' : 'Follow'
     const posts = this.props.posts
 
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(this.state.user.username)
+
     return (
       <section className={ styles.wrapper }>
         <div className={ styles.profilePictureWrapper }>
-          <div className={ styles.profilePicture } style={ { backgroundImage: `url(${ this.state.user.picture })` } }>
+          <div
+            className={ styles.profilePicture }
+            style={ {
+              backgroundImage: `url(${ this.state.user.picture })`,
+              backgroundColor: uniqueAvatarColorBasedOnHash
+            } }
+          >
           </div>
           { this.state.user.isOwner && (
             <span
@@ -170,7 +193,7 @@ class ProfileCard extends Component {
                 onDragLeave={ this.onAvatarDragLeave }
                 style={ {
                   backgroundImage: `url(${ this.state.user.picture })`,
-                  // backgroundColor: uniqueAvatarColorBasedOnHash
+                  backgroundColor: uniqueAvatarColorBasedOnHash
                 } }
               />
             </span>
@@ -202,9 +225,13 @@ class ProfileCard extends Component {
               (<Button
                 icon={ this.state.icon }
                 value={ editButtonValue }
-                className={ styles.followButton }
+                className={ styles.editButton }
                 onClick={ () => this.changeEditingState() } />) :
-              (<Button value={ followButtonValue } className={ styles.followButton } />) }
+              (<Button
+                value={ followButtonValue }
+                className={ `${styles.followButton} ${this.state.following ? styles.replied : '' }` }
+                onClick={ this.follow }
+              />) }
             <Button icon='CommentAlt' className={ styles.chatButton } />
           </div>
           <div className={ styles.profileCardBio }>

@@ -119,6 +119,18 @@
 .followButton {
 	border-radius: 0;
 	width: 210px;
+
+	&.replied {
+		background: white;
+		color: $primary;
+		border: 1px solid $primary;
+	}
+}
+
+.editButton {
+	border-radius: 0;
+	width: 210px;
+	background-color: $secondary;
 }
 
 .chatButton {
