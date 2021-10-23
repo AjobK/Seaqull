@@ -130,6 +130,16 @@ class UserBanner extends Component {
     }
   }
 
+  getFollowIcon = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'UsersSlash' : 'UserFriends'
+    } else {
+      return following ? 'Check' : 'Reply'
+    }
+  }
+
   render() {
     const user = this.props.user
     const role = this.props.role
@@ -175,7 +185,7 @@ class UserBanner extends Component {
               onClick={ this.follow }
             >
               <p>{ this.getFollowText() }</p>
-              <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
+              <Icon iconName={ this.getFollowIcon() } classNames={ styles.replyIcon } />
             </button>
             }
           </div>
