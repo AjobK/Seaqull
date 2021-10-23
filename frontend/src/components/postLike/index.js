@@ -76,7 +76,7 @@ class PostLike extends Component {
         {likesAmount <= 0 && <p className={ `${styles.postLikesAmount}` }>0 likes</p>}
         {likesAmount > 0 && (
           <p className={ `${styles.postLikesAmount} ${styles.clickableLikes}` } onClick={ this.openLikesList }>
-            {UnitFormatterUtil.getNumberSuffix(likesAmount)} {likesAmount === 1 ? 'like' : 'likes'}
+            { UnitFormatterUtil.getNumberSuffix(likesAmount)} {likesAmount === 1 ? 'like' : 'likes' }
           </p>
         )}
         {!isOwner && (
