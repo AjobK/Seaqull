@@ -72,6 +72,9 @@ class PostController {
 
     const foundPost = await this.dao.getPostByPath(req.params.path)
 
+    if (!foundPost)
+      return res.status(404).json({ 'message': 'No post found on that path' })
+
     const { JWT_SECRET } = process.env
     let decodedId
 
@@ -95,10 +98,7 @@ class PostController {
     }
     response.isOwner = foundPost.profile.id == decodedId
 
-    if (req.params.path && foundPost)
-      return res.status(200).json(response)
-    else
-      return res.status(404).json({ 'message': 'No post found on that path' })
+    return res.status(200).json(response)
   }
 
   public createPost = async (req: Request, res: Response): Promise<Response> => {
