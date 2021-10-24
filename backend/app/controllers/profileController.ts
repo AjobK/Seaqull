@@ -170,19 +170,19 @@ class ProfileController {
     let followsYou = false
 
     if (!isOwner && decodedToken && decodedToken.username) {
-      const userTargetProfile: ProfileFollowedBy = new ProfileFollowedBy()
-      const userOwnProfile: ProfileFollowedBy = new ProfileFollowedBy()
+      const targetProfile: ProfileFollowedBy = new ProfileFollowedBy()
+      const ownProfile: ProfileFollowedBy = new ProfileFollowedBy()
 
       const followingProfile = await this.dao.getProfileByUsername(decodedToken.username)
 
-      userTargetProfile.follower = followingProfile.id
-      userTargetProfile.profile = profile.id
+      targetProfile.follower = followingProfile.id
+      targetProfile.profile = profile.id
 
-      userOwnProfile.follower = profile.id
-      userOwnProfile.profile = followingProfile.id
+      ownProfile.follower = profile.id
+      ownProfile.profile = followingProfile.id
 
-      following = await this.dao.isFollowing(userTargetProfile)
-      followsYou = await this.dao.isFollowing(userOwnProfile)
+      following = await this.dao.isFollowing(targetProfile)
+      followsYou = await this.dao.isFollowing(ownProfile)
     }
 
     const payload = {
