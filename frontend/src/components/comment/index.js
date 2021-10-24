@@ -136,6 +136,47 @@ class Comment extends Component {
       })
   }
 
+  displayLikeButton = () => {
+    return (
+        <>
+          <div className={ styles.like__wrapper }>
+            <Icon
+              iconName={ 'Heart' }
+              className={ `
+                ${styles.comment__likeButtonIcon}
+                ${
+                    this.state.likes.profileHasLiked ?
+                      styles.comment__hasLikedComment :
+                      styles.comment__hasNotLikedComment
+                }
+              ` }
+              onClick={ this.onLikeClick }
+            />
+            <p>{ this.state.likes.length }</p>
+          </div>
+          <span className={ styles.seperator }></span>
+        </>
+    )
+  }
+
+  displayTrashButton = () => {
+    const { comment } = this.props
+    const { profile } = this.props.store
+
+    if (comment.profile.display_name === profile.display_name) {
+      return (
+          <>
+            <Icon
+              iconName={ 'Trash' }
+              className={ styles.comment__deleteButtonIcon }
+              onClick={ this.onDeleteClick }
+            />
+            { !this.isReply && <span className={ styles.seperator }></span> }
+          </>
+      )
+    }
+  }
+
   displayReplyButton = () => {
     if (!this.isReply) {
       return (
@@ -161,28 +202,24 @@ class Comment extends Component {
                 <div className={ styles.comment__header }>
                   <div className={ styles.comment__headerAuthor }>
                     { profile.loggedIn && this.state.isPostOwner && (
-                        <>
-                          <Icon
-                            iconName={ 'Thumbtack' }
-                            className={ `
+                      <Icon
+                        iconName={ 'Thumbtack' }
+                        className={ `
                               ${styles.comment__pinButtonIcon} 
                               ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
                             ` }
-                            onClick={ this.onPinClick }
-                          />
-                        </>
+                        onClick={ this.onPinClick }
+                      />
                     ) }
-                    { this.state.isPinned && !this.state.isPostOwner || !profile.loggedIn && this.state.isPinned && (
-                        <>
-                          <Icon
-                            iconName={ 'Thumbtack' }
-                            className={ `
+                    { this.state.isPinned && (!this.state.isPostOwner || !profile.loggedIn) && (
+                      <Icon
+                        iconName={ 'Thumbtack' }
+                        className={ `
                               ${styles.comment__pinButtonIcon} 
                               ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
                             ` }
-                            onClick={ this.onPinClick }
-                          />
-                        </>
+                        onClick={ this.onPinClick }
+                      />
                     ) }
                     <Link to={ `/profile/${comment.profile.display_name}` } className={ styles.comment__headerAuthor }>
                       {comment.profile.display_name}
@@ -209,31 +246,8 @@ class Comment extends Component {
                     <span className={ styles.seperator }></span>
                   </>
                 )}
-                { profile.loggedIn && comment.profile.display_name === profile.display_name && (
-                  <>
-                    <div className={ styles.like__wrapper }>
-                      <Icon
-                        iconName={ 'Heart' }
-                        className={ `
-                          ${styles.comment__likeButtonIcon}
-                          ${
-                            this.state.likes.profileHasLiked ?
-                              styles.comment__hasLikedComment : styles.comment__hasNotLikedComment
-                          }
-                        ` }
-                        onClick={ this.onLikeClick }
-                      />
-                      <p>{ this.state.likes.length }</p>
-                    </div>
-                    <span className={ styles.seperator }></span>
-                    <Icon
-                      iconName={ 'Trash' }
-                      className={ styles.comment__deleteButtonIcon }
-                      onClick={ this.onDeleteClick }
-                    />
-                    { !this.isReply && <span className={ styles.seperator }></span> }
-                  </>
-                ) }
+                { profile.loggedIn && this.displayLikeButton() }
+                { profile.loggedIn && this.displayTrashButton() }
                 { profile.loggedIn && this.displayReplyButton() }
               </div>
             </div>
