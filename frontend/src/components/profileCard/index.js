@@ -162,7 +162,7 @@ class ProfileCard extends Component {
 
   render() {
 
-    let editButtonValue = this.state.editingBio ? 'Save' : 'Edit'
+    let editButtonValue = this.state.editingBio ? 'Save' : 'Edit Bio'
     let followButtonValue = this.state.following ? 'Following' : 'Follow'
     const posts = this.props.posts
 

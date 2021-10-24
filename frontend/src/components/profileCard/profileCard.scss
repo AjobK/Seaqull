@@ -8,12 +8,12 @@
 }
 
 .wrapper {
-	max-width: 262px;
+	max-width: 265px;
 	margin-bottom: 30px;
+	transform: translateY(-75px);
 
 	@include mobile-all-portrait {
 		overflow: visible;
-		max-width: 80%;
 		margin: 0 auto 30px auto;
 	}
 }
@@ -23,12 +23,6 @@
 	max-width: 150px;
 	margin: 0 auto;
 
-	@include mobile-all-portrait {
-		overflow: visible;
-
-		max-width: 200px;
-	}
-
 	.profilePicture {
 		border-radius: 100%;
 		position: relative;
@@ -37,16 +31,9 @@
 		background-color: $darkest;
 		display: flex;
 		justify-content: center;
-		min-width: 150px;
-		min-height: 150px;
+		width: 150px;
+		height: 150px;
 		pointer-events: initial;
-
-		@include mobile-all-portrait {
-			overflow: visible;
-	
-			width: 200px;
-			height: 200px;
-		}
 
 		@include box-shadow;
 
@@ -94,50 +81,46 @@
 
 .profileInfo {
 	margin-top: 10px;
-}
 
-.profileNameWrapper {
-	display: flex;
-	justify-content: center;
-	color: $primary;
-	font-size: $nr-md-fontsize;
-}
-
-.profileInfoBadge {
-	vertical-align: middle;
-	height: auto;
-	color: $primary;
-	margin-right: 5px;
-}
-
-.profileInfoUsername {
-	text-align: center;
-	color: $secondary;
+	.profileNameWrapper {
+		display: flex;
+		justify-content: center;
+		color: $primary;
+		font-size: $nr-md-fontsize;
+	}
+	
+	.profileInfoBadge {
+		vertical-align: middle;
+		height: auto;
+		color: $primary;
+		margin-right: 5px;
+	}
+	
+	.profileInfoUsername {
+		text-align: center;
+		color: $secondary;
+	}
 }
 
 .profileStatistics {
 	@include profileCardFlexSection;
 
-	@include mobile-all-portrait {
-		justify-content: space-around;
+	.profileStatisticNumber {
+		font-weight: 600;
+		font-size: $nr-md-fontsize;
 	}
-}
 
-.profileStatisticNumber {
-	font-weight: 600;
-	font-size: $nr-md-fontsize;
-}
-
-.profileStatisticMetric {
-	opacity: 0.8;
-	font-size: $nr-sm-fontsize;
+	.profileStatisticMetric {
+		opacity: 0.8;
+		font-size: $nr-sm-fontsize;
+	}
 }
 
 .profileCardButtons {
 	@include profileCardFlexSection;
 
 	@include mobile-all-portrait {
-		justify-content: left;
+		justify-content: center;
 	}
 
 	.followButton {
@@ -162,7 +145,7 @@
 		color: $primary;
 		background-color: transparent;
 		border: 1px solid $primary;
-		margin-left: 5px;
+		margin-left: 10px;
 	}
 
 	.settingsButton {
@@ -170,17 +153,17 @@
 		color: black;
 		background-color: transparent;
 		border: 1px solid black;
-		margin-left: 5px;
+		margin-left: 10px;
 	}
 }
 
 .profileCardBio {
 	width: 100%;
-}
 
-.editor {
-	background-color: rgba(255, 255, 255, 0.1); 
-	border-radius: 5px;
-	margin-top: 30px;
-	width: 100%;
+	.editor {
+		background-color: rgba(255, 255, 255, 0.1); 
+		border-radius: 5px;
+		margin-top: 30px;
+		width: 100%;
+	}
 }
