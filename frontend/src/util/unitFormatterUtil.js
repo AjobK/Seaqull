@@ -1,4 +1,4 @@
-class unitFormatterUtil {
+class UnitFormatterUtil {
   static getNumberSuffix(value) {
     if (value === undefined)
       return ''
@@ -19,4 +19,4 @@ class unitFormatterUtil {
   }
 }
 
-export default unitFormatterUtil
+export default UnitFormatterUtil

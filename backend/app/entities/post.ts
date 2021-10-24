@@ -9,6 +9,7 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 import Profile from './profile'
+import Attachment from './attachment'
 
 @Entity('post')
 export class Post extends BaseEntity {
@@ -30,6 +31,10 @@ export class Post extends BaseEntity {
 
   @Column()
   description: string
+
+  @ManyToOne(() => Attachment, (attachment) => attachment.id)
+  @JoinColumn({ name: 'thumbnail_attachment_id', referencedColumnName: 'id' })
+  thumbnail_attachment: Attachment
 
   @CreateDateColumn()
   created_at: Date
