@@ -11,10 +11,13 @@ class PostRoutes implements RouterBase {
   public router = express.Router()
   private postService: PostService
   private upload
+  private POST_OWNER = 'POST_OWNER'
+  private ROLE_PERMISSIONS = 'ROLE_PERMISSIONS'
 
   constructor() {
     this.postService = new PostService()
     this.upload = new FileService().getUpload()
+
     this.initRoutes()
   }
 
@@ -31,11 +34,14 @@ class PostRoutes implements RouterBase {
     this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
     this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
     this.router.put(this.post + '/:path', auth, this.postService.updatePost)
-    this.router.put(this.post + '/archive/:path', auth, hasPostPermission, this.postService.archivePost)
+    this.router.put(this.post + '/archive/:path',
+      auth, hasPostPermission([this.POST_OWNER, this.ROLE_PERMISSIONS]),
+      this.postService.archivePost
+    )
     this.router.post(this.post + '/view', this.postService.addViewToPost)
     this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
     this.router.put(this.post + '/thumbnail/:path',
-      auth, hasPostPermission, this.upload.single('file'),
+      auth, hasPostPermission([this.POST_OWNER]), this.upload.single('file'),
       this.postService.updatePostThumbnail
     )
     this.router.get(this.post + '/thumbnail/default', this.postService.getPostDefaultThumbnailURL)
