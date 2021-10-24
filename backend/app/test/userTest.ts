@@ -9,7 +9,7 @@ describe('Testing the login/register', () => {
   const id = uuidv4()
   const agent = chai.request.agent('http://localhost:8000/api')
 
-  it('Check to see if you can create a new user when no number was included in the password', (done) => {
+  it('Shouldn\'t register user because no numbers are present in the password', (done) => {
     agent
       .post('/profile/register')
       .send({
@@ -23,7 +23,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check to see if you can create a new user when no uppercase character was used', (done) => {
+  it('Shouldn\'t register user because no capitol are present in the password', (done) => {
     agent
       .post('/profile/register')
       .send({
@@ -37,7 +37,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check if you can create a new user when the user already exists', (done) => {
+  it('Shouldn\'t register user because the user already exists', (done) => {
     agent
       .post('/profile/register')
       .send({
@@ -51,7 +51,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check if you can create a new user when the input value is valid', (done) => {
+  it('Should create a new user', (done) => {
     agent
       .post('/profile/register')
       .send({
@@ -65,7 +65,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check if you can login when data is invalid', (done) => {
+  it('Shouln\'t login because username and password are incorrect', (done) => {
     agent
       .post('/login')
       .send({
@@ -78,7 +78,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check if you can login because data is valid', (done) => {
+  it('Should login', (done) => {
     agent
       .post('/login')
       .send({
@@ -91,7 +91,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check if you can verify a user is logged in', (done) => {
+  it('Should verify the user is logged in', (done) => {
     agent
       .get('/login-verify')
       .end((err, res) => {
@@ -100,7 +100,7 @@ describe('Testing the login/register', () => {
       })
   })
 
-  it('Check if a user can logout', (done) => {
+  it('Should logout user', (done) => {
     agent
       .get('/logout')
       .end((err, res) => {

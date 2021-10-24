@@ -51,9 +51,9 @@ class BanController {
 
     if (isNaN(banTime)) return res.status(400).json({ error: ['Invalid data'] })
 
-    const createdBan = await this.banService.banUser(user, admin, reason, req.connection.remoteAddress, banTime)
+    await this.banService.banUser(user, admin, reason, req.connection.remoteAddress, banTime)
 
-    return res.status(200).json({ ban: createdBan })
+    return res.status(200).json({})
   }
 }
 

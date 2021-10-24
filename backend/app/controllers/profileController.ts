@@ -195,6 +195,7 @@ class ProfileController {
   }
 
   public register = async (req: any, res: Response): Promise<Response> => {
+    console.log(req.body)
     const userRequested = req.body
     const errors = {
       username: [],

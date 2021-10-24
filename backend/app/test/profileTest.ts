@@ -13,20 +13,27 @@ describe('Testing the different components used on the profile page', () => {
 
   let amountOfFollowers = 0
 
-  it('Login so we can test the profile page', (done) => {
+  before((done) => {
     agentUser
       .post('/login')
       .send({
         username: 'User',
         password: 'Qwerty123'
       })
-      .end((err, res) => {
-        assert.equal(res.status, 200)
-        done()
+      .end(() => {
+        agentAdmin
+          .post('/login')
+          .send({
+            username: 'Admin',
+            password: 'Qwerty123'
+          })
+          .end(() => {
+            done()
+          })
       })
   })
 
-  it('Updating user', (done) => {
+  it('Should update user', (done) => {
     agentUser
       .put('/profile/User')
       .send({
@@ -35,11 +42,8 @@ describe('Testing the different components used on the profile page', () => {
       })
       .end((err, res) => {
         assert.equal(res.status, 200)
-        done()
       })
-  })
 
-  it('Checking if the description is updated', (done) => {
     agentUser
       .get('/profile/User')
       .end((err, res) => {
@@ -48,24 +52,10 @@ describe('Testing the different components used on the profile page', () => {
       })
   })
 
-  it('Login as admin so we can check the amount of followers', (done) => {
-    agentAdmin
-      .post('/login')
-      .send({
-        username: 'Admin',
-        password: 'Qwerty123'
-      })
-      .end((err, res) => {
-        assert.equal(res.status, 200)
-        done()
-      })
-  })
-
-  it('Getting the current amount of followers', (done) => {
+  it('Should retrieve the current amount of followers', (done) => {
     agentAdmin
       .get('/profile/Admin/followers')
       .end((err, res) => {
-
         if (res.status == 200) {
           amountOfFollowers = res.body.followers.length
         } else {
@@ -76,79 +66,67 @@ describe('Testing the different components used on the profile page', () => {
       })
   })
 
-  it('Following the admin as user', (done) => {
+  it('Should follow the admin', (done) => {
     agentUser
       .post('/profile/follow/Admin')
       .end((err, res) => {
         assert.equal(res.status, 200)
-        done()
+
+        agentAdmin
+          .get('/profile/Admin/followers')
+          .end((err, res) => {
+            assert.equal(res.body.followers.length, (amountOfFollowers + 1))
+            done()
+          })
       })
   })
 
-  it('Checking followers count after following', (done) => {
-    agentAdmin
-      .get('/profile/Admin/followers')
-      .end((err, res) => {
-        assert.equal(res.body.followers.length, (amountOfFollowers + 1))
-        done()
-      })
-  })
-
-  it('Unfollowing the admin as user', (done) => {
+  it('Should unfollow the admin as user', (done) => {
     agentUser
       .post('/profile/follow/Admin')
       .end((err, res) => {
         assert.equal(res.status, 200)
-        done()
+
+        agentAdmin
+          .get('/profile/Admin/followers')
+          .end((err, res) => {
+            if (res.status == 200) {
+              assert.equal(res.body.followers.length, amountOfFollowers)
+            } else if (res.status == 204) {
+              assert.equal(Object.keys(res.body).length, amountOfFollowers)
+            }
+
+            done()
+          })
       })
   })
 
-  it('checking followers after unfollowing', (done) => {
-    agentAdmin
-      .get('/profile/Admin/followers')
-      .end((err, res) => {
-        if (res.status == 200) {
-          assert.equal(res.body.followers.length, amountOfFollowers)
-        } else if (res.status == 204) {
-          assert.equal(Object.keys(res.body).length, amountOfFollowers)
-        }
-
-        done()
-      })
-  })
-
-  it('checking if we can change our avatar', (done) => {
+  it('Should update profile pictures', (done) => {
     agentUser
       .get('/profile/User')
       .end((err, res) => {
         currentAvatar = res.body.profile.avatar
         currentBanner = res.body.profile.banner
         assert.equal(res.status, 200)
+
+        agentUser
+          .put('/profile/avatar')
+          .attach('file', fs.readFileSync(`${__dirname}/data/avatar.jpg`), 'avatar.jpg')
+          .end((err, res) => {
+            assert.notEqual(currentAvatar, res.body.url)
+          })
+
+        agentUser
+          .put('/profile/banner')
+          .attach('file', fs.readFileSync(`${__dirname}/data/banner.jpeg`), 'banner.jpeg')
+          .end((err, res) => {
+            assert.notEqual(currentBanner, res.body.url)
+          })
         done()
       })
   })
 
-  it('Checking if we can update the avatar', ((done) => {
-    agentUser
-      .put('/profile/avatar')
-      .attach('file', fs.readFileSync(`${__dirname}/data/avatar.jpg`), 'avatar.jpg')
-      .end((err, res) => {
-        assert.notEqual(currentAvatar, res.body.url)
-        done()
-      })
-  }))
-
-  it('Checking if we can update the banner', ((done) => {
-    agentUser
-      .put('/profile/avatar')
-      .attach('file', fs.readFileSync(`${__dirname}/data/banner.jpeg`), 'banner.jpeg')
-      .end((err, res) => {
-        assert.notEqual(currentBanner, res.body.url)
-        done()
-      })
-  }))
-
-  it('Checking if we can get the role', ((done) => {
+  it('Should retrieve role', ((done) => {
     agentUser
       .get('/role')
       .end((err, res) => {
