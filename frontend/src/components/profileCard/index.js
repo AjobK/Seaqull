@@ -19,6 +19,7 @@ class ProfileCard extends Component {
       posts: props.posts,
       loggedIn: this.props.loggedIn,
       following: this.props.user.following || false,
+      followsYou: this.props.user.followsYou,
       upAvatar: null,
       draggingOverAvatar: false,
       editingBio: false,
@@ -33,6 +34,17 @@ class ProfileCard extends Component {
 
   componentDidMount = () => {
     this.setDescription()
+  }
+
+  componentDidUpdate(prevProps) {
+    const { username, following, followsYou } = this.props.user
+
+    if (username !== prevProps.user.username) {
+      this.setState({
+        following,
+        followsYou
+      })
+    }
   }
 
   onEditAvatar = (input) => {
@@ -96,6 +108,26 @@ class ProfileCard extends Component {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  getFollowText = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'Friends' : 'Follow back'
+    } else {
+      return following ? 'Following' : 'Follow'
+    }
+  }
+
+  getFollowButtonClass = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou && following) {
+      return styles.friends
+    } else if (following) {
+      return styles.following
+    }
   }
 
   onChangeBio = (editorState) => {
@@ -163,7 +195,6 @@ class ProfileCard extends Component {
   render() {
 
     let editButtonValue = this.state.editingBio ? 'Save' : 'Edit Bio'
-    let followButtonValue = this.state.following ? 'Following' : 'Follow'
     const posts = this.props.posts
 
     const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(this.state.user.username)
@@ -228,8 +259,8 @@ class ProfileCard extends Component {
                 className={ styles.editButton }
                 onClick={ () => this.changeEditingState() } />) :
               (<Button
-                value={ followButtonValue }
-                className={ `${styles.followButton} ${this.state.following ? styles.replied : '' }` }
+                value={ <span>{ this.getFollowText() } </span> }
+                className={ `${styles.followButton} ${this.getFollowButtonClass()}` }
                 onClick={ this.follow }
               />) }
             { this.state.profile.loggedIn && this.state.user.isOwner ?

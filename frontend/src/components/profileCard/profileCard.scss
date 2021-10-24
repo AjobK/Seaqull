@@ -129,10 +129,36 @@
 	.followButton {
 		width: 100%;
 	
-		&.replied {
+		&.following {
 			background: white;
 			color: $primary;
 			border: 1px solid $primary;
+
+			&:hover {
+				span {
+					display: none;
+				}
+
+				&:after {
+					content: 'Unfollow';
+				}
+			}
+		}
+
+		&.friends {
+			background: white;
+			color: $primary;
+			border: 1px solid $primary;
+
+			&:hover {
+				span {
+					display: none;
+				}
+
+				&:after {
+					content: 'Unfriend';
+				}
+			}
 		}
 	}
 	
