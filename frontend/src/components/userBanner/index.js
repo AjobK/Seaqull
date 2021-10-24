@@ -130,7 +130,7 @@ class UserBanner extends Component {
     }
   }
 
-  getFollowIcon = () => {
+  getFollowIconName = () => {
     const { followsYou, following } = this.state
 
     if (followsYou) {
