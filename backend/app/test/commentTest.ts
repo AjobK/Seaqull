@@ -81,9 +81,6 @@ describe('Testing comment section on posts', () => {
       })
       .end((err, res) => {
         assert.equal(res.status, 200)
-
-        // todo
-
         done()
       })
   })
