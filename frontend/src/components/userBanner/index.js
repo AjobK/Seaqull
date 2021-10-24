@@ -24,9 +24,9 @@ class UserBanner extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { username, following, followsYou } = this.props
-    
-    if (username !== username) {
+    const { username, following, followsYou } = this.props.user
+
+    if (username !== prevProps.user.username) {
       this.setState({
         following,
         followsYou
