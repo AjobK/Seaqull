@@ -154,7 +154,7 @@
 	.editButton {
 		border-radius: 0;
 		width: 210px;
-		background-color: $secondary;
+		background-color: black;
 	}
 	
 	.chatButton {
@@ -162,6 +162,14 @@
 		color: $primary;
 		background-color: transparent;
 		border: 1px solid $primary;
+		margin-left: 5px;
+	}
+
+	.settingsButton {
+		border-radius: 0;
+		color: black;
+		background-color: transparent;
+		border: 1px solid black;
 		margin-left: 5px;
 	}
 }

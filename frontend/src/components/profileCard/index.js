@@ -232,7 +232,10 @@ class ProfileCard extends Component {
                 className={ `${styles.followButton} ${this.state.following ? styles.replied : '' }` }
                 onClick={ this.follow }
               />) }
-            <Button icon='CommentAlt' className={ styles.chatButton } />
+            { this.state.profile.loggedIn && this.state.user.isOwner ?
+              (<Button icon='Cog' className={ styles.settingsButton } />) :
+              (<Button icon='CommentAlt' className={ styles.chatButton } />)
+            }
           </div>
           <div className={ styles.profileCardBio }>
             <section className={ styles.editor }>
