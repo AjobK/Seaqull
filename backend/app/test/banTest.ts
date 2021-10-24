@@ -68,6 +68,7 @@ describe('Testing banning a user', () => {
         password: 'Qwerty123'
       })
       .end((err, res) => {
+        console.log(err)
         assert.equal(res.status, 200)
         done()
       })
