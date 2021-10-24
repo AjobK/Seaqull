@@ -204,13 +204,13 @@ class ProfileCard extends Component {
             <Icon className={ styles.profileInfoBadge } iconName={ 'At' }/>
             <h2 className={ styles.profileInfoUsername }>{ this.state.user.username || 'Username' }</h2>
           </div>
-          <div className={ styles.profileCardFlexSection }>
+          <div className={ styles.profileStatistics }>
             <div className={ styles.profileStatistic }>
               <p className={ styles.profileStatisticNumber }>{ this.state.user.followerCount }</p>
               <p className={ styles.profileStatisticMetric }>Followers</p>
             </div>
             <div className={ styles.profileStatistic }>
-              <p className={ styles.profileStatisticNumber }>103</p>
+              <p className={ styles.profileStatisticNumber }>{ this.state.user.followingCount }</p>
               <p className={ styles.profileStatisticMetric }>Following</p>
             </div>
             <div className={ styles.profileStatistic }>
@@ -220,7 +220,7 @@ class ProfileCard extends Component {
               <p className={ styles.profileStatisticMetric }>Posts</p>
             </div>
           </div>
-          <div className={ styles.profileCardFlexSection }>
+          <div className={ styles.profileCardButtons }>
             { this.state.profile.loggedIn && this.state.user.isOwner ?
               (<Button
                 icon={ this.state.icon }

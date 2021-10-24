@@ -85,6 +85,45 @@ class ProfileController {
     return res.status(200).json(payload)
   }
 
+  public getFollowing = async (req: Request, res: Response): Promise<Response> => {
+    //TODO: duplicate code, will export to single method once it's working correctly
+    const { token } = req.cookies
+    let decodedToken: any
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+      decodedToken = null
+    }
+
+    let receivedUsername = req.params.username
+
+    if (!receivedUsername) {
+      if (decodedToken && decodedToken.username) {
+        receivedUsername = decodedToken.username
+      } else {
+        return res.status(404).json({ error: 'No username was given' })
+      }
+    }
+
+    const profile = await this.dao.getProfileByUsername(receivedUsername)
+    const followingById = await this.dao.getFollowingByProfileId(profile.id)
+
+    const payload = {
+      following: []
+    }
+
+    followingById.forEach((entry) => {
+      payload.following.push(entry.profile)
+    })
+
+    if (payload.following.length < 1) {
+      return res.status(204)
+    }
+
+    return res.status(200).json(payload)
+  }
+
   public updateProfile = async (req: any, res: Response): Promise<Response> => {
     const updateUser = req.body
 
@@ -161,6 +200,7 @@ class ProfileController {
     const title: Title = (await this.titleDAO.getTitleByUserId(profile.id)) || null
 
     const followerCount = await this.dao.getFollowersCount(profile.id)
+    const followingCount = await this.dao.getFollowingCount(profile.id)
 
     let isOwner = false
 
@@ -184,6 +224,7 @@ class ProfileController {
       title: title ? title.name : 'Title not found...',
       description: profile.description,
       followerCount,
+      followingCount
     }
     const attachments = await this.dao.getProfileAttachments(profile.id)
 

@@ -75,6 +75,25 @@ class ProfileDAO {
 
     return !!foundFollow
   }
+
+  public async getFollowingByProfileId(profileId: number): Promise<any> {
+    const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+
+    const following = await repository.find({
+      where: { follower: profileId },
+      relations: ['profile', 'profile.avatar_attachment', 'profile.title']
+    })
+
+    return following
+  }
+
+  public async getFollowingCount(profileId: number): Promise<any> {
+    const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
+
+    const followingAmount = await repository.count({ where: { follower: profileId } })
+
+    return followingAmount
+  }
 }
 
 export default ProfileDAO

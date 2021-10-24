@@ -83,6 +83,7 @@ class Profile extends App {
       picture: profile.avatar || '/src/static/dummy/user/profile.jpg',
       description: profile.description,
       followerCount: profile.followerCount,
+      followingCount: profile.followingCount
     }
 
     this.setState({ user })

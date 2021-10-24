@@ -1,14 +1,33 @@
 @import '../../styles/index.scss';
 
+@mixin profileCardFlexSection {
+	margin-top: 25px;
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}
+
 .wrapper {
-	background-color: white;
-	width: 262px;
+	max-width: 262px;
+	margin-bottom: 30px;
+
+	@include mobile-all-portrait {
+		overflow: visible;
+		max-width: 80%;
+		margin: 0 auto 30px auto;
+	}
 }
 
 .profilePictureWrapper {
 	position: relative;
 	max-width: 150px;
 	margin: 0 auto;
+
+	@include mobile-all-portrait {
+		overflow: visible;
+
+		max-width: 200px;
+	}
 
 	.profilePicture {
 		border-radius: 100%;
@@ -24,13 +43,11 @@
 
 		@include mobile-all-portrait {
 			overflow: visible;
-			min-width: 150px;
-			min-height: 150px;
-			width: 20vh;
-			height: 20vh;
-			max-width: 80vw;
-			max-height: 80vw;
+	
+			width: 200px;
+			height: 200px;
 		}
+
 		@include box-shadow;
 
 		&Edit {
@@ -83,10 +100,10 @@
 	display: flex;
 	justify-content: center;
 	color: $primary;
+	font-size: $nr-md-fontsize;
 }
 
 .profileInfoBadge {
-	font-size: $nr-lg-fontsize;
 	vertical-align: middle;
 	height: auto;
 	color: $primary;
@@ -96,14 +113,14 @@
 .profileInfoUsername {
 	text-align: center;
 	color: $secondary;
-	font-size: $nr-lg-fontsize;
 }
 
-.profileCardFlexSection {
-	margin-top: 25px;
-	display: flex;
-	justify-content: space-between;
-	text-align: center;
+.profileStatistics {
+	@include profileCardFlexSection;
+
+	@include mobile-all-portrait {
+		justify-content: space-around;
+	}
 }
 
 .profileStatisticNumber {
@@ -116,28 +133,37 @@
 	font-size: $nr-sm-fontsize;
 }
 
-.followButton {
-	border-radius: 0;
-	width: 210px;
+.profileCardButtons {
+	@include profileCardFlexSection;
 
-	&.replied {
-		background: white;
-		color: $primary;
-		border: 1px solid $primary;
+	@include mobile-all-portrait {
+		justify-content: left;
 	}
-}
 
-.editButton {
-	border-radius: 0;
-	width: 210px;
-	background-color: $secondary;
-}
-
-.chatButton {
-	border-radius: 0;
-	color: $primary;
-	background-color: transparent;
-	border: 1px solid $primary;
+	.followButton {
+		border-radius: 0;
+		width: 210px;
+	
+		&.replied {
+			background: white;
+			color: $primary;
+			border: 1px solid $primary;
+		}
+	}
+	
+	.editButton {
+		border-radius: 0;
+		width: 210px;
+		background-color: $secondary;
+	}
+	
+	.chatButton {
+		border-radius: 0;
+		color: $primary;
+		background-color: transparent;
+		border: 1px solid $primary;
+		margin-left: 5px;
+	}
 }
 
 .profileCardBio {
