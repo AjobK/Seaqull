@@ -185,7 +185,7 @@ class UserBanner extends Component {
               onClick={ this.follow }
             >
               <p>{ this.getFollowText() }</p>
-              <Icon iconName={ this.getFollowIcon() } classNames={ styles.replyIcon } />
+              <Icon iconName={ this.getFollowIconName() } classNames={ styles.replyIcon } />
             </button>
             }
           </div>
