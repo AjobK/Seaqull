@@ -17,8 +17,20 @@ class UserBanner extends Component {
       upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false,
-      following: this.props.user.following || false,
+      following: this.props.user.following,
+      followsYou: this.props.user.followsYou,
       banUser: false
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { username, following, followsYou } = this.props.user
+
+    if (username !== prevProps.user.username) {
+      this.setState({
+        following,
+        followsYou
+      })
     }
   }
 
@@ -106,8 +118,28 @@ class UserBanner extends Component {
       })
   }
 
-  banUser() {
+  banUser = () => {
     this.setState({ banUser: true })
+  }
+
+  getFollowText = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'Unfriend' : 'Follow back'
+    } else {
+      return following ? 'Unfollow' : 'Follow'
+    }
+  }
+
+  getFollowIconName = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'UsersSlash' : 'UserFriends'
+    } else {
+      return following ? 'Check' : 'Reply'
+    }
   }
 
   render() {
@@ -154,8 +186,8 @@ class UserBanner extends Component {
               className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` }
               onClick={ this.follow }
             >
-              <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
-              <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
+              <p>{ this.getFollowText() }</p>
+              <Icon iconName={ this.getFollowIconName() } classNames={ styles.replyIcon } />
             </button>
             }
           </div>
@@ -201,7 +233,7 @@ class UserBanner extends Component {
                 onChange={ this.onEditBanner }
                 onDragEnter={ this.onBannerDragEnter }
                 onDragLeave={ this.onBannerDragLeave }
-                onClick={ this.banUser.bind(this) }
+                onClick={ () => { this.setState({ banUser: true }) } }
               />
               <div className={ styles.bannerEditActionBtn }>
                 <p className={ styles.bannerEditActionBtnText }>
