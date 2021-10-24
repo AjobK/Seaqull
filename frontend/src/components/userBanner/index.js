@@ -231,7 +231,7 @@ class UserBanner extends Component {
                 onChange={ this.onEditBanner }
                 onDragEnter={ this.onBannerDragEnter }
                 onDragLeave={ this.onBannerDragLeave }
-                onClick={ this.banUser.bind(this) }
+                onClick={ () => { this.setState({ banUser: true }) } }
               />
               <div className={ styles.bannerEditActionBtn }>
                 <p className={ styles.bannerEditActionBtnText }>
