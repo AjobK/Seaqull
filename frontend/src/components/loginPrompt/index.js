@@ -4,6 +4,7 @@ import styles from './loginPrompt.scss'
 import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
 import RecaptchaUtil from '../../util/recaptchaUtil'
 
@@ -116,6 +117,10 @@ class LoginPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
+  handleVerificationSuccess(token, ekey) {
+    console.log(token)
+  }
+
   render() {
     const { username, password, remainingTime, loadingTimeout } = this.state
 
@@ -149,6 +154,10 @@ class LoginPrompt extends Component {
               />
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
             </div>
+            <HCaptcha
+              sitekey={ '031482b3-54e1-4beb-a0d7-dce10eecfdbf' }
+              onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
+            />
           </form>
           <div className={ styles.image } />
         </div>
