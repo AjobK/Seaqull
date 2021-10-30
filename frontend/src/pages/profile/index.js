@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
-import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo, ProfileCard } from '../../components'
+import { Icon, ProfileBanner, PostsPreview, Statistics, Loader, ProfileInfo, ProfileCard } from '../../components'
 import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
 import { withRouter } from 'react-router'
@@ -118,7 +118,7 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner
+        <ProfileBanner
           changeFollowerCount={ this.changeFollowerCount }
           role={ profile.role }
           user={ user }

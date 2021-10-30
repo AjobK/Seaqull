@@ -22,7 +22,7 @@ class Cropper extends Component {
     }
 
     if (props.inputType === this.BANNER) {
-      crop.aspect = 16 / 9
+      crop.aspect = 1366 / 270
     }
 
     this.state = {

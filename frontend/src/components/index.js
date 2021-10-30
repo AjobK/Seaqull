@@ -39,6 +39,7 @@ import PostsBlockSmall from './postsBlockSmall'
 import PopUp from './popUp'
 import GlobalNotification from './globalNotification'
 import ProfileCard from './profileCard'
+import ProfileBanner from './profileBanner'
 
 export {
   Button,
@@ -81,5 +82,6 @@ export {
   PostsBlockSmall,
   PopUp,
   GlobalNotification,
-  ProfileCard
+  ProfileCard,
+  ProfileBanner
 }
