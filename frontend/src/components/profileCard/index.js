@@ -131,7 +131,7 @@ class ProfileCard extends Component {
   }
 
   onChangeBio = (editorState) => {
-    const user = this.state.user
+    const user = this.props.user
 
     user.description = convertToRaw(editorState.getCurrentContent())
 
@@ -178,8 +178,8 @@ class ProfileCard extends Component {
   saveNewDescription = () => {
     if (this.state.changedContent) {
       const payload = {
-        username: this.state.user.username,
-        description: this.state.user.description
+        username: this.props.user.username,
+        description: this.props.user.description
       }
 
       this.setState({
@@ -193,6 +193,7 @@ class ProfileCard extends Component {
   }
 
   render() {
+    const user = this.props.user
 
     let editButtonValue = this.state.editingBio ? 'Save' : 'Edit Bio'
     const posts = this.props.posts
@@ -205,12 +206,12 @@ class ProfileCard extends Component {
           <div
             className={ styles.profilePicture }
             style={ {
-              backgroundImage: `url(${ this.state.user.picture })`,
+              backgroundImage: `url(${ user.picture })`,
               backgroundColor: uniqueAvatarColorBasedOnHash
             } }
           >
           </div>
-          { this.state.user.isOwner && (
+          { user.isOwner && (
             <span
               className={
                 `${ styles.profilePictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }`
@@ -223,7 +224,7 @@ class ProfileCard extends Component {
                 onDragEnter={ this.onAvatarDragEnter }
                 onDragLeave={ this.onAvatarDragLeave }
                 style={ {
-                  backgroundImage: `url(${ this.state.user.picture })`,
+                  backgroundImage: `url(${ user.picture })`,
                   backgroundColor: uniqueAvatarColorBasedOnHash
                 } }
               />
@@ -233,15 +234,15 @@ class ProfileCard extends Component {
         <div className={ styles.profileInfo }>
           <div className={ styles.profileNameWrapper }>
             <Icon className={ styles.profileInfoBadge } iconName={ 'At' }/>
-            <h2 className={ styles.profileInfoUsername }>{ this.state.user.username || 'Username' }</h2>
+            <h2 className={ styles.profileInfoUsername }>{ user.username || 'Username' }</h2>
           </div>
           <div className={ styles.profileStatistics }>
             <div className={ styles.profileStatistic }>
-              <p className={ styles.profileStatisticNumber }>{ this.state.user.followerCount }</p>
+              <p className={ styles.profileStatisticNumber }>{ user.followerCount }</p>
               <p className={ styles.profileStatisticMetric }>Followers</p>
             </div>
             <div className={ styles.profileStatistic }>
-              <p className={ styles.profileStatisticNumber }>{ this.state.user.followingCount }</p>
+              <p className={ styles.profileStatisticNumber }>{ user.followingCount }</p>
               <p className={ styles.profileStatisticMetric }>Following</p>
             </div>
             <div className={ styles.profileStatistic }>
@@ -252,18 +253,18 @@ class ProfileCard extends Component {
             </div>
           </div>
           <div className={ styles.profileCardButtons }>
-            { this.state.profile.loggedIn && this.state.user.isOwner ?
+            { this.state.profile.loggedIn && user.isOwner ?
               (<Button
                 icon={ this.state.icon }
                 value={ editButtonValue }
-                className={ styles.editButton }
+                className={ `${styles.editButton} secondary` }
                 onClick={ () => this.changeEditingState() } />) :
               (<Button
                 value={ <span>{ this.getFollowText() } </span> }
                 className={ `${styles.followButton} ${this.getFollowButtonClass()}` }
                 onClick={ this.follow }
               />) }
-            { this.state.profile.loggedIn && this.state.user.isOwner ?
+            { this.state.profile.loggedIn && user.isOwner ?
               (<Button icon='Cog' className={ styles.settingsButton } />) :
               (<Button icon='CommentAlt' className={ styles.chatButton } />)
             }
