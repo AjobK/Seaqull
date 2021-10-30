@@ -1,33 +1,10 @@
 @import '../../styles/index.scss';
 
-.infoWrapper {
-	padding: 20px;
-	background-color: rgba(0,0,0,0.05);
-	border-bottom: 1px solid rgba(0,0,0,0.1);
+.profileWrapper {
 	display: flex;
-	flex-direction: row;
+	justify-content: center;
 }
 
-.tempFollowerIndicator {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	margin: auto;
-	color: #808080;
-
-	p {
-		margin-left: 5px;
-	}
-
-	.clickableFollowers {
-		&:hover {
-			text-decoration: underline;
-			cursor: pointer;
-		}
-	}
-
-	svg {
-		font-size: 1.2em
-	}
+.profileContentWrapper {
+	margin-left: 10px;
 }
