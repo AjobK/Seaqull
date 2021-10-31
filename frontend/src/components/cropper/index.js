@@ -60,9 +60,22 @@ class Cropper extends Component {
     const canvas = document.createElement('canvas')
     const scaleX = image.naturalWidth / image.width
     const scaleY = image.naturalHeight / image.height
+
+    const maxWidthOrHeight = 900
+    let imageWidth = crop.width * scaleX
+    let imageHeight = crop.height * scaleY
+
+    if (imageWidth >= imageHeight && imageWidth > maxWidthOrHeight) {
+      imageHeight = imageHeight * (maxWidthOrHeight / imageWidth)
+      imageWidth = maxWidthOrHeight
+    } else if (imageHeight > maxWidthOrHeight) {
+      imageWidth = imageWidth * (maxWidthOrHeight / imageHeight)
+      imageHeight = maxWidthOrHeight
+    }
+
     const ctx = canvas.getContext('2d')
-    canvas.width = (crop.width / image.width) * image.naturalWidth
-    canvas.height = (crop.height / image.height) * image.naturalHeight
+    canvas.width = imageWidth
+    canvas.height = imageHeight
 
     ctx.drawImage(
       image,
@@ -87,20 +100,11 @@ class Cropper extends Component {
 
   validateImage = (img) => {
     const allowedFileTypes = ['jpeg', 'png']
-    const maxFileSizeKB = 4000
-
-    const fileSizeKB = ((3 * (img.length / 4)) / 1024).toFixed(2)
     const fileType = img.match(/[^:/]\w+(?=;|,)/)[0]
 
     if (!allowedFileTypes.includes(fileType))
       return this.setState({
         error: `File type is not allowed. Please use an image of the following types: ${allowedFileTypes.join(', ')}.`,
-      })
-
-    if (maxFileSizeKB < fileSizeKB)
-      return this.setState({
-        error:
-        `File size of ${fileSizeKB} KB is not allowed. Please use an image below the maximum of ${maxFileSizeKB} KB.`,
       })
 
     this.setState({
