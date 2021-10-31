@@ -4,8 +4,7 @@ import { inject, observer } from 'mobx-react'
 import Axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Icon } from '../../components'
-import ColorUtil from '../../util/colorUtil'
-import URLUtil from '../../util/urlUtil'
+import { ColorUtil, URLUtil } from '../../util/'
 
 @inject('store')
 @observer

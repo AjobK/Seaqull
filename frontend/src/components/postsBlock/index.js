@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { convertFromRaw } from 'draft-js'
 import { PostsBlockLarge, PostsBlockSmall } from '../../components'
 import styles from './postsBlock.scss'
-import TextUtil from '../../util/textUtil'
+import { TextUtil } from '../../util/'
 
 class PostsBlock extends Component {
   constructor(props) {

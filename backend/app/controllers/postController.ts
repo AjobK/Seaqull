@@ -6,10 +6,13 @@ import AccountDAO from '../daos/accountDAO'
 import PostLike from '../entities/post_like'
 import Profile from '../entities/profile'
 import ProfileDAO from '../daos/profileDAO'
+import AttachmentDAO from '../daos/attachmentDAO'
 import ArchivedPost from '../entities/archivedPost'
-import archivedPostDAO from '../daos/archivedPostDAO'
+import ArchivedPostDAO from '../daos/archivedPostDAO'
 import NetworkService from '../utils/networkService'
 import PostView from '../entities/post_view'
+import FileService from '../utils/fileService'
+import Attachment from '../entities/attachment'
 
 const jwt = require('jsonwebtoken')
 
@@ -17,13 +20,17 @@ class PostController {
   private dao: PostDAO
   private profileDAO: ProfileDAO
   private accountDAO: AccountDAO
-  private archivedPostDao: archivedPostDAO
+  private archivedPostDao: ArchivedPostDAO
+  private attachmentDAO: AttachmentDAO
+  private fileService: FileService
 
   constructor() {
     this.dao = new PostDAO()
     this.profileDAO = new ProfileDAO()
     this.accountDAO = new AccountDAO()
-    this.archivedPostDao = new archivedPostDAO()
+    this.archivedPostDao = new ArchivedPostDAO()
+    this.attachmentDAO = new AttachmentDAO()
+    this.fileService = new FileService()
   }
 
   public getPosts = async (req: Request, res: Response): Promise<Response> => {
@@ -42,20 +49,29 @@ class PostController {
       }
     }
 
+    for (const post of posts) {
+      post.thumbnail = await this.getPostThumbnailURL(post.id)
+    }
+
     const count = await this.dao.getAmountPosts()
-    const message = { posts, totalPosts: count, per_page: amount }
+    const message = { posts: posts, totalPosts: count, per_page: amount }
 
     return res.status(200).json(message)
   }
 
   public getOwnedPosts = async (req: Request, res: Response): Promise<Response> => {
+    let posts = []
     let account = null
 
     try {
       account = await new AccountDAO().getAccountByUsername(req.params.username)
     } catch (e) { return res.status(404).json([]) }
 
-    const posts = await this.dao.getOwnedPosts(account.profile)
+    posts = await this.dao.getOwnedPosts(account.profile)
+
+    for (const post of posts) {
+      post.thumbnail = await this.getPostThumbnailURL(post.id)
+    }
 
     return res.status(200).json(posts)
   }
@@ -67,7 +83,7 @@ class PostController {
         amount: 0,
         userLiked: false
       },
-      isOwner: false
+      isOwner: false,
     }
 
     const foundPost = await this.dao.getPostByPath(req.params.path)
@@ -91,7 +107,10 @@ class PostController {
     const profile = await this.fetchProfile(req)
     const userLiked = !!(await this.dao.findLikeByPostAndProfile(foundPost, profile || null))
 
-    response.post = foundPost
+    response.post = {
+      ...foundPost,
+      thumbnail: await this.getPostThumbnailURL(foundPost.id)
+    }
     response.likes = {
       amount: postLikesAmount,
       userLiked: userLiked
@@ -101,17 +120,32 @@ class PostController {
     return res.status(200).json(response)
   }
 
-  public createPost = async (req: Request, res: Response): Promise<Response> => {
+  public createPost = async (req: any, res: Response): Promise<Response> => {
     const { JWT_SECRET } = process.env
     const newPost = new Post()
     const { title, description, content } = req.body
+    let thumbnailAttachment = null
+
+    newPost.path = uuidv4()
+
+    if (req.file) {
+      const isImage = await this.fileService.isImage(req.file)
+
+      if (!isImage) {
+        return res.status(400).json({ error: 'Only images are allowed' })
+      }
+
+      thumbnailAttachment = await this.createThumbnailAttachment(newPost.path, req.file)
+    } else {
+      thumbnailAttachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
+    }
 
     newPost.title = title
     newPost.description = description
     newPost.content = content
-    newPost.path = uuidv4()
     newPost.published_at = new Date()
     newPost.created_at = new Date()
+    newPost.thumbnail_attachment = thumbnailAttachment
 
     const decodedToken = jwt.verify(req.cookies.token, JWT_SECRET)
 
@@ -248,6 +282,18 @@ class PostController {
     return res.status(200).json({ 'views': viewCount })
   }
 
+  public getPostDefaultThumbnailURL = async (req: Request, res: Response): Promise<any> => {
+    const foundAttachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
+
+    if (!foundAttachment) {
+      return res.status(404).json({ 'message': 'Attachment not found' })
+    }
+
+    const attachmentURL = 'http://localhost:8000/' + foundAttachment.path
+
+    return res.status(200).json({ 'thumbnail': attachmentURL })
+  }
+
   // TODO Move to another file?
   private fetchProfile = async (req: Request): Promise<Profile> => {
     const { token } = req.cookies
@@ -289,6 +335,70 @@ class PostController {
     if (!newPost) return res.status(500).json({ error: 'Could not archive post' })
 
     return res.status(200).json({ message: 'Post archived!' })
+  }
+
+  public updatePostThumbnail = async (req: any, res: Response): Promise<Response> => {
+    const isImage = await this.fileService.isImage(req.file)
+
+    if (!isImage) {
+      return res.status(400).json({ error: 'Only images are allowed' })
+    } else {
+      const banner = await this.updateThumbnailAttachment(req.params.path, req.file)
+
+      return res.status(200).json({ message: 'success', url: 'http://localhost:8000/' + banner.path })
+    }
+  }
+
+  private updateThumbnailAttachment = async (postPath, file): Promise<any> => {
+    const post = await this.dao.getPostByPath(postPath)
+    let attachment = await this.dao.getPostAttachment(post.id)
+    const location = await this.fileService.storeImage(file, 'post/thumbnail')
+
+    const typeDefaultPath = 'default/defaultThumbnail.jpg'
+
+    if (attachment.path !== typeDefaultPath) {
+      return await this.deleteThumbnailAttachment(attachment, location)
+    }
+
+    attachment = await this.convertThumbnailToAttachment(location)
+
+    post.thumbnail_attachment = await this.attachmentDAO.saveAttachment(attachment)
+
+    await this.dao.updatePost(post)
+
+    return post.thumbnail_attachment
+  }
+
+  private createThumbnailAttachment = async (postPath, file): Promise<any> => {
+    const location = await this.fileService.storeImage(file, 'post/thumbnail')
+
+    const attachment = await this.convertThumbnailToAttachment(location)
+
+    return await this.attachmentDAO.saveAttachment(attachment)
+  }
+
+  private deleteThumbnailAttachment = async (attachment: Attachment, location: string) => {
+    this.fileService.deleteImage(attachment.path)
+    attachment.path = location
+
+    return await this.attachmentDAO.saveAttachment(attachment)
+  }
+
+  private getPostThumbnailURL = async (postId: number) => {
+    const attachment = await this.dao.getPostAttachment(postId)
+
+    return 'http://localhost:8000/' + attachment.path
+  }
+
+  private convertThumbnailToAttachment = async (location) => {
+    const dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
+
+    await this.fileService.convertImage(location, dimensions)
+
+    const attachment = new Attachment()
+    attachment.path = location
+
+    return attachment
   }
 }
 

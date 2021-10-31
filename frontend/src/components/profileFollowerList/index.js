@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 import styles from '../postLikesList/postLikesList.scss'
 import { Icon } from '../index'
-import ColorUtil from '../../util/colorUtil'
+import { ColorUtil } from '../../util/'
 import { Link } from 'react-router-dom'
 
 @inject('store')

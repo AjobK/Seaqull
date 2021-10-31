@@ -4,6 +4,7 @@ import Profile from '../entities/profile'
 import { PostLike } from '../entities/post_like'
 import { PostView } from '../entities/post_view'
 import { IsNull } from 'typeorm'
+import Attachment from '../entities/attachment'
 
 class PostDAO {
     private postViewRepository = 'PostView'
@@ -139,6 +140,13 @@ class PostDAO {
       const viewCount = await repository.count({ where: { post: post } })
 
       return viewCount
+    }
+
+    public async getPostAttachment(postId: number): Promise<Attachment> {
+      const repository = await DatabaseConnector.getRepository('Post')
+      const thumbnail = await repository.findOne({ where: { id: postId }, relations: ['thumbnail_attachment'] })
+
+      return thumbnail.thumbnail_attachment
     }
 }
 

@@ -46,7 +46,6 @@ class Posts extends Component {
         }
 
         this.setState({
-          ...this.state,
           page: this.state.page + 1,
         })
         this.renderNewPosts(json.posts ? json.posts : [])
@@ -105,7 +104,6 @@ class Posts extends Component {
     postsBlocks.push(this.createPostsBlock(posts))
 
     this.setState({
-      ...this.state,
       postsBlocks,
     })
   }

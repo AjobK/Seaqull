@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 import { Editor, EditorState, convertFromRaw } from 'draft-js'
 import { CommentForm, CommentChildren, Icon, Dialog } from '../'
 
-import TimeUtil from '../../util/timeUtil'
-import ColorUtil from '../../util/colorUtil'
+import { TimeUtil, ColorUtil } from '../../util/'
 import axios from 'axios'
 
 @inject('store')

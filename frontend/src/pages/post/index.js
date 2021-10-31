@@ -21,6 +21,8 @@ class Post extends App {
 
     this.postPath = URLUtil.getLastPathArgument()
 
+    this.addedThumbnail = null
+
     this.state = {
       isOwner: true,
       isEditing: true,
@@ -58,9 +60,7 @@ class Post extends App {
         let newPost
 
         newPost = {
-          title: post.title,
-          content: post.content,
-          description: post.description,
+          ...post,
           path: this.postPath,
           likes: {
             amount: likes.amount,
@@ -71,8 +71,8 @@ class Post extends App {
         try {
           newPost = {
             ...newPost,
-            title: convertFromRaw(JSON.parse(newPost.title)),
-            content: convertFromRaw(JSON.parse(newPost.content)),
+            title: convertFromRaw(JSON.parse(post.title)),
+            content: convertFromRaw(JSON.parse(post.content)),
           }
         } catch (e) {
 
@@ -136,26 +136,47 @@ class Post extends App {
     this.setState(newState)
   }
 
-  sendToDB = (path = null) => {
+  save = (path = null) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
+    if (!path) {
+      this.createPost()
+    } else if (typeof path == 'string') {
+      this.updatePost()
+    }
+  }
+
+  createPost = () => {
+    const fd = new FormData()
+
+    fd.append('file', this.addedThumbnail)
+    fd.append('title', JSON.stringify(this.state.post.title))
+    fd.append('description', JSON.stringify('None'))
+    fd.append('content', JSON.stringify(this.state.post.content))
+
+    Axios.post('/post', fd, {
+      withCredentials: true, 'content-type': 'multipart/form-data'
+    }).then((res) => {
+      this.props.history.push(`/posts/${res.data.path}`)
+    })
+  }
+
+  updatePost = () => {
     const payload = {
       title: this.state.post.title,
       description: 'None',
       content: this.state.post.content,
     }
 
-    if (!path) {
-      Axios.post('/post', payload, { withCredentials: true }).then((res) => {
-        this.props.history.push(`/posts/${res.data.path}`)
-      })
-    } else if (typeof path == 'string') {
-      Axios.put(`/post/${path}`, payload, { withCredentials: true }).then(() => {
-        const { notification } = this.props.store
+    Axios.put(`/post/${this.state.post.path}`, payload, { withCredentials: true }).then(() => {
+      const { notification } = this.props.store
 
-        notification.setContent(popUpData.messages.updatePostNotification)
-      })
-    }
+      notification.setContent(popUpData.messages.updatePostNotification)
+    })
+  }
+
+  onThumbnailAdded = (thumbnail) => {
+    this.addedThumbnail = thumbnail
   }
 
   onDeletePostClicked = () => {
@@ -200,12 +221,11 @@ class Post extends App {
 
   render = () => {
     // Values change based on initial response from server
-    const { profile, user } = this.props.store
+    const { profile } = this.props.store
     const { isEditing, isOwner, post, loaded, author } = this.state
 
     const ownerAuthor = {
       name: profile.display_name,
-      bannerURL: user.banner,
       avatarURL: profile.avatarURL,
       title: profile.title
     }
@@ -217,7 +237,10 @@ class Post extends App {
       <Standard className={ styles.stdBgWhite }>
         <PostBanner
           author={ this.props.new ? ownerAuthor : author }
+          post={ this.state.post }
           isOwner={ isOwner }
+          isNew={ this.props.new }
+          onThumbnailAdded={ this.onThumbnailAdded }
         />
         <Section noTitle className={ styles.extraWhitespace }>
           { !this.props.new &&
@@ -262,7 +285,7 @@ class Post extends App {
                 <Button
                   className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
                   value={ 'Create' }
-                  onClick={ () => this.sendToDB(post.path) }
+                  onClick={ () => this.save(post.path) }
                 />
               }
               {
@@ -270,7 +293,7 @@ class Post extends App {
                 <Button
                   className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
                   value={ 'Update' }
-                  onClick={ () => this.sendToDB(post.path) }
+                  onClick={ () => this.save(post.path) }
                 />
               }
             </div>
