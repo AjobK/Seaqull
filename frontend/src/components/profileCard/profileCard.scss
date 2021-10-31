@@ -1,10 +1,10 @@
 @import '../../styles/index.scss';
 
 .wrapper {
-	position: relative;
+	z-index: 1;
 	width: 100%;
 	max-width: 265px;
-	top: -75px;
+	margin-top: -75px;
 
 	@include mobile-all-portrait {
 		margin: 0 auto;
