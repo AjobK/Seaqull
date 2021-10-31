@@ -11,6 +11,7 @@ class AuthorizationRoutes implements RouterBase {
 
     constructor() {
       this.authController = new AuthController()
+      
       this.initRoutes()
     }
 
