@@ -3,7 +3,8 @@
 .wrapper {
 	width: 100%;
 	max-width: 265px;
-	margin-top: -75px;
+	margin-top: calc(-75px - #{$header-spacing}); // Subtract header-spacing due to padding on section wrapper
+	margin-right: $header-spacing;
 
 	@include mobile-all-portrait {
 		margin: 0 auto;
