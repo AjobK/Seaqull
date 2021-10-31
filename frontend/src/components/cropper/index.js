@@ -12,28 +12,53 @@ class Cropper extends Component {
   constructor(props) {
     super(props)
 
-    this.BANNER = 'banner'
     this.AVATAR = 'avatar'
+    this.BANNER = 'banner'
+    this.THUMBNAIL = 'thumbnail'
 
-    let crop = {
-      unit: '%',
-      width: 100,
-      aspect: 1,
-    }
-
-    if (props.inputType === this.BANNER) {
-      crop.aspect = 16 / 9
-    }
+    this.BANNER_ASPECT = 16 / 9
+    this.AVATAR_ASPECT = 1
+    this.THUMBNAIL_ASPECT = 16 / 9
 
     this.state = {
       inputImage: null,
-      crop,
+      crop: this.getCrop(),
       error: '',
     }
   }
 
   componentDidMount() {
     this.validateImage(this.props.img)
+    this.setScrollEnabled(false)
+  }
+
+  componentWillUnmount() {
+    this.setScrollEnabled(true)
+  }
+
+  getCrop = () => {
+    let aspect
+
+    switch (this.props.inputType) {
+    case this.AVATAR:
+      aspect = this.AVATAR_ASPECT
+
+      break
+    case this.BANNER:
+      aspect = this.BANNER_ASPECT
+
+      break
+    case this.THUMBNAIL:
+      aspect = this.THUMBNAIL_ASPECT
+
+      break
+    }
+
+    return {
+      unit: '%',
+      width: 100,
+      aspect,
+    }
   }
 
   onImageLoaded = (image) => {
@@ -108,19 +133,17 @@ class Cropper extends Component {
     })
   }
 
-  saveImage = () => {
+  onSave = () => {
     const image = this.state.croppedImage
 
-    const fd = new FormData()
-    fd.append('file', image)
+    if (this.props.returnOnSave) {
+      this.props.changeImage(image)
+      this.props.closeCropper()
 
-    const { inputType } = this.props
-    let address = this.props.store.defaultData.backendUrl + '/profile/' + inputType
+      return
+    }
 
-    Axios.put(address, fd, {
-      withCredentials: true,
-      'content-type': 'multipart/form-data',
-    })
+    this.saveImage(image)
       .then((res) => {
         this.props.changeImage(res.data.url)
         this.props.closeCropper()
@@ -130,6 +153,35 @@ class Cropper extends Component {
           this.props.history.push('/login/')
         }
       })
+  }
+
+  saveImage = async (image) => {
+    const fd = new FormData()
+    fd.append('file', image)
+
+    const { inputType, store } = this.props
+    let address = store.defaultData.backendUrl
+
+    switch (inputType) {
+    case this.AVATAR:
+    case this.BANNER:
+      address = address + '/profile/' + inputType
+
+      break
+    case this.THUMBNAIL:
+      address = address + '/post/' + inputType + '/' + this.props.entityId
+
+      break
+    }
+
+    return Axios.put(address, fd, {
+      withCredentials: true,
+      'content-type': 'multipart/form-data',
+    })
+  }
+
+  setScrollEnabled = (scrollEnabled) => {
+    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
   render() {
@@ -171,7 +223,7 @@ class Cropper extends Component {
                 className={ styles.avatarUploadPopUpBtnsSaveButton }
                 value={ 'Save' }
                 disabled={ !inputImage || !isCropped }
-                onClick={ inputImage && isCropped ? this.saveImage : undefined }
+                onClick={ inputImage && isCropped ? this.onSave : undefined }
               />
             )}
           </div>

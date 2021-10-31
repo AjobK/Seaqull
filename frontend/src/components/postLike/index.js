@@ -5,8 +5,7 @@ import Axios from 'axios'
 import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
-import unitFormatterUtil from '../../util/unitFormatterUtil'
-import URLUtil from '../../util/urlUtil'
+import { UnitFormatterUtil, URLUtil } from '../../util/'
 
 @inject('store')
 @observer
@@ -77,7 +76,7 @@ class PostLike extends Component {
         {likesAmount <= 0 && <p className={ `${styles.postLikesAmount}` }>0 likes</p>}
         {likesAmount > 0 && (
           <p className={ `${styles.postLikesAmount} ${styles.clickableLikes}` } onClick={ this.openLikesList }>
-            {unitFormatterUtil.getNumberSuffix(likesAmount)} {likesAmount === 1 ? 'like' : 'likes'}
+            { UnitFormatterUtil.getNumberSuffix(likesAmount)} {likesAmount === 1 ? 'like' : 'likes' }
           </p>
         )}
         {!isOwner && (

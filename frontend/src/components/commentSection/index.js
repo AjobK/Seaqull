@@ -8,7 +8,7 @@ import styles from './commentSection.scss'
 import { Section } from '../../layouts'
 import { Comment } from '../'
 import { CommentForm } from '../'
-import URLUtil from '../../util/urlUtil'
+import { URLUtil } from '../../util/'
 
 @inject('store')
 @observer
