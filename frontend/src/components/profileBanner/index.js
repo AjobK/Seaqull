@@ -78,18 +78,18 @@ class ProfileBanner extends Component {
                 `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }`
               }
             >
-              <input
-                type='file' accept='image/png, image/jpeg' value={ '' }
-                onChange={ this.onEditBanner }
-                onDragEnter={ this.onBannerDragEnter }
-                onDragLeave={ this.onBannerDragLeave }
-              />
               <div className={ styles.bannerEditActionBtn }>
                 <p className={ styles.bannerEditActionBtnText }>
                   <span>EDIT BANNER</span>
                   <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
                 </p>
               </div>
+              <input
+                type='file' accept='image/png, image/jpeg' value={ '' }
+                onChange={ this.onEditBanner }
+                onDragEnter={ this.onBannerDragEnter }
+                onDragLeave={ this.onBannerDragLeave }
+              />
             </div>
           )}
           { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn ? (
