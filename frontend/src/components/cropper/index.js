@@ -40,18 +40,18 @@ class Cropper extends Component {
     let aspect
 
     switch (this.props.inputType) {
-    case this.AVATAR:
-      aspect = this.AVATAR_ASPECT
+      case this.AVATAR:
+        aspect = this.AVATAR_ASPECT
 
-      break
-    case this.BANNER:
-      aspect = this.BANNER_ASPECT
+        break
+      case this.BANNER:
+        aspect = this.BANNER_ASPECT
 
-      break
-    case this.THUMBNAIL:
-      aspect = this.THUMBNAIL_ASPECT
+        break
+      case this.THUMBNAIL:
+        aspect = this.THUMBNAIL_ASPECT
 
-      break
+        break
     }
 
     return {
@@ -163,15 +163,15 @@ class Cropper extends Component {
     let address = store.defaultData.backendUrl
 
     switch (inputType) {
-    case this.AVATAR:
-    case this.BANNER:
-      address = address + '/profile/' + inputType
+      case this.AVATAR:
+      case this.BANNER:
+        address = address + '/profile/' + inputType
 
-      break
-    case this.THUMBNAIL:
-      address = address + '/post/' + inputType + '/' + this.props.entityId
+        break
+      case this.THUMBNAIL:
+        address = address + '/post/' + inputType + '/' + this.props.entityId
 
-      break
+        break
     }
 
     return Axios.put(address, fd, {
