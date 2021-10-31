@@ -167,15 +167,15 @@ class Cropper extends Component {
     let address = store.defaultData.backendUrl
 
     switch (inputType) {
-      case this.AVATAR:
-      case this.BANNER:
-        address = address + '/profile/' + inputType
+        case this.AVATAR:
+        case this.BANNER:
+          address = address + '/profile/' + inputType
 
-        break
-      case this.THUMBNAIL:
-        address = address + '/post/' + inputType + '/' + this.props.entityId
+          break
+        case this.THUMBNAIL:
+          address = address + '/post/' + inputType + '/' + this.props.entityId
 
-        break
+          break
     }
 
     return Axios.put(address, fd, {
