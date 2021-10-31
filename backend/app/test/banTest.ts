@@ -5,132 +5,139 @@ import { v4 as uuidv4 } from 'uuid'
 
 chai.use(chaiHttp)
 
-describe('Testing banning a user', () => {
+describe('Ban functionality', () => {
   const agent = chai.request.agent('http://localhost:8000/api')
-  const userToShortBan = uuidv4()
-  const userToLongBan = uuidv4()
 
-  it('Should create a user so we can ban him', (done) => {
+  const shortBannedUser = uuidv4()
+  const longBannedUser = uuidv4()
+
+  before((done) => {
     agent
       .post('/profile/register')
       .send({
-        username: userToShortBan,
+        username: shortBannedUser,
         password: 'Qwerty123',
-        email: userToShortBan + '@test.com'
+        email: `${shortBannedUser}@test.com`
       })
-      .end(() => {
-        agent
-          .get('/profile/' + userToShortBan)
-          .end((err, res) => {
-            assert.equal(res.status, 200)
-            done()
-          })
-      }
+      .end()
 
-      )
-  })
-
-  it('Souldn\'t ban a user as a user', (done) => {
-    agent
-      .post('/login')
-      .send({
-        username: 'User',
-        password: 'Qwerty123'
-      })
-      .end(() => {
-        agent
-          .patch('/shortBan')
-          .send({
-            username: userToShortBan,
-            days: '10',
-            reason: 'being offensive'
-          })
-          .end((err, res) => {
-            assert.equal(res.status, 401)
-            done()
-          })
-      })
-  })
-
-  it('Shouldn\'t long ban users as admin', (done) => {
-    agent
-      .post('/login')
-      .send({
-        username: 'Moderator',
-        password: 'Qwerty123'
-      })
-      .end(() => {
-        agent
-          .patch('/ban')
-          .send({
-            username: userToLongBan,
-            days: '35',
-            reason: 'being offensive'
-          })
-          .end((err, res) => {
-            assert.equal(res.status, 401)
-            done()
-          })
-      })
-  })
-
-  it('Should short ban a user', (done) => {
-    agent
-      .patch('/shortBan')
-      .send({
-        username: userToShortBan,
-        days: '10',
-        reason: 'being offensive'
-      })
-      .end((err, res) => {
-        assert.equal(res.status, 200)
-
-        agent
-          .get('/profile/' + userToShortBan)
-          .end((err, res) => {
-            assert.equal(res.status, 403)
-            done()
-          })
-      })
-  })
-
-  it('Should create a user so we can ban him', (done) => {
     agent
       .post('/profile/register')
       .send({
-        username: userToLongBan,
+        username: longBannedUser,
         password: 'Qwerty123',
-        email: userToLongBan + '@test.com'
+        email: `${longBannedUser}@test.com`
       })
-      .end((err, res) => {
-        assert.equal(res.status, 200)
+      .end(() => {
         done()
       })
   })
 
-  it('Should long term ban a user as admin', (done) => {
-    agent
-      .post('/login')
-      .send({
-        username: 'Admin',
-        password: 'Qwerty123'
-      })
-      .end(() => {
-        agent
-          .patch('/ban')
-          .send({
-            username: userToLongBan,
-            days: '35',
-            reason: 'being offensive'
-          })
-          .end(() => {
-            agent
-              .get('/profile/' + userToLongBan)
-              .end((err, res) => {
-                assert.equal(res.status, 403)
-                done()
-              })
-          })
-      })
+  describe('Testing banning a user as user', () => {
+    before((done) => {
+      agent
+        .post('/login')
+        .send({
+          username: 'User',
+          password: 'Qwerty123'
+        })
+        .end(() => {
+          done()
+        })
+    })
+
+    it('Souldn\'t ban a user as a user', (done) => {
+      agent
+        .patch('/shortBan')
+        .send({
+          username: shortBannedUser,
+          days: 10,
+          reason: 'being offensive'
+        })
+        .end((err, res) => {
+          assert.equal(res.status, 401)
+          done()
+        })
+    })
+  })
+
+  describe('Testing banning a user as modarator', () => {
+    before((done) => {
+      agent
+        .post('/login')
+        .send({
+          username: 'Moderator',
+          password: 'Qwerty123'
+        })
+        .end(() => {
+          done()
+        })
+    })
+
+    it('Souldn\'t longterm ban a user as a moderator', (done) => {
+      agent
+        .patch('/ban')
+        .send({
+          username: longBannedUser,
+          days: 35,
+          reason: 'being offensive'
+        })
+        .end((err, res) => {
+          assert.equal(res.status, 401)
+          done()
+        })
+    })
+
+    it('Should short ban a user', (done) => {
+      agent
+        .patch('/shortBan')
+        .send({
+          username: shortBannedUser,
+          days: 10,
+          reason: 'being offensive'
+        })
+        .end((err, res) => {
+          assert.equal(res.status, 200)
+
+          agent
+            .get(`/profile/${shortBannedUser}`)
+            .end((err, res) => {
+              assert.equal(res.status, 403)
+              done()
+            })
+        })
+    })
+  })
+
+  describe('Testing banning a user as admin', () => {
+    before((done) => {
+      agent
+        .post('/login')
+        .send({
+          username: 'Admin',
+          password: 'Qwerty123'
+        })
+        .end(() => {
+          done()
+        })
+    })
+
+    it('Should long term ban a user as admin', (done) => {
+      agent
+        .patch('/ban')
+        .send({
+          username: longBannedUser,
+          days: 35,
+          reason: 'being offensive'
+        })
+        .end(() => {
+          agent
+            .get(`/profile/'${longBannedUser}`)
+            .end((err, res) => {
+              assert.equal(res.status, 404)
+              done()
+            })
+        })
+    })
   })
 })

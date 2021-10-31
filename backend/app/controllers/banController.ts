@@ -53,7 +53,7 @@ class BanController {
 
     await this.banService.banUser(user, admin, reason, req.connection.remoteAddress, banTime)
 
-    return res.status(200).json({})
+    return res.status(200).json({ message: 'User banned' })
   }
 }
 

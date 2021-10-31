@@ -6,9 +6,8 @@ import Post from '../entities/post'
 
 chai.use(chaiHttp)
 
-describe('Testing the post crud', () => {
+describe('Post functionalities', () => {
   const agent = chai.request.agent('http://localhost:8000/api')
-  let id = uuidv4()
   let post: Post
 
   before((done) => {
@@ -19,11 +18,17 @@ describe('Testing the post crud', () => {
         password: 'Qwerty123'
       })
       .end(() => {
-        done()
+        agent
+          .get('/post/owned-by/User')
+          .end((err, res) => {
+            post = res.body[0]
+            done()
+          })
       })
   })
 
   it('Should create a post', (done) => {
+    const id = uuidv4()
     agent
       .post('/post')
       .send({
@@ -36,14 +41,13 @@ describe('Testing the post crud', () => {
           .get('/post/owned-by/User')
           .end((err, res) => {
             assert.equal(res.body[0].title, id)
-            post = res.body[0]
             done()
           })
       })
   })
 
   it('Should update a post', (done) => {
-    id = uuidv4()
+    const id = uuidv4()
     agent
       .put('/post/' + post.path)
       .send({
