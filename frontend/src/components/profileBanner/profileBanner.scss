@@ -37,6 +37,8 @@
 		z-index: 0;
 		background-size: cover;
 		background-position: center;
+		-webkit-backdrop-filter: blur(7px);
+		backdrop-filter: blur(7px);
 	}
 
 	&Edit {

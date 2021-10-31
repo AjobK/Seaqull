@@ -4,13 +4,14 @@ import { Icon } from '../index'
 
 class Button extends Component {
   render() {
-    const { value, noStyle, inverted, className, onClick, onSubmit, submit, disabled, icon } = this.props
+    const { value, noStyle, inverted, className, onClick, onSubmit, submit, disabled, icon, noPulse } = this.props
 
     return (
       <button
         className={ [
           className,
-          disabled ? styles.disabled : styles.pulse,
+          disabled || noPulse ? '' : styles.pulse,
+          disabled ? styles.disabled : '',
           !noStyle && styles.button,
           !noStyle && inverted && styles.inverted,
           value && icon ? styles.iconWithText : styles.iconWithoutText,

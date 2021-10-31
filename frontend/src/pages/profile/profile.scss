@@ -3,6 +3,10 @@
 .profileWrapper {
 	display: flex;
 	justify-content: center;
+	
+	@include mobile-all-portrait {
+		display: block;
+	}
 }
 
 .profileContentWrapper {

@@ -258,14 +258,15 @@ class ProfileCard extends Component {
                 icon={ this.state.icon }
                 value={ editButtonValue }
                 className={ `${styles.editButton} secondary` }
-                onClick={ () => this.changeEditingState() } />) :
+                onClick={ () => this.changeEditingState() }
+                noPulse />) :
               (<Button
                 value={ <span>{ this.getFollowText() } </span> }
                 className={ `${styles.followButton} ${this.getFollowButtonClass()}` }
                 onClick={ this.follow }
               />) }
             { this.state.profile.loggedIn && user.isOwner ?
-              (<Button icon='Cog' className={ styles.settingsButton } />) :
+              (<Button icon='Cog' className={ styles.settingsButton } noPulse />) :
               (<Button icon='CommentAlt' className={ styles.chatButton } />)
             }
           </div>
