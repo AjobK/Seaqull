@@ -22,7 +22,7 @@ class Cropper extends Component {
     }
 
     if (props.inputType === this.BANNER) {
-      crop.aspect = 1366 / 270
+      crop.aspect = 16 / 9
     }
 
     this.state = {
@@ -61,8 +61,8 @@ class Cropper extends Component {
     const scaleX = image.naturalWidth / image.width
     const scaleY = image.naturalHeight / image.height
     const ctx = canvas.getContext('2d')
-    canvas.width = crop.width
-    canvas.height = crop.height
+    canvas.width = (crop.width / image.width) * image.naturalWidth
+    canvas.height = (crop.height / image.height) * image.naturalHeight
 
     ctx.drawImage(
       image,
@@ -72,8 +72,8 @@ class Cropper extends Component {
       crop.height * scaleY,
       0,
       0,
-      crop.width,
-      crop.height
+      canvas.width,
+      canvas.height
     )
 
     return new Promise((resolve) => {
