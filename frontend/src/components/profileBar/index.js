@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './profilebar.scss'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
-import ColorUtil from '../../util/colorUtil'
+import { ColorUtil } from '../../util/'
 
 @inject('store')
 @observer

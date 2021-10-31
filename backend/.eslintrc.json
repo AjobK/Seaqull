@@ -43,7 +43,7 @@
     "no-multi-spaces": "error",
     "no-unused-vars": "error",
     "func-style": ["error", "expression"],
-    "indent": ["error", 2],
+    "indent": ["error", 2, {"SwitchCase": 1}],
     "newline-before-return": "error",
     "arrow-parens": "error",
     "arrow-spacing": "error",
