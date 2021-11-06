@@ -3,9 +3,8 @@ import styles from './userBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, Cropper } from '..'
 import Axios from 'axios'
-import ColorUtil from '../../util/colorUtil'
+import { ColorUtil, URLUtil, InputUtil } from '../../util/'
 import BanUser from '../banUser/index'
-import URLUtil from '../../util/urlUtil'
 
 @inject('store') @observer
 class UserBanner extends Component {
@@ -17,35 +16,39 @@ class UserBanner extends Component {
       upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false,
-      following: this.props.user.following || false,
+      following: this.props.user.following,
+      followsYou: this.props.user.followsYou,
       banUser: false
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { username, following, followsYou } = this.props.user
+
+    if (username !== prevProps.user.username) {
+      this.setState({
+        following,
+        followsYou
+      })
+    }
+  }
+
   onEditAvatar = (input) => {
-    this.handleInput(input, 'upAvatar')
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upAvatar: result
+      })
+    })
     this.onAvatarDragLeave()
   }
 
   onEditBanner = (input) => {
-    this.handleInput(input, 'upBanner')
-    this.onBannerDragLeave()
-  }
-
-  handleInput = (input, stateVar) => {
-    input.value = ''
-
-    if (input.target.files && input.target.files.length > 0) {
-      this.setScrollEnabled(false)
-      const reader = new FileReader()
-
-      reader.addEventListener('load', () => {
-        this.setState({
-          [stateVar]: reader.result
-        })
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upBanner: result
       })
-      reader.readAsDataURL(input.target.files[0])
-    }
+    })
+    this.onBannerDragLeave()
   }
 
   onAvatarDragEnter = () => {
@@ -80,17 +83,12 @@ class UserBanner extends Component {
     this.props.user.banner = newBanner
   }
 
-  closePopup = () => {
-    this.setScrollEnabled(true)
+  closeCropper = () => {
     this.setState({
       upAvatar: null,
       upBanner: null,
       banUser: false
     })
-  }
-
-  setScrollEnabled = (scrollEnabled) => {
-    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
   follow = () => {
@@ -106,8 +104,28 @@ class UserBanner extends Component {
       })
   }
 
-  banUser() {
+  banUser = () => {
     this.setState({ banUser: true })
+  }
+
+  getFollowText = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'Unfriend' : 'Follow back'
+    } else {
+      return following ? 'Unfollow' : 'Follow'
+    }
+  }
+
+  getFollowIconName = () => {
+    const { followsYou, following } = this.state
+
+    if (followsYou) {
+      return following ? 'UsersSlash' : 'UserFriends'
+    } else {
+      return following ? 'Check' : 'Reply'
+    }
   }
 
   render() {
@@ -154,8 +172,8 @@ class UserBanner extends Component {
               className={ `${ styles.follow } ${this.state.following ? styles.replied : ''}` }
               onClick={ this.follow }
             >
-              <p>{ this.state.following ? 'unfollow' : 'follow' }</p>
-              <Icon iconName={ this.state.following ? 'Check' : 'Reply' } classNames={ styles.replyIcon } />
+              <p>{ this.getFollowText() }</p>
+              <Icon iconName={ this.getFollowIconName() } classNames={ styles.replyIcon } />
             </button>
             }
           </div>
@@ -201,7 +219,7 @@ class UserBanner extends Component {
                 onChange={ this.onEditBanner }
                 onDragEnter={ this.onBannerDragEnter }
                 onDragLeave={ this.onBannerDragLeave }
-                onClick={ this.banUser.bind(this) }
+                onClick={ () => { this.setState({ banUser: true }) } }
               />
               <div className={ styles.bannerEditActionBtn }>
                 <p className={ styles.bannerEditActionBtnText }>
@@ -217,7 +235,7 @@ class UserBanner extends Component {
           <Cropper
             inputType={ 'avatar' }
             img={ this.state.upAvatar }
-            closeCropper={ this.closePopup }
+            closeCropper={ this.closeCropper }
             changeImage={ this.changeAvatar }
           />
         )}
@@ -225,14 +243,14 @@ class UserBanner extends Component {
           <Cropper
             inputType={ 'banner' }
             img={ this.state.upBanner }
-            closeCropper={ this.closePopup }
+            closeCropper={ this.closeCropper }
             changeImage={ this.changeBanner }
           />
         )}
         { this.state.banUser && (
           <BanUser
             user={ user }
-            closePopup={ this.closePopup }
+            closePopup={ this.closeCropper }
           />
         )}
       </section>
