@@ -151,7 +151,9 @@ class LoginPrompt extends Component {
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
             </div>
             <HCaptcha
-              sitekey={ process.env.REACT_APP_HCAPTCHA_PROD_SITEKEY }
+              sitekey={ process.env.CURRENT_APP_STATE === 'dev'
+                ? process.env.HCAPTCHA_DEV_SITEKEY
+                : process.env.HCAPTCHA_PROD_SITEKEY }
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
               onError={ this.onError }
