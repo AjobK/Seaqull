@@ -100,23 +100,6 @@
 	}
 }
 
-.profileStatistics {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 25px;
-	text-align: center;
-
-	.profileStatisticNumber {
-		font-size: $nr-md-fontsize;
-		font-weight: 600;
-	}
-
-	.profileStatisticMetric {
-		font-size: $nr-sm-fontsize;
-		opacity: 0.8;
-	}
-}
-
 .profileCardButtons {
 	display: flex;
 	justify-content: space-between;

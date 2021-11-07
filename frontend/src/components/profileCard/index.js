@@ -6,6 +6,7 @@ import Axios from 'axios'
 import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js'
 import URLUtil from '../../util/urlUtil'
 import ColorUtil from '../../util/colorUtil'
+import ProfileInfo from '../profileInfo'
 
 @inject('store')
 @observer
@@ -198,7 +199,7 @@ class ProfileCard extends Component {
     let editButtonValue = this.state.editingBio ? 'Save' : 'Edit Bio'
     const posts = this.props.posts
 
-    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(this.state.user.username)
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(user.username)
 
     return (
       <section className={ styles.wrapper }>
@@ -236,22 +237,7 @@ class ProfileCard extends Component {
             <Icon className={ styles.profileInfoBadge } iconName={ 'At' }/>
             <h2 className={ styles.profileInfoUsername }>{ user.username || 'Username' }</h2>
           </div>
-          <div className={ styles.profileStatistics }>
-            <div className={ styles.profileStatistic }>
-              <p className={ styles.profileStatisticNumber }>{ user.followerCount }</p>
-              <p className={ styles.profileStatisticMetric }>Followers</p>
-            </div>
-            <div className={ styles.profileStatistic }>
-              <p className={ styles.profileStatisticNumber }>{ user.followingCount }</p>
-              <p className={ styles.profileStatisticMetric }>Following</p>
-            </div>
-            <div className={ styles.profileStatistic }>
-              <p className={ styles.profileStatisticNumber }>
-                { posts.length }
-              </p>
-              <p className={ styles.profileStatisticMetric }>Posts</p>
-            </div>
-          </div>
+          <ProfileInfo user={ user } posts={ posts } openFollowersList={ this.props.openFollowersList }/>
           <div className={ styles.profileCardButtons }>
             { this.state.profile.loggedIn && user.isOwner ?
               (<Button

@@ -1,33 +1,24 @@
 @import '../../styles/index.scss';
 
-.editor {
-	background-color: rgba(255, 255, 255, 0.1); 
-	border-radius: 5px;
-	margin-top: 30px;
-	width: 100%;
-}
-
-.iconContainer {
-	@include noselect;
-	margin-top: 20px;
+.profileStatistics {
 	display: flex;
-	justify-content: flex-end;
-	font-weight: bold;
-}
+	justify-content: space-between;
+	margin-top: 25px;
+	text-align: center;
 
-.iconContainer:hover {
-	cursor: pointer;
-}
+	.profileStatisticNumber {
+		font-size: $nr-md-fontsize;
+		font-weight: 600;
+	}
 
-.iconContainer p {
-	margin-left: 10px;
-}
+	.profileStatisticMetric {
+		font-size: $nr-sm-fontsize;
+		opacity: 0.8;
+	}
 
-.icon {
-	background-color: rgb(0, 0, 0);
-	color: white;
-	border-radius: 30px;
-	font-size: 1.5rem;
-	padding: 6px;
-	width: 1em !important;
+	.profileStatistic {
+		&.clickableFollowers {
+			cursor: pointer;
+		}
+	}
 }

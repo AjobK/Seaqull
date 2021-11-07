@@ -130,6 +130,7 @@ class Profile extends App {
             profile={ profile }
             posts={ this.state.posts }
             changeFollowerCount={ this.changeFollowerCount }
+            openFollowersList={ this.openFollowersList }
           />
           <div className={ styles.profileContentWrapper }>
             <Section title={ 'CREATED POSTS' }>

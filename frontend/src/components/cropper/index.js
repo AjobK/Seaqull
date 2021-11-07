@@ -38,7 +38,7 @@ class Cropper extends Component {
 
   getCrop = () => {
     let aspect
-
+    /*eslint-disable */
     switch (this.props.inputType) {
       case this.AVATAR:
         aspect = this.AVATAR_ASPECT
@@ -53,6 +53,7 @@ class Cropper extends Component {
 
         break
     }
+    /*eslint-enable */
 
     return {
       unit: '%',
@@ -166,6 +167,7 @@ class Cropper extends Component {
     const { inputType, store } = this.props
     let address = store.defaultData.backendUrl
 
+    /*eslint-disable */
     switch (inputType) {
       case this.AVATAR:
       case this.BANNER:
@@ -177,6 +179,7 @@ class Cropper extends Component {
 
         break
     }
+    /*eslint-enable */
 
     return Axios.put(address, fd, {
       withCredentials: true,
