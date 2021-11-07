@@ -105,8 +105,7 @@ class LoginPrompt extends Component {
     this.elId[item.props.name] = id
   }
 
-  handleVerificationSuccess(token, ekey) {
-    console.log(ekey)
+  handleVerificationSuccess(token) {
     this.auth(token)
   }
 
@@ -152,7 +151,7 @@ class LoginPrompt extends Component {
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
             </div>
             <HCaptcha
-              sitekey={ '10000000-ffff-ffff-ffff-000000000001' }
+              sitekey={ this.PROD_SITEKEY }
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
               onError={ this.onError }

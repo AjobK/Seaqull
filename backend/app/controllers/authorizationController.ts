@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
-import RecaptchaService from '../utils/recaptchaService'
+import hCaptchaService from '../utils/hCaptchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
 
@@ -67,7 +67,7 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
-      const isHCaptchaValid = await RecaptchaService.verifyHCAPTCHA(recaptcha)
+      const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(recaptcha)
 
       if (!isHCaptchaValid) {
         return res.status(403).send({
@@ -100,9 +100,8 @@ class AuthorizationController {
 
       res.setHeader(
         'Set-Cookie',
-        `token=${token}; HttpOnly; ${SECURE == 'true' ? 'Secure;' : ''} expires=${+new Date(
-          new Date().getTime() + 86409000
-        ).toUTCString()}; path=/`
+        `token=${token}; HttpOnly; ${SECURE == 'true' ? 'Secure;' : ''} expires=${
+          +new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
       )
 
       res.status(200).json({

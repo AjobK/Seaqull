@@ -15,7 +15,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
-import RecaptchaService from '../utils/recaptchaService'
+import hCaptchaService from '../utils/hCaptchaService'
 
 const jwt = require('jsonwebtoken')
 
@@ -230,7 +230,7 @@ class ProfileController {
 
     errors.password = passwordStrengthErrors
 
-    const isRecaptchaValid = await RecaptchaService.verifyHCAPTCHA(recaptcha)
+    const isRecaptchaValid = await hCaptchaService.verifyHCAPTCHA(recaptcha)
 
     if (!isRecaptchaValid) {
       errors.recaptcha = ['We could not confirm you are not a robot']
