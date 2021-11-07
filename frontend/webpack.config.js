@@ -1,5 +1,6 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   mode: 'development',
@@ -62,9 +63,10 @@ module.exports = {
       files: '**/*.scss',
       failOnError: false,
       quiet: false
-    })
+    }),
+    new Dotenv()
   ],
   node: {
     fs: 'empty'
   }
-};
+}
