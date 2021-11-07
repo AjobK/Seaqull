@@ -21,26 +21,26 @@ class CommentSection extends Component {
   loadComments() {
     const path = URLUtil.getLastPathArgument()
     const { backendUrl } = this.props.store.defaultData
-    const postCommentsUrl = `${backendUrl}/comment/${path}`
-    const profileLikeCommentsUrl = `${backendUrl}/comment/likes/`
-    const profileHasLikedCommentUrl = `${backendUrl}/comment/likes/profileHasLiked/`
+    const postCommentsUrl = `${backendUrl}/comment/${path}/${this.props.store.profile.loggedIn ? '' : 'no-login'}`
 
-    Axios.get(postCommentsUrl)
+    Axios.get(postCommentsUrl, { withCredentials: true })
       .then((response) => {
         // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
         this.setState({ comments: [] }, () => {
-          response.data.forEach((comment) => {
-            Axios.get(profileLikeCommentsUrl + comment.id)
-              .then((response) => {
-                const commentLikes = response.data
-                Axios.get(profileHasLikedCommentUrl + comment.id, { withCredentials: true })
-                  .then((response) => {
-                    comment.likes = { commentLikes, profileHasLiked: response.data, length: commentLikes.length }
-                    const comments = this.state.comments
-                    comments.push(comment)
-                    this.setState({ comments: this.nestComments(comments) })
-                  })
-              })
+          console.log(response.data)
+          response.data.forEach((element) => {
+            const comment = element.comment
+            comment.likes = {
+              commentLikes: element.commentLikePayload,
+              profileHasLiked: element.profileHasLikedComment,
+              length: element.commentLikePayload.length
+            }
+
+            const comments = this.state.comments
+            comments.push(comment)
+            this.setState({
+              comments: this.nestComments(comments)
+            })
           })
         })
       })

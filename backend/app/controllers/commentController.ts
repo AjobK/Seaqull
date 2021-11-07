@@ -15,11 +15,20 @@ class CommentController {
     this.postDAO = new PostDAO()
   }
 
-  public getComments = async (req: Request, res: Response): Promise<Response> => {
+  public getCommentsWithoutCredentials = async (req: Request, res: Response): Promise<Response> => {
     const { path } = req.params
     const foundComments = await this.dao.getComments(await this.postDAO.getPostByPath(path))
 
-    if (path && foundComments) return res.status(200).json(foundComments)
+    if (path && foundComments) return res.status(200).json(await this.getCommentsPayload(foundComments))
+    else return res.status(404).json({ message: 'No comments found on that path' })
+  }
+
+  public getComments = async (req: Request | any, res: Response): Promise<Response> => {
+    const { path } = req.params
+    const foundComments = await this.dao.getComments(await this.postDAO.getPostByPath(path))
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+
+    if (path && foundComments) return res.status(200).json(await this.getCommentsPayload(foundComments, profile.id))
     else return res.status(404).json({ message: 'No comments found on that path' })
   }
 
@@ -59,27 +68,6 @@ class CommentController {
     }
 
     return res.status(401).json({ message: 'Invalid user' })
-  }
-
-  public getCommentLikes = async (req: Request, res: Response): Promise<Response> => {
-    const { id } = req.params
-
-    const foundCommentLikes = await this.dao.getCommentLikes(Number(id))
-
-    return res.status(200).json(foundCommentLikes)
-  }
-
-  public getHasProfileLikedComment = async (req: Request | any, res: Response): Promise<Response> => {
-    const { id } = req.params
-
-    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
-    const foundCommentLikes = await this.dao.getCommentLikes(Number(id))
-
-    foundCommentLikes.forEach((commentLike: any) => {
-      if (commentLike.profile.id === profile.id) return res.status(200).json(true)
-    })
-
-    return res.status(200).json(false)
   }
 
   public createCommentLike = async (req: Request | any, res: Response): Promise<Response> => {
@@ -154,6 +142,25 @@ class CommentController {
     }
 
     return res.status(403).json({ message: 'Unauthorized' })
+  }
+
+  private getCommentsPayload = async (comments: Comment[], profile_id?: number): Promise<any[]> => {
+    const responsePayload = []
+
+    for (const comment of comments) {
+      const commentLikePayload = []
+      const commentLikes = await this.dao.getCommentLikes(comment.id)
+      let profileHasLikedComment = false
+
+      commentLikes.forEach((commentLike) => {
+        if (commentLike.profile.id === profile_id) profileHasLikedComment = true
+        commentLikePayload.push(commentLike)
+      })
+
+      responsePayload.push({ comment, commentLikePayload, profileHasLikedComment })
+    }
+
+    return responsePayload
   }
 }
 
