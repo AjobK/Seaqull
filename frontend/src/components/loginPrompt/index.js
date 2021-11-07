@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
 import { Button, FormInput } from '../../components'
@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
-import RecaptchaUtil from '../../util/recaptchaUtil'
 
 @inject('store')
 @observer
@@ -22,17 +21,9 @@ class LoginPrompt extends Component {
       loadingTimeout: false,
     }
 
+    this.captchaRef = createRef()
+
     this.elId = {}
-  }
-
-  componentDidMount() {
-    RecaptchaUtil.loadRecaptchaScript(this.props.store.defaultData.recaptchaSiteKey, () => {
-      console.log('Script loaded!')
-    })
-  }
-
-  componentWillUnmount() {
-    RecaptchaUtil.unloadRecaptchaScript()
   }
 
   auth = (recaptchaToken) => {
@@ -107,10 +98,7 @@ class LoginPrompt extends Component {
       loadingTimeout: true,
     })
 
-    RecaptchaUtil.executeRecaptcha(this.props.store.defaultData.recaptchaSiteKey)
-      .then((token) => {
-        this.auth(token)
-      })
+    this.captchaRef.current.execute()
   }
 
   setElId = (item, id) => {
@@ -118,7 +106,16 @@ class LoginPrompt extends Component {
   }
 
   handleVerificationSuccess(token, ekey) {
-    console.log(token)
+    console.log(ekey)
+    this.auth(token)
+  }
+
+  onExpire = () => {
+    console.log('hCaptcha Token Expired')
+  }
+
+  onError = (err) => {
+    console.log(`hCaptcha Error: ${err}`)
   }
 
   render() {
@@ -155,8 +152,12 @@ class LoginPrompt extends Component {
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
             </div>
             <HCaptcha
-              sitekey={ '031482b3-54e1-4beb-a0d7-dce10eecfdbf' }
+              sitekey={ '10000000-ffff-ffff-ffff-000000000001' }
+              size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
+              onError={ this.onError }
+              onExpire={ this.onExpire }
+              ref={ this.captchaRef }
             />
           </form>
           <div className={ styles.image } />

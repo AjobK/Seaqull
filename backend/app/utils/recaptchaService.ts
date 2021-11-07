@@ -1,13 +1,22 @@
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
+import Axios from 'axios'
 
 class RecaptchaService {
-    public static verifyReCAPTCHA = async (token: string): Promise<boolean> => {
-      const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, .6)
-      const verificationResult = await reCaptcha.verify(token)
+    public static verifyHCAPTCHA = async (token: string): Promise<boolean> => {
+      const params = new URLSearchParams()
+      params.append('secret', process.env.RECAPTCHA_SECRET_KEY)
+      params.append('response', token)
 
-      console.log(verificationResult)
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
 
-      return verificationResult.isHuman
+      const hCaptcha = await Axios.post('https://hcaptcha.com/siteverify/', params, config)
+
+      console.log(hCaptcha.data)
+
+      return hCaptcha.data['success']
     }
 }
 

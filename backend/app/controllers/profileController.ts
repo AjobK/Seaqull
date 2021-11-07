@@ -230,7 +230,7 @@ class ProfileController {
 
     errors.password = passwordStrengthErrors
 
-    const isRecaptchaValid = await RecaptchaService.verifyReCAPTCHA(recaptcha)
+    const isRecaptchaValid = await RecaptchaService.verifyHCAPTCHA(recaptcha)
 
     if (!isRecaptchaValid) {
       errors.recaptcha = ['We could not confirm you are not a robot']

@@ -67,9 +67,9 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
-      const isRecaptchaValid = await RecaptchaService.verifyReCAPTCHA(recaptcha)
+      const isHCaptchaValid = await RecaptchaService.verifyHCAPTCHA(recaptcha)
 
-      if (!isRecaptchaValid) {
+      if (!isHCaptchaValid) {
         return res.status(403).send({
           errors: ['We could not verify that you are a human']
         })
