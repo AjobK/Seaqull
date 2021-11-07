@@ -56,6 +56,7 @@ Personalize your profile and engage with other community members. View all the c
 | Command                | Description                         |
 |------------------------|-------------------------------------|
 | `npm i`                | Install back-end modules            |
+| `npm test`             | Run backend tests                   |
 | `npm run seed:run`     | Run seeder                          |
 | `npm run schema:drop`  | Drop the database schema            |
 | `npm run reset`        | Reset the database and seeded data  |
