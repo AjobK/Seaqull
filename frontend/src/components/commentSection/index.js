@@ -27,7 +27,6 @@ class CommentSection extends Component {
       .then((response) => {
         // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
         this.setState({ comments: [] }, () => {
-          console.log(response.data)
           response.data.forEach((element) => {
             const comment = element.comment
             comment.likes = {
