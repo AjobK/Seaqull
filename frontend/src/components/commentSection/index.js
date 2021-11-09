@@ -15,7 +15,7 @@ import { URLUtil } from '../../util/'
 class CommentSection extends Component {
   constructor(props) {
     super(props)
-    this.state = { isPostOwner: props.isPostOwner, comments: [], commentLikes: [] }
+    this.state = { isPostOwner: props.isPostOwner, comments: [] }
   }
 
   loadComments() {
@@ -85,7 +85,9 @@ class CommentSection extends Component {
         if (comment.parent_comment_id !== null) {
           const parent = commentMap[comment.parent_comment_id]
 
-          parent.children ? parent.children.push(comment) : (parent.children = [comment])
+          if (parent) {
+            parent.children ? parent.children.push(comment) : (parent.children = [comment])
+          }
         }
       })
     }

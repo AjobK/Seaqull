@@ -252,7 +252,9 @@ class Comment extends Component {
             </div>
           </div>
           { profile.loggedIn && this.displayCommentForm() }
-          { showReplies && <CommentChildren commentChildren={ comment.children } /> }
+          { showReplies &&
+            <CommentChildren commentChildren={ comment.children } onReplyAdd={ this.props.onReplyAdd } />
+          }
           { this.state.isDeleting && (
             <Dialog
               header="Deleting comment"
