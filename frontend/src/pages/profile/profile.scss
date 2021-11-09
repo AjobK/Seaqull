@@ -3,10 +3,12 @@
 .profileWrapper {
 	display: flex;
 	justify-content: center;
+	width: $wrapper-width;
+	margin: 0 auto;
 	padding: $header-spacing;
 
 	.profileContentWrapper {
-		min-width: 60vw;
+		width: 100%;
 	}
 	
 	@include mobile-all-portrait {
