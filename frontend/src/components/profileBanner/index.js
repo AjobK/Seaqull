@@ -19,6 +19,10 @@ class ProfileBanner extends Component {
     this.onBannerDragLeave()
   }
 
+  banUser() {
+    this.setState({ banUser: true })
+  }
+
   handleInput = (input, stateVar) => {
     input.value = ''
 

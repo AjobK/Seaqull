@@ -4,6 +4,10 @@
 	display: flex;
 	justify-content: center;
 	padding: $header-spacing;
+
+	.profileContentWrapper {
+		min-width: 60vw;
+	}
 	
 	@include mobile-all-portrait {
 		display: block;
