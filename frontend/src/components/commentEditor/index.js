@@ -80,12 +80,12 @@ class CommentEditor extends Component {
     this.setState({ editorState: EditorState.createEmpty() })
   }
 
-  keyBindingFn = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+  keyBindingFn = (keyBindingEvent) => {
+    if (keyBindingEvent.key === 'Enter' && !keyBindingEvent.shiftKey) {
       return 'send'
     }
 
-    return getDefaultKeyBinding(e)
+    return getDefaultKeyBinding(keyBindingEvent)
   }
 
   handleKeyCommand = (command) => {
