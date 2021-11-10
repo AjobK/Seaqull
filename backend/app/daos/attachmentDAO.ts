@@ -28,6 +28,11 @@ class attachmentDAO {
     return await repository.findOne({ where: { id: 2 } })
   }
 
+  public async getDefaultThumbnailAttachment(): Promise<Attachment> {
+    const repository = await DatabaseConnector.getRepository('Attachment')
+
+    return await repository.findOne({ where: { id: 3 } })
+  }
 }
 
 export default attachmentDAO

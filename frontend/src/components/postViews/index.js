@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import styles from './postViews.scss'
 import Axios from 'axios'
 import { Icon } from '../../components'
-import unitFormatterUtil from '../../util/unitFormatterUtil'
-import URLUtil from '../../util/urlUtil'
+import { URLUtil, UnitFormatterUtil } from '../../util/'
 
 class PostViews extends Component {
   constructor(props) {
@@ -34,8 +33,10 @@ class PostViews extends Component {
       <div className={ styles.postViews }>
         <Icon iconName={ 'Eye' } className={ styles.viewIcon } />
         <p className={ styles.postViewsText }>
-          {`${unitFormatterUtil.getNumberSuffix(this.state.views)} 
-                    ${this.state.views === 1 ? 'view' : 'views'}`}
+          { `
+              ${ UnitFormatterUtil.getNumberSuffix(this.state.views) } 
+              ${ this.state.views === 1 ? 'view' : 'views' }
+          `}
         </p>
       </div>
     )
