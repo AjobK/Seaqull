@@ -15,7 +15,7 @@ import { URLUtil } from '../../util/'
 class CommentSection extends Component {
   constructor(props) {
     super(props)
-    this.state = { isPostOwner: props.isPostOwner, comments: [], commentLikes: [] }
+    this.state = { isPostOwner: props.isPostOwner, comments: [] }
   }
 
   loadComments() {
@@ -85,7 +85,9 @@ class CommentSection extends Component {
         if (comment.parent_comment_id !== null) {
           const parent = commentMap[comment.parent_comment_id]
 
-          parent.children ? parent.children.push(comment) : (parent.children = [comment])
+          if (parent) {
+            parent.children ? parent.children.push(comment) : (parent.children = [comment])
+          }
         }
       })
     }
@@ -94,25 +96,34 @@ class CommentSection extends Component {
       return comment.parent_comment_id === null
     })
 
+    const userComments = []
     const pinnedComments = []
     const unpinnedComments = []
 
     filteredComments.forEach((comment) => {
-      if (comment.is_pinned) {
+      if (comment.profile.display_name === this.props.store.profile.display_name) {
+        userComments.push(comment)
+      } else if (comment.is_pinned) {
         pinnedComments.push(comment)
       } else {
         unpinnedComments.push(comment)
       }
     })
 
-    const filteredSortedComments = pinnedComments.sort((firstComparedPinnedComment, secondComparedPinnedComment) => {
-      return firstComparedPinnedComment.likes.length < secondComparedPinnedComment.likes.length ? 1 : -1
-    }).concat(unpinnedComments.sort((firstComparedComment, secondComparedComment) => {
-      return firstComparedComment.likes.length < secondComparedComment.likes.length ? 1 : -1
-    }))
+    const filteredAndSortedComments = [
+      ...this.sortCommentsByDate(userComments),
+      ...this.sortCommentsByDate(pinnedComments),
+      ...this.sortCommentsByDate(unpinnedComments)
+    ]
 
-    return filteredSortedComments
+    return filteredAndSortedComments
   }
+
+  sortCommentsByDate = (unsortedComments) => (
+    unsortedComments.sort((currentComment, nextComment) => (
+      nextComment.created_at - currentComment.created_at
+    ))
+  )
 
   render() {
     return (
