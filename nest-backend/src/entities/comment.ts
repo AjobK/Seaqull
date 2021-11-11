@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-import Post from './post'
-import Profile from './profile'
+import { Post } from './post'
+import { Profile } from './profile'
 
 @Entity('comment')
 export class Comment extends BaseEntity {

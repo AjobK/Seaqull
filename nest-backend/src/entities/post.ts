@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-import Profile from './profile'
+import { Profile } from './profile'
 
 @Entity('post')
 export class Post extends BaseEntity {

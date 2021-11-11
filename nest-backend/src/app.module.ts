@@ -12,7 +12,7 @@ import { configValidationSchema } from './config.schema'
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
       validationSchema: configValidationSchema
     }),
     AuthorizationModule,
