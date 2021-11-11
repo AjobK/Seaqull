@@ -110,20 +110,20 @@ class CommentSection extends Component {
       }
     })
 
-    const fullyFilteredSortedComments =
-      userComments.sort ((firstComparedUserComment, secondComparedUserComment) => {
-        return new Date(firstComparedUserComment.created_at).getTime() <
-          new Date(secondComparedUserComment.created_at).getTime() ? 1 : -1
-      }).concat(pinnedComments.sort((firstComparedPinnedComment, secondComparedPinnedComment) => {
-        return new Date(firstComparedPinnedComment.created_at).getTime() <
-          new Date(secondComparedPinnedComment.created_at).getTime() ? 1 : -1
-      }).concat(unpinnedComments.sort((firstComparedComment, secondComparedComment) => {
-        return new Date(firstComparedComment.created_at).getTime() <
-          new Date(secondComparedComment.created_at).getTime() ? 1 : -1
-      })))
+    const filteredAndSortedComments = [
+      ...this.sortCommentsByDate(userComments),
+      ...this.sortCommentsByDate(pinnedComments),
+      ...this.sortCommentsByDate(unpinnedComments)
+    ]
 
-    return fullyFilteredSortedComments
+    return filteredAndSortedComments
   }
+
+  sortCommentsByDate = (unsortedComments) => (
+    unsortedComments.sort((currentComment, nextComment) => (
+      nextComment.created_at - currentComment.created_at
+    ))
+  )
 
   render() {
     return (
