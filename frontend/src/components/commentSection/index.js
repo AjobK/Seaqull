@@ -96,24 +96,33 @@ class CommentSection extends Component {
       return comment.parent_comment_id === null
     })
 
+    const userComments = []
     const pinnedComments = []
     const unpinnedComments = []
 
     filteredComments.forEach((comment) => {
-      if (comment.is_pinned) {
+      if (comment.profile.display_name === this.props.store.profile.display_name) {
+        userComments.push(comment)
+      } else if (comment.is_pinned) {
         pinnedComments.push(comment)
       } else {
         unpinnedComments.push(comment)
       }
     })
 
-    const filteredSortedComments = pinnedComments.sort((firstComparedPinnedComment, secondComparedPinnedComment) => {
-      return firstComparedPinnedComment.likes.length < secondComparedPinnedComment.likes.length ? 1 : -1
-    }).concat(unpinnedComments.sort((firstComparedComment, secondComparedComment) => {
-      return firstComparedComment.likes.length < secondComparedComment.likes.length ? 1 : -1
-    }))
+    const fullyFilteredSortedComments =
+      userComments.sort ((firstComparedUserComment, secondComparedUserComment) => {
+        return new Date(firstComparedUserComment.created_at).getTime() <
+          new Date(secondComparedUserComment.created_at).getTime() ? 1 : -1
+      }).concat(pinnedComments.sort((firstComparedPinnedComment, secondComparedPinnedComment) => {
+        return new Date(firstComparedPinnedComment.created_at).getTime() <
+          new Date(secondComparedPinnedComment.created_at).getTime() ? 1 : -1
+      }).concat(unpinnedComments.sort((firstComparedComment, secondComparedComment) => {
+        return new Date(firstComparedComment.created_at).getTime() <
+          new Date(secondComparedComment.created_at).getTime() ? 1 : -1
+      })))
 
-    return filteredSortedComments
+    return fullyFilteredSortedComments
   }
 
   render() {
