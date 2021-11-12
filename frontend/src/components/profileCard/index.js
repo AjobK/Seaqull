@@ -57,7 +57,6 @@ class ProfileCard extends Component {
     input.value = ''
 
     if (input.target.files && input.target.files.length > 0) {
-      this.setScrollEnabled(false)
       const reader = new FileReader()
 
       reader.addEventListener('load', () => {
@@ -86,16 +85,11 @@ class ProfileCard extends Component {
   }
 
   closePopup = () => {
-    this.setScrollEnabled(true)
     this.setState({
       upAvatar: null,
       upBanner: null,
       banUser: false
     })
-  }
-
-  setScrollEnabled = (scrollEnabled) => {
-    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
   }
 
   follow = () => {
