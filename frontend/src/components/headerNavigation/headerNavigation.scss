@@ -1,7 +1,8 @@
 @import '../../styles/index.scss';
 
 .menu {
-	float: right;
+	position: relative;
+
 	@include mobile-sm {
 		display: none;
 	}
@@ -14,20 +15,18 @@
 		align-items: center;
 		letter-spacing: 1px;
 		font-weight: bold;
+		
+
+		> :last-child {
+			margin-left: $header-spacing * 0.75;
+			background-color: orange;
+		}
 	}
 
 	&Item {
 		text-decoration: none;
 		color: rgba(0,0,0,0.6);
 		cursor: pointer;
-
-		&:not(:last-child) {
-			margin: 0 $nr-sm-fontsize;
-		}
-
-		&:last-child {
-			margin-left: $nr-sm-fontsize;
-		}
 
 		&:hover {
 			transition: 0.2s;
@@ -36,6 +35,51 @@
 	}
 }
 
-.button {
-	border-radius: 30px;
+.avatarWrapper {
+	display: flex;
+	align-items: center;
+
+	&Image {
+		display: inherit;
+		width: 40px;
+		height: 40px;
+		border-radius: 100%;
+	}
+
+	&Dropdown {
+		transition: 0.2s;
+
+		&Icon {
+			cursor: pointer;
+			font-size: 0.8em;
+			margin-left: $header-spacing / 2;
+		}
+
+		> ul {
+			background-color: $background-trans;
+			position: absolute;
+			top: $header-height - $header-spacing;
+			right: 0;
+			width: 100%;
+			list-style-type: none;
+			border-radius: 0 0 3px 3px;
+			opacity: 1;
+			transition: 0.2s;
+
+			&.open {
+				opacity: 0;
+				pointer-events: none;
+			}
+
+			> li {
+				margin: -1px;
+				padding: $header-spacing * 0.75;
+				text-align: right;
+
+				&:not(:last-child) {
+					border-bottom: 1px solid rgba(0,0,0,0.1);
+				}
+			}
+		}
+	}
 }
