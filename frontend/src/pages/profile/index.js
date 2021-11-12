@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
-import { ProfileBanner, PostsPreview, Statistics, Loader, ProfileCard } from '../../components'
+import { ProfileBanner, PostsPreview, Loader, ProfileCard } from '../../components'
 import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
 import { withRouter } from 'react-router'
@@ -138,9 +138,6 @@ class Profile extends App {
             </Section>
             <Section title={ 'LIKED POSTS' }>
               <PostsPreview posts={ this.state.likes } />
-            </Section>
-            <Section title={ 'STATISTICS' }>
-              <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
             </Section>
             { (this.state.showFollowers && this.state.user.followerCount > 0) &&
               <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />

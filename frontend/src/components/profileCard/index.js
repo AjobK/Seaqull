@@ -19,7 +19,7 @@ class ProfileCard extends Component {
       profile: props.profile,
       posts: props.posts,
       loggedIn: this.props.loggedIn,
-      following: this.props.user.following || false,
+      following: !!this.props.user.following,
       followsYou: this.props.user.followsYou,
       upAvatar: null,
       draggingOverAvatar: false,
@@ -233,7 +233,7 @@ class ProfileCard extends Component {
           )}
         </div>
         <div className={ styles.profileInfo }>
-          <div className={ styles.profileNameWrapper }>
+          <div className={ styles.profileInfoNameWrapper }>
             <Icon className={ styles.profileInfoBadge } iconName={ 'At' }/>
             <h2 className={ styles.profileInfoUsername }>{ user.username || 'Username' }</h2>
           </div>

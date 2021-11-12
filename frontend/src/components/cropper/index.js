@@ -38,6 +38,8 @@ class Cropper extends Component {
 
   getCrop = () => {
     let aspect
+
+    // disabled due to eslinter giving indentation errors on switch statement
     /*eslint-disable */
     switch (this.props.inputType) {
       case this.AVATAR:
@@ -167,6 +169,7 @@ class Cropper extends Component {
     const { inputType, store } = this.props
     let address = store.defaultData.backendUrl
 
+    // disabled due to eslinter giving indentation errors on switch statement
     /*eslint-disable */
     switch (inputType) {
       case this.AVATAR:

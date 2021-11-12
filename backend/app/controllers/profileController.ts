@@ -48,23 +48,10 @@ class ProfileController {
   }
 
   public getFollowers = async (req: Request, res: Response): Promise<Response> => {
-    const { token } = req.cookies
-    let decodedToken: any
-
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (e) {
-      decodedToken = null
-    }
-
-    let receivedUsername = req.params.username
+    const receivedUsername = this.getUsernameFromToken(req)
 
     if (!receivedUsername) {
-      if (decodedToken && decodedToken.username) {
-        receivedUsername = decodedToken.username
-      } else {
-        return res.status(404).json({ error: 'No username was given' })
-      }
+      res.status(404).json({ error: 'No username was given' })
     }
 
     const profile = await this.dao.getProfileByUsername(receivedUsername)
@@ -86,24 +73,10 @@ class ProfileController {
   }
 
   public getFollowing = async (req: Request, res: Response): Promise<Response> => {
-    //TODO: duplicate code, will export to single method once it's working correctly
-    const { token } = req.cookies
-    let decodedToken: any
-
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (e) {
-      decodedToken = null
-    }
-
-    let receivedUsername = req.params.username
+    const receivedUsername = this.getUsernameFromToken(req)
 
     if (!receivedUsername) {
-      if (decodedToken && decodedToken.username) {
-        receivedUsername = decodedToken.username
-      } else {
-        return res.status(404).json({ error: 'No username was given' })
-      }
+      res.status(404).json({ error: 'No username was given' })
     }
 
     const profile = await this.dao.getProfileByUsername(receivedUsername)
@@ -122,6 +95,29 @@ class ProfileController {
     }
 
     return res.status(200).json(payload)
+  }
+
+  private getUsernameFromToken = (req: Request) => {
+    const { token } = req.cookies
+    let decodedToken: any
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+      decodedToken = null
+    }
+
+    let receivedUsername = req.params.username
+
+    if (!receivedUsername) {
+      if (decodedToken && decodedToken.username) {
+        receivedUsername = decodedToken.username
+      } else {
+        return null
+      }
+    }
+
+    return receivedUsername
   }
 
   public updateProfile = async (req: any, res: Response): Promise<Response> => {

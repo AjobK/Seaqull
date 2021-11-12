@@ -16,7 +16,7 @@ class UserBanner extends Component {
       upBanner: null,
       draggingOverAvatar: false,
       draggingOverBanner: false,
-      following: this.props.user.following || false,
+      following: !!this.props.user.following,
       banUser: false
     }
   }

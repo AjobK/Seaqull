@@ -13,8 +13,7 @@ class ProfileInfo extends Component {
   }
 
   render() {
-    const user = this.props.user
-    const posts = this.props.posts
+    const { user, posts } = this.props
 
     const followersStatisticClass = user.followerCount > 0 ? styles.clickableFollowers : ''
 

@@ -25,8 +25,9 @@ class ProfileBanner extends Component {
 
   handleInput = (input, stateVar) => {
     input.value = ''
+    const files = input?.target?.files
 
-    if (input.target.files && input.target.files.length > 0) {
+    if (files.length > 0) {
       this.setScrollEnabled(false)
       const reader = new FileReader()
 
@@ -35,7 +36,7 @@ class ProfileBanner extends Component {
           [stateVar]: reader.result
         })
       })
-      reader.readAsDataURL(input.target.files[0])
+      reader.readAsDataURL(files[0])
     }
   }
 
@@ -96,7 +97,7 @@ class ProfileBanner extends Component {
               />
             </div>
           )}
-          { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn ? (
+          { role != 'User' && !this.props.owner && this.props.store.profile.loggedIn ? (
             <div
               onDragEnter={ this.onBannerDragEnter }
               onDragLeave={ this.onBannerDragLeave }

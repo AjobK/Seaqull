@@ -2,7 +2,7 @@
 
 .wrapper {
 	width: 100%;
-	max-width: 265px;
+	max-width: $profile-card-width;
 	margin-top: calc(-75px - #{$header-spacing}); // Subtract header-spacing due to padding on section wrapper
 	margin-right: $header-spacing;
 
@@ -79,14 +79,14 @@
 .profileInfo {
 	margin-top: 10px;
 
-	.profileNameWrapper {
+	&NameWrapper {
 		display: flex;
 		justify-content: center;
 		font-size: $nr-md-fontsize;
 		color: $primary;
 	}
 	
-	.profileInfoBadge {
+	&Badge {
 		vertical-align: middle;
 		height: auto;
 		margin-right: 5px;
@@ -94,7 +94,7 @@
 		color: $primary;
 	}
 	
-	.profileInfoUsername {
+	&Username {
 		text-align: center;
 		color: $secondary;
 	}
