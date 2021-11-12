@@ -1,8 +1,8 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Profile } from './profile'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Profile } from './profile.entity'
 
 @Entity('setting')
-export class Setting extends BaseEntity {
+export class Setting {
     @PrimaryGeneratedColumn()
     id: number
 

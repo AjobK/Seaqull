@@ -1,10 +1,10 @@
-import { BaseEntity, Column, Entity, JoinColumn, Unique, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Profile } from './profile'
-import { Post } from './post'
+import { Column, Entity, JoinColumn, Unique, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Profile } from './profile.entity'
+import { Post } from './post.entity'
 
 @Entity('post_like')
 @Unique(['profile', 'post'])
-export class PostLike extends BaseEntity {
+export class PostLike {
     @PrimaryGeneratedColumn()
     id: number
 

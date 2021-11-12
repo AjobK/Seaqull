@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,11 +7,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
-import { Comment } from './comment'
-import { Attachment } from './attachment';
+import { Comment } from './comment.entity'
+import { Attachment } from './attachment.entity';
 
 @Entity('comment_has_attachment')
-export class CommentHasAttachment extends BaseEntity {
+export class CommentHasAttachment {
     @PrimaryGeneratedColumn()
     id: number
 

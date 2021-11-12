@@ -1,0 +1,8 @@
+export const permissionsAdmins = [
+  'PROMOTE_MODERATORS',
+  'REMOVE_MODERATORS',
+  'BAN_USERS',
+  'PERMA_BAN_USERS',
+  'REVIEW_BAN_APPEALS',
+  'MACHINE_BAN_USERS'
+]

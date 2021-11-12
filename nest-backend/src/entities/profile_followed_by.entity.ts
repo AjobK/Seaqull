@@ -1,8 +1,8 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Profile } from './profile'
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
+import { Profile } from './profile.entity'
 
 @Entity('profile_followed_by')
-export class ProfileFollowedBy extends BaseEntity {
+export class ProfileFollowedBy {
     @PrimaryGeneratedColumn()
     id: number
 

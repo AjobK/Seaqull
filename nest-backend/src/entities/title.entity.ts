@@ -1,7 +1,7 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('role')
-export class Role extends BaseEntity {
+@Entity('title')
+export class Title {
     @PrimaryGeneratedColumn()
     id: number
 

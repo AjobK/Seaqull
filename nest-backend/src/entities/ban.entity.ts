@@ -1,8 +1,8 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Account } from './account'
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Account } from './account.entity'
 
 @Entity('ban')
-export class Ban extends BaseEntity {
+export class Ban {
     @PrimaryGeneratedColumn()
     id: number
 

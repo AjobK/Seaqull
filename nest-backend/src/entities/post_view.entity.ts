@@ -1,9 +1,9 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm'
-import { Post } from './post'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm'
+import { Post } from './post.entity'
 
 @Entity('post_view')
 @Unique(['post', 'ip'])
-export class PostView extends BaseEntity {
+export class PostView {
     @PrimaryGeneratedColumn()
     id: number
 

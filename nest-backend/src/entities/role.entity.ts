@@ -1,12 +1,12 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity()
-export class EmailVerification extends BaseEntity {
+@Entity('role')
+export class Role {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column({ unique: true })
-    path: string
+    name: string
 
     @CreateDateColumn()
     created_at: Date

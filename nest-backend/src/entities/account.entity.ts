@@ -1,9 +1,9 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToOne } from 'typeorm'
-import { Role } from './role'
-import { Profile } from './profile'
+import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToOne } from 'typeorm'
+import { Role } from './role.entity'
+import { Profile } from './profile.entity'
 
 @Entity('account')
-export class Account extends BaseEntity {
+export class Account {
     @PrimaryGeneratedColumn()
     id: number
 

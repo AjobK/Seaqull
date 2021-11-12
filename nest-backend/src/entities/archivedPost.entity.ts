@@ -1,8 +1,8 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Account } from './account'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Account } from './account.entity'
 
 @Entity('archivedPost')
-export class ArchivedPost extends BaseEntity {
+export class ArchivedPost {
   @PrimaryGeneratedColumn()
   id: number
 

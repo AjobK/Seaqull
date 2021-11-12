@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   Entity,
   PrimaryGeneratedColumn,
@@ -8,11 +7,11 @@ import {
   JoinColumn,
   ManyToOne
 } from 'typeorm'
-import { Attachment } from './attachment'
-import { Title } from './title'
+import { Attachment } from './attachment.entity'
+import { Title } from './title.entity'
 
 @Entity('profile')
-export class Profile extends BaseEntity {
+export class Profile {
     @PrimaryGeneratedColumn()
     id: number
 

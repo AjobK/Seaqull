@@ -1,9 +1,9 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Comment } from './comment'
-import { Profile } from './profile'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Comment } from './comment.entity'
+import { Profile } from './profile.entity'
 
 @Entity('profile_comment_like')
-export class ProfileCommentLike extends BaseEntity {
+export class ProfileCommentLike {
     @PrimaryGeneratedColumn()
     id: number
 

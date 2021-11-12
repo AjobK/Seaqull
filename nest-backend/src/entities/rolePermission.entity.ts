@@ -1,9 +1,9 @@
-import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Permission } from './permission'
-import { Role } from './role'
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Permission } from './permission.entity'
+import { Role } from './role.entity'
 
 @Entity('role_permission')
-export class RolePermission extends BaseEntity {
+export class RolePermission {
     @PrimaryGeneratedColumn()
     id: number
 

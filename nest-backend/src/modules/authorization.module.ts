@@ -6,12 +6,22 @@ import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AccountRepository } from '../repositories/account.repository'
 import { PassportModule } from '@nestjs/passport'
-import {JwtStrategy} from "../services/jwt.strategy";
+import { JwtStrategy } from '../services/jwt.strategy'
+import { RoleRepository } from '../repositories/role.repository'
+import { ProfileRepository } from '../repositories/profile.repository'
+import { TitleRepository } from '../repositories/title.repository'
+import { AttachmentRepository } from '../repositories/attachment.repository'
 
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([AccountRepository]),
+    TypeOrmModule.forFeature([
+      AccountRepository,
+      RoleRepository,
+      ProfileRepository,
+      TitleRepository,
+      AttachmentRepository
+    ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
