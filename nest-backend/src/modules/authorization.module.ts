@@ -7,17 +7,17 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AccountRepository } from '../repositories/account.repository'
 import { PassportModule } from '@nestjs/passport'
 import { JwtStrategy } from '../services/jwt.strategy'
-import { RoleRepository } from '../repositories/role.repository'
 import { ProfileRepository } from '../repositories/profile.repository'
 import { TitleRepository } from '../repositories/title.repository'
 import { AttachmentRepository } from '../repositories/attachment.repository'
+import { BanModule } from './ban.module'
 
 @Module({
   imports: [
+    BanModule,
     ConfigModule,
     TypeOrmModule.forFeature([
       AccountRepository,
-      RoleRepository,
       ProfileRepository,
       TitleRepository,
       AttachmentRepository
