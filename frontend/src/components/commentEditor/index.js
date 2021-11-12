@@ -80,22 +80,18 @@ class CommentEditor extends Component {
     this.setState({ editorState: EditorState.createEmpty() })
   }
 
-  keyBindingFn = (e) => {
-    if (e.key === 'Enter') {
-      return 'enter-pressed'
+  keyBindingFn = (keyBindingEvent) => {
+    if (keyBindingEvent.key === 'Enter' && !keyBindingEvent.shiftKey) {
+      return 'send'
     }
 
-    return getDefaultKeyBinding(e)
+    return getDefaultKeyBinding(keyBindingEvent)
   }
 
   handleKeyCommand = (command) => {
-    if (command === 'enter-pressed') {
+    if (command === 'send') {
       this.onSubmit()
-
-      return 'handled'
     }
-
-    return 'not-handled'
   }
 
   displayError = () => {
@@ -125,7 +121,8 @@ class CommentEditor extends Component {
               editorState={ this.state.editorState }
               ref={ this.editorInput }
               onChange={ this.onChange }
-              placeholder="Leave a comment..."
+              placeholder='Leave a comment...'
+              stripPastedStyles={ true }
               keyBindingFn={ this.keyBindingFn }
               handleKeyCommand={ this.handleKeyCommand }
             />
@@ -133,7 +130,7 @@ class CommentEditor extends Component {
           <Button
             value={ this.buttonText }
             className={ styles.editorForm__button }
-            type="button"
+            type='button'
             onClick={ this.onSubmit }
           />
         </div>
