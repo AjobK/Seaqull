@@ -89,7 +89,7 @@
 				bottom: 0;
 				left: 0;
 				height: 2px;
-				width: 0%;
+				width: 0;
 				background-color: $primary;
 			}
 
@@ -114,6 +114,10 @@
 		margin-bottom: 10px;
 
 		&Author {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			height: 30px;
 			font-size: 1.2rem;
 			font-weight: 600;
 			&:link,
@@ -129,11 +133,34 @@
 			}
 		}
 
+		&IsPinned {
+			display: flex;
+			color: $gray;
+			align-items: center;
+			font-size: 1em;
+		}
+
+		&PinIcon {
+			color: $primary;
+			font-size: 1.2rem;
+			margin-right: 10px;
+		}
+
 		&PublishedTime {
 			display: flex;
 			color: $gray;
 			align-items: center;
 			font-size: 1rem;
+		}
+	}
+
+	&__likeButtonIcon {
+		font-size: 1.2rem;
+		margin-right: 10px;
+
+		&:hover {
+			color: $primary;
+			cursor: pointer;
 		}
 	}
 
@@ -150,12 +177,42 @@
 		}
 	}
 
+	&__isPinned {
+		background-color: $primary;
+		color: #FFFFFF;
+	}
+
+	&__isUnpinned {
+		background-color: $light-gray;
+		color: #FFFFFF;
+	}
+
 	&__deleteButtonIcon {
 		color: $textdark;
 		font-size: 1.2rem;
 		margin-right: 10px;
+
 		&:hover {
 			color: $primary;
+			cursor: pointer;
+		}
+	}
+
+	&__pinButtonIcon {
+		transform: rotate(45deg);
+		height: 25px;
+		width: 25px !important;
+		padding: 6px 5px 5px 5px;
+		border-radius: 20px;
+		font-size: 1.2rem;
+		margin-right: 10px;
+		transition: .2s ease-in-out;
+
+	}
+
+	&__pinButtonHover {
+		&:hover {
+			background-color: $primary;
 			cursor: pointer;
 		}
 	}
@@ -208,6 +265,25 @@
 	border: none;
 
 	@include noselect;
+}
+
+.like__wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	.comment__hasLikedComment {
+		color: $primary;
+	}
+
+	.comment__hasNotLikedComment {
+		color: $textdark;
+	}
+
+	p {
+		font-size: 1.2rem;
+		margin-right: 10px;
+	}
 }
 
 .isReplying {

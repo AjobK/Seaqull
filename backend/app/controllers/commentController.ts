@@ -15,12 +15,96 @@ class CommentController {
     this.postDAO = new PostDAO()
   }
 
-  public getComments = async (req: Request, res: Response): Promise<Response> => {
+  public getCommentsWithoutCredentials = async (req: Request, res: Response): Promise<Response> => {
     const { path } = req.params
     const foundComments = await this.dao.getComments(await this.postDAO.getPostByPath(path))
 
-    if (path && foundComments) return res.status(200).json(foundComments)
+    if (path && foundComments) return res.status(200).json(await this.getCommentsPayload(foundComments))
     else return res.status(404).json({ message: 'No comments found on that path' })
+  }
+
+  public getComments = async (req: Request | any, res: Response): Promise<Response> => {
+    const { path } = req.params
+    const foundComments = await this.dao.getComments(await this.postDAO.getPostByPath(path))
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+
+    if (path && foundComments) return res.status(200).json(await this.getCommentsPayload(foundComments, profile.id))
+    else return res.status(404).json({ message: 'No comments found on that path' })
+  }
+
+  public pinComment = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const post = await this.postDAO.getPostByPath(await this.dao.getPostPathByCommentId(id))
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+
+    if (!post) {
+      return res.status(404).json({ message: 'Comment or post not found' })
+    }
+
+    if (profile.id === post.profile.id) {
+      await this.dao.pinComment(id)
+
+      return res.status(200).json({ message: 'Succesfully pinned comment' })
+    }
+
+    return res.status(401).json({ message: 'Invalid user' })
+  }
+
+  public unpinComment = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const post = await this.postDAO.getPostByPath(await this.dao.getPostPathByCommentId(id))
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+
+    if (!post) {
+      return res.status(404).json({ message: 'Comment or post not found' })
+    }
+
+    if (profile.id === post.profile.id) {
+      await this.dao.unpinComment(id)
+
+      return res.status(200).json({ message: 'Succesfully unpinned comment' })
+    }
+
+    return res.status(401).json({ message: 'Invalid user' })
+  }
+
+  public createCommentLike = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+    const comment = await this.dao.getComment(id)
+
+    if (!comment) return res.status(404).json({ message: 'Comment was not found and therefore not liked' })
+
+    this.dao.createCommentLike(comment, profile)
+      .then(() => {
+        return res.status(200).json({ message: 'Succesfully added commentLike' })
+      })
+      .catch(() => {
+        return res.status(500).json({ message: 'A serverside error occured' })
+      })
+
+  }
+
+  public deleteCommentLike = async (req: Request | any, res: Response): Promise<Response> => {
+    const { id } = req.params
+
+    const profile = await this.profileDAO.getProfileByUsername(req.decoded.username)
+    const comment = await this.dao.getComment(id)
+
+    if (!comment || !profile) return res.status(404).json({ message: 'Invalid profile or comment id given' })
+
+    const result = await this.dao.deleteCommentLike(comment, profile)
+
+    if (result.affected < 1) {
+      return res.status(404).json(
+        { message: 'No comment found with given comment id and profile, therefore none were deleted' }
+      )
+    }
+
+    return res.status(200).json({ message: 'Succesfully added commentLike' })
   }
 
   public createComment = async (req: Request | any, res: Response): Promise<Response> => {
@@ -41,6 +125,7 @@ class CommentController {
     newComment.parent_comment_id = parent_comment_id
     newComment.created_at = new Date()
     newComment.updated_at = new Date()
+    newComment.is_pinned = false
 
     await this.dao.createComment(newComment)
 
@@ -57,6 +142,25 @@ class CommentController {
     }
 
     return res.status(403).json({ message: 'Unauthorized' })
+  }
+
+  private getCommentsPayload = async (comments: Comment[], profile_id?: number): Promise<any[]> => {
+    const responsePayload = []
+
+    for (const comment of comments) {
+      const commentLikePayload = []
+      const commentLikes = await this.dao.getCommentLikes(comment.id)
+      let profileHasLikedComment = false
+
+      commentLikes.forEach((commentLike) => {
+        if (commentLike.profile.id === profile_id) profileHasLikedComment = true
+        commentLikePayload.push(commentLike)
+      })
+
+      responsePayload.push({ comment, commentLikePayload, profileHasLikedComment })
+    }
+
+    return responsePayload
   }
 }
 
