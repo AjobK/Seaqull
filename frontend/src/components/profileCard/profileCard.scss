@@ -3,7 +3,7 @@
 .wrapper {
 	width: 100%;
 	max-width: $profile-card-width;
-	margin-top: calc(-$profile-card-offset - #{$header-spacing}); // Subtract header-spacing due to padding on section wrapper
+	margin-top: calc(-$profile-card-offset - #{$header-spacing});
 	margin-right: $header-spacing;
 
 	@include mobile-all-portrait {
