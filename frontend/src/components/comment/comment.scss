@@ -208,8 +208,10 @@
 		margin-right: 10px;
 		transition: .2s ease-in-out;
 
-		&:hover {
+	}
 
+	&__pinButtonHover {
+		&:hover {
 			background-color: $primary;
 			cursor: pointer;
 		}

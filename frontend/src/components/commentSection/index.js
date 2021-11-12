@@ -96,13 +96,18 @@ class CommentSection extends Component {
       return comment.parent_comment_id === null
     })
 
-    const userComments = []
+    const pinnedUserComments = []
+    const unpinnedUserComments = []
     const pinnedComments = []
     const unpinnedComments = []
 
     filteredComments.forEach((comment) => {
       if (comment.profile.display_name === this.props.store.profile.display_name) {
-        userComments.push(comment)
+        if (comment.is_pinned) {
+          pinnedUserComments.push(comment)
+        } else {
+          unpinnedUserComments.push(comment)
+        }
       } else if (comment.is_pinned) {
         pinnedComments.push(comment)
       } else {
@@ -111,7 +116,8 @@ class CommentSection extends Component {
     })
 
     const filteredAndSortedComments = [
-      ...this.sortCommentsByDate(userComments),
+      ...this.sortCommentsByDate(pinnedUserComments),
+      ...this.sortCommentsByDate(unpinnedUserComments),
       ...this.sortCommentsByDate(pinnedComments),
       ...this.sortCommentsByDate(unpinnedComments)
     ]
@@ -120,9 +126,13 @@ class CommentSection extends Component {
   }
 
   sortCommentsByDate = (unsortedComments) => (
-    unsortedComments.sort((currentComment, nextComment) => (
-      nextComment.created_at - currentComment.created_at
-    ))
+    unsortedComments.sort((currentComment, nextComment) => {
+      if (currentComment.likes.length === nextComment.likes.length) {
+        return nextComment.created_at - currentComment.created_at
+      }
+
+      return nextComment.likes.length - currentComment.likes.length
+    })
   )
 
   render() {

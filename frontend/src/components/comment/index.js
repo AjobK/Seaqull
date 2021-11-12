@@ -204,7 +204,8 @@ class Comment extends Component {
                       <Icon
                         iconName={ 'Thumbtack' }
                         className={ `
-                              ${styles.comment__pinButtonIcon} 
+                              ${styles.comment__pinButtonIcon}
+                              ${styles.comment__pinButtonHover} 
                               ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
                             ` }
                         onClick={ this.onPinClick }
@@ -214,10 +215,9 @@ class Comment extends Component {
                       <Icon
                         iconName={ 'Thumbtack' }
                         className={ `
-                              ${styles.comment__pinButtonIcon} 
+                              ${styles.comment__pinButtonIcon}
                               ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
                             ` }
-                        onClick={ this.onPinClick }
                       />
                     ) }
                     <Link to={ `/profile/${comment.profile.display_name}` } className={ styles.comment__headerAuthor }>
