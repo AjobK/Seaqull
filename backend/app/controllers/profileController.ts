@@ -14,7 +14,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
-import hCaptchaService from '../utils/hCaptchaService'
+import captchaService from '../utils/captchaService'
 
 const jwt = require('jsonwebtoken')
 
@@ -204,13 +204,13 @@ class ProfileController {
   }
 
   public register = async (req: any, res: Response): Promise<Response> => {
-    const { username, email, password, hCaptcha } = req.body
+    const { username, email, password, captcha } = req.body
 
     const errors = {
       username: [],
       email: [],
       password: [],
-      hCaptcha: [],
+      captcha: [],
     }
 
     const isUsernameNotValid = await this.checkValidUsername(username)
@@ -229,13 +229,13 @@ class ProfileController {
 
     errors.password = passwordStrengthErrors
 
-    const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(hCaptcha)
+    const isCaptchaValid = await captchaService.verifyHCaptcha(captcha)
 
-    if (!isHCaptchaValid) {
-      errors.hCaptcha = ['We could not confirm you are not a robot']
+    if (!isCaptchaValid) {
+      errors.captcha = ['We could not confirm you are not a robot']
     }
 
-    if (isUsernameNotValid || isEmailNotValid || !isHCaptchaValid || passwordStrengthErrors.length > 0) {
+    if (isUsernameNotValid || isEmailNotValid || !isCaptchaValid || passwordStrengthErrors.length > 0) {
       return res.status(401).json({ errors: errors })
     }
 

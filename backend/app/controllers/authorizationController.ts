@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
-import hCaptchaService from '../utils/hCaptchaService'
+import captchaService from '../utils/captchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
 
@@ -53,7 +53,7 @@ class AuthorizationController {
   }
 
   public login = async (req: Request, res: Response): Promise<any> => {
-    const { username, password, hCaptcha } = req.body
+    const { username, password, captcha } = req.body
 
     if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
@@ -67,9 +67,9 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
-      const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(hCaptcha)
+      const isCaptchaValid = await captchaService.verifyHCaptcha(captcha)
 
-      if (!isHCaptchaValid) {
+      if (!isCaptchaValid) {
         return res.status(403).send({
           errors: ['We could not confirm you are not a robot']
         })
