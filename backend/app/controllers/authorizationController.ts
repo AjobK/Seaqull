@@ -53,7 +53,7 @@ class AuthorizationController {
   }
 
   public login = async (req: Request, res: Response): Promise<any> => {
-    const { username, password, recaptcha } = req.body
+    const { username, password, hCaptcha } = req.body
 
     if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
@@ -67,7 +67,7 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
-      const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(recaptcha)
+      const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(hCaptcha)
 
       if (!isHCaptchaValid) {
         return res.status(403).send({

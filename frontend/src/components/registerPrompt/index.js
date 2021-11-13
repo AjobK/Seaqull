@@ -25,7 +25,7 @@ class RegisterPrompt extends Component {
     this.elId = {}
   }
 
-  auth = (recaptchaToken) => {
+  auth = (hCaptchaToken) => {
     this.setState({
       username: 'loading',
       email: 'loading',
@@ -38,7 +38,7 @@ class RegisterPrompt extends Component {
       username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: recaptchaToken,
+      hCaptcha: hCaptchaToken,
     }
 
     Axios.post('/profile/register', payload, { withCredentials: true })
@@ -48,14 +48,14 @@ class RegisterPrompt extends Component {
         this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((res) => {
-        const { username, email, password, recaptcha } = res.response.data.errors
+        const { username, email, password, hCaptcha } = res.response.data.errors
 
         this.setState({
           username: username || [],
           email: email || [],
           password: password || [],
-          generalError: recaptcha || [],
-          recaptchaToken: null,
+          generalError: hCaptcha || [],
+          hCaptchaToken: null,
         })
       })
   }

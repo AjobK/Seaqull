@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import isEmail from 'validator/lib/isEmail'
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
 import * as bcrypt from 'bcrypt'
 import Account from '../entities/account'
 import Profile from '../entities/profile'
@@ -205,13 +204,13 @@ class ProfileController {
   }
 
   public register = async (req: any, res: Response): Promise<Response> => {
-    const { username, email, password, recaptcha } = req.body
+    const { username, email, password, hCaptcha } = req.body
 
     const errors = {
       username: [],
       email: [],
       password: [],
-      recaptcha: [],
+      hCaptcha: [],
     }
 
     const isUsernameNotValid = await this.checkValidUsername(username)
@@ -230,10 +229,10 @@ class ProfileController {
 
     errors.password = passwordStrengthErrors
 
-    const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(recaptcha)
+    const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(hCaptcha)
 
     if (!isHCaptchaValid) {
-      errors.recaptcha = ['We could not confirm you are not a robot']
+      errors.hCaptcha = ['We could not confirm you are not a robot']
     }
 
     if (isUsernameNotValid || isEmailNotValid || !isHCaptchaValid || passwordStrengthErrors.length > 0) {
@@ -395,17 +394,6 @@ class ProfileController {
     if (password.search(/\d/) < 0) errors.push('Atleast one numeric character')
 
     return errors
-  }
-
-  private async checkReCAPTCHA(token: string): Promise<string> {
-    const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
-    const verificationResult = await reCaptcha.verify(token)
-
-    if (!verificationResult.isHuman) {
-      return 'Invalid captcha'
-    }
-
-    return null
   }
 
   private async saveProfile(req: Request): Promise<Account> {

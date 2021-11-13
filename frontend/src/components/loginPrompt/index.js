@@ -26,13 +26,13 @@ class LoginPrompt extends Component {
     this.elId = {}
   }
 
-  auth = (recaptchaToken) => {
+  auth = (hCaptchaToken) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: recaptchaToken
+      hCaptcha: hCaptchaToken
     }
 
     Axios.post('/login', payload, { withCredentials: true })
