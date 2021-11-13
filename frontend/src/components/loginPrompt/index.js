@@ -153,7 +153,6 @@ class LoginPrompt extends Component {
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
               onError={ this.onCaptchaError }
-              onExpire={ this.onCaptchaError }
               ref={ this.captchaRef }
             />
           </form>
