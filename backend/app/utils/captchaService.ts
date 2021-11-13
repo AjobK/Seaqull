@@ -3,7 +3,9 @@ import Axios from 'axios'
 class captchaService {
     public static verifyHCaptcha = async (token: string): Promise<boolean> => {
       const params = new URLSearchParams()
-      params.append('secret', process.env.HCAPTCHA_SECRET_KEY)
+      params.append('secret', process.env.CURRENT_APP_STATE === 'dev'
+        ? process.env.HCAPTCHA_DEV_SECRET_KEY
+        : process.env.HCAPTCHA_PROD_SECRET_KEY)
       params.append('response', token)
 
       const config = {
