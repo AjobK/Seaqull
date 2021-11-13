@@ -92,12 +92,6 @@ class LoginPrompt extends Component {
 
     if (this.state.remainingTime && this.remainingTimeInterval) return
 
-    this.setState({
-      username: 'loading',
-      password: 'loading',
-      loadingTimeout: true,
-    })
-
     this.captchaRef.current.execute()
   }
 
@@ -106,6 +100,12 @@ class LoginPrompt extends Component {
   }
 
   handleVerificationSuccess(token) {
+    this.setState({
+      username: 'loading',
+      password: 'loading',
+      loadingTimeout: true,
+    })
+
     this.auth(token)
   }
 

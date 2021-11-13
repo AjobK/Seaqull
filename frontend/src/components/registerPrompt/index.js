@@ -66,16 +66,16 @@ class RegisterPrompt extends Component {
   onSubmit = (e) => {
     e.preventDefault()
 
+    this.captchaRef.current.execute()
+  }
+
+  handleVerificationSuccess(token) {
     this.setState({
       username: 'loading',
       email: 'loading',
       password: 'loading',
     })
 
-    this.captchaRef.current.execute()
-  }
-
-  handleVerificationSuccess(token) {
     this.auth(token)
   }
 
