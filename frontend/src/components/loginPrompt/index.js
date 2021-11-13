@@ -109,12 +109,8 @@ class LoginPrompt extends Component {
     this.auth(token)
   }
 
-  onExpire = () => {
-    console.log('hCaptcha Token Expired')
-  }
-
-  onError = (err) => {
-    console.log(`hCaptcha Error: ${err}`)
+  onHCaptchaError = () => {
+    this.props.store.notification.setContent(popUpData.messages.captchaError)
   }
 
   render() {
@@ -156,8 +152,8 @@ class LoginPrompt extends Component {
                 : process.env.HCAPTCHA_PROD_SITEKEY }
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
-              onError={ this.onError }
-              onExpire={ this.onExpire }
+              onError={ this.onHCaptchaError }
+              onExpire={ this.onHCaptchaError }
               ref={ this.captchaRef }
             />
           </form>

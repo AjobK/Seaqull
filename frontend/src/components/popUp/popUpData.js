@@ -19,6 +19,10 @@ export const popUpData = {
     'deletePostConfirmation': {
       'title': 'Delete Post',
       'description': 'Are you sure you want to delete this post?'
+    },
+    'captchaError': {
+      'title': 'Captcha error',
+      'description': 'An error occurred while performing the captcha. Please try again.'
     }
   },
   'actions': {
