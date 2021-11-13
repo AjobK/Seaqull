@@ -230,13 +230,13 @@ class ProfileController {
 
     errors.password = passwordStrengthErrors
 
-    const isRecaptchaValid = await hCaptchaService.verifyHCAPTCHA(recaptcha)
+    const isHCaptchaValid = await hCaptchaService.verifyHCAPTCHA(recaptcha)
 
-    if (!isRecaptchaValid) {
+    if (!isHCaptchaValid) {
       errors.recaptcha = ['We could not confirm you are not a robot']
     }
 
-    if (isUsernameNotValid || isEmailNotValid || !isRecaptchaValid || passwordStrengthErrors.length > 0) {
+    if (isUsernameNotValid || isEmailNotValid || !isHCaptchaValid || passwordStrengthErrors.length > 0) {
       return res.status(401).json({ errors: errors })
     }
 

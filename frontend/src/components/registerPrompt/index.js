@@ -1,16 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import styles from './registerPrompt.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, FormInput, Button } from '../'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import RecaptchaUtil from '../../util/recaptchaUtil'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store')
 @observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       username: null,
       email: null,
@@ -18,13 +20,9 @@ class RegisterPrompt extends Component {
       generalError: null
     }
 
-    this.elId = {}
-  }
+    this.captchaRef = createRef()
 
-  componentDidMount() {
-    RecaptchaUtil.loadRecaptchaScript(this.props.store.defaultData.recaptchaSiteKey, () => {
-      console.log('Script loaded!')
-    })
+    this.elId = {}
   }
 
   auth = (recaptchaToken) => {
@@ -75,10 +73,11 @@ class RegisterPrompt extends Component {
       password: 'loading',
     })
 
-    RecaptchaUtil.executeRecaptcha(this.props.store.defaultData.recaptchaSiteKey)
-      .then((token) => {
-        this.auth(token)
-      })
+    this.captchaRef.current.execute()
+  }
+
+  handleVerificationSuccess(token) {
+    this.auth(token)
   }
 
   setElId = (item, id) => {
@@ -89,6 +88,10 @@ class RegisterPrompt extends Component {
     const generalError = this.state.generalError
 
     return generalError?.length > 0 ? generalError : credentialError
+  }
+
+  onCaptchaError = () => {
+    this.props.store.notification.setContent(popUpData.messages.captchaError)
   }
 
   render() {
@@ -127,6 +130,16 @@ class RegisterPrompt extends Component {
             <div to="/" className={ styles.submitWrapper }>
               <Button value={ 'Sign Up' } className={ styles.submit } />
             </div>
+            <HCaptcha
+              sitekey={ process.env.CURRENT_APP_STATE === 'dev'
+                ? process.env.HCAPTCHA_DEV_SITEKEY
+                : process.env.HCAPTCHA_PROD_SITEKEY }
+              size={ 'invisible' }
+              onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
+              onError={ this.onCaptchaError }
+              onExpire={ this.onCaptchaError }
+              ref={ this.captchaRef }
+            />
           </form>
           <div className={ styles.image } />
         </div>

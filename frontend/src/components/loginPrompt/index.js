@@ -109,7 +109,7 @@ class LoginPrompt extends Component {
     this.auth(token)
   }
 
-  onHCaptchaError = () => {
+  onCaptchaError = () => {
     this.props.store.notification.setContent(popUpData.messages.captchaError)
   }
 
@@ -152,8 +152,8 @@ class LoginPrompt extends Component {
                 : process.env.HCAPTCHA_PROD_SITEKEY }
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
-              onError={ this.onHCaptchaError }
-              onExpire={ this.onHCaptchaError }
+              onError={ this.onCaptchaError }
+              onExpire={ this.onCaptchaError }
               ref={ this.captchaRef }
             />
           </form>

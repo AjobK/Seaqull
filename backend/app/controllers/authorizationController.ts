@@ -71,7 +71,7 @@ class AuthorizationController {
 
       if (!isHCaptchaValid) {
         return res.status(403).send({
-          errors: ['We could not verify that you are a human']
+          errors: ['We could not confirm you are not a robot']
         })
       }
 
