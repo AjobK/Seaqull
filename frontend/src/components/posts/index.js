@@ -106,45 +106,38 @@ class Posts extends Component {
   renderNewPosts = (posts) => {
     let postsBlocks = this.state.postsBlocks
 
-    if (postsBlocks.length <= 0) {
+    const postsInLastPostsBlock = this.findPostsInPostsBlock(postsBlocks.at(-1))
+
+    if (postsInLastPostsBlock.length <= 0 || postsInLastPostsBlock.length >= this.MAX_POSTS_IN_BLOCK) {
       return this.renderNewPostsBlock(posts)
     }
 
-    const postElsInLastPostsBlock = this.findPostsListElOfPostsBlock(postsBlocks.at(-1))
-
-    if (postElsInLastPostsBlock.posts.length >= this.MAX_POSTS_IN_BLOCK) {
-      return this.renderNewPostsBlock(posts)
-    }
-
-    this.addPostsToLastPostsBlock(postElsInLastPostsBlock, posts)
+    this.renderNewPostsAtLastPostsBlock(postsInLastPostsBlock, posts)
   }
 
-  addPostsToLastPostsBlock(lastPostsBlock, newPosts) {
-    const postsToAddToLastPostsBlock = newPosts.slice(0, this.MAX_POSTS_IN_BLOCK - lastPostsBlock.posts.length)
-    const filledLastPostsBlockPosts = lastPostsBlock.posts.concat(postsToAddToLastPostsBlock)
-
-    this.state.postsBlocks.pop()
-
-    this.renderNewPostsBlock(filledLastPostsBlockPosts)
-  }
-
-  findPostsListElOfPostsBlock(postsBlock) {
+  findPostsInPostsBlock(postsBlock) {
     let currentElement = postsBlock
-    let postsListElOfPostsBlock
+
+    if (!postsBlock)
+      return []
 
     while (true) {
       if (currentElement.props.children) {
         currentElement = currentElement.props.children
       } else {
-        postsListElOfPostsBlock = currentElement.props.posts
-          ? currentElement.props
-          : null
-
-        break
+        return currentElement.props.posts
+          ? currentElement.props.posts
+          : []
       }
     }
+  }
 
-    return postsListElOfPostsBlock
+  renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
+    const postsToAddToLastPostsBlock = newPosts.slice(0, this.MAX_POSTS_IN_BLOCK - lastPostBlockPosts.length)
+    const filledLastPostsBlockPosts = lastPostBlockPosts.concat(postsToAddToLastPostsBlock)
+
+    this.state.postsBlocks.pop()
+    this.renderNewPostsBlock(filledLastPostsBlockPosts)
   }
 
   renderNewPostsBlock(posts) {
@@ -157,7 +150,7 @@ class Posts extends Component {
     postsBlocks.push(this.createPostsBlock(posts))
 
     this.setState({
-      postsBlocks,
+      postsBlocks
     })
   }
 
