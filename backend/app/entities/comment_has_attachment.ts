@@ -1,8 +1,17 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 import attachment from './attachment'
 import comment from './comment'
 
-@Entity('comment_has_attatchment')
+@Entity('comment_has_attachment')
 export class CommentHasAttachment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number

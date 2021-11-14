@@ -2,26 +2,27 @@ import { Request, Response } from 'express'
 import RoleDAO from '../daos/roleDAO'
 
 class RoleController {
-    private dao: RoleDAO
+  private dao: RoleDAO
 
-    constructor() {
-        this.dao = new RoleDAO()
+  constructor() {
+    this.dao = new RoleDAO()
+  }
+
+  public getRoles = async (req: Request, res: Response): Promise<Response> => {
+    const roles = await this.dao.getRoles()
+
+    if (roles) {
+      return res.status(200).json(roles)
     }
 
-    public getRoles = async (req: Request, res: Response): Promise<Response> => {
-        const roles = await this.dao.getRoles()
+    return res.status(404).json({ message: 'No roles found.' })
+  }
 
-        if(roles) {
-            return res.status(200).json(roles)
-        }
+  public getRole = async (req: any, res: Response): Promise<Response> => {
+    const role = await this.dao.getRoleById(req.decoded.role)
 
-        return res.status(404).json({ 'message': 'No roles found.' })
-    }
-
-    public getRole = async (req: any, res: Response): Promise<Response> => {
-        const role = await this.dao.getRoleById(req.decoded.role)
-        return res.status(200).json(role)
-    }
+    return res.status(200).json(role)
+  }
 }
 
 export default RoleController

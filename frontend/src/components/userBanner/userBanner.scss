@@ -203,7 +203,7 @@
 
 			&Text {
 				vertical-align: middle;
-				
+
 				> span {
 					text-transform: uppercase;
 					font-weight: bold;
@@ -318,17 +318,17 @@
 .role {
 	align-items: center;
 	font-size: 1.2rem;
-	margin-left: $header-spacing / 2;
 	font-weight: normal;
 	color: $primary;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	padding: 0 5px;
+
 	@include text-shadow;
 	@include mobile-all-portrait {
 		white-space: pre-wrap;
 		font-size: 1rem;
-		margin-left: 0;
 	}
 }
 
@@ -369,11 +369,11 @@
 		&Large {
 			font-size: 1.35rem;
 		}
-	
+
 		&Medium {
 			font-size: 1.2rem;
 		}
-	
+
 		&Small {
 			font-size: 1rem;
 		}

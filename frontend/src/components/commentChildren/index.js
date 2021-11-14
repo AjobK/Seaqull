@@ -5,28 +5,22 @@ import styles from './commentChildren.scss'
 import { Comment } from '../'
 
 class CommentChildren extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { data: props.commentChildren }
-    }
+  constructor(props) {
+    super(props)
+    this.state = { data: props.commentChildren }
+  }
 
-    displayChildren = () => {
-        if (this.state.data) {
-            return this.state.data.map((comment) => {
-                return (
-                    <Comment key={ comment.id } comment={ comment } type="reply" />
-                )
-            })
-        }
+  displayChildren = () => {
+    if (this.state.data) {
+      return this.state.data.map((comment) => {
+        return <Comment key={ comment.id } comment={ comment } type="reply" onReplyAdd={ this.props.onReplyAdd } />
+      })
     }
+  }
 
-    render() {
-        return (
-            <div className={ styles.childrenWrapper }>
-                { this.displayChildren() }
-            </div>
-        )
-    }
+  render() {
+    return <div className={ styles.childrenWrapper }>{this.displayChildren()}</div>
+  }
 }
 
 export default CommentChildren

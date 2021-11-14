@@ -1,17 +1,17 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import comment from './comment'
 import { Profile } from './profile'
 
 @Entity('profile_comment_like')
 export class ProfileCommentLike extends BaseEntity {
-    @PrimaryColumn()
-    id: number;
+    @PrimaryGeneratedColumn()
+    id: number
 
-    @ManyToOne(() => Profile, Profile => Profile.id)
-    @JoinColumn({ name: 'Profile', referencedColumnName: 'id' })
-    profile: number
+    @ManyToOne(() => Profile, (Profile) => Profile.id)
+    @JoinColumn({ name: 'profile', referencedColumnName: 'id' })
+    profile: Profile
 
-    @ManyToOne(() => comment, comment => comment.id)
+    @ManyToOne(() => comment, (comment) => comment.id)
     @JoinColumn({ name: 'comment_id', referencedColumnName: 'id' })
     comment: comment
 

@@ -48,13 +48,13 @@
 	}
 
 	&__editor {
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 		border-radius: 22.5px;
 		background-color: white;
 		color: $textdark;
 		padding: 10px 18px;
 		margin-right: 10px;
-		//TODO: find better solution
-		width: 88%;
+		width: 100%;
 
 		@include mobile-all-portrait {
 			width: 100%;

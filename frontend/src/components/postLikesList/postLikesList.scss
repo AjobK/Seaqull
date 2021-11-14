@@ -12,9 +12,9 @@ $likes-list-padding: 20px;
 	top: 0;
 	position: fixed;
 	z-index: 101;
-
+	
 	> * {
-		transition: .2s ease-in-out;
+		transition: .2s;
 	}
 
 	.likesBackground {
@@ -22,7 +22,7 @@ $likes-list-padding: 20px;
 		height: inherit;
 		background-color: black;
 		opacity: 0.5;
-		animation: fade-in-half 0.2s
+		animation: fade-in 0.2s
 	}
 
 	.likesListWrapper {
@@ -102,32 +102,6 @@ $likes-list-padding: 20px;
 								filter: brightness(90%);
 							}
 						}
-
-						.level {
-							border: white 1.8px solid;
-							font-weight: bold;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							position: absolute;
-							bottom: -2px;
-							right: -4px;
-							height: 22px;
-							min-width: 22px;
-							width: auto;
-							text-align: center;
-							background-color: $primary;
-							border-radius: 100%;
-
-							.levelNumber {
-								text-align: center;
-								font-family: $sidefont;
-								color: white;
-								font-size: 0.68em;
-								line-height: 0.8em;
-								margin-bottom: -1px;
-							}
-						}
 					}
 
 					.profileTextWrapper {
@@ -152,7 +126,7 @@ $likes-list-padding: 20px;
 	}
 }
 
-@keyframes fade-in-half {
+@keyframes fade-in {
 	0% {
 		opacity: 0;
 	}

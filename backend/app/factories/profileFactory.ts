@@ -4,20 +4,22 @@ import title from '../entities/title'
 import { Profile } from '../entities/profile'
 import Attachment from '../entities/attachment'
 
-define(Profile, (faker: typeof Faker, settings: { display_name: string, profilePic: Attachment, bannerPic: Attachment }): Profile => {
-    const profileFake = new Profile()
+define(Profile, (
+  faker: typeof Faker,
+  settings: { display_name: string, profilePic: Attachment, bannerPic: Attachment }
+): Profile => {
+  const profileFake = new Profile()
 
-    const createdTitle = factory(title)() as any
-    profileFake.title = createdTitle
+  const createdTitle = factory(title)() as any
+  profileFake.title = createdTitle
 
-    profileFake.avatar_attachment = settings.profilePic
-    profileFake.banner_attachment = settings.bannerPic
-    profileFake.created_at = new Date()
-    profileFake.custom_path = faker.random.uuid()
-    profileFake.display_name = settings.display_name || 'root'
-    profileFake.experience = 0
-    profileFake.rows_scrolled = 0
-    profileFake.description = 'Welcome to my profile!'
+  profileFake.avatar_attachment = settings.profilePic
+  profileFake.banner_attachment = settings.bannerPic
+  profileFake.created_at = new Date()
+  profileFake.custom_path = faker.random.uuid()
+  profileFake.display_name = settings.display_name || 'root'
+  profileFake.rows_scrolled = 0
+  profileFake.description = 'Welcome to my profile!'
 
-    return profileFake
+  return profileFake
 })

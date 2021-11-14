@@ -116,8 +116,7 @@
 	opacity: 0.5;
 	align-items: center;
 	font-size: 1.3em;
-	transition: 0.2s;
-	user-select: none;
+	transition: 0.2s linear;
 
 	&:hover {
 		color: $primary;
@@ -134,4 +133,53 @@
 	width: 0%;
 	background-color: rgba($primary, 0.5);
 	border-radius: 100vh;
+}
+
+@mixin tooltip {
+	padding: 4px 8px;
+}
+
+@mixin backdrop {
+	.backdrop {
+		transition: 0.3s;
+		position: absolute;
+		bottom: 0;
+		height: 100%;
+		width: 100%;
+		opacity: 0;
+		background-color: rgba(0,0,0,0.35);
+
+		&:hover {
+			opacity: 1;
+			cursor: pointer;
+
+			.bannerText {
+				visibility: visible;
+			}
+		}
+
+		.icon {
+			margin-left: 10px
+		}
+
+		.bannerText {
+			visibility: hidden;
+			color: white;
+			vertical-align: middle;
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+			padding: $header-spacing;
+			justify-content: center;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: flex;
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 1rem;
+			margin-right: 10px;
+			letter-spacing: 1px;
+		}
+	}
 }

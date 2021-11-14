@@ -2,211 +2,321 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard, Section } from '../../layouts'
-import { PostBanner, PostContent, Button, Icon, PostLike, CommentSection } from '../../components'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import styles from './post.scss'
 import { convertFromRaw } from 'draft-js'
+import ReactTooltip from 'react-tooltip'
+import { popUpData } from '../../components/popUp/popUpData'
+import URLUtil from '../../util/urlUtil'
+import styles from './post.scss'
+import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews, Loader } from '../../components'
 
-@inject('store') @observer
+@inject('store')
+@observer
 class Post extends App {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        this.post = {
-            title: '',
-            description: '',
-            content: '',
-            path: '',
-            likes: {
-                amount: 0,
-                userLiked: false
-            }
-        }
+    this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
 
-        this.state = {
-            isOwner: true,
-            isEditing: true,
-            author: {
-                name: 'Emily Washington',                                   // Display name
-                bannerURL: '/src/static/dummy/user/banner.jpg',     // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',    // Avatar URL from ID
-                path: '/profile',                                   // Custom path
-                level: 0,                                           // Level of user
-                title: 'Software Engineer'                          // Currently selected title by ID
-            },
-            loaded: false,
-            post: this.post
+    this.postPath = URLUtil.getLastPathArgument()
+
+    this.addedThumbnail = null
+
+    this.state = {
+      isOwner: true,
+      isEditing: true,
+      author: {
+        name: '',
+        bannerURL: '',
+        avatarURL: '',
+        path: '/profile/',
+        title: ''
+      },
+      loaded: false,
+      post: {
+        title: '',
+        description: '',
+        content: '',
+        path: '',
+        likes: {
+          amount: 0,
+          userLiked: false
         }
+      }
     }
+  }
 
-    loadArticle = () => {
-        let path = window.location.pathname.split('/').filter(i => i != '').pop()
+  componentDidMount = () => {
+    if (!this.props.new) return this.loadArticle()
+  }
 
-        Axios.get(`${this.props.store.defaultData.backendUrl}/post/${path}`, {withCredentials: true})
-        .then(res => {
-            this.post = {
-                title: res.data.post.title,
-                content: res.data.post.content,
-                description: res.data.post.description,
-                path: path,
-                likes: {
-                    amount: res.data.likes.amount,
-                    userLiked: res.data.likes.userLiked
-                }
-            }
+  loadArticle = () => {
+    const { defaultData } = this.props.store
 
-            try {
-                this.post = {
-                    title: convertFromRaw(JSON.parse(res.data.post.title)),
-                    content: convertFromRaw(JSON.parse(res.data.post.content)),
-                    description: '',
-                    path: path,
-                    likes: {
-                        amount: res.data.likes.amount,
-                        userLiked: res.data.likes.userLiked
-                    }
-                }
-            } catch (e) {
-                this.post = {
-                    title: res.data.post.title,
-                    content: res.data.post.content,
-                    description: res.data.post.description,
-                    path: path,
-                    likes: {
-                        amount: res.data.likes.amount,
-                        userLiked: res.data.likes.userLiked
-                    }
-                }
-            }
+    Axios.get(`${defaultData.backendUrl}/post/${this.postPath}`, { withCredentials: true })
+      .then((res) => {
+        const { post, likes, isOwner } = res.data
+        let newPost
 
-            let author = {
-                name: res.data.post.profile.display_name,               // Display name
-                bannerURL: '/src/static/dummy/user/banner.jpg',         // Banner URL from ID
-                avatarURL: '/src/static/dummy/user/profile.jpg',        // Avatar URL from ID
-                path: `/profile/${res.data.post.profile.display_name}`, // Custom path
-                level: 1,                                               // Level of user
-                title: 'Default Title'                                  // Currently selected title by ID
-            }
+        newPost = {
+          ...post,
+          path: this.postPath,
+          likes: {
+            amount: likes.amount,
+            userLiked: likes.userLiked
+          }
+        }
 
-            this.setState({
-                post: this.post,
-                loaded: true,
-                isOwner: res.data.isOwner,
-                isEditing: true,
-                author: author
-            })
+        try {
+          newPost = {
+            ...newPost,
+            title: convertFromRaw(JSON.parse(post.title)),
+            content: convertFromRaw(JSON.parse(post.content)),
+          }
+        } catch (e) {
+
+        }
+
+        let author = {
+          name: post.profile.display_name,
+          bannerURL: '/src/static/dummy/user/banner.jpg',
+          avatarURL: post.profile.avatar_attachment
+            ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
+            : '/src/static/dummy/user/profile.jpg',
+          path: `/profile/${post.profile.display_name}`,
+          title: post.profile.title || 'No title'
+        }
+
+        this.post = newPost
+
+        this.setState({
+          post: newPost,
+          loaded: true,
+          isOwner: isOwner,
+          isEditing: true,
+          author: author
+        }, this.addViewToDB)
+      })
+      .catch((error) => {
+        let { name, message } = error.toJSON()
+
+        if (error?.response?.data?.message) {
+          message = error.response.data.message
+        } else if (error?.response?.statusText) {
+          message = error.response.statusText
+        }
+
+        this.props.history.push({
+          pathname: '/error',
+          state: {
+            title: error.response ? error.response.status : name,
+            sub: message
+          }
         })
+      })
+  }
+
+  toggleLike = () => {
+    // Toggles liked state for all like components
+    let newState = this.state
+
+    // Increment/decrement likes locally
+    let newLikesAmount
+
+    if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
+      newLikesAmount = this.state.post.likes.amount - 1
+    } else {
+      newLikesAmount = this.state.post.likes.amount + 1
     }
 
-    toggleLike = () => {
-        // Toggles liked state for all like components
-        let newState = this.state
+    newState.post.likes.amount = newLikesAmount
+    this.state.post.likes.userLiked = !this.state.post.likes.userLiked
 
-        // Increment/decrement likes locally
-        let newLikesAmount
-        if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
-            newLikesAmount = this.state.post.likes.amount - 1
-        } else {
-            newLikesAmount = this.state.post.likes.amount + 1
+    this.setState(newState)
+  }
+
+  save = (path = null) => {
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
+    if (!path) {
+      this.createPost()
+    } else if (typeof path == 'string') {
+      this.updatePost()
+    }
+  }
+
+  createPost = () => {
+    const fd = new FormData()
+
+    fd.append('file', this.addedThumbnail)
+    fd.append('title', JSON.stringify(this.state.post.title))
+    fd.append('description', JSON.stringify('None'))
+    fd.append('content', JSON.stringify(this.state.post.content))
+
+    Axios.post('/post', fd, {
+      withCredentials: true, 'content-type': 'multipart/form-data'
+    }).then((res) => {
+      this.props.history.push(`/posts/${res.data.path}`)
+    })
+  }
+
+  updatePost = () => {
+    const payload = {
+      title: this.state.post.title,
+      description: 'None',
+      content: this.state.post.content,
+    }
+
+    Axios.put(`/post/${this.state.post.path}`, payload, { withCredentials: true }).then(() => {
+      const { notification } = this.props.store
+
+      notification.setContent(popUpData.messages.updatePostNotification)
+    })
+  }
+
+  onThumbnailAdded = (thumbnail) => {
+    this.addedThumbnail = thumbnail
+  }
+
+  onDeletePostClicked = () => {
+    const { notification } = this.props.store
+
+    notification.setContent(popUpData.messages.deletePostConfirmation)
+
+    notification.setActions([
+      {
+        ...popUpData.actions.cancel,
+        action: () => { notification.close() }
+      },
+      {
+        ...popUpData.actions.confirmWithText,
+        action: () => {
+          this.deletePost()
+          notification.close()
         }
-        newState.post.likes.amount = newLikesAmount
-        this.state.post.likes.userLiked = !this.state.post.likes.userLiked
+      }
+    ])
+  }
 
-        this.setState(newState)
+  deletePost = () => {
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
+    Axios.put(`/post/archive/${this.postPath}`, {}, { withCredentials: true }).then((_res) => {
+      this.props.history.push('/')
+    }).catch((_err) => { })
+  }
+
+  addViewToDB = () => {
+    if (!this.state.isOwner) {
+      Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
+
+      const payload = {
+        path: this.postPath
+      }
+
+      Axios.post('api/post/view', payload)
+    }
+  }
+
+  render = () => {
+    // Values change based on initial response from server
+    const { profile } = this.props.store
+    const { isEditing, isOwner, post, loaded, author } = this.state
+
+    const ownerAuthor = {
+      name: profile.display_name,
+      avatarURL: profile.avatarURL,
+      title: profile.title
     }
 
-    componentDidMount() {
-        if (!this.props.new) this.loadArticle()
-    }
+    if (!loaded && !this.props.new)
+      return <Loader />
 
-    sendToDB(path=null) {
-        Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    return (
+      <Standard className={ [styles.stdBgWhite] }>
+        <PostBanner
+          author={ this.props.new ? ownerAuthor : author }
+          post={ this.state.post }
+          isOwner={ isOwner }
+          isNew={ this.props.new }
+          onThumbnailAdded={ this.onThumbnailAdded }
+        />
+        <Section noTitle>
+          { !this.props.new &&
+          <div className={ styles.likePostWrapper }>
+            <PostViews />
+            <PostLike
+              likesAmount={ this.state.post.likes.amount || 0 }
+              liked={ this.state.post.likes.userLiked }
+              toggleLike={ this.toggleLike }
+              isOwner={ isOwner }
+            />
+          </div>
+          }
+          <div className={ styles.renderWrapper }>
+            <PostContent
+              type={ 'title' }
+              // Saves post title with draftJS content
+              callBackSaveData={ (data) => {
+                post.title = data
 
-        const payload = {
-            title: this.state.post.title,
-            description: 'None',
-            content: this.state.post.content
-        }
+                this.setState({ post: post })
+              } }
+              readOnly={ !isOwner || !isEditing }
+              value={ post.title } // Initial no content, should be prefilled by API
+            />
+            <PostContent
+              type={ 'content' }
+              // Saves post content with draftJS content
+              callBackSaveData={ (data) => {
+                post.content = data
 
-        if (!path) {
-            Axios.post('/post', payload, { withCredentials: true })
-            .then(res => {
-                this.props.history.push('/')
-            })
-        } else if (typeof path == 'string') {
-            Axios.put(`/post/${path}`, payload, { withCredentials: true })
-            .then(res => {
-                this.props.history.push('/profile')
-            })
-        }
-    }
-
-    render() {
-        // Values change based on initial response from server
-        const { isEditing, isOwner, post, loaded, author } = this.state
-
-        if (!loaded && !this.props.new) return (<h1>Not loaded</h1>)
-
-        return (
-            <Standard className={[styles.stdBgWhite]}>
-                <PostBanner author={author} isOwner={isOwner} />
-                <Section noTitle>
-                { !this.props.new &&
-                    <div className={styles.likePostWrapper}>
-                        <PostLike
-                            likesAmount={this.state.post.likes.amount || 0}
-                            liked={this.state.post.likes.userLiked}
-                            toggleLike={this.toggleLike}
-                            isOwner={isOwner}
-                        />
-                    </div>
-                }
-                <div className={styles.renderWrapper}>
-                <PostContent
-                    type={'title'}
-                    // Saves post title with draftJS content
-                    callBackSaveData={(data) => {
-                        this.post.title = data
-
-                        this.setState({ post: this.post })
-                    }}
-                    readOnly={!isOwner || !isEditing}
-                    value={post.title} // Initial no content, should be prefilled by API
+                this.setState({ post: post })
+              } }
+              readOnly={ !isOwner || !isEditing }
+              value={ post.content } // Initial no content, should be prefilled by API
+            />
+          </div>
+          <div className={ styles.postActionButtons }>
+            <div className={ styles.postActionButtonsLeft }>
+              {
+                isOwner && this.props.new &&
+                <Button
+                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  value={ 'Create' }
+                  onClick={ () => this.save(post.path) }
                 />
-                <PostContent
-                    type={'content'}
-                    // Saves post content with draftJS content
-                    callBackSaveData={(data) => {
-                        this.post.content = data
-
-                        this.setState({ post: this.post })
-                    }}
-                    readOnly={!isOwner || !isEditing}
-                    value={post.content} // Initial no content, should be prefilled by API
+              }
+              {
+                isOwner && isEditing && !this.props.new &&
+                <Button
+                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  value={ 'Update' }
+                  onClick={ () => this.save(post.path) }
                 />
-                </div>
-                {
-                    isOwner && this.props.new &&
-                    <Button
-                        className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
-                        value={'Create'}
-                        onClick={() => this.sendToDB()}
-                    />
-                }
-                {
-                    isOwner && isEditing && !this.props.new &&
-                    <Button
-                        className={[styles.publishButton, /* isPublished ? styles.published : */''].join(' ')}
-                        value={'Update'}
-                        onClick={() => this.sendToDB(this.post.path)}
-                    />
-                }
-                </Section>
-                <CommentSection/>
-            </Standard>
-        )
-    }
+              }
+            </div>
+            <div className={ styles.postActionButtonsRight }>
+              { !this.props.new && (this.canBanUser || isOwner) &&
+              <span
+                className={ styles.delete }
+                data-tip data-for={ 'postDeleteTooltip' }
+                onClick={ this.onDeletePostClicked }
+              >
+                <Icon iconName={ 'Trash' } />
+              </span>
+              }
+            </div>
+            <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
+              Delete
+            </ReactTooltip>
+          </div>
+        </Section>
+        { !this.props.new && <CommentSection isPostOwner={ this.state.isOwner } /> }
+      </Standard>
+    )
+  }
 }
 
 export default withRouter(Post)

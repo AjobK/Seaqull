@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Provider } from 'mobx-react'
 import { initStore } from '../stores'
 
-require('dotenv').config();
+require('dotenv').config()
 
 class App extends Component {
   componentDidMount() {
@@ -11,7 +11,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={this.store}>
+      <Provider store={ this.store }>
         {this.props.children}
       </Provider>
     )

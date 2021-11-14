@@ -7,8 +7,8 @@ const NavigationStore = types
         ref: '/',
         icon: 'Home'
       },
-      personal: {
-        ref: '/',
+      profile: {
+        ref: '/profile',
         icon: 'User'
       },
       logout: {
@@ -23,7 +23,7 @@ const NavigationStore = types
       },
       'log in': {
         ref: '/login',
-        icon: 'SingInAlt'
+        icon: 'SignInAlt'
       },
       'sign up': {
         ref: '/signup',
@@ -31,7 +31,7 @@ const NavigationStore = types
       }
     })
   })
-  .actions(self => ({
+  .actions((self) => ({
     reset() {
       self.menuItemsLoggedIn = [{}],
       self.menuItemsLoggedOut = [{}]

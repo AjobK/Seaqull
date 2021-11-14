@@ -5,9 +5,9 @@ import RolePermission from '../entities/rolePermission'
 import Permission from '../entities/permission'
 
 define(RolePermission, (faker: typeof Faker, settings: { role: Role, permission: Permission }):RolePermission => {
-    const rolePermissionFake = new RolePermission()
-    rolePermissionFake.role = settings.role
-    rolePermissionFake.permission = settings.permission
+  const rolePermissionFake = new RolePermission()
+  rolePermissionFake.role = settings.role
+  rolePermissionFake.permission = settings.permission
 
-    return rolePermissionFake
+  return rolePermissionFake
 })

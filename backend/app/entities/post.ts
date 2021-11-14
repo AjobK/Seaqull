@@ -1,41 +1,52 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 import Profile from './profile'
+import Attachment from './attachment'
 
 @Entity('post')
 export class Post extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @ManyToOne(() => Profile, profile => profile.id)
-    @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
-    profile: Profile
+  @ManyToOne(() => Profile, (profile) => profile.id)
+  @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
+  profile: Profile
 
-    @Column()
-    title: string
+  @Column()
+  title: string
 
-    @Column({ unique: true })
-    path: string
+  @Column({ unique: true })
+  path: string
 
-    @Column()
-    content: string
+  @Column()
+  content: string
 
-    @Column()
-    description: string
+  @Column()
+  description: string
 
-    @CreateDateColumn()
-    created_at: Date
+  @ManyToOne(() => Attachment, (attachment) => attachment.id)
+  @JoinColumn({ name: 'thumbnail_attachment_id', referencedColumnName: 'id' })
+  thumbnail_attachment: Attachment
 
-    @UpdateDateColumn({ nullable: true })
-    updated_at: Date
+  @CreateDateColumn()
+  created_at: Date
 
-    @Column({ nullable: true })
-    archived_at: Date
+  @UpdateDateColumn({ nullable: true })
+  updated_at: Date
 
-    @Column({ nullable: true, type: 'bigint' })
-    hidden_at: number
+  @Column({ nullable: true, type: 'bigint' })
+  archived_at: number
 
-    @Column()
-    published_at: Date
+  @Column()
+  published_at: Date
 }
 
 export default Post

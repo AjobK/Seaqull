@@ -18,7 +18,13 @@ class Icon extends Component {
 
     library.add(icon)
 
-    return <FontAwesomeIcon className={classNames.join(' ')} icon={icon} onClick={onClick} onMouseDown={onMouseDown} onMouseUp={onMouseUp} style={style} />
+    return <FontAwesomeIcon
+      className={ classNames.join(' ') }
+      icon={ icon } onClick={ onClick }
+      onMouseDown={ onMouseDown }
+      onMouseUp={ onMouseUp }
+      style={ style }
+    />
   }
 }
 

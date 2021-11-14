@@ -5,59 +5,67 @@ import { Button, Icon } from '../index'
 
 @inject('store') @observer
 class PopUp extends Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        this.setScrollDisabled(true)
-    }
+    this.setScrollDisabled(true)
+  }
 
-    setScrollDisabled = (scrollDisabled) => {
-        document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
-    }
+  componentWillUnmount() {
+    this.setScrollDisabled(false)
+  }
 
-    closePopUp = () => {
-        this.setScrollDisabled(false)
+  setScrollDisabled = (scrollDisabled) => {
+    document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
+  }
 
-        this.props.content.close()
-    }
+  render() {
+    const { title, description, titleIcon, actions, canCloseWithClick } = this.props.content
 
-    render() {
-        const { title, description, actions } = this.props.content
-
-        return (
-            <div className={ styles.popUpWrapper }>
-                <div className={ styles.popUpBackground } onClick={ this.closePopUp } />
-                <div className={ styles.popUp }>
-                    <div className={ styles.popUpHeader }>
-                        { title && (
-                            <h2 className={ styles.popUpHeaderTitle }>
-                                { title }
-                            </h2>
-                        )}
-                        <button className={ styles.popUpHeaderClose } onClick={ this.closePopUp }>
-                            <Icon iconName={ 'Times' } />
-                        </button>
-                    </div>
-                    { description && (
-                        <p className={ styles.popUpDescription }>
-                            { description }
-                        </p>
-                    )}
-                    { actions && (
-                        <ul className={ styles.popUpActions }>
-                            { actions.map((action) => {
-                                return (
-                                    <li className={ styles.popUpActionsAction } key={ Math.random() }>
-                                        <Button icon={ action.icon } value={ action.title } inverted={ !action.primary } onClick={ action.action } />
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    )}
-                </div>
-            </div>
-        )
-    }
+    return (
+      <div className={ styles.popUpWrapper }>
+        <div className={ styles.popUpBackground }
+          onClick={ canCloseWithClick ? this.props.content.close : undefined } />
+        <div className={ styles.popUp }>
+          <div className={ styles.popUpHeader }>
+            { title && (
+              <h2 className={ styles.popUpHeaderTitle }>
+                { titleIcon && (
+                  <Icon className={ styles.popUpHeaderTitleIcon } iconName={ titleIcon } />
+                )}
+                { title }
+              </h2>
+            )}
+            { canCloseWithClick &&
+              <button className={ styles.popUpHeaderClose } onClick={ this.props.content.close }>
+                <Icon iconName={ 'Times' } />
+              </button>
+            }
+          </div>
+          { description && (
+            <p className={ styles.popUpDescription }>
+              { description }
+            </p>
+          )}
+          { actions && (
+            <ul className={ styles.popUpActions }>
+              { actions.map((action) => {
+                return (
+                  <li className={ styles.popUpActionsAction } key={ Math.random() }>
+                    <Button
+                      icon={ action.icon }
+                      value={ action.title }
+                      inverted={ !action.primary }
+                      onClick={ action.action } />
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
+      </div>
+    )
+  }
 }
 
 export default PopUp

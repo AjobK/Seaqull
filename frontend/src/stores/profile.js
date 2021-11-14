@@ -5,25 +5,30 @@ const ProfileStore = types
   .model('ProfileStore', {
     role: types.optional(types.string, 'user'),
     loggedIn: types.optional(types.boolean, false),
-    display_name: types.optional(types.string, 'Emily Washington')
-
+    display_name: types.optional(types.string, 'NONE'),
+    title: types.optional(types.string, 'NONE'),
+    avatarURL: types.optional(types.string, 'NONE')
   })
   .actions((self) => ({
     loginVerify() {
       Axios.defaults.baseURL = 'http://localhost:8000'
-  
-      Axios.get(`/api/login-verify`, { withCredentials: true })
-      .then((res) => {
-        self.setLoggedIn(true)
-        self.setRole(res.data.profile.role)
-        self.setDisplayName(res.data.profile.display_name)
-      })
-      .catch((e) => {
-        self.setLoggedIn(false)
-      })
+
+      Axios.get('/api/login-verify', { withCredentials: true })
+        .then((res) => {
+          this.setProfileData(res.data)
+        })
+        .catch(() => {
+          self.setLoggedIn(false)
+        })
     },
-    setRole(role) {
-      self.role = role
+    setProfileData(data) {
+      const { profile } = data
+
+      self.setLoggedIn(true)
+      self.setDisplayName(profile.display_name)
+      self.setAvatarURL(`http://localhost:8000/${profile.avatar_attachment.path}`)
+      self.setTitle(profile.title.name)
+      self.setRole(profile.role)
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn
@@ -31,13 +36,22 @@ const ProfileStore = types
     setDisplayName(display_name) {
       self.display_name = display_name
     },
+    setAvatarURL(avatarURL) {
+      self.avatarURL = avatarURL
+    },
+    setTitle(title) {
+      self.title = title
+    },
+    setRole(role) {
+      self.role = role
+    },
     logOut() {
       Axios.defaults.baseURL = 'http://localhost:8000'
 
       Axios.get('/api/logout', { withCredentials: true })
-      .then(() => {
-        self.setLoggedIn(false)
-      })
+        .then(() => {
+          self.setLoggedIn(false)
+        })
     }
   }))
 
