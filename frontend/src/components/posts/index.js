@@ -104,11 +104,55 @@ class Posts extends Component {
   }
 
   renderNewPosts = (posts) => {
+    let postsBlocks = this.state.postsBlocks
+
+    if (postsBlocks.length <= 0) {
+      return this.renderNewPostsBlock(posts)
+    }
+
+    const postElsInLastPostsBlock = this.findPostsListElOfPostsBlock(postsBlocks.at(-1))
+
+    if (postElsInLastPostsBlock.posts.length >= this.MAX_POSTS_IN_BLOCK) {
+      return this.renderNewPostsBlock(posts)
+    }
+
+    this.addPostsToLastPostsBlock(postElsInLastPostsBlock, posts)
+  }
+
+  addPostsToLastPostsBlock(lastPostsBlock, newPosts) {
+    const postsToAddToLastPostsBlock = newPosts.slice(0, this.MAX_POSTS_IN_BLOCK - lastPostsBlock.posts.length)
+    const filledLastPostsBlockPosts = lastPostsBlock.posts.concat(postsToAddToLastPostsBlock)
+
+    this.state.postsBlocks.pop()
+
+    this.renderNewPostsBlock(filledLastPostsBlockPosts)
+  }
+
+  findPostsListElOfPostsBlock(postsBlock) {
+    let currentElement = postsBlock
+    let postsListElOfPostsBlock
+
+    while (true) {
+      if (currentElement.props.children) {
+        currentElement = currentElement.props.children
+      } else {
+        postsListElOfPostsBlock = currentElement.props.posts
+          ? currentElement.props
+          : null
+
+        break
+      }
+    }
+
+    return postsListElOfPostsBlock
+  }
+
+  renderNewPostsBlock(posts) {
     let singleLi = document.createElement('li')
 
     singleLi.classList.add(styles.post)
 
-    let postsBlocks = this.state.postsBlocks
+    const postsBlocks = this.state.postsBlocks
 
     postsBlocks.push(this.createPostsBlock(posts))
 
