@@ -19,9 +19,11 @@ export class AuthorizationService {
   }
 
   public async loginVerify(token: string): Promise<Profile> {
-    const decodedUsername = this.jwtService.verify(token).username
+    const decodedUsername = this.jwtService.verify(token)
 
-    const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedUsername)
+    const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedUsername.user_name)
+
+    console.log(account)
 
     const profile = account.profile
 
@@ -48,11 +50,8 @@ export class AuthorizationService {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     }
-    try {
-      await this.attemptLogin(account, password)
-    } catch (err) {
-      throw err
-    }
+
+    await this.attemptLogin(account, password)
 
     const ban = await this.banService.checkIfUserIsBanned(account)
 

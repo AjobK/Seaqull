@@ -12,7 +12,7 @@ import { AuthorizationService } from '../services/authorization.service'
 import { Request, Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
 import { LoginDTO } from '../dtos/login.dto'
-import { Profile } from "../entities/profile.entity";
+import { Profile } from '../entities/profile.entity'
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -21,7 +21,7 @@ export class AuthorizationController {
 
   @Get('/login-verify')
   public async loginVerify(@Req() req: Request): Promise<Profile> {
-    if (!req.cookies?.token) throw new UnauthorizedException({ loggedIn: false })
+    if (!req.cookies?.token) throw new UnauthorizedException({ loggedIn: false });
 
     try {
       const profile = await this.authorizationService.loginVerify(req.cookies.token)

@@ -1,12 +1,26 @@
 import { EntityRepository, Repository } from 'typeorm'
 import { Account } from '../entities/account.entity'
-import { Role } from '../entities/role.entity'
 
 @EntityRepository(Account)
 export class AccountRepository extends Repository<Account> {
 
   public async getAccountByUsername(username: string): Promise<Account> {
-    const account = await this.findOne({ user_name: username })
+    const account = await this.createQueryBuilder('account')
+      .leftJoinAndSelect('account.profile', 'profile')
+      .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
+      .leftJoinAndSelect('profile.title', 'title')
+      .where('account.user_name = :user_name', { user_name: username })
+      .getOne()
+
+    return account
+  }
+
+  public async getAccountProfileAndRoleByUsername(username: string): Promise<Account> {
+    const account = await this.createQueryBuilder('account')
+      .leftJoinAndSelect('account.profile', 'profile')
+      .leftJoinAndSelect('account.role', 'role')
+      .where('account.user_name = :user_name', { user_name: username })
+      .getOne()
 
     return account
   }
@@ -19,17 +33,6 @@ export class AccountRepository extends Repository<Account> {
       .getRawOne()
 
     return role.role_id
-  }
-
-  public async getAccountProfileAndRoleByUsername(username: string): Promise<Account> {
-    const account = await this.createQueryBuilder('account')
-      .leftJoinAndSelect('account.role', 'role')
-      .leftJoinAndSelect('account.profile', 'profile')
-      .select(['account.role'])
-      .where('account.user_name = :user_name', { user_name: username })
-      .getRawOne()
-
-    return account
   }
 
   public async lockAccount(account: Account): Promise<number> {
