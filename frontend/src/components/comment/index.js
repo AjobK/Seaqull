@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 import { Editor, EditorState, convertFromRaw } from 'draft-js'
 import { CommentForm, CommentChildren, Icon, Dialog } from '../'
 
-import TimeUtil from '../../util/timeUtil'
-import ColorUtil from '../../util/colorUtil'
+import { TimeUtil, ColorUtil } from '../../util/'
 import axios from 'axios'
 
 @inject('store')
@@ -15,6 +14,9 @@ class Comment extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isPinned: props.comment.is_pinned,
+      likes: props.comment.likes,
+      isPostOwner: props.isPostOwner,
       editorState:
         props.comment.content != null
           ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.comment.content)))
@@ -90,6 +92,90 @@ class Comment extends Component {
     this.setState({ isDeleting: false })
   }
 
+  onLikeClick = () => {
+    const url = `http://localhost:8000/api/comment/likes/${this.props.comment.id}/`
+    this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
+  }
+
+  onLikeComment = (url) => {
+    axios.post(url, undefined, { withCredentials: true })
+      .then(() => {
+        this.setState({
+          likes: {
+            commentLikes: this.state.likes.commentLikes,
+            profileHasLiked: true,
+            length: this.state.likes.length + 1
+          }
+        })
+      })
+
+  }
+
+  onUnlikeComment = (url) => {
+    axios.delete(url, { withCredentials: true })
+      .then(() => {
+        this.setState({
+          likes: {
+            commentLikes: this.state.likes.commentLikes,
+            profileHasLiked: false,
+            length: this.state.likes.length - 1
+          }
+        })
+      })
+  }
+
+  onPinClick = () => {
+    const url = `http://localhost:8000/api/comment/${this.props.comment.id}/${this.state.isPinned ? 'un' : ''}pin`
+
+    axios.patch(url, null, { withCredentials: true })
+      .then(() => {
+        this.setState({
+          isPinned: !this.state.isPinned
+        })
+      })
+  }
+
+  displayLikeButton = () => {
+    return (
+        <>
+          <div className={ styles.like__wrapper }>
+            <Icon
+              iconName={ 'Heart' }
+              className={ `
+                ${styles.comment__likeButtonIcon}
+                ${
+                    this.state.likes.profileHasLiked ?
+                      styles.comment__hasLikedComment :
+                      styles.comment__hasNotLikedComment
+                }
+              ` }
+              onClick={ this.onLikeClick }
+            />
+            <p>{ this.state.likes.length }</p>
+          </div>
+          <span className={ styles.seperator }></span>
+        </>
+    )
+  }
+
+  displayTrashButton = () => {
+    const { comment } = this.props
+    const { profile } = this.props.store
+
+    if (comment.profile.display_name === profile.display_name) {
+      return (
+          <>
+            <Icon
+              iconName={ 'Trash' }
+              className={ styles.comment__deleteButtonIcon }
+              onClick={ this.onDeleteClick }
+            />
+            { !this.isReply && <span className={ styles.seperator }></span> }
+          </>
+      )
+    }
+  }
+
   displayReplyButton = () => {
     if (!this.isReply) {
       return (
@@ -114,6 +200,26 @@ class Comment extends Component {
               <div className={ styles.comment_content }>
                 <div className={ styles.comment__header }>
                   <div className={ styles.comment__headerAuthor }>
+                    { profile.loggedIn && this.state.isPostOwner && (
+                      <Icon
+                        iconName={ 'Thumbtack' }
+                        className={ `
+                              ${styles.comment__pinButtonIcon}
+                              ${styles.comment__pinButtonHover} 
+                              ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                            ` }
+                        onClick={ this.onPinClick }
+                      />
+                    ) }
+                    { this.state.isPinned && (!this.state.isPostOwner || !profile.loggedIn) && (
+                      <Icon
+                        iconName={ 'Thumbtack' }
+                        className={ `
+                              ${styles.comment__pinButtonIcon}
+                              ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                            ` }
+                      />
+                    ) }
                     <Link to={ `/profile/${comment.profile.display_name}` } className={ styles.comment__headerAuthor }>
                       {comment.profile.display_name}
                     </Link>
@@ -139,23 +245,17 @@ class Comment extends Component {
                     <span className={ styles.seperator }></span>
                   </>
                 )}
-                {profile.loggedIn && comment.profile.display_name === profile.display_name && (
-                  <>
-                    <Icon
-                      iconName={ 'Trash' }
-                      className={ styles.comment__deleteButtonIcon }
-                      onClick={ this.onDeleteClick }
-                    />
-                    {!this.isReply && <span className={ styles.seperator }></span>}
-                  </>
-                )}
-                {profile.loggedIn && this.displayReplyButton()}
+                { profile.loggedIn && this.displayLikeButton() }
+                { profile.loggedIn && this.displayTrashButton() }
+                { profile.loggedIn && this.displayReplyButton() }
               </div>
             </div>
           </div>
-          {profile.loggedIn && this.displayCommentForm()}
-          {showReplies && <CommentChildren commentChildren={ comment.children } />}
-          {this.state.isDeleting && (
+          { profile.loggedIn && this.displayCommentForm() }
+          { showReplies &&
+            <CommentChildren commentChildren={ comment.children } onReplyAdd={ this.props.onReplyAdd } />
+          }
+          { this.state.isDeleting && (
             <Dialog
               header="Deleting comment"
               body="Are you sure you want to delete this comment?"

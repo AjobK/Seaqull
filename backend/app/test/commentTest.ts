@@ -66,7 +66,7 @@ describe('Comment section', () => {
                       content: 'this is a comment on a comment',
                     })
                     .end((err, res) => {
-                      comment = res.body[0]
+                      comment = res.body[0].comment
                       done()
                     })
                 })

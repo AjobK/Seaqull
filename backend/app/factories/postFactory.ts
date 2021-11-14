@@ -2,8 +2,9 @@ import { define } from 'typeorm-seeding'
 import { Post } from '../entities/post'
 import * as Faker from 'faker'
 import Profile from '../entities/profile'
+import Attachment from '../entities/attachment'
 
-define(Post, (faker: typeof Faker, settings: { profile: Profile }): Post => {
+define(Post, (faker: typeof Faker, settings: { profile: Profile, thumbnailPic: Attachment }): Post => {
   const postFake = new Post()
 
   postFake.profile = settings.profile
@@ -11,6 +12,7 @@ define(Post, (faker: typeof Faker, settings: { profile: Profile }): Post => {
   postFake.description = faker.lorem.sentence(~~(Math.random() * 7) + 3)
   postFake.title = faker.lorem.sentence(~~(Math.random() * 4) + 2)
   postFake.path = faker.random.uuid()
+  postFake.thumbnail_attachment = settings.thumbnailPic
 
   const today = new Date()
 

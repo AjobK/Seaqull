@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 
 import { CommentEditor } from '../'
-import URLUtil from '../../util/urlUtil'
+import { URLUtil } from '../../util/'
 
 class CommentForm extends Component {
   constructor(props) {
