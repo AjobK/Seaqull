@@ -133,11 +133,19 @@ class Posts extends Component {
   }
 
   renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
-    const postsToAddToLastPostsBlock = newPosts.slice(0, this.MAX_POSTS_IN_BLOCK - lastPostBlockPosts.length)
+    const postsAmountToAddToLastPostsBlock = this.MAX_POSTS_IN_BLOCK - lastPostBlockPosts.length
+
+    const postsToAddToLastPostsBlock = newPosts.slice(0, postsAmountToAddToLastPostsBlock)
+    const remainingPosts = newPosts.slice(postsAmountToAddToLastPostsBlock)
+
     const filledLastPostsBlockPosts = lastPostBlockPosts.concat(postsToAddToLastPostsBlock)
 
     this.state.postsBlocks.pop()
     this.renderNewPostsBlock(filledLastPostsBlockPosts)
+
+    if (remainingPosts.length > 0) {
+      this.renderNewPostsBlock(remainingPosts)
+    }
   }
 
   renderNewPostsBlock(posts) {
