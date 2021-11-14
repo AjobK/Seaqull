@@ -46,7 +46,7 @@ class Posts extends Component {
         }
 
         this.setCurrentPage(this.state.page + 1)
-		this.renderNewPosts(json.posts ? json.posts : [])
+        this.renderNewPosts(json.posts ? json.posts : [])
 
         if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
           this.setEndReached(true)
@@ -74,10 +74,10 @@ class Posts extends Component {
   }
 
   setCurrentPage = (page) => {
-	this.setState({
-		...this.state,
-		page
-	})
+    this.setState({
+      ...this.state,
+      page
+    })
   }
 
   fetchMorePosts = () => {
