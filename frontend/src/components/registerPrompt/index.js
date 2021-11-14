@@ -48,7 +48,7 @@ class RegisterPrompt extends Component {
         this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((res) => {
-        const { username, email, password, captcha } = res.response.data.errors
+        const { username, email, password, captcha } = res.response?.data?.errors
 
         this.setState({
           username: username || [],

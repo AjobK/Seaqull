@@ -216,23 +216,23 @@ class ProfileController {
     const isUsernameNotValid = await this.checkValidUsername(username)
 
     if (isUsernameNotValid) {
-      errors.username = [isUsernameNotValid]
+      errors.username.push(isUsernameNotValid)
     }
 
     const isEmailNotValid = await this.checkValidEmail(email)
 
     if (isEmailNotValid) {
-      errors.email = [isEmailNotValid]
+      errors.email.push(isEmailNotValid)
     }
 
     const passwordStrengthErrors = this.getPasswordStrengthErrors(password)
 
-    errors.password = passwordStrengthErrors
+    errors.password.push(passwordStrengthErrors)
 
     const isCaptchaValid = await captchaService.verifyHCaptcha(captcha)
 
     if (!isCaptchaValid) {
-      errors.captcha = ['We could not confirm you are not a robot']
+      errors.captcha.push('We could not confirm you are not a robot')
     }
 
     if (isUsernameNotValid || isEmailNotValid || !isCaptchaValid || passwordStrengthErrors.length > 0) {

@@ -4,7 +4,7 @@ const DefaultDataStore = types
   .model('DefaultDataStore', {
     projectName: types.optional(types.string, 'Seaqull'),
     backendUrl: types.optional(types.string, 'http://localhost:8000/api'),
-    backendUrlBase: types.optional(types.string, 'http://localhost:8000'),
+    backendUrlBase: types.optional(types.string, 'http://localhost:8000')
   })
   .actions((self) => ({
     reset() {
