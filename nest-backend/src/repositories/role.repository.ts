@@ -9,4 +9,10 @@ export class RoleRepository extends Repository<Role> {
 
     return roles
   }
+
+  public async getRoleById(id: number): Promise<Role> {
+    const role = this.findOne(id)
+
+    return role
+  }
 }

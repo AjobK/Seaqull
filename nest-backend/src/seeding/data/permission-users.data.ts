@@ -1,7 +1,0 @@
-export const permissionsUsers = [
-  'REPORT_USERS',
-  'REQUEST_MODERATORS',
-  'OPEN_TICKETS',
-  'REQUEST_BAN_APPEALS',
-  'REQUEST_CONTENT_BLOCK_APPEALS',
-]

@@ -1,34 +1,31 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { BanRepository } from '../repositories/ban.repository'
 import { Account } from '../entities/account.entity'
+import { BanUserDTO } from '../dtos/ban-user.dto'
+import { AccountRepository } from '../repositories/account.repository'
 
 @Injectable()
 export class BanService {
   constructor(
-    @InjectRepository(BanRepository) private readonly banRepository: BanRepository
+    @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
+    @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository
   ) {
   }
 
-  async checkIfUserIsBanned(account: Account): Promise<string> {
-    const ban = await this.banRepository.getBanByUser(account)
+  public async banUser(banUserDTO: BanUserDTO, account: Account, remoteAddress): Promise<void> {
+    const { username, days, reason } = banUserDTO
 
-    if (!ban) return null
+    const user = await this.accountRepository.getAccountByUsername(username)
+    const admin = await this.accountRepository.getAccountByUsername(account.user_name)
 
-    const bannedToDate = ban.banned_to.getTime()
+    if (!user) throw new BadRequestException({ error: ['User not found'] })
+    if (!admin) throw new BadRequestException({ error: ['Admin not found'] })
 
-    if (bannedToDate > Date.now()) {
-      const bannedDateobject = new Date(bannedToDate)
-      const date =
-        bannedDateobject.getDate() + ' ' +
-        bannedDateobject.toLocaleString('default', { month: 'long' }) + ' ' +
-        bannedDateobject.getFullYear() + ' ' +
-        (bannedDateobject.getHours() > 9 ? '' : '0') + bannedDateobject.getHours() + ':' +
-        (bannedDateobject.getMinutes() > 9 ? '' : '0') + bannedDateobject.getMinutes()
+    const existingBan = await this.banRepository.checkIfUserIsBanned(user)
 
-      return `Account banned until ${date}`
-    }
+    if (existingBan) throw new BadRequestException({ error: ['The user is already banned'] })
 
-    return null
+    await this.banRepository.banUser(user, admin, reason, remoteAddress, days)
   }
 }

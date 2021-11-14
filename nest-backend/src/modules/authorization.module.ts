@@ -10,16 +10,16 @@ import { JwtStrategy } from '../services/jwt.strategy'
 import { ProfileRepository } from '../repositories/profile.repository'
 import { TitleRepository } from '../repositories/title.repository'
 import { AttachmentRepository } from '../repositories/attachment.repository'
-import { BanModule } from './ban.module'
+import { BanRepository } from '../repositories/ban.repository'
 
 @Module({
   imports: [
-    BanModule,
     ConfigModule,
     TypeOrmModule.forFeature([
       AccountRepository,
       ProfileRepository,
       TitleRepository,
+      BanRepository,
       AttachmentRepository
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -36,6 +36,6 @@ import { BanModule } from './ban.module'
   ],
   controllers: [AuthorizationController],
   providers: [AuthorizationService, JwtStrategy],
-  exports: [JwtStrategy, PassportModule]
+  exports: [JwtStrategy, PassportModule, JwtModule]
 })
 export class AuthorizationModule {}

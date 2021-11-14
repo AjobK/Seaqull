@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common'
+import {ForbiddenException, forwardRef, Inject, Injectable} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AccountRepository } from '../repositories/account.repository'
@@ -8,12 +8,13 @@ import * as bcrypt from 'bcrypt'
 import { BanService } from './ban.service'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { SuccessfulLoginDTO } from '../dtos/successful-login.dto'
+import {BanRepository} from "../repositories/ban.repository";
 
 @Injectable()
 export class AuthorizationService {
   constructor(
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
-    private readonly banService: BanService,
+    @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
     private readonly jwtService: JwtService
   ) {
   }
@@ -22,8 +23,6 @@ export class AuthorizationService {
     const decodedUsername = this.jwtService.verify(token)
 
     const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedUsername.user_name)
-
-    console.log(account)
 
     const profile = account.profile
 
@@ -34,8 +33,6 @@ export class AuthorizationService {
 
   public async getAccountByUsername(username: string): Promise<Account> {
     const account = await this.accountRepository.getAccountByUsername(username)
-
-    if (!account) throw new ForbiddenException({ errors: ['Incorrect username or password'] })
 
     return account
   }
@@ -53,7 +50,7 @@ export class AuthorizationService {
 
     await this.attemptLogin(account, password)
 
-    const ban = await this.banService.checkIfUserIsBanned(account)
+    const ban = await this.banRepository.checkIfUserIsBanned(account)
 
     if (ban) throw new ForbiddenException(ban)
 
