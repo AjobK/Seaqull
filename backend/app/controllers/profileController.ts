@@ -47,6 +47,12 @@ class ProfileController {
     this.banService = new BanService()
   }
 
+  public updateSettings = async (req: Request, res: Response): Promise<Response> => {
+    console.log('update')
+
+    return res.status(200).json({ 'message': 'updated' })
+  }
+
   public getFollowers = async (req: Request, res: Response): Promise<Response> => {
     const { token } = req.cookies
     let decodedToken: any

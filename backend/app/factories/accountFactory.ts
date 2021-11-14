@@ -4,6 +4,7 @@ import role from '../entities/role'
 import Profile from '../entities/profile'
 import * as Faker from 'faker'
 import Attachment from '../entities/attachment'
+import AccountSettings from '../entities/accountSettings'
 
 define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attachment, bannerPic: Attachment }) => {
   const acc = new Account()
@@ -14,6 +15,10 @@ define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attach
     profilePic: settings.profilePic,
     bannerPic: settings.bannerPic
   }) as any
+  const createSettings = factory(AccountSettings)() as any
+
+  const set = new AccountSettings()
+  set.active = true
 
   acc.profile = createdUser
   acc.role = createdRole
@@ -23,6 +28,7 @@ define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attach
   acc.login_attempts_counts = 0
   acc.locked_to = null
   acc.password = '$2b$10$Ex8Tdpd079JyRvIDhVB1s.OvlKco1T2WKCRoBYJst81KDNuT8VBAS'
+  acc.settings = createSettings
 
   const today = new Date()
   acc.email_verified_at = today
