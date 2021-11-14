@@ -33,7 +33,7 @@ class CommentController {
     if (!post || !profile)
       return res
         .status(422)
-        .json({ message: 'Invalid post or profile given. Likely an attempt to comment on "new-post" page.' })
+        .json({ message: 'Invalid post or profile given. Likely an attempt to comment on "new-post" page' })
 
     newComment.profile = profile
     newComment.post = post
