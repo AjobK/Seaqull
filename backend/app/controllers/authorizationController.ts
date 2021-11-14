@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
-import captchaService from '../utils/captchaService'
+import CaptchaService from '../utils/captchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
 
