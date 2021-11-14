@@ -101,13 +101,13 @@ describe('Profile page', () => {
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
-        })
 
-      agentUser
-        .get('/profile/User')
-        .end((err, res) => {
-          assert.equal(res.body.profile.description, 'update user')
-          done()
+          agentUser
+            .get('/profile/User')
+            .end((err, res) => {
+              assert.equal(res.body.profile.description, 'update user')
+              done()
+            })
         })
     })
 
