@@ -24,27 +24,27 @@ class PostRoutes implements RouterBase {
   public initRoutes(): void {
     this.router.get(this.post, this.postService.getPosts)
     this.router.get(this.post + '/:path', this.postService.getPostByPath)
-    this.router.put(this.post + '/:path', auth, this.postService.updatePost)
+    this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
+    this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
+    this.router.get(this.post + '/owned-by/:username', this.postService.getOwnedPosts)
+    this.router.get(this.post + '/thumbnail/default', this.postService.getPostDefaultThumbnailURL)
+    this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
+
+    this.router.post(this.post, auth, this.postService.createPost)
+    this.router.post(this.post + '/view', this.postService.addViewToPost)
+    this.router.post(this.post + '/like/:path', auth, this.postService.likePost)
     this.router.post(this.post, auth, this.upload.single('file'), this.postService.createPost)
 
-    this.router.get(this.post + '/owned-by/:username', this.postService.getOwnedPosts)
-    this.router.get(this.post + '/like/:path', this.postService.getPostLikes)
-    this.router.get(this.post + '/liked-by/recent/:username', this.postService.getRecentUserLikes)
-    this.router.post(this.post + '/view', this.postService.addViewToPost)
-    this.router.post(this.post, auth, this.postService.createPost)
-    this.router.post(this.post + '/like/:path', auth, this.postService.likePost)
+    this.router.put(this.post + '/:path', auth, this.postService.updatePost)
     this.router.put(this.post + '/:path', auth, this.postService.updatePost)
     this.router.put(this.post + '/archive/:path',
       auth, hasPostPermission([this.POST_OWNER, this.ROLE_PERMISSIONS]),
       this.postService.archivePost
     )
-    this.router.post(this.post + '/view', this.postService.addViewToPost)
-    this.router.get(this.post + '/view/:path', this.postService.getPostViewCount)
     this.router.put(this.post + '/thumbnail/:path',
       auth, hasPostPermission([this.POST_OWNER]), this.upload.single('file'),
       this.postService.updatePostThumbnail
     )
-    this.router.get(this.post + '/thumbnail/default', this.postService.getPostDefaultThumbnailURL)
   }
 }
 

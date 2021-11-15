@@ -1,13 +1,16 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common'
+import { Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
 import { PostService } from '../services/post.service'
+import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get()
-  public getPosts(): any {
+  public async getPosts(@Query('page') skipSize: string): Promise<PostsResponsePayloadDTO> {
+    const posts = await this.postService.getPosts(skipSize)
 
+    return posts
   }
 
   @Get('/:path')
