@@ -3,7 +3,7 @@ import { BanService } from '../services/ban.service'
 import { BanUserDTO } from '../dtos/ban-user.dto'
 import { hasPermission } from '../guards/roles.guard'
 import { AuthGuard } from '@nestjs/passport'
-import { DecodedJwtPayload } from '../decorators/jwt.decorator'
+import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 
 @Controller('ban')
@@ -15,7 +15,7 @@ export class BanController {
   @UseGuards(hasPermission('BAN_USERS'))
   public async longBanUser(
     @Body() banUserDTO: BanUserDTO,
-    @DecodedJwtPayload() user: Account,
+    @AuthorizedUser() user: Account,
     @Ip() remoteAddress: string
   ): Promise<void> {
     if (banUserDTO.days > 30) {
@@ -29,7 +29,7 @@ export class BanController {
   @UseGuards(hasPermission('SHORT_BAN_USERS'))
   public async shortBanUser(
     @Body() banUserDTO: BanUserDTO,
-    @DecodedJwtPayload() user: Account,
+    @AuthorizedUser() user: Account,
     @Ip() remoteAddress: string
   ): Promise<void> {
     await this.banService.banUser(banUserDTO, user, remoteAddress)

@@ -3,7 +3,7 @@ import { CommentService } from '../services/comment.service'
 import { Comment } from '../entities/comment.entity'
 import {AuthGuard} from "@nestjs/passport";
 import {CommentDTO} from "../dtos/comment.dto";
-import {DecodedJwtPayload} from "../decorators/jwt.decorator";
+import {AuthorizedUser} from "../decorators/jwt.decorator";
 import {JwtPayload} from "../interfaces/jwt-payload.interface";
 import {Account} from "../entities/account.entity";
 
@@ -22,13 +22,13 @@ export class CommentController {
 
   @UseGuards(AuthGuard())
   @Post()
-  public async createComment(@Body() commentDTO: CommentDTO, @DecodedJwtPayload() user: Account): Promise<void> {
+  public async createComment(@Body() commentDTO: CommentDTO, @AuthorizedUser() user: Account): Promise<void> {
     await this.commentService.createComment(commentDTO, user.profile)
   }
 
   @UseGuards(AuthGuard())
   @Delete('/:id')
-  public async deleteComment(@Param('id') comment_id: number, @DecodedJwtPayload() user: Account): Promise<void> {
+  public async deleteComment(@Param('id') comment_id: number, @AuthorizedUser() user: Account): Promise<void> {
     await this.commentService.deleteComment(comment_id, user.profile)
   }
 }
