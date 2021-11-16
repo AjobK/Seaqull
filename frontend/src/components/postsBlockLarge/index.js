@@ -26,7 +26,10 @@ class PostsBlockLarge extends Component {
             data-tip
             data-for={ 'largeBookmarkTooltip' }
           >
-            <Icon iconName={ 'Bookmark' } />
+            <Icon
+              className={ styles.largeThumbnailBookmarkIcon }
+              iconName={ 'Bookmark' }
+            />
           </span>
           <ReactTooltip
             id={ 'largeBookmarkTooltip' }

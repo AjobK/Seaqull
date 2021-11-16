@@ -34,10 +34,10 @@ class BanService {
     async banUser(user: Account, admin: Account, reason: string, adress: string, banTime: number): Promise<Ban> {
       const ban = new Ban()
       ban.user = user
-      ban.staff= admin
+      ban.staff = admin
       ban.reason = reason
       ban.banned_at = new Date()
-      ban.banned_to = new Date(new Date().setDate(ban.banned_at.getDate()+banTime))
+      ban.banned_to = new Date(new Date().setDate(ban.banned_at.getDate() + banTime))
       ban.ip_ban = adress
 
       return await this.banDAO.saveBan(ban)
