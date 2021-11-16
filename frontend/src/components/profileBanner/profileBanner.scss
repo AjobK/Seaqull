@@ -34,7 +34,6 @@
 		width: 100%;
 		height: 100%;
 		opacity: 0.5;
-		z-index: 0;
 		background-size: cover;
 		background-position: center;
 		-webkit-backdrop-filter: blur(7px);
@@ -70,6 +69,7 @@
 			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 			padding: $header-spacing;
 			transition: 0.2s;
+			pointer-events: none;
 
 			@include mobile-all {
 				padding: $header-spacing;
@@ -97,8 +97,6 @@
 			cursor: pointer;
 			width: inherit;
 			height: inherit;
-			position: absolute;
-			z-index: 1;
 			opacity: 0;
 		}
 
