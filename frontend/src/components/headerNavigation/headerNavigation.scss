@@ -62,11 +62,11 @@
 			min-width: 100%;
 			list-style-type: none;
 			border-radius: 0 0 3px 3px;
-			opacity: 1;
 			transition: 0.2s;
+			opacity: 0;
 
 			&.open {
-				opacity: 0;
+				opacity: 1;
 				pointer-events: none;
 			}
 
