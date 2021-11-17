@@ -18,8 +18,7 @@
 		
 
 		> :last-child {
-			margin-left: $header-spacing * 0.75;
-			background-color: orange;
+			margin-left: $header-spacing * 2;
 		}
 	}
 
@@ -60,7 +59,7 @@
 			position: absolute;
 			top: $header-height - $header-spacing;
 			right: 0;
-			width: 100%;
+			min-width: 100%;
 			list-style-type: none;
 			border-radius: 0 0 3px 3px;
 			opacity: 1;

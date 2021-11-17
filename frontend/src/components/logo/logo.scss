@@ -4,11 +4,10 @@
 	display: flex;
 	align-items: center;
 	margin-right: auto;
-	fill: orange !important;
 
 	&Image {
-		width: $header-height * 0.6;
-		height: $header-height * 0.6;
+		width: $header-height / 2;
+		height: $header-height / 2;
 	}
 
 	&Text {		

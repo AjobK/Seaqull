@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Header } from '../../layouts'
 import { NavigationMobile } from '../../components'
 import { observer, inject } from 'mobx-react'
 import styles from './standard.scss'
@@ -19,7 +18,6 @@ class Standard extends Component {
 
     return (
       <section className={ [styles.wrapper, ...(className ? className : [''])].join(' ') }>
-        <Header />
         <aside className={ styles.higherOrder }>
           <NavigationMobile />
         </aside>
