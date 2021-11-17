@@ -97,10 +97,11 @@
 			border-radius: 0 0 3px 3px;
 			transition: 0.2s;
 			opacity: 0;
+			pointer-events: none;
 
 			&.open {
 				opacity: 1;
-				pointer-events: none;
+				pointer-events: initial;
 			}
 
 			> li {
