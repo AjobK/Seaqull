@@ -1,6 +1,10 @@
 @import '../../styles/index.scss';
 
 .menu {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
 	position: relative;
 
 	@include mobile-sm {
@@ -30,6 +34,35 @@
 		&:hover {
 			transition: 0.2s;
 			color: rgba(0,0,0,1);
+		}
+	}
+
+	> .goBack {
+		display: flex;
+		align-items: center;
+		color: rgba($secondary, 0.5);
+
+		> p {
+			margin-left: $header-spacing * 0.5;
+			position: relative;
+
+			> span {
+				position: absolute;
+				transition: 0.2s;
+				left: 0;
+				bottom: -2px;
+				height: 2px;
+				width: 0;
+				background-color: rgba($secondary, 0.25);
+			}
+		}
+
+		> .goBackIcon {
+			font-size: 0.8em;
+		}
+
+		&:hover > p > span {
+			width: 100%;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
-import { Hamburger, HeaderNavigation, Logo } from '../../components'
+import { Hamburger, HeaderNavigation } from '../../components'
 
 @inject('store') @observer
 class Header extends Component {
@@ -17,7 +17,8 @@ class Header extends Component {
     let headerContent = (
       <section className={ styles.headerContent }>
         <Hamburger onClick={ this.hamburgerClick.bind(this) } active={ ui.subNavOpen } className={ styles.hamburger } />
-        <Logo onlyIcon />
+        {/* TODO: Add logo back in middle of nav */}
+        {/* <Logo onlyIcon className /> */}
         <HeaderNavigation />
       </section>
     )
