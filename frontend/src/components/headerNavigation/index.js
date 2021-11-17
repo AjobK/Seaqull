@@ -26,42 +26,40 @@ class HeaderNavigation extends Component {
 
     return (
       <nav className={ styles.menu }>
+        <Link to='/' className={ styles.goBack }>
+          <Icon iconName='ChevronLeft' className={ styles.goBackIcon } />
+          <p>
+            Back to home
+            <span /> {/* Underline */}
+          </p>
+        </Link>
         { profile.loggedIn ? ( // Logged in content
-          <>
-            <Link to='/' className={ styles.goBack }>
-              <Icon iconName='ChevronLeft' className={ styles.goBackIcon } />
-              <p>
-                Back to home
-                <span /> {/* Underline */}
-              </p>
-            </Link>
-            <ul className={ styles.menuUl }>
-              <li className={ styles.avatarWrapper }>
-                <Link to={ `/profile/${ profile.display_name }` } className={ styles.menuItem }>
-                  <img
-                    src={ profile.avatarURL }
-                    className={ styles.avatarWrapperImage }
-                    style={ {
-                      backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.display_name),
-                    } }
-                  />
-                </Link>
-                <div className={ styles.avatarWrapperDropdown }>
-                  <Icon
-                    iconName='ChevronDown'
-                    className={ styles.avatarWrapperDropdownIcon }
-                    onClick={ this.toggleDropdown }
-                  />
-                  <ul className={ dropdownOpen ? styles.open : '' }>
-                    <li onClick={ profile.logOut } className={ styles.menuItem }>Logout</li>
-                  </ul>
-                </div>
-              </li>
-              <Link to='/new-post'>
-                <Button value='Create Post' />
+          <ul className={ styles.menuUl }>
+            <li className={ styles.avatarWrapper }>
+              <Link to={ `/profile/${ profile.display_name }` } className={ styles.menuItem }>
+                <img
+                  src={ profile.avatarURL }
+                  className={ styles.avatarWrapperImage }
+                  style={ {
+                    backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.display_name),
+                  } }
+                />
               </Link>
-            </ul>
-          </>
+              <div className={ styles.avatarWrapperDropdown }>
+                <Icon
+                  iconName='ChevronDown'
+                  className={ styles.avatarWrapperDropdownIcon }
+                  onClick={ this.toggleDropdown }
+                />
+                <ul className={ dropdownOpen ? styles.open : '' }>
+                  <li onClick={ profile.logOut } className={ styles.menuItem }>Logout</li>
+                </ul>
+              </div>
+            </li>
+            <Link to='/new-post'>
+              <Button value='Create Post' />
+            </Link>
+          </ul>
         ) : ( // Logged out content
           <ul className={ styles.menuUl }>
             <Link to='/login' className={ styles.menuItem }>
