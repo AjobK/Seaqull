@@ -3,11 +3,15 @@ import { PostController } from '../controllers/post.controller'
 import { PostService } from '../services/post.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
+import { AuthorizationModule } from './authorization.module'
+import { PostLikeRepository } from '../repositories/post_like.repository'
 
 @Module({
   imports: [
+    AuthorizationModule,
     TypeOrmModule.forFeature([
-      PostRepository
+      PostRepository,
+      PostLikeRepository
     ])
   ],
   controllers: [PostController],

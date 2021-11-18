@@ -1,6 +1,10 @@
-import { Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
+import {Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards} from '@nestjs/common'
 import { PostService } from '../services/post.service'
 import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
+import { AuthorizedUser } from '../decorators/jwt.decorator'
+import { Account } from '../entities/account.entity'
+import { AuthGuard } from '@nestjs/passport'
+import {CreatePostDTO} from "../dtos/create-post.dto";
 
 @Controller('post')
 export class PostController {
@@ -14,8 +18,23 @@ export class PostController {
   }
 
   @Get('/:path')
-  public getPostByPath(): any {
+  public async getPostByPath(
+    @Param('path') path
+  ): Promise<any> {
+    const postDetailedPayload = await this.postService.getPostByPath(path, undefined)
 
+    return postDetailedPayload
+  }
+
+  @Get('/:path/auth')
+  @UseGuards(AuthGuard())
+  public async getPostByPathWhileAuthorized(
+    @Param('path') path,
+    @AuthorizedUser() account: Account
+  ): Promise<any> {
+    const postDetailedPayload = await this.postService.getPostByPath(path, account)
+
+    return postDetailedPayload
   }
 
   @Get('/like/:path')
@@ -39,7 +58,7 @@ export class PostController {
   }
 
   @Post()
-  public createPost(): any {
+  public createPost(@Body() createPostDTO: CreatePostDTO): any {
 
   }
 

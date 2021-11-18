@@ -13,7 +13,13 @@ export class PostRepository extends Repository<Post> {
   }
 
   public async getPostByPath(postPath: string): Promise<Post> {
-    const post = this.findOne({ path: postPath })
+    const post = await this.findOne({ path: postPath })
+
+    return post
+  }
+
+  public async getPostByPathWithAttachment(postPath: string): Promise<Post> {
+    const post = await this.findOne({ where: { path: postPath }, relations: ['thumbnail_attachment'] })
 
     return post
   }

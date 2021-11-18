@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, ForbiddenException, mixin, UnauthorizedE
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { RolePermissionRepository } from '../repositories/role_permission.repository'
-import has = Reflect.has;
 
 export const hasPermission = (permission: string): any => {
   class RoleGuard implements CanActivate {
