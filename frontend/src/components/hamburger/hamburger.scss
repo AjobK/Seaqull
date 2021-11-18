@@ -1,19 +1,23 @@
 @import '../../styles/index.scss';
 
+$hamburger-height: 19px;
+$hamburger-width: 22px;
+
 .hamburger {
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	height: $hamburger-height;
+	flex-direction: column;
+	justify-content: space-between;
 
 	&Line{
-		width: 30px;
-		height: 5px;
-		background-color: $dark;
+		width: $hamburger-width;
+		height: 3px;
+		background-color: $secondary;
 		display: block;
 		border-radius: 2px;
 		@include transition-ease(0.5s);
-
-		&:nth-child(2)  {
-			margin: 6px auto 6px 0;
-		}
 	}
 
 	&:hover{
@@ -25,10 +29,10 @@
 	}
 
 	&.hActive &Line:nth-child(1){
-		transform: translateY(11px) rotate(45deg);
+		transform: translateY(8px) rotate(45deg);
 	}
 
 	&.hActive &Line:nth-child(3){
-		transform: translateY(-11px) rotate(-45deg);
+		transform: translateY(-8px) rotate(-45deg);
 	}
 }

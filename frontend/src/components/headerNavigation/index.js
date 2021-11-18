@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '../../components'
 import { ColorUtil } from '../../util/'
 import Icon from '../icon'
+import Logo from '../logo'
 
 @inject('store') @observer
 class HeaderNavigation extends Component {
@@ -26,13 +27,16 @@ class HeaderNavigation extends Component {
 
     return (
       <nav className={ styles.menu }>
-        <Link to='/' className={ styles.goBack }>
-          <Icon iconName='ChevronLeft' className={ styles.goBackIcon } />
-          <p>
-            Back to home
-            <span /> {/* Underline */}
-          </p>
-        </Link>
+        <div className={ styles.goBackWrapper }>
+          <Link to='/' className={ styles.goBack }>
+            <Icon iconName='ChevronLeft' className={ styles.goBackIcon } />
+            <p>
+              <span>back to </span>home
+              <span className={ styles.underline } /> {/* Underline */}
+            </p>
+          </Link>
+        </div>
+        <Logo onlyIcon className={ [styles.logo] } />
         { profile.loggedIn ? ( // Logged in content
           <ul className={ styles.menuUl }>
             <li className={ styles.avatarWrapper }>
@@ -56,8 +60,9 @@ class HeaderNavigation extends Component {
                 </ul>
               </div>
             </li>
-            <Link to='/new-post'>
+            <Link to='/new-post' className={ styles.newPost }>
               <Button value='Create Post' />
+              <Icon iconName="Plus" />
             </Link>
           </ul>
         ) : ( // Logged out content

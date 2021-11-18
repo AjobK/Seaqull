@@ -6,23 +6,21 @@
 	align-items: center;
 	justify-content: space-between;
 	position: relative;
-
-	@include mobile-sm {
-		display: none;
-	}
 	
 	&Ul {
+		width: 100%;
+		max-width: $header-side-element-width;
 		display: flex;
 		list-style-type: none;
 		font-size: $nr-sm-fontsize;
 		text-transform: capitalize;
 		align-items: center;
+		justify-content: flex-end;
 		letter-spacing: 1px;
 		font-weight: bold;
-		
 
-		> :last-child {
-			margin-left: $header-spacing * 2;
+		> :not(:last-child) {
+			margin-right: $header-spacing;
 		}
 	}
 
@@ -37,23 +35,40 @@
 		}
 	}
 
-	> .goBack {
+	.goBack {
 		display: flex;
 		align-items: center;
 		color: rgba($secondary, 0.75);
 
+		&Wrapper {
+			width: 100%;
+			max-width: $header-side-element-width;
+		}
+
 		> p {
-			margin-left: $header-spacing * 0.5;
+			margin-left: $header-spacing;
 			position: relative;
 
+			&::first-letter {
+				text-transform: capitalize;
+			}
+
 			> span {
-				position: absolute;
-				transition: 0.2s;
-				left: 0;
-				bottom: -2px;
-				height: 2px;
-				width: 0;
-				background-color: rgba($secondary, 0.375);
+				&:first-child {
+					@include mobile-sm {
+						display: none;
+					}
+				}
+
+				&.underline {
+					position: absolute;
+					transition: 0.2s;
+					left: 0;
+					bottom: 0;
+					height: 1px;
+					width: 0;
+					background-color: rgba($secondary, 0.5);
+				}
 			}
 		}
 
@@ -76,10 +91,20 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 100%;
+		
+		@include mobile-all-portrait {
+			position: absolute;
+			left: 50%;
+			top: -($header-spacing * 0.45);
+		}
 	}
 
 	&Dropdown {
 		transition: 0.2s;
+
+		@include mobile-all-portrait {
+			display: none;
+		}
 
 		&Icon {
 			cursor: pointer;
@@ -113,6 +138,32 @@
 					border-bottom: 1px solid rgba(0,0,0,0.1);
 				}
 			}
+		}
+	}
+}
+
+.logo {
+	@include mobile-all-portrait {
+		display: none !important;
+	}
+}
+
+.newPost {
+	> :last-child {
+		display: none;
+		color: $secondary;
+		margin-top: 2px;
+		font-size: 1.2em;
+		line-height: 1.2em;
+	}
+
+	@include mobile-all-portrait {
+		> :first-child {
+			display: none;
+		}
+
+		> :last-child {
+			display: initial;
 		}
 	}
 }

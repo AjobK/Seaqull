@@ -56,14 +56,10 @@
 }
 
 .hamburger {
-	margin-right: $header-spacing;
+	margin-left: $header-spacing;
 	display: none;
 
 	@include mobile-all-portrait {
-		display: block;
-	}
-	@include mobile-sm {
-		position: absolute;
-		left: $header-spacing;
+		display: flex;
 	}
 }
