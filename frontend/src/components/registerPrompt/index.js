@@ -84,7 +84,7 @@ class RegisterPrompt extends Component {
   }
 
   getError = (credentialError) => {
-    const generalError = this.state.generalError
+    const { generalError } = this.state
 
     return generalError?.length > 0 ? generalError : credentialError
   }
