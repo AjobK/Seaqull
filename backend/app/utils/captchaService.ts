@@ -20,4 +20,4 @@ class CaptchaService {
     }
 }
 
-export default captchaService
+export default CaptchaService
