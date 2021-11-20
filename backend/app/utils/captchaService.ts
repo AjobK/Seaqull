@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-class captchaService {
+class CaptchaService {
     public static verifyHCaptcha = async (token: string): Promise<boolean> => {
       const params = new URLSearchParams()
       params.append('secret', process.env.CURRENT_APP_STATE === 'dev'
