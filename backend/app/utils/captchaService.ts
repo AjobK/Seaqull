@@ -16,7 +16,7 @@ class captchaService {
 
       const hCaptcha = await Axios.post('https://hcaptcha.com/siteverify/', params, config)
 
-      return hCaptcha.data['success']
+      return hCaptcha.data.success
     }
 }
 
