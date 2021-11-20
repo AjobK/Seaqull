@@ -130,7 +130,7 @@ class RegisterPrompt extends Component {
               <Button value={ 'Sign Up' } className={ styles.submit } />
             </div>
             <HCaptcha
-              sitekey={ process.env.CURRENT_APP_STATE === 'dev'
+              sitekey={ process.env.NODE_ENV === 'development'
                 ? process.env.HCAPTCHA_DEV_SITE_KEY
                 : process.env.HCAPTCHA_PROD_SITE_KEY }
               size={ 'invisible' }

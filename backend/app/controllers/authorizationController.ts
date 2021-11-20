@@ -67,7 +67,7 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
-      const isCaptchaValid = await captchaService.verifyHCaptcha(captcha)
+      const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
 
       if (!isCaptchaValid) {
         return res.status(403).send({
