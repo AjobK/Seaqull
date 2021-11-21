@@ -32,7 +32,7 @@ jobs:
       - name: Run tests
         working-directory: ./backend
         run: |
-          mv ormconfig.example.json ormconfig.json
+          mv ormconfig.github-actions.json ormconfig.json
           npm install
           npm run reset
           npm start
