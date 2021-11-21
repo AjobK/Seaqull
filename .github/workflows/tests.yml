@@ -58,6 +58,6 @@ jobs:
         with:
           start: npm start
           working-directory: ./backend
-          wait-on: 'localhost:8000/api/post'
+          wait-on: 'http://localhost:8000/api/post'
       - name: Run back-end tests
         run: npm test
