@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: node:lastest
+    container: node:latest
 
     services:
       postgres:
