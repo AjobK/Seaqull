@@ -53,7 +53,7 @@ jobs:
       - name: Prepare for back-end tests
         run: |
           mv ormconfig.example.json ormconfig.json
-          npm install
+          npm ci
           npm run reset
       - name: Start back-end server
         uses: cypress-io/github-action@v2
