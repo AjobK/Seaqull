@@ -229,7 +229,7 @@ class ProfileController {
 
     errors.password.push(passwordStrengthErrors)
 
-    const isCaptchaValid = await captchaService.verifyHCaptcha(captcha)
+    const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
 
     if (!isCaptchaValid) {
       errors.captcha.push('We couldn\'t verify that you\'re not a robot.')
