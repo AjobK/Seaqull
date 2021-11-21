@@ -14,6 +14,7 @@ const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 const { FRONTEND_URL } = process.env
+const LOCALHOST = 'http://localhost'
 
 const backend = new serverConstructor({
   port: 8000,
@@ -32,9 +33,9 @@ const backend = new serverConstructor({
     cors({
       origin: [
         FRONTEND_URL,
-        'http://localhost:8080',
-        'http://localhost:3000',
-        'http://localhost'
+        LOCALHOST,
+        LOCALHOST + ':8080',
+        LOCALHOST + ':3000'
       ],
       credentials: true
     }),

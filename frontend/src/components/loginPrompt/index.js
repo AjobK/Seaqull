@@ -118,6 +118,11 @@ class LoginPrompt extends Component {
 
   render() {
     const { username, password, remainingTime, loadingTimeout } = this.state
+    const { NODE_ENV, HCAPTCHA_DEV_SITE_KEY, HCAPTCHA_PROD_SITE_KEY } = process.env
+
+    const siteKey = NODE_ENV === 'development'
+      ? HCAPTCHA_DEV_SITE_KEY
+      : HCAPTCHA_PROD_SITE_KEY
 
     return (
       <div className={ [styles.prompt, this.props.className].join(' ') }>
@@ -150,9 +155,7 @@ class LoginPrompt extends Component {
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
             </div>
             <HCaptcha
-              sitekey={ process.env.NODE_ENV === 'development'
-                ? process.env.HCAPTCHA_DEV_SITE_KEY
-                : process.env.HCAPTCHA_PROD_SITE_KEY }
+              sitekey={ siteKey }
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
               onError={ this.onCaptchaError }

@@ -232,7 +232,7 @@ class ProfileController {
     const isCaptchaValid = await captchaService.verifyHCaptcha(captcha)
 
     if (!isCaptchaValid) {
-      errors.captcha.push('We could not confirm you are not a robot')
+      errors.captcha.push('We couldn\'t verify that you\'re not a robot.')
     }
 
     if (isUsernameNotValid || isEmailNotValid || !isCaptchaValid || passwordStrengthErrors.length > 0) {
