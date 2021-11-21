@@ -44,8 +44,6 @@ class PostController {
 
       if (posts.length <= 0 ) {
         posts = await this.dao.getPosts('0', amount)
-
-        return res.status(200).json({ 'message': 'You`ve reached the last post' })
       }
     }
 

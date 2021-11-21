@@ -52,7 +52,9 @@ class Posts extends Component {
           this.setEndReached(true)
         }
 
-        this.handleScroll()
+        if (this.state.postsBlocks.length <= 1) {
+          this.fetchPosts()
+        }
       })
       .catch((_err) => {
         this.setIsFetching(false)
