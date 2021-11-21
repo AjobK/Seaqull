@@ -57,9 +57,9 @@ jobs:
           npm run reset
       - name: Start back-end server
         uses: cypress-io/github-action@v2
-        working-directory: ./backend
         with:
           start: npm start
+          working-directory: ./backend
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:8000'
       - name: Run back-end tests
