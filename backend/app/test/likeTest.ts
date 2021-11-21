@@ -26,7 +26,8 @@ describe('Like posts', () => {
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end(() => {
           agent
@@ -57,7 +58,8 @@ describe('Like posts', () => {
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end(() => {
           done()

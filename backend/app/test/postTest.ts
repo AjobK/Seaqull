@@ -15,7 +15,8 @@ describe('Post functionalities', () => {
       .post('/login')
       .send({
         username: 'User',
-        password: 'Qwerty123'
+        password: 'Qwerty123',
+        captcha: '10000000-aaaa-bbbb-cccc-000000000001'
       })
       .end(() => {
         agent

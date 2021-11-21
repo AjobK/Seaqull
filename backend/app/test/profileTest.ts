@@ -14,14 +14,16 @@ describe('Profile page', () => {
       .post('/login')
       .send({
         username: 'User',
-        password: 'Qwerty123'
+        password: 'Qwerty123',
+        captcha: '10000000-aaaa-bbbb-cccc-000000000001'
       })
       .end(() => {
         agentAdmin
           .post('/login')
           .send({
             username: 'Admin',
-            password: 'Qwerty123'
+            password: 'Qwerty123',
+            captcha: '10000000-aaaa-bbbb-cccc-000000000001'
           })
           .end(() => {
             done()

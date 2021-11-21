@@ -16,7 +16,8 @@ describe('Testing the login/register', () => {
         .send({
           username: `test${id}`,
           password: 'Qwerty',
-          email: id + '@test.com'
+          email: id + '@test.com',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -30,7 +31,8 @@ describe('Testing the login/register', () => {
         .send({
           username: `test${id}`,
           password: 'qwerty123',
-          email: id + '@test.com'
+          email: id + '@test.com',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -44,7 +46,8 @@ describe('Testing the login/register', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          email: id + '@test.com'
+          email: id + '@test.com',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end((err, res) => {
           assert.equal(res.body.errors.username, 'Username not available')
@@ -58,7 +61,8 @@ describe('Testing the login/register', () => {
         .send({
           username: `test${id}`,
           password: '123Qwerty',
-          email: id + '@test.com'
+          email: id + '@test.com',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
@@ -73,7 +77,8 @@ describe('Testing the login/register', () => {
         .post('/login')
         .send({
           username: 'user',
-          password: 'qwerty123'
+          password: 'qwerty123',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end((err, res) => {
           assert.equal(res.status, 403)
@@ -86,7 +91,8 @@ describe('Testing the login/register', () => {
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
