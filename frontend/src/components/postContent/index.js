@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, convertToRaw, ContentState } from 'draft-js'
+import { EditorState, Editor, convertToRaw, ContentState, RichUtils } from 'draft-js'
 import '../../DraftFallback.css'
 
 @inject('store')
@@ -70,8 +70,20 @@ class PostContent extends Component {
     this.props.callBackSaveData(this)
   }
 
+  onBoldClick() {
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'))
+  }
+
+  onItalicClick() {
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'))
+  }
+
+  onUnderlineClick() {
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'))
+  }
+
   focusOnEditor = () => {
-    this.editorInput.current.focus()
+    this.state.editorState.focused()
   }
 
   componentDidMount() {
@@ -113,6 +125,18 @@ class PostContent extends Component {
             handlePastedText={ this.handlePastedText }
             blockStyleFn={ () => `${styles.postContent} ${styles[type]}` }
           />
+
+          <button onClick={ this.onBoldClick.bind(this) }>B</button>
+          <button onClick={ this.onItalicClick.bind(this) }>I</button>
+          <button onClick={ this.onUnderlineClick.bind(this) }>U</button>
+
+          {/*<ReactTooltip id="tooltip" place="top" effect="solid">*/}
+          {/*  <button onClick={ this.onBoldClick.bind(this) }>B</button>*/}
+          {/*  <button onClick={ this.onItalicClick.bind(this) }>I</button>*/}
+          {/*  <button onClick={ this.onUnderlineClick.bind(this) }>U</button>*/}
+          {/*</ReactTooltip>*/}
+
+          {/*<button data-tip data-for="tooltip">kang</button>*/}
           {/* { type != 'title' && this.inlineStyleControls()} */}
         </PostContentBlock>
       </div>
