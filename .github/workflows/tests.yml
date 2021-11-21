@@ -7,7 +7,7 @@ on:
     branches: [ develop, master ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -19,8 +19,8 @@ jobs:
           node-version: '12.x'
       - name: Run tests
         working-directory: ./backend
-        run: cd backend
-        run: npm install
-        run: npm run reset
-        run: npm start
-        run: npm test
+        run: |
+          npm install
+          npm run reset
+          npm start
+          npm test
