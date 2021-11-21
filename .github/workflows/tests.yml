@@ -57,6 +57,7 @@ jobs:
           npm update
           npm run reset
       - name: Start back-end server
+        run: npm install
         uses: cypress-io/github-action@v2
         with:
           start: npm start
