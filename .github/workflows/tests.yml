@@ -20,6 +20,7 @@ jobs:
       - name: Run tests
         working-directory: ./backend
         run: |
+          ls
           npm install
           npm run reset
           npm start
