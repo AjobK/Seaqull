@@ -8,8 +8,8 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
+    container: node:lastest
 
     services:
       postgres:
