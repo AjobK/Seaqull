@@ -61,5 +61,6 @@ jobs:
           start: npm start
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:8000'
+        working-directory: ./backend
       - name: Run back-end tests
         run: npm test
