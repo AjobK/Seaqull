@@ -32,6 +32,7 @@ class ProfileRoutes implements RouterBase {
       this.router.put(this.profileAvatar, auth, this.upload.single('file'), this.profileController.updateProfileAvatar)
       this.router.put(this.profileBanner, auth, this.upload.single('file'), this.profileController.updateProfileBanner)
       this.router.put(this.profileSettings, auth, this.profileController.updateSettings)
+      this.router.get(this.profileSettings, auth, this.profileController.getSettings)
       this.router.put(this.profile, auth, this.profileController.updateProfile)
     }
 }

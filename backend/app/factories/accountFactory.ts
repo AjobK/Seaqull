@@ -4,7 +4,7 @@ import role from '../entities/role'
 import Profile from '../entities/profile'
 import * as Faker from 'faker'
 import Attachment from '../entities/attachment'
-import AccountSettings from '../entities/accountSettings'
+import AccountSettings from '../entities/account_settings'
 
 define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attachment, bannerPic: Attachment }) => {
   const acc = new Account()
@@ -15,7 +15,7 @@ define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attach
     profilePic: settings.profilePic,
     bannerPic: settings.bannerPic
   }) as any
-  const createSettings = factory(AccountSettings)() as any
+  const createSettings = factory(AccountSettings)({}) as any
 
   const set = new AccountSettings()
   set.active = true

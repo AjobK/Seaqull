@@ -15,6 +15,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
+import SettingsDAO from '../daos/settingsDAO'
 
 const jwt = require('jsonwebtoken')
 
@@ -33,6 +34,7 @@ class ProfileController {
   private titleDAO: TitleDAO
   private accountDAO: AccountDAO
   private roleDAO: RoleDao
+  private settingsDAO: SettingsDAO
   private attachmentDAO: attachmentDAO
   private fileService: FileService
   private banService: BanService
@@ -42,6 +44,7 @@ class ProfileController {
     this.titleDAO = new TitleDAO()
     this.accountDAO = new AccountDAO()
     this.roleDAO = new RoleDao()
+    this.settingsDAO = new SettingsDAO()
     this.attachmentDAO = new attachmentDAO()
     this.fileService = new FileService()
     this.banService = new BanService()
@@ -49,6 +52,13 @@ class ProfileController {
 
   public updateSettings = async (req: Request, res: Response): Promise<Response> => {
     console.log('update')
+
+    return res.status(200).json({ 'message': 'updated' })
+  }
+
+  public getSettings = async (req: any, res: Response): Promise<Response> => {
+    const { decoded } = req.body
+    console.log(decoded)
 
     return res.status(200).json({ 'message': 'updated' })
   }
@@ -160,6 +170,7 @@ class ProfileController {
     if (!profile) return res.status(404).json({ message: 'User not found' })
 
     const account = await this.accountDAO.getAccountByUsername(profile.display_name)
+    console.log(account)
     const ban = await this.banService.checkIfUserIsBanned(account)
 
     if (ban) return res.status(403).json({ errors: [ban] })

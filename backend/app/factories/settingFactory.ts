@@ -1,9 +1,9 @@
 import { define } from 'typeorm-seeding'
-import AccountSettings from '../entities/accountSettings'
+import AccountSettings from '../entities/account_settings'
 
 define(AccountSettings, ():AccountSettings => {
-  const setting = new AccountSettings()
-  setting.active = true
+  const accSetting = new AccountSettings()
+  accSetting.active = true
 
-  return setting
+  return accSetting
 })
