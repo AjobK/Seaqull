@@ -31,20 +31,25 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Run tests
-        working-directory: ./backend
-        run: |
-          mv ormconfig.example.json ormconfig.json
-          npm install
-          npm run reset
-          npm start
-          npm test
-        env:
-          JWT_SECRET: KGn]FCx0w~TI
-          JWT_EXPIRATION_TIME: 600000
-          RECAPTCHA_SECRET_KEY: 6LcuZr8cAAAAAFprJpiETSZ84zOK35JAb8EhGyKs
-          secure: false
-          PORT: 8000
-          NODE_ENV: development
-          CURRENT_APP_STATE: dev
-          HCAPTCHA_DEV_SECRET_KEY: 0x0000000000000000000000000000000000000000
+      # TODO: Turned off these steps because we don't poll the back-end for a response yet. This means that the
+      #       workflow never continues after 'npm start' because we don't detect whether it's started. Without
+      #       starting the back-end we can't run the tests either. If we kept this running our github actions minutes
+      #       would vanish. 
+      #
+      # - name: Run tests
+      #   working-directory: ./backend
+      #   run: |
+      #     mv ormconfig.example.json ormconfig.json
+      #     npm install
+      #     npm run reset
+      #     npm start
+      #     npm test
+      #   env:
+      #     JWT_SECRET: KGn]FCx0w~TI
+      #     JWT_EXPIRATION_TIME: 600000
+      #     RECAPTCHA_SECRET_KEY: 6LcuZr8cAAAAAFprJpiETSZ84zOK35JAb8EhGyKs
+      #     secure: false
+      #     PORT: 8000
+      #     NODE_ENV: development
+      #     CURRENT_APP_STATE: dev
+      #     HCAPTCHA_DEV_SECRET_KEY: 0x0000000000000000000000000000000000000000
