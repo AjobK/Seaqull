@@ -5,6 +5,8 @@ import assert = require('assert')
 
 require('dotenv').config()
 
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Profile page', () => {
@@ -18,7 +20,7 @@ describe('Profile page', () => {
       .send({
         username: 'User',
         password: 'Qwerty123',
-        captcha: process.env.HCAPTCHA_TEST_TOKEN
+        captcha
       })
       .end(() => {
         agentAdmin
@@ -26,7 +28,7 @@ describe('Profile page', () => {
           .send({
             username: 'Admin',
             password: 'Qwerty123',
-            captcha: process.env.HCAPTCHA_TEST_TOKEN
+            captcha
           })
           .end(() => {
             done()

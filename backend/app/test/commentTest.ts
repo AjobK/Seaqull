@@ -6,6 +6,8 @@ import Comment from '../entities/comment'
 
 require('dotenv').config()
 
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Comment section', () => {
@@ -47,7 +49,7 @@ describe('Comment section', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end(() => {
           agent

@@ -6,6 +6,8 @@ import Post from '../entities/post'
 
 require('dotenv').config()
 
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Post functionalities', () => {
@@ -20,7 +22,7 @@ describe('Post functionalities', () => {
       .send({
         username: 'User',
         password: 'Qwerty123',
-        captcha: process.env.HCAPTCHA_TEST_TOKEN
+        captcha
       })
       .end(() => {
         agent

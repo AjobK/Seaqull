@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 require('dotenv').config()
 
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Testing the login/register', () => {
@@ -19,7 +21,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: 'Qwerty',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -34,7 +36,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: 'qwerty123',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -49,7 +51,7 @@ describe('Testing the login/register', () => {
           username: 'User',
           password: 'Qwerty123',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end((err, res) => {
           assert.equal(res.body.errors.username, 'Username not available')
@@ -64,7 +66,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: '123Qwerty',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
@@ -80,7 +82,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'user',
           password: 'qwerty123',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end((err, res) => {
           assert.equal(res.status, 403)
@@ -94,7 +96,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_TEST_TOKEN
+          captcha
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
