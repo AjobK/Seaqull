@@ -65,7 +65,9 @@ class PostController {
 
     try {
       account = await new AccountDAO().getAccountByUsername(req.params.username)
-    } catch (e) { return res.status(404).json([]) }
+    } catch (e) {
+      return res.status(404).json([])
+    }
 
     posts = await this.dao.getOwnedPosts(account.profile)
 

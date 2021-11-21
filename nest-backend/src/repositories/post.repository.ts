@@ -1,6 +1,7 @@
 import { EntityRepository, IsNull, Repository } from 'typeorm'
 import { Post } from '../entities/post.entity'
 import { Attachment } from '../entities/attachment.entity'
+import { Profile } from '../entities/profile.entity'
 
 @EntityRepository(Post)
 export class PostRepository extends Repository<Post> {
@@ -34,5 +35,18 @@ export class PostRepository extends Repository<Post> {
     const count = await this.count()
 
     return count
+  }
+
+  public async getPostsByProfile(profile: Profile): Promise<Post[]> {
+    const posts = await this.createQueryBuilder('post')
+      .leftJoinAndSelect('post.profile', 'profile')
+      .where('post.profile = :profileId', { profileId: profile.id })
+      .andWhere('post.archived_at IS NULL')
+      .orderBy({
+        'post.updated_at': 'DESC'
+      })
+      .getMany()
+
+    return posts
   }
 }

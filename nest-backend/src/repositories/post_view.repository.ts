@@ -1,7 +1,13 @@
 import { EntityRepository, Repository } from 'typeorm'
 import { PostView } from '../entities/post_view.entity'
+import { Post } from '../entities/post.entity'
 
 @EntityRepository(PostView)
 export class PostViewRepository extends Repository<PostView> {
 
+  public async getPostViewCount(post: Post): Promise<number> {
+    const viewCount = await this.count({ where: { post: post } })
+
+    return viewCount
+  }
 }

@@ -1,10 +1,11 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards} from '@nestjs/common'
+import {Body, Controller, Get, Ip, Param, Post, Put, Query, UseGuards} from '@nestjs/common'
 import { PostService } from '../services/post.service'
 import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AuthGuard } from '@nestjs/passport'
-import {CreatePostDTO} from "../dtos/create-post.dto";
+import { CreatePostDTO } from '../dtos/create-post.dto'
+import { PostViewDTO } from '../dtos/post-view.dto'
 
 @Controller('post')
 export class PostController {
@@ -37,24 +38,18 @@ export class PostController {
     return postDetailedPayload
   }
 
-  @Get('/like/:path')
-  public getPostLikes(): any {
-
-  }
-
   @Get('/view/:path')
-  public getPostViewCount(): any {
+  public async getPostViewCount(@Param('path') postPath: string): Promise<PostViewDTO> {
+    const postViewCount = await this.postService.getPostViewsByPath(postPath)
 
+    return postViewCount
   }
 
   @Get('/owned-by/:username')
-  public getOwnedPosts(): any {
+  public async getOwnedPosts(@Param('username') username: string): Promise<any[]> {
+    const ownedPosts = await this.postService.getOwnedPostsByUsername(username)
 
-  }
-
-  @Get('/liked-by/recent/:username')
-  public getRecentUserLikes(): any {
-
+    return ownedPosts
   }
 
   @Post()
@@ -63,12 +58,7 @@ export class PostController {
   }
 
   @Post('/view')
-  public addViewToPost(): any {
-
-  }
-
-  @Post('/like/:path')
-  public likePost(): any {
+  public addViewToPost(@Body('path') postPath: string, @Ip() ipAddress: string): any {
 
   }
 
@@ -79,11 +69,6 @@ export class PostController {
 
   @Put('/archive/:path')
   public archivePost(): any {
-
-  }
-
-  @Delete('/like/:path')
-  public unlikePost(): any {
 
   }
 }

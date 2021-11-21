@@ -8,6 +8,7 @@ import { RoleModule } from './modules/role.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configValidationSchema } from './config.schema'
+import {PostLikeModule} from "./modules/post-like.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { configValidationSchema } from './config.schema'
     PostModule,
     ProfileModule,
     RoleModule,
+    PostLikeModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

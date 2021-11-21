@@ -1,16 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
 import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
 import { Account } from '../entities/account.entity'
 import { PostLikeRepository } from '../repositories/post_like.repository'
 import { PostDetailedPayloadDTO } from '../dtos/post-detailed-payload.dto'
+import { PostViewRepository } from '../repositories/post_view.repository'
+import { PostViewDTO } from '../dtos/post-view.dto'
+import { Post } from '../entities/post.entity'
+import { AccountRepository } from '../repositories/account.repository'
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(PostRepository) private readonly postRepository: PostRepository,
-    @InjectRepository(PostLikeRepository) private readonly postLikeRepository: PostLikeRepository
+    @InjectRepository(PostLikeRepository) private readonly postLikeRepository: PostLikeRepository,
+    @InjectRepository(PostViewRepository) private readonly postViewRepository: PostViewRepository,
+    @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository
   ) {
   }
 
@@ -54,6 +60,30 @@ export class PostService {
     }
 
     return { post, likes: postLikesAmount, isOwner: userLiked }
+  }
+
+  public async getPostViewsByPath(postPath: string): Promise<PostViewDTO> {
+    const post = await this.postRepository.getPostByPath(postPath)
+
+    if (!post) throw new NotFoundException({ message: 'Post not found' })
+
+    const postViewCount = await this.postViewRepository.getPostViewCount(post)
+
+    return { views: postViewCount }
+  }
+
+  public async getOwnedPostsByUsername(username: string): Promise<any[]> {
+    const account = await this.accountRepository.getAccountByUsername(username)
+
+    if (!account) throw new NotFoundException([])
+
+    const posts = await this.postRepository.getPostsByProfile(account.profile) as any[]
+
+    for (const post of posts) {
+      post.thumbnail = await this.getPostThumbnailURL(post.id)
+    }
+
+    return posts
   }
 
   private async getPostThumbnailURL(postId: number): Promise<string> {
