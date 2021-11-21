@@ -18,9 +18,9 @@ jobs:
         with:
           node-version: '12.x'
       - name: Run tests
-        - working-directory: ./backend
-        - run: cd backend
-        - run: npm install
-        - run: npm run reset
-        - run: npm start
-        - run: npm test
+        working-directory: ./backend
+        run: cd backend
+        run: npm install
+        run: npm run reset
+        run: npm start
+        run: npm test
