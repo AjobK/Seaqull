@@ -20,7 +20,7 @@ describe('Ban functionality', () => {
         username: shortBannedUser,
         password: 'Qwerty123',
         email: `${shortBannedUser}@test.com`,
-        captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+        captcha: process.env.HCAPTCHA_TEST_TOKEN
       })
       .end()
 
@@ -30,7 +30,7 @@ describe('Ban functionality', () => {
         username: longBannedUser,
         password: 'Qwerty123',
         email: `${longBannedUser}@test.com`,
-        captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+        captcha: process.env.HCAPTCHA_TEST_TOKEN
       })
       .end(() => {
         done()
@@ -44,7 +44,7 @@ describe('Ban functionality', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end(() => {
           done()
@@ -73,7 +73,7 @@ describe('Ban functionality', () => {
         .send({
           username: 'Moderator',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end(() => {
           done()
@@ -122,7 +122,7 @@ describe('Ban functionality', () => {
         .send({
           username: 'Admin',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end(() => {
           done()

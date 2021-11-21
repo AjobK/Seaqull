@@ -18,7 +18,7 @@ describe('Profile page', () => {
       .send({
         username: 'User',
         password: 'Qwerty123',
-        captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+        captcha: process.env.HCAPTCHA_TEST_TOKEN
       })
       .end(() => {
         agentAdmin
@@ -26,7 +26,7 @@ describe('Profile page', () => {
           .send({
             username: 'Admin',
             password: 'Qwerty123',
-            captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+            captcha: process.env.HCAPTCHA_TEST_TOKEN
           })
           .end(() => {
             done()

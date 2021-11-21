@@ -19,7 +19,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: 'Qwerty',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -34,7 +34,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: 'qwerty123',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -49,7 +49,7 @@ describe('Testing the login/register', () => {
           username: 'User',
           password: 'Qwerty123',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end((err, res) => {
           assert.equal(res.body.errors.username, 'Username not available')
@@ -57,7 +57,7 @@ describe('Testing the login/register', () => {
         })
     })
 
-    console.log(process.env.HCAPTCHA_DEV_TEST_KEY)
+    console.log(process.env.HCAPTCHA_TEST_TOKEN)
 
     it('Should register a new user', (done) => {
       agent
@@ -66,7 +66,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: '123Qwerty',
           email: id + '@test.com',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
@@ -82,7 +82,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'user',
           password: 'qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end((err, res) => {
           assert.equal(res.status, 403)
@@ -96,7 +96,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end((err, res) => {
           assert.equal(res.status, 200)

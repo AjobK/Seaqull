@@ -31,7 +31,7 @@ describe('Like posts', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end(() => {
           agent
@@ -63,7 +63,7 @@ describe('Like posts', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
+          captcha: process.env.HCAPTCHA_TEST_TOKEN
         })
         .end(() => {
           done()
