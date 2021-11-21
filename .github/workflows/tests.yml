@@ -45,23 +45,20 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      # TODO: Turned off these steps because we don't poll the back-end for a response yet. This means that the
-      #       workflow never continues after 'npm start' because we don't detect whether it's started. Without
-      #       starting the back-end we can't run the tests either. If we kept this running our github actions minutes
-      #       would vanish. 
-      #
       - name: Prepare for back-end tests
         run: |
           mv ormconfig.example.json ormconfig.json
           npm ci
           npm run build
-          npm run reset
+      - name: Setup and seed database
+        run: npm run reset
+      - name: Log all files in folder
+        run: ls
       - name: Start back-end server
         uses: cypress-io/github-action@v2
         with:
           start: npm start
           working-directory: ./backend
-          # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:8000'
       - name: Run back-end tests
         run: npm test
