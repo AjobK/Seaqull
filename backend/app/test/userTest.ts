@@ -3,6 +3,8 @@ import chaiHttp = require('chai-http')
 import assert = require('assert')
 import { v4 as uuidv4 } from 'uuid'
 
+require('dotenv').config()
+
 chai.use(chaiHttp)
 
 describe('Testing the login/register', () => {
@@ -17,7 +19,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: 'Qwerty',
           email: id + '@test.com',
-          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
+          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -32,7 +34,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: 'qwerty123',
           email: id + '@test.com',
-          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
+          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
         })
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -47,13 +49,15 @@ describe('Testing the login/register', () => {
           username: 'User',
           password: 'Qwerty123',
           email: id + '@test.com',
-          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
+          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
         })
         .end((err, res) => {
           assert.equal(res.body.errors.username, 'Username not available')
           done()
         })
     })
+
+    console.log(process.env.HCAPTCHA_DEV_TEST_KEY)
 
     it('Should register a new user', (done) => {
       agent
@@ -62,7 +66,7 @@ describe('Testing the login/register', () => {
           username: `test${id}`,
           password: '123Qwerty',
           email: id + '@test.com',
-          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
+          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
@@ -78,7 +82,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'user',
           password: 'qwerty123',
-          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
+          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
         })
         .end((err, res) => {
           assert.equal(res.status, 403)
@@ -92,7 +96,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          captcha: '10000000-aaaa-bbbb-cccc-000000000001'
+          captcha: process.env.HCAPTCHA_DEV_TEST_KEY
         })
         .end((err, res) => {
           assert.equal(res.status, 200)
