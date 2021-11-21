@@ -39,12 +39,6 @@ class Posts extends Component {
       .then((json) => {
         this.setIsFetching(false)
 
-        if (json.message) {
-          this.setEndReached(true)
-
-          return
-        }
-
         this.setCurrentPage(this.state.page + 1)
         this.renderNewPosts(json.posts ? json.posts : [])
 
@@ -181,8 +175,8 @@ class Posts extends Component {
 
     return (
       <div>
-        <ul className={ styles.posts }>{postsBlocks}</ul>
-        {this.state.isFetching || (!this.state.endReached && <Loader />)}
+        <ul className={ styles.posts }>{ postsBlocks }</ul>
+        { this.state.isFetching && <Loader /> }
       </div>
     )
   }
