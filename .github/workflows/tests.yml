@@ -17,8 +17,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: cd backend
-      - run: npm install
-      - run: npm run reset
-      - run: npm start
-      - run: npm test
+      - name: Run tests
+        - run: cd backend
+        - run: npm install
+        - run: npm run reset
+        - run: npm start
+        - run: npm test
