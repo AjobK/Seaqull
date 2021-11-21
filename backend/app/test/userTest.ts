@@ -57,8 +57,6 @@ describe('Testing the login/register', () => {
         })
     })
 
-    console.log(process.env.HCAPTCHA_TEST_TOKEN)
-
     it('Should register a new user', (done) => {
       agent
         .post('/profile/register')
