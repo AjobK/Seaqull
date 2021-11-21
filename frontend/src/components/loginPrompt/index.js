@@ -110,7 +110,10 @@ class LoginPrompt extends Component {
   }
 
   onCaptchaError = () => {
-    this.props.store.notification.setContent(popUpData.messages.captchaError)
+    const { notification } = this.props.store
+    const { captchaError } = popUpData.messages
+
+    notification.setContent(captchaError)
   }
 
   render() {
