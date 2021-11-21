@@ -17,10 +17,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - name: Set working directory
       - name: Run tests
         working-directory: ./backend
         run: |
-          ls
+          mv ormconfig.example.json ormconfig.json
           npm install
           npm run reset
           npm start
