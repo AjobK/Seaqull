@@ -48,7 +48,7 @@ jobs:
       - name: Prepare for back-end tests
         run: |
           mv ormconfig.example.json ormconfig.json
-          npm install
+          npm install & npm i cypress
       - name: Setup and seed database
         run: npm run reset
       - name: Log all files in folder
