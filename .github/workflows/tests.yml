@@ -48,16 +48,27 @@ jobs:
       - name: Prepare for back-end tests
         run: |
           mv ormconfig.example.json ormconfig.json
-          npm install & npm i cypress
+          npm install
       - name: Setup and seed database
         run: npm run reset
       - name: Log all files in folder
         run: ls -a
+
+      # - name: Start back-end server
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     start: npm start
+      #     working-directory: ./backend
+      #     wait-on: 'http://localhost:8000/api/post'
+      
       - name: Start back-end server
-        uses: cypress-io/github-action@v2
+        run: npm start &
+      - name: Wait for OK status
+        uses: nev7n/wait_for_response@v1
         with:
-          start: npm start
-          working-directory: ./backend
-          wait-on: 'http://localhost:8000/api/post'
+          url: 'http://localhost:8000/api/post'
+          responseCode: 200
+          timeout: 10000
+          interval: 500
       - name: Run back-end tests
         run: npm test
