@@ -53,13 +53,6 @@ jobs:
         run: npm run reset
       - name: Log all files in folder
         run: ls -a
-
-      # - name: Start back-end server
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     start: npm start
-      #     working-directory: ./backend
-      #     wait-on: 'http://localhost:8000/api/post'
       - name: Start back-end server
         run: npm start &
       - name: Wait for OK status
