@@ -7,8 +7,8 @@ jobs:
     steps:
       - name: Install base modules
         run: |
-          npm install @actions/core
-          npm install @actions/github
+          npm i -D @actions/core
+          npm i -D @actions/github
       - uses: actions/checkout@v1
       - name: Hello world action step
         id: hello
