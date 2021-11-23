@@ -5,6 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
+      - name: Install base modules
+        run: |
+          npm install @actions/core
+          npm install @actions/github
       - uses: actions/checkout@v1
       - name: Hello world action step
         id: hello
