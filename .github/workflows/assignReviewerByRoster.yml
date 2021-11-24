@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
+      - uses: actions/checkout@v1
       - name: Log all files in folder
         run: |
           pwd
@@ -15,7 +16,6 @@ jobs:
         run: |
           npm i -D @actions/core
           npm i -D @actions/github
-      - uses: actions/checkout@v1
       - name: Hello world action step
         id: hello
         uses: ./.github/actions/assignReviewerByRoster
