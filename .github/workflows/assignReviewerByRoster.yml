@@ -7,6 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
+      - name: Log all files in folder
+        run: |
+          pwd
+          ls -a
       - name: Install base modules
         run: |
           npm i -D @actions/core
