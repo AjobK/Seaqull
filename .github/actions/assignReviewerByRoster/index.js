@@ -13,10 +13,10 @@ const reviewerGroups = [
 ]
 
 console.log('ACTOR')
-console.log(github.actor)
+console.log(github)
 
 const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length].filter(
-  reviewer => reviewer !== github.actor
+  reviewer => reviewer == reviewer
 )
 
 core.setOutput('reviewers', chosenReviewers)
