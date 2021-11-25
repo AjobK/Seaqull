@@ -9,7 +9,7 @@ on:
 jobs:
   assign_reviewer_job:
     runs-on: ubuntu-latest
-    name: A to assign reviewers to PR
+    name: A job to assign reviewers to PR
     steps:
       - uses: actions/checkout@v1
       - name: Log all files in folder
