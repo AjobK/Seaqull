@@ -21,4 +21,3 @@ jobs:
         uses: ./.github/actions/formatIssue
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
