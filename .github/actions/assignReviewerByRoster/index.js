@@ -4,7 +4,11 @@ const github = require('@actions/github');
 const token = core.getInput('token');
 const octokit = github.getOctokit(token)
 
-let reviewers = [ 'AjobK' ]
+const defaultReviewers = [ 'AjobK' ]
+const reviewerGroups = [
+  [ 'ryankroon00', 'jerohero' ],
+  [ 'S-Goossens', 'Shifu-py', 'daansneep' ]
+]
 
 core.setOutput('reviewers', reviewers)
 
@@ -12,22 +16,12 @@ octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_review
   owner: 'AjobK',
   repo: 'Seaqull',
   pull_number: github.context.payload.pull_request.number,
-  reviewers: [
-    'ryankroon00'
-  ]
+  reviewers: [ ...defaultReviewers, ...reviewerGroups[getSprintNumber()]]
 })
 
-// try {
-//   // `who-to-greet` input defined in action metadata file
-//   const nameToGreet = core.getInput('who-to-greet');
-//   console.log(`Hello ${nameToGreet}!`);
-//   const time = (new Date()).toTimeString();
-//   core.setOutput("time", time);
-//   // Get the JSON webhook payload for the event that triggered the workflow
-//   const payload = JSON.stringify(github.context.payload, undefined, 2)
-
-//   github.context.
-//   console.log(`The event payload: ${payload}`);
-// } catch (error) {
-//   core.setFailed(error.message);
-// }
+// d2 default is based on first time we started the review roster
+function getSprintNumber(d1 = new Date(), d2 = new Date(2021, 05, 26)) {
+  const weeksPassed = Math.abs(Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000)))
+  
+  return ~~(weeksPassed / 2)
+}
