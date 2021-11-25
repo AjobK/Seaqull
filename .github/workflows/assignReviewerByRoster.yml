@@ -7,9 +7,9 @@ on:
       - develop
 
 jobs:
-  hello_world_job:
+  assign_reviewer_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A to assign reviewers to PR
     steps:
       - uses: actions/checkout@v1
       - name: Log all files in folder
@@ -20,11 +20,10 @@ jobs:
         run: |
           npm i -D @actions/core
           npm i -D @actions/github
-      - name: Hello world action step
-        id: hello
+      - name: Reviewer(s) assignment
+        id: reviewerAssignment
         uses: ./.github/actions/assignReviewerByRoster
         with:
-          who-to-greet: 'Mona the Octocat'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Display the assigned reviewers
+        run: echo "The assigned reviewers are ${{ steps.reviewerAssignment.outputs.reviewers }}"

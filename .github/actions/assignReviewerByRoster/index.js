@@ -1,7 +1,14 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-github.getOctokit().request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
+const token = core.getInput('token');
+const octokit = github.getOctokit(token)
+
+let reviewers = [ 'AjobK' ]
+
+core.setOutput('reviewers', reviewers)
+
+octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
   owner: 'AjobK',
   repo: 'Seaqull',
   pull_number: github.context.payload.pull_request.number,

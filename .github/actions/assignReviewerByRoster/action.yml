@@ -1,13 +1,12 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Assign reviewer by roster'
+description: 'Assigns reviewers by roster. They alternate per sprint.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  token:
+    description: 'Token for octokit'
     required: true
-    default: 'World'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  reviewers:
+    description: Reviewers that were assigned
 runs:
   using: 'node12'
   main: 'index.js'
