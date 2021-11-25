@@ -1,6 +1,10 @@
 name: Assign reviewer by roster
 
-on: [ push ]
+on:
+  pull_request:
+    types: [ opened, reopened ]
+    branches:
+      - develop
 
 jobs:
   hello_world_job:
@@ -16,6 +20,7 @@ jobs:
         run: |
           npm i -D @actions/core
           npm i -D @actions/github
+          npm i -D @octokit/core
       - name: Hello world action step
         id: hello
         uses: ./.github/actions/assignReviewerByRoster
