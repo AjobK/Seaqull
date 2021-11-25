@@ -13,7 +13,7 @@ octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_review
   repo: 'Seaqull',
   pull_number: github.context.payload.pull_request.number,
   reviewers: [
-    'AjobK'
+    'ryankroon00'
   ]
 })
 
