@@ -10,7 +10,7 @@ const reviewerGroups = [
   [ 'S-Goossens', 'Shifu-py', 'daansneep' ]
 ]
 
-const chosenReviewers = reviewerGroups[getSprintNumber()]
+const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length]
 
 core.setOutput('reviewers', chosenReviewers)
 
