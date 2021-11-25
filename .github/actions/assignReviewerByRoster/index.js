@@ -13,7 +13,7 @@ const reviewerGroups = [
 ]
 
 console.log('github event')
-console.log(github.event)
+console.log(octokit.auth.name)
 // console.log(github.event?.pull_request?.user?.login)
 
 const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length]
