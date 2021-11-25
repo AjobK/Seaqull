@@ -4,11 +4,16 @@ const github = require('@actions/github');
 const token = core.getInput('token');
 const octokit = github.getOctokit(token)
 
+const { pull_request } = github.context.payload
+
 const defaultReviewers = [ 'AjobK' ]
 const reviewerGroups = [
   [ 'ryankroon00', 'jerohero' ],
   [ 'S-Goossens', 'Shifu-py', 'daansneep' ]
 ]
+
+console.log('BODY')
+console.log(pull_request.body)
 
 const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length]
 
@@ -17,7 +22,7 @@ core.setOutput('reviewers', chosenReviewers)
 octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
   owner: 'AjobK',
   repo: 'Seaqull',
-  pull_number: github.context.payload.pull_request.number,
+  pull_number: pull_request.number,
   reviewers: [ ...defaultReviewers, ...chosenReviewers ]
 })
 
