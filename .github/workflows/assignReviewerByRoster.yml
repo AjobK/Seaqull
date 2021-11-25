@@ -25,5 +25,6 @@ jobs:
         uses: ./.github/actions/assignReviewerByRoster
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
       - name: Display the assigned reviewers
         run: echo "The assigned reviewers are ${{ steps.reviewerAssignment.outputs.reviewers }}"
