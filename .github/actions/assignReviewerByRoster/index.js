@@ -16,7 +16,10 @@ const reviewerGroups = [
 console.log('ACTOR')
 console.log(actor)
 
-const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length].filter(
+const chosenReviewers = [
+  ...reviewerGroups[getSprintNumber() % reviewerGroups.length],
+  ...defaultReviewers
+].filter(
   reviewer => reviewer !== actor
 )
 
@@ -26,7 +29,7 @@ octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_review
   owner: 'AjobK',
   repo: 'Seaqull',
   pull_number: pull_request.number,
-  reviewers: [ ...defaultReviewers, ...chosenReviewers ]
+  reviewers: chosenReviewers
 })
 
 // d2 default is based on first time we started the review roster
