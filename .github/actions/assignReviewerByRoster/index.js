@@ -10,13 +10,15 @@ const reviewerGroups = [
   [ 'S-Goossens', 'Shifu-py', 'daansneep' ]
 ]
 
-core.setOutput('reviewers', reviewers)
+const chosenReviewers = reviewerGroups[getSprintNumber()]
+
+core.setOutput('reviewers', chosenReviewers)
 
 octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
   owner: 'AjobK',
   repo: 'Seaqull',
   pull_number: github.context.payload.pull_request.number,
-  reviewers: [ ...defaultReviewers, ...reviewerGroups[getSprintNumber()]]
+  reviewers: [ ...defaultReviewers, ...chosenReviewers]
 })
 
 // d2 default is based on first time we started the review roster
