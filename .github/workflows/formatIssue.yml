@@ -2,7 +2,7 @@ name: Format issue
 
 on:
   issues:
-    types: [ opened, reopened, closed ]
+    types: [ opened ]
     branches:
       - develop
 
