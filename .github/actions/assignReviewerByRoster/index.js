@@ -6,14 +6,15 @@ const octokit = github.getOctokit(token)
 
 const { pull_request } = github.context.payload
 
+console.log('1THIS IS SOMETHING PLEASE SEE ME')
 const defaultReviewers = [ 'AjobK' ]
 const reviewerGroups = [
   [ 'ryankroon00', 'jerohero' ],
   [ 'S-Goossens', 'Shifu-py', 'daansneep' ]
 ]
 
-console.log('github event')
-console.log(github.context)
+console.log('2THIS IS SOMETHING PLEASE SEE ME')
+console.log(github)
 // console.log(github.event?.pull_request?.user?.login)
 
 const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length]
