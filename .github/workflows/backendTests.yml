@@ -23,6 +23,7 @@ jobs:
       NODE_ENV: development
       CURRENT_APP_STATE: dev
       HCAPTCHA_DEV_SECRET_KEY: 0x0000000000000000000000000000000000000000
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     services:
       postgres:
