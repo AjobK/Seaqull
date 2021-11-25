@@ -4,7 +4,8 @@ const github = require('@actions/github');
 const token = core.getInput('token');
 const octokit = github.getOctokit(token)
 
-const { pull_request } = github.context.payload
+const { actor, payload } = github.context
+const { pull_request } = payload
 
 const defaultReviewers = [ 'AjobK' ]
 const reviewerGroups = [
@@ -13,10 +14,10 @@ const reviewerGroups = [
 ]
 
 console.log('ACTOR')
-console.log(github)
+console.log(actor)
 
 const chosenReviewers = reviewerGroups[getSprintNumber() % reviewerGroups.length].filter(
-  reviewer => reviewer == reviewer
+  reviewer => reviewer !== actor
 )
 
 core.setOutput('reviewers', chosenReviewers)
