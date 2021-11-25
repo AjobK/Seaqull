@@ -9,12 +9,9 @@ const { pull_request } = payload
 
 const defaultReviewers = [ 'AjobK' ]
 const reviewerGroups = [
-  [ 'ryankroon00', 'jerohero' ],
-  [ 'S-Goossens', 'Shifu-py', 'daansneep' ]
+  [ 'S-Goossens', 'Shifu-py', 'daansneep' ],
+  [ 'ryankroon00', 'jerohero' ]
 ]
-
-console.log('ACTOR')
-console.log(actor)
 
 const chosenReviewers = [
   ...reviewerGroups[getSprintNumber() % reviewerGroups.length],
