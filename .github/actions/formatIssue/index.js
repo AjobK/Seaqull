@@ -14,7 +14,7 @@ issue.title = issue.title.trim()
 // Check whether format is correct ('[ISSUE_NUMBER] ISSUE TITLE')
 // For example: '[111] Create Post'
 let issueTitleMatches = issue.title.match(/^(?:\[+\d+\] )/)
-if (!issueTitleMatches?.length) {
+if (!issueTitleMatches || issueTitleMatches.length <= 0) {
   issue.title = `[${issue.number}] ${issue.title}`
 }
 
