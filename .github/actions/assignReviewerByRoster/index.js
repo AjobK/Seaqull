@@ -18,7 +18,7 @@ octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_review
   owner: 'AjobK',
   repo: 'Seaqull',
   pull_number: github.context.payload.pull_request.number,
-  reviewers: [ ...defaultReviewers, ...chosenReviewers]
+  reviewers: [ ...defaultReviewers, ...chosenReviewers ]
 })
 
 // d2 default is based on first time we started the review roster
