@@ -7,15 +7,22 @@ const octokit = github.getOctokit(token)
 const { payload } = github.context
 const { issue } = payload
 
-console.log(' --- context --- ')
-console.log(github.context)
+let inputIssueTitle = issue.title
 
-console.log(' --- issue --- ')
-console.log(issue)
+issue.title = issue.title.trim()
 
-// octokit.rest.issues.update({
-//   owner: 'AjobK',
-//   repo: 'Seaqull',
-//   issue_number: issue.number,
-//   title: issue.
-// });
+// Check whether format is correct ('[ISSUE_NUMBER] ISSUE TITLE')
+// For example: '[111] Create Post'
+let issueTitleMatches = issue.title.match(/^(?:\[+\d+\] )/)
+if (issueTitleMatches.length <= 0) {
+  issue.title = `[${issue.number}] ${issue.title}`
+}
+
+if (inputIssueTitle != issue.title) {
+  octokit.rest.issues.update({
+    owner: 'AjobK',
+    repo: 'Seaqull',
+    issue_number: issue.number,
+    title: issue.title
+  })
+}
