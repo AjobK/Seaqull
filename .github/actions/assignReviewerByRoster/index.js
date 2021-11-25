@@ -20,8 +20,6 @@ const chosenReviewers = [
   reviewer => reviewer !== actor
 )
 
-core.setOutput('reviewers', chosenReviewers)
-
 octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
   owner: 'AjobK',
   repo: 'Seaqull',

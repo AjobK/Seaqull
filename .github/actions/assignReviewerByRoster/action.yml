@@ -4,9 +4,6 @@ inputs:
   token:
     description: 'Token for octokit'
     required: true
-outputs:
-  reviewers:
-    description: Reviewers that were assigned
 runs:
   using: 'node12'
   main: 'index.js'
