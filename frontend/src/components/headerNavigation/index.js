@@ -29,7 +29,7 @@ class HeaderNavigation extends Component {
       <nav className={ styles.menu }>
         <div className={ styles.goBackWrapper }>
           <Link to='/' className={ styles.goBack }>
-            <Icon iconName='ChevronLeft' className={ styles.goBackIcon } />
+            <Icon iconName='Home' className={ styles.goBackIcon } />
             <p>
               <span>back to </span>home
               <span className={ styles.underline } /> {/* Underline */}
@@ -40,7 +40,7 @@ class HeaderNavigation extends Component {
         { profile.loggedIn ? ( // Logged in content
           <ul className={ styles.menuUl }>
             <li className={ styles.avatarWrapper }>
-              <Link to={ `/profile/${ profile.display_name }` } className={ styles.menuItem }>
+              <Link to={ `/profile/${ profile.display_name }` }>
                 <img
                   src={ profile.avatarURL }
                   className={ styles.avatarWrapperImage }
@@ -56,13 +56,29 @@ class HeaderNavigation extends Component {
                   onClick={ this.toggleDropdown }
                 />
                 <ul className={ dropdownOpen ? styles.open : '' }>
-                  <li onClick={ profile.logOut } className={ styles.menuItem }>Logout</li>
+                  <div className={ styles.menuPointer } />
+                  <li className={ styles.menuItem }>
+                    <Icon iconName='Home' />
+                    <Link to='/'>Home</Link>
+                  </li>
+                  <li className={ styles.menuItem }>
+                    <Icon iconName='UserCircle' />
+                    <Link to={ `/profile/${ profile.display_name }` }>Profile</Link>
+                  </li>
+                  <li className={ styles.menuItem }>
+                    <Icon iconName='Pen' />
+                    <Link to='/new-post'>Create Post</Link>
+                  </li>
+                  <li onClick={ profile.logOut } className={ styles.menuItem }>
+                    <Icon iconName='SignOutAlt' />
+                    <span>Logout</span>
+                  </li>
                 </ul>
               </div>
             </li>
             <Link to='/new-post' className={ styles.newPost }>
               <Button value='Create Post' />
-              <Icon iconName="Plus" />
+              <Icon iconName='Bell' />
             </Link>
           </ul>
         ) : ( // Logged out content

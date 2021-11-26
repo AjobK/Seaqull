@@ -8,8 +8,6 @@
 	position: relative;
 	
 	&Ul {
-		width: 100%;
-		max-width: $header-side-element-width;
 		display: flex;
 		list-style-type: none;
 		font-size: $nr-sm-fontsize;
@@ -17,7 +15,10 @@
 		align-items: center;
 		justify-content: flex-end;
 		letter-spacing: 1px;
-		font-weight: bold;
+
+		@include mobile-sm {
+			max-width: 100%;
+		}
 
 		> :not(:last-child) {
 			margin-right: $header-spacing;
@@ -25,28 +26,44 @@
 	}
 
 	&Item {
+		white-space: nowrap;
 		text-decoration: none;
-		color: rgba(0,0,0,0.6);
 		cursor: pointer;
-
-		&:hover {
-			transition: 0.2s;
-			color: rgba(0,0,0,1);
+		transition: 0.2s;
+		border-radius: 3px;
+		color: $secondary;
+		
+		> :nth-child(2) {
+			font-size: 1em;
+			margin-left: $header-spacing / 2;
 		}
+
+		> * {
+			color: $secondary;
+		}
+	}
+
+	&Pointer {
+		width: $header-spacing;
+		height: $header-spacing;
+		top: -($header-spacing / 2) - 1px;
+		left: calc(50% - #{$header-spacing} / 2);
+		transform: rotate(45deg);
+		background-color: $background;
+		border: 1px solid rgba($secondary, 0.2);
+		border-right: none;
+		border-bottom: none;
+		position: absolute;
 	}
 
 	.goBack {
 		display: flex;
 		align-items: center;
-		color: rgba($secondary, 0.75);
-
-		&Wrapper {
-			width: 100%;
-			max-width: $header-side-element-width;
-		}
+		color: $secondary;
 
 		> p {
-			margin-left: $header-spacing;
+			color: $secondary;
+			margin-left: $header-spacing * 0.75;
 			position: relative;
 
 			&::first-letter {
@@ -72,10 +89,6 @@
 			}
 		}
 
-		> .goBackIcon {
-			font-size: 0.8em;
-		}
-
 		&:hover > p > span {
 			width: 100%;
 		}
@@ -91,6 +104,7 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 100%;
+		margin-right: $header-spacing / 2;
 		
 		@include mobile-all-portrait {
 			position: absolute;
@@ -101,6 +115,9 @@
 
 	&Dropdown {
 		transition: 0.2s;
+		display: flex;
+		justify-content: center;
+		position: relative;
 
 		@include mobile-all-portrait {
 			display: none;
@@ -109,30 +126,32 @@
 		&Icon {
 			cursor: pointer;
 			font-size: 0.8em;
-			margin-left: $header-spacing / 2;
 		}
 
 		> ul {
-			background-color: $background-trans;
+			z-index: 1;
+			background-color: $background;
 			position: absolute;
-			top: $header-height - $header-spacing;
-			right: 0;
-			min-width: 100%;
+			top: $header-spacing * 2;
+			max-width: 300px;
+			min-width: 200px;
 			list-style-type: none;
-			border-radius: 0 0 3px 3px;
+			border-radius: 3px;
 			transition: 0.2s;
 			opacity: 0;
 			pointer-events: none;
+			box-shadow: 0 0 10px rgba($secondary, 0.2);
+			border: 1px solid rgba($secondary, 0.2);
+			transform: translateY($header-spacing / 4);
 
 			&.open {
 				opacity: 1;
 				pointer-events: initial;
+				transform: translateY(0);
 			}
 
 			> li {
-				margin: -1px;
-				padding: $header-spacing * 0.75;
-				text-align: right;
+				padding: ($header-spacing * 0.5) ($header-spacing * 0.75);
 
 				&:not(:last-child) {
 					border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -143,6 +162,9 @@
 }
 
 .logo {
+	position: absolute;
+	left: calc(50% - #{$header-spacing});
+
 	@include mobile-all-portrait {
 		display: none !important;
 	}
