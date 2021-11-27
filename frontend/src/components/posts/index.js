@@ -119,15 +119,12 @@ class Posts extends Component {
     if (!postsBlock)
       return []
 
-    while (true) {
-      if (currentElement.props.children) {
-        currentElement = currentElement.props.children
-      } else {
-        return currentElement.props.posts
-          ? currentElement.props.posts
-          : []
-      }
+    while (currentElement?.props?.children) {
+        const { children } = currentElement.props
+        currentElement = children || []
     }
+    
+    return currentElement
   }
 
   renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
