@@ -147,10 +147,6 @@ class Posts extends Component {
   }
 
   renderNewPostsBlock(posts) {
-    let singleLi = document.createElement('li')
-
-    singleLi.classList.add(styles.post)
-
     const postsBlocks = this.state.postsBlocks
 
     postsBlocks.push(this.createPostsBlock(posts))
