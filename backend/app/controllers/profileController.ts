@@ -15,6 +15,7 @@ import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
 import CaptchaService from '../utils/CaptchaService'
+import { error } from 'util'
 
 const jwt = require('jsonwebtoken')
 
@@ -216,23 +217,23 @@ class ProfileController {
     const isUsernameNotValid = await this.checkValidUsername(username)
 
     if (isUsernameNotValid) {
-      errors.username.push(isUsernameNotValid)
+      errors.username = [isUsernameNotValid]
     }
 
     const isEmailNotValid = await this.checkValidEmail(email)
 
     if (isEmailNotValid) {
-      errors.email.push(isEmailNotValid)
+      errors.email = [isEmailNotValid]
     }
 
     const passwordStrengthErrors = this.getPasswordStrengthErrors(password)
 
-    errors.password.push(passwordStrengthErrors)
+    errors.password = passwordStrengthErrors
 
     const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
 
     if (!isCaptchaValid) {
-      errors.captcha.push('We couldn\'t verify that you\'re not a robot.')
+      errors.captcha = ['We couldn\'t verify that you\'re not a robot.']
     }
 
     if (isUsernameNotValid || isEmailNotValid || !isCaptchaValid || passwordStrengthErrors.length > 0) {
