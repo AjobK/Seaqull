@@ -128,7 +128,7 @@ class Posts extends Component {
       currentElement = children || []
     }
 
-    return currentElement
+    return currentElement.props.posts
   }
 
   renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
