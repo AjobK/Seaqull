@@ -11,7 +11,7 @@ class Posts extends Component {
   constructor(props) {
     super(props)
 
-    this.MAX_POSTS_IN_BLOCK = 6
+    this.maxPostsInBlock = null
     this.totalPages = null
     this.scrolling = false
     this.state = {
@@ -39,10 +39,14 @@ class Posts extends Component {
       .then((json) => {
         this.setIsFetching(false)
 
-        this.setCurrentPage(this.state.page + 1)
-        this.renderNewPosts(json.posts ? json.posts : [])
+        if (!this.maxPostsInBlock) {
+          this.maxPostsInBlock = json.per_page || 6
+        }
 
-        if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
+        this.setCurrentPage(this.state.page + 1)
+        this.renderNewPosts(json.posts || [])
+
+        if (json.posts.length < this.maxPostsInBlock) {
           this.setEndReached(true)
         }
 
@@ -106,7 +110,7 @@ class Posts extends Component {
 
     const postsInLastPostsBlock = this.findPostsInPostsBlock(postsBlocks.at(-1))
 
-    if (postsInLastPostsBlock.length <= 0 || postsInLastPostsBlock.length >= this.MAX_POSTS_IN_BLOCK) {
+    if (postsInLastPostsBlock.length <= 0 || postsInLastPostsBlock.length >= this.maxPostsInBlock) {
       return this.renderNewPostsBlock(posts)
     }
 
@@ -128,7 +132,7 @@ class Posts extends Component {
   }
 
   renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
-    const postsAmountToAddToLastPostsBlock = this.MAX_POSTS_IN_BLOCK - lastPostBlockPosts.length
+    const postsAmountToAddToLastPostsBlock = this.maxPostsInBlock - lastPostBlockPosts.length
 
     const postsToAddToLastPostsBlock = newPosts.slice(0, postsAmountToAddToLastPostsBlock)
     const remainingPosts = newPosts.slice(postsAmountToAddToLastPostsBlock)
