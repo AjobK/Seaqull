@@ -1,0 +1,9 @@
+name: 'Format issue'
+description: 'Formats an issues title and body according to our standard'
+inputs:
+  token:
+    description: 'Token for octokit'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'

@@ -1,0 +1,9 @@
+name: 'Assign reviewer by roster'
+description: 'Assigns reviewers by roster. They alternate per sprint.'
+inputs:
+  token:
+    description: 'Token for octokit'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
