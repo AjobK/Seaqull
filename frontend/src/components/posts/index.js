@@ -148,7 +148,7 @@ class Posts extends Component {
 
     singleLi.classList.add(styles.post)
 
-    const postsBlocks = this.state.postsBlocks
+    const { postsBlocks } = this.state
 
     postsBlocks.push(this.createPostsBlock(posts))
 
