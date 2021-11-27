@@ -10,4 +10,8 @@ export class PostViewRepository extends Repository<PostView> {
 
     return viewCount
   }
+
+  public async addViewToPost(postView: PostView): Promise<void> {
+    await this.save(postView)
+  }
 }

@@ -1,11 +1,10 @@
-import {Body, Controller, Delete, Get, NotFoundException, Param, Post, UseGuards} from '@nestjs/common'
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, UseGuards } from '@nestjs/common'
 import { CommentService } from '../services/comment.service'
 import { Comment } from '../entities/comment.entity'
-import {AuthGuard} from "@nestjs/passport";
-import {CommentDTO} from "../dtos/comment.dto";
-import {AuthorizedUser} from "../decorators/jwt.decorator";
-import {JwtPayload} from "../interfaces/jwt-payload.interface";
-import {Account} from "../entities/account.entity";
+import { AuthGuard } from '@nestjs/passport'
+import { CommentDTO } from '../dtos/comment.dto'
+import { AuthorizedUser } from '../decorators/jwt.decorator'
+import { Account } from '../entities/account.entity'
 
 @Controller('comment')
 export class CommentController {

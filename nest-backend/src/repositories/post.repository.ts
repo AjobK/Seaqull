@@ -49,4 +49,8 @@ export class PostRepository extends Repository<Post> {
 
     return posts
   }
+
+  public async createPost(newPost: Post): Promise<void> {
+    await this.save(newPost)
+  }
 }

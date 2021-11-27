@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
 import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
@@ -7,8 +7,13 @@ import { PostLikeRepository } from '../repositories/post_like.repository'
 import { PostDetailedPayloadDTO } from '../dtos/post-detailed-payload.dto'
 import { PostViewRepository } from '../repositories/post_view.repository'
 import { PostViewDTO } from '../dtos/post-view.dto'
-import { Post } from '../entities/post.entity'
 import { AccountRepository } from '../repositories/account.repository'
+import { CreatePostDTO } from '../dtos/create-post.dto'
+import { FileService } from './file.service'
+import { Post } from '../entities/post.entity'
+import Attachment from '../../../backend/app/entities/attachment'
+import { AttachmentRepository } from '../repositories/attachment.repository'
+import {PostView} from "../entities/post_view.entity";
 
 @Injectable()
 export class PostService {
@@ -16,7 +21,9 @@ export class PostService {
     @InjectRepository(PostRepository) private readonly postRepository: PostRepository,
     @InjectRepository(PostLikeRepository) private readonly postLikeRepository: PostLikeRepository,
     @InjectRepository(PostViewRepository) private readonly postViewRepository: PostViewRepository,
-    @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository
+    @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
+    @InjectRepository(AttachmentRepository) private readonly attachmentRepository: AttachmentRepository,
+    private readonly fileService: FileService,
   ) {
   }
 
@@ -84,6 +91,64 @@ export class PostService {
     }
 
     return posts
+  }
+
+  public async addViewToPost(postPath: string, ipAddress: string): Promise<void> {
+    const foundPost = await this.postRepository.getPostByPath(postPath)
+
+    if (!foundPost) throw new NotFoundException({ message: 'Post not found' })
+
+    const postView = new PostView()
+    postView.post = foundPost
+    postView.ip = ipAddress
+
+    await this.postViewRepository.addViewToPost(postView)
+  }
+
+  public async createPost(createPostDTO: CreatePostDTO, file: Express.Multer.File, user: Account): Promise<string> {
+    let thumbnailAttachment
+    const newPost = new Post()
+
+    if (file) {
+      const isImage = this.fileService.isImage(file)
+
+      if (!isImage) throw new BadRequestException({ error: 'Only images are allowed' })
+
+      thumbnailAttachment = await this.createThumbnailAttachment(file)
+    } else {
+      thumbnailAttachment = await this.attachmentRepository.getDefaultThumbnailAttachment()
+    }
+
+    newPost.title = createPostDTO.title
+    newPost.description = createPostDTO.description
+    newPost.content = createPostDTO.content
+    newPost.published_at = new Date()
+    newPost.created_at = new Date()
+    newPost.thumbnail_attachment = thumbnailAttachment
+    newPost.profile = user.profile
+
+    await this.postRepository.createPost(newPost)
+
+    return newPost.path
+  }
+
+  private async createThumbnailAttachment(file: Express.Multer.File) {
+    const location = await this.fileService.storeImage(file, 'post/thumbnail')
+
+    const attachment = await this.convertThumbnailToAttachment(location)
+
+    return await this.attachmentRepository.saveAttachment(attachment)
+  }
+
+  private async convertThumbnailToAttachment(location: string) {
+    const dimensions = { width: +(800 * (16 / 9)).toFixed(), height: 800 }
+
+    await this.fileService.convertImage(location, dimensions)
+
+    const attachment = new Attachment()
+    attachment.path = location
+
+    return attachment
   }
 
   private async getPostThumbnailURL(postId: number): Promise<string> {
