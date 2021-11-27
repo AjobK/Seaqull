@@ -79,13 +79,13 @@ class Posts extends Component {
   }
 
   fetchMorePosts = () => {
-	  if (this.state.endReached) {
-		  this.setCurrentPage(0)
-		  this.setEndReached(false)
-		  this.fetchPosts()
+    if (this.state.endReached) {
+      this.setCurrentPage(0)
+      this.setEndReached(false)
+      this.fetchPosts()
 
-		  return
-	  }
+      return
+    }
 
     this.fetchPosts()
   }
@@ -120,8 +120,8 @@ class Posts extends Component {
       return []
 
     while (currentElement?.props?.children) {
-        const { children } = currentElement.props
-        currentElement = children || []
+      const { children } = currentElement.props
+      currentElement = children || []
     }
 
     return currentElement
