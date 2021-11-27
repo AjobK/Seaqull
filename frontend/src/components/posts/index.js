@@ -145,7 +145,7 @@ class Posts extends Component {
   renderNewPostsBlock(posts) {
     const { postsBlocks } = this.state
 
-    const amountOfPostBlocks = Math.ceil(posts.length / 6)
+    const amountOfPostBlocks = Math.ceil(posts.length / this.MAX_POSTS_IN_BLOCK)
 
     for (let i = 0; i < amountOfPostBlocks; i++) {
       const postsInPostsBlock = posts.slice(
