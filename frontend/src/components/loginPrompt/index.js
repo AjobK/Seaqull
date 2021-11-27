@@ -118,11 +118,10 @@ class LoginPrompt extends Component {
 
   render() {
     const { username, password, remainingTime, loadingTimeout } = this.state
-    const { NODE_ENV, HCAPTCHA_DEV_SITE_KEY, HCAPTCHA_PROD_SITE_KEY } = process.env
 
-    const siteKey = NODE_ENV === 'development'
-      ? HCAPTCHA_DEV_SITE_KEY
-      : HCAPTCHA_PROD_SITE_KEY
+    const siteKey = process.env.NODE_ENV === 'development'
+      ? process.env.HCAPTCHA_DEV_SITE_KEY
+      : process.env.HCAPTCHA_PROD_SITE_KEY
 
     return (
       <div className={ [styles.prompt, this.props.className].join(' ') }>
