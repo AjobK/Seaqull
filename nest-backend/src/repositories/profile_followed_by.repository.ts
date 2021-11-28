@@ -12,4 +12,10 @@ export class ProfileFollowedByRepository extends Repository<ProfileFollowedBy> {
 
     return followers
   }
+
+  public async getFollowersCount(id: number): Promise<number> {
+    const amountOfFollowers = await this.count({ where: { profile: id } })
+
+    return amountOfFollowers
+  }
 }

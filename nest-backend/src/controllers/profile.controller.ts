@@ -1,14 +1,16 @@
-import {Controller, Get, Param, Post, Put, UseGuards} from '@nestjs/common'
+import { Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { ProfileService } from '../services/profile.service'
 import { AuthGuard } from '@nestjs/passport'
+import Title from '../../../backend/app/entities/title'
+import ProfileFollowedBy from '../../../backend/app/entities/profile_followed_by'
 
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Get('/:username')
-  public getProfile(): any {
-
+  public async getProfile(@Param('username') username: string): any {
+    const profile = await this.profileService.getProfile(username)
   }
 
   @Get('/:username/followers')
