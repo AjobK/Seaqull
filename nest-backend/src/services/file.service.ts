@@ -26,7 +26,7 @@ export class FileService {
     const day = String(today.getDate()).padStart(2, '0')
     const month = String(today.getMonth() + 1).padStart(2, '0')
     const year = today.getFullYear()
-    const name = uuidv4() + file.mimetype
+    const name = uuidv4() + file.originalname.split('.').at(-1)
     let newPath = 'src/public/' + path + '/' + year
 
     if (!fs.existsSync(newPath)) {

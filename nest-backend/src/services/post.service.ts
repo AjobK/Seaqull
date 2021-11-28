@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
 import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
@@ -11,10 +11,12 @@ import { AccountRepository } from '../repositories/account.repository'
 import { CreatePostDTO } from '../dtos/create-post.dto'
 import { FileService } from './file.service'
 import { Post } from '../entities/post.entity'
-import Attachment from '../../../backend/app/entities/attachment'
 import { AttachmentRepository } from '../repositories/attachment.repository'
-import {PostView} from "../entities/post_view.entity";
-
+import { PostView } from '../entities/post_view.entity'
+import { ArchivedPost } from '../entities/archivedPost.entity'
+import { ArchivedPostRepository } from '../repositories/archived_post.repository'
+import { Attachment } from '../entities/attachment.entity'
+import {RolePermissionRepository} from "../repositories/role_permission.repository";
 @Injectable()
 export class PostService {
   constructor(
@@ -23,6 +25,8 @@ export class PostService {
     @InjectRepository(PostViewRepository) private readonly postViewRepository: PostViewRepository,
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
     @InjectRepository(AttachmentRepository) private readonly attachmentRepository: AttachmentRepository,
+    @InjectRepository(ArchivedPostRepository) private readonly archivedPostRepository: ArchivedPostRepository,
+    @InjectRepository(RolePermissionRepository) private readonly rolePermissionRepository: RolePermissionRepository,
     private readonly fileService: FileService,
   ) {
   }
@@ -132,12 +136,100 @@ export class PostService {
     return newPost.path
   }
 
+  public async updatePost(path: string, createPostDTO: CreatePostDTO, display_name: string): Promise<void> {
+    const post = await this.postRepository.getPostByPath(path)
+
+    if (!post || display_name !== post.profile.display_name) {
+      throw new ForbiddenException({
+        message: 'The authorized requesting user does not have access to this resource'
+      })
+    }
+
+    post.title = createPostDTO.title
+    post.description = createPostDTO.description
+    post.content = createPostDTO.content
+
+    const result = await this.postRepository.updatePost(post)
+
+    if (!result) throw new NotFoundException('Post was not found and could not be updated')
+  }
+
+  public async archivePost(path: string, user: Account): Promise<void> {
+    const post = await this.postRepository.getPostByPath(path)
+
+    if (!post || post.profile.display_name !== user.profile.display_name || !(await this.hasRemovePostPermission(user))) {
+      throw new ForbiddenException({
+        message: 'The authorized requesting user does not have access to this resource'
+      })
+    }
+
+    const currentDate = Date.now()
+    post.archived_at = currentDate
+
+    const archivedPost = new ArchivedPost()
+    archivedPost.archived_at = currentDate
+    archivedPost.archivist = user
+
+    await this.archivedPostRepository.saveArchivedPost(archivedPost)
+
+    const newPost = await this.postRepository.updatePost(post)
+
+    if (!newPost) throw new NotFoundException('Post was not found and could not be updated')
+  }
+
+  public async getDefaultThumbnailAttachment(): Promise<string> {
+    const foundAttachment = await this.attachmentRepository.getDefaultThumbnailAttachment()
+
+    if (!foundAttachment) throw new NotFoundException('Attachment not found')
+
+    const attachmentURL = 'http://localhost:8000/' + foundAttachment.path
+
+    return attachmentURL
+  }
+
+  public async updatePostThumbnail(path: string, file: Express.Multer.File, user: Account): Promise<string> {
+    const post = await this.postRepository.getPostByPath(path)
+
+    if (!post || user.profile.display_name !== post.profile.display_name) {
+      throw new ForbiddenException({
+        message: 'The authorized requesting user does not have access to this resource'
+      })
+    }
+
+    const isImage = this.fileService.isImage(file)
+
+    if (!isImage) throw new BadRequestException('Only images are allowed')
+
+    const banner = await this.updateThumbnailAttachment(post, file)
+
+    return 'http://localhost:8000/' + banner.path
+  }
+
   private async createThumbnailAttachment(file: Express.Multer.File) {
     const location = await this.fileService.storeImage(file, 'post/thumbnail')
 
     const attachment = await this.convertThumbnailToAttachment(location)
 
     return await this.attachmentRepository.saveAttachment(attachment)
+  }
+
+  private async updateThumbnailAttachment(post: Post, file: Express.Multer.File): Promise<Attachment> {
+    let attachment = await this.postRepository.getPostAttachment(post.id)
+    const location = await this.fileService.storeImage(file, 'post/thumbnail')
+
+    const typeDefaultPath = 'default/defaultThumbnail.jpg'
+
+    if (attachment.path !== typeDefaultPath) {
+      return await this.deleteThumbnailAttachment(attachment, location)
+    }
+
+    attachment = await this.convertThumbnailToAttachment(location)
+
+    post.thumbnail_attachment = await this.attachmentRepository.saveAttachment(attachment)
+
+    await this.postRepository.updatePost(post)
+
+    return post.thumbnail_attachment
   }
 
   private async convertThumbnailToAttachment(location: string) {
@@ -155,5 +247,24 @@ export class PostService {
     const attachment = await this.postRepository.getPostAttachment(postId)
 
     return 'http://localhost:8000/' + attachment.path
+  }
+
+  private async deleteThumbnailAttachment(attachment: Attachment, location: string) {
+    this.fileService.deleteImage(attachment.path)
+    attachment.path = location
+
+    return await this.attachmentRepository.saveAttachment(attachment)
+  }
+
+  private async hasRemovePostPermission(user: Account): Promise<boolean> {
+    const permissions = await this.rolePermissionRepository.getRolePermissionsByRole(user.role.id)
+
+    let hasPermission = false
+
+    if (permissions.some((permission) => permission.permission.name === 'REMOVE_POSTS')) {
+      hasPermission = true
+    }
+
+    return hasPermission
   }
 }

@@ -68,6 +68,15 @@ export class PostController {
     return ownedPosts
   }
 
+  @Get('/thumbnail/default')
+  public async getPostDefaultThumbnailURL(): Promise<{ thumbnail: string }> {
+    const attachmentURL = await this.postService.getDefaultThumbnailAttachment()
+
+    return {
+      thumbnail: attachmentURL
+    }
+  }
+
   @Post()
   @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('file', {
@@ -96,12 +105,46 @@ export class PostController {
   }
 
   @Put('/:path')
-  public updatePost(): any {
+  @UseGuards(AuthGuard())
+  public async updatePost(
+    @Param('path') path: string,
+    @Body() createPostDTO: CreatePostDTO,
+    @AuthorizedUser() user: Account
+  ): Promise<{ message: string }> {
+    await this.postService.updatePost(path, createPostDTO, user.profile.display_name)
 
+    return {
+      message: 'Post has been updated!'
+    }
   }
 
   @Put('/archive/:path')
-  public archivePost(): any {
+  @UseGuards(AuthGuard())
+  public async archivePost(
+    @Param('path') path: string,
+    @AuthorizedUser() user: Account
+  ): Promise<{ message: string }> {
+    await this.postService.archivePost(path, user)
 
+    return {
+      message: 'Post archived'
+    }
+  }
+
+  @Put('/thumbnail/:path')
+  @UseGuards(AuthGuard())
+  @UseInterceptors(FileInterceptor('file', {
+    limits: { fieldSize: 2 * 1024 * 1024 },
+  }))
+  public async updatePostThumbnail(
+    @Param('path') path: string,
+    @UploadedFile() file: Express.Multer.File,
+    @AuthorizedUser() user: Account,
+  ): Promise<{ message: string, url: string }> {
+    const url = await this.postService.updatePostThumbnail(path, file, user)
+
+    return {
+      message: 'success', url
+    }
   }
 }

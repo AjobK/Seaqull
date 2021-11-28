@@ -8,7 +8,7 @@ import { RoleModule } from './modules/role.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configValidationSchema } from './config.schema'
-import {PostLikeModule} from "./modules/post-like.module";
+import { PostLikeModule } from './modules/post-like.module'
 
 @Module({
   imports: [

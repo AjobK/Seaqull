@@ -284,35 +284,6 @@ class PostController {
     return res.status(200).json({ 'views': viewCount })
   }
 
-  public getPostDefaultThumbnailURL = async (req: Request, res: Response): Promise<any> => {
-    const foundAttachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
-
-    if (!foundAttachment) {
-      return res.status(404).json({ 'message': 'Attachment not found' })
-    }
-
-    const attachmentURL = 'http://localhost:8000/' + foundAttachment.path
-
-    return res.status(200).json({ 'thumbnail': attachmentURL })
-  }
-
-  // TODO Move to another file?
-  private fetchProfile = async (req: Request): Promise<Profile> => {
-    const { token } = req.cookies
-
-    if (token) {
-      try {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
-        return await this.profileDAO.getProfileByUsername(decodedToken.username)
-      } catch (err) {
-        return null
-      }
-    }
-
-    return null
-  }
-
   public archivePost = async (req: any, res: Response): Promise<any> => {
     const post = await this.dao.getPostByPath(req.params.path)
 
@@ -339,6 +310,18 @@ class PostController {
     return res.status(200).json({ message: 'Post archived!' })
   }
 
+  public getPostDefaultThumbnailURL = async (req: Request, res: Response): Promise<any> => {
+    const foundAttachment = await this.attachmentDAO.getDefaultThumbnailAttachment()
+
+    if (!foundAttachment) {
+      return res.status(404).json({ 'message': 'Attachment not found' })
+    }
+
+    const attachmentURL = 'http://localhost:8000/' + foundAttachment.path
+
+    return res.status(200).json({ 'thumbnail': attachmentURL })
+  }
+
   public updatePostThumbnail = async (req: any, res: Response): Promise<Response> => {
     const isImage = await this.fileService.isImage(req.file)
 
@@ -349,6 +332,23 @@ class PostController {
 
       return res.status(200).json({ message: 'success', url: 'http://localhost:8000/' + banner.path })
     }
+  }
+
+  // TODO Move to another file?
+  private fetchProfile = async (req: Request): Promise<Profile> => {
+    const { token } = req.cookies
+
+    if (token) {
+      try {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
+        return await this.profileDAO.getProfileByUsername(decodedToken.username)
+      } catch (err) {
+        return null
+      }
+    }
+
+    return null
   }
 
   private updateThumbnailAttachment = async (postPath, file): Promise<any> => {

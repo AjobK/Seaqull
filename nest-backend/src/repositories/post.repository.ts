@@ -53,4 +53,10 @@ export class PostRepository extends Repository<Post> {
   public async createPost(newPost: Post): Promise<void> {
     await this.save(newPost)
   }
+
+  public async updatePost(post: Post): Promise<Post> {
+    const newPost = await this.save(post)
+
+    return newPost
+  }
 }
