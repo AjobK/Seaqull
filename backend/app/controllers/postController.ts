@@ -34,17 +34,19 @@ class PostController {
   }
 
   public getPosts = async (req: Request, res: Response): Promise<Response> => {
-    let posts = []
     const amount = 6
-    const page = req.query?.page
     const totalPosts = await this.dao.getAmountPosts()
     const totalPages = Math.ceil(totalPosts / amount)
+
+    let posts = []
+    let page = +req.query?.page
 
     if (isNaN(+page) || +page < 0)
       return res.status(422).json({
         message: 'Invalid page number'
       })
 
+    page = ~~page
     posts = await this.dao.getPosts(+page, amount)
 
     const message = {
