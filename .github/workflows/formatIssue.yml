@@ -1,0 +1,23 @@
+name: Format issue
+
+on:
+  issues:
+    types: [ opened ]
+    branches:
+      - develop
+
+jobs:
+  format_issue:
+    runs-on: ubuntu-latest
+    name: A job to format an issue
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install base modules
+        run: |
+          npm i -D @actions/core
+          npm i -D @actions/github
+      - name: Issue formatting
+        id: reviewerAssignment
+        uses: ./.github/actions/formatIssue
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
