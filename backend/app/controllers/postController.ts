@@ -35,7 +35,7 @@ class PostController {
 
   public getPosts = async (req: Request, res: Response): Promise<Response> => {
     let posts
-    const amount = 6
+    const amount = 4
 
     if (req.query.page == null) {
       posts = await this.dao.getPosts('0', amount)
@@ -52,7 +52,11 @@ class PostController {
     }
 
     const count = await this.dao.getAmountPosts()
-    const message = { posts: posts, totalPosts: count, per_page: amount }
+    const message = {
+      posts: posts,
+      postsPerPage: amount,
+      totalPages: Math.ceil(count / amount)
+    }
 
     return res.status(200).json(message)
   }
