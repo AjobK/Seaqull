@@ -14,7 +14,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
-import CaptchaService from '../utils/CaptchaService'
+import CaptchaService from '../utils/captchaService'
 
 const jwt = require('jsonwebtoken')
 
