@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common'
+import {Controller, Get, Param, Post, Put, UseGuards} from '@nestjs/common'
 import { ProfileService } from '../services/profile.service'
 import { AuthGuard } from '@nestjs/passport'
 
@@ -27,12 +27,6 @@ export class ProfileController {
 
   @Post('/follow/:username')
   public follow(): any {
-
-  }
-
-  @Put('/:username')
-  @UseGuards(AuthGuard())
-  public updateProfile(): any {
 
   }
 

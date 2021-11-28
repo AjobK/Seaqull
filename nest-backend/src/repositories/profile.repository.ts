@@ -9,7 +9,7 @@ export class ProfileRepository extends Repository<Profile> {
     return profile
   }
 
-  public async getFollowersByProfileId(id: number) {
-
+  public async saveProfile(profile: Profile): Promise<void> {
+    await this.save(profile)
   }
 }
