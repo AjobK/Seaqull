@@ -77,7 +77,7 @@ class HeaderNavigation extends Component {
               </div>
             </li>
             <Link to='/new-post' className={ styles.newPost }>
-              <Button value='Create Post' />
+              <Button value='Create Post' className={ styles.button } />
               <Icon iconName='Bell' />
             </Link>
           </ul>

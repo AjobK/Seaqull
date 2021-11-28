@@ -84,7 +84,7 @@
 					bottom: 0;
 					height: 1px;
 					width: 0;
-					background-color: rgba($secondary, 0.5);
+					background-color: rgba($secondary, 1);
 				}
 			}
 		}
@@ -188,4 +188,8 @@
 			display: initial;
 		}
 	}
+}
+
+.button {
+	font-weight: normal;
 }

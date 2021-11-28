@@ -9,7 +9,11 @@ const NavigationStore = types
       },
       profile: {
         ref: '/profile',
-        icon: 'User'
+        icon: 'UserCircle'
+      },
+      'create post': {
+        ref: '/new-post',
+        icon: 'Pen'
       },
       logout: {
         ref: '/logout',
