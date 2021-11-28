@@ -34,28 +34,29 @@ class PostController {
   }
 
   public getPosts = async (req: Request, res: Response): Promise<Response> => {
-    let posts
+    let posts = []
     const amount = 4
+    const page = req.query?.page
+    const totalPosts = await this.dao.getAmountPosts()
+    const totalPages = Math.ceil(totalPosts / amount)
 
-    if (req.query.page == null) {
-      posts = await this.dao.getPosts('0', amount)
-    } else {
-      posts = await this.dao.getPosts(String(req.query.page), amount)
+    if (isNaN(+page) || +page < 0)
+      return res.status(422).json({
+        message: 'Invalid page number'
+      })
 
-      if (posts.length <= 0 ) {
-        posts = await this.dao.getPosts('0', amount)
-      }
-    }
+    posts = await this.dao.getPosts(+page, amount)
 
+    // TODO: This definitely needs some reworking done. Not good code...
     for (const post of posts) {
       post.thumbnail = await this.getPostThumbnailURL(post.id)
     }
 
-    const count = await this.dao.getAmountPosts()
     const message = {
-      posts: posts,
+      currentPage: +page,
+      totalPages: totalPages,
       postsPerPage: amount,
-      totalPages: Math.ceil(count / amount)
+      posts: posts
     }
 
     return res.status(200).json(message)

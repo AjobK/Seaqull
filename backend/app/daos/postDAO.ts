@@ -9,9 +9,9 @@ import Attachment from '../entities/attachment'
 class PostDAO {
     private postViewRepository = 'PostView'
 
-    public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
+    public async getPosts(skipSize: number, amount: number): Promise<Post[]> {
       const repository = await DatabaseConnector.getRepository('Post')
-      const skipAmount = parseInt(skipSize) * amount
+      const skipAmount = skipSize * amount
       const postList = repository.find({ where: { archived_at: IsNull() }, take : amount, skip: skipAmount })
 
       return postList
