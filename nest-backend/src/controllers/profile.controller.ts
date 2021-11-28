@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Put } from '@nestjs/common'
+import { Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { ProfileService } from '../services/profile.service'
+import { AuthGuard } from '@nestjs/passport'
 
 @Controller('profile')
 export class ProfileController {
@@ -11,8 +12,12 @@ export class ProfileController {
   }
 
   @Get('/:username/followers')
-  public getFollowers(): any {
+  public async getFollowers(@Param('username') username: string): Promise<{ followers: number[] }> {
+    const followers = await this.profileService.getFollowers(username)
 
+    return {
+      followers
+    }
   }
 
   @Post('/register')
@@ -26,16 +31,19 @@ export class ProfileController {
   }
 
   @Put('/:username')
+  @UseGuards(AuthGuard())
   public updateProfile(): any {
 
   }
 
   @Put('/avatar')
+  @UseGuards(AuthGuard())
   public updateProfileAvatar(): any {
 
   }
 
   @Put('/banner')
+  @UseGuards(AuthGuard())
   public updateProfileBanner(): any {
 
   }
