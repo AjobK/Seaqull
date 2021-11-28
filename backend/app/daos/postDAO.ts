@@ -12,7 +12,12 @@ class PostDAO {
     public async getPosts(skipSize: number, amount: number): Promise<Post[]> {
       const repository = await DatabaseConnector.getRepository('Post')
       const skipAmount = skipSize * amount
-      const postList = repository.find({ where: { archived_at: IsNull() }, take : amount, skip: skipAmount })
+      const postList = repository.find({
+        where: { archived_at: IsNull() },
+        relations: ['thumbnail_attachment'],
+        take : amount,
+        skip: skipAmount
+      })
 
       return postList
     }

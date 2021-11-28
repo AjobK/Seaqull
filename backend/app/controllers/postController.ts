@@ -47,11 +47,6 @@ class PostController {
 
     posts = await this.dao.getPosts(+page, amount)
 
-    // TODO: This definitely needs some reworking done. Not good code...
-    for (const post of posts) {
-      post.thumbnail = await this.getPostThumbnailURL(post.id)
-    }
-
     const message = {
       currentPage: +page,
       totalPages: totalPages,
