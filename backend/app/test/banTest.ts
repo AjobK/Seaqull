@@ -3,6 +3,10 @@ import chaiHttp = require('chai-http')
 import assert = require('assert')
 import { v4 as uuidv4 } from 'uuid'
 
+require('dotenv').config()
+
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Ban functionality', () => {
@@ -17,7 +21,8 @@ describe('Ban functionality', () => {
       .send({
         username: shortBannedUser,
         password: 'Qwerty123',
-        email: `${shortBannedUser}@test.com`
+        email: `${shortBannedUser}@test.com`,
+        captcha
       })
       .end()
 
@@ -26,7 +31,8 @@ describe('Ban functionality', () => {
       .send({
         username: longBannedUser,
         password: 'Qwerty123',
-        email: `${longBannedUser}@test.com`
+        email: `${longBannedUser}@test.com`,
+        captcha
       })
       .end(() => {
         done()
@@ -39,7 +45,8 @@ describe('Ban functionality', () => {
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha
         })
         .end(() => {
           done()
@@ -67,7 +74,8 @@ describe('Ban functionality', () => {
         .post('/login')
         .send({
           username: 'Moderator',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha
         })
         .end(() => {
           done()
@@ -115,7 +123,8 @@ describe('Ban functionality', () => {
         .post('/login')
         .send({
           username: 'Admin',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha
         })
         .end(() => {
           done()
