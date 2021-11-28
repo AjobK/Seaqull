@@ -14,6 +14,7 @@ class Posts extends Component {
     this.MAX_POSTS_IN_BLOCK = 6
     this.totalPages = null
     this.scrolling = false
+
     this.state = {
       postsBlocks: [],
       isFetching: false,
@@ -34,15 +35,16 @@ class Posts extends Component {
   fetchPosts = () => {
     this.setIsFetching(true)
 
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/?page=${this.state.page}`, { withCredentials: true })
+    Axios.get(`${ this.props.store.defaultData.backendUrl }/post/?page=${ this.state.page }`, { withCredentials: true })
       .then((response) => response.data)
       .then((json) => {
         this.setIsFetching(false)
 
         this.setCurrentPage(this.state.page + 1)
-        this.renderNewPosts(json.posts ? json.posts : [])
 
-        if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
+        this.renderNewPosts(json.posts || [])
+
+        if (json.posts.length < json.per_page) {
           this.setEndReached(true)
         }
 
@@ -59,33 +61,30 @@ class Posts extends Component {
 
   setEndReached(endReached) {
     this.setState({
-      ...this.state,
-      endReached,
+      endReached
     })
   }
 
   setIsFetching = (isFetching) => {
     this.setState({
-      ...this.state,
-      isFetching,
+      isFetching
     })
   }
 
   setCurrentPage = (page) => {
     this.setState({
-      ...this.state,
       page
     })
   }
 
   fetchMorePosts = () => {
-	  if (this.state.endReached) {
-		  this.setCurrentPage(0)
-		  this.setEndReached(false)
-		  this.fetchPosts()
+    if (this.state.endReached) {
+      this.setCurrentPage(0)
+      this.setEndReached(false)
+      this.fetchPosts()
 
-		  return
-	  }
+      return
+    }
 
     this.fetchPosts()
   }
@@ -119,15 +118,12 @@ class Posts extends Component {
     if (!postsBlock)
       return []
 
-    while (true) {
-      if (currentElement.props.children) {
-        currentElement = currentElement.props.children
-      } else {
-        return currentElement.props.posts
-          ? currentElement.props.posts
-          : []
-      }
+    while (currentElement?.props?.children) {
+      const { children } = currentElement.props
+      currentElement = children || []
     }
+
+    return currentElement.props.posts
   }
 
   renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
@@ -147,13 +143,18 @@ class Posts extends Component {
   }
 
   renderNewPostsBlock(posts) {
-    let singleLi = document.createElement('li')
+    const { postsBlocks } = this.state
 
-    singleLi.classList.add(styles.post)
+    const amountOfPostBlocks = Math.ceil(posts.length / this.MAX_POSTS_IN_BLOCK)
 
-    const postsBlocks = this.state.postsBlocks
+    for (let i = 0; i < amountOfPostBlocks; i++) {
+      const postsInPostsBlock = posts.slice(
+        this.MAX_POSTS_IN_BLOCK * i,
+        this.MAX_POSTS_IN_BLOCK * (i + 1)
+      )
 
-    postsBlocks.push(this.createPostsBlock(posts))
+      postsBlocks.push(this.createPostsBlock(postsInPostsBlock))
+    }
 
     this.setState({
       postsBlocks
