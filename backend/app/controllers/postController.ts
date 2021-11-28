@@ -100,7 +100,7 @@ class PostController {
       decodedId = account.profile.id
     } catch (e) {
       decodedId = -1
-    }
+    } // stinkie
 
     const foundLikes = await this.dao.getPostLikesById(foundPost.id)
     const postLikesAmount = foundLikes ? foundLikes.length : 0
