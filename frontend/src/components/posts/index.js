@@ -37,7 +37,7 @@ class Posts extends Component {
 
     Axios.get(`${ this.props.store.defaultData.backendUrl }/post/?page=${ this.state.page }`, { withCredentials: true })
       .then((response) => response.data)
-      .then((json) => { // woef zegt hondje
+      .then((json) => {
         this.setIsFetching(false)
 
         this.setCurrentPage(this.state.page + 1)
