@@ -25,12 +25,6 @@ class PostBanner extends Component {
     }
   }
 
-  updatePopup() {
-    this.setState({
-      popUpOpen: !this.state.popUpOpen,
-    })
-  }
-
   onThumbnailDragEnter = () => {
     this.setState({
       draggingOverThumbnail: true
@@ -97,6 +91,7 @@ class PostBanner extends Component {
     const { author, isOwner } = this.props
 
     const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
+    console.log(this.state.thumbnail)
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
