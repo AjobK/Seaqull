@@ -4,6 +4,10 @@ import assert = require('assert')
 import Post from '../entities/post'
 import Comment from '../entities/comment'
 
+require('dotenv').config()
+
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Comment section', () => {
@@ -44,7 +48,8 @@ describe('Comment section', () => {
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha
         })
         .end(() => {
           agent

@@ -1,33 +1,31 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import styles from './registerPrompt.scss'
 import { inject, observer } from 'mobx-react'
 import { Icon, FormInput, Button } from '../'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
-import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store')
 @observer
 class RegisterPrompt extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       username: null,
       email: null,
       password: null,
-      recaptcha: null,
-      recaptchaToken: null,
+      generalError: null
     }
+
+    this.captchaRef = createRef()
 
     this.elId = {}
   }
 
-  componentDidMount() {
-    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this)
-    this.verifyCallback = this.verifyCallback.bind(this)
-  }
-
-  auth = () => {
+  auth = (captchaToken) => {
     this.setState({
       username: 'loading',
       email: 'loading',
@@ -40,7 +38,7 @@ class RegisterPrompt extends Component {
       username: document.getElementById(this.elId.Username).value,
       email: document.getElementById(this.elId.Email).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken,
+      captcha: captchaToken,
     }
 
     Axios.post('/profile/register', payload, { withCredentials: true })
@@ -50,14 +48,13 @@ class RegisterPrompt extends Component {
         this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((res) => {
-        const { username, email, password, recaptcha } = res.response.data.errors
+        const { username, email, password, captcha } = res.response?.data?.errors
 
         this.setState({
           username: username || [],
           email: email || [],
           password: password || [],
-          recaptcha: recaptcha || [],
-          recaptchaToken: null,
+          generalError: captcha || [],
         })
       })
   }
@@ -68,62 +65,36 @@ class RegisterPrompt extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
+
+    this.captchaRef.current.execute()
+  }
+
+  handleVerificationSuccess(token) {
     this.setState({
       username: 'loading',
       email: 'loading',
       password: 'loading',
     })
 
-    //checking if recaptcha is already loaded
-    if (!this.captcha.state.ready) {
-      this.state.recaptchaToken == null ? loadReCaptcha() : this.auth()
-    } else {
-      this.loadCaptchaOnSubmit()
-    }
+    this.auth(token)
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
-  loadCaptchaOnSubmit = () => {
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
-    }
-    // setTimeout( () => {
-    //   this.setState({
-    //     user_name: null,
-    //     email: null,
-    //     password: null,
-    //     recaptcha: null,
-    //   })
-    // }, 3000);
+  getError = (credentialError) => {
+    const { generalError } = this.state
+
+    return generalError?.length > 0 ? generalError : credentialError
   }
 
-  onLoadRecaptcha = () => {
-    if (this.captcha) {
-      this.captcha.reset()
-      this.captcha.execute()
-    }
-    //   setTimeout( () => {
-    //     this.setState({
-    //       user_name: null,
-    //       email: null,
-    //       password: null,
-    //       recaptcha: null,
-    //     })
-    // }, 3000);
-  }
-
-  verifyCallback = (recaptchaToken) => {
-    this.setState({ recaptchaToken })
-    this.auth()
+  onCaptchaError = () => {
+    this.props.store.notification.setContent(popUpData.messages.captchaError)
   }
 
   render() {
-    const { username, email, password, recaptcha } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Sign Up'
+    const { username, email, password } = this.state
 
     return (
       <div className={ [styles.prompt, this.props.className].join(' ') }>
@@ -136,38 +107,37 @@ class RegisterPrompt extends Component {
             <FormInput
               toolTipDirection={ 'bottom' }
               name={ 'Username' }
-              errors={ username }
+              errors={ this.getError(username) }
               className={ [styles.formGroup] }
               callBack={ this.setElId }
             />
             <FormInput
               toolTipDirection={ 'bottom' }
               name={ 'Email' }
-              errors={ email }
+              errors={ this.getError(email) }
               className={ [styles.formGroup] }
               callBack={ this.setElId }
             />
             <FormInput
               toolTipDirection={ 'bottom' }
               name={ 'Password' }
-              errors={ password }
+              errors={ this.getError(password) }
               className={ [styles.formGroup] }
               callBack={ this.setElId }
               type="password"
             />
             <div to="/" className={ styles.submitWrapper }>
-              <Button value={ buttonClass } className={ styles.submit } />
-              <ReCaptcha
-                ref={ (el) => {
-                  this.captcha = el
-                } }
-                size="invisible"
-                render="explicit"
-                sitekey="6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S"
-                onloadCallback={ this.onLoadRecaptcha }
-                verifyCallback={ this.verifyCallback }
-              />
+              <Button value={ 'Sign Up' } className={ styles.submit } />
             </div>
+            <HCaptcha
+              sitekey={ process.env.NODE_ENV === 'development'
+                ? process.env.HCAPTCHA_DEV_SITE_KEY
+                : process.env.HCAPTCHA_PROD_SITE_KEY }
+              size={ 'invisible' }
+              onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
+              onError={ this.onCaptchaError }
+              ref={ this.captchaRef }
+            />
           </form>
           <div className={ styles.image } />
         </div>

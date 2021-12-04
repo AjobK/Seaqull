@@ -1,0 +1,29 @@
+name: Pull-request creation
+
+on:
+  pull_request:
+    types: [ opened, reopened ]
+    branches:
+      - develop
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v3
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  assign_reviewer_job:
+    runs-on: ubuntu-latest
+    name: A job to assign reviewers to PR
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install base modules
+        run: |
+          npm i -D @actions/core
+          npm i -D @actions/github
+      - name: Reviewer(s) assignment
+        uses: ./.github/actions/assignReviewerByRoster
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
