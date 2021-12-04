@@ -91,7 +91,6 @@ class PostBanner extends Component {
     const { author, isOwner } = this.props
 
     const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
-    console.log(this.state.thumbnail)
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
