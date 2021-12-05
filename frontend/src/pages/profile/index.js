@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
-import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
+import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo, SettingsPrompt } from '../../components'
 import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
 import { withRouter } from 'react-router'
@@ -135,6 +135,9 @@ class Profile extends App {
             </p>
           </div>
         </section>
+        <Section title={ 'SETTINGS' }>
+          <SettingsPrompt settings={ user.settings }/>
+        </Section>
         <Section title={ 'DESCRIPTION' }>
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn } />
         </Section>

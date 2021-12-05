@@ -1,7 +1,7 @@
 ---
 name: Feature
 about: Used for new functionalities and features.
-title: "[000] Issue Title"
+title: "Issue Title"
 labels: Backlog
 assignees: ''
 

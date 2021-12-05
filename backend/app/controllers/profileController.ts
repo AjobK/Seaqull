@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import isEmail from 'validator/lib/isEmail'
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
 import * as bcrypt from 'bcrypt'
 import Account from '../entities/account'
 import Profile from '../entities/profile'
@@ -17,6 +16,7 @@ import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
 import AccountSettings from '../entities/account_settings'
 import SettingsDAO from '../daos/settingsDAO'
+import CaptchaService from '../utils/captchaService'
 
 const jwt = require('jsonwebtoken')
 
@@ -97,7 +97,7 @@ class ProfileController {
     })
 
     if (payload.followers.length < 1) {
-      return res.status(204)
+      return res.status(204).json(payload)
     }
 
     return res.status(200).json(payload)
@@ -223,37 +223,38 @@ class ProfileController {
   }
 
   public register = async (req: any, res: Response): Promise<Response> => {
-    const userRequested = req.body
+    const { username, email, password, captcha } = req.body
+
     const errors = {
       username: [],
       email: [],
       password: [],
-      recaptcha: [],
+      captcha: [],
     }
 
-    const isUsernameNotValid = await this.checkValidUsername(userRequested.username)
+    const isUsernameNotValid = await this.checkValidUsername(username)
 
     if (isUsernameNotValid) {
       errors.username = [isUsernameNotValid]
     }
 
-    const isEmailNotValid = await this.checkValidEmail(userRequested.email)
+    const isEmailNotValid = await this.checkValidEmail(email)
 
     if (isEmailNotValid) {
       errors.email = [isEmailNotValid]
     }
 
-    const passwordStrengthErrors = this.getPasswordStrengthErrors(userRequested.password)
+    const passwordStrengthErrors = this.getPasswordStrengthErrors(password)
 
     errors.password = passwordStrengthErrors
 
-    const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+    const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
 
-    if (isRecaptchaNotValid) {
-      errors.recaptcha = [isRecaptchaNotValid]
+    if (!isCaptchaValid) {
+      errors.captcha = ['We couldn\'t verify that you\'re not a robot.']
     }
 
-    if (isUsernameNotValid || isEmailNotValid || passwordStrengthErrors.length > 0) {
+    if (isUsernameNotValid || isEmailNotValid || !isCaptchaValid || passwordStrengthErrors.length > 0) {
       return res.status(401).json({ errors: errors })
     }
 
@@ -412,17 +413,6 @@ class ProfileController {
     if (password.search(/\d/) < 0) errors.push('Atleast one numeric character')
 
     return errors
-  }
-
-  private async checkReCAPTCHA(token: string): Promise<string> {
-    const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
-    const verificationResult = await reCaptcha.verify(token)
-
-    if (!verificationResult.isHuman) {
-      return 'Invalid captcha'
-    }
-
-    return null
   }
 
   private async saveProfile(req: Request): Promise<Account> {

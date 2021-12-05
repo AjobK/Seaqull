@@ -8,10 +8,13 @@ import CommentRoutes from './routes/commentRoutes'
 import ProfileRoutes from './routes/profileRoutes'
 import RoleRoutes from './routes/roleRoute'
 import AdminRoutes from './routes/banRoutes'
+
 const cookieParser = require('cookie-parser')
+
 require('dotenv').config()
 
 const { FRONTEND_URL } = process.env
+const LOCALHOST = 'http://localhost'
 
 const backend = new serverConstructor({
   port: 8000,
@@ -28,7 +31,12 @@ const backend = new serverConstructor({
     bodyParser.json(),
     bodyParser.urlencoded({ extended: true }),
     cors({
-      origin: [FRONTEND_URL, 'http://localhost:8080', 'http://localhost:3000', 'http://localhost'],
+      origin: [
+        FRONTEND_URL,
+        LOCALHOST,
+        LOCALHOST + ':8080',
+        LOCALHOST + ':3000'
+      ],
       credentials: true
     }),
   ]

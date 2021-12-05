@@ -26,8 +26,8 @@ class AppRouter extends Component {
           <Router>
             <Switch>
               <Route path='/' exact component={ Home } />
-              <Route path='/profile/:path' exact component={ Profile } />
               <Route path='/profile' exact component={ Profile } />
+              <Route path='/profile/:path' exact component={ Profile } />
               <Route path='/error' exact component={ Error } />
               <Route path='/new-post' exact component={ () => <Post new={ true } /> } />
               <Route path='/posts/:postUrl' exact component={ Post } />
