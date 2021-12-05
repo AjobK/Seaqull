@@ -4,7 +4,6 @@ import ProfileBar from './profileBar'
 import NavDropdown from './navDropdown'
 import HeaderNavigation from './headerNavigation'
 import NavigationMobile from './navigationMobile'
-import UserBanner from './userBanner'
 import Title from './title'
 import Posts from './posts'
 import PostsPreview from './postsPreview'
@@ -49,7 +48,6 @@ export {
   HeaderNavigation,
   NavigationMobile,
   NavDropdown,
-  UserBanner,
   Title,
   Posts,
   PostsPreview,

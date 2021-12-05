@@ -10,9 +10,9 @@ class ProfileInfo extends Component {
     const followersStatisticClass = user.followerCount > 0 ? styles.clickableFollowers : ''
 
     return (
-      <div className={ `${styles.profileStatistics}` }>
+      <div className={ `${ styles.profileStatistics }` }>
         <div
-          className={ `${styles.profileStatistic} ${followersStatisticClass}` }
+          className={ `${ styles.profileStatistic } ${ followersStatisticClass }` }
           onClick={ this.props.openFollowersList }>
           <p className={ styles.profileStatisticNumber }>{ user.followerCount }</p>
           <p className={ styles.profileStatisticMetric }>Followers</p>

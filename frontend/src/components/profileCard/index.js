@@ -27,6 +27,7 @@ class ProfileCard extends Component {
       icon: 'Pen',
     }
 
+    this.stateLockDelay = 500
     this.changeStateLock = null
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
   }
@@ -93,14 +94,12 @@ class ProfileCard extends Component {
   follow = () => {
     const username = URLUtil.getLastPathArgument()
 
-    Axios.post(`${this.props.store.defaultData.backendUrl}/profile/follow/${username}`, {}, { withCredentials: true })
+    Axios.post(`${ this.props.store.defaultData.backendUrl }/profile/follow/${ username }`, {}, {
+      withCredentials: true
+    })
       .then((res) => {
         this.setState({ following: res.data.following || false },
           this.props.changeFollowerCount(res.data.following ? 1 : -1))
-        console.log(res.data.following)
-      })
-      .catch((err) => {
-        console.log(err)
       })
   }
 
@@ -159,7 +158,7 @@ class ProfileCard extends Component {
         editorState: EditorState.moveFocusToEnd(this.state.editorState)
       })
     } else if (this.changeStateLock < Date.now() || this.changeStateLock == null) {
-      this.changeStateLock = Date.now() + 500
+      this.changeStateLock = Date.now() + this.stateLockDelay
       this.saveNewDescription()
 
       this.setState({
@@ -187,10 +186,9 @@ class ProfileCard extends Component {
   }
 
   render() {
-    const user = this.props.user
+    const { user, posts } = this.props
 
     let editButtonValue = this.state.editingBio ? 'Save' : 'Edit Bio'
-    const posts = this.props.posts
 
     const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(user.username)
 
@@ -236,12 +234,12 @@ class ProfileCard extends Component {
               (<Button
                 icon={ this.state.icon }
                 value={ editButtonValue }
-                className={ `${styles.editButton} secondary` }
+                className={ `${ styles.editButton } secondary` }
                 onClick={ () => this.changeEditingState() }
                 noPulse />) :
               (<Button
                 value={ <span>{ this.getFollowText() } </span> }
-                className={ `${styles.followButton} ${this.getFollowButtonClass()}` }
+                className={ `${ styles.followButton } ${ this.getFollowButtonClass() }` }
                 onClick={ this.follow }
               />) }
             { this.props.profile.loggedIn && user.isOwner ?

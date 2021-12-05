@@ -76,7 +76,7 @@ class ProfileDAO {
     return !!foundFollow
   }
 
-  public async getFollowingByProfileId(profileId: number): Promise<any> {
+  public async getFollowingByProfileId(profileId: number): Promise<ProfileFollowedBy[]> {
     const repository = await DatabaseConnector.getRepository('ProfileFollowedBy')
 
     const following = await repository.find({
