@@ -38,7 +38,7 @@ class PostLike extends Component {
   }
 
   showLoginRedirect = () => {
-    const { notification } = this.props.store
+    const { notification, nav } = this.props.store
 
     notification.setContent(popUpData.messages.loginRequired)
     notification.setActions([
@@ -49,6 +49,7 @@ class PostLike extends Component {
       {
         ...popUpData.actions.confirmWithText,
         action: () => {
+          nav.setPathRedirectAfterLogin(window.location.pathname)
           notification.close()
           this.props.history.push('/login/')
         }

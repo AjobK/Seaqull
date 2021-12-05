@@ -26,13 +26,15 @@ class RegisterPrompt extends Component {
   }
 
   auth = (captchaToken) => {
+    const { defaultData, nav } = this.props.store
+
     this.setState({
       username: 'loading',
       email: 'loading',
       password: 'loading',
     })
 
-    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    Axios.defaults.baseURL = defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
@@ -43,9 +45,14 @@ class RegisterPrompt extends Component {
 
     Axios.post('/profile/register', payload, { withCredentials: true })
       .then((res) => {
+        const { user } = res.data
+
         this.props.store.profile.loginVerify()
-        this.props.store.profile.setProfileData(res.data.user)
-        this.goToProfile(res.data.user.profile.display_name)
+        this.props.store.profile.setProfileData(user)
+
+        nav.pathRedirectAfterLogin
+          ? this.redirect()
+          : this.goToProfile(user.profile.display_name)
       })
       .catch((res) => {
         const { username, email, password, captcha } = res.response?.data?.errors
@@ -61,6 +68,14 @@ class RegisterPrompt extends Component {
 
   goToProfile = (username) => {
     this.props.history.push('/profile/' + username)
+  }
+
+  redirect = () => {
+    const { nav } = this.props.store
+
+    this.props.history.push(nav.pathRedirectAfterLogin)
+
+    nav.undoPathRedirectAfterLogin()
   }
 
   onSubmit = (e) => {

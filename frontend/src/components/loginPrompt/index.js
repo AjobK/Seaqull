@@ -27,7 +27,9 @@ class LoginPrompt extends Component {
   }
 
   auth = (captchaToken) => {
-    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    const { defaultData, nav } = this.props.store
+
+    Axios.defaults.baseURL = defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
@@ -37,9 +39,14 @@ class LoginPrompt extends Component {
 
     Axios.post('/login', payload, { withCredentials: true })
       .then((res) => {
+        const { user } = res.data
+
         this.props.store.profile.setLoggedIn(true)
-        this.props.store.profile.setProfileData(res.data.user)
-        this.goToProfile(res.data.user.profile.display_name)
+        this.props.store.profile.setProfileData(user)
+
+        nav.pathRedirectAfterLogin
+          ? this.redirect()
+          : this.goToProfile(user.profile.display_name)
       })
       .catch((res) => {
         if (res.message === 'Network Error') {
@@ -85,6 +92,14 @@ class LoginPrompt extends Component {
 
   goToProfile = (username) => {
     this.props.history.push('/profile/' + username)
+  }
+
+  redirect = () => {
+    const { nav } = this.props.store
+
+    this.props.history.push(nav.pathRedirectAfterLogin)
+
+    nav.undoPathRedirectAfterLogin()
   }
 
   onSubmit = (e) => {

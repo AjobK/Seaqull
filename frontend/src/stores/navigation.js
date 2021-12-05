@@ -29,12 +29,20 @@ const NavigationStore = types
         ref: '/signup',
         icon: 'Users'
       }
-    })
+    }),
+    pathRedirectAfterLogin: types.optional(types.string, '')
   })
   .actions((self) => ({
+    setPathRedirectAfterLogin(path) {
+      self.pathRedirectAfterLogin = path
+    },
+    undoPathRedirectAfterLogin() {
+      self.pathRedirectAfterLogin = ''
+    },
     reset() {
-      self.menuItemsLoggedIn = [{}],
+      self.menuItemsLoggedIn = [{}]
       self.menuItemsLoggedOut = [{}]
+      self.pathRedirectAfterLogin = ''
     }
   }))
 
