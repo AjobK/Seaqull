@@ -72,6 +72,8 @@ class AuthorizationController {
 
       if (validation != null) return res.status(400).send(validation)
 
+      if (account.settings.active == false) return res.status(404).json({ errors: ['Account inactive'] })
+
       const ban = await this.banService.checkIfUserIsBanned(account)
 
       if (ban) {

@@ -5,13 +5,13 @@ class AccountDAO {
   public async getAccountByUsername( username:string ): Promise<Account> {
     const repository = await DatabaseConnector.getRepository('Account')
     const account = await repository.createQueryBuilder('account')
-      .innerJoinAndSelect('account.settings', 'account_settings')
+      .leftJoinAndSelect('account.settings', 'account_settings')
       .leftJoinAndSelect('account.profile', 'profile')
-      .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
+      .leftJoinAndSelect('profile.avatar_attachment', 'avatar_attachment')
+      .leftJoinAndSelect('profile.banner_attachment', 'banner_attachment')
       .leftJoinAndSelect('profile.title', 'title')
       .where('account.user_name = :user_name', { user_name: username })
-      .andWhere()
-      .getMany()
+      .getOne()
 
     return account
   }

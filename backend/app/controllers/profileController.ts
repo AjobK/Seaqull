@@ -15,6 +15,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
+import AccountSettings from '../entities/account_settings'
 import SettingsDAO from '../daos/settingsDAO'
 
 const jwt = require('jsonwebtoken')
@@ -34,31 +35,32 @@ class ProfileController {
   private titleDAO: TitleDAO
   private accountDAO: AccountDAO
   private roleDAO: RoleDao
-  private settingsDAO: SettingsDAO
   private attachmentDAO: attachmentDAO
   private fileService: FileService
   private banService: BanService
+  private settingsService: SettingsDAO
 
   constructor() {
     this.dao = new ProfileDAO()
     this.titleDAO = new TitleDAO()
     this.accountDAO = new AccountDAO()
     this.roleDAO = new RoleDao()
-    this.settingsDAO = new SettingsDAO()
     this.attachmentDAO = new attachmentDAO()
     this.fileService = new FileService()
     this.banService = new BanService()
+    this.settingsService = new SettingsDAO()
   }
 
-  public updateSettings = async (req: Request, res: Response): Promise<Response> => {
-    console.log('update')
+  public updateSettings = async (req: any, res: Response): Promise<Response> => {
+    const setting: AccountSettings = req.body
 
-    return res.status(200).json({ 'message': 'updated' })
-  }
+    const acc = await this.accountDAO.getAccountByUsername(req.decoded.username)
 
-  public getSettings = async (req: any, res: Response): Promise<Response> => {
-    const { decoded } = req.body
-    console.log(decoded)
+    if (acc.settings.id == setting.id) {
+      this.settingsService.updateActiveState(setting)
+    } else {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
 
     return res.status(200).json({ 'message': 'updated' })
   }
@@ -170,12 +172,14 @@ class ProfileController {
     if (!profile) return res.status(404).json({ message: 'User not found' })
 
     const account = await this.accountDAO.getAccountByUsername(profile.display_name)
-    console.log(account)
+
+    if (account.settings.active == false) return res.status(404).json({ error: 'User not found' })
+
     const ban = await this.banService.checkIfUserIsBanned(account)
 
     if (ban) return res.status(403).json({ errors: [ban] })
 
-    const title: Title = (await this.titleDAO.getTitleByUserId(profile.id)) || null
+    const title: Title = account.profile.title
 
     const followerCount = await this.dao.getFollowersCount(profile.id)
 
@@ -210,12 +214,10 @@ class ProfileController {
       title: title ? title.name : 'Title not found...',
       description: profile.description,
       followerCount,
+      settings: account.settings,
+      avatar: 'http://localhost:8000/' + account.profile.avatar_attachment.path,
+      banner: 'http://localhost:8000/' + account.profile.banner_attachment.path
     }
-    const attachments = await this.dao.getProfileAttachments(profile.id)
-
-    if (attachments.avatar) payload['avatar'] = 'http://localhost:8000/' + attachments.avatar.path
-
-    if (attachments.banner) payload['banner'] = 'http://localhost:8000/' + attachments.banner.path
 
     return res.status(200).json({ profile: payload })
   }
