@@ -1,7 +1,7 @@
 import Button from './button'
 import Hamburger from './hamburger'
 import ProfileBar from './profileBar'
-import NavDropdown from './navDropdown'
+import NavigationMobileElement from './navigationMobileElement'
 import HeaderNavigation from './headerNavigation'
 import NavigationMobile from './navigationMobile'
 import UserBanner from './userBanner'
@@ -45,7 +45,7 @@ export {
   ProfileBar,
   HeaderNavigation,
   NavigationMobile,
-  NavDropdown,
+  NavigationMobileElement,
   UserBanner,
   Title,
   Posts,

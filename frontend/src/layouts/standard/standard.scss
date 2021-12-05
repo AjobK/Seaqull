@@ -13,7 +13,6 @@
 	position: relative;
 	margin-top: $header-height;
 	display: inline-block;
-	margin-left: -4px; // For inline blocks
 	overflow: hidden;
 	width: 100%;
 	min-height: calc(100vh - #{$header-height});

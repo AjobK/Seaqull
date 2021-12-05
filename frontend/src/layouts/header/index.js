@@ -5,32 +5,40 @@ import { Hamburger, HeaderNavigation, NavigationMobile } from '../../components'
 
 @inject('store') @observer
 class Header extends Component {
-  hamburgerClick() {
-    const { ui } = this.props.store
+  constructor(props) {
+    super(props)
 
-    ui.toggleSubNav()
+    this.state = {
+      subNavOpen: false
+    }
+  }
+
+  toggleSubNavigation = () => {
+    let { subNavOpen } = this.state
+
+    this.setState({ subNavOpen: !subNavOpen })
   }
 
   render() {
-    const { ui } = this.props.store
+    const { subNavOpen } = this.state
 
     return (
       <div className={ [
         styles.headerWrap,
-        ui.subNavOpen && styles.sNavOpen
+        subNavOpen && styles.sNavOpen
       ].join(' ') }>
         <header className={ [styles.header].join(' ') }>
           <section className={ styles.headerContent }>
             <HeaderNavigation />
             <Hamburger
-              onClick={ this.hamburgerClick.bind(this) }
-              active={ ui.subNavOpen }
+              onClick={ this.toggleSubNavigation }
+              active={ subNavOpen }
               className={ styles.hamburger }
             />
           </section>
           <div className={ [
             styles.navigationMobile,
-            !ui.subNavOpen ? styles.hide : ''
+            !subNavOpen ? styles.hide : ''
           ].join(' ') } >
             <NavigationMobile />
           </div>

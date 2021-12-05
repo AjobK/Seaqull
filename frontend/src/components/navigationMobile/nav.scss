@@ -1,14 +1,12 @@
 @import '../../styles/index.scss';
 
 .navigation {
+	margin: 0 auto;
 	transition: 1s;
-	width: 0;
-	max-width: 0;
-	overflow-x: hidden;
-	position: fixed;
-	pointer-events: auto;
-	margin-left: -1px;
-	border-right: 1px solid black;
+	width: 100%;
+	max-width: $wrapper-width;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .sNavOpen {
@@ -22,6 +20,11 @@
 .menu {
 	width: 325px;
 	max-width: 75vw;
+	margin: $header-spacing;
+	border-radius: 5px;
+	overflow: hidden;
+	background-color: $background;
+	padding: $header-spacing / 2;
 	
 	&Ul {
 		list-style-type: none;
