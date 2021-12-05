@@ -81,8 +81,8 @@ class Profile extends App {
   }
 
   changeFollowerCount(amount) {
-    let user = { ...this.state.user, 'followCount': this.state.followCount + amount }
-
+    const user = { ...this.state.user }
+    user.followerCount += amount
     this.setState({ user })
   }
 
@@ -119,6 +119,7 @@ class Profile extends App {
     return (
       <Standard>
         <ProfileBanner
+          changeFollowerCount={ this.changeFollowerCount }
           role={ profile.role }
           user={ user }
           owner={ isOwner && profile.loggedIn }

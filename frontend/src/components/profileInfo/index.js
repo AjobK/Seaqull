@@ -4,14 +4,6 @@ import { inject, observer } from 'mobx-react'
 
 @inject('store') @observer
 class ProfileInfo extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      user: props.user
-    }
-  }
-
   render() {
     const { user, posts } = this.props
 

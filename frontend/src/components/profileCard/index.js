@@ -15,8 +15,6 @@ class ProfileCard extends Component {
     super(props)
 
     this.state = {
-      user: props.user,
-      profile: props.profile,
       posts: props.posts,
       loggedIn: this.props.loggedIn,
       following: !!this.props.user.following,
@@ -99,6 +97,7 @@ class ProfileCard extends Component {
       .then((res) => {
         this.setState({ following: res.data.following || false },
           this.props.changeFollowerCount(res.data.following ? 1 : -1))
+        console.log(res.data.following)
       })
       .catch((err) => {
         console.log(err)
@@ -141,9 +140,9 @@ class ProfileCard extends Component {
     let editorState
 
     try {
-      editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.state.user.description)))
+      editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.user.description)))
     } catch {
-      editorState = EditorState.createWithContent(ContentState.createFromText(this.state.user.description))
+      editorState = EditorState.createWithContent(ContentState.createFromText(this.props.user.description))
     }
 
     this.setState({ editorState })
@@ -231,9 +230,9 @@ class ProfileCard extends Component {
             <Icon className={ styles.profileInfoBadge } iconName={ 'At' }/>
             <h2 className={ styles.profileInfoUsername }>{ user.username || 'Username' }</h2>
           </div>
-          <ProfileInfo user={ user } posts={ posts } openFollowersList={ this.props.openFollowersList }/>
+          <ProfileInfo user={ this.props.user } posts={ posts } openFollowersList={ this.props.openFollowersList }/>
           <div className={ styles.profileCardButtons }>
-            { this.state.profile.loggedIn && user.isOwner ?
+            { this.props.profile.loggedIn && user.isOwner ?
               (<Button
                 icon={ this.state.icon }
                 value={ editButtonValue }
@@ -245,7 +244,7 @@ class ProfileCard extends Component {
                 className={ `${styles.followButton} ${this.getFollowButtonClass()}` }
                 onClick={ this.follow }
               />) }
-            { this.state.profile.loggedIn && user.isOwner ?
+            { this.props.profile.loggedIn && user.isOwner ?
               (<Button icon='Cog' className={ styles.settingsButton } noPulse />) :
               (<Button icon='CommentAlt' className={ styles.chatButton } />)
             }
