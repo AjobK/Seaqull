@@ -60,6 +60,8 @@ class Posts extends Component {
   }
 
   setEndReached(endReached) {
+    this.setCurrentPage(0)
+
     this.setState({
       endReached
     })
@@ -79,7 +81,6 @@ class Posts extends Component {
 
   fetchMorePosts = () => {
     if (this.state.endReached) {
-      this.setCurrentPage(0)
       this.setEndReached(false)
       this.fetchPosts()
 
