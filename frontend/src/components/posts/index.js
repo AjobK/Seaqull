@@ -44,7 +44,7 @@ class Posts extends Component {
 
         this.renderNewPosts(json.posts || [])
 
-        if (json.posts.length < json.per_page) {
+        if (json.posts.length < json.postsPerPage) {
           this.setEndReached(true)
         }
 
