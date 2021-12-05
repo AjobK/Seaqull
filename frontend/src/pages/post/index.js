@@ -215,7 +215,7 @@ class Post extends App {
         path: this.postPath
       }
 
-      Axios.post('api/post/view', payload)
+      Axios.post(`${ this.props.store.defaultData.backendUrl }/post/view`, payload)
     }
   }
 
