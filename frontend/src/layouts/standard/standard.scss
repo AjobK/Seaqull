@@ -22,12 +22,3 @@
 		width: calc(100% - #{$navigation-width});
 	}
 }
-
-.higherOrder {
-	display: flex;
-	flex-wrap: nowrap;
-	position: fixed;
-	width: 100vw;
-	height: 100vh;
-	pointer-events: none;
-}

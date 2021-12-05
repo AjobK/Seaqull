@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { NavigationMobile } from '../../components'
 import { observer, inject } from 'mobx-react'
 import styles from './standard.scss'
 
@@ -18,10 +17,6 @@ class Standard extends Component {
 
     return (
       <section className={ [styles.wrapper, ...(className ? className : [''])].join(' ') }>
-        <aside className={ styles.higherOrder }>
-          <NavigationMobile />
-        </aside>
-        <NavigationMobile filler /> {/* Filler aligns content */}
         <div className={ styles.innerWrapper } onClick={ this.props.store.ui.closeSubNav }>
           { this.props.children }
         </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
-import { Hamburger, HeaderNavigation } from '../../components'
+import { Hamburger, HeaderNavigation, NavigationMobile } from '../../components'
 
 @inject('store') @observer
 class Header extends Component {
@@ -14,20 +14,26 @@ class Header extends Component {
   render() {
     const { ui } = this.props.store
 
-    let headerContent = (
-      <section className={ styles.headerContent }>
-        <HeaderNavigation />
-        <Hamburger onClick={ this.hamburgerClick.bind(this) } active={ ui.subNavOpen } className={ styles.hamburger } />
-      </section>
-    )
-
     return (
       <div className={ [
         styles.headerWrap,
         ui.subNavOpen && styles.sNavOpen
       ].join(' ') }>
         <header className={ [styles.header].join(' ') }>
-          {headerContent}
+          <section className={ styles.headerContent }>
+            <HeaderNavigation />
+            <Hamburger
+              onClick={ this.hamburgerClick.bind(this) }
+              active={ ui.subNavOpen }
+              className={ styles.hamburger }
+            />
+          </section>
+          <div className={ [
+            styles.navigationMobile,
+            !ui.subNavOpen ? styles.hide : ''
+          ].join(' ') } >
+            <NavigationMobile />
+          </div>
         </header>
       </div>
     )

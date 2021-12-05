@@ -17,7 +17,7 @@ $hamburger-width: 22px;
 		background-color: $secondary;
 		display: block;
 		border-radius: 2px;
-		@include transition-ease(0.5s);
+		transition: 0.2s;
 	}
 
 	&:hover{

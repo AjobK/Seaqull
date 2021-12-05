@@ -43,6 +43,20 @@
 			z-index: 100;
 		}
 	}
+
+	.navigationMobile {
+		transition: 0.2s;
+		background-color: rgba(0, 0, 0, 0.3);
+		position: fixed;
+		top: $header-height;
+		bottom: 0;
+		width: 100%;
+
+		&.hide {
+			pointer-events: none;
+			opacity: 0;
+		}
+	}
 }
 
 .sNavOpen {
@@ -57,9 +71,5 @@
 
 .hamburger {
 	margin-left: $header-spacing;
-	display: none;
-
-	@include mobile-all-portrait {
-		display: flex;
-	}
+	display: flex;
 }

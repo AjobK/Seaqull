@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './nav.scss'
-import { ProfileBar, NavDropdown } from '../../components'
+import { NavDropdown } from '../../components'
 
 @inject('store') @observer
 class NavigationMobile extends Component {
   render() {
     const { ui, nav, profile } = this.props.store
+
     let menuItems = profile.loggedIn && nav.menuItemsLoggedIn || nav.menuItemsLoggedOut
     let arr = []
 
@@ -26,20 +27,13 @@ class NavigationMobile extends Component {
     return (
       <section className={ [
         styles.navigation,
-        ui.subNavOpen && styles.sNavOpen,
-        this.props.filler && styles.filler
+        ui.subNavOpen && styles.sNavOpen
       ].join(' ') }>
-        {!this.props.filler &&
-          <div className={ styles.menu }>
-            { profile.loggedIn && <ProfileBar
-              name={ profile.display_name }
-              title={ profile.title }
-              avatar={ profile.avatarURL }
-            /> }
-            <ul className={ styles.menuUl }>
-              {arr}
-            </ul>
-          </div>}
+        <div className={ styles.menu }>
+          <ul className={ styles.menuUl }>
+            {arr}
+          </ul>
+        </div>
       </section>
     )
   }

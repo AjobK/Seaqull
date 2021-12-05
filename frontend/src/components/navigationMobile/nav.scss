@@ -5,25 +5,10 @@
 	width: 0;
 	max-width: 0;
 	overflow-x: hidden;
-	background-color: $darker;
-	height: calc(100vh - #{$header-height});
-	bottom: 0;
-	z-index: -1;
 	position: fixed;
 	pointer-events: auto;
 	margin-left: -1px;
 	border-right: 1px solid black;
-}
-
-.filler {
-	// Added everything necessary to hide and
-	// disable the header for maximum ensurance
-	opacity: 0 !important;
-	visibility: hidden !important;
-	position: static !important;
-	pointer-events: none !important;
-	z-index: 0 !important;
-	display: inline-block;
 }
 
 .sNavOpen {
