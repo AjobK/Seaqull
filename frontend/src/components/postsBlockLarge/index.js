@@ -69,7 +69,7 @@ class PostsBlockLarge extends Component {
                   <p>{TimeUtil.timeAgo(new Date(post.created_at))}</p>
                 </div>
               </div>
-              <Link to={ `posts/${post.path}` } className={ styles.goTo }>
+              <Link to={ `/posts/${post.path}` } className={ styles.goTo }>
                 <p>
                   Read more
                   <span>{/* UNDERLINE */}</span>
@@ -78,12 +78,12 @@ class PostsBlockLarge extends Component {
               </Link>
             </div>
           </div>
-          <Link to={ `posts/${post.path}` }>
+          <Link to={ `/posts/${post.path}` }>
             <img src={ post.thumbnail } alt={ 'post' } />
           </Link>
         </div>
 
-        <a href={ `posts/${post.path}` } className={ styles.largeBottom }>
+        <a href={ `/posts/${post.path}` } className={ styles.largeBottom }>
           <h3 className={ styles.largeBottomTitle }>{post.title}</h3>
           <p className={ styles.largeBottomDescription }>{post.description}</p>
           <span className={ styles.goTo }>

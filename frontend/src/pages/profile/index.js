@@ -7,6 +7,7 @@ import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from 
 import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
 import { withRouter } from 'react-router'
+import { ProfilePosts } from '../../components'
 
 @inject('store')
 @observer
@@ -139,7 +140,8 @@ class Profile extends App {
           <ProfileInfo user={ user } loggedIn={ profile.loggedIn } />
         </Section>
         <Section title={ 'CREATED POSTS' }>
-          <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } />
+          {/* <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } /> */}
+          <ProfilePosts posts={ this.state.posts } user={ user } isOwner={ isOwner } profile={ profile } />
         </Section>
         <Section title={ 'LIKED POSTS' }>
           <PostsPreview posts={ this.state.likes } />
