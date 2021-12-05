@@ -12,7 +12,6 @@ class NavigationMobile extends Component {
     let navigationItems = []
 
     for (let key in menuItems) {
-      console.log(menuItems[key])
       navigationItems.push(
         <NavigationMobileElement
           title={ key }
@@ -36,7 +35,6 @@ class NavigationMobile extends Component {
                 title={ 'Logout' }
                 icon={ 'SignOutAlt' }
                 onClick={ () => {
-                  console.log('logout')
                   profile.logOut()
                 } }
               />

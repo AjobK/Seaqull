@@ -3,7 +3,7 @@ import App from '../App'
 import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
-import { Icon, UserBanner, PostsPreview, Statistics, Loader, ProfileInfo } from '../../components'
+import { ProfileBanner, PostsPreview, Loader, ProfileCard } from '../../components'
 import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
 import { withRouter } from 'react-router'
@@ -81,7 +81,7 @@ class Profile extends App {
   }
 
   changeFollowerCount(amount) {
-    const user = this.state.user
+    const user = { ...this.state.user }
     user.followerCount += amount
     this.setState({ user })
   }
@@ -118,38 +118,32 @@ class Profile extends App {
 
     return (
       <Standard>
-        <UserBanner
+        <ProfileBanner
           changeFollowerCount={ this.changeFollowerCount }
           role={ profile.role }
           user={ user }
           owner={ isOwner && profile.loggedIn }
         />
-        <section className={ [styles.infoWrapper] }>
-          <div className={ [styles.tempFollowerIndicator] }>
-            <Icon iconName={ 'UserFriends' } />
-            <p
-              className={ this.state.user.followerCount > 0 ? `${styles.clickableFollowers}` : '' }
-              onClick={ this.openFollowersList }
-            >
-              { user.followerCount } follower{ user.followerCount === 1 ? '' : 's' }{ ' ' }
-            </p>
+        <div className={ styles.profileWrapper }>
+          <ProfileCard
+            user={ user }
+            profile={ profile }
+            posts={ this.state.posts }
+            changeFollowerCount={ this.changeFollowerCount }
+            openFollowersList={ this.openFollowersList }
+          />
+          <div className={ styles.profileContentWrapper }>
+            <Section title={ 'CREATED POSTS' }>
+              <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } />
+            </Section>
+            <Section title={ 'LIKED POSTS' }>
+              <PostsPreview posts={ this.state.likes } />
+            </Section>
+            { (this.state.showFollowers && this.state.user.followerCount > 0) &&
+              <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
+            }
           </div>
-        </section>
-        <Section title={ 'DESCRIPTION' }>
-          <ProfileInfo user={ user } loggedIn={ profile.loggedIn } />
-        </Section>
-        <Section title={ 'CREATED POSTS' }>
-          <PostsPreview posts={ this.state.posts } create={ isOwner && profile.loggedIn } />
-        </Section>
-        <Section title={ 'LIKED POSTS' }>
-          <PostsPreview posts={ this.state.likes } />
-        </Section>
-        <Section title={ 'STATISTICS' }>
-          <Statistics statisticsData={ { views: 0, likes: 0, posts: 0 } } />
-        </Section>
-        { (this.state.showFollowers && this.state.user.followerCount > 0) &&
-          <ProfileFollowerList closeFollowersList={ this.closeFollowersList } user={ this.state.user } />
-        }
+        </div>
       </Standard>
     )
   }
