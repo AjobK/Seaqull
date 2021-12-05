@@ -2,7 +2,10 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, convertToRaw, ContentState, RichUtils } from 'draft-js'
+import { EditorState, convertToRaw, ContentState } from 'draft-js'
+import Editor from '@draft-js-plugins/editor'
+import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
+import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
 import '../../DraftFallback.css'
 
 @inject('store')
@@ -12,11 +15,16 @@ class PostContent extends Component {
     super(props)
     const { type } = this.props
 
+    this.inLineToolbarPlugin = createInlineToolbarPlugin()
+    this.plugins = [this.inLineToolbarPlugin]
+
     this.type = type || 'content'
     this.selected = false
     this.maxLength = this.type == 'title' ? 128 : null
     this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
+
+    this.inlineToolbarPlugin = createInlineToolbarPlugin()
 
     this.editorInput = React.createRef()
 
@@ -70,22 +78,6 @@ class PostContent extends Component {
     this.props.callBackSaveData(this)
   }
 
-  onBoldClick() {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'))
-  }
-
-  onItalicClick() {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'))
-  }
-
-  onUnderlineClick() {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'))
-  }
-
-  focusOnEditor = () => {
-    this.state.editorState.focused()
-  }
-
   componentDidMount() {
     let eState =
       typeof this.props.value == 'string'
@@ -104,6 +96,9 @@ class PostContent extends Component {
 
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
+    const { InlineToolbar } = this.inlineToolbarPlugin
+    const plugins = [this.inlineToolbarPlugin]
+
     return (
       <div>
         <PostContentBlock
@@ -114,7 +109,9 @@ class PostContent extends Component {
         >
           <Editor
             editorState={ this.state.editorState }
-            ref={ this.editorInput }
+            ref={ (element) => {
+              this.editor = element
+            } }
             onChange={ this.onChange }
             readOnly={ readOnly != undefined ? readOnly : false }
             // onFocus={this.onFocus}
@@ -124,20 +121,14 @@ class PostContent extends Component {
             handleBeforeInput={ this.handleBeforeInput }
             handlePastedText={ this.handlePastedText }
             blockStyleFn={ () => `${styles.postContent} ${styles[type]}` }
+            plugins={ plugins }
           />
 
-          <button onClick={ this.onBoldClick.bind(this) }>B</button>
-          <button onClick={ this.onItalicClick.bind(this) }>I</button>
-          <button onClick={ this.onUnderlineClick.bind(this) }>U</button>
+          { type == 'content' &&
+          <InlineToolbar />
+          }
 
-          {/*<ReactTooltip id="tooltip" place="top" effect="solid">*/}
-          {/*  <button onClick={ this.onBoldClick.bind(this) }>B</button>*/}
-          {/*  <button onClick={ this.onItalicClick.bind(this) }>I</button>*/}
-          {/*  <button onClick={ this.onUnderlineClick.bind(this) }>U</button>*/}
-          {/*</ReactTooltip>*/}
-
-          {/*<button data-tip data-for="tooltip">kang</button>*/}
-          {/* { type != 'title' && this.inlineStyleControls()} */}
+          {/*{ type != 'title' && this.inlineStyleControls()}*/}
         </PostContentBlock>
       </div>
     )
