@@ -134,9 +134,7 @@ class Profile extends App {
             openFollowersList={ this.openFollowersList }
           />
           <div className={ styles.profileContentWrapper }>
-            <Section title={ 'CREATED POSTS' }>
-              <ProfilePosts posts={ this.state.posts } user={ user } isOwner={ isOwner } profile={ profile } />
-            </Section>
+            <ProfilePosts posts={ this.state.posts } user={ user } isOwner={ isOwner } profile={ profile } />
             <Section title={ 'LIKED POSTS' }>
               <PostsPreview posts={ this.state.likes } />
             </Section>
