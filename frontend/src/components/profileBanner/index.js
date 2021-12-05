@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styles from './profileBanner.scss'
 import { inject, observer } from 'mobx-react'
-import { Icon, Cropper } from '..'
+import { Icon, Cropper, BanUser } from '..'
+import { InputUtil } from '../../util/'
 
 @inject('store') @observer
 class ProfileBanner extends Component {
@@ -11,16 +12,17 @@ class ProfileBanner extends Component {
     this.state = {
       upBanner: null,
       draggingOverBanner: false,
+      banUser: false
     }
   }
 
   onEditBanner = (input) => {
-    this.handleInput(input, 'upBanner')
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upBanner: result
+      })
+    })
     this.onBannerDragLeave()
-  }
-
-  banUser() {
-    this.setState({ banUser: true })
   }
 
   handleInput = (input, stateVar) => {
@@ -28,7 +30,6 @@ class ProfileBanner extends Component {
     const files = input?.target?.files
 
     if (files.length > 0) {
-      this.setScrollEnabled(false)
       const reader = new FileReader()
 
       reader.addEventListener('load', () => {
@@ -56,22 +57,19 @@ class ProfileBanner extends Component {
     this.props.user.banner = newBanner
   }
 
-  closePopup = () => {
-    this.setScrollEnabled(true)
+  banUser = () => {
+    this.setState({ banUser: true })
+  }
+
+  closeCropper = () => {
     this.setState({
-      upAvatar: null,
       upBanner: null,
       banUser: false
     })
   }
 
-  setScrollEnabled = (scrollEnabled) => {
-    document.body.style.overflow = scrollEnabled ? 'unset' : 'hidden'
-  }
-
   render() {
-    const user = this.props.user
-    const role = this.props.role
+    const { user, role } = this.props
 
     return (
       <section className={ styles.wrapper }>
@@ -83,21 +81,21 @@ class ProfileBanner extends Component {
                 `${ styles.bannerEdit } ${ this.state.draggingOverBanner ? styles.bannerEditDraggingOver : '' }`
               }
             >
-              <div className={ styles.bannerEditActionBtn }>
-                <p className={ styles.bannerEditActionBtnText }>
-                  <span>EDIT BANNER</span>
-                  <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
-                </p>
-              </div>
               <input
                 type='file' accept='image/png, image/jpeg' value={ '' }
                 onChange={ this.onEditBanner }
                 onDragEnter={ this.onBannerDragEnter }
                 onDragLeave={ this.onBannerDragLeave }
               />
+              <div className={ styles.bannerEditActionBtn }>
+                <p className={ styles.bannerEditActionBtnText }>
+                  <span>EDIT BANNER</span>
+                  <Icon iconName={ 'Pen' } className={ styles.bannerEditActionBtnIcon } />
+                </p>
+              </div>
             </div>
           )}
-          { role != 'User' && !this.props.owner && this.props.store.profile.loggedIn ? (
+          { role != 'User' && !this.props.owner && this.props.store.profile.loggedIn && (
             <div
               onDragEnter={ this.onBannerDragEnter }
               onDragLeave={ this.onBannerDragLeave }
@@ -110,18 +108,30 @@ class ProfileBanner extends Component {
                 onChange={ this.onEditBanner }
                 onDragEnter={ this.onBannerDragEnter }
                 onDragLeave={ this.onBannerDragLeave }
-                onClick={ this.banUser.bind(this) }
+                onClick={ this.banUser }
               />
+              <div className={ styles.bannerEditActionBtn }>
+                <p className={ styles.bannerEditActionBtnText }>
+                  <span>BAN USER</span>
+                  <Icon iconName={ 'Ban' } className={ styles.bannerEditActionBtnIcon } />
+                </p>
+              </div>
             </div>
-          ) : ''}
+          )}
         </div>
 
         { this.state.upBanner && (
           <Cropper
             inputType={ 'banner' }
             img={ this.state.upBanner }
-            closeCropper={ this.closePopup }
+            closeCropper={ this.closeCropper }
             changeImage={ this.changeBanner }
+          />
+        )}
+        { this.state.banUser && (
+          <BanUser
+            user={ user }
+            closePopup={ this.closeCropper }
           />
         )}
       </section>

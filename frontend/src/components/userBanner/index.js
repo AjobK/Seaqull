@@ -174,7 +174,7 @@ class UserBanner extends Component {
               </div>
             </div>
           )}
-          { role != 'User' & !this.props.owner & this.props.store.profile.loggedIn && (
+          { role != 'User' && !this.props.owner && this.props.store.profile.loggedIn && (
             <div
               onDragEnter={ this.onBannerDragEnter }
               onDragLeave={ this.onBannerDragLeave }

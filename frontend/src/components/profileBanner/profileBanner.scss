@@ -69,6 +69,7 @@
 			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 			padding: $header-spacing;
 			transition: 0.2s;
+			pointer-events: none;
 
 			@include mobile-all {
 				padding: $header-spacing;
@@ -96,7 +97,6 @@
 			cursor: pointer;
 			width: inherit;
 			height: inherit;
-			position: absolute;
 			opacity: 0;
 		}
 

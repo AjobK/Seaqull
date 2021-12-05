@@ -3,7 +3,8 @@
 .profileWrapper {
 	display: flex;
 	justify-content: center;
-	width: $wrapper-width;
+	max-width: $wrapper-width;
+	width: 100%;
 	margin: 0 auto;
 	padding: $header-spacing;
 

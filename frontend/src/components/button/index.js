@@ -10,7 +10,7 @@ class Button extends Component {
       <button
         className={ [
           className,
-          disabled || noPulse ? '' : styles.pulse,
+          (disabled || noPulse) ? '' : styles.pulse,
           disabled ? styles.disabled : '',
           !noStyle && styles.button,
           !noStyle && inverted && styles.inverted,

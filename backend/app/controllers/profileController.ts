@@ -107,17 +107,9 @@ class ProfileController {
       decodedToken = null
     }
 
-    let receivedUsername = req.params.username
+    const receivedUsername = req.params.username
 
-    if (!receivedUsername) {
-      if (decodedToken && decodedToken.username) {
-        receivedUsername = decodedToken.username
-      } else {
-        return null
-      }
-    }
-
-    return receivedUsername
+    return receivedUsername || decodedToken?.username
   }
 
   public updateProfile = async (req: any, res: Response): Promise<Response> => {
