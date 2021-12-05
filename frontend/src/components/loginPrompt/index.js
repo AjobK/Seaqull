@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import Axios from 'axios'
 import styles from './loginPrompt.scss'
 import { Button, FormInput } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
 
 @inject('store')
@@ -17,45 +18,21 @@ class LoginPrompt extends Component {
       password: null,
       remainingTimeInterval: null,
       remainingTime: null,
-      recaptchaToken: null,
-      recaptcha: null,
       loadingTimeout: false,
     }
 
-    window.recaptchaOptions = {
-      lang: 'en',
-      useRecaptchaNet: true,
-      removeOnUnmount: true,
-    }
+    this.captchaRef = createRef()
 
-    this.recaptchaRef = React.createRef()
-    this.onChange = this.onChange.bind(this)
     this.elId = {}
   }
 
-  componentDidMount = () => {
-    this.clearCaptcha()
-  }
-
-  componentWillUnmount = () => {
-    this.clearCaptcha()
-  }
-
-  clearCaptcha = () => {
-    Array.prototype.slice.call(document.getElementsByTagName('IFRAME')).forEach((element) => {
-      if (element.src.indexOf('www.google.com/recaptcha') > -1 && element.parentNode) {
-        element.parentNode.removeChild(element)
-      }
-    })
-  }
-
-  auth = () => {
+  auth = (captchaToken) => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
       password: document.getElementById(this.elId.Password).value,
-      recaptcha: this.state.recaptchaToken,
+      captcha: captchaToken
     }
 
     Axios.post('/login', payload, { withCredentials: true })
@@ -115,30 +92,36 @@ class LoginPrompt extends Component {
 
     if (this.state.remainingTime && this.remainingTimeInterval) return
 
-    this.setState({
-      username: 'loading',
-      password: 'loading',
-      loadingTimeout: true,
-    })
-
-    if (!this.state.loadingTimeout) {
-      // this.recaptchaRef.current.reset()
-      // this.recaptchaRef.current.execute()
-    }
+    this.captchaRef.current.execute()
   }
 
   setElId = (item, id) => {
     this.elId[item.props.name] = id
   }
 
-  onChange = (recaptchaToken) => {
-    this.setState({ recaptchaToken })
-    this.auth()
+  handleVerificationSuccess(token) {
+    this.setState({
+      username: 'loading',
+      password: 'loading',
+      loadingTimeout: true,
+    })
+
+    this.auth(token)
+  }
+
+  onCaptchaError = () => {
+    const { notification } = this.props.store
+    const { captchaError } = popUpData.messages
+
+    notification.setContent(captchaError)
   }
 
   render() {
-    const { username, password, remainingTime, recaptcha, loadingTimeout } = this.state
-    let buttonClass = Array.isArray(recaptcha) && recaptcha.length > 0 ? 'Try again...' : 'Log In'
+    const { username, password, remainingTime, loadingTimeout } = this.state
+
+    const siteKey = process.env.NODE_ENV === 'development'
+      ? process.env.HCAPTCHA_DEV_SITE_KEY
+      : process.env.HCAPTCHA_PROD_SITE_KEY
 
     return (
       <div className={ [styles.prompt, this.props.className].join(' ') }>
@@ -164,18 +147,19 @@ class LoginPrompt extends Component {
             />
             <div to="/" className={ styles.submitWrapper }>
               <Button
-                value={ buttonClass }
+                value={ 'Log In' }
                 className={ styles.submit }
                 disabled={ !!remainingTime || loadingTimeout }
-                onClick={ this.auth }
               />
               {remainingTime && <p className={ styles.counter }>{`${remainingTime}s left`}</p>}
-              {/* <ReCAPTCHA
-                ref={this.recaptchaRef}
-                sitekey='6Lev1KUUAAAAAKBHldTqZdeR1XdZDLQiOOgMXJ-S'
-                size='invisible' onChange={this.onChange}
-              /> */}
             </div>
+            <HCaptcha
+              sitekey={ siteKey }
+              size={ 'invisible' }
+              onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
+              onError={ this.onCaptchaError }
+              ref={ this.captchaRef }
+            />
           </form>
           <div className={ styles.image } />
         </div>
