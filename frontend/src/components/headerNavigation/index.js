@@ -11,19 +11,10 @@ import Logo from '../logo'
 class HeaderNavigation extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      dropdownOpen: false
-    }
-  }
-
-  toggleDropdown = () => {
-    this.setState({ dropdownOpen: !this.state.dropdownOpen })
   }
 
   render() {
     const { profile } = this.props.store
-    const { dropdownOpen } = this.state
 
     return (
       <nav className={ styles.menu }>
@@ -49,36 +40,9 @@ class HeaderNavigation extends Component {
                   } }
                 />
               </Link>
-              <div className={ styles.avatarWrapperDropdown }>
-                <Icon
-                  iconName='ChevronDown'
-                  className={ styles.avatarWrapperDropdownIcon }
-                  onClick={ this.toggleDropdown }
-                />
-                <ul className={ dropdownOpen ? styles.open : '' }>
-                  <div className={ styles.menuPointer } />
-                  <li className={ styles.menuItem }>
-                    <Icon iconName='Home' />
-                    <Link to='/'>Home</Link>
-                  </li>
-                  <li className={ styles.menuItem }>
-                    <Icon iconName='UserCircle' />
-                    <Link to={ `/profile/${ profile.display_name }` }>Profile</Link>
-                  </li>
-                  <li className={ styles.menuItem }>
-                    <Icon iconName='Pen' />
-                    <Link to='/new-post'>Create Post</Link>
-                  </li>
-                  <li onClick={ profile.logOut } className={ styles.menuItem }>
-                    <Icon iconName='SignOutAlt' />
-                    <span>Logout</span>
-                  </li>
-                </ul>
-              </div>
             </li>
             <Link to='/new-post' className={ styles.newPost }>
               <Button value='Create Post' className={ styles.button } />
-              <Icon iconName='Bell' />
             </Link>
           </ul>
         ) : ( // Logged out content

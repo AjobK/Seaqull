@@ -14,10 +14,6 @@ const NavigationStore = types
       'create post': {
         ref: '/new-post',
         icon: 'Pen'
-      },
-      logout: {
-        ref: '/logout',
-        icon: 'SignOutAlt'
       }
     }),
     menuItemsLoggedOut: types.optional(types.frozen(), {
@@ -30,7 +26,7 @@ const NavigationStore = types
         icon: 'SignInAlt'
       },
       'sign up': {
-        ref: '/signup',
+        ref: '/register',
         icon: 'Users'
       }
     })

@@ -6,32 +6,41 @@ import { NavigationMobileElement } from '../../components'
 @inject('store') @observer
 class NavigationMobile extends Component {
   render() {
-    const { nav, profile, open } = this.props.store
+    const { nav, profile } = this.props.store
 
     let menuItems = profile.loggedIn && nav.menuItemsLoggedIn || nav.menuItemsLoggedOut
-    let arr = []
+    let navigationItems = []
 
     for (let key in menuItems) {
-      if (menuItems.hasOwnProperty(key)) {
-        arr.push(
-          <NavigationMobileElement
-            title={ key }
-            icon={ menuItems[key].icon }
-            key={ Math.random() }
-            value={ menuItems[key].children
-            } />
-        )
-      }
+      console.log(menuItems[key])
+      navigationItems.push(
+        <NavigationMobileElement
+          title={ key }
+          to={ menuItems[key]?.ref }
+          icon={ menuItems[key]?.icon }
+          key={ Math.random() }
+        />
+      )
     }
 
     return (
       <section className={ [
-        styles.navigation,
-        open && styles.sNavOpen
+        styles.navigation
       ].join(' ') }>
         <div className={ styles.menu }>
           <ul className={ styles.menuUl }>
-            {arr}
+            { navigationItems }
+            {
+              profile.loggedIn &&
+              <NavigationMobileElement
+                title={ 'Logout' }
+                icon={ 'SignOutAlt' }
+                onClick={ () => {
+                  console.log('logout')
+                  profile.logOut()
+                } }
+              />
+            }
           </ul>
         </div>
       </section>

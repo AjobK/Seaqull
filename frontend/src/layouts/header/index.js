@@ -29,17 +29,22 @@ class Header extends Component {
       ].join(' ') }>
         <header className={ [styles.header].join(' ') }>
           <section className={ styles.headerContent }>
-            <HeaderNavigation />
+            <HeaderNavigation subNavOpen={ subNavOpen } />
             <Hamburger
               onClick={ this.toggleSubNavigation }
               active={ subNavOpen }
               className={ styles.hamburger }
             />
           </section>
-          <div className={ [
-            styles.navigationMobile,
-            !subNavOpen ? styles.hide : ''
-          ].join(' ') } >
+          <div
+            className={ [
+              styles.navigationMobile,
+              !subNavOpen ? styles.hide : ''
+            ].join(' ') }
+            onClick={ () => {
+              this.setState({ subNavOpen: false })
+            } }
+          >
             <NavigationMobile />
           </div>
         </header>
