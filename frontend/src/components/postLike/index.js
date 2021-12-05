@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
 import { UnitFormatterUtil, URLUtil } from '../../util/'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store')
 @observer
@@ -31,9 +32,28 @@ class PostLike extends Component {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          this.props.history.push('/login/')
+          this.showLoginRedirect()
         }
       })
+  }
+
+  showLoginRedirect = () => {
+    const { notification } = this.props.store
+
+    notification.setContent(popUpData.messages.loginRequired)
+    notification.setActions([
+      {
+        ...popUpData.actions.cancel,
+        action: () => { notification.close() }
+      },
+      {
+        ...popUpData.actions.confirmWithText,
+        action: () => {
+          notification.close()
+          this.props.history.push('/login/')
+        }
+      }
+    ])
   }
 
   postUnlike = () => {

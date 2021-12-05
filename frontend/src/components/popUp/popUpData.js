@@ -23,6 +23,10 @@ export const popUpData = {
     'captchaError': {
       'title': 'Captcha error',
       'description': 'An error occurred while performing the captcha. Please try again.'
+    },
+    'loginRequired': {
+      'title': 'Login required',
+      'description': 'Sign up to become a Seaqull member and get access to its features.'
     }
   },
   'actions': {
