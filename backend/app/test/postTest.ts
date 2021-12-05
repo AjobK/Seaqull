@@ -4,6 +4,10 @@ import assert = require('assert')
 import { v4 as uuidv4 } from 'uuid'
 import Post from '../entities/post'
 
+require('dotenv').config()
+
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Post functionalities', () => {
@@ -11,11 +15,14 @@ describe('Post functionalities', () => {
   let post: Post
 
   before((done) => {
+    require('dotenv').config()
+
     agent
       .post('/login')
       .send({
         username: 'User',
-        password: 'Qwerty123'
+        password: 'Qwerty123',
+        captcha
       })
       .end(() => {
         agent

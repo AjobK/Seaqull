@@ -3,6 +3,10 @@ import chai = require('chai')
 import chaiHttp = require('chai-http')
 import assert = require('assert')
 
+require('dotenv').config()
+
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Profile page', () => {
@@ -10,18 +14,21 @@ describe('Profile page', () => {
   const agentUser = chai.request.agent('http://localhost:8000/api')
 
   before((done) => {
+
     agentUser
       .post('/login')
       .send({
         username: 'User',
-        password: 'Qwerty123'
+        password: 'Qwerty123',
+        captcha
       })
       .end(() => {
         agentAdmin
           .post('/login')
           .send({
             username: 'Admin',
-            password: 'Qwerty123'
+            password: 'Qwerty123',
+            captcha
           })
           .end(() => {
             done()

@@ -3,6 +3,10 @@ import chaiHttp = require('chai-http')
 import assert = require('assert')
 import Post from '../entities/post'
 
+require('dotenv').config()
+
+const captcha = process.env.HCAPTCHA_TEST_TOKEN
+
 chai.use(chaiHttp)
 
 describe('Like posts', () => {
@@ -21,12 +25,15 @@ describe('Like posts', () => {
   })
 
   describe('Like functionalities as guest', () => {
+    require('dotenv').config()
+
     before((done) => {
       agent
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha
         })
         .end(() => {
           agent
@@ -57,7 +64,8 @@ describe('Like posts', () => {
         .post('/login')
         .send({
           username: 'User',
-          password: 'Qwerty123'
+          password: 'Qwerty123',
+          captcha
         })
         .end(() => {
           done()

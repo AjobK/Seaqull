@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
 import * as bcrypt from 'bcrypt'
+import CaptchaService from '../utils/captchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
 
@@ -52,7 +53,7 @@ class AuthorizationController {
   }
 
   public login = async (req: Request, res: Response): Promise<any> => {
-    const { username, password } = req.body
+    const { username, password, captcha } = req.body
 
     if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
 
@@ -66,6 +67,14 @@ class AuthorizationController {
         remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
       })
     } else {
+      const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
+
+      if (!isCaptchaValid) {
+        return res.status(403).send({
+          errors: ['We couldn\'t verify that you\'re not a robot.']
+        })
+      }
+
       if (req.cookies['token']) res.clearCookie('token')
 
       const validation = this.validateAccountRequest(account, username, password)
@@ -91,9 +100,8 @@ class AuthorizationController {
 
       res.setHeader(
         'Set-Cookie',
-        `token=${token}; HttpOnly; ${SECURE == 'true' ? 'Secure;' : ''} expires=${+new Date(
-          new Date().getTime() + 86409000
-        ).toUTCString()}; path=/`
+        `token=${token}; HttpOnly; ${SECURE == 'true' ? 'Secure;' : ''} expires=${
+          +new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
       )
 
       res.status(200).json({
