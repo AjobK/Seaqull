@@ -7,7 +7,7 @@
 	margin-right: $header-spacing;
 
 	@include mobile-all-portrait {
-		margin: 0 auto;
+		margin: calc(-#{$profile-card-offset} - #{$header-spacing}) auto 0 auto;
 	}
 }
 
