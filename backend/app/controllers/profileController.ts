@@ -82,15 +82,9 @@ class ProfileController {
     const profile = await this.dao.getProfileByUsername(receivedUsername)
     const followingById = await this.dao.getFollowingByProfileId(profile.id)
 
-    const payload = {
-      following: []
-    }
+    const payload = followingById.map((entry) => entry.profile)
 
-    followingById.forEach((entry) => {
-      payload.following.push(entry.profile)
-    })
-
-    if (payload.following.length < 1) {
+    if (payload.length < 1) {
       return res.status(204)
     }
 

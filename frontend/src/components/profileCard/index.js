@@ -194,7 +194,8 @@ class ProfileCard extends Component {
           { user.isOwner && (
             <span
               className={
-                `${ styles.profilePictureEdit } ${ this.state.draggingOverAvatar ? styles.pictureDraggingOver : '' }`
+                `${ styles.profilePictureEdit } ${ this.state.draggingOverAvatar ?
+                  styles.profilePictureDraggingOver : '' }`
               }
             >
               <Icon iconName={ 'Pen' } />
