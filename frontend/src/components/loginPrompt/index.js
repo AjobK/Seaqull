@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
+import { NotificationUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -50,7 +51,7 @@ class LoginPrompt extends Component {
       })
       .catch((res) => {
         if (res.message === 'Network Error') {
-          this.props.store.notification.setContent(popUpData.messages.networkError)
+          NotificationUtil.showNetworkError(this.props.store)
 
           return this.setState({
             username: ['No connection'],

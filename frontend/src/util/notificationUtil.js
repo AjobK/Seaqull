@@ -20,6 +20,10 @@ class NotificationUtil {
       }
     ])
   }
+
+  static showNetworkError = (store) => {
+    store.notification.setContent(popUpData.messages.networkError)
+  }
 }
 
 export default NotificationUtil
