@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
+import { Button } from '..'
+import styles from './settings.scss'
 
 @inject('store')
 @observer
@@ -12,12 +14,13 @@ class SettingsPrompt extends Component {
     const settingsJson = props.settings
 
     for (let key in settingsJson) {
-      console.log(settingsJson[key])
-      const newObject = {
-        'key': key,
-        'value': settingsJson[key]
+      if (key != 'id') {
+        const newObject = {
+          'key': key,
+          'value': settingsJson[key]
+        }
+        settingsList.push(newObject)
       }
-      settingsList.push(newObject)
     }
 
     this.state = {
@@ -25,17 +28,34 @@ class SettingsPrompt extends Component {
     }
   }
 
+  updateSettings (o) {
+    console.log(o)
+    /*const newSettings = this.state.settings
+    newSettings[o.key] = o.value
+
+    this.setState ({
+      'settings': newSettings
+    })
+    console.log(o)*/
+  }
+
   render() {
     return (
       <div>
-        { this.state.settings.map(function(object, i) {
+        { this.state.settings.map((object, i) => {
           return (
-            <>
-              <div>
-                <p key={ 'key' + i }> {object.key} </p>
-                <p key={ 'value' + i }> {object.value} </p>
-              </div>
-            </>
+            <div key={ i }>
+              <p key={ 'key' + i }> {object.key} </p>
+              <p key={ 'value' + i }> {object.value} </p>
+
+              <Button
+                key={ 'button' + i }
+                className={ styles.avatarUploadPopUpBtnsCancelButton }
+                value={ object.value ? 'Deactivate' : 'Activate' }
+                inverted={ !object.value }
+                onClick={ this.updateSettings.bind(this) }
+              />
+            </div>
           )
         })}
       </div>
