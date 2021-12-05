@@ -1,0 +1,109 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	position: relative;
+	background-position: center;
+	background-size: cover;
+	height: calc(30vh + #{$header-height});
+	max-height: 300px;
+	background-color: $darker;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.banner {
+	display: flex;
+	justify-content: flex-end;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+
+	&:hover {
+		.bannerEdit {
+			opacity: 1;
+		}
+	}
+
+	&Image {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		opacity: 0.5;
+		background-size: cover;
+		background-position: center;
+		-webkit-backdrop-filter: blur(7px);
+		backdrop-filter: blur(7px);
+	}
+
+	&Edit {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		justify-content: flex-end;
+		transition: 0.2s;
+
+		&:hover {
+			.bannerEditActionBtn {
+				opacity: 1;
+			}
+		}
+
+		&ActionBtn {
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			position: absolute;
+			display: flex;
+			align-items: flex-end;
+			justify-content: center;
+			opacity: 0;
+			color: white;
+			background-color: rgba(0, 0, 0, 0.35);
+			font-size: 1rem;
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+			padding: $header-spacing;
+			transition: 0.2s;
+			pointer-events: none;
+
+			@include mobile-all {
+				padding: $header-spacing;
+				font-size: 1.5rem;
+			}
+
+			&Text {
+				vertical-align: middle;
+				
+				> span {
+					text-transform: uppercase;
+					font-weight: bold;
+					font-size: 1rem;
+					margin-right: 10px;
+					letter-spacing: 1px;
+
+					@include mobile-all {
+						display: none;
+					}
+				}
+			}
+		}
+
+		input {
+			cursor: pointer;
+			width: inherit;
+			height: inherit;
+			opacity: 0;
+		}
+
+		&DraggingOver {
+			.bannerEditActionBtn {
+				opacity: 1;
+			}
+		}
+	}
+}

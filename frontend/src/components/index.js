@@ -4,7 +4,6 @@ import ProfileBar from './profileBar'
 import NavDropdown from './navDropdown'
 import HeaderNavigation from './headerNavigation'
 import NavigationMobile from './navigationMobile'
-import UserBanner from './userBanner'
 import Title from './title'
 import Posts from './posts'
 import PostsPreview from './postsPreview'
@@ -39,6 +38,9 @@ import PostsBlockSmall from './postsBlockSmall'
 import PopUp from './popUp'
 import GlobalNotification from './globalNotification'
 import ProfilePosts from './profilePosts'
+import ProfileCard from './profileCard'
+import ProfileBanner from './profileBanner'
+import BanUser from './banUser'
 
 export {
   Button,
@@ -47,7 +49,6 @@ export {
   HeaderNavigation,
   NavigationMobile,
   NavDropdown,
-  UserBanner,
   Title,
   Posts,
   PostsPreview,
@@ -81,5 +82,8 @@ export {
   PostsBlockSmall,
   PopUp,
   GlobalNotification,
-  ProfilePosts
+  ProfilePosts,
+  ProfileCard,
+  ProfileBanner,
+  BanUser
 }
