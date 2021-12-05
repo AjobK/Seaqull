@@ -7,6 +7,7 @@ import { NavigationMobileElement } from '../../components'
 class NavigationMobile extends Component {
   render() {
     const { nav, profile } = this.props.store
+    const { className } = this.props
 
     let menuItems = profile.loggedIn && nav.menuItemsLoggedIn || nav.menuItemsLoggedOut
     let navigationItems = []
@@ -24,7 +25,8 @@ class NavigationMobile extends Component {
 
     return (
       <section className={ [
-        styles.navigation
+        styles.navigation,
+        className
       ].join(' ') }>
         <div className={ styles.menu }>
           <ul className={ styles.menuUl }>

@@ -7,7 +7,6 @@
 	top: 0;
 	background-color: $background;
 	height: $header-height;
-	pointer-events: auto;
 	width: 100%;
 
 	@include mobile-all-portrait {
@@ -46,11 +45,24 @@
 
 	.navigationMobile {
 		transition: 0.2s;
-		background-color: rgba(0, 0, 0, 0.35);
 		position: fixed;
 		top: $header-height;
 		bottom: 0;
 		width: 100%;
+		max-width: $wrapper-width;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+
+		> .overlay {
+			z-index: -1;
+			position: fixed;
+			top: $header-height;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(0, 0, 0, 0.35);
+		}
 
 		&.hide {
 			pointer-events: none;

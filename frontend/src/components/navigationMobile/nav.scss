@@ -1,12 +1,12 @@
 @import '../../styles/index.scss';
 
 .navigation {
-	margin: 0 auto;
 	transition: 1s;
-	width: 100%;
 	max-width: $wrapper-width;
 	display: flex;
+	align-items: flex-end;
 	justify-content: flex-end;
+	pointer-events: initial;
 }
 
 .sNavOpen {

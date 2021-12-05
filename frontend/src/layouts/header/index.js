@@ -27,7 +27,7 @@ class Header extends Component {
         styles.headerWrap,
         subNavOpen && styles.sNavOpen
       ].join(' ') }>
-        <header className={ [styles.header].join(' ') }>
+        <header className={ styles.header }>
           <section className={ styles.headerContent }>
             <HeaderNavigation subNavOpen={ subNavOpen } />
             <Hamburger
@@ -41,11 +41,15 @@ class Header extends Component {
               styles.navigationMobile,
               !subNavOpen ? styles.hide : ''
             ].join(' ') }
-            onClick={ () => {
-              this.setState({ subNavOpen: false })
-            } }
           >
-            <NavigationMobile />
+            <div
+              className={ styles.overlay }
+              onClick={ () => {
+                console.log('CLOSEEE')
+                this.setState({ subNavOpen: false })
+              } }
+            />
+            <NavigationMobile className={ styles.navigationMobileBox } />
           </div>
         </header>
       </div>
