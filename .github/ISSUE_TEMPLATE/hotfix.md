@@ -1,7 +1,7 @@
 ---
 name: Hotfix
 about: Used for bug fixing and other necessary hotfixes.
-title: "[000] Hotfix Title"
+title: "Hotfix Title"
 labels: ['Backlog', 'Bug']
 assignees: ''
 
