@@ -23,6 +23,16 @@ export const popUpData = {
     'captchaError': {
       'title': 'Captcha error',
       'description': 'An error occurred while performing the captcha. Please try again.'
+    },
+    'confirmDeactivate': {
+      'title': 'Deactivate Account',
+      'description': 'Are you sure you want to deactivate your account,' +
+        ' it will be deleted after two weeks and you\'ll be able to reactivate during the 2 weeks' +
+        ' wait by loging into your account'
+    },
+    'confirmActive': {
+      'title': 'Activate Account',
+      'description': 'Your account is set to inactive, would you like to activate your account?'
     }
   },
   'actions': {
@@ -43,6 +53,15 @@ export const popUpData = {
     'cancel': {
       'title': 'Cancel',
       'primary': false
+    },
+    'cancelNegative': {
+      'title': 'Cancel',
+      'primary': true
+    },
+    'confirmNegative': {
+      'title': 'Confirm',
+      'icon': 'Check',
+      'primary': false,
     }
   }
 }

@@ -1,8 +1,12 @@
+/* eslint-disable indent */
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import { Button } from '..'
 import styles from './settings.scss'
+import Axios from 'axios'
+import { PopUp } from '../../components'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store')
 @observer
@@ -10,54 +14,72 @@ class SettingsPrompt extends Component {
   constructor(props) {
     super(props)
 
-    const settingsList = []
-    const settingsJson = props.settings
-
-    for (let key in settingsJson) {
-      if (key != 'id') {
-        const newObject = {
-          'key': key,
-          'value': settingsJson[key]
-        }
-        settingsList.push(newObject)
-      }
-    }
-
     this.state = {
-      settings: settingsList
+      settings: props.settings,
+      popupVisible: false
     }
   }
 
-  updateSettings (o) {
-    console.log(o)
-    /*const newSettings = this.state.settings
-    newSettings[o.key] = o.value
+  deactivate () {
+    const newSettings = this.state.settings
+    newSettings.active = !this.state.settings.active
 
-    this.setState ({
-      'settings': newSettings
+    Axios.put('/profile/settings', newSettings, { withCredentials: true }).then(() => {
+      this.setState ({
+        settings: newSettings
+      })
     })
-    console.log(o)*/
+  }
+
+  showPopup() {
+    const { notification } = this.props.store
+
+    if (this.state.settings.active) {
+      notification.setContent(popUpData.messages.confirmDeactivate)
+
+      notification.setActions([
+        {
+          ...popUpData.actions.confirmNegative,
+          action: () => {
+            this.deactivate()
+            notification.close()
+          }
+        },
+        {
+          ...popUpData.actions.cancelNegative,
+          action: notification.close
+        }
+      ])
+
+      notification.setCanCloseWithClick(true)
+    } else {
+      this.deactivate()
+    }
   }
 
   render() {
-    return (
-      <div>
-        { this.state.settings.map((object, i) => {
-          return (
-            <div key={ i }>
-              <p key={ 'key' + i }> {object.key} </p>
-              <p key={ 'value' + i }> {object.value} </p>
+    const { notification } = this.props.store
 
-              <Button
-                key={ 'button' + i }
-                className={ styles.avatarUploadPopUpBtnsCancelButton }
-                value={ object.value ? 'Deactivate' : 'Activate' }
-                inverted={ !object.value }
-                onClick={ this.updateSettings.bind(this) }
-              />
-            </div>
-          )
-        })}
+    return (
+      <div className={ styles.settingsContainer }>
+        <div className={ styles.settingsElement }>
+          <p className={ styles.key }> Active </p>
+          <Button
+            key={ 'button' }
+            className={ styles.avatarUploadPopUpBtnsCancelButton }
+            value={ this.state.settings.active ? 'Deactivate' : 'Activate' }
+            inverted={ this.state.settings.active }
+            onClick={ this.showPopup.bind(this) }
+          />
+        </div>
+        { this.state.popupVisible && (
+          <PopUp content={ {
+                    ...notification.getContentJSON(),
+                    actions: notification.actionsData,
+                    close: () => notification.close(),
+                    canCloseWithClick: notification.canCloseWithClick
+                  } }/>
+        )}
       </div>
     )
   }

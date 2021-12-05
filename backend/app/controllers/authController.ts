@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import AccountDAO from '../daos/accountDAO'
 import RoleDAO from '../daos/roleDAO'
-import * as bcrypt from 'bcrypt'
 import CaptchaService from '../utils/captchaService'
 import { Account } from '../entities/account'
 import BanService from '../utils/banService'
+import AccountValidationService from '../utils/accountValidationService'
 
 const jwt = require('jsonwebtoken')
 const expirationtimeInMs = process.env.JWT_EXPIRATION_TIME
@@ -16,11 +16,13 @@ class AuthorizationController {
   private accountDAO: AccountDAO
   private roleDAO: RoleDAO
   private banService: BanService
+  private accountValidationService: AccountValidationService
 
   constructor() {
     this.accountDAO = new AccountDAO()
     this.roleDAO = new RoleDAO()
     this.banService = new BanService()
+    this.accountValidationService = new AccountValidationService()
   }
 
   public loginVerify = async (req: Request, res: Response): Promise<any> => {
@@ -30,6 +32,8 @@ class AuthorizationController {
       const account = await this.accountDAO.getAccountByUsername(
         jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
       )
+
+      if (!account.settings.active) return res.status(403).json({ 'Error': 'Account Deactivated' })
 
       const profile = account.profile
 
@@ -77,11 +81,11 @@ class AuthorizationController {
 
       if (req.cookies['token']) res.clearCookie('token')
 
-      const validation = this.validateAccountRequest(account, username, password)
+      const validation = this.accountValidationService.validateAccountRequest(account, username, password)
 
       if (validation != null) return res.status(400).send(validation)
 
-      if (account.settings.active == false) return res.status(404).json({ errors: ['Account inactive'] })
+      if (!account.settings.active) return res.status(403).json({ errors: ['Account inactive'] })
 
       const ban = await this.banService.checkIfUserIsBanned(account)
 
@@ -110,34 +114,6 @@ class AuthorizationController {
         user: account
       })
       res.send()
-    }
-  }
-
-  private validateAccountRequest = (account: Account, username, password): any => {
-    try {
-      if (username === account.user_name) {
-        if (!bcrypt.compareSync(password, account.password)) {
-          if (account.login_attempts_counts != 2) {
-            account.login_attempts_counts++
-            this.accountDAO.updateAccount(account)
-
-            return { errors: ['Incorrect username or password'] }
-          } else {
-            account.login_attempts_counts = null
-            account.locked_to = Date.now() + 30000
-            this.accountDAO.updateAccount(account)
-            const remainingTime = Math.floor((account.locked_to - Date.now()) / 1000)
-
-            return { errors: ['Too many login attempts'], remainingTime: remainingTime }
-          }
-        } else {
-          return null
-        }
-      } else {
-        return { errors: ['Incorrect username or password'] }
-      }
-    } catch (error) {
-      return { errors: ['Incorrect username or password'] }
     }
   }
 

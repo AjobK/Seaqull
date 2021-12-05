@@ -41,18 +41,23 @@ class LoginPrompt extends Component {
         this.props.store.profile.setProfileData(res.data.user)
         this.goToProfile(res.data.user.profile.display_name)
       })
-      .catch((res) => {
-        if (res.message === 'Network Error') {
-          this.props.store.notification.setContent(popUpData.messages.networkError)
+      .catch((err) => {
+        if (err.message === 'Network Error') {
 
           return this.setState({
-            username: ['No connection'],
-            password: ['No connection'],
             loadingTimeout: false,
           })
         }
 
-        const { errors, remainingTime } = res.response.data
+        if (err.response.data.errors[0] === 'Account inactive') {
+          this.activateAccountPopup(captchaToken)
+
+          return this.setState({
+            loadingTimeout: false,
+          })
+        }
+
+        const { errors, remainingTime } = err.response.data
 
         if (remainingTime) this.setRemainingTimeInterval(remainingTime)
 
@@ -62,6 +67,34 @@ class LoginPrompt extends Component {
           loadingTimeout: false,
         })
       })
+  }
+
+  activate(captchaToken) {
+    const payload = {
+      username: document.getElementById(this.elId.Username).value,
+      password: document.getElementById(this.elId.Password).value,
+      captcha: captchaToken
+    }
+
+    Axios.put('/profile/settings/reactivate', payload, { withCredentials: true }).then(() => {
+      this.auth(captchaToken)
+    })
+  }
+
+  activateAccountPopup(captchaToken) {
+    const { notification } = this.props.store
+
+    notification.setContent(popUpData.messages.confirmActive)
+
+    notification.setActions([
+      {
+        ...popUpData.actions.confirmWithoutText,
+        action: () => {
+          this.activate(captchaToken)
+          notification.close()
+        }
+      }
+    ])
   }
 
   setRemainingTimeInterval = (remainingTime) => {

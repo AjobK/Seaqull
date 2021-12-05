@@ -17,6 +17,7 @@ import BanService from '../utils/banService'
 import AccountSettings from '../entities/account_settings'
 import SettingsDAO from '../daos/settingsDAO'
 import CaptchaService from '../utils/captchaService'
+import AccountValidationService from '../utils/accountValidationService'
 
 const jwt = require('jsonwebtoken')
 
@@ -39,6 +40,7 @@ class ProfileController {
   private fileService: FileService
   private banService: BanService
   private settingsService: SettingsDAO
+  private accountValidationService: AccountValidationService
 
   constructor() {
     this.dao = new ProfileDAO()
@@ -49,6 +51,7 @@ class ProfileController {
     this.fileService = new FileService()
     this.banService = new BanService()
     this.settingsService = new SettingsDAO()
+    this.accountValidationService = new AccountValidationService()
   }
 
   public updateSettings = async (req: any, res: Response): Promise<Response> => {
@@ -63,6 +66,49 @@ class ProfileController {
     }
 
     return res.status(200).json({ 'message': 'updated' })
+  }
+
+  public reactivateAccount = async (req: any, res: Response): Promise<Response> => {
+    const { username, password, captcha } = req.body
+
+    if (typeof username != 'string' || typeof username != 'string') return res.status(400).json({ loggedIn: false })
+
+    const account = await this.accountDAO.getAccountByUsername(username)
+
+    if (account == null) return res.status(403).json({ errors: ['Incorrect username or password'] })
+
+    if (account.locked_to - Date.now() > 0) {
+      return res.status(403).send({
+        errors: ['Too many login attempts'],
+        remainingTime: Math.floor((account.locked_to - Date.now()) / 1000),
+      })
+    } else {
+      const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
+
+      if (!isCaptchaValid) {
+        return res.status(403).send({
+          errors: ['We couldn\'t verify that you\'re not a robot.']
+        })
+      }
+
+      if (req.cookies['token']) res.clearCookie('token')
+
+      const validation = this.accountValidationService.validateAccountRequest(account, username, password)
+
+      if (validation != null) return res.status(400).send(validation)
+
+      const ban = await this.banService.checkIfUserIsBanned(account)
+
+      if (ban) {
+        return res.status(403).json({ errors: [ban] })
+      }
+
+      account.settings.active = true
+
+      this.settingsService.updateActiveState(account.settings)
+
+      return res.status(200).json({ 'message': 'updated' })
+    }
   }
 
   public getFollowers = async (req: Request, res: Response): Promise<Response> => {
