@@ -5,8 +5,7 @@ import Axios from 'axios'
 import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
-import { UnitFormatterUtil, URLUtil } from '../../util/'
-import { popUpData } from '../popUp/popUpData'
+import { UnitFormatterUtil, URLUtil, NotificationUtil } from '../../util/'
 
 @inject('store')
 @observer
@@ -42,23 +41,9 @@ class PostLike extends Component {
   }
 
   showLoginRedirect = () => {
-    const { notification, nav } = this.props.store
+    const { store, history } = this.props
 
-    notification.setContent(popUpData.messages.loginRequired)
-    notification.setActions([
-      {
-        ...popUpData.actions.cancel,
-        action: () => { notification.close() }
-      },
-      {
-        ...popUpData.actions.confirmWithText,
-        action: () => {
-          nav.setPathRedirectAfterLogin(window.location.pathname)
-          notification.close()
-          this.props.history.push('/login/')
-        }
-      }
-    ])
+    NotificationUtil.showLoginRedirect(store, history)
   }
 
   postUnlike = () => {
