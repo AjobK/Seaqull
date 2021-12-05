@@ -25,22 +25,6 @@ class ProfileBanner extends Component {
     this.onBannerDragLeave()
   }
 
-  handleInput = (input, stateVar) => {
-    input.value = ''
-    const files = input?.target?.files
-
-    if (files.length > 0) {
-      const reader = new FileReader()
-
-      reader.addEventListener('load', () => {
-        this.setState({
-          [stateVar]: reader.result
-        })
-      })
-      reader.readAsDataURL(files[0])
-    }
-  }
-
   onBannerDragEnter = () => {
     this.setState({
       draggingOverBanner: true

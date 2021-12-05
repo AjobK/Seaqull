@@ -4,8 +4,7 @@ import { observer, inject } from 'mobx-react'
 import { Icon, Button, Cropper } from '../'
 import Axios from 'axios'
 import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js'
-import URLUtil from '../../util/urlUtil'
-import ColorUtil from '../../util/colorUtil'
+import { URLUtil, InputUtil, ColorUtil } from '../../util/'
 import ProfileInfo from '../profileInfo'
 
 @inject('store')
@@ -48,23 +47,12 @@ class ProfileCard extends Component {
   }
 
   onEditAvatar = (input) => {
-    this.handleInput(input, 'upAvatar')
-    this.onAvatarDragLeave()
-  }
-
-  handleInput = (input, stateVar) => {
-    input.value = ''
-
-    if (input.target.files && input.target.files.length > 0) {
-      const reader = new FileReader()
-
-      reader.addEventListener('load', () => {
-        this.setState({
-          [stateVar]: reader.result
-        })
+    InputUtil.handleInput(input, (result) => {
+      this.setState({
+        upAvatar: result
       })
-      reader.readAsDataURL(input.target.files[0])
-    }
+    })
+    this.onAvatarDragLeave()
   }
 
   onAvatarDragEnter = () => {
