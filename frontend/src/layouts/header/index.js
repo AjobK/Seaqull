@@ -35,6 +35,7 @@ class Header extends Component {
               active={ subNavOpen }
               className={ styles.hamburger }
             />
+            <NavigationMobile className={ `${ styles.navigationMobileBox } ${ !subNavOpen ? styles.hide : '' }` } />
           </section>
           <div
             className={ [
@@ -49,7 +50,6 @@ class Header extends Component {
                 this.setState({ subNavOpen: false })
               } }
             />
-            <NavigationMobile className={ styles.navigationMobileBox } />
           </div>
         </header>
       </div>
