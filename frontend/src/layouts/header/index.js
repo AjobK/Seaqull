@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
 import { Hamburger, HeaderNavigation, NavigationMobile } from '../../components'
+import { withRouter } from 'react-router'
 
 @inject('store') @observer
 class Header extends Component {
@@ -11,12 +12,27 @@ class Header extends Component {
     this.state = {
       subNavOpen: false
     }
+
+    this.currentPath = this.props.location.pathname
   }
 
   toggleSubNavigation = () => {
     let { subNavOpen } = this.state
 
     this.setState({ subNavOpen: !subNavOpen })
+  }
+
+  closeSubNavigation = () => {
+    this.setState({ subNavOpen: false })
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { pathname } = newProps.location
+
+    if (this.state.subNavOpen && this.currentPath != pathname) {
+      this.currentPath = pathname
+      this.closeSubNavigation()
+    }
   }
 
   render() {
@@ -35,7 +51,6 @@ class Header extends Component {
               active={ subNavOpen }
               className={ styles.hamburger }
             />
-            <NavigationMobile className={ `${ styles.navigationMobileBox } ${ !subNavOpen ? styles.hide : '' }` } />
           </section>
           <div
             className={ [
@@ -45,11 +60,9 @@ class Header extends Component {
           >
             <div
               className={ styles.overlay }
-              onClick={ () => {
-                console.log('CLOSEEE')
-                this.setState({ subNavOpen: false })
-              } }
+              onClick={ this.closeSubNavigation }
             />
+            <NavigationMobile className={ styles.navigationMobileBox } />
           </div>
         </header>
       </div>
@@ -57,4 +70,4 @@ class Header extends Component {
   }
 }
 
-export default Header
+export default withRouter(Header)

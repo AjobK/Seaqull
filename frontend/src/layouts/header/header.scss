@@ -50,10 +50,14 @@
 	top: $header-height;
 	bottom: 0;
 	width: 100%;
-	max-width: $wrapper-width;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: flex-start;
+	
+	@include mobile-sm {
+		align-items: stretch;
+		overflow: hidden;
+	}
 
 	> .overlay {
 		position: fixed;
@@ -70,14 +74,12 @@
 	}
 
 	&Box {
-		z-index: 100;
-		position: absolute;
-		top: $header-height;
-		transition: 0.2s;
+		width: 100%;
+		z-index: 1;
+		pointer-events: none;
 
-		&.hide {
-			pointer-events: none;
-			opacity: 0;
+		> * {
+			pointer-events: initial;
 		}
 	}
 }
