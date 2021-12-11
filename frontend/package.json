@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@draft-js-plugins/buttons": "^4.1.1",
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",

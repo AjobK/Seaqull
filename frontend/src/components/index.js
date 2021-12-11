@@ -38,6 +38,7 @@ import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
 import PopUp from './popUp'
 import GlobalNotification from './globalNotification'
+import DraftJsTooltipButton from './draftjsTooltipButton'
 
 export {
   Button,
@@ -79,5 +80,6 @@ export {
   PostsBlockLarge,
   PostsBlockSmall,
   PopUp,
-  GlobalNotification
+  GlobalNotification,
+  DraftJsTooltipButton,
 }

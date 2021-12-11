@@ -1,0 +1,27 @@
+@import '../../styles/index.scss';
+
+$tooltip-hover: #EFEFEF;
+
+.draftJsButton {
+	background: #fbfbfb;
+	color: #888;
+	font-size: 18px;
+	border: 0;
+	padding-top: 5px;
+	vertical-align: bottom;
+	height: 34px;
+	width: 36px;
+
+	&:hover, &:focus {
+		background: $tooltip-hover;
+		outline: 0;
+	}
+}
+
+.active {
+	color: #6a9cc9;
+}
+
+.active svg {
+	fill: #6a9cc9;
+}
