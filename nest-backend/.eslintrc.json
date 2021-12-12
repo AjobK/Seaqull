@@ -42,7 +42,7 @@
     "no-eval": "error",
     "no-multi-spaces": "error",
     "func-style": ["error", "expression"],
-    "indent": ["error", 2],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
     "newline-before-return": "error",
     "arrow-parens": "error",
     "arrow-spacing": "error",

@@ -1,19 +1,38 @@
-import { Body, Controller, Get, Ip, Param, Post, Put, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  ForbiddenException,
+  Get,
+  Ip,
+  Param,
+  Post,
+  Put, Req,
+  Res, UnauthorizedException,
+  UploadedFile,
+  UseInterceptors
+} from '@nestjs/common'
 import { ProfileService } from '../services/profile.service'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AllowAny } from '../decorators/allow-any.decorator'
 import { RegisterDTO } from '../dtos/register.dto'
 import { RegisterPayloadDTO } from '../dtos/register-payload.dto'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { ConfigService } from '@nestjs/config'
 import { FollowDTO } from '../dtos/response/follow.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ProfileAvatarDTO } from '../dtos/response/profile-avatar.dto'
+import { CaptchaService } from '../services/captcha.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Profile')
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService, private readonly configService: ConfigService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private readonly configService: ConfigService,
+    private readonly captchaService: CaptchaService,
+  ) {}
 
   @Get()
   public async getOwnProfile(
@@ -52,15 +71,14 @@ export class ProfileController {
     @Ip() ip: string,
     @Res({ passthrough: true }) res: Response
   ): Promise<{ user: RegisterPayloadDTO }> {
+    const isValidCaptcha = await this.captchaService.verifyHCaptcha(registerDTO.captcha)
+
+    if (!isValidCaptcha) throw new ForbiddenException('We could not verify that you are not a robot')
+
     const payload = await this.profileService.register(registerDTO, ip)
 
     res.setHeader(
-      'Set-Cookie',
-      `token=${payload.token}; 
-      HttpOnly; 
-      ${this.configService.get('SECURE') == 'true' ? 'Secure;' : ''} 
-      expires=${+new Date(new Date().getTime() + 86409000).toUTCString()}; 
-      path=/`
+      'Set-Cookie', `token=${payload.token};httponly;${this.configService.get('SECURE') == 'true' ? 'secure;' : ''}expires=${+new Date(new Date().getTime() + 86409000).toUTCString()};path=/;`
     )
 
     delete payload.token
@@ -78,6 +96,19 @@ export class ProfileController {
       message: `Successfully ${hasFollowedProfile ? '' : 'un'}followed profile`,
       following: hasFollowedProfile,
     }
+  }
+
+  @Put('/:username')
+  public async updateProfile(@AuthorizedUser() user: Account, @Req() req: Request): Promise<string> {
+    const updateUser = req.body
+
+    if (user.user_name !== updateUser.username) {
+      throw new UnauthorizedException()
+    }
+
+    await this.profileService.updateProfile(updateUser)
+
+    return 'Success'
   }
 
   @Put('/avatar')

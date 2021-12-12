@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { AuthorizationModule } from './modules/authorization.module'
+import { AuthModule } from './modules/auth.module'
 import { BanModule } from './modules/ban.module'
 import { CommentModule } from './modules/comment.module'
 import { PostModule } from './modules/post.module'
@@ -18,7 +18,7 @@ import {JwtAuthGuard} from "./guards/jwt-auth.guard";
       envFilePath: ['.env'],
       validationSchema: configValidationSchema
     }),
-    AuthorizationModule,
+    AuthModule,
     BanModule,
     CommentModule,
     PostModule,

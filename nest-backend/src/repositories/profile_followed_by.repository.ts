@@ -34,6 +34,8 @@ export class ProfileFollowedByRepository extends Repository<ProfileFollowedBy> {
       return !foundFollow
     }
 
+    await this.remove(foundFollow)
+
     return !foundFollow
   }
 }

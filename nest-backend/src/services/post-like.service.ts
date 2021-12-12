@@ -1,16 +1,18 @@
 import { PostLikeRepository } from '../repositories/post_like.repository'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
-import { ForbiddenException, NotFoundException } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common'
 import { PostLike } from '../entities/post_like.entity'
 import { ProfileRepository } from '../repositories/profile.repository'
 import { Profile } from '../entities/profile.entity'
+import { AccountRepository } from '../repositories/account.repository'
 
 export class PostLikeService {
   constructor(
     @InjectRepository(PostRepository) private readonly postRepository: PostRepository,
     @InjectRepository(PostLikeRepository) private readonly postLikeRepository: PostLikeRepository,
     @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
+    @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
   ) {
   }
 
@@ -25,11 +27,13 @@ export class PostLikeService {
   }
 
   public async getRecentUserLikes(username: string): Promise<PostLike[]> {
-    const profile = await this.profileRepository.getProfileByUsername(username)
+    const profile = await this.accountRepository.getProfileByUsername(username)
 
     if (!profile) throw new NotFoundException('User not found')
 
     const likes = await this.postLikeRepository.getUserLikesByProfileId(profile.id, 8)
+
+    console.log(likes)
 
     return likes
   }
@@ -46,7 +50,13 @@ export class PostLikeService {
     postLike.post = post
     postLike.liked_at = new Date()
 
-    await this.postLikeRepository.likePost(postLike)
+    console.log(postLike)
+
+    try {
+      await this.postLikeRepository.likePost(postLike)
+    } catch (e) {
+      throw new BadRequestException('Post already liked')
+    }
   }
 
   async unlikePost(path: string, profile: Profile): Promise<void> {

@@ -1,8 +1,18 @@
 import { EntityRepository, Repository } from 'typeorm'
 import { Account } from '../entities/account.entity'
+import { Profile } from '../entities/profile.entity'
+import { Role } from '../entities/role.entity'
 
 @EntityRepository(Account)
 export class AccountRepository extends Repository<Account> {
+
+  public async getProfileByUsername(username: string): Promise<Profile> {
+    const account = await this.findOne({ where: { user_name: username }, relations: ['profile'] })
+
+    if (!account) return undefined
+
+    return account.profile
+  }
 
   public async getAccountByUsername(username: string): Promise<Account> {
     const account = await this.createQueryBuilder('account')
@@ -50,5 +60,20 @@ export class AccountRepository extends Repository<Account> {
 
   public async updateAccount(account: Account): Promise<void> {
     await this.save(account)
+  }
+
+  public async accountAlreadyExists(email: string, user_name: string): Promise<boolean> {
+    const usernameInUse = await this.findOne({ where: { user_name } })
+    const emailInUse = await this.findOne({ where: { email } })
+
+    return !!(usernameInUse || emailInUse)
+  }
+
+  public async getAccountRole(id: number): Promise<Role> {
+    const account = await this.findOne(id, { relations: ['role'] })
+
+    if (!account) return undefined
+
+    return account.role
   }
 }

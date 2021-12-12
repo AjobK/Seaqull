@@ -65,7 +65,7 @@ class Profile extends App {
   }
 
   fetchLikedPosts(username) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/liked-by/recent/${username}`)
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/recent/${username}`)
       .then((json) => {
         this.setState({ likes: json.data })
       })

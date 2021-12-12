@@ -8,16 +8,31 @@ import {
   Res,
   UnauthorizedException
 } from '@nestjs/common'
-import { AuthorizationService } from '../services/authorization.service'
+import { AuthService } from '../services/auth.service'
 import { Request, Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
 import { LoginDTO } from '../dtos/login.dto'
 import { Profile } from '../entities/profile.entity'
+import { CaptchaService } from '../services/captcha.service'
+import { AllowAny } from '../decorators/allow-any.decorator'
 
-@ApiTags('Authorization')
-@Controller('auth')
-export class AuthorizationController {
-  constructor(private readonly authorizationService: AuthorizationService) {}
+@ApiTags('Auth')
+@Controller('')
+export class AuthController {
+  constructor(private readonly authorizationService: AuthService, private readonly captchaService: CaptchaService) {}
+
+  @Get('/logout')
+  public logout(@Req() req: Request, @Res() res: Response): Promise<string> {
+    if (req.cookies['token']) {
+      res.clearCookie('token').status(200).json({
+        message: 'Succesfully logged out'
+      })
+
+      return
+    }
+
+    throw new UnauthorizedException('Invalid JWT')
+  }
 
   @Get('/login-verify')
   public async loginVerify(@Req() req: Request): Promise<Profile> {
@@ -33,7 +48,12 @@ export class AuthorizationController {
   }
 
   @Post('/login')
+  @AllowAny()
   public async login(@Req() req: Request, @Res() res: Response, @Body() loginDTO: LoginDTO): Promise<void> {
+    const isCaptchaValid = await this.captchaService.verifyHCaptcha(loginDTO.captcha)
+
+    if (!isCaptchaValid) throw new ForbiddenException('We could not verify that you are not a robot')
+
     const account = await this.authorizationService.getAccountByUsername(loginDTO.username)
 
     if (!account) throw new ForbiddenException({ errors: ['Incorrect username or password'] })
@@ -49,19 +69,6 @@ export class AuthorizationController {
     })
 
     res.send()
-  }
-
-  @Post('/logout')
-  public logout(@Req() req: Request, @Res() res: Response): Promise<string> {
-    if (req.cookies['token']) {
-      res.clearCookie('token').status(200).json({
-        message: 'Succesfully logged out'
-      })
-
-      return
-    }
-
-    throw new UnauthorizedException('Invalid JWT')
   }
 
   private setJWTCookieHeader(res: Response, token: string): Response {

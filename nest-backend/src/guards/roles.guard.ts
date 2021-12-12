@@ -28,7 +28,7 @@ export const hasPermission = (permission: string): any => {
 
       if (hasPermission) return true
 
-      throw new ForbiddenException({ 'error': 'You don\'t have the right permisions' })
+      throw new ForbiddenException({ 'error': 'You don\'t have the right permissions' })
     }
   }
 

@@ -7,14 +7,16 @@ import { ProfileFollowedByRepository } from '../repositories/profile_followed_by
 import { AccountRepository } from '../repositories/account.repository'
 import { TitleRepository } from '../repositories/title.repository'
 import { BanRepository } from '../repositories/ban.repository'
-import { AuthorizationModule } from './authorization.module'
+import { AuthModule } from './auth.module'
 import { RoleRepository } from '../repositories/role.repository'
 import { AttachmentRepository } from '../repositories/attachment.repository'
 import { ConfigService } from '@nestjs/config'
+import { FileService } from '../services/file.service'
+import { CaptchaService } from '../services/captcha.service'
 
 @Module({
   imports: [
-    AuthorizationModule,
+    AuthModule,
     TypeOrmModule.forFeature([
       ProfileRepository,
       ProfileFollowedByRepository,
@@ -26,6 +28,6 @@ import { ConfigService } from '@nestjs/config'
     ])
   ],
   controllers: [ProfileController],
-  providers: [ProfileService, ConfigService]
+  providers: [ProfileService, ConfigService, FileService, CaptchaService]
 })
 export class ProfileModule {}

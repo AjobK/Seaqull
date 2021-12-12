@@ -21,6 +21,6 @@ module.exports = {
     'migrationsDir': 'src/migration',
     'subscribersDir': 'src/subscriber'
   },
-  'seeds': ['src/seeding/seeders/mainSeeder.ts'],
+  'seeds': ['src/seeding/seeders/seeder.ts'],
   'factories': ['src/seeding/factories/*.ts']
 }

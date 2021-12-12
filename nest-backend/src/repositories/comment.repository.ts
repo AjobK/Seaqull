@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm'
 import { Comment } from '../entities/comment.entity'
 import { Post } from '../entities/post.entity'
+import { Profile } from '../entities/profile.entity'
 
 @EntityRepository(Comment)
 export class CommentRepository extends Repository<Comment> {
@@ -30,12 +31,42 @@ export class CommentRepository extends Repository<Comment> {
     return comment
   }
 
+  async getPostByCommentId(id: number): Promise<Post> {
+    const comment = await this.findOne(id, { relations: ['post'] })
+
+    return comment.post
+  }
+
   public async createComment(comment: Comment): Promise<void> {
+    await this.save(comment)
+  }
+
+  public async pinCommentById(id: number): Promise<void> {
+    const comment = await this.findOne(id)
+
+    comment.is_pinned = true
+
+    await this.save(comment)
+  }
+
+  public async unpinCommentById(id: number): Promise<void> {
+    const comment = await this.findOne(id)
+
+    comment.is_pinned = false
+
     await this.save(comment)
   }
 
   public async archiveComment(comment: Comment, archivedDate: Date): Promise<void> {
     comment.archived_at = archivedDate
     await this.save(comment)
+  }
+
+  public async getCommentProfileById(id: number): Promise<Profile> {
+    const comment = await this.findOne(id, { relations: ['profile'] })
+
+    if (!comment) return undefined
+
+    return comment.profile
   }
 }

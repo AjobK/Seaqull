@@ -1,10 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
+import { Controller, Get } from '@nestjs/common'
 import { RoleService } from '../services/role.service'
-import { AuthGuard } from '@nestjs/passport'
 import { JwtToken } from '../decorators/jwt.decorator'
 import { Role } from '../entities/role.entity'
+import { ApiTags } from '@nestjs/swagger'
 
-@UseGuards(AuthGuard())
+@ApiTags('Role')
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}

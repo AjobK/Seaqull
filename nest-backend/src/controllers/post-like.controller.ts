@@ -1,11 +1,12 @@
-import { Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common'
+import { Controller, Delete, Get, NotFoundException, Param, Post } from '@nestjs/common'
 import { PostLikeService } from '../services/post-like.service'
 import { PostLike } from '../entities/post_like.entity'
-import { AuthGuard } from '@nestjs/passport'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
-import {AllowAny} from "../decorators/allow-any.decorator";
+import { AllowAny } from '../decorators/allow-any.decorator'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Post-like')
 @Controller('post/like')
 export class PostLikeController {
 
@@ -26,6 +27,8 @@ export class PostLikeController {
   @AllowAny()
   public async getRecentUserLikes(@Param('username') username: string): Promise<PostLike[]> {
     const recentUserLikes = await this.postLikeService.getRecentUserLikes(username)
+
+    if (recentUserLikes.length < 1) throw new NotFoundException('No likes found for that username')
 
     return recentUserLikes
   }

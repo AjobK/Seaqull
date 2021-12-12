@@ -5,15 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { PostLikeRepository } from '../repositories/post_like.repository'
 import { PostRepository } from '../repositories/post.repository'
 import { ProfileRepository } from '../repositories/profile.repository'
-import { AuthorizationModule } from './authorization.module'
+import { AuthModule } from './auth.module'
+import { AccountRepository } from '../repositories/account.repository'
 
 @Module({
   imports: [
-    AuthorizationModule,
+    AuthModule,
     TypeOrmModule.forFeature([
       PostLikeRepository,
       PostRepository,
       ProfileRepository,
+      AccountRepository,
     ])],
   controllers: [PostLikeController],
   providers: [PostLikeService],

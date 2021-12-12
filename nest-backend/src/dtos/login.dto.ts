@@ -6,4 +6,7 @@ export class LoginDTO {
 
   @IsNotEmpty()
   password: string
+
+  @IsNotEmpty()
+  captcha: string
 }

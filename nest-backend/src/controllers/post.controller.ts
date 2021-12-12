@@ -8,20 +8,20 @@ import {
   Put,
   Query,
   UploadedFile,
-  UseGuards,
   UseInterceptors
 } from '@nestjs/common'
 import { PostService } from '../services/post.service'
-import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
+import { PostsDTO } from '../dtos/response/posts.dto'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
-import { AuthGuard } from '@nestjs/passport'
 import { CreatePostDTO } from '../dtos/create-post.dto'
 import { PostViewDTO } from '../dtos/post-view.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { PostCreationDTO } from '../dtos/post-creation.dto'
 import { AllowAny } from '../decorators/allow-any.decorator'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Post')
 @Controller('post')
 export class PostController {
   constructor(
@@ -30,7 +30,7 @@ export class PostController {
 
   @Get()
   @AllowAny()
-  public async getPosts(@Query('page') skipSize: string): Promise<PostsResponsePayloadDTO> {
+  public async getPosts(@Query('page') skipSize: string): Promise<PostsDTO> {
     const posts = await this.postService.getPosts(skipSize)
 
     return posts
@@ -39,15 +39,6 @@ export class PostController {
   @Get('/:path')
   @AllowAny()
   public async getPostByPath(
-    @Param('path') path: string
-  ): Promise<any> {
-    const postDetailedPayload = await this.postService.getPostByPath(path, undefined)
-
-    return postDetailedPayload
-  }
-
-  @Get('/:path/auth')
-  public async getPostByPathWhileAuthorized(
     @Param('path') path: string,
     @AuthorizedUser() account: Account
   ): Promise<any> {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
-import { AuthorizationController } from '../controllers/authorization.controller'
-import { AuthorizationService } from '../services/authorization.service'
+import { AuthController } from '../controllers/auth.controller'
+import { AuthService } from '../services/auth.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -11,6 +11,7 @@ import { ProfileRepository } from '../repositories/profile.repository'
 import { TitleRepository } from '../repositories/title.repository'
 import { AttachmentRepository } from '../repositories/attachment.repository'
 import { BanRepository } from '../repositories/ban.repository'
+import {CaptchaService} from "../services/captcha.service";
 
 @Module({
   imports: [
@@ -34,8 +35,8 @@ import { BanRepository } from '../repositories/ban.repository'
       }
     })
   ],
-  controllers: [AuthorizationController],
-  providers: [AuthorizationService, JwtStrategy],
+  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy, CaptchaService],
   exports: [JwtStrategy, PassportModule, JwtModule]
 })
-export class AuthorizationModule {}
+export class AuthModule {}

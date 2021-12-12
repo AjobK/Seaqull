@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { BanRepository } from '../repositories/ban.repository'
 import { RoleRepository } from '../repositories/role.repository'
 import { AccountRepository } from '../repositories/account.repository'
-import { AuthorizationModule } from './authorization.module'
+import { AuthModule } from './auth.module'
 import { RolePermissionRepository } from '../repositories/role_permission.repository'
 import { PermissionRepository } from '../repositories/permission.repository'
 
@@ -18,7 +18,7 @@ import { PermissionRepository } from '../repositories/permission.repository'
       RolePermissionRepository,
       PermissionRepository
     ]),
-    AuthorizationModule
+    AuthModule
   ],
   controllers: [BanController],
   providers: [BanService],

@@ -24,7 +24,8 @@ import { v4 as uuidv4 } from 'uuid'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { FileService } from './file.service'
-import Attachment from '../../../backend/app/entities/attachment'
+import { Attachment } from '../entities/attachment.entity'
+import {Multer} from "multer";
 
 @Injectable()
 export class ProfileService {
@@ -43,7 +44,7 @@ export class ProfileService {
   }
 
   public async getFollowers(username: string): Promise<number[]> {
-    const profile = await this.profileRepository.getProfileByUsername(username)
+    const profile = await this.accountRepository.getProfileByUsername(username)
 
     if (!profile) throw new NotFoundException('Profile not found')
 
@@ -59,7 +60,7 @@ export class ProfileService {
   }
 
   public async getProfile(username: string, user: Account | undefined): Promise<any> {
-    const profile = await this.profileRepository.getProfileByUsername(username)
+    const profile = await this.accountRepository.getProfileByUsername(username)
 
     if (!profile) throw new NotFoundException('Profile not found')
 
@@ -81,7 +82,7 @@ export class ProfileService {
       const currentProfile = new ProfileFollowedBy()
       const loggedInProfile = new ProfileFollowedBy()
 
-      const followingProfile = await this.profileRepository.getProfileByUsername(username)
+      const followingProfile = await this.accountRepository.getProfileByUsername(username)
 
       currentProfile.follower = followingProfile.id
       currentProfile.profile = profile.id
@@ -117,7 +118,7 @@ export class ProfileService {
   public async register(registerDTO: RegisterDTO, ip: string): Promise<RegisterPayloadDTO> {
     if (registerDTO.email.endsWith('@seaqull.com')) throw new UnauthorizedException('No permission to use this e-mail')
 
-    const credentialsInUse = await this.profileRepository.profileAlreadyExists(registerDTO.email, registerDTO.username)
+    const credentialsInUse = await this.accountRepository.accountAlreadyExists(registerDTO.email, registerDTO.username)
 
     if (credentialsInUse) throw new UnauthorizedException('Account with this email or username is already in use')
 
@@ -142,7 +143,7 @@ export class ProfileService {
 
   public async follow(profile: Profile, toBeFollowedUsername: string): Promise<boolean> {
     const follower = profile
-    const profileToBeFollowed = await this.profileRepository.getProfileByUsername(toBeFollowedUsername)
+    const profileToBeFollowed = await this.accountRepository.getProfileByUsername(toBeFollowedUsername)
 
     if (follower.id == profileToBeFollowed.id) throw new ForbiddenException('Not allowed to follow yourself')
 
@@ -151,6 +152,8 @@ export class ProfileService {
     profileFollowedBy.profile = profileToBeFollowed.id
 
     const followedProfile = await this.profileFollowedByRepository.follow(profileFollowedBy)
+
+    console.log(followedProfile)
 
     return followedProfile
   }
@@ -199,8 +202,8 @@ export class ProfileService {
     return createdAccount
   }
 
-  private updateAttachment = async (username, file, type): Promise<any> => {
-    const profile = await this.profileRepository.getProfileByUsername(username)
+  private async updateAttachment(file: Express.Multer.File, username: string, type: string): Promise<any> {
+    const profile = await this.accountRepository.getProfileByUsername(username)
     const attachments = await this.profileRepository.getProfileAttachments(profile.id)
 
     let attachment = attachments[type]
@@ -238,5 +241,15 @@ export class ProfileService {
     await this.profileRepository.saveProfile(profile)
 
     return profile[typeField]
+  }
+
+  public async updateProfile(updateUser: any): Promise<void> {
+    const profile = await this.accountRepository.getProfileByUsername(updateUser.username)
+
+    for (let i = 0; i < Object.keys(updateUser).length; i++) {
+      profile[Object.keys(updateUser)[i]] = updateUser[Object.keys(updateUser)[i]]
+    }
+
+    await this.profileRepository.saveProfile(profile)
   }
 }

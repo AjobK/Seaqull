@@ -85,7 +85,6 @@ class CommentController {
       .catch(() => {
         return res.status(500).json({ message: 'A serverside error occured' })
       })
-
   }
 
   public deleteCommentLike = async (req: Request | any, res: Response): Promise<Response> => {

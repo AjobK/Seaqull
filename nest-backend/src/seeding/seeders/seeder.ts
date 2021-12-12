@@ -3,11 +3,11 @@ import { Connection } from 'typeorm'
 import { Role } from '../../entities/role.entity'
 import { permissionsAdmins, permissionsHeadAdmins, permissionsModerators, permissionsUsers } from '../data/seed.data'
 
-const roleSeeder = require('./roleSeeder')
-const attachmentSeeder = require('./attachmentSeeder')
-const accountSeeder = require('./accountSeeder')
-const permissionSeeder = require('./permissionSeeder')
-const rolePermissionSeeder = require('./rolePermissionSeeder')
+const roleSeeder = require('./role.seeder')
+const attachmentSeeder = require('./attachment.seeder')
+const accountSeeder = require('./account.seeder')
+const permissionSeeder = require('./permission.seeder')
+const rolePermissionSeeder = require('./role-permission.seeder')
 
 export default class CreateObjects implements Seeder {
   private async checkDatabaseIsSeeded(connection: Connection): Promise<boolean> {

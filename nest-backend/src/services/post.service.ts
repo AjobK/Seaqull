@@ -1,7 +1,7 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
-import { PostsResponsePayloadDTO } from '../dtos/posts-response-payload.dto'
+import { PostsDTO } from '../dtos/response/posts.dto'
 import { Account } from '../entities/account.entity'
 import { PostLikeRepository } from '../repositories/post_like.repository'
 import { PostDetailedPayloadDTO } from '../dtos/post-detailed-payload.dto'
@@ -16,7 +16,9 @@ import { PostView } from '../entities/post_view.entity'
 import { ArchivedPost } from '../entities/archivedPost.entity'
 import { ArchivedPostRepository } from '../repositories/archived_post.repository'
 import { Attachment } from '../entities/attachment.entity'
-import {RolePermissionRepository} from "../repositories/role_permission.repository";
+import { RolePermissionRepository } from '../repositories/role_permission.repository'
+import { v4 as uuidv4 } from 'uuid'
+
 @Injectable()
 export class PostService {
   constructor(
@@ -31,7 +33,7 @@ export class PostService {
   ) {
   }
 
-  public async getPosts(skipSize: string): Promise<PostsResponsePayloadDTO> {
+  public async getPosts(skipSize: string): Promise<PostsDTO> {
     let posts
     const skipAmount = 6
 
@@ -51,7 +53,7 @@ export class PostService {
     }
 
     const count = await this.postRepository.getAmountPosts()
-    const message: PostsResponsePayloadDTO = { posts: posts, totalPosts: count, per_page: skipAmount }
+    const message: PostsDTO = { posts: posts, totalPosts: count, per_page: skipAmount }
 
     return message
   }
@@ -130,6 +132,7 @@ export class PostService {
     newPost.created_at = new Date()
     newPost.thumbnail_attachment = thumbnailAttachment
     newPost.profile = user.profile
+    newPost.path = uuidv4()
 
     await this.postRepository.createPost(newPost)
 
@@ -257,7 +260,8 @@ export class PostService {
   }
 
   private async hasRemovePostPermission(user: Account): Promise<boolean> {
-    const permissions = await this.rolePermissionRepository.getRolePermissionsByRole(user.role.id)
+    const role = await this.accountRepository.getAccountRole(user.id)
+    const permissions = await this.rolePermissionRepository.getRolePermissionsByRole(role.id)
 
     let hasPermission = false
 

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
-import * as fs from 'fs'
 import { Injectable } from '@nestjs/common'
+import { createWriteStream, existsSync, mkdirSync, unlink } from 'fs'
+import { createReadStream } from 'streamifier'
 
 const { promisify } = require('util')
 const pipeline = promisify(require('stream').pipeline)
@@ -26,28 +27,32 @@ export class FileService {
     const day = String(today.getDate()).padStart(2, '0')
     const month = String(today.getMonth() + 1).padStart(2, '0')
     const year = today.getFullYear()
-    const name = uuidv4() + file.originalname.split('.').at(-1)
+    const delimitedFile = file.originalname.split('.')
+    const extension = delimitedFile[delimitedFile.length - 1]
+    const name = uuidv4() + `.${extension}`
     let newPath = 'src/public/' + path + '/' + year
 
-    if (!fs.existsSync(newPath)) {
-      fs.mkdirSync(newPath)
-      fs.mkdirSync(newPath + '/' + month)
-      fs.mkdirSync(newPath + '/' + month + '/' + day)
-    } else if (!fs.existsSync(newPath + '/' + month)) {
-      fs.mkdirSync(newPath + '/' + month)
-      fs.mkdirSync(newPath + '/' + month + '/' + day)
-    } else if (!fs.existsSync(newPath + '/' + month + '/' + day)) {
-      fs.mkdirSync(newPath + '/' + month + '/' + day)
+    if (!existsSync(newPath)) {
+      mkdirSync(newPath)
+      mkdirSync(newPath + '/' + month)
+      mkdirSync(newPath + '/' + month + '/' + day)
+    } else if (!existsSync(newPath + '/' + month)) {
+      mkdirSync(newPath + '/' + month)
+      mkdirSync(newPath + '/' + month + '/' + day)
+    } else if (!existsSync(newPath + '/' + month + '/' + day)) {
+      mkdirSync(newPath + '/' + month + '/' + day)
     }
 
     newPath = newPath + '/' + month + '/' + day + '/' + name
-    await pipeline(file.stream, fs.createWriteStream(newPath))
+
+    const writeStream = createWriteStream(newPath)
+    createReadStream(file.buffer).pipe(writeStream)
 
     return path + '/' + year + '/' + month + '/' + day + '/' + name
   }
 
   public deleteImage(path: string): void {
-    fs.unlink('app/public/' + path, function (err) {
+    unlink('src/public/' + path, function (err) {
       if (err) throw err
     })
   }

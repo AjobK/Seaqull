@@ -5,12 +5,12 @@ import { Request } from 'express'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { Account } from '../entities/account.entity'
-import { AuthorizationService } from '../services/authorization.service'
+import { AuthService } from '../services/auth.service'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private readonly authorizationService: AuthorizationService,
+    private readonly authorizationService: AuthService,
     private readonly configService: ConfigService,
   ) {
     super({

@@ -14,7 +14,7 @@ export class PostRepository extends Repository<Post> {
   }
 
   public async getPostByPath(postPath: string): Promise<Post> {
-    const post = await this.findOne({ path: postPath })
+    const post = await this.findOne({ path: postPath }, { relations: ['profile'] })
 
     return post
   }

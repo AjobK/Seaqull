@@ -1,4 +1,4 @@
-import {IsEmail, IsNotIn, Matches, MaxLength, MinLength} from 'class-validator'
+import { IsEmail, IsNotEmpty, IsNotIn, Matches, MaxLength, MinLength } from 'class-validator'
 
 export class RegisterDTO {
   @Matches(new RegExp('^[a-zA-Z0-9_.-]*$'), {
@@ -22,4 +22,7 @@ export class RegisterDTO {
     message: 'Password must contain at least one  lowercase, uppercase and alphanumeric character'
   })
   password: string
+
+  @IsNotEmpty()
+  captcha: string
 }

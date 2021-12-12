@@ -5,12 +5,6 @@ import { Attachment } from '../entities/attachment.entity'
 
 @EntityRepository(Profile)
 export class ProfileRepository extends Repository<Profile> {
-  public async getProfileByUsername(username: string): Promise<Profile> {
-    const profile = this.findOne({ where: { username } })
-
-    return profile
-  }
-
   public async saveProfile(profile: Profile): Promise<Profile> {
     const newProfile = await this.save(profile)
 
@@ -31,12 +25,5 @@ export class ProfileRepository extends Repository<Profile> {
       avatar: avatar.avatar_attachment,
       banner: banner.banner_attachment
     }
-  }
-
-  public async profileAlreadyExists(email: string, username: string): Promise<boolean> {
-    const emailExists = await this.findOne({ where: { email } })
-    const usernameExists = await this.findOne({ where: { username } })
-
-    return (emailExists ? true : !!usernameExists)
   }
 }

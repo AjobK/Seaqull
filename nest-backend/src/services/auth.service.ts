@@ -10,7 +10,7 @@ import { SuccessfulLoginDTO } from '../dtos/successful-login.dto'
 import { BanRepository } from '../repositories/ban.repository'
 
 @Injectable()
-export class AuthorizationService {
+export class AuthService {
   constructor(
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
     @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
