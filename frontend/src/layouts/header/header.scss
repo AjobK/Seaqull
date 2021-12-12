@@ -71,6 +71,10 @@
 	&.hide {
 		pointer-events: none;
 		opacity: 0;
+
+		.navigationMobileBox > * {
+			pointer-events: none;
+		}
 	}
 
 	&Box {
