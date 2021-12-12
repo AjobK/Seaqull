@@ -25,6 +25,7 @@ class PopUp extends Component {
   initImages = () => {
     this.imagesMap
       .set('socialNetwork', require('../../static/images/social_network.svg'))
+      .set('serverDown', require('../../static/images/server_down.svg'))
   }
 
   getImageByKeyword = () => {

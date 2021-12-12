@@ -2,7 +2,8 @@ export const popUpData = {
   'messages': {
     'networkError': {
       'title': 'Network Error',
-      'description': 'The network connection is lost.'
+      'description': 'The network connection is lost.',
+      'imageKeyword': 'serverDown'
     },
     'cookies': {
       'title': 'Cookies',
