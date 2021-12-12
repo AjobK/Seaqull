@@ -44,7 +44,7 @@ class LoginPrompt extends Component {
         const { profile } = this.props.store
 
         this.props.store.profile.setLoggedIn(true)
-        this.props.store.profile.setProfileData(user)
+        profile.setProfileData(user)
 
         nav.pathRedirectAfterLogin
           ? this.redirect()
