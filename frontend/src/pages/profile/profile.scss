@@ -1,33 +1,18 @@
 @import '../../styles/index.scss';
 
-.infoWrapper {
-	padding: 20px;
-	background-color: rgba(0,0,0,0.05);
-	border-bottom: 1px solid rgba(0,0,0,0.1);
+.profileWrapper {
 	display: flex;
-	flex-direction: row;
-}
-
-.tempFollowerIndicator {
-	display: flex;
-	flex-direction: row;
 	justify-content: center;
-	align-items: center;
-	margin: auto;
-	color: #808080;
+	max-width: $wrapper-width;
+	width: 100%;
+	margin: 0 auto;
+	padding: $header-spacing;
 
-	p {
-		margin-left: 5px;
+	.profileContentWrapper {
+		width: 100%;
 	}
-
-	.clickableFollowers {
-		&:hover {
-			text-decoration: underline;
-			cursor: pointer;
-		}
-	}
-
-	svg {
-		font-size: 1.2em
+	
+	@include mobile-all-portrait {
+		display: block;
 	}
 }

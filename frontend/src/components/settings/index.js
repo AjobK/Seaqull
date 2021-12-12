@@ -62,16 +62,18 @@ class SettingsPrompt extends Component {
 
     return (
       <div className={ styles.settingsContainer }>
-        <div className={ styles.settingsElement }>
-          <p className={ styles.key }> Active </p>
-          <Button
-            key={ 'button' }
-            className={ styles.avatarUploadPopUpBtnsCancelButton }
-            value={ this.state.settings.active == null ? 'Deactivate' : 'Activate' }
-            inverted={ this.state.settings.active == null }
-            onClick={ this.showPopup.bind(this) }
-          />
-        </div>
+          <div className={ styles.settingsElement }>
+            <p className={ styles.key }> Active </p>
+            <div>
+              <Button
+                key={ 'button' }
+                className={ styles.avatarUploadPopUpBtnsCancelButton }
+                value={ this.state.settings.active == null ? 'Deactivate' : 'Activate' }
+                inverted={ this.state.settings.active == null }
+                onClick={ this.showPopup.bind(this) }
+              />
+            </div>
+          </div>
         { this.state.popupVisible && (
           <PopUp content={ {
                     ...notification.getContentJSON(),

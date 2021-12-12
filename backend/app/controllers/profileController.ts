@@ -112,23 +112,10 @@ class ProfileController {
   }
 
   public getFollowers = async (req: Request, res: Response): Promise<Response> => {
-    const { token } = req.cookies
-    let decodedToken: any
-
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (e) {
-      decodedToken = null
-    }
-
-    let receivedUsername = req.params.username
+    const receivedUsername = this.getUsernameFromToken(req)
 
     if (!receivedUsername) {
-      if (decodedToken && decodedToken.username) {
-        receivedUsername = decodedToken.username
-      } else {
-        return res.status(404).json({ error: 'No username was given' })
-      }
+      res.status(404).json({ error: 'No username was given' })
     }
 
     const profile = await this.dao.getProfileByUsername(receivedUsername)
@@ -147,6 +134,40 @@ class ProfileController {
     }
 
     return res.status(200).json(payload)
+  }
+
+  public getFollowing = async (req: Request, res: Response): Promise<Response> => {
+    const receivedUsername = this.getUsernameFromToken(req)
+
+    if (!receivedUsername) {
+      res.status(404).json({ error: 'No username was given' })
+    }
+
+    const profile = await this.dao.getProfileByUsername(receivedUsername)
+    const followingById = await this.dao.getFollowingByProfileId(profile.id)
+
+    const payload = followingById.map((entry) => entry.profile)
+
+    if (payload.length < 1) {
+      return res.status(204)
+    }
+
+    return res.status(200).json(payload)
+  }
+
+  private getUsernameFromToken = (req: Request) => {
+    const { token } = req.cookies
+    let decodedToken: any
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+      decodedToken = null
+    }
+
+    const receivedUsername = req.params.username
+
+    return receivedUsername || decodedToken?.username
   }
 
   public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -262,7 +283,7 @@ class ProfileController {
       followerCount,
       settings: account.settings,
       avatar: 'http://localhost:8000/' + account.profile.avatar_attachment.path,
-      banner: 'http://localhost:8000/' + account.profile.banner_attachment.path
+      banner: 'http://localhost:8000/' + account.profile.banner_attachment.path,
     }
 
     return res.status(200).json({ profile: payload })
