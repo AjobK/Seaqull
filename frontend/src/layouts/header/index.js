@@ -19,11 +19,21 @@ class Header extends Component {
   toggleSubNavigation = () => {
     let { subNavOpen } = this.state
 
-    this.setState({ subNavOpen: !subNavOpen })
+    this.setSubNavigationOpen(!subNavOpen)
   }
 
   closeSubNavigation = () => {
-    this.setState({ subNavOpen: false })
+    this.setSubNavigationOpen(false)
+  }
+
+  setSubNavigationOpen = (isOpen) => {
+    this.setState({ subNavOpen: isOpen }, () => {
+      document.body.style.overflow = isOpen ? 'hidden' : 'unset'
+    })
+  }
+
+  componentWillUnmount() {
+    document.body.style.overflow = 'unset'
   }
 
   componentWillReceiveProps(newProps) {
