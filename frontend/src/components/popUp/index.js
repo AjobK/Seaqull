@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import styles from './popUp.scss'
 import { Button, Icon } from '../index'
+import UndrawUtil from '../../util/undrawUtil'
 
 @inject('store') @observer
 class PopUp extends Component {
@@ -9,9 +10,6 @@ class PopUp extends Component {
     super(props)
 
     this.setScrollDisabled(true)
-
-    this.imagesMap = new Map()
-    this.initImages()
   }
 
   componentWillUnmount() {
@@ -20,16 +18,6 @@ class PopUp extends Component {
 
   setScrollDisabled = (scrollDisabled) => {
     document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
-  }
-
-  initImages = () => {
-    this.imagesMap
-      .set('socialNetwork', require('../../static/images/social_network.svg'))
-      .set('serverDown', require('../../static/images/server_down.svg'))
-  }
-
-  getImageByKeyword = () => {
-    return this.imagesMap.get(this.props.content.imageKeyword)
   }
 
   render() {
@@ -43,7 +31,7 @@ class PopUp extends Component {
           { imageKeyword && (
             <img
               className={ styles.popUpImage }
-              src={ this.getImageByKeyword() } alt={ 'Notification image' }
+              src={ UndrawUtil.getUndrawImage(imageKeyword) } alt={ 'Notification image' }
             />
           )}
           <div className={ styles.popUpHeader }>
