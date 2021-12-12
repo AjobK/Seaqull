@@ -3,6 +3,7 @@ import { TimeUtil } from '../../util/'
 import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
 import ReactTooltip from 'react-tooltip'
+import { Link } from 'react-router-dom'
 
 class PostsBlockLarge extends Component {
   constructor(props) {
@@ -25,7 +26,10 @@ class PostsBlockLarge extends Component {
             data-tip
             data-for={ 'largeBookmarkTooltip' }
           >
-            <Icon iconName={ 'Bookmark' } />
+            <Icon
+              className={ styles.largeThumbnailBookmarkIcon }
+              iconName={ 'Bookmark' }
+            />
           </span>
           <ReactTooltip
             id={ 'largeBookmarkTooltip' }
@@ -36,15 +40,15 @@ class PostsBlockLarge extends Component {
             Work in progress
           </ReactTooltip>
           <div className={ styles.largeThumbnailContent }>
-            <a href={ `posts/${post.path}` }>
+            <Link to={ `posts/${post.path}` }>
               <h3 className={ styles.largeThumbnailContentTitle }>{post.title}</h3>
               <div className={ styles.largeThumbnailContentDescription }>
                 <p>{post.description}</p>
               </div>
-            </a>
+            </Link>
             <div className={ styles.largeThumbnailContentBottom }>
               <div className={ styles.largeThumbnailContentBottomInfo }>
-                <a href={ '#' } className={ styles.largeThumbnailContentBottomInfoCategory }>
+                <Link to={ '#' } className={ styles.largeThumbnailContentBottomInfoCategory }>
                   <span className={ styles.largeThumbnailContentBottomInfoCategoryBullet }>
                     <Icon iconName={ 'Circle' } />
                   </span>
@@ -52,7 +56,7 @@ class PostsBlockLarge extends Component {
                     Machine learning
                     <span>{/* UNDERLINE */}</span>
                   </p>
-                </a>
+                </Link>
                 <span className={ styles.largeThumbnailContentBottomInfoBullet }>&bull;</span>
                 <div className={ styles.largeThumbnailContentBottomInfoText }>
                   <span className={ styles.largeThumbnailContentBottomInfoTextIcon }>
@@ -65,18 +69,18 @@ class PostsBlockLarge extends Component {
                   <p>{TimeUtil.timeAgo(new Date(post.created_at))}</p>
                 </div>
               </div>
-              <a href={ `posts/${post.path}` } className={ styles.goTo }>
+              <Link to={ `posts/${post.path}` } className={ styles.goTo }>
                 <p>
                   Read more
                   <span>{/* UNDERLINE */}</span>
                 </p>
                 <Icon iconName={ 'ChevronRight' } className={ styles.goToIcon } />
-              </a>
+              </Link>
             </div>
           </div>
-          <a href={ `posts/${post.path}` }>
+          <Link to={ `posts/${post.path}` }>
             <img src={ post.thumbnail } alt={ 'post' } />
-          </a>
+          </Link>
         </div>
 
         <a href={ `posts/${post.path}` } className={ styles.largeBottom }>

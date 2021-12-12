@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import isEmail from 'validator/lib/isEmail'
-import { ReCAPTCHA } from 'node-grecaptcha-verify'
 import * as bcrypt from 'bcrypt'
 import Account from '../entities/account'
 import Profile from '../entities/profile'
@@ -15,6 +14,7 @@ import FileService from '../utils/fileService'
 import Attachment from '../entities/attachment'
 import ProfileFollowedBy from '../entities/profile_followed_by'
 import BanService from '../utils/banService'
+import CaptchaService from '../utils/captchaService'
 
 const jwt = require('jsonwebtoken')
 
@@ -48,23 +48,10 @@ class ProfileController {
   }
 
   public getFollowers = async (req: Request, res: Response): Promise<Response> => {
-    const { token } = req.cookies
-    let decodedToken: any
-
-    try {
-      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (e) {
-      decodedToken = null
-    }
-
-    let receivedUsername = req.params.username
+    const receivedUsername = this.getUsernameFromToken(req)
 
     if (!receivedUsername) {
-      if (decodedToken && decodedToken.username) {
-        receivedUsername = decodedToken.username
-      } else {
-        return res.status(404).json({ error: 'No username was given' })
-      }
+      res.status(404).json({ error: 'No username was given' })
     }
 
     const profile = await this.dao.getProfileByUsername(receivedUsername)
@@ -79,10 +66,44 @@ class ProfileController {
     })
 
     if (payload.followers.length < 1) {
+      return res.status(204).json(payload)
+    }
+
+    return res.status(200).json(payload)
+  }
+
+  public getFollowing = async (req: Request, res: Response): Promise<Response> => {
+    const receivedUsername = this.getUsernameFromToken(req)
+
+    if (!receivedUsername) {
+      res.status(404).json({ error: 'No username was given' })
+    }
+
+    const profile = await this.dao.getProfileByUsername(receivedUsername)
+    const followingById = await this.dao.getFollowingByProfileId(profile.id)
+
+    const payload = followingById.map((entry) => entry.profile)
+
+    if (payload.length < 1) {
       return res.status(204)
     }
 
     return res.status(200).json(payload)
+  }
+
+  private getUsernameFromToken = (req: Request) => {
+    const { token } = req.cookies
+    let decodedToken: any
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+      decodedToken = null
+    }
+
+    const receivedUsername = req.params.username
+
+    return receivedUsername || decodedToken?.username
   }
 
   public updateProfile = async (req: any, res: Response): Promise<Response> => {
@@ -161,6 +182,7 @@ class ProfileController {
     const title: Title = (await this.titleDAO.getTitleByUserId(profile.id)) || null
 
     const followerCount = await this.dao.getFollowersCount(profile.id)
+    const followingCount = await this.dao.getFollowingCount(profile.id)
 
     let isOwner = false
 
@@ -193,6 +215,7 @@ class ProfileController {
       title: title ? title.name : 'Title not found...',
       description: profile.description,
       followerCount,
+      followingCount
     }
     const attachments = await this.dao.getProfileAttachments(profile.id)
 
@@ -204,37 +227,38 @@ class ProfileController {
   }
 
   public register = async (req: any, res: Response): Promise<Response> => {
-    const userRequested = req.body
+    const { username, email, password, captcha } = req.body
+
     const errors = {
       username: [],
       email: [],
       password: [],
-      recaptcha: [],
+      captcha: [],
     }
 
-    const isUsernameNotValid = await this.checkValidUsername(userRequested.username)
+    const isUsernameNotValid = await this.checkValidUsername(username)
 
     if (isUsernameNotValid) {
       errors.username = [isUsernameNotValid]
     }
 
-    const isEmailNotValid = await this.checkValidEmail(userRequested.email)
+    const isEmailNotValid = await this.checkValidEmail(email)
 
     if (isEmailNotValid) {
       errors.email = [isEmailNotValid]
     }
 
-    const passwordStrengthErrors = this.getPasswordStrengthErrors(userRequested.password)
+    const passwordStrengthErrors = this.getPasswordStrengthErrors(password)
 
     errors.password = passwordStrengthErrors
 
-    const isRecaptchaNotValid = await this.checkReCAPTCHA(userRequested.recaptcha)
+    const isCaptchaValid = await CaptchaService.verifyHCaptcha(captcha)
 
-    if (isRecaptchaNotValid) {
-      errors.recaptcha = [isRecaptchaNotValid]
+    if (!isCaptchaValid) {
+      errors.captcha = ['We couldn\'t verify that you\'re not a robot.']
     }
 
-    if (isUsernameNotValid || isEmailNotValid || passwordStrengthErrors.length > 0) {
+    if (isUsernameNotValid || isEmailNotValid || !isCaptchaValid || passwordStrengthErrors.length > 0) {
       return res.status(401).json({ errors: errors })
     }
 
@@ -393,17 +417,6 @@ class ProfileController {
     if (password.search(/\d/) < 0) errors.push('Atleast one numeric character')
 
     return errors
-  }
-
-  private async checkReCAPTCHA(token: string): Promise<string> {
-    const reCaptcha = new ReCAPTCHA(process.env.RECAPTCHA_SECRET_KEY, 0.5)
-    const verificationResult = await reCaptcha.verify(token)
-
-    if (!verificationResult.isHuman) {
-      return 'Invalid captcha'
-    }
-
-    return null
   }
 
   private async saveProfile(req: Request): Promise<Account> {

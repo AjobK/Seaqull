@@ -1,6 +1,8 @@
 import DatabaseConnector from '../utils/databaseConnector'
 import { Comment } from '../entities/comment'
 import Post from '../entities/post'
+import Profile from '../entities/profile'
+import ProfileCommentLike from '../entities/profile_comment_like'
 
 class CommentDAO {
     private repo = 'Comment'
@@ -50,6 +52,69 @@ class CommentDAO {
       }
 
       return repository.save(comment)
+    }
+
+    public async getCommentLikes(id: number): Promise<ProfileCommentLike[]> {
+      const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
+
+      const profileCommentLikes = await repository.createQueryBuilder('commentLike')
+        .leftJoinAndSelect('commentLike.profile', 'profile')
+        .where('commentLike.comment_id = :id', { id })
+        .getMany()
+
+      return profileCommentLikes
+    }
+
+    public async getPostPathByCommentId(id: number): Promise<string> {
+      const repository = await DatabaseConnector.getRepository('Comment')
+
+      const comment = await repository.findOne({ where: { id: id }, relations: ['post'] })
+
+      return comment.post.path
+    }
+
+    public async createCommentLike(comment: Comment, profile: Profile): Promise<void> {
+      const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
+
+      const commentLikes = await repository.find({ profile: profile.id, comment: comment.id })
+
+      if (commentLikes.length > 0) {
+        return
+      }
+
+      const commentLike = {
+        profile: profile,
+        comment: comment,
+        liked_at: new Date(),
+      }
+
+      repository.save(commentLike)
+    }
+
+    async deleteCommentLike(comment: Comment, profile: Profile): Promise<any> {
+      const repository = await DatabaseConnector.getRepository('ProfileCommentLike')
+
+      const result = await repository.delete({ profile: profile.id, comment: comment.id })
+
+      return result
+    }
+
+    async pinComment(id: number): Promise<void> {
+      const repository = await DatabaseConnector.getRepository('Comment')
+
+      const comment = await repository.findOne(id)
+      comment.is_pinned = true
+
+      repository.save(comment)
+    }
+
+    async unpinComment(id: number): Promise<void> {
+      const repository = await DatabaseConnector.getRepository('Comment')
+
+      const comment = await repository.findOne(id)
+      comment.is_pinned = false
+
+      repository.save(comment)
     }
 }
 

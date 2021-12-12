@@ -3,6 +3,7 @@ import { Icon } from '../../components'
 import { TimeUtil } from '../../util/'
 import styles from './postsBlockSmall.scss'
 import ReactTooltip from 'react-tooltip'
+import { Link } from 'react-router-dom'
 
 class PostsBlockSmall extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class PostsBlockSmall extends Component {
       <div className={ styles.small }>
         <div className={ styles.smallThumbnail }>
           <div className={ styles.smallThumbnailContent }>
-            <a href={ '#' } className={ styles.smallThumbnailContentCategory }>
+            <Link to={ '#' } className={ styles.smallThumbnailContentCategory }>
               <span className={ styles.smallThumbnailContentCategoryBullet }>
                 <Icon iconName={ 'Circle' } />
               </span>
@@ -28,7 +29,7 @@ class PostsBlockSmall extends Component {
                 Machine learning
                 <span>{/* UNDERLINE */}</span>
               </p>
-            </a>
+            </Link>
             <span
               className={ styles.bookmark }
               onClick={ this.bookmarkPost }
@@ -45,12 +46,12 @@ class PostsBlockSmall extends Component {
               Work in progress
             </ReactTooltip>
           </div>
-          <a href={ `posts/${post.path}` }>
+          <Link to={ `posts/${post.path}` } >
             <img src={ post.thumbnail } alt={ 'post' } />
-          </a>
+          </Link>
         </div>
         <div className={ styles.smallContent }>
-          <a href={ `posts/${post.path}` } className={ styles.smallContentClickable }></a>
+          <Link to={ `posts/${post.path}` } className={ styles.smallContentClickable } />
           <div>
             <div>
               <h4 className={ styles.smallContentTitle }>{post.title}</h4>

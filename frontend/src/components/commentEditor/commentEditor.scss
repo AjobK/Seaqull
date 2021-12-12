@@ -11,7 +11,7 @@
 		margin-right: 5px;
 		background-color: white;
 		border-radius: 100%;
-		color: $textdark;
+		color: $text-dark;
 	
 		@include mobile-all-portrait {
 			font-size: 1rem;
@@ -33,7 +33,7 @@
 	&__title {
 		font-size: 1.5rem;
 		font-weight: bold;
-		color: $textdark;
+		color: $text-dark;
 	}
 }
 
@@ -51,11 +51,10 @@
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 		border-radius: 22.5px;
 		background-color: white;
-		color: $textdark;
+		color: $text-dark;
 		padding: 10px 18px;
 		margin-right: 10px;
-		//TODO: find better solution
-		width: 88%;
+		width: 100%;
 
 		@include mobile-all-portrait {
 			width: 100%;
