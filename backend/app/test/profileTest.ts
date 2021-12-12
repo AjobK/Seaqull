@@ -85,6 +85,51 @@ describe('Profile page', () => {
     })
   })
 
+  describe('Profile update settings functionalities', () => {
+    let originalSettings
+
+    before((done) => {
+      agentUser
+        .get('/profile/')
+        .end((err, res) => {
+          originalSettings = res.body.profile.settings
+          done()
+        })
+    })
+
+    it('Should update user active state', (done) => {
+      originalSettings.active = Date.now()
+
+      agentUser
+        .put('/profile/settings')
+        .send(
+          originalSettings
+        )
+        .end((err, res) => {
+          assert.equal(res.status, 200)
+          agentUser
+            .get('/profile/User')
+            .end((err, res) => {
+              assert.notEqual(res.status, 200)
+              done()
+            })
+        })
+    })
+
+    after((done) => {
+      originalSettings.active = null
+
+      agentUser
+        .put('/profile/settings')
+        .send(
+          originalSettings
+        )
+        .end(() => {
+          done()
+        })
+    })
+  })
+
   describe('Profile update functionalities', () => {
     let currentAvatar = ''
     let currentBanner = ''

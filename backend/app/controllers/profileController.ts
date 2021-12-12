@@ -39,7 +39,7 @@ class ProfileController {
   private attachmentDAO: attachmentDAO
   private fileService: FileService
   private banService: BanService
-  private settingsService: SettingsDAO
+  private settingsDAO: SettingsDAO
   private accountValidationService: AccountValidationService
 
   constructor() {
@@ -50,7 +50,7 @@ class ProfileController {
     this.attachmentDAO = new attachmentDAO()
     this.fileService = new FileService()
     this.banService = new BanService()
-    this.settingsService = new SettingsDAO()
+    this.settingsDAO = new SettingsDAO()
     this.accountValidationService = new AccountValidationService()
   }
 
@@ -60,7 +60,7 @@ class ProfileController {
     const acc = await this.accountDAO.getAccountByUsername(req.decoded.username)
 
     if (acc.settings.id == setting.id) {
-      this.settingsService.updateActiveState(setting)
+      this.settingsDAO.updateSettings(setting)
     } else {
       return res.status(401).json({ error: 'Unauthorized' })
     }
@@ -103,9 +103,9 @@ class ProfileController {
         return res.status(403).json({ errors: [ban] })
       }
 
-      account.settings.active = true
+      account.settings.active = null
 
-      this.settingsService.updateActiveState(account.settings)
+      this.settingsDAO.updateSettings(account.settings)
 
       return res.status(200).json({ 'message': 'updated' })
     }
@@ -219,7 +219,7 @@ class ProfileController {
 
     const account = await this.accountDAO.getAccountByUsername(profile.display_name)
 
-    if (account.settings.active == false) return res.status(404).json({ error: 'User not found' })
+    if (account.settings.active != null) return res.status(404).json({ error: 'User not found' })
 
     const ban = await this.banService.checkIfUserIsBanned(account)
 
@@ -481,6 +481,7 @@ class ProfileController {
     acc.password = await bcrypt.hash(u.password, 10)
     acc.user_name = u.username
     acc.role = await this.roleDAO.getRoleById(1)
+    acc.settings = await this.settingsDAO.updateSettings(new AccountSettings())
 
     const createdAccount = await this.accountDAO.saveAccount(acc)
 

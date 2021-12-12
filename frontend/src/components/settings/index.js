@@ -20,9 +20,9 @@ class SettingsPrompt extends Component {
     }
   }
 
-  deactivate () {
+  updateActivate (status) {
     const newSettings = this.state.settings
-    newSettings.active = !this.state.settings.active
+    newSettings.active = status
 
     Axios.put('/profile/settings', newSettings, { withCredentials: true }).then(() => {
       this.setState ({
@@ -34,14 +34,14 @@ class SettingsPrompt extends Component {
   showPopup() {
     const { notification } = this.props.store
 
-    if (this.state.settings.active) {
+    if (this.state.settings.active == null) {
       notification.setContent(popUpData.messages.confirmDeactivate)
 
       notification.setActions([
         {
           ...popUpData.actions.confirmNegative,
           action: () => {
-            this.deactivate()
+            this.updateActivate(Date.now())
             notification.close()
           }
         },
@@ -53,7 +53,7 @@ class SettingsPrompt extends Component {
 
       notification.setCanCloseWithClick(true)
     } else {
-      this.deactivate()
+      this.updateActivate(null)
     }
   }
 
@@ -67,8 +67,8 @@ class SettingsPrompt extends Component {
           <Button
             key={ 'button' }
             className={ styles.avatarUploadPopUpBtnsCancelButton }
-            value={ this.state.settings.active ? 'Deactivate' : 'Activate' }
-            inverted={ this.state.settings.active }
+            value={ this.state.settings.active == null ? 'Deactivate' : 'Activate' }
+            inverted={ this.state.settings.active == null }
             onClick={ this.showPopup.bind(this) }
           />
         </div>

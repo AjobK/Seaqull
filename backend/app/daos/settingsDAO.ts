@@ -2,7 +2,7 @@ import AccountSettings from '../entities/account_settings'
 import DatabaseConnector from '../utils/databaseConnector'
 
 class SettingsDAO {
-  public async updateActiveState(setting: AccountSettings): Promise<AccountSettings> {
+  public async updateSettings(setting: AccountSettings): Promise<AccountSettings> {
     const repository = await DatabaseConnector.getRepository('AccountSettings')
     const accountSettings = await repository.save(setting)
 

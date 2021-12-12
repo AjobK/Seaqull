@@ -27,7 +27,7 @@ export const popUpData = {
     'confirmDeactivate': {
       'title': 'Deactivate Account',
       'description': 'Are you sure you want to deactivate your account,' +
-        ' it will be deleted after two weeks and you\'ll be able to reactivate during the 2 weeks' +
+        ' it will be deleted after a month and you\'ll be able to reactivate during this month' +
         ' wait by loging into your account'
     },
     'confirmActive': {

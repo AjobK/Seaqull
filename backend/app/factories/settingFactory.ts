@@ -3,7 +3,7 @@ import AccountSettings from '../entities/account_settings'
 
 define(AccountSettings, ():AccountSettings => {
   const accSetting = new AccountSettings()
-  accSetting.active = true
+  accSetting.active = null
 
   return accSetting
 })

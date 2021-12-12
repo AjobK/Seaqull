@@ -5,8 +5,8 @@ export class AccountSettings extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
-    active: boolean
+    @Column({ nullable: true, type: 'bigint' })
+    active: number
 }
 
 export default AccountSettings

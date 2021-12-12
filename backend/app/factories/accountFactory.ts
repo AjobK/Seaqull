@@ -17,9 +17,6 @@ define(Account, (faker: typeof Faker, settings: { role: role, profilePic: Attach
   }) as any
   const createSettings = factory(AccountSettings)({}) as any
 
-  const set = new AccountSettings()
-  set.active = true
-
   acc.profile = createdUser
   acc.role = createdRole
   acc.user_name = name

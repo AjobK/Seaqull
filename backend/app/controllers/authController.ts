@@ -33,7 +33,12 @@ class AuthorizationController {
         jwt.verify(req.cookies.token, process.env.JWT_SECRET).username
       )
 
-      if (!account.settings.active) return res.status(403).json({ 'Error': 'Account Deactivated' })
+      const date = new Date()
+      date.setMonth(date.getMonth() - 1)
+
+      if (account.settings.active > Date.parse(date.toDateString())) {
+        return res.status(403).json({ 'Error': 'Account Deactivated' })
+      }
 
       const profile = account.profile
 
@@ -85,7 +90,12 @@ class AuthorizationController {
 
       if (validation != null) return res.status(400).send(validation)
 
-      if (!account.settings.active) return res.status(403).json({ errors: ['Account inactive'] })
+      const date = new Date()
+      date.setMonth(date.getMonth() - 1)
+
+      if (account.settings.active > Date.parse(date.toDateString())) {
+        return res.status(403).json({ errors: ['Account inactive'] })
+      }
 
       const ban = await this.banService.checkIfUserIsBanned(account)
 
