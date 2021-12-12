@@ -23,10 +23,10 @@ class PostLike extends Component {
   }
 
   postLike = () => {
+    const { profile } = this.props.store
+
     const path = URLUtil.getLastPathArgument()
 
-    const { profile } = this.props.store
-    
     if (!profile.loggedIn) return this.showLoginRedirect()
 
     Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, { withCredentials: true })

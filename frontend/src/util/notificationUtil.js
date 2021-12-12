@@ -1,5 +1,7 @@
 import { popUpData } from '../components/popUp/popUpData'
+import { inject } from 'mobx-react'
 
+@inject('store')
 class NotificationUtil {
   static showLoginRedirect = (store, history) => {
     const { notification, nav } = store
@@ -21,8 +23,8 @@ class NotificationUtil {
     ])
   }
 
-  static showNetworkError = (store) => {
-    store.notification.setContent(popUpData.messages.networkError)
+  static showNotification = (store, message) => {
+    store.notification.setContent(message)
   }
 }
 

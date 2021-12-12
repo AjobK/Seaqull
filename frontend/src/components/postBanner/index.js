@@ -5,6 +5,7 @@ import { Cropper, Icon } from '..'
 import { Link } from 'react-router-dom'
 import { ColorUtil, InputUtil, NotificationUtil } from '../../util/'
 import Axios from 'axios'
+import { popUpData } from '../popUp/popUpData'
 
 @inject('store') @observer
 class PostBanner extends Component {
@@ -82,7 +83,7 @@ class PostBanner extends Component {
         })
       })
       .catch(() => {
-        NotificationUtil.showNetworkError(this.props.store)
+        NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
       })
   }
 

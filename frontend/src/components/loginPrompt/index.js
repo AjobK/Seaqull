@@ -43,7 +43,7 @@ class LoginPrompt extends Component {
         const { user } = res.data
         const { profile } = this.props.store
 
-        this.props.store.profile.setLoggedIn(true)
+        profile.setLoggedIn(true)
         profile.setProfileData(user)
 
         nav.pathRedirectAfterLogin
@@ -52,7 +52,7 @@ class LoginPrompt extends Component {
       })
       .catch((res) => {
         if (res.message === 'Network Error') {
-          NotificationUtil.showNetworkError(this.props.store)
+          NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
 
           return this.setState({
             username: ['No connection'],
