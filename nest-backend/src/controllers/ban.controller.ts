@@ -7,7 +7,6 @@ import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 
 @Controller('ban')
-@UseGuards(AuthGuard())
 export class BanController {
   constructor(private readonly banService: BanService) {}
 

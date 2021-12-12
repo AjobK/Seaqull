@@ -29,7 +29,7 @@ import { BanRepository } from '../repositories/ban.repository'
       useFactory: async (configService: ConfigService) => {
         return {
           secret: configService.get('JWT_SECRET'),
-          signOptions: { expiresIn: configService.get('JWT_EXPIRATION_TIME') }
+          signOptions: { expiresIn: `${configService.get('JWT_EXPIRATION')}s` }
         }
       }
     })

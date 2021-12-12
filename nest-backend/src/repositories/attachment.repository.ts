@@ -10,6 +10,14 @@ export class AttachmentRepository extends Repository<Attachment> {
     return createdAttachment
   }
 
+  public async getDefaultAvatarAttachment(): Promise<Attachment> {
+    return await this.findOne({ where: { id: 1 } })
+  }
+
+  public async getDefaultBannerAttachment(): Promise<Attachment> {
+    return await this.findOne({ where: { id: 2 } })
+  }
+
   public async getDefaultThumbnailAttachment(): Promise<Attachment> {
     return await this.findOne({ where: { id: 3 } })
   }

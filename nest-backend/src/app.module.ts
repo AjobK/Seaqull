@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configValidationSchema } from './config.schema'
 import { PostLikeModule } from './modules/post-like.module'
+import {APP_GUARD, Reflector} from "@nestjs/core";
+import {JwtAuthGuard} from "./guards/jwt-auth.guard";
 
 @Module({
   imports: [
@@ -40,5 +42,12 @@ import { PostLikeModule } from './modules/post-like.module'
       }
     })
   ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useFactory: (ref) => new JwtAuthGuard(ref),
+      inject: [Reflector],
+    },
+  ]
 })
 export class AppModule {}

@@ -20,6 +20,7 @@ import { CreatePostDTO } from '../dtos/create-post.dto'
 import { PostViewDTO } from '../dtos/post-view.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { PostCreationDTO } from '../dtos/post-creation.dto'
+import { AllowAny } from '../decorators/allow-any.decorator'
 
 @Controller('post')
 export class PostController {
@@ -28,6 +29,7 @@ export class PostController {
   ) {}
 
   @Get()
+  @AllowAny()
   public async getPosts(@Query('page') skipSize: string): Promise<PostsResponsePayloadDTO> {
     const posts = await this.postService.getPosts(skipSize)
 
@@ -35,6 +37,7 @@ export class PostController {
   }
 
   @Get('/:path')
+  @AllowAny()
   public async getPostByPath(
     @Param('path') path: string
   ): Promise<any> {
@@ -44,7 +47,6 @@ export class PostController {
   }
 
   @Get('/:path/auth')
-  @UseGuards(AuthGuard())
   public async getPostByPathWhileAuthorized(
     @Param('path') path: string,
     @AuthorizedUser() account: Account
@@ -55,6 +57,7 @@ export class PostController {
   }
 
   @Get('/view/:path')
+  @AllowAny()
   public async getPostViewCount(@Param('path') postPath: string): Promise<PostViewDTO> {
     const postViewCount = await this.postService.getPostViewsByPath(postPath)
 
@@ -62,6 +65,7 @@ export class PostController {
   }
 
   @Get('/owned-by/:username')
+  @AllowAny()
   public async getOwnedPosts(@Param('username') username: string): Promise<any[]> {
     const ownedPosts = await this.postService.getOwnedPostsByUsername(username)
 
@@ -69,6 +73,7 @@ export class PostController {
   }
 
   @Get('/thumbnail/default')
+  @AllowAny()
   public async getPostDefaultThumbnailURL(): Promise<{ thumbnail: string }> {
     const attachmentURL = await this.postService.getDefaultThumbnailAttachment()
 
@@ -78,7 +83,6 @@ export class PostController {
   }
 
   @Post()
-  @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('file', {
     limits: { fieldSize: 2 * 1024 * 1024 },
   }))
@@ -96,6 +100,7 @@ export class PostController {
   }
 
   @Post('/view')
+  @AllowAny()
   public async addViewToPost(@Body('path') postPath: string, @Ip() ipAddress: string): Promise<{ message: string}> {
     await this.postService.addViewToPost(postPath, ipAddress)
 
@@ -105,7 +110,6 @@ export class PostController {
   }
 
   @Put('/:path')
-  @UseGuards(AuthGuard())
   public async updatePost(
     @Param('path') path: string,
     @Body() createPostDTO: CreatePostDTO,
@@ -119,7 +123,6 @@ export class PostController {
   }
 
   @Put('/archive/:path')
-  @UseGuards(AuthGuard())
   public async archivePost(
     @Param('path') path: string,
     @AuthorizedUser() user: Account
@@ -132,7 +135,6 @@ export class PostController {
   }
 
   @Put('/thumbnail/:path')
-  @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('file', {
     limits: { fieldSize: 2 * 1024 * 1024 },
   }))

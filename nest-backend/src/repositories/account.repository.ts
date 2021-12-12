@@ -35,6 +35,10 @@ export class AccountRepository extends Repository<Account> {
     return role.role_id
   }
 
+  public async saveAccount(acc: Account): Promise<Account> {
+    return await this.save(acc)
+  }
+
   public async lockAccount(account: Account): Promise<number> {
     account.login_attempts_counts = 0
     account.locked_to = Date.now() + 30000

@@ -4,6 +4,7 @@ import { PostLike } from '../entities/post_like.entity'
 import { AuthGuard } from '@nestjs/passport'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
+import {AllowAny} from "../decorators/allow-any.decorator";
 
 @Controller('post/like')
 export class PostLikeController {
@@ -14,6 +15,7 @@ export class PostLikeController {
   }
 
   @Get('/:path')
+  @AllowAny()
   public async getPostLikes(@Param('path') path: string): Promise<PostLike[]> {
     const likes = await this.postLikeService.getPostLikes(path)
 
@@ -21,6 +23,7 @@ export class PostLikeController {
   }
 
   @Get('/recent/:username')
+  @AllowAny()
   public async getRecentUserLikes(@Param('username') username: string): Promise<PostLike[]> {
     const recentUserLikes = await this.postLikeService.getRecentUserLikes(username)
 
@@ -28,7 +31,6 @@ export class PostLikeController {
   }
 
   @Post('/:path')
-  @UseGuards(AuthGuard())
   public async likePost(@Param('path') path: string, @AuthorizedUser() user: Account): Promise<{ message: string }> {
     await this.postLikeService.likePost(path, user.profile)
 
@@ -38,7 +40,6 @@ export class PostLikeController {
   }
 
   @Delete('/:path')
-  @UseGuards(AuthGuard())
   public async unlikePost(@Param('path') path: string, @AuthorizedUser() user: Account): Promise<{ message: string }> {
     await this.postLikeService.unlikePost(path, user.profile)
 

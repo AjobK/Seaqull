@@ -7,6 +7,10 @@ import { AuthorizationModule } from './authorization.module'
 import { PostLikeRepository } from '../repositories/post_like.repository'
 import { PostViewRepository } from '../repositories/post_view.repository'
 import { AccountRepository } from '../repositories/account.repository'
+import { AttachmentRepository } from '../repositories/attachment.repository'
+import { ArchivedPostRepository } from '../repositories/archived_post.repository'
+import { RolePermissionRepository } from '../repositories/role_permission.repository'
+import { FileService } from '../services/file.service'
 
 @Module({
   imports: [
@@ -15,10 +19,13 @@ import { AccountRepository } from '../repositories/account.repository'
       AccountRepository,
       PostRepository,
       PostLikeRepository,
-      PostViewRepository
+      PostViewRepository,
+      AttachmentRepository,
+      ArchivedPostRepository,
+      RolePermissionRepository,
     ])
   ],
   controllers: [PostController],
-  providers: [PostService]
+  providers: [PostService, FileService]
 })
 export class PostModule {}

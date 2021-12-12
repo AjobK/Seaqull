@@ -18,4 +18,22 @@ export class ProfileFollowedByRepository extends Repository<ProfileFollowedBy> {
 
     return amountOfFollowers
   }
+
+  public async isFollowing(profileFollowedBy: ProfileFollowedBy): Promise<boolean> {
+    const foundFollow = await this.findOne(profileFollowedBy)
+
+    return !!foundFollow
+  }
+
+  public async follow(profileFollowedBy: ProfileFollowedBy): Promise<boolean> {
+    const foundFollow = await this.findOne(profileFollowedBy)
+
+    if (!foundFollow) {
+      await this.save(profileFollowedBy)
+
+      return !foundFollow
+    }
+
+    return !foundFollow
+  }
 }
