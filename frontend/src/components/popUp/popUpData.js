@@ -25,8 +25,9 @@ export const popUpData = {
       'description': 'An error occurred while performing the captcha. Please try again.'
     },
     'loginRequired': {
-      'title': 'Login required',
-      'description': 'Sign up to become a Seaqull member and get access to its features.'
+      'title': 'Community feature',
+      'description': 'Welp, you can not use this feature yet... Get access by joining our (awesome) community!',
+      'imageKeyword': 'socialNetwork'
     }
   },
   'actions': {

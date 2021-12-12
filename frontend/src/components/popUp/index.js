@@ -9,6 +9,9 @@ class PopUp extends Component {
     super(props)
 
     this.setScrollDisabled(true)
+
+    this.imagesMap = new Map()
+    this.initImages()
   }
 
   componentWillUnmount() {
@@ -19,14 +22,29 @@ class PopUp extends Component {
     document.body.style.overflow = scrollDisabled ? 'hidden' : 'unset'
   }
 
+  initImages = () => {
+    this.imagesMap
+      .set('socialNetwork', require('../../static/images/social_network.svg'))
+  }
+
+  getImageByKeyword = () => {
+    return this.imagesMap.get(this.props.content.imageKeyword)
+  }
+
   render() {
-    const { title, description, titleIcon, actions, canCloseWithClick } = this.props.content
+    const { title, description, imageKeyword, titleIcon, actions, canCloseWithClick } = this.props.content
 
     return (
       <div className={ styles.popUpWrapper }>
         <div className={ styles.popUpBackground }
           onClick={ canCloseWithClick ? this.props.content.close : undefined } />
         <div className={ styles.popUp }>
+          { imageKeyword && (
+            <img
+              className={ styles.popUpImage }
+              src={ this.getImageByKeyword() } alt={ 'Notification image' }
+            />
+          )}
           <div className={ styles.popUpHeader }>
             { title && (
               <h2 className={ styles.popUpHeaderTitle }>
