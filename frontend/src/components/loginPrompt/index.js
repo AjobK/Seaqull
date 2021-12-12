@@ -41,6 +41,7 @@ class LoginPrompt extends Component {
     Axios.post('/login', payload, { withCredentials: true })
       .then((res) => {
         const { user } = res.data
+        const { profile } = this.props.store
 
         this.props.store.profile.setLoggedIn(true)
         this.props.store.profile.setProfileData(user)
