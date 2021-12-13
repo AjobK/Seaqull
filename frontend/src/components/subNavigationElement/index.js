@@ -12,16 +12,16 @@ class SubNavigationElement extends Component {
     const { title, index, icon, onClick, to } = this.props
 
     return (
-      <li className={ styles.item } key={ index }>
-        <Link
-          className={ styles.itemHeading }
-          to={ to || '' }
-          onClick={ onClick }
-        >
+      <Link
+        className={ styles.item }
+        to={ to || '' }
+        onClick={ onClick }
+      >
+        <li className={ styles.itemHeading } key={ index }>
           <Icon iconName={ icon } className={ styles.icon } />
           {title}
-        </Link>
-      </li>
+        </li>
+      </Link>
     )
   }
 }

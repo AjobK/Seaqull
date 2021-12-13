@@ -66,6 +66,10 @@
 			margin-left: $header-spacing * 0.75;
 			position: relative;
 
+			@include mobile-xs {
+				display: none;
+			}
+
 			&::first-letter {
 				text-transform: capitalize;
 			}

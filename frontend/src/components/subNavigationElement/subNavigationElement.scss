@@ -6,6 +6,8 @@
 	font-size: 1rem;
 	display: block;
 	padding: $header-spacing / 2;
+	border-radius: 5px;
+	transition: 0.2s;
 
 	&Heading {
 		transition: 0.2s;
@@ -22,6 +24,8 @@
 	}
 
 	&:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+
 		> .itemHeading {
 			color: $secondary;
 		}
