@@ -40,6 +40,7 @@ import GlobalNotification from './globalNotification'
 import ProfileCard from './profileCard'
 import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
+import AvatarCreator from './avatarCreator'
 
 export {
   Button,
@@ -83,5 +84,6 @@ export {
   GlobalNotification,
   ProfileCard,
   ProfileBanner,
-  BanUser
+  BanUser,
+  AvatarCreator
 }

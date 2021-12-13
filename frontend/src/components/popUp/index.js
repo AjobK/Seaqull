@@ -47,6 +47,7 @@ class PopUp extends Component {
               { description }
             </p>
           )}
+          { this.props.children }
           { actions && (
             <ul className={ styles.popUpActions }>
               { actions.map((action) => {
