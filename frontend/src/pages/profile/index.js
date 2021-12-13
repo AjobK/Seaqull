@@ -112,7 +112,9 @@ class Profile extends App {
       )
     }
 
-    if (this.props.match.params.path != user.username) {
+    const { path } = this.props.match.params
+
+    if (path != null && path != user.username) {
       this.fetchProfileData(this.props.match.params.path)
     }
 

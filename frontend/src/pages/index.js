@@ -29,6 +29,7 @@ class AppRouter extends Component {
               <Header />
               <Switch>
                 <Route path='/' exact component={ Home } />
+                <Route path='/profile' exact component={ Profile } />
                 <Route path='/profile/:path' exact component={ Profile } />
                 <Route path='/error' exact component={ Error } />
                 <Route path='/new-post' exact component={ () => <Post new={ true } /> } />
