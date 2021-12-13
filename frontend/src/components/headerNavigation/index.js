@@ -6,6 +6,7 @@ import { Button } from '../../components'
 import { ColorUtil } from '../../util/'
 import Icon from '../icon'
 import Logo from '../logo'
+import Hamburger from '../hamburger'
 
 @inject('store') @observer
 class HeaderNavigation extends Component {
@@ -14,6 +15,7 @@ class HeaderNavigation extends Component {
   }
 
   render() {
+    const { onHamburgerClick, subNavOpen } = this.props
     const { profile } = this.props.store
 
     return (
@@ -27,34 +29,41 @@ class HeaderNavigation extends Component {
             </p>
           </Link>
         </div>
-        <Logo onlyIcon className={ [styles.logo] } />
-        { profile.loggedIn ? ( // Logged in content
-          <ul className={ styles.menuUl }>
-            <li className={ styles.avatarWrapper }>
-              <Link to={ `/profile/${ profile.display_name }` }>
-                <img
-                  src={ profile.avatarURL }
-                  className={ styles.avatarWrapperImage }
-                  style={ {
-                    backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.display_name),
-                  } }
-                />
+        <div className={ styles.rightContent }>
+          <Logo onlyIcon className={ [styles.logo] } />
+          { profile.loggedIn ? ( // Logged in content
+            <ul className={ styles.menuUl }>
+              <li className={ styles.avatarWrapper }>
+                <Link to={ `/profile/${ profile.display_name }` }>
+                  <img
+                    src={ profile.avatarURL }
+                    className={ styles.avatarWrapperImage }
+                    style={ {
+                      backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.display_name),
+                    } }
+                  />
+                </Link>
+              </li>
+              <Link to='/new-post' className={ styles.newPost }>
+                <Button value='Create Post' className={ styles.button } />
               </Link>
-            </li>
-            <Link to='/new-post' className={ styles.newPost }>
-              <Button value='Create Post' className={ styles.button } />
-            </Link>
-          </ul>
-        ) : ( // Logged out content
-          <ul className={ styles.menuUl }>
-            <Link to='/login' className={ styles.menuItem }>
-              <li>Log in</li>
-            </Link>
-            <Link to='/register'>
-              <Button value='Sign Up' className={ styles.button } />
-            </Link>
-          </ul>
-        )}
+            </ul>
+          ) : ( // Logged out content
+            <ul className={ styles.menuUl }>
+              <Link to='/login' className={ styles.menuItem }>
+                <li>Log in</li>
+              </Link>
+              <Link to='/register'>
+                <Button value='Sign Up' className={ styles.button } />
+              </Link>
+            </ul>
+          )}
+          <Hamburger
+            onClick={ onHamburgerClick }
+            active={ subNavOpen }
+            className={ styles.hamburger }
+          />
+        </div>
       </nav>
     )
   }

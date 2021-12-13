@@ -98,11 +98,6 @@
 	margin-right: 0;
 }
 
-.hamburger {
-	margin-left: $header-spacing;
-	display: flex;
-}
-
 .noScrollbar {
 	@include mobile-sm {
 		overflow: hidden;

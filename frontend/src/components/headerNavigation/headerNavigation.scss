@@ -107,7 +107,7 @@
 		
 		@include mobile-all-portrait {
 			position: absolute;
-			left: 50%;
+			left: calc(50% - #{$header-spacing});
 			top: -($header-spacing * 0.45);
 		}
 	}
@@ -130,4 +130,14 @@
 
 .button {
 	font-weight: normal;
+}
+
+.hamburger {
+	margin-left: $header-spacing;
+	display: flex;
+}
+
+.rightContent {
+	display: flex;
+	align-items: center;
 }
