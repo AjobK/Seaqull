@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import styles from './navigationMobileElement.scss'
+import styles from './subNavigationElement.scss'
 import { Icon } from '..'
 import { Link } from 'react-router-dom'
 
-class NavigationMobileElement extends Component {
+class SubNavigationElement extends Component {
   constructor(props) {
     super(props)
   }
@@ -26,4 +26,4 @@ class NavigationMobileElement extends Component {
   }
 }
 
-export default NavigationMobileElement
+export default SubNavigationElement

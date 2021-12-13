@@ -1,9 +1,9 @@
 import Button from './button'
 import Hamburger from './hamburger'
 import ProfileBar from './profileBar'
-import NavigationMobileElement from './navigationMobileElement'
+import SubNavigationElement from './subNavigationElement'
 import HeaderNavigation from './headerNavigation'
-import NavigationMobile from './navigationMobile'
+import SubNavigation from './subNavigation'
 import Title from './title'
 import Posts from './posts'
 import PostsPreview from './postsPreview'
@@ -46,8 +46,8 @@ export {
   Hamburger,
   ProfileBar,
   HeaderNavigation,
-  NavigationMobile,
-  NavigationMobileElement,
+  SubNavigation,
+  SubNavigationElement,
   Title,
   Posts,
   PostsPreview,

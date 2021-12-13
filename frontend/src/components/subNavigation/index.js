@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './nav.scss'
-import { NavigationMobileElement } from '../../components'
+import { SubNavigationElement } from '../../components'
+import * as menuItemsJSON from './menuItems.json'
 
 @inject('store') @observer
-class NavigationMobile extends Component {
+class SubNavigation extends Component {
   render() {
-    const { nav, profile } = this.props.store
+    const { profile } = this.props.store
     const { className } = this.props
 
-    let menuItems = profile.loggedIn && nav.menuItemsLoggedIn || nav.menuItemsLoggedOut
+    let menuItems = profile.loggedIn && menuItemsJSON.menuItemsLoggedIn || menuItemsJSON.menuItemsLoggedOut
     let navigationItems = []
 
     for (let key in menuItems) {
       navigationItems.push(
-        <NavigationMobileElement
+        <SubNavigationElement
           title={ key }
           to={ menuItems[key]?.ref }
           icon={ menuItems[key]?.icon }
@@ -33,7 +34,7 @@ class NavigationMobile extends Component {
             { navigationItems }
             {
               profile.loggedIn &&
-              <NavigationMobileElement
+              <SubNavigationElement
                 title={ 'Logout' }
                 icon={ 'SignOutAlt' }
                 onClick={ () => {
@@ -48,4 +49,4 @@ class NavigationMobile extends Component {
   }
 }
 
-export default NavigationMobile
+export default SubNavigation

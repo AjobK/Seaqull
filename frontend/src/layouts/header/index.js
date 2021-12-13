@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './header.scss'
-import { Hamburger, HeaderNavigation, NavigationMobile } from '../../components'
+import { Hamburger, HeaderNavigation, SubNavigation } from '../../components'
 import { withRouter } from 'react-router'
 
 @inject('store') @observer
@@ -28,12 +28,13 @@ class Header extends Component {
 
   setSubNavigationOpen = (isOpen) => {
     this.setState({ subNavOpen: isOpen }, () => {
-      document.body.style.overflow = isOpen ? 'hidden' : 'unset'
+      if (isOpen) document.body.classList.add(styles.noScrollbar)
+      else document.body.classList.remove(styles.noScrollbar)
     })
   }
 
   componentWillUnmount() {
-    document.body.style.overflow = 'unset'
+    document.body.classList.remove(styles.noScrollbar)
   }
 
   componentWillReceiveProps(newProps) {
@@ -72,7 +73,7 @@ class Header extends Component {
               className={ styles.overlay }
               onClick={ this.closeSubNavigation }
             />
-            <NavigationMobile className={ styles.navigationMobileBox } />
+            <SubNavigation className={ styles.navigationMobileBox } />
           </div>
         </header>
       </div>
