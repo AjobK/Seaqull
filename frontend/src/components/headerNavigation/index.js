@@ -25,7 +25,7 @@ class HeaderNavigation extends Component {
             <Icon iconName='Home' className={ styles.goBackIcon } />
             <p>
               <span>back to </span>home
-              <span className={ styles.underline } /> {/* Underline */}
+              <span className={ styles.underline } />
             </p>
           </Link>
         </div>
