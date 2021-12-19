@@ -8,6 +8,7 @@ import CommentRoutes from './routes/commentRoutes'
 import ProfileRoutes from './routes/profileRoutes'
 import RoleRoutes from './routes/roleRoute'
 import AdminRoutes from './routes/banRoutes'
+import HealthRoutes from './routes/healthRoutes'
 
 const cookieParser = require('cookie-parser')
 
@@ -19,6 +20,7 @@ const LOCALHOST = 'http://localhost'
 const backend = new serverConstructor({
   port: 8000,
   routes: [
+    new HealthRoutes(),
     new PostRoutes(),
     new AuthorizationRoutes(),
     new CommentRoutes(),
