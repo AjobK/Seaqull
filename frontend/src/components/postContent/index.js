@@ -8,8 +8,15 @@ import 'draft-js/dist/Draft.css'
 import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
-import { DraftJsTooltipButton } from '../../components'
-import { HeadlineOneButton, HeadlineThreeButton, HeadlineTwoButton } from '@draft-js-plugins/buttons'
+import {
+  BoldButton,
+  UnderlineButton,
+  ItalicButton,
+  HeadlineOneButton,
+  HeadlineThreeButton,
+  HeadlineTwoButton,
+} from '@draft-js-plugins/buttons'
+import { DraftJsTooltipButton, MobileBar } from '../../components'
 
 @inject('store')
 @observer
@@ -25,6 +32,7 @@ class PostContent extends Component {
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.inlineToolbarPlugin = createInlineToolbarPlugin()
+
     this.PluginComponents = {
       InlineToolbar: this.inlineToolbarPlugin.InlineToolbar
     }
@@ -96,10 +104,10 @@ class PostContent extends Component {
     this.setState({ editorState: eState }, () => this.props.callBackSaveData(convertToRaw(eState.getCurrentContent())))
   }
 
-  onToggleInlineStyling = (styling, e) => {
-    e.preventDefault()
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, styling))
-  }
+  // onToggleInlineStyling = (styling, e) => {
+  //   e.preventDefault()
+  //   this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, styling))
+  // }
 
   onToggleBlockStyling = (styling, e) => {
     e.preventDefault()
@@ -125,6 +133,25 @@ class PostContent extends Component {
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     const { InlineToolbar } = this.PluginComponents
+
+    const buttonArray = [
+      BoldButton,
+      UnderlineButton,
+      ItalicButton,
+      Separator,
+      HeadlineOneButton,
+      HeadlineTwoButton,
+      HeadlineThreeButton,
+      Separator,
+    ]
+    const mobileButtonArray = [
+      BoldButton,
+      UnderlineButton,
+      ItalicButton,
+      HeadlineOneButton,
+      HeadlineTwoButton,
+      HeadlineThreeButton,
+    ]
 
     return (
       <div>
@@ -153,43 +180,53 @@ class PostContent extends Component {
           />
 
           { type === 'content' &&
-          <InlineToolbar>
-            {
-              (externalProps) => (
-                <>
-                  <DraftJsTooltipButton
-                    iconName={ 'Bold' }
-                    onButtonClick={ (e) => this.onToggleInlineStyling('BOLD', e) }
-                  />
-                  <DraftJsTooltipButton
-                    iconName={ 'Italic' }
-                    onButtonClick={ (e) => this.onToggleInlineStyling('ITALIC', e) }
-                  />
-                  <DraftJsTooltipButton
-                    iconName={ 'Underline' }
-                    onButtonClick={ (e) => this.onToggleInlineStyling('UNDERLINE', e) }
-                  />
-                  <Separator />
-                  <HeadlineOneButton { ...externalProps } />
-                  <HeadlineTwoButton { ...externalProps } />
-                  <HeadlineThreeButton { ...externalProps } />
-                  <Separator />
-                  <DraftJsTooltipButton
-                    iconName={ 'AlignLeft' }
-                    onButtonClick={ (e) => this.onToggleBlockStyling('left', e) }
-                  />
-                  <DraftJsTooltipButton
-                    iconName={ 'AlignCenter' }
-                    onButtonClick={ (e) => this.onToggleBlockStyling('center', e) }
-                  />
-                  <DraftJsTooltipButton
-                    iconName={ 'AlignRight' }
-                    onButtonClick={ (e) => this.onToggleBlockStyling('right', e) }
-                  />
-                </>
-              )
-            }
-          </InlineToolbar>
+            <>
+              <InlineToolbar>
+                {
+                  (externalProps) => (
+                    <>
+                      {
+                        buttonArray.map((Button, i) => (
+                          <Button key={ i } { ...externalProps } />
+                        ))
+                      }
+                      <DraftJsTooltipButton
+                        iconName={ 'AlignLeft' }
+                        onButtonClick={ (e) => this.onToggleBlockStyling('left', e) }
+                      />
+                      <DraftJsTooltipButton
+                        iconName={ 'AlignCenter' }
+                        onButtonClick={ (e) => this.onToggleBlockStyling('center', e) }
+                      />
+                      <DraftJsTooltipButton
+                        iconName={ 'AlignRight' }
+                        onButtonClick={ (e) => this.onToggleBlockStyling('right', e) }
+                      />
+                    </>
+                  )
+                }
+              </InlineToolbar>
+              <MobileBar>
+                {/*{*/}
+                {/*  mobileButtonArray.map((Button, i) => (*/}
+                {/*    <Button key={ i }/>*/}
+                {/*  ))*/}
+                {/*}*/}
+                <DraftJsTooltipButton
+                  iconName={ 'AlignLeft' }
+                  onButtonClick={ (e) => this.onToggleBlockStyling('left', e) }
+                />
+                <DraftJsTooltipButton
+                  iconName={ 'AlignCenter' }
+                  onButtonClick={ (e) => this.onToggleBlockStyling('center', e) }
+                />
+                <DraftJsTooltipButton
+                  iconName={ 'AlignRight' }
+                  onButtonClick={ (e) => this.onToggleBlockStyling('right', e) }
+                />
+              </MobileBar>
+            </>
+
           }
 
           {/*{ type != 'title' && this.inlineStyleControls()}*/}

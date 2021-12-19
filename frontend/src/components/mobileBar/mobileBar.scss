@@ -1,0 +1,22 @@
+@import '../../styles/index.scss';
+
+$max: 100%;
+
+.mobileNavContainer {
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	justify-content: center;
+	min-width: $max;
+	height: 60px;
+	background-color: white;
+	max-width: 960px;
+	border-radius: 5px;
+	//box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+	//box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0, rgba(0, 0, 0, 0.06) 0 1px 2px 0;
+	box-shadow: rgba(50, 50, 105, 0.15) 0 2px 5px 0, rgba(0, 0, 0, 0.05) 0 1px 1px 0;
+
+	> button {
+		background-color: white;
+	}
+}
