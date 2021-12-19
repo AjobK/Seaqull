@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNotIn, Matches, MaxLength, MinLength } from 'class-validator'
+import { IsEmail, IsNotEmpty, Matches, MaxLength, MinLength } from 'class-validator'
 
 export class RegisterDTO {
   @Matches(new RegExp('^[a-zA-Z0-9_.-]*$'), {
@@ -9,17 +9,19 @@ export class RegisterDTO {
   })
   username: string
 
-  @IsEmail()
+  @IsEmail({}, {
+    message: 'Email not valid'
+  })
   email: string
 
   @MinLength(8, {
-    message: 'Must be between 8 and 20 characters long'
+    message: 'Password must be between 8 and 20 characters long'
   })
   @MaxLength(20, {
-    message: 'Must be between 8 and 20 characters long'
+    message: 'Password must be between 8 and 20 characters long'
   })
   @Matches(new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*?[0-9])'), {
-    message: 'Password must contain at least one  lowercase, uppercase and alphanumeric character'
+    message: 'Password must contain at least one lowercase, uppercase and alphanumeric character'
   })
   password: string
 

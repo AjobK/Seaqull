@@ -25,7 +25,7 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { FileService } from './file.service'
 import { Attachment } from '../entities/attachment.entity'
-import {Multer} from "multer";
+import { Multer } from 'multer'
 
 @Injectable()
 export class ProfileService {

@@ -48,14 +48,7 @@ class RegisterPrompt extends Component {
         this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((res) => {
-        const { username, email, password, captcha } = res.response?.data?.errors
-
-        this.setState({
-          username: username || [],
-          email: email || [],
-          password: password || [],
-          generalError: captcha || [],
-        })
+        this.handleError(res?.response?.data?.message)
       })
   }
 
@@ -91,6 +84,44 @@ class RegisterPrompt extends Component {
 
   onCaptchaError = () => {
     this.props.store.notification.setContent(popUpData.messages.captchaError)
+  }
+
+  handleError = (msg) => {
+    let username = []
+    let email = []
+    let password = []
+    let generalError = []
+
+    for (const elem of msg) {
+      const error = elem.toLowerCase()
+
+      if (error.includes('username')) {
+        username.push(elem)
+
+        continue
+      }
+
+      if (error.includes('email')) {
+        email.push(elem)
+
+        continue
+      }
+
+      if (error.includes('password')) {
+        password.push(elem)
+
+        continue
+      }
+
+      generalError.push(elem)
+    }
+
+    this.setState({
+      username,
+      email,
+      password,
+      generalError
+    })
   }
 
   render() {

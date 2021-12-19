@@ -9,14 +9,19 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { configValidationSchema } from './config.schema'
 import { PostLikeModule } from './modules/post-like.module'
-import {APP_GUARD, Reflector} from "@nestjs/core";
-import {JwtAuthGuard} from "./guards/jwt-auth.guard";
+import { APP_GUARD, Reflector } from '@nestjs/core'
+import { JwtAuthGuard } from './guards/jwt-auth.guard'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env'],
       validationSchema: configValidationSchema
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
     }),
     AuthModule,
     BanModule,

@@ -10,7 +10,7 @@ const captcha = process.env.HCAPTCHA_TEST_TOKEN
 chai.use(chaiHttp)
 
 describe('Ban functionality', () => {
-  const agent = chai.request.agent('http://localhost:3000/api')
+  const agent = chai.request.agent('http://localhost:8000/api')
 
   const shortBannedUser = uuidv4()
   const longBannedUser = uuidv4()

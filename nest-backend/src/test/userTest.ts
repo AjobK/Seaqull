@@ -11,7 +11,7 @@ chai.use(chaiHttp)
 
 describe('Testing the login/register', () => {
   const id = uuidv4()
-  const agent = chai.request.agent('http://localhost:3000/api')
+  const agent = chai.request.agent('http://localhost:8000/api')
 
   describe('Register tests', () => {
     it('Shouldn\'t register user because no numbers are present in the password', (done) => {
