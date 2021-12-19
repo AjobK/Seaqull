@@ -29,8 +29,8 @@ class HeaderNavigation extends Component {
             </p>
           </Link>
         </div>
+        <Logo onlyIcon className={ [styles.logo] } />
         <div className={ styles.rightContent }>
-          <Logo onlyIcon className={ [styles.logo] } />
           { profile.loggedIn ? ( // Logged in content
             <ul className={ styles.menuUl }>
               <li className={ styles.avatarWrapper }>

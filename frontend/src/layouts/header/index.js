@@ -17,7 +17,7 @@ class Header extends Component {
   }
 
   toggleSubNavigation = () => {
-    let { subNavOpen } = this.state
+    const { subNavOpen } = this.state
 
     this.setSubNavigationOpen(!subNavOpen)
   }

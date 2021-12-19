@@ -2,23 +2,26 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import styles from './nav.scss'
 import { SubNavigationElement } from '../../components'
-import * as menuItemsJSON from './menuItems.json'
+import * as navigationItemsJSON from './navigationItems.json'
 
 @inject('store') @observer
 class SubNavigation extends Component {
   render() {
     const { profile } = this.props.store
     const { className } = this.props
+    const { navigationItemsLoggedIn, navigationItemsLoggedOut } = navigationItemsJSON
 
-    let menuItems = profile.loggedIn && menuItemsJSON.menuItemsLoggedIn || menuItemsJSON.menuItemsLoggedOut
-    let navigationItems = []
+    const navigationItems = profile.loggedIn
+      ? navigationItemsLoggedIn
+      : navigationItemsLoggedOut
+    const navigationElements = []
 
-    for (let key in menuItems) {
-      navigationItems.push(
+    for (let key in navigationItems) {
+      navigationElements.push(
         <SubNavigationElement
           title={ key }
-          to={ menuItems[key]?.ref }
-          icon={ menuItems[key]?.icon }
+          to={ navigationItems[key]?.ref }
+          icon={ navigationItems[key]?.icon }
           key={ Math.random() }
         />
       )
@@ -31,7 +34,7 @@ class SubNavigation extends Component {
       ].join(' ') }>
         <div className={ styles.menu }>
           <ul className={ styles.menuUl }>
-            { navigationItems }
+            { navigationElements }
             {
               profile.loggedIn &&
               <SubNavigationElement
