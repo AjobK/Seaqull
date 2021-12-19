@@ -3,36 +3,74 @@ import { PopUp } from '..'
 import styles from './avatarCreator.scss'
 
 class AvatarCreator extends Component {
-  canvasSize = 150
+  canvasDimensions = [280, 280]
 
   canvas = null
 
   ctx = null
 
   features = {
-    Faces: 'Faces/Face=Beard Face 1',
-    Outfit: 'Outfit/Outfit=Outfit 01',
-    Eyes: 'Eyes/Eyes=Angry',
-    Mouth: 'Mouth/Mouth=Angry',
-    Hair: 'Hair/Hair=Style 01',
-    Accessories: 'Accessories/Accessories=Cap'
+    Faces: {
+      path: 'Faces/Faces (3)',
+      position: {
+        x: this.canvasDimensions[0] * 0.168,
+        y: this.canvasDimensions[1] * 0.1947
+      },
+    },
+    Outfit: {
+      path: 'Outfit/Outfit (2)',
+      position: {
+        x: this.canvasDimensions[0] * 0.047,
+        y: this.canvasDimensions[1] * 0.64
+      },
+    },
+    // Eyes: {
+    //   path: 'Eyes/Eyes=Angry',
+    //   position: {
+    //     x: 0,
+    //     y: 0
+    //   },
+    // },
+    // Mouth: {
+    //   path: 'Mouth/Mouth=Angry',
+    //   position: {
+    //     x: 0,
+    //     y: 0
+    //   },
+    // },
+    // Hair: {
+    //   path: 'Hair/Hair=Style 01',
+    //   position: {
+    //     x: 0,
+    //     y: 0
+    //   },
+    // },
+    // Accessories: {
+    //   path: 'Accessories/Accessories=Cap',
+    //   position: {
+    //     x: 0,
+    //     y: 0
+    //   }
+    // }
   }
 
   componentDidMount() {
     this.drawAllFeatures()
-    this.getTotalRatio()
+    // this.getTotalRatio()
   }
 
   getTotalRatio = async () => {
+    let bestRatio
+
     for (const [key, value] of Object.entries(this.features)) {
       console.log(`For ${key}`)
 
       let ratio = await new Promise(() => {
         let newImg = new Image()
-        newImg.src = require(`./features/${ featureName }.svg`)
+        newImg.src = require(`./features/${ feature }.svg`)
 
         newImg.onload = () => {
-          resolve()
+          resolve(this.canvasDimensions[0] / img.width)
         }
       })
     }
@@ -43,24 +81,32 @@ class AvatarCreator extends Component {
     this.drawFeature(this.features[Object.keys(this.features)[0]])
   }
 
-  drawFeature = (featureName) => {
+  drawFeature = (feature) => {
     let newImg = new Image()
-    newImg.src = require(`./features/${ featureName }.svg`)
+    newImg.src = require(`./features/${ feature.path }.svg`)
 
     newImg.onload = () => {
-      let largestDimensionSize = Math.max(newImg.width, newImg.height)
-      let ratio = this.canvasSize / largestDimensionSize
+      // let largestDimensionSize = Math.max(newImg.width, newImg.height)
+      // let ratio = 1
+      // let newWidth = newImg.width * ratio
+      // let newHeight = newImg.height * ratio
 
-      this.ctx.drawImage(newImg, 0, 0, newImg.width * ratio, newImg.height * ratio)
+      this.ctx.drawImage(
+        newImg,
+        feature.position.x - 15,
+        feature.position.y - 5,
+        newImg.width,
+        newImg.height
+      )
     }
 
-    let allFeatureNames = Object.keys(this.features)
-    let currentFeatureName = featureName.split('/')[0]
-    let currentFeatureIndex = allFeatureNames.indexOf(currentFeatureName)
-    // console.log(allFeatureNames[currentFeatureIndex + 1])
+    let allFeatures = Object.keys(this.features)
+    let currentFeature = feature.path.split('/')[0]
+    let currentFeatureIndex = allFeatures.indexOf(currentFeature)
+    // console.log(allFeatures[currentFeatureIndex + 1])
 
-    if (this.features[allFeatureNames[currentFeatureIndex + 1]])
-      this.drawFeature(this.features[allFeatureNames[currentFeatureIndex + 1]])
+    if (this.features[allFeatures[currentFeatureIndex + 1]])
+      this.drawFeature(this.features[allFeatures[currentFeatureIndex + 1]])
   }
 
   render() {
@@ -69,8 +115,8 @@ class AvatarCreator extends Component {
         { title: 'Avatar Creator' }
       }>
         <canvas
-          height={ this.canvasSize }
-          width={ this.canvasSize }
+          width={ this.canvasDimensions[0] }
+          height={ this.canvasDimensions[1] }
           className={ styles.avatarRender }
           ref={ (c) => {
             this.canvas = c
