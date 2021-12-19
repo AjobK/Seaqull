@@ -46,4 +46,6 @@ export class Post {
 
   @Column()
   published_at: Date
+
+  thumbnail: string
 }

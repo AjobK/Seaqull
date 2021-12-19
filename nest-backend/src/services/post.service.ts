@@ -18,6 +18,7 @@ import { ArchivedPostRepository } from '../repositories/archived_post.repository
 import { Attachment } from '../entities/attachment.entity'
 import { RolePermissionRepository } from '../repositories/role_permission.repository'
 import { v4 as uuidv4 } from 'uuid'
+import { ProfileRepository } from '../repositories/profile.repository'
 
 @Injectable()
 export class PostService {
@@ -29,6 +30,7 @@ export class PostService {
     @InjectRepository(AttachmentRepository) private readonly attachmentRepository: AttachmentRepository,
     @InjectRepository(ArchivedPostRepository) private readonly archivedPostRepository: ArchivedPostRepository,
     @InjectRepository(RolePermissionRepository) private readonly rolePermissionRepository: RolePermissionRepository,
+    @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
     private readonly fileService: FileService,
   ) {
   }
@@ -58,21 +60,37 @@ export class PostService {
     return message
   }
 
-  public async getPostByPath(path: string, account: Account | undefined): Promise<PostDetailedPayloadDTO> {
-    const post = await this.postRepository.getPostByPathWithAttachment(path)
+  public async getPostByPath(path: string, account: Account | undefined, hostUrl: string): Promise<PostDetailedPayloadDTO> {
+    let post = await this.postRepository.getPostByPath(path) as any
 
     if (!post) throw new NotFoundException(`No post found with path ${path}`)
+
+    const attachments = await this.profileRepository.getProfileAttachments(post.profile.id)
+
+    post.profile.avatar_attachment = attachments.avatar.path
+    post.profile.banner_attachment = attachments.banner.path
 
     const postLikes = await this.postLikeRepository.getPostLikesById(post.id)
     const postLikesAmount = postLikes ? postLikes.length : 0
 
     let userLiked = false
 
+    let isOwner = false
+
     if (account) {
+      isOwner = post.profile.id === account.profile.id
       userLiked = await this.postLikeRepository.findIfLikeByPostAndProfile(post, account.profile)
     }
 
-    return { post, likes: postLikesAmount, isOwner: userLiked }
+    const attachment = await this.postRepository.getPostAttachment(post.id)
+
+    post = {
+      ...post,
+      // TODO, attachments have the server host url hardcoded prepended
+      thumbnail: `${hostUrl}/${attachment.path}`
+    }
+
+    return { post, likes: { amount: postLikesAmount, userLiked }, isOwner }
   }
 
   public async getPostViewsByPath(postPath: string): Promise<PostViewDTO> {
@@ -103,6 +121,10 @@ export class PostService {
     const foundPost = await this.postRepository.getPostByPath(postPath)
 
     if (!foundPost) throw new NotFoundException({ message: 'Post not found' })
+
+    const ipViewedPost = await this.postViewRepository.hasViewedPost(foundPost, ipAddress)
+
+    if (ipViewedPost) return
 
     const postView = new PostView()
     postView.post = foundPost

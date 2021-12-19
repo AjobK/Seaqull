@@ -21,7 +21,7 @@ import { join } from 'path'
       validationSchema: configValidationSchema
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
+      rootPath: join(__dirname, '..', 'src/public'),
     }),
     AuthModule,
     BanModule,

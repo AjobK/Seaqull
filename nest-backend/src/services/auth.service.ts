@@ -8,11 +8,13 @@ import * as bcrypt from 'bcrypt'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { SuccessfulLoginDTO } from '../dtos/successful-login.dto'
 import { BanRepository } from '../repositories/ban.repository'
+import {ProfileRepository} from "../repositories/profile.repository";
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
+    @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
     @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
     private readonly jwtService: JwtService
   ) {
@@ -23,9 +25,15 @@ export class AuthService {
 
     const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedUsername.user_name)
 
+    const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
+    const title = await this.profileRepository.getTitleByUserId(account.profile.id)
+
     const profile = account.profile
 
     profile['role'] = account.role.name
+    profile.avatar_attachment = attachments.avatar
+    profile.banner_attachment = attachments.banner
+    profile.title = title
 
     return profile
   }

@@ -75,7 +75,6 @@ class Post extends App {
             content: convertFromRaw(JSON.parse(post.content)),
           }
         } catch (e) {
-
         }
 
         let author = {
@@ -99,7 +98,7 @@ class Post extends App {
         }, this.addViewToDB)
       })
       .catch((error) => {
-        let { name, message } = error.toJSON()
+        let message
 
         if (error?.response?.data?.message) {
           message = error.response.data.message
@@ -209,13 +208,14 @@ class Post extends App {
 
   addViewToDB = () => {
     if (!this.state.isOwner) {
-      Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
 
       const payload = {
         path: this.postPath
       }
 
-      Axios.post('api/post/view', payload)
+      const url = `${this.props.store.defaultData.backendUrl}/post/view`
+
+      Axios.post(url, payload)
     }
   }
 

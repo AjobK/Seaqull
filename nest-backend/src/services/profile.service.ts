@@ -153,8 +153,6 @@ export class ProfileService {
 
     const followedProfile = await this.profileFollowedByRepository.follow(profileFollowedBy)
 
-    console.log(followedProfile)
-
     return followedProfile
   }
 

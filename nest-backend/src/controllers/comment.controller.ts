@@ -16,7 +16,7 @@ export class CommentController {
   public async getComments(@Param('postPath') postPath: string, @AuthorizedUser() user: Account): Promise<Comment[]> {
     const comments = await this.commentService.getCommentsByPostPath(postPath)
 
-    if (comments.length === 0) throw new NotFoundException({ message: 'No comments found on that path' })
+    if (comments.length === 0) return []
 
     const payload = await this.commentService.getCommentsPayload(comments, user.profile)
 
@@ -28,7 +28,7 @@ export class CommentController {
   public async getCommentsWithoutCredentials(@Param('postPath') postPath: string): Promise<Comment[]> {
     const comments = await this.commentService.getCommentsByPostPath(postPath)
 
-    if (comments.length === 0) throw new NotFoundException({ message: 'No comments found on that path' })
+    if (comments.length === 0) return []
 
     const payload = await this.commentService.getCommentsPayload(comments)
 

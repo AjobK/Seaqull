@@ -35,14 +35,19 @@ export class AuthController {
   }
 
   @Get('/login-verify')
-  public async loginVerify(@Req() req: Request): Promise<Profile> {
+  public async loginVerify(@Req() req: Request): Promise<{ profile: Profile, loggedIn: boolean }> {
     if (!req.cookies?.token) throw new UnauthorizedException({ loggedIn: false })
 
     try {
       const profile = await this.authorizationService.loginVerify(req.cookies.token)
 
-      return profile
+      return {
+        profile,
+        loggedIn: true,
+      }
     } catch (error) {
+      console.log(error)
+
       throw new UnauthorizedException({ loggedIn: false })
     }
   }

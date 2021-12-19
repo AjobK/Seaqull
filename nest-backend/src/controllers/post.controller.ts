@@ -6,7 +6,7 @@ import {
   Param,
   Post,
   Put,
-  Query,
+  Query, Req,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
@@ -20,6 +20,8 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { PostCreationDTO } from '../dtos/post-creation.dto'
 import { AllowAny } from '../decorators/allow-any.decorator'
 import { ApiTags } from '@nestjs/swagger'
+import { HOST_METADATA } from '@nestjs/common/constants'
+import { ServerHost } from '../decorators/host.decorator'
 
 @ApiTags('Post')
 @Controller('post')
@@ -40,9 +42,10 @@ export class PostController {
   @AllowAny()
   public async getPostByPath(
     @Param('path') path: string,
-    @AuthorizedUser() account: Account
+    @AuthorizedUser() account: Account,
+    @ServerHost() hostUrl: string
   ): Promise<any> {
-    const postDetailedPayload = await this.postService.getPostByPath(path, account)
+    const postDetailedPayload = await this.postService.getPostByPath(path, account, hostUrl)
 
     return postDetailedPayload
   }

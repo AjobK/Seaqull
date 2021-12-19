@@ -14,4 +14,10 @@ export class PostViewRepository extends Repository<PostView> {
   public async addViewToPost(postView: PostView): Promise<void> {
     await this.save(postView)
   }
+
+  public async hasViewedPost(post: Post, ipAddress: string): Promise<boolean> {
+    const postView = await this.findOne({ where: { post, ip: ipAddress } })
+
+    return !!postView
+  }
 }

@@ -33,8 +33,6 @@ export class PostLikeService {
 
     const likes = await this.postLikeRepository.getUserLikesByProfileId(profile.id, 8)
 
-    console.log(likes)
-
     return likes
   }
 
@@ -49,9 +47,6 @@ export class PostLikeService {
     postLike.profile = profile
     postLike.post = post
     postLike.liked_at = new Date()
-
-    console.log(postLike)
-
     try {
       await this.postLikeRepository.likePost(postLike)
     } catch (e) {

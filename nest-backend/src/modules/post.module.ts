@@ -11,7 +11,8 @@ import { AttachmentRepository } from '../repositories/attachment.repository'
 import { ArchivedPostRepository } from '../repositories/archived_post.repository'
 import { RolePermissionRepository } from '../repositories/role_permission.repository'
 import { FileService } from '../services/file.service'
-import {RoleRepository} from "../repositories/role.repository";
+import { RoleRepository } from '../repositories/role.repository'
+import { ProfileRepository } from '../repositories/profile.repository'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import {RoleRepository} from "../repositories/role.repository";
       PostRepository,
       RoleRepository,
       PostLikeRepository,
+      ProfileRepository,
       PostViewRepository,
       AttachmentRepository,
       ArchivedPostRepository,
