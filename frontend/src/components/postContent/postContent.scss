@@ -37,8 +37,7 @@
 		max-width: 10px;
 		height: 10px;
 		background-color: black;
-		margin: 0 auto;
-		margin-top: -5px;
+		margin: -5px auto 0;
 		transform: rotate(45deg);
 	}
 
@@ -62,6 +61,24 @@
 		}
 	}
 }
+
+.mobileBar {
+	position: relative;
+	z-index: 1;
+
+	&Container{
+		position: fixed;
+		left: 0;
+		right: 0;
+		padding: 0 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		bottom: 10px;
+	}
+}
+
 h1 {
 	font-size: 2em;
 }
