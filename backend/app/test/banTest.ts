@@ -6,11 +6,12 @@ import { v4 as uuidv4 } from 'uuid'
 require('dotenv').config()
 
 const captcha = process.env.HCAPTCHA_TEST_TOKEN
+const port = process.env.PORT
 
 chai.use(chaiHttp)
 
 describe('Ban functionality', () => {
-  const agent = chai.request.agent('http://localhost:8000/api')
+  const agent = chai.request.agent('http://localhost:' + port + '/api')
 
   const shortBannedUser = uuidv4()
   const longBannedUser = uuidv4()
