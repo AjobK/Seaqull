@@ -23,6 +23,7 @@ class NotificationUtil {
     ])
   }
 
+  // TODO: Rework function and function implementations to access store directly from this class
   static showNotification = (store, message) => {
     store.notification.setContent(message)
   }
