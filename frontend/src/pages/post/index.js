@@ -234,7 +234,7 @@ class Post extends App {
       return <Loader />
 
     return (
-      <Standard className={ [styles.stdBgWhite] }>
+      <Standard className={ styles.stdBgWhite }>
         <PostBanner
           author={ this.props.new ? ownerAuthor : author }
           post={ this.state.post }
@@ -242,7 +242,7 @@ class Post extends App {
           isNew={ this.props.new }
           onThumbnailAdded={ this.onThumbnailAdded }
         />
-        <Section noTitle>
+        <Section noTitle className={ styles.extraWhitespace }>
           { !this.props.new &&
           <div className={ styles.likePostWrapper }>
             <PostViews />

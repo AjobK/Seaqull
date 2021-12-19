@@ -1,0 +1,177 @@
+@import '../../styles/index.scss';
+
+.wrapper {
+	width: 100%;
+	max-width: $profile-card-width;
+	margin-top: calc(-#{$profile-card-offset} - #{$header-spacing});
+	margin-right: $header-spacing;
+
+	@include mobile-all-portrait {
+		margin: calc(-#{$profile-card-offset} - #{$header-spacing}) auto 0 auto;
+	}
+}
+
+.profilePictureWrapper {
+	position: relative;
+	max-width: 150px;
+	margin: 0 auto;
+
+	.profilePicture {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		width: 150px;
+		height: 150px;
+		border-radius: 100%;
+		background-size: cover;
+		background-position: center;
+		background-color: $darkest;
+		pointer-events: initial;
+
+		@include mobile-all-portrait {
+			overflow: visible;
+		}
+
+		@include box-shadow;
+
+		&Edit {
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			font-size: 2rem;
+			border-radius: 50%;
+			background-color: rgba(0,0,0,0.75);
+			color: white;
+			transition: 0.2s;
+			opacity: 0;
+	
+			&:hover {
+				transition: 0.2s;
+				opacity: 1;
+			}
+
+			@include mobile-all-portrait {
+				border-radius: 100%;
+			}
+	
+			input {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				cursor: pointer;
+			}
+		}
+	
+		&DraggingOver {
+			transition: 0.2s;
+			opacity: 1;
+			cursor: pointer;
+		}
+	}
+}
+
+.profileInfo {
+	margin-top: 10px;
+
+	&NameWrapper {
+		display: flex;
+		justify-content: center;
+		font-size: $nr-md-fontsize;
+		color: $primary;
+	}
+	
+	&Badge {
+		vertical-align: middle;
+		height: auto;
+		margin-right: 5px;
+		font-size: 28px;
+		color: $primary;
+	}
+	
+	&Username {
+		text-align: center;
+		color: $secondary;
+	}
+}
+
+.profileCardButtons {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 25px;
+	text-align: center;
+
+	@include mobile-all-portrait {
+		justify-content: center;
+	}
+
+	.followButton {
+		width: 100%;
+	
+		&.following {
+			background: white;
+			color: $primary;
+			border: 1px solid $primary;
+
+			&:hover {
+				span {
+					display: none;
+				}
+
+				&:after {
+					content: 'Unfollow';
+				}
+			}
+		}
+
+		&.friends {
+			background: white;
+			color: $primary;
+			border: 1px solid $primary;
+
+			&:hover {
+				span {
+					display: none;
+				}
+
+				&:after {
+					content: 'Unfriend';
+				}
+			}
+		}
+	}
+	
+	.editButton {
+		width: 100%;
+		background-color: black;
+	}
+	
+	.chatButton {
+		margin-left: 10px;
+		background-color: transparent;
+		color: $primary;
+		border: 1px solid $primary;
+	}
+
+	.settingsButton {
+		margin-left: 10px;
+		background-color: transparent;
+		color: black;
+		border: 1px solid black;
+	}
+}
+
+.profileCardBio {
+	width: 100%;
+
+	.editor {
+		width: 100%;
+		margin-top: 30px;
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+}
