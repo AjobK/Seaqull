@@ -14,6 +14,7 @@ class Posts extends Component {
     this.MAX_POSTS_IN_BLOCK = 6
     this.totalPages = null
     this.scrolling = false
+
     this.state = {
       postsBlocks: [],
       isFetching: false,
@@ -34,24 +35,21 @@ class Posts extends Component {
   fetchPosts = () => {
     this.setIsFetching(true)
 
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/?page=${this.state.page}`, { withCredentials: true })
+    Axios.get(`${ this.props.store.defaultData.backendUrl }/post/?page=${ this.state.page }`, { withCredentials: true })
       .then((response) => response.data)
       .then((json) => {
         this.setIsFetching(false)
 
-        if (json.message) {
-          this.setEndReached(true)
+        this.setCurrentPage(this.state.page + 1)
 
-          return
+        this.renderNewPosts(json.posts || [])
+
+        if (json.posts.length < json.postsPerPage) {
+          this.setEndReached(true)
         }
 
-        this.setState({
-          page: this.state.page + 1,
-        })
-        this.renderNewPosts(json.posts ? json.posts : [])
-
-        if (json.posts.length < this.MAX_POSTS_IN_BLOCK) {
-          this.setEndReached(true)
+        if (this.state.postsBlocks.length <= 1) {
+          return this.fetchPosts()
         }
 
         this.handleScroll()
@@ -62,21 +60,30 @@ class Posts extends Component {
   }
 
   setEndReached(endReached) {
+    this.setCurrentPage(0)
+
     this.setState({
-      ...this.state,
-      endReached,
+      endReached
     })
   }
 
   setIsFetching = (isFetching) => {
     this.setState({
-      ...this.state,
-      isFetching,
+      isFetching
+    })
+  }
+
+  setCurrentPage = (page) => {
+    this.setState({
+      page
     })
   }
 
   fetchMorePosts = () => {
     if (this.state.endReached) {
+      this.setEndReached(false)
+      this.fetchPosts()
+
       return
     }
 
@@ -95,16 +102,63 @@ class Posts extends Component {
   }
 
   renderNewPosts = (posts) => {
-    let singleLi = document.createElement('li')
-
-    singleLi.classList.add(styles.post)
-
     let postsBlocks = this.state.postsBlocks
 
-    postsBlocks.push(this.createPostsBlock(posts))
+    const postsInLastPostsBlock = this.findPostsInPostsBlock(postsBlocks.at(-1))
+
+    if (postsInLastPostsBlock.length <= 0 || postsInLastPostsBlock.length >= this.MAX_POSTS_IN_BLOCK) {
+      return this.renderNewPostsBlock(posts)
+    }
+
+    this.renderNewPostsAtLastPostsBlock(postsInLastPostsBlock, posts)
+  }
+
+  findPostsInPostsBlock(postsBlock) {
+    let currentElement = postsBlock
+
+    if (!postsBlock)
+      return []
+
+    while (currentElement?.props?.children) {
+      const { children } = currentElement.props
+      currentElement = children || []
+    }
+
+    return currentElement.props.posts || []
+  }
+
+  renderNewPostsAtLastPostsBlock(lastPostBlockPosts, newPosts) {
+    const postsAmountToAddToLastPostsBlock = this.MAX_POSTS_IN_BLOCK - lastPostBlockPosts.length
+
+    const postsToAddToLastPostsBlock = newPosts.slice(0, postsAmountToAddToLastPostsBlock)
+    const remainingPosts = newPosts.slice(postsAmountToAddToLastPostsBlock)
+
+    const filledLastPostsBlockPosts = lastPostBlockPosts.concat(postsToAddToLastPostsBlock)
+
+    this.state.postsBlocks.pop()
+    this.renderNewPostsBlock(filledLastPostsBlockPosts)
+
+    if (remainingPosts.length > 0) {
+      this.renderNewPostsBlock(remainingPosts)
+    }
+  }
+
+  renderNewPostsBlock(posts) {
+    const { postsBlocks } = this.state
+
+    const amountOfPostBlocks = Math.ceil(posts.length / this.MAX_POSTS_IN_BLOCK)
+
+    for (let i = 0; i < amountOfPostBlocks; i++) {
+      const postsInPostsBlock = posts.slice(
+        this.MAX_POSTS_IN_BLOCK * i,
+        this.MAX_POSTS_IN_BLOCK * (i + 1)
+      )
+
+      postsBlocks.push(this.createPostsBlock(postsInPostsBlock))
+    }
 
     this.setState({
-      postsBlocks,
+      postsBlocks
     })
   }
 
@@ -123,8 +177,8 @@ class Posts extends Component {
 
     return (
       <div>
-        <ul className={ styles.posts }>{postsBlocks}</ul>
-        {this.state.isFetching || (!this.state.endReached && <Loader />)}
+        <ul className={ styles.posts }>{ postsBlocks }</ul>
+        { this.state.isFetching && <Loader /> }
       </div>
     )
   }
