@@ -11,40 +11,40 @@ class AvatarCreator extends Component {
 
   features = {
     Faces: {
-      path: 'Faces/Faces (3)',
+      path: 'Faces/Face (2)',
       position: {
         x: this.canvasDimensions[0] * 0.168,
-        y: this.canvasDimensions[1] * 0.1947
+        y: this.canvasDimensions[1] * 0.2
       },
     },
     Outfit: {
-      path: 'Outfit/Outfit (2)',
+      path: 'Outfit/Outfit (7)',
       position: {
-        x: this.canvasDimensions[0] * 0.047,
-        y: this.canvasDimensions[1] * 0.64
+        x: this.canvasDimensions[0] * 0.068 - 0.5,
+        y: this.canvasDimensions[1] * 0.668 - 1.3
       },
     },
-    // Eyes: {
-    //   path: 'Eyes/Eyes=Angry',
-    //   position: {
-    //     x: 0,
-    //     y: 0
-    //   },
-    // },
-    // Mouth: {
-    //   path: 'Mouth/Mouth=Angry',
-    //   position: {
-    //     x: 0,
-    //     y: 0
-    //   },
-    // },
-    // Hair: {
-    //   path: 'Hair/Hair=Style 01',
-    //   position: {
-    //     x: 0,
-    //     y: 0
-    //   },
-    // },
+    Eyes: {
+      path: 'Eyes/Eyes (2)',
+      position: {
+        x: this.canvasDimensions[0] * 0.54,
+        y: this.canvasDimensions[1] * 0.39
+      },
+    },
+    Mouth: {
+      path: 'Mouth/Mouth (3)',
+      position: {
+        x: this.canvasDimensions[0] * 0.6,
+        y: this.canvasDimensions[1] * 0.63
+      },
+    },
+    Hair: {
+      path: 'Hair/Hair (2)',
+      position: {
+        x: this.canvasDimensions[0] * 0.105,
+        y: this.canvasDimensions[1] * 0.13
+      },
+    }
     // Accessories: {
     //   path: 'Accessories/Accessories=Cap',
     //   position: {
@@ -81,9 +81,9 @@ class AvatarCreator extends Component {
     this.drawFeature(this.features[Object.keys(this.features)[0]])
   }
 
-  drawFeature = (feature) => {
+  drawFeature = async (feature) => {
     let newImg = new Image()
-    newImg.src = require(`./features/${ feature.path }.svg`)
+    newImg.src = await require(`./features/${ feature.path }.svg`)
 
     newImg.onload = () => {
       // let largestDimensionSize = Math.max(newImg.width, newImg.height)
