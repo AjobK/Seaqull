@@ -34,27 +34,27 @@ class PostController {
   }
 
   public getPosts = async (req: Request, res: Response): Promise<Response> => {
-    let posts
     const amount = 6
+    const totalPosts = await this.dao.getAmountPosts()
+    const totalPages = Math.ceil(totalPosts / amount)
 
-    if (req.query.page == null) {
-      posts = await this.dao.getPosts('0', amount)
-    } else {
-      posts = await this.dao.getPosts(String(req.query.page), amount)
+    let posts = []
+    let page = +req.query?.page
 
-      if (posts.length <= 0 ) {
-        posts = await this.dao.getPosts('0', amount)
+    if (isNaN(+page) || +page < 0)
+      return res.status(422).json({
+        message: 'Invalid page number'
+      })
 
-        return res.status(200).json({ 'message': 'You`ve reached the last post' })
-      }
+    page = ~~page
+    posts = await this.dao.getPosts(+page, amount)
+
+    const message = {
+      currentPage: +page,
+      totalPages: totalPages,
+      postsPerPage: amount,
+      posts: posts
     }
-
-    for (const post of posts) {
-      post.thumbnail = await this.getPostThumbnailURL(post.id)
-    }
-
-    const count = await this.dao.getAmountPosts()
-    const message = { posts: posts, totalPosts: count, per_page: amount }
 
     return res.status(200).json(message)
   }
