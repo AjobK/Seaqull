@@ -39,19 +39,19 @@ class AvatarCreator extends Component {
       },
     },
     Hair: {
-      path: 'Hair/Hair (2)',
+      path: 'Hair/Hair (1)',
       position: {
         x: this.canvasDimensions[0] * 0.105,
         y: this.canvasDimensions[1] * 0.13
       },
+    },
+    Accessories: {
+      path: 'Accessories/Accessories (3)',
+      position: {
+        x: this.canvasDimensions[0] * 0.32,
+        y: this.canvasDimensions[1] * 0.5
+      }
     }
-    // Accessories: {
-    //   path: 'Accessories/Accessories=Cap',
-    //   position: {
-    //     x: 0,
-    //     y: 0
-    //   }
-    // }
   }
 
   componentDidMount() {
