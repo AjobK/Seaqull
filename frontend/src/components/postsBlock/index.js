@@ -8,7 +8,7 @@ class PostsBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      posts: props.posts,
+      posts: [],
     }
   }
 
@@ -19,7 +19,7 @@ class PostsBlock extends Component {
   convertPosts() {
     let convertedPosts = []
 
-    this.state.posts.forEach((post) => {
+    this.props.posts.forEach((post) => {
       try {
         post.title = this.getRawContentFromPostData(post.title)
         post.readTime = TextUtil.getReadTimeFromText(this.getRawContentFromPostData(post.content))

@@ -4,7 +4,9 @@ import { Icon } from '../../components'
 import styles from './postsBlockLarge.scss'
 import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class PostsBlockLarge extends Component {
   constructor(props) {
     super(props)
@@ -15,7 +17,7 @@ class PostsBlockLarge extends Component {
   }
 
   render() {
-    const { post } = this.props
+    const { post, store } = this.props
 
     return (
       <div className={ styles.large }>
@@ -79,7 +81,7 @@ class PostsBlockLarge extends Component {
             </div>
           </div>
           <Link to={ `posts/${post.path}` }>
-            <img src={ post.thumbnail } alt={ 'post' } />
+            <img src={ `${ store.defaultData.backendUrlBase }/${ post.thumbnail_attachment.path }` } alt={ 'post' } />
           </Link>
         </div>
 

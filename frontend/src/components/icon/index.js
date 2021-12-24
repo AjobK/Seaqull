@@ -8,13 +8,16 @@ class Icon extends Component {
   render() {
     let classNames = []
     const { className, iconName, onClick, onMouseDown, onMouseUp, style } = this.props
+    let { prefix } = this.props
+
+    prefix = prefix || 'fa'
 
     if (typeof className == 'string')
       classNames.push(className)
     else if (className)
       classNames = [...className]
 
-    let icon = icons[`fa${iconName}`] || brands[`fa${iconName}`] || icons['faBan']
+    let icon = icons[`${prefix}${iconName}`] || brands[`${prefix}${iconName}`] || icons['faBan']
 
     library.add(icon)
 

@@ -25,12 +25,6 @@ class PostBanner extends Component {
     }
   }
 
-  updatePopup() {
-    this.setState({
-      popUpOpen: !this.state.popUpOpen,
-    })
-  }
-
   onThumbnailDragEnter = () => {
     this.setState({
       draggingOverThumbnail: true
