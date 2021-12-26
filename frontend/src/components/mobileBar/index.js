@@ -9,9 +9,9 @@ class MobileBar extends Component {
   render() {
 
     return (
-      <div className={ styles.mobileBar }>
-        <div className={ styles.mobileBarContainer }>
-          <div className={ styles.mobileNavContainer }>
+      <div className={ styles.contentHolder }>
+        <div className={ styles.mobileBar }>
+          <div className={ styles.mobileBarItems }>
             { this.props.children }
           </div>
         </div>

@@ -1,32 +1,10 @@
 @import '../../styles/index.scss';
 
-.mobileNavContainer {
-	display: none;
-	gap: 15px;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
-	height: 60px;
-	background-color: white;
-	border-radius: 5px;
-	padding: 10px;
-	box-shadow: rgba(50, 50, 105, 0.15) 0 2px 5px 0, rgba(0, 0, 0, 0.05) 0 1px 1px 0;
-	overflow-x: auto;
-	overflow-y: hidden;
-	> button {
-		background-color: white;
-	}
-
-	@include mobile-all-portrait {
-		display: flex;
-	}
-}
-
-.mobileBar {
+.contentHolder {
 	position: relative;
 	z-index: 1;
 
-	&Container{
+	.mobileBar {
 		position: fixed;
 		left: 0;
 		right: 0;
@@ -36,5 +14,27 @@
 		justify-content: center;
 		width: 100%;
 		bottom: 10px;
+
+		&Items {
+			display: none;
+			gap: 15px;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			height: 60px;
+			background-color: white;
+			border-radius: 5px;
+			padding: 10px;
+			box-shadow: rgba(50, 50, 105, 0.15) 0 2px 5px 0, rgba(0, 0, 0, 0.05) 0 1px 1px 0;
+			overflow-x: auto;
+			overflow-y: hidden;
+			> button {
+				background-color: white;
+			}
+
+			@include mobile-all-portrait {
+				display: flex;
+			}
+		}
 	}
 }
