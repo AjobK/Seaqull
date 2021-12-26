@@ -19,7 +19,7 @@
 	}
 	&Story {
 		margin-bottom: 2.5rem;
-		font-family: Sanchez;
+		font-family: Sanchez, serif;
 		color: rgba(0,0,0,0.8);
 		font-size: 1.25rem;
 		line-height: 1.9rem;
@@ -61,21 +61,10 @@
 		}
 	}
 }
-
-.mobileBar {
-	position: relative;
-	z-index: 1;
-
-	&Container{
-		position: fixed;
-		left: 0;
-		right: 0;
-		padding: 0 20px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		bottom: 10px;
+// Default styling class of inline toolbar which needs to get overridden
+div[class^='tukdd6b']{
+	@include mobile-all-portrait {
+		display: none;
 	}
 }
 

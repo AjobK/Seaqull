@@ -9,8 +9,12 @@ class MobileBar extends Component {
   render() {
 
     return (
-      <div className={ styles.mobileNavContainer }>
-        { this.props.children }
+      <div className={ styles.mobileBar }>
+        <div className={ styles.mobileBarContainer }>
+          <div className={ styles.mobileNavContainer }>
+            { this.props.children }
+          </div>
+        </div>
       </div>
     )
   }
