@@ -212,6 +212,8 @@ class PostContent extends Component {
                   )
                 }
               </InlineToolbar>
+
+              { !readOnly &&
               <MobileBar>
                 {
                   inlineButtonStyling.map((element, i) => (
@@ -244,6 +246,7 @@ class PostContent extends Component {
                   ))
                 }
               </MobileBar>
+              }
             </div>
           }
 
