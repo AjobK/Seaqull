@@ -1,10 +1,11 @@
 @import '../../styles/index.scss';
 
 .menu {
-	float: right;
-	@include mobile-sm {
-		display: none;
-	}
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
 	
 	&Ul {
 		display: flex;
@@ -12,30 +13,135 @@
 		font-size: $nr-sm-fontsize;
 		text-transform: capitalize;
 		align-items: center;
+		justify-content: flex-end;
 		letter-spacing: 1px;
-		font-weight: bold;
+
+		@include mobile-sm {
+			max-width: 100%;
+		}
+
+		> :not(:last-child) {
+			margin-right: $header-spacing;
+		}
 	}
 
 	&Item {
+		white-space: nowrap;
 		text-decoration: none;
-		color: rgba(0,0,0,0.6);
 		cursor: pointer;
-
-		&:not(:last-child) {
-			margin: 0 $nr-sm-fontsize;
+		transition: 0.2s;
+		border-radius: 3px;
+		color: $secondary;
+		
+		> :nth-child(2) {
+			font-size: 1em;
+			margin-left: $header-spacing / 2;
 		}
 
-		&:last-child {
-			margin-left: $nr-sm-fontsize;
+		> * {
+			color: $secondary;
+		}
+	}
+
+	&Pointer {
+		width: $header-spacing;
+		height: $header-spacing;
+		top: -($header-spacing / 2) - 1px;
+		left: calc(50% - #{$header-spacing} / 2);
+		transform: rotate(45deg);
+		background-color: $background;
+		border: 1px solid rgba($secondary, 0.2);
+		border-right: none;
+		border-bottom: none;
+		position: absolute;
+	}
+
+	.goBack {
+		display: flex;
+		align-items: center;
+		color: $secondary;
+
+		> p {
+			color: $secondary;
+			margin-left: $header-spacing * 0.75;
+			position: relative;
+
+			@include mobile-xs {
+				display: none;
+			}
+
+			&::first-letter {
+				text-transform: capitalize;
+			}
+
+			> span {
+				&:first-child {
+					@include mobile-sm {
+						display: none;
+					}
+				}
+
+				&.underline {
+					position: absolute;
+					transition: 0.2s;
+					left: 0;
+					bottom: 0;
+					height: 1px;
+					width: 0;
+					background-color: rgba($secondary, 1);
+				}
+			}
 		}
 
-		&:hover {
-			transition: 0.2s;
-			color: rgba(0,0,0,1);
+		&:hover > p > span {
+			width: 100%;
 		}
 	}
 }
 
+.avatarWrapper {
+	display: flex;
+	align-items: center;
+
+	&Image {
+		display: inherit;
+		width: 40px;
+		height: 40px;
+		border-radius: 100%;
+		
+		@include mobile-all-portrait {
+			position: absolute;
+			left: calc(50% - #{$header-spacing});
+			top: -($header-spacing * 0.45);
+		}
+	}
+}
+
+.logo {
+	position: absolute;
+	left: calc(50% - #{$header-spacing});
+
+	@include mobile-all-portrait {
+		display: none !important;
+	}
+}
+
+.newPost {
+	@include mobile-all-portrait {
+		display: none;
+	}
+}
+
 .button {
-	border-radius: 30px;
+	font-weight: normal;
+}
+
+.hamburger {
+	margin-left: $header-spacing;
+	display: flex;
+}
+
+.rightContent {
+	display: flex;
+	align-items: center;
 }

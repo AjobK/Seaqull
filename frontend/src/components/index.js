@@ -1,10 +1,9 @@
 import Button from './button'
 import Hamburger from './hamburger'
 import ProfileBar from './profileBar'
-import NavDropdown from './navDropdown'
 import HeaderNavigation from './headerNavigation'
-import NavigationMobile from './navigationMobile'
-import UserBanner from './userBanner'
+import SubNavigation from './subNavigation'
+import SubNavigationElement from './subNavigationElement'
 import Title from './title'
 import Posts from './posts'
 import PostsPreview from './postsPreview'
@@ -38,6 +37,9 @@ import PostsBlockLarge from './postsBlockLarge'
 import PostsBlockSmall from './postsBlockSmall'
 import PopUp from './popUp'
 import GlobalNotification from './globalNotification'
+import ProfileCard from './profileCard'
+import ProfileBanner from './profileBanner'
+import BanUser from './banUser'
 import DraftJsTooltipButton from './draftjsTooltipButton'
 import MobileBar from './mobileBar'
 
@@ -46,9 +48,8 @@ export {
   Hamburger,
   ProfileBar,
   HeaderNavigation,
-  NavigationMobile,
-  NavDropdown,
-  UserBanner,
+  SubNavigation,
+  SubNavigationElement,
   Title,
   Posts,
   PostsPreview,
@@ -82,6 +83,9 @@ export {
   PostsBlockSmall,
   PopUp,
   GlobalNotification,
+  ProfileCard,
+  ProfileBanner,
+  BanUser,
   DraftJsTooltipButton,
   MobileBar,
 }

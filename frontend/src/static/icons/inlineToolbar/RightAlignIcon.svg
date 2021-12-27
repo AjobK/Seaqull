@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150">
+  <defs>
+    <clipPath id="clip-RightAlignIcon">
+      <rect width="150" height="150"/>
+    </clipPath>
+  </defs>
+  <g id="RightAlignIcon" clip-path="url(#clip-RightAlignIcon)">
+    <g id="Right_align" data-name="Right align" transform="translate(35 42)">
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="81" height="12"/>
+      <rect id="Rectangle_3" data-name="Rectangle 3" width="65" height="12" transform="translate(16 18)"/>
+      <rect id="Rectangle_4" data-name="Rectangle 4" width="43" height="12" transform="translate(38 36)"/>
+      <rect id="Rectangle_5" data-name="Rectangle 5" width="81" height="12" transform="translate(0 54)"/>
+    </g>
+  </g>
+</svg>

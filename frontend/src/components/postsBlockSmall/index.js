@@ -4,7 +4,9 @@ import { TimeUtil } from '../../util/'
 import styles from './postsBlockSmall.scss'
 import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class PostsBlockSmall extends Component {
   constructor(props) {
     super(props)
@@ -15,7 +17,7 @@ class PostsBlockSmall extends Component {
   }
 
   render() {
-    const { post } = this.props
+    const { post, store } = this.props
 
     return (
       <div className={ styles.small }>
@@ -47,7 +49,7 @@ class PostsBlockSmall extends Component {
             </ReactTooltip>
           </div>
           <Link to={ `posts/${post.path}` } >
-            <img src={ post.thumbnail } alt={ 'post' } />
+            <img src={ `${ store.defaultData.backendUrlBase }/${ post.thumbnail_attachment.path }` } alt={ 'post' } />
           </Link>
         </div>
         <div className={ styles.smallContent }>

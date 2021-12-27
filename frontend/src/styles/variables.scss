@@ -7,7 +7,7 @@
 $primary: #ff4040; // Changes color of most elements, including logo
 $secondary: #2e2e4c;
 $text: #68677D;
-$textdark: #2b2b2b;
+$text-dark: #000000;
 $light: #efefef;
 $dark-light: #dcdcde;
 $dark: #4e4e4e;
@@ -15,10 +15,10 @@ $darker: #2b2b2b;
 $darkest: #1f1f1f;
 $raw-text-color: black;
 $nav-items: #808080;
-$background: #F4F4F4;
+$background: #FFFFFF;
 $statistic-color: #333333;
-$background-trans: rgba(244, 244, 244, 0.95);
-$background-trans-less: rgba(244, 244, 244, 0.6);
+$background-trans: rgba(255, 255, 255, 0.95);
+$background-trans-less: rgba(255, 255, 255, 0.6);
 $background-darker: #dedede;
 $success: #59df83;
 $failure: $primary;
@@ -42,8 +42,11 @@ $wrapper-width: 1200px;
 $logo-font-size: 2.5rem;
 $logo-font-size-sm: 2.5rem;
 $header-height: 80px;
+$header-side-element-width: 220px;
 $navigation-width: 0px; /* stylelint-disable-line length-zero-no-unit */ // Normally 50px
 $navigation-width-expanded: 0px; /* stylelint-disable-line length-zero-no-unit */ // Normally 400px
+$profile-card-width: 265px;
+$profile-card-offset: 75px;
 
 // Spacing
 $header-spacing: 20px;

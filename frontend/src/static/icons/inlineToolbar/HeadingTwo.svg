@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150">
+  <defs>
+    <clipPath id="clip-HeadingTwo">
+      <rect width="150" height="150"/>
+    </clipPath>
+  </defs>
+  <g id="HeadingTwo" clip-path="url(#clip-HeadingTwo)">
+    <text id="H2" transform="translate(25 106)" font-size="90" font-family="Dubai-Regular, Dubai"><tspan x="0" y="0">H</tspan><tspan y="0" font-size="70">2</tspan></text>
+  </g>
+</svg>

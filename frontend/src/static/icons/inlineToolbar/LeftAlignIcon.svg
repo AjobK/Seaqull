@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150">
+  <defs>
+    <clipPath id="clip-LeftAlignIcon">
+      <rect width="150" height="150"/>
+    </clipPath>
+  </defs>
+  <g id="LeftAlignIcon" clip-path="url(#clip-LeftAlignIcon)">
+    <g id="Left_Align" data-name="Left Align" transform="translate(35 40)">
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="81" height="12"/>
+      <rect id="Rectangle_3" data-name="Rectangle 3" width="65" height="12" transform="translate(0 18)"/>
+      <rect id="Rectangle_4" data-name="Rectangle 4" width="43" height="12" transform="translate(0 38)"/>
+      <rect id="Rectangle_5" data-name="Rectangle 5" width="81" height="12" transform="translate(0 58)"/>
+    </g>
+  </g>
+</svg>
