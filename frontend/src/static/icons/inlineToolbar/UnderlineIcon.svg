@@ -5,9 +5,9 @@
     </clipPath>
   </defs>
   <g id="UnderlineIcon" clip-path="url(#clip-UnderlineIcon)">
-    <g id="Underline" transform="translate(17 4)">
-      <text id="U" transform="translate(0 28)" font-size="25" font-family="Dubai-Bold, Dubai" font-weight="700"><tspan x="0" y="0">U</tspan></text>
-      <path id="Path_1" data-name="Path 1" d="M2.314,3.19H16.7V6.278H2.314Z" transform="translate(-0.912 27)"/>
+    <g id="Underline" transform="translate(15 8)">
+      <text id="U" transform="translate(0 27)" fill="rgba(43,41,41,0.73)" font-size="29" font-family="Rockwell"><tspan x="0" y="0">U</tspan></text>
+      <path id="Path_1" data-name="Path 1" d="M2.314,3.19H21.092V6.278H2.314Z" transform="translate(-1.912 26)" fill="rgba(43,41,41,0.73)"/>
     </g>
   </g>
 </svg>

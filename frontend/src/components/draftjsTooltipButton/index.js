@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Icon } from '../../components'
 import styles from './draftjsTooltipButton.scss'
 
 class DraftJsTooltipButton extends Component {
@@ -12,7 +11,9 @@ class DraftJsTooltipButton extends Component {
 
     return (
       <button onMouseDown={ onButtonClick } className={ styles.draftJsButton }>
-        <Icon iconName={ iconName }/>
+        <figure>
+          <img src={ iconName } alt={ iconName } />
+        </figure>
       </button>
     )
   }

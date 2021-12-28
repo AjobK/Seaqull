@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
   <defs>
     <clipPath id="clip-HeadingThree">
-      <rect width="150" height="150"/>
+      <rect width="50" height="50"/>
     </clipPath>
   </defs>
   <g id="HeadingThree" clip-path="url(#clip-HeadingThree)">
-    <text id="H3" transform="translate(25 106)" font-size="90" font-family="Dubai-Regular, Dubai"><tspan x="0" y="0">H</tspan><tspan y="0" font-size="70">3</tspan></text>
+    <text id="H3" transform="translate(8 36)" fill="rgba(43,41,41,0.73)" font-size="31" font-family="Rockwell"><tspan x="0" y="0">H</tspan><tspan y="0" font-size="24">3</tspan></text>
   </g>
 </svg>

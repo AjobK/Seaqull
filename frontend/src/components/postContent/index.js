@@ -9,9 +9,17 @@ import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
 import { DraftJsTooltipButton, MobileBar } from '../../components'
-// import {
-//   BoldButton,
-// } from '@draft-js-plugins/buttons'
+import {
+  BoldIcon,
+  ItalicIcon,
+  UnderlineIcon,
+  HeadingOne,
+  HeadingTwo,
+  HeadingThree,
+  LeftAlignIcon,
+  CenterAlignIcon,
+  RightAlignIcon,
+} from '../../static/icons/inlineToolbar'
 
 @inject('store')
 @observer
@@ -130,21 +138,21 @@ class PostContent extends Component {
     const { InlineToolbar } = this.PluginComponents
 
     const inlineButtonStyling = [
-      { icon: 'Bold', styling: 'BOLD' },
-      { icon: 'Underline', styling: 'UNDERLINE' },
-      { icon: 'Italic', styling: 'ITALIC' },
+      { icon: BoldIcon, styling: 'BOLD' },
+      { icon: UnderlineIcon, styling: 'UNDERLINE' },
+      { icon: ItalicIcon, styling: 'ITALIC' },
     ]
 
     const headlineButtons = [
-      { icon: 'Heading', styling: 'header-one' },
-      { icon: 'Heading', styling: 'header-two' },
-      { icon: 'Heading', styling: 'header-three' },
+      { icon: HeadingOne, styling: 'header-one' },
+      { icon: HeadingTwo, styling: 'header-two' },
+      { icon: HeadingThree, styling: 'header-three' },
     ]
 
     const alignButtonArray = [
-      { icon: 'AlignLeft', styling: 'left' },
-      { icon: 'AlignCenter', styling: 'center' },
-      { icon: 'AlignRight', styling: 'right' },
+      { icon: LeftAlignIcon, styling: 'left' },
+      { icon: CenterAlignIcon, styling: 'center' },
+      { icon: RightAlignIcon, styling: 'right' },
     ]
 
     return (
@@ -212,7 +220,6 @@ class PostContent extends Component {
                   )
                 }
               </InlineToolbar>
-
               { !readOnly &&
               <MobileBar>
                 {
@@ -235,7 +242,6 @@ class PostContent extends Component {
                   ))
                 }
                 <Separator />
-
                 {
                   alignButtonArray.map((element, i) => (
                     <DraftJsTooltipButton

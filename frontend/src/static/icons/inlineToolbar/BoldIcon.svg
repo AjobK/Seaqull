@@ -5,6 +5,6 @@
     </clipPath>
   </defs>
   <g id="BoldIcon" clip-path="url(#clip-BoldIcon)">
-    <text id="B" transform="translate(15 35)" font-size="34" font-family="Dubai-Bold, Dubai" font-weight="700"><tspan x="0" y="0">B</tspan></text>
+    <text id="B" transform="translate(14 36)" fill="rgba(43,41,41,0.73)" font-size="31" font-family="Rockwell"><tspan x="0" y="0">B</tspan></text>
   </g>
 </svg>

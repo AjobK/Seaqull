@@ -7,7 +7,6 @@ $tooltip-hover: #EFEFEF;
 	color: #888;
 	font-size: 18px;
 	border: 0;
-	padding-top: 5px;
 	vertical-align: bottom;
 	height: 34px;
 	width: 36px;
@@ -15,6 +14,16 @@ $tooltip-hover: #EFEFEF;
 	&:hover, &:focus {
 		background: $tooltip-hover;
 		outline: 0;
+	}
+
+	> figure {
+		display: flex;
+		justify-content: center;
+
+		> img {
+			width: 36px;
+			height: 34px;
+		}
 	}
 }
 
