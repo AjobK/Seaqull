@@ -1,6 +1,8 @@
 @import '../../styles/index.scss';
 
 $tooltip-hover: #EFEFEF;
+$height: 34px;
+$width: 36px;
 
 .draftJsButton {
 	background-color: #fbfbfb;
@@ -8,8 +10,8 @@ $tooltip-hover: #EFEFEF;
 	font-size: 18px;
 	border: 0;
 	vertical-align: bottom;
-	height: 34px;
-	width: 36px;
+	height: $height;
+	width: $width;
 
 	&:hover, &:focus {
 		background: $tooltip-hover;
@@ -21,16 +23,8 @@ $tooltip-hover: #EFEFEF;
 		justify-content: center;
 
 		> img {
-			width: 36px;
-			height: 34px;
+			width: $width;
+			height: $height;
 		}
 	}
-}
-
-.active {
-	color: #6a9cc9;
-}
-
-.active svg {
-	fill: #6a9cc9;
 }
