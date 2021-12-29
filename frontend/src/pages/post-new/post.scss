@@ -2,25 +2,19 @@
 
 $post-wrapper-width: 670px;
 
-.postContent {
+.postWrapper {
 	width: 100%;
 	max-width: $post-wrapper-width;
 	margin: 0 auto;
 	padding-top: $header-spacing * 4;
 	white-space: normal;
 
-	&Title {
-		color: $secondary;
-		font-size: 46px;
-		line-height: 1.13;
-		margin-bottom: 10px;
+	&Thumbnail {
+		width: 100%;
+		margin-bottom: 40px;
 	}
 
-	&Description {
-		color: $text;
-		font-size: $nr-sm-fontsize;
-		line-height: 1.5;
-		font-weight: 600;
-		margin-bottom: 30px;
+	&Content {
+
 	}
 }
