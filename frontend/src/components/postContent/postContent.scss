@@ -1,5 +1,7 @@
 @import '../../styles/index.scss';
 
+$content-side-padding: 35px;
+
 .postContent {
 	&Title {
 		color: $secondary;
@@ -35,6 +37,7 @@
 		color: $text;
 		font-size: $nr-sm-fontsize;
 		line-height: 1.5;
+		padding: 0 $content-side-padding;
 	}
 }
 
