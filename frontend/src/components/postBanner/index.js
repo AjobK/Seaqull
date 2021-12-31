@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Cropper, Icon } from '..'
-import { Link } from 'react-router-dom'
 import { ColorUtil, InputUtil } from '../../util/'
 import Axios from 'axios'
 import { popUpData } from '../popUp/popUpData'
@@ -118,25 +117,6 @@ class PostBanner extends Component {
         ) }
 
         <div className={ styles.innerWrapper }>
-          <div className={ styles.info }>
-            <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
-              <div className={ styles.infoInner }>
-                <div
-                  className={ styles.picture }
-                  style={ {
-                    backgroundImage: `url(${author.avatarURL || ''})`,
-                    backgroundColor: uniqueAvatarColorBasedOnHash
-                  } }
-                />
-                <div className={ styles.user_info }>
-                  <h2 className={ [styles.name].join(' ') }>{ author.name || '' }</h2>
-                  <div className={ styles.achieved }>
-                    <h3 className={ styles.role }>{ author.title || '' }</h3>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
           { this.state.upThumbnail && (
             <Cropper
               inputType={ 'thumbnail' }
