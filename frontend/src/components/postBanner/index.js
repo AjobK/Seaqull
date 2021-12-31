@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Cropper, Icon } from '..'
-import { ColorUtil, InputUtil } from '../../util/'
+import { InputUtil } from '../../util/'
 import Axios from 'axios'
 import { popUpData } from '../popUp/popUpData'
 
@@ -87,16 +87,11 @@ class PostBanner extends Component {
   }
 
   render() {
-    const { author, isOwner } = this.props
-
-    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
+    const { isOwner } = this.props
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
-        <div
-          className={ styles.background }
-          style={ { backgroundImage: `url(${ this.state.thumbnail })` } }
-        />
+        <img className={ styles.thumbnail } src={ this.state.thumbnail } alt={ 'post' } />
 
         { isOwner && (
           <div className={ styles.wrapperThumbnailEdit }>

@@ -7,7 +7,7 @@ import styles from './post.scss'
 import URLUtil from '../../util/urlUtil'
 import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
-import { Loader, PostContent } from '../../components'
+import { Loader, PostBanner, PostContent } from '../../components'
 
 @inject('store')
 @observer
@@ -127,14 +127,15 @@ class PostNew extends App {
     }
   }
 
+  onThumbnailAdded = (thumbnail) => {
+    this.addedThumbnail = thumbnail
+  }
+
   render = () => {
-    const { store } = this.props
-    const { isEditing, isOwner, post, loaded, author } = this.state
+    const { isEditing, isOwner, post, loaded } = this.state
 
     if (!loaded && !this.props.new)
       return <Loader />
-
-    console.log(post)
 
     return (
       <Standard>
@@ -161,7 +162,14 @@ class PostNew extends App {
             readOnly={ !isOwner || !isEditing }
             value={ post.description } // Initial no content, should be prefilled by API
           />
-          <img className={ styles.postWrapperThumbnail } src={ post.thumbnail } alt={ 'post' } />
+          <div className={ styles.postWrapperThumbnail }>
+            <PostBanner
+              post={ this.state.post }
+              isOwner={ isOwner }
+              isNew={ this.props.new }
+              onThumbnailAdded={ this.onThumbnailAdded }
+            />
+          </div>
           <div className={ styles.postWrapperContent }>
             <PostContent
               type={ 'content' }
