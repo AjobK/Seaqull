@@ -7,7 +7,9 @@ import styles from './post.scss'
 import URLUtil from '../../util/urlUtil'
 import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
-import { Loader, PostBanner, PostContent } from '../../components'
+import { Button, CommentSection, Icon, Loader, PostBanner, PostContent, PostLike, PostViews } from '../../components'
+import ReactTooltip from 'react-tooltip'
+import { popUpData } from '../../components/popUp/popUpData'
 
 @inject('store')
 @observer
@@ -115,6 +117,92 @@ class PostNew extends App {
       })
   }
 
+  toggleLike = () => {
+    // Toggles liked state for all like components
+    let newState = this.state
+
+    // Increment/decrement likes locally
+    let newLikesAmount
+
+    if (this.state.post.likes.userLiked && newState.post.likes.amount > 0) {
+      newLikesAmount = this.state.post.likes.amount - 1
+    } else {
+      newLikesAmount = this.state.post.likes.amount + 1
+    }
+
+    newState.post.likes.amount = newLikesAmount
+    this.state.post.likes.userLiked = !this.state.post.likes.userLiked
+
+    this.setState(newState)
+  }
+
+  save = (path = null) => {
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
+    if (!path) {
+      this.createPost()
+    } else if (typeof path == 'string') {
+      this.updatePost()
+    }
+  }
+
+  createPost = () => {
+    const fd = new FormData()
+
+    fd.append('file', this.addedThumbnail)
+    fd.append('title', JSON.stringify(this.state.post.title))
+    fd.append('description', JSON.stringify('None'))
+    fd.append('content', JSON.stringify(this.state.post.content))
+
+    Axios.post('/post', fd, {
+      withCredentials: true, 'content-type': 'multipart/form-data'
+    }).then((res) => {
+      this.props.history.push(`/posts/${res.data.path}`)
+    })
+  }
+
+  updatePost = () => {
+    const payload = {
+      title: this.state.post.title,
+      description: 'None',
+      content: this.state.post.content,
+    }
+
+    Axios.put(`/post/${this.state.post.path}`, payload, { withCredentials: true }).then(() => {
+      const { notification } = this.props.store
+
+      notification.setContent(popUpData.messages.updatePostNotification)
+    })
+  }
+
+  onDeletePostClicked = () => {
+    const { notification } = this.props.store
+
+    notification.setContent(popUpData.messages.deletePostConfirmation)
+
+    notification.setActions([
+      {
+        ...popUpData.actions.cancel,
+        action: () => { notification.close() }
+      },
+      {
+        ...popUpData.actions.confirmWithText,
+        action: () => {
+          this.deletePost()
+          notification.close()
+        }
+      }
+    ])
+  }
+
+  deletePost = () => {
+    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+
+    Axios.put(`/post/archive/${this.postPath}`, {}, { withCredentials: true }).then((_res) => {
+      this.props.history.push('/')
+    }).catch((_err) => { })
+  }
+
   addViewToDB = () => {
     if (!this.state.isOwner) {
       Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
@@ -140,6 +228,17 @@ class PostNew extends App {
     return (
       <Standard>
         <section className={ styles.postWrapper }>
+          { !this.props.new &&
+          <div className={ styles.likePostWrapper }>
+            <PostViews />
+            <PostLike
+              likesAmount={ this.state.post.likes.amount || 0 }
+              liked={ this.state.post.likes.userLiked }
+              toggleLike={ this.toggleLike }
+              isOwner={ isOwner }
+            />
+          </div>
+          }
           <PostContent
             type={ 'title' }
             // Saves post title with draftJS content
@@ -183,7 +282,43 @@ class PostNew extends App {
               value={ post.content } // Initial no content, should be prefilled by API
             />
           </div>
+
+          <div className={ styles.postActionButtons }>
+            <div className={ styles.postActionButtonsLeft }>
+              {
+                isOwner && this.props.new &&
+                <Button
+                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  value={ 'Create' }
+                  onClick={ () => this.save(post.path) }
+                />
+              }
+              {
+                isOwner && isEditing && !this.props.new &&
+                <Button
+                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  value={ 'Update' }
+                  onClick={ () => this.save(post.path) }
+                />
+              }
+            </div>
+            <div className={ styles.postActionButtonsRight }>
+              { !this.props.new && (this.canBanUser || isOwner) &&
+              <span
+                className={ styles.delete }
+                data-tip data-for={ 'postDeleteTooltip' }
+                onClick={ this.onDeletePostClicked }
+              >
+                <Icon iconName={ 'Trash' } />
+              </span>
+              }
+            </div>
+            <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
+              Delete
+            </ReactTooltip>
+          </div>
         </section>
+        { !this.props.new && <CommentSection isPostOwner={ this.state.isOwner } /> }
       </Standard>
     )
   }
