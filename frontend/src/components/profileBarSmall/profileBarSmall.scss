@@ -1,5 +1,7 @@
 @import '../../styles/index.scss';
 
+$profile-bar-image-size: 40px;
+
 .profileBarSmall {
 	display: flex;
 	align-items: center;
@@ -8,8 +10,8 @@
 		background-size: cover;
 		background-position: center;
 		display: inherit;
-		width: 40px;
-		height: 40px;
+		width: $profile-bar-image-size;
+		height: $profile-bar-image-size;
 		border-radius: 100%;
 		margin-right: 10px;
 	}
@@ -20,7 +22,6 @@
 		color: $primary;
 		align-items: center;
 		font-weight: 900;
-		line-height: 3.25;
 
 		&Badge {
 			vertical-align: middle;

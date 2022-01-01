@@ -237,9 +237,12 @@ class PostNew extends App {
     return (
       <Standard className={ styles.post }>
         <div className={ styles.postSide }>
-          <div>Author</div>
-
-          <ProfileBarSmall author={ author } />
+          <div className={ styles.postSideAuthor }>
+            <p className={ styles.postSideAuthorHeader }>
+              Written by:
+            </p>
+            <ProfileBarSmall author={ author } />
+          </div>
 
           <PostLike
             likesAmount={ this.state.post.likes.amount || 0 }

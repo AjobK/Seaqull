@@ -19,38 +19,12 @@ $post-padding-top: $header-spacing * 3;
 
 		&Author {
 			display: flex;
-			align-items: center;
+			flex-direction: column;
 
-			&Image {
-				background-size: cover;
-				background-position: center;
-				display: inherit;
-				width: 40px;
-				height: 40px;
-				border-radius: 100%;
-				margin-right: 10px;
-			}
-
-			&Content {
-				display: flex;
-				justify-content: center;
-				color: $primary;
-				align-items: center;
-				font-weight: 900;
-				line-height: 3.25;
-
-				&Badge {
-					vertical-align: middle;
-					height: auto;
-					color: $primary;
-					font-size: $nr-sm-fontsize;
-				}
-
-				&Username {
-					text-align: center;
-					color: $secondary;
-					font-size: $nr-sm-fontsize;
-				}
+			&Header {
+				color: $secondary;
+				font-size: $nr-sm-fontsize;
+				margin-bottom: 10px;
 			}
 		}
 	}
