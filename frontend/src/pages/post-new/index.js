@@ -226,17 +226,21 @@ class PostNew extends App {
       return <Loader />
 
     return (
-      <Standard>
+      <Standard className={ styles.post }>
+        <div className={ styles.postSide }>
+          <div>Author</div>
+          <PostLike
+            likesAmount={ this.state.post.likes.amount || 0 }
+            liked={ this.state.post.likes.userLiked }
+            toggleLike={ this.toggleLike }
+            isOwner={ isOwner }
+          />
+        </div>
         <section className={ styles.postWrapper }>
           { !this.props.new &&
+          // TODO Replace this
           <div className={ styles.likePostWrapper }>
             <PostViews />
-            <PostLike
-              likesAmount={ this.state.post.likes.amount || 0 }
-              liked={ this.state.post.likes.userLiked }
-              toggleLike={ this.toggleLike }
-              isOwner={ isOwner }
-            />
           </div>
           }
           <PostContent

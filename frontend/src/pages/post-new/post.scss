@@ -1,26 +1,50 @@
 @import '../../styles/index.scss';
 
 $post-wrapper-width: 670px;
+$post-padding-top: $header-spacing * 3;
 
-.likePostWrapper {
+.likePostWrapper { // TODO remove
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 }
 
-.postWrapper {
-	width: 100%;
-	max-width: $post-wrapper-width;
-	margin: 0 auto;
-	padding-top: $header-spacing * 4;
-	white-space: normal;
-
-	&Thumbnail {
-		margin-bottom: 40px;
+.post {
+	&Side {
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		left: 83px;
+		padding-top: $post-padding-top;
 	}
 
-	&Content {
-		margin-bottom: 40px;
+	&Wrapper {
+		width: 100%;
+		max-width: $post-wrapper-width;
+		margin: 0 auto;
+		padding-top: $post-padding-top;
+		white-space: normal;
+
+		&Thumbnail {
+			margin-bottom: 40px;
+		}
+
+		&Content {
+			margin-bottom: 40px;
+		}
+	}
+
+	&ActionButtons {
+		display: flex;
+		justify-content: space-between;
+
+		&Left {
+
+		}
+
+		&Right {
+			padding-top: 10px;
+		}
 	}
 }
 
@@ -33,19 +57,6 @@ $post-wrapper-width: 670px;
 
 	&:hover {
 		color: $primary;
-	}
-}
-
-.postActionButtons {
-	display: flex;
-	justify-content: space-between;
-
-	&Left {
-
-	}
-
-	&Right {
-		padding-top: 10px;
 	}
 }
 
