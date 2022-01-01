@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from '../../components'
-import { TimeUtil } from '../../util/'
+import { DraftJsUtil, TextUtil, TimeUtil } from '../../util/'
 import styles from './postsBlockSmall.scss'
 import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
@@ -65,7 +65,7 @@ class PostsBlockSmall extends Component {
                   <span className={ styles.smallContentBottomInfoTextIcon }>
                     <Icon iconName={ 'Stopwatch' } />
                   </span>
-                  <p>{post.readTime}</p>
+                  <p>{ TextUtil.getReadTimeFromText(DraftJsUtil.getRawContentFromData(post.content)) }</p>
                 </div>
                 <span className={ styles.smallContentBottomInfoBullet }>&bull;</span>
                 <div className={ styles.smallContentBottomInfoText }>

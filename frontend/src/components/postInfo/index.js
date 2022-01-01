@@ -9,10 +9,14 @@ import { Icon } from '../index'
 @observer
 class PostInfo extends Component {
   render() {
-    const { post } = this.props
+    let { post, type } = this.props
+
+    if (!type) type = 'light'
+
+    const style = styles[`postInfo${ type.charAt(0).toUpperCase() + type.slice(1) }`]
 
     return (
-      <div className={ styles.postInfo }>
+      <div className={ `${ styles.postInfo } ${ style }` }>
         <Link to={ '#' } className={ styles.postInfoCategory }>
           <span className={ styles.postInfoCategoryBullet }>
             <Icon iconName={ 'Circle' } />

@@ -42,24 +42,48 @@ $profile-bar-image-size: 40px;
 	}
 
 	&Text {
-		color: $dark-light;
-		opacity: .7;
 		font-size: $nr-xs-fontsize;
 		font-weight: 300;
 		display: flex;
 
 		&Icon {
 			font-size: .8em;
-			margin-right: 3px;
+			margin-right: 10px;
 			display: flex;
 			align-items: center;
 		}
 	}
 
 	&Bullet {
-		color: white;
-		opacity: .4;
 		font-size: .9em;
+	}
+
+	&Light {
+		.postInfo {
+			&Text {
+				color: $dark-light;
+				opacity: .8;
+			}
+
+			&Bullet {
+				color: white;
+				opacity: .4;
+			}
+		}
+	}
+
+	&Dark {
+		.postInfo {
+			&Text {
+				color: $secondary;
+				opacity: .8;
+			}
+
+			&Bullet {
+				color: $secondary;
+				opacity: .4;
+			}
+		}
 	}
 
 	@include mobile-all() {

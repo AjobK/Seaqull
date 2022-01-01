@@ -38,7 +38,8 @@ $post-padding-top: $header-spacing * 3;
 		white-space: normal;
 
 		&Top {
-
+			display: flex;
+			justify-content: space-between;
 		}
 
 		&Thumbnail {

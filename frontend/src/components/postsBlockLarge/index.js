@@ -48,7 +48,7 @@ class PostsBlockLarge extends Component {
               </div>
             </Link>
             <div className={ styles.largeThumbnailContentBottom }>
-              <PostInfo post={ post } />
+              <PostInfo post={ post } type={ 'light' } />
               <Link to={ `posts/${post.path}` } className={ styles.goTo }>
                 <p>
                   Read more
