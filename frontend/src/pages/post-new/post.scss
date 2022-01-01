@@ -20,6 +20,7 @@ $post-padding-top: $header-spacing * 3;
 		&Author {
 			display: flex;
 			flex-direction: column;
+			margin-bottom: 20px;
 
 			&Header {
 				color: $secondary;

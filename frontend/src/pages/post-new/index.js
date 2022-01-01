@@ -241,7 +241,7 @@ class PostNew extends App {
             <p className={ styles.postSideAuthorHeader }>
               Written by:
             </p>
-            <ProfileBarSmall author={ author } />
+            <ProfileBarSmall profile={ author } />
           </div>
 
           <PostLike

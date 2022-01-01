@@ -9,20 +9,20 @@ import { Icon } from '../index'
 @observer
 class ProfileBarSmall extends Component {
   render() {
-    const { author } = this.props
+    const { profile } = this.props
 
     return (
-      <Link to={ `/profile/${ author.name }` } className={ styles.profileBarSmall }>
+      <Link to={ `/profile/${ profile.name }` } className={ styles.profileBarSmall }>
         <div
           className={ styles.profileBarSmallImage }
           style={ {
-            backgroundImage: `url(${ author.avatarURL || '' })`,
-            backgroundColor: ColorUtil.getUniqueColorBasedOnString(author.name)
+            backgroundImage: `url(${ profile.avatarURL || '' })`,
+            backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.name)
           } }
         />
         <div className={ styles.profileBarSmallContent }>
           <Icon className={ styles.profileBarSmallContentBadge } iconName={ 'At' }/>
-          <h2 className={ styles.profileBarSmallContentUsername }>{ author.name || 'Username' }</h2>
+          <h2 className={ styles.profileBarSmallContentUsername }>{ profile.name || 'Username' }</h2>
         </div>
       </Link>
     )
