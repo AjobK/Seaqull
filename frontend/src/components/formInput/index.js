@@ -97,17 +97,11 @@ class FormInput extends Component {
             min={ limit || '0' }
           />
           {isPassword && (
-            passwordVisible
-              ? <Icon
-                className={ `${styles.icon} ${styles.iconPassword}` }
-                iconName={ 'EyeSlash' }
-                onClick={ this.togglePasswordVisible }
-              />
-              : <Icon
-                className={ `${styles.icon} ${styles.iconPassword}` }
-                iconName={ 'Eye' }
-                onClick={ this.togglePasswordVisible }
-              />
+            <Icon
+              className={ `${ styles.icon } ${ styles.iconPassword }` }
+              iconName={ passwordVisible ? 'EyeSlash' : 'Eye' }
+              onClick={ this.togglePasswordVisible }
+            />
           )}
           {hasErrors && this.getErrorMessages()}
         </div>
