@@ -255,7 +255,6 @@ class PostNew extends App {
         <section className={ styles.postWrapper }>
           { !this.props.new &&
             <div className={ styles.postWrapperTop }>
-              <p>More</p>
               <PostInfo post={ post } type={ 'dark' } />
               {/*<PostViews />*/}
             </div>

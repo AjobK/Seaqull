@@ -39,7 +39,8 @@ $post-padding-top: $header-spacing * 3;
 
 		&Top {
 			display: flex;
-			justify-content: space-between;
+			justify-content: flex-end;
+			margin-bottom: 30px;
 		}
 
 		&Thumbnail {
