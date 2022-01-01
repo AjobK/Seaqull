@@ -13,9 +13,9 @@ import {
   Icon,
   Loader,
   PostBanner,
-  PostContent,
+  PostContent, PostInfo,
   PostLike,
-  PostViews, ProfileBarSmall
+  ProfileBarSmall
 } from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
@@ -251,12 +251,13 @@ class PostNew extends App {
             isOwner={ isOwner }
           />
         </div>
+
         <section className={ styles.postWrapper }>
           { !this.props.new &&
-          // TODO Replace this
-          <div className={ styles.likePostWrapper }>
-            <PostViews />
-          </div>
+            <div className={ styles.postWrapperTop }>
+              <PostInfo post={ post }/>
+              {/*<PostViews />*/}
+            </div>
           }
           <PostContent
             type={ 'title' }

@@ -29,6 +29,7 @@ import CommentEditor from './commentEditor'
 import CommentChildren from './commentChildren'
 import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
+import PostInfo from './postInfo'
 import PostLikesList from './postLikesList'
 import Cropper from './cropper'
 import Dialog from './dialog'
@@ -73,6 +74,7 @@ export {
   CommentEditor,
   CommentChildren,
   PostLike,
+  PostInfo,
   ProfileInfo,
   PostLikesList,
   Cropper,

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { TimeUtil } from '../../util/'
-import { Icon } from '../../components'
+import { Icon, PostInfo } from '../../components'
 import styles from './postsBlockLarge.scss'
 import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
@@ -49,28 +48,7 @@ class PostsBlockLarge extends Component {
               </div>
             </Link>
             <div className={ styles.largeThumbnailContentBottom }>
-              <div className={ styles.largeThumbnailContentBottomInfo }>
-                <Link to={ '#' } className={ styles.largeThumbnailContentBottomInfoCategory }>
-                  <span className={ styles.largeThumbnailContentBottomInfoCategoryBullet }>
-                    <Icon iconName={ 'Circle' } />
-                  </span>
-                  <p>
-                    Machine learning
-                    <span>{/* UNDERLINE */}</span>
-                  </p>
-                </Link>
-                <span className={ styles.largeThumbnailContentBottomInfoBullet }>&bull;</span>
-                <div className={ styles.largeThumbnailContentBottomInfoText }>
-                  <span className={ styles.largeThumbnailContentBottomInfoTextIcon }>
-                    <Icon iconName={ 'Stopwatch' } />
-                  </span>
-                  <p>{post.readTime}</p>
-                </div>
-                <span className={ styles.largeThumbnailContentBottomInfoBullet }>&bull;</span>
-                <div className={ styles.largeThumbnailContentBottomInfoText }>
-                  <p>{TimeUtil.timeAgo(new Date(post.created_at))}</p>
-                </div>
-              </div>
+              <PostInfo post={ post } />
               <Link to={ `posts/${post.path}` } className={ styles.goTo }>
                 <p>
                   Read more

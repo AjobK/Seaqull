@@ -3,7 +3,7 @@
 $post-wrapper-width: 670px;
 $post-padding-top: $header-spacing * 3;
 
-.likePostWrapper { // TODO remove
+.likePostWrapper {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -36,6 +36,10 @@ $post-padding-top: $header-spacing * 3;
 		margin: 0 auto;
 		padding-top: $post-padding-top;
 		white-space: normal;
+
+		&Top {
+
+		}
 
 		&Thumbnail {
 			margin-bottom: 40px;
