@@ -2,7 +2,7 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard } from '../../layouts'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import styles from './post.scss'
 import URLUtil from '../../util/urlUtil'
 import Axios from 'axios'
@@ -15,11 +15,10 @@ import {
   PostBanner,
   PostContent,
   PostLike,
-  PostViews
+  PostViews, ProfileBarSmall
 } from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
-import { ColorUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -240,19 +239,7 @@ class PostNew extends App {
         <div className={ styles.postSide }>
           <div>Author</div>
 
-          <Link to={ `/profile/${ author.name }` } className={ styles.postSideAuthor }>
-            <div
-              className={ styles.postSideAuthorImage }
-              style={ {
-                backgroundImage: `url(${ author.avatarURL || '' })`,
-                backgroundColor: ColorUtil.getUniqueColorBasedOnString(author.name)
-              } }
-            />
-            <div className={ styles.postSideAuthorContent }>
-              <Icon className={ styles.postSideAuthorContentBadge } iconName={ 'At' }/>
-              <h2 className={ styles.postSideAuthorContentUsername }>{ author.name || 'Username' }</h2>
-            </div>
-          </Link>
+          <ProfileBarSmall author={ author } />
 
           <PostLike
             likesAmount={ this.state.post.likes.amount || 0 }

@@ -1,6 +1,7 @@
 import Button from './button'
 import Hamburger from './hamburger'
 import ProfileBar from './profileBar'
+import ProfileBarSmall from './profileBarSmall'
 import HeaderNavigation from './headerNavigation'
 import SubNavigation from './subNavigation'
 import SubNavigationElement from './subNavigationElement'
@@ -45,6 +46,7 @@ export {
   Button,
   Hamburger,
   ProfileBar,
+  ProfileBarSmall,
   HeaderNavigation,
   SubNavigation,
   SubNavigationElement,
