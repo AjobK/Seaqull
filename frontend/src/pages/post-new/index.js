@@ -255,8 +255,7 @@ class PostNew extends App {
         <section className={ styles.postWrapper }>
           { !this.props.new &&
             <div className={ styles.postWrapperTop }>
-              <PostInfo post={ post } type={ 'dark' } />
-              {/*<PostViews />*/}
+              <PostInfo post={ post } type={ 'dark' } withViews />
             </div>
           }
           <PostContent
@@ -274,7 +273,7 @@ class PostNew extends App {
             type={ 'description' }
             // Saves post description with draftJS content
             callBackSaveData={ (data) => {
-              post.title = data
+              post.description = data
 
               this.setState({ post: post })
             } }

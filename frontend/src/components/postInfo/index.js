@@ -3,13 +3,13 @@ import styles from './postInfo.scss'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import { TextUtil, TimeUtil, DraftJsUtil } from '../../util/'
-import { Icon } from '../index'
+import { Icon, PostViews } from '../index'
 
 @inject('store')
 @observer
 class PostInfo extends Component {
   render() {
-    let { post, type } = this.props
+    let { post, type, withViews } = this.props
 
     if (!type) type = 'light'
 
@@ -39,6 +39,9 @@ class PostInfo extends Component {
         <div className={ styles.postInfoText }>
           <p>{ TimeUtil.timeAgo(new Date(post.created_at)) }</p>
         </div>
+        { withViews && (
+          <PostViews />
+        ) }
       </div>
     )
   }
