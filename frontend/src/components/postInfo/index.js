@@ -26,6 +26,12 @@ class PostInfo extends Component {
             <span>{/* UNDERLINE */}</span>
           </p>
         </Link>
+        { withViews && (
+          <div className={ styles.postInfoViews }>
+            <span className={ styles.postInfoBullet }>&bull;</span>
+            <PostViews />
+          </div>
+        ) }
         <span className={ styles.postInfoBullet }>&bull;</span>
         <div className={ styles.postInfoText }>
           <span className={ styles.postInfoTextIcon }>
@@ -39,9 +45,6 @@ class PostInfo extends Component {
         <div className={ styles.postInfoText }>
           <p>{ TimeUtil.timeAgo(new Date(post.created_at)) }</p>
         </div>
-        { withViews && (
-          <PostViews />
-        ) }
       </div>
     )
   }

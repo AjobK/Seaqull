@@ -4,9 +4,10 @@
 .postViews {
 	display: flex;
 	align-items: center;
-	margin-bottom: 10px;
 	justify-content: flex-start;
-	color: $nav-items;
+	color: $secondary;
+	opacity: .8;
+	font-size: $nr-xs-fontsize;
 
 	.postViewsText {
 		display: -webkit-flex;
@@ -16,12 +17,15 @@
 		-webkit-justify-content: center;
 		justify-content: center;
 		height: 100%;
-		margin-left: 8px;
 		vertical-align: middle;
+		font-weight: 300;
 	}
 
 	.viewIcon {
-		font-size: 1.2em;
 		vertical-align: middle;
+		font-size: .8em;
+		margin-right: 10px;
+		display: flex;
+		align-items: center;
 	}
 }

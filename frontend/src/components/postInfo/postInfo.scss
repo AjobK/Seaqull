@@ -9,10 +9,6 @@ $profile-bar-image-size: 40px;
 	flex-wrap: wrap;
 	pointer-events: initial;
 
-	& > * {
-		margin-right: 10px;
-	}
-
 	&Category {
 		color: $primary;
 		display: flex;
@@ -56,6 +52,11 @@ $profile-bar-image-size: 40px;
 
 	&Bullet {
 		font-size: .9em;
+		margin: 0 10px;
+	}
+
+	&Views {
+		display: flex;
 	}
 
 	&Light {
