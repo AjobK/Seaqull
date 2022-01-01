@@ -2,14 +2,24 @@ import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
 import { Standard } from '../../layouts'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import styles from './post.scss'
 import URLUtil from '../../util/urlUtil'
 import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
-import { Button, CommentSection, Icon, Loader, PostBanner, PostContent, PostLike, PostViews } from '../../components'
+import {
+  Button,
+  CommentSection,
+  Icon,
+  Loader,
+  PostBanner,
+  PostContent,
+  PostLike,
+  PostViews
+} from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
+import { ColorUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -220,7 +230,7 @@ class PostNew extends App {
   }
 
   render = () => {
-    const { isEditing, isOwner, post, loaded } = this.state
+    const { isEditing, isOwner, post, loaded, author } = this.state
 
     if (!loaded && !this.props.new)
       return <Loader />
@@ -229,6 +239,21 @@ class PostNew extends App {
       <Standard className={ styles.post }>
         <div className={ styles.postSide }>
           <div>Author</div>
+
+          <Link to={ `/profile/${ author.name }` } className={ styles.postSideAuthor }>
+            <div
+              className={ styles.postSideAuthorImage }
+              style={ {
+                backgroundImage: `url(${ author.avatarURL || '' })`,
+                backgroundColor: ColorUtil.getUniqueColorBasedOnString(author.name)
+              } }
+            />
+            <div className={ styles.postSideAuthorContent }>
+              <Icon className={ styles.postSideAuthorContentBadge } iconName={ 'At' }/>
+              <h2 className={ styles.postSideAuthorContentUsername }>{ author.name || 'Username' }</h2>
+            </div>
+          </Link>
+
           <PostLike
             likesAmount={ this.state.post.likes.amount || 0 }
             liked={ this.state.post.likes.userLiked }
