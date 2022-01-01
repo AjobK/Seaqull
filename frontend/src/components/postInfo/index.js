@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './postInfo.scss'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
-import { TextUtil, TimeUtil } from '../../util/'
+import { TextUtil, TimeUtil, DraftJsUtil } from '../../util/'
 import { Icon } from '../index'
 
 @inject('store')
@@ -28,7 +28,7 @@ class PostInfo extends Component {
             <Icon iconName={ 'Stopwatch' } />
           </span>
           <p>
-            { TextUtil.getReadTimeFromText(this.getRawContentFromPostData(post.content)) }
+            { TextUtil.getReadTimeFromText(DraftJsUtil.getRawContentFromData(post.content)) }
           </p>
         </div>
         <span className={ styles.postInfoBullet }>&bull;</span>
