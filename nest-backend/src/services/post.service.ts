@@ -55,7 +55,7 @@ export class PostService {
     }
 
     const count = await this.postRepository.getAmountPosts()
-    const message: PostsDTO = { posts: posts, totalPosts: count, per_page: skipAmount }
+    const message: PostsDTO = { posts: posts, totalPosts: count }
 
     return message
   }

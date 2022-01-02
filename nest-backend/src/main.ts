@@ -11,8 +11,8 @@ const bootstrap = async () => {
 
   app.setGlobalPrefix('api')
 
-  const swaggerEndpointPath = 'docs'
-  const port = 8000
+  const swaggerEndpointPath = process.env.SWAGGER_DOCS_ENDPOINT
+  const port = process.env.BACKEND_PORT
 
   if (process.env.NODE_ENV === 'development') {
     const swaggerConfig = new DocumentBuilder()
