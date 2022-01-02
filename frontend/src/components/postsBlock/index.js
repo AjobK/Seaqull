@@ -20,7 +20,7 @@ class PostsBlock extends Component {
 
     this.props.posts.forEach((post) => {
       try {
-        post.title = DraftJsUtil.getRawContentFromData(post.title)
+        post.title = DraftJsUtil.getRawContentFromData(JSON.parse(post.title))
       } catch (e) {}
 
       convertedPosts.push(post)
