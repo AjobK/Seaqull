@@ -101,7 +101,7 @@ describe('Profile page', () => {
 
     it('Should update user', (done) => {
       agentUser
-        .put('/profile/User')
+        .put('/profile')
         .send({
           username: 'User',
           description: 'update user'

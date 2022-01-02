@@ -69,7 +69,7 @@ describe('Testing the login/register', () => {
           captcha
         })
         .end((err, res) => {
-          assert.equal(res.status, 201)
+          assert.equal(res.status, 200)
           done()
         })
     })
