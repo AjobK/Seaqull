@@ -76,7 +76,7 @@ class PostBanner extends Component {
   fetchDefaultThumbnail = () => {
     const { defaultData, notification } = this.props.store
 
-    Axios.get(`${defaultData.backendUrl}/post/thumbnail/default`)
+    Axios.get(`${ defaultData.backendUrl }/post/thumbnail/default`)
       .then((res) => {
         this.setState({
           thumbnail: res.data.thumbnail
@@ -130,7 +130,7 @@ class PostBanner extends Component {
                 <div
                   className={ styles.picture }
                   style={ {
-                    backgroundImage: `url(${author.avatarURL || ''})`,
+                    backgroundImage: `url(${ author.avatarURL || '' })`,
                     backgroundColor: uniqueAvatarColorBasedOnHash
                   } }
                 />

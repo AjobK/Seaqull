@@ -7,7 +7,7 @@ import styles from './standard.scss'
 @inject('store') @observer
 class Standard extends Component {
   componentDidMount() {
-    document.querySelector(`.${styles.wrapper}`).addEventListener('mousedown', this.preventXScroll)
+    document.querySelector(`.${ styles.wrapper }`).addEventListener('mousedown', this.preventXScroll)
   }
 
   preventXScroll = (e) => {

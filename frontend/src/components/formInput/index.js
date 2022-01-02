@@ -10,7 +10,7 @@ class FormInput extends Component {
 
     this.elId = []
     this.id = this.getElId(name)
-    this.toolTipId = this.getElId(`${name}ToolTip`)
+    this.toolTipId = this.getElId(`${ name }ToolTip`)
 
     this.state = {
       passwordVisible: false,

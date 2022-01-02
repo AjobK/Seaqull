@@ -14,7 +14,7 @@ class Icon extends Component {
     else if (className)
       classNames = [...className]
 
-    let icon = icons[`fa${iconName}`] || brands[`fa${iconName}`] || icons['faBan']
+    let icon = icons[`fa${ iconName }`] || brands[`fa${ iconName }`] || icons['faBan']
 
     library.add(icon)
 

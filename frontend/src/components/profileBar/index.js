@@ -13,7 +13,7 @@ class ProfileBar extends Component {
     return (
       <section className={ styles.profile } style={ { backgroundColor: ColorUtil.getUniqueColorBasedOnString(name) } }>
         <Link to={ '/profile' }>
-          <div className={ styles.profilePicture } style={ { backgroundImage: `url('${avatar}')` } }></div>
+          <div className={ styles.profilePicture } style={ { backgroundImage: `url('${ avatar }')` } }></div>
         </Link>
         <div className={ styles.profileInfo }>
           <div className={ styles.profileInfoWrapper }>

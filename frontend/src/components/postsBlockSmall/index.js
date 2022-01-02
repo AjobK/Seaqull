@@ -46,7 +46,7 @@ class PostsBlockSmall extends Component {
               Work in progress
             </ReactTooltip>
           </div>
-          <Link to={ `posts/${post.path}` } >
+          <Link to={ `posts/${ post.path }` } >
             <img src={ post.thumbnail } alt={ 'post' } />
           </Link>
         </div>

@@ -34,7 +34,7 @@ class Profile extends App {
   }
 
   fetchProfileData(path) {
-    Axios.get(`/profile/${path}`, { withCredentials: true })
+    Axios.get(`/profile/${ path }`, { withCredentials: true })
       .then((response) => {
         this.updateProfile(response.data.profile)
         this.fetchOwnedPosts(this.state.user.username)
@@ -57,7 +57,7 @@ class Profile extends App {
   }
 
   fetchOwnedPosts(username) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/owned-by/${username}`)
+    Axios.get(`${ this.props.store.defaultData.backendUrl }/post/owned-by/${ username }`)
       .then((json) => {
         this.setState({ posts: json.data })
       })
@@ -65,7 +65,7 @@ class Profile extends App {
   }
 
   fetchLikedPosts(username) {
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/recent/${username}`)
+    Axios.get(`${ this.props.store.defaultData.backendUrl }/post/like/recent/${ username }`)
       .then((json) => {
         this.setState({ likes: json.data })
       })
