@@ -3,40 +3,29 @@ import chaiHttp = require('chai-http')
 import assert = require('assert')
 import { v4 as uuidv4 } from 'uuid'
 import Post from '../entities/post'
+import { UserAgentStore } from './data/agents'
 
 require('dotenv').config()
-
-const captcha = process.env.HCAPTCHA_TEST_TOKEN
 
 chai.use(chaiHttp)
 
 describe('Post functionalities', () => {
-  const agent = chai.request.agent('http://localhost:8000/api')
   let post: Post
 
   before((done) => {
     require('dotenv').config()
 
-    agent
-      .post('/login')
-      .send({
-        username: 'User',
-        password: 'Qwerty123',
-        captcha
-      })
-      .end(() => {
-        agent
-          .get('/post/owned-by/User')
-          .end((err, res) => {
-            post = res.body[0]
-            done()
-          })
+    UserAgentStore.agent
+      .get('/post/owned-by/User')
+      .end((err, res) => {
+        post = res.body[0]
+        done()
       })
   })
 
   it('Should create a post', (done) => {
     const id = uuidv4()
-    agent
+    UserAgentStore.agent
       .post('/post')
       .send({
         title: id,
@@ -44,7 +33,7 @@ describe('Post functionalities', () => {
         content: 'example text'
       })
       .end(() => {
-        agent
+        UserAgentStore.agent
           .get('/post/owned-by/User')
           .end((err, res) => {
             assert.equal(res.body[0].title, id)
@@ -55,7 +44,7 @@ describe('Post functionalities', () => {
 
   it('Should update a post', (done) => {
     const id = uuidv4()
-    agent
+    UserAgentStore.agent
       .put('/post/' + post.path)
       .send({
         title: id,
@@ -63,7 +52,7 @@ describe('Post functionalities', () => {
         content: 'example text'
       })
       .end(() => {
-        agent
+        UserAgentStore.agent
           .get('/post/' + post.path)
           .end((err, res) => {
             assert.equal(res.body.post.title, id)
@@ -73,10 +62,10 @@ describe('Post functionalities', () => {
   })
 
   it('Should archive post', (done) => {
-    agent
+    UserAgentStore.agent
       .put('/post/archive/' + post.path)
       .end(() => {
-        agent
+        UserAgentStore.agent
           .get('/post/owned-by/User')
           .end((err, res) => {
             assert.notEqual(res.body[0].title, true)
