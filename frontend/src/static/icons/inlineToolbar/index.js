@@ -8,6 +8,10 @@ import LeftAlignIcon from './LeftAlignIcon.svg'
 import CenterAlignIcon from './CenterAlignIcon.svg'
 import RightAlignIcon from './RightAlignIcon.svg'
 
+/**
+ * TODO: We need a generic icon component which also ships icons which we are exporting underneath.
+ */
+
 export {
   BoldIcon,
   ItalicIcon,

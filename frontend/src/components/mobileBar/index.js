@@ -10,11 +10,11 @@ class MobileBar extends Component {
 
     return (
       <div className={ styles.contentHolder }>
-        <div className={ styles.mobileBar }>
-          <div className={ styles.mobileBarItems }>
+        <nav className={ styles.mobileBar }>
+          <ul className={ styles.mobileBarItems }>
             { this.props.children }
-          </div>
-        </div>
+          </ul>
+        </nav>
       </div>
     )
   }

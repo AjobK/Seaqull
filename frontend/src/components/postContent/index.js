@@ -71,6 +71,7 @@ class PostContent extends Component {
 
   handlePastedText = (text) => {
     if (!this.maxLength) return false
+
     text.removeInlineStyle()
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + text.length
 
@@ -118,16 +119,9 @@ class PostContent extends Component {
   }
 
   getBlockStyle = (block) => {
-    switch (block.getType()) {
-      case 'left':
-        return 'DraftEditor-alignLeft'
-      case 'center':
-        return 'DraftEditor-alignCenter'
-      case 'right':
-        return 'DraftEditor-alignRight'
-      default:
-        return null
-    }
+    let blockType = block.getType()
+
+    return blockType ? `DraftEditor-align${ blockType[0].toUpperCase() } ${ blockType.slice(1) }` : null
   }
 
   render() {
@@ -192,7 +186,7 @@ class PostContent extends Component {
                           <DraftJsTooltipButton
                             key={ i }
                             iconName={ element.icon }
-                            onButtonClick={ (e) => this.onToggleInlineStyling(`${element.styling}`, e) }
+                            onButtonClick={ (e) => this.onToggleInlineStyling(element.styling, e) }
                           />
                         ))
                       }
@@ -202,7 +196,7 @@ class PostContent extends Component {
                           <DraftJsTooltipButton
                             key={ i }
                             iconName={ element.icon }
-                            onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
+                            onButtonClick={ (e) => this.onToggleBlockStyling(element.styling, e) }
                           />
                         ))
                       }
@@ -212,7 +206,7 @@ class PostContent extends Component {
                           <DraftJsTooltipButton
                             key={ i }
                             iconName={ element.icon }
-                            onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
+                            onButtonClick={ (e) => this.onToggleBlockStyling(element.styling, e) }
                           />
                         ))
                       }
@@ -221,37 +215,37 @@ class PostContent extends Component {
                 }
               </InlineToolbar>
               { !readOnly &&
-              <MobileBar>
-                {
-                  inlineButtonStyling.map((element, i) => (
-                    <DraftJsTooltipButton
-                      key={ i }
-                      iconName={ element.icon }
-                      onButtonClick={ (e) => this.onToggleInlineStyling(`${element.styling}`, e) }
-                    />
-                  ))
-                }
-                <Separator />
-                {
-                  headlineButtons.map((element, i) => (
-                    <DraftJsTooltipButton
-                      key={ i }
-                      iconName={ element.icon }
-                      onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
-                    />
-                  ))
-                }
-                <Separator />
-                {
-                  alignButtonArray.map((element, i) => (
-                    <DraftJsTooltipButton
-                      key={ i }
-                      iconName={ element.icon }
-                      onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
-                    />
-                  ))
-                }
-              </MobileBar>
+                <MobileBar>
+                  {
+                    inlineButtonStyling.map((element, i) => (
+                      <DraftJsTooltipButton
+                        key={ i }
+                        iconName={ element.icon }
+                        onButtonClick={ (e) => this.onToggleInlineStyling(`${element.styling}`, e) }
+                      />
+                    ))
+                  }
+                  <Separator />
+                  {
+                    headlineButtons.map((element, i) => (
+                      <DraftJsTooltipButton
+                        key={ i }
+                        iconName={ element.icon }
+                        onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
+                      />
+                    ))
+                  }
+                  <Separator />
+                  {
+                    alignButtonArray.map((element, i) => (
+                      <DraftJsTooltipButton
+                        key={ i }
+                        iconName={ element.icon }
+                        onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
+                      />
+                    ))
+                  }
+                </MobileBar>
               }
             </div>
           }
