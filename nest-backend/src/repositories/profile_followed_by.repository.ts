@@ -36,11 +36,9 @@ export class ProfileFollowedByRepository extends Repository<ProfileFollowedBy> {
 
     if (!foundFollow) {
       await this.save(profileFollowedBy)
-
-      return !foundFollow
+    } else {
+      await this.remove(foundFollow)
     }
-
-    await this.remove(foundFollow)
 
     return !foundFollow
   }

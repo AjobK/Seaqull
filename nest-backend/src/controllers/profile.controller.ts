@@ -25,7 +25,7 @@ import { FollowDTO } from '../dtos/response/follow.dto'
 import { ProfileAvatarDTO } from '../dtos/response/profile-avatar.dto'
 import { CaptchaService } from '../services/captcha.service'
 import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
-import {RegisterPayloadDTO} from "../dtos/register-payload.dto";
+import { RegisterPayloadDTO } from '../dtos/register-payload.dto'
 
 @ApiTags('Profile')
 @Controller('profile')
@@ -93,11 +93,9 @@ export class ProfileController {
       email: payload.email,
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       user: publicPayload
-    })
-
-    res.send()
+    }).send()
   }
 
   @Post('/follow/:username')
@@ -136,7 +134,7 @@ export class ProfileController {
 
     return {
       message: 'success',
-      url: 'http://localhost:8000' + avatar.path
+      url: `${ this.configService.get('BACKEND_URL') }${ avatar.path }`
     }
   }
 
@@ -152,7 +150,7 @@ export class ProfileController {
 
     return {
       message: 'success',
-      url: 'http://localhost:8000' + banner.path
+      url: `${ this.configService.get('BACKEND_URL') }${ banner.path }`
     }
   }
 }

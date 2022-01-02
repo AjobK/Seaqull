@@ -1,8 +1,12 @@
 import Axios from 'axios'
 import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class CaptchaService {
+
+  constructor(private readonly configService: ConfigService) { }
+
   public async verifyHCaptcha(token: string): Promise<boolean> {
     const { NODE_ENV, HCAPTCHA_DEV_SECRET_KEY, HCAPTCHA_PROD_SECRET_KEY } = process.env
 
@@ -20,8 +24,8 @@ export class CaptchaService {
       }
     }
 
-    const hCaptcha = await Axios.post('https://hcaptcha.com/siteverify/', params, config)
+    const hCaptcha = await Axios.post(this.configService.get('HCAPTCHA_SITE_VERIFY'), params, config)
 
-    return hCaptcha.data['success']
+    return hCaptcha.data.success
   }
 }

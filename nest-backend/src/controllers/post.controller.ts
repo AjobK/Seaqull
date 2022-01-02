@@ -30,9 +30,7 @@ export class PostController {
   @Get()
   @AllowAny()
   public async getPosts(@Query('page') skipSize: string): Promise<PostsDTO> {
-    const posts = await this.postService.getPosts(skipSize)
-
-    return posts
+    return await this.postService.getPosts(skipSize)
   }
 
   @Get('/:path')
@@ -42,34 +40,26 @@ export class PostController {
     @AuthorizedUser() account: Account,
     @ServerHost() hostUrl: string
   ): Promise<any> {
-    const postDetailedPayload = await this.postService.getPostByPath(path, account, hostUrl)
-
-    return postDetailedPayload
+    return await this.postService.getPostByPath(path, account, hostUrl)
   }
 
   @Get('/view/:path')
   @AllowAny()
   public async getPostViewCount(@Param('path') postPath: string): Promise<PostViewDTO> {
-    const postViewCount = await this.postService.getPostViewsByPath(postPath)
-
-    return postViewCount
+    return await this.postService.getPostViewsByPath(postPath)
   }
 
   @Get('/owned-by/:username')
   @AllowAny()
   public async getOwnedPosts(@Param('username') username: string): Promise<any[]> {
-    const ownedPosts = await this.postService.getOwnedPostsByUsername(username)
-
-    return ownedPosts
+    return await this.postService.getOwnedPostsByUsername(username)
   }
 
   @Get('/thumbnail/default')
   @AllowAny()
   public async getPostDefaultThumbnailURL(): Promise<{ thumbnail: string }> {
-    const attachmentURL = await this.postService.getDefaultThumbnailAttachment()
-
     return {
-      thumbnail: attachmentURL
+      thumbnail: await this.postService.getDefaultThumbnailAttachment()
     }
   }
 
@@ -82,11 +72,9 @@ export class PostController {
     @UploadedFile() file: Express.Multer.File,
     @AuthorizedUser() user: Account,
   ): Promise<PostCreationDTO> {
-    const path = await this.postService.createPost(createPostDTO, file, user)
-
     return {
       message: 'Post added!',
-      path
+      path: await this.postService.createPost(createPostDTO, file, user)
     }
   }
 

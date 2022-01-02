@@ -99,12 +99,14 @@ class RegisterPrompt extends Component {
 
       let errorIsAdded = false
 
-      Object.keys(errors).forEach((key) => {
+      for (const key of Object.keys(errors)) {
         if (error.includes(key)) {
           errors[key].push(elem)
           errorIsAdded = true
+
+          break
         }
-      })
+      }
 
       if (!errorIsAdded) errors.generalError.push(elem)
     }

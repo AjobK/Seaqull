@@ -15,9 +15,7 @@ export class PostLikeController {
   @Get('/:path')
   @AllowAny()
   public async getPostLikes(@Param('path') path: string): Promise<PostLike[]> {
-    const likes = await this.postLikeService.getPostLikes(path)
-
-    return likes
+    return await this.postLikeService.getPostLikes(path)
   }
 
   @Get('/recent/:username')

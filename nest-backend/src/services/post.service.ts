@@ -1,6 +1,7 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { v4 as uuidv4 } from 'uuid'
+import { ConfigService } from '@nestjs/config'
 import { PostRepository } from '../repositories/post.repository'
 import { PostsDTO } from '../dtos/response/posts.dto'
 import { Account } from '../entities/account.entity'
@@ -32,6 +33,7 @@ export class PostService {
     @InjectRepository(RolePermissionRepository) private readonly rolePermissionRepository: RolePermissionRepository,
     @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
     private readonly fileService: FileService,
+    private readonly configService: ConfigService
   ) {
   }
 
@@ -212,7 +214,7 @@ export class PostService {
 
     if (!foundAttachment) throw new NotFoundException('Attachment not found')
 
-    const attachmentURL = 'http://localhost:8000/' + foundAttachment.path
+    const attachmentURL = `${ this.configService.get('BACKEND_URL') }${ foundAttachment.path }`
 
     return attachmentURL
   }
@@ -232,7 +234,7 @@ export class PostService {
 
     const banner = await this.updateThumbnailAttachment(post, file)
 
-    return 'http://localhost:8000/' + banner.path
+    return `${ this.configService.get('BACKEND_URL') }${ banner.path }`
   }
 
   private async createThumbnailAttachment(file: Express.Multer.File) {
@@ -276,7 +278,7 @@ export class PostService {
   private async getPostThumbnailURL(postId: number): Promise<string> {
     const attachment = await this.postRepository.getPostAttachment(postId)
 
-    return 'http://localhost:8000/' + attachment.path
+    return `${ this.configService.get('BACKEND_URL') }${ attachment.path }`
   }
 
   private async deleteThumbnailAttachment(attachment: Attachment, location: string) {

@@ -102,7 +102,7 @@ export class ProfileService {
       following: following,
       followsYou: followsYou,
       username: username,
-      title: title ? title.name : 'Title not found...',
+      title: title?.name || 'Title not found...',
       description: profile.description,
       followerCount,
       followingCount,
@@ -110,9 +110,9 @@ export class ProfileService {
 
     const attachments = await this.profileRepository.getProfileAttachments(profile.id)
 
-    if (attachments.avatar) payload['avatar'] = 'http://localhost:8000/' + attachments.avatar.path
+    if (attachments.avatar) payload['avatar'] = `${ this.configService.get('BACKEND_URL') }${ attachments.avatar.path }`
 
-    if (attachments.banner) payload['banner'] = 'http://localhost:8000/' + attachments.banner.path
+    if (attachments.banner) payload['banner'] = `${ this.configService.get('BACKEND_URL') }${ attachments.banner.path }`
 
     return {
       profile: payload,

@@ -58,7 +58,7 @@ export class AuthController {
 
   @Post('/login')
   @AllowAny()
-  public async login(@Req() req: Request, @Res() res: Response, @Body() loginDTO: LoginDTO): Promise<void> {
+  public async login(@Req() req: Request, @Res() res: Response, @Body() loginDTO: LoginDTO): Promise<any> {
     const isCaptchaValid = await this.captchaService.verifyHCaptcha(loginDTO.captcha)
 
     if (!isCaptchaValid) throw new ForbiddenException('We could not verify that you are not a robot')
@@ -73,11 +73,9 @@ export class AuthController {
 
     this.setJWTCookieHeader(res, loginResponse.token)
 
-    res.status(200).json({
+    return res.status(200).json({
       user: loginResponse.account
-    })
-
-    res.send()
+    }).send()
   }
 
   private setJWTCookieHeader(res: Response, token: string): Response {
