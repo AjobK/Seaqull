@@ -98,8 +98,8 @@ class FormInput extends Component {
           />
           {isPassword && (
             <Icon
-              className={ `${styles.icon} ${styles.iconPassword}` }
-              iconName={ 'Eye' }
+              className={ `${ styles.icon } ${ styles.iconPassword }` }
+              iconName={ passwordVisible ? 'EyeSlash' : 'Eye' }
               onClick={ this.togglePasswordVisible }
             />
           )}
