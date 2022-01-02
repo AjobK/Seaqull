@@ -13,7 +13,8 @@ import {
   Icon,
   Loader,
   PostBanner,
-  PostContent, PostInfo,
+  PostContent,
+  PostInfo,
   PostLike,
   ProfileBarSmall
 } from '../../components'
@@ -255,7 +256,7 @@ class PostNew extends App {
         <section className={ styles.postWrapper }>
           { !this.props.new &&
             <div className={ styles.postWrapperTop }>
-              <PostInfo post={ post } type={ 'dark' } withViews />
+              <PostInfo post={ post } types={ ['dark'] } withViews />
             </div>
           }
           <PostContent
