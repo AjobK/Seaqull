@@ -29,8 +29,6 @@ const ProfileStore = types
       self.setAvatarURL(`http://localhost:8000/${profile.avatar_attachment.path}`)
       self.setTitle(profile.title.name)
       self.setRole(profile.role)
-
-      // console.log(profile)
     },
     setLoggedIn(loggedIn) {
       self.loggedIn = loggedIn

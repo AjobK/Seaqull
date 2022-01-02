@@ -15,11 +15,16 @@ import { LoginDTO } from '../dtos/login.dto'
 import { Profile } from '../entities/profile.entity'
 import { CaptchaService } from '../services/captcha.service'
 import { AllowAny } from '../decorators/allow-any.decorator'
+import { ConfigService } from '@nestjs/config'
 
 @ApiTags('Auth')
 @Controller('')
 export class AuthController {
-  constructor(private readonly authorizationService: AuthService, private readonly captchaService: CaptchaService) {}
+  constructor(
+    private readonly authorizationService: AuthService,
+    private readonly captchaService: CaptchaService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Get('/logout')
   public logout(@Req() req: Request, @Res() res: Response): Promise<string> {
@@ -35,6 +40,7 @@ export class AuthController {
   }
 
   @Get('/login-verify')
+  @AllowAny()
   public async loginVerify(@Req() req: Request): Promise<{ profile: Profile, loggedIn: boolean }> {
     if (!req.cookies?.token) throw new UnauthorizedException({ loggedIn: false })
 
@@ -45,9 +51,7 @@ export class AuthController {
         profile,
         loggedIn: true,
       }
-    } catch (error) {
-      console.log(error)
-
+    } catch () {
       throw new UnauthorizedException({ loggedIn: false })
     }
   }
@@ -79,7 +83,7 @@ export class AuthController {
   private setJWTCookieHeader(res: Response, token: string): Response {
     res.setHeader(
       'Set-Cookie',
-      `token=${token}; HttpOnly; ${process.env.SECURE == 'true' ? 'Secure;' : ''} expires=${+new Date(
+      `token=${token}; HttpOnly; ${this.configService.get('SECURE') == 'true' ? 'Secure;' : ''} expires=${+new Date(
         new Date().getTime() + 86409000
       ).toUTCString()}; path=/`
     )

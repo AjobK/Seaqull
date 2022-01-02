@@ -26,6 +26,8 @@ import * as jwt from 'jsonwebtoken'
 import { FileService } from './file.service'
 import { Attachment } from '../entities/attachment.entity'
 import { Multer } from 'multer'
+import { JwtService } from '@nestjs/jwt'
+import {JwtPayload} from "../interfaces/jwt-payload.interface";
 
 @Injectable()
 export class ProfileService {
@@ -40,6 +42,7 @@ export class ProfileService {
     @InjectRepository(RoleRepository) private readonly roleRepository: RoleRepository,
     private readonly configService: ConfigService,
     private readonly fileService: FileService,
+    private readonly jwtService: JwtService,
   ) {
   }
 
@@ -124,13 +127,13 @@ export class ProfileService {
 
     const createAccount = await this.saveProfile(registerDTO, ip)
 
-    const payload = {
-      role: createAccount.role.id,
-      username: createAccount.user_name,
+    const payload: JwtPayload = {
+      role_id: createAccount.role.id,
+      user_name: createAccount.user_name,
       expiration: Date.now() + parseInt(this.configService.get('JWT_EXPIRATION')),
     }
 
-    const token = jwt.sign(JSON.stringify(payload), this.configService.get('JWT_SECRET'))
+    const token = this.jwtService.sign(payload)
 
     return {
       role: createAccount.role,

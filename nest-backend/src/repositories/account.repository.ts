@@ -26,11 +26,7 @@ export class AccountRepository extends Repository<Account> {
   }
 
   public async getAccountProfileAndRoleByUsername(username: string): Promise<Account> {
-    const account = await this.createQueryBuilder('account')
-      .leftJoinAndSelect('account.profile', 'profile')
-      .leftJoinAndSelect('account.role', 'role')
-      .where('account.user_name = :user_name', { user_name: username })
-      .getOne()
+    const account = this.findOne({ where: { user_name: username }, relations: ['profile', 'role'] })
 
     return account
   }

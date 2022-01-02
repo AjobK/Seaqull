@@ -21,9 +21,9 @@ export class AuthService {
   }
 
   public async loginVerify(token: string): Promise<Profile> {
-    const decodedUsername = this.jwtService.verify(token)
+    const decodedToken = this.jwtService.verify(token)
 
-    const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedUsername.user_name)
+    const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedToken.user_name)
 
     const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
     const title = await this.profileRepository.getTitleByUserId(account.profile.id)

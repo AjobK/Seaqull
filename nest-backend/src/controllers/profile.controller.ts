@@ -70,7 +70,7 @@ export class ProfileController {
     @Body() registerDTO: RegisterDTO,
     @Ip() ip: string,
     @Res({ passthrough: true }) res: Response
-  ): Promise<{ user: RegisterPayloadDTO }> {
+  ): Promise<any> {
     const isValidCaptcha = await this.captchaService.verifyHCaptcha(registerDTO.captcha)
 
     if (!isValidCaptcha) throw new ForbiddenException('We could not verify that you are not a robot')
@@ -78,14 +78,16 @@ export class ProfileController {
     const payload = await this.profileService.register(registerDTO, ip)
 
     res.setHeader(
-      'Set-Cookie', `token=${payload.token};httponly;${this.configService.get('SECURE') == 'true' ? 'secure;' : ''}expires=${+new Date(new Date().getTime() + 86409000).toUTCString()};path=/;`
+      'Set-Cookie', `token=${payload.token}; HttpOnly; ${this.configService.get('SECURE') == 'true' ? 'secure;' : ''} expires=${+new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
     )
 
     delete payload.token
 
-    return {
+    res.status(200).json({
       user: payload
-    }
+    })
+
+    res.send()
   }
 
   @Post('/follow/:username')
