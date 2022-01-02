@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common'
 import { CommentService } from '../services/comment.service'
 import { Comment } from '../entities/comment.entity'
 import { CommentDTO } from '../dtos/comment.dto'

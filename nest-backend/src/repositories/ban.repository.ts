@@ -33,7 +33,13 @@ export class BanRepository extends Repository<Ban> {
     return ban
   }
 
-  public async banUser(user: Account, admin: Account, reason: string, remoteAddress: any, days: number): Promise<void> {
+  public async banUser(
+    user: Account,
+    admin: Account,
+    reason: string,
+    remoteAddress: string,
+    days: number
+  ): Promise<void> {
     const ban = new Ban()
     ban.user = user
     ban.staff = admin

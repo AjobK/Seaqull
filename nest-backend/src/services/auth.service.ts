@@ -1,4 +1,4 @@
-import { ForbiddenException, forwardRef, Inject, Injectable } from '@nestjs/common'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AccountRepository } from '../repositories/account.repository'
@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { SuccessfulLoginDTO } from '../dtos/successful-login.dto'
 import { BanRepository } from '../repositories/ban.repository'
-import {ProfileRepository} from "../repositories/profile.repository";
+import { ProfileRepository } from '../repositories/profile.repository'
 
 @Injectable()
 export class AuthService {

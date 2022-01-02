@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
 import { PostsDTO } from '../dtos/response/posts.dto'
@@ -60,7 +60,11 @@ export class PostService {
     return message
   }
 
-  public async getPostByPath(path: string, account: Account | undefined, hostUrl: string): Promise<PostDetailedPayloadDTO> {
+  public async getPostByPath(
+    path: string,
+    account: Account | undefined,
+    hostUrl: string
+  ): Promise<PostDetailedPayloadDTO> {
     let post = await this.postRepository.getPostByPath(path) as any
 
     if (!post) throw new NotFoundException(`No post found with path ${path}`)
@@ -182,7 +186,11 @@ export class PostService {
   public async archivePost(path: string, user: Account): Promise<void> {
     const post = await this.postRepository.getPostByPath(path)
 
-    if (!post || post.profile.display_name !== user.profile.display_name || !(await this.hasRemovePostPermission(user))) {
+    if (
+      !post ||
+      post.profile.display_name !== user.profile.display_name ||
+      !(await this.hasRemovePostPermission(user))
+    ) {
       throw new ForbiddenException({
         message: 'The authorized requesting user does not have access to this resource'
       })

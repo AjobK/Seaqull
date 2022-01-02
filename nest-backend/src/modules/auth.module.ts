@@ -11,7 +11,7 @@ import { ProfileRepository } from '../repositories/profile.repository'
 import { TitleRepository } from '../repositories/title.repository'
 import { AttachmentRepository } from '../repositories/attachment.repository'
 import { BanRepository } from '../repositories/ban.repository'
-import {CaptchaService} from "../services/captcha.service";
+import { CaptchaService } from '../services/captcha.service'
 
 @Module({
   imports: [

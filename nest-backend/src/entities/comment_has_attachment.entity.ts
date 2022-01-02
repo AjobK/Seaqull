@@ -8,7 +8,7 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 import { Comment } from './comment.entity'
-import { Attachment } from './attachment.entity';
+import { Attachment } from './attachment.entity'
 
 @Entity('comment_has_attachment')
 export class CommentHasAttachment {

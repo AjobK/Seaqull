@@ -6,7 +6,7 @@ import {
   Param,
   Post,
   Put,
-  Query, Req,
+  Query,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
@@ -20,7 +20,6 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { PostCreationDTO } from '../dtos/post-creation.dto'
 import { AllowAny } from '../decorators/allow-any.decorator'
 import { ApiTags } from '@nestjs/swagger'
-import { HOST_METADATA } from '@nestjs/common/constants'
 import { ServerHost } from '../decorators/host.decorator'
 
 @ApiTags('Post')

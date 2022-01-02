@@ -1,6 +1,5 @@
 import { Post } from '../entities/post.entity'
 import { IsBoolean, IsNotEmpty, IsNumber } from 'class-validator'
-import { PostLike } from '../entities/post_like.entity'
 
 export class PostDetailedPayloadDTO {
   @IsNotEmpty()

@@ -1,3 +1,3 @@
-import { SetMetadata } from '@nestjs/common'
+import { CustomDecorator, SetMetadata } from '@nestjs/common'
 
-export const AllowAny = () => SetMetadata('allow-any', true)
+export const AllowAny = (): CustomDecorator => SetMetadata('allow-any', true)

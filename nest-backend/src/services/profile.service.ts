@@ -22,12 +22,11 @@ import { AttachmentRepository } from '../repositories/attachment.repository'
 import { RoleRepository } from '../repositories/role.repository'
 import { v4 as uuidv4 } from 'uuid'
 import * as bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
 import { FileService } from './file.service'
 import { Attachment } from '../entities/attachment.entity'
-import { Multer } from 'multer'
 import { JwtService } from '@nestjs/jwt'
-import {JwtPayload} from "../interfaces/jwt-payload.interface";
+import { JwtPayload } from '../interfaces/jwt-payload.interface'
+import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
 
 @Injectable()
 export class ProfileService {
@@ -246,12 +245,10 @@ export class ProfileService {
     return profile[typeField]
   }
 
-  public async updateProfile(updateUser: any): Promise<void> {
-    const profile = await this.accountRepository.getProfileByUsername(updateUser.username)
+  public async updateProfile(profileUpdateDTO: ProfileUpdateDTO): Promise<void> {
+    const profile = await this.accountRepository.getProfileByUsername(profileUpdateDTO.username)
 
-    for (let i = 0; i < Object.keys(updateUser).length; i++) {
-      profile[Object.keys(updateUser)[i]] = updateUser[Object.keys(updateUser)[i]]
-    }
+    profile.description = profileUpdateDTO.description
 
     await this.profileRepository.saveProfile(profile)
   }

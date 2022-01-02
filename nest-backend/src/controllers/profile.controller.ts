@@ -6,7 +6,7 @@ import {
   Ip,
   Param,
   Post,
-  Put, Req,
+  Put,
   Res, UnauthorizedException,
   UploadedFile,
   UseInterceptors
@@ -16,14 +16,14 @@ import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AllowAny } from '../decorators/allow-any.decorator'
 import { RegisterDTO } from '../dtos/register.dto'
-import { RegisterPayloadDTO } from '../dtos/register-payload.dto'
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { ConfigService } from '@nestjs/config'
 import { FollowDTO } from '../dtos/response/follow.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ProfileAvatarDTO } from '../dtos/response/profile-avatar.dto'
 import { CaptchaService } from '../services/captcha.service'
 import { ApiTags } from '@nestjs/swagger'
+import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
 
 @ApiTags('Profile')
 @Controller('profile')
@@ -78,7 +78,10 @@ export class ProfileController {
     const payload = await this.profileService.register(registerDTO, ip)
 
     res.setHeader(
-      'Set-Cookie', `token=${payload.token}; HttpOnly; ${this.configService.get('SECURE') == 'true' ? 'secure;' : ''} expires=${+new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
+      'Set-Cookie',
+      `token=${payload.token}; HttpOnly; ${
+        this.configService.get('SECURE') == 'true' ? 'secure;' : ''
+      } expires=${+new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
     )
 
     delete payload.token
@@ -101,14 +104,15 @@ export class ProfileController {
   }
 
   @Put()
-  public async updateProfile(@AuthorizedUser() user: Account, @Req() req: Request): Promise<string> {
-    const updateUser = req.body
-
-    if (user.user_name !== updateUser.username) {
-      throw new UnauthorizedException()
+  public async updateProfile(
+    @AuthorizedUser() user: Account,
+    @Body() profileUpdateDTO: ProfileUpdateDTO,
+  ): Promise<string> {
+    if (user.user_name !== profileUpdateDTO.username) {
+      throw new UnauthorizedException('Cannot update another users profile')
     }
 
-    await this.profileService.updateProfile(updateUser)
+    await this.profileService.updateProfile(profileUpdateDTO)
 
     return 'Success'
   }
@@ -137,11 +141,11 @@ export class ProfileController {
     @UploadedFile() file: Express.Multer.File,
     @AuthorizedUser() user: Account,
   ): Promise<ProfileAvatarDTO> {
-    const avatar = await this.profileService.updateProfileAvatar(file, user.user_name)
+    const banner = await this.profileService.updateProfileBanner(file, user.user_name)
 
     return {
       message: 'success',
-      url: 'http://localhost:8000' + avatar.path
+      url: 'http://localhost:8000' + banner.path
     }
   }
 }

@@ -3,9 +3,6 @@ import { Injectable } from '@nestjs/common'
 import { createWriteStream, existsSync, mkdirSync, unlink } from 'fs'
 import { createReadStream } from 'streamifier'
 
-const { promisify } = require('util')
-const pipeline = promisify(require('stream').pipeline)
-
 const sharp = require('sharp')
 
 @Injectable()

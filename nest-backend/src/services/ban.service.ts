@@ -13,7 +13,7 @@ export class BanService {
   ) {
   }
 
-  public async banUser(banUserDTO: BanUserDTO, account: Account, remoteAddress): Promise<void> {
+  public async banUser(banUserDTO: BanUserDTO, account: Account, remoteAddress: string): Promise<void> {
     const { username, days, reason } = banUserDTO
 
     const user = await this.accountRepository.getAccountByUsername(username)

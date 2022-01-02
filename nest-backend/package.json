@@ -1,10 +1,9 @@
 {
-  "name": "nest-backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "backend",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "author": "seaqull",
+  "license": "ISC",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
