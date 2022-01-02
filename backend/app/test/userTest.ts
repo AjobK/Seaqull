@@ -18,7 +18,7 @@ describe('Testing the login/register', () => {
       agent
         .post('/profile/register')
         .send({
-          username: `test${ id }`,
+          username: `test${id}`,
           password: 'Qwerty',
           email: id + '@test.com',
           captcha
@@ -33,7 +33,7 @@ describe('Testing the login/register', () => {
       agent
         .post('/profile/register')
         .send({
-          username: `test${ id }`,
+          username: `test${id}`,
           password: 'qwerty123',
           email: id + '@test.com',
           captcha

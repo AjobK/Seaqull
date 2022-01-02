@@ -53,7 +53,7 @@ describe('Ban functionality', () => {
         })
     })
 
-    it('Shouldn\'t ban a user as a user', (done) => {
+    it('Souldn\'t ban a user as a user', (done) => {
       agent
         .patch('/shortBan')
         .send({
@@ -82,7 +82,7 @@ describe('Ban functionality', () => {
         })
     })
 
-    it('Shouldn\'t longterm ban a user as a moderator', (done) => {
+    it('Souldn\'t longterm ban a user as a moderator', (done) => {
       agent
         .patch('/ban')
         .send({

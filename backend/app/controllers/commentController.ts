@@ -85,6 +85,7 @@ class CommentController {
       .catch(() => {
         return res.status(500).json({ message: 'A serverside error occured' })
       })
+
   }
 
   public deleteCommentLike = async (req: Request | any, res: Response): Promise<Response> => {
@@ -116,7 +117,7 @@ class CommentController {
     if (!post || !profile)
       return res
         .status(422)
-        .json({ message: 'Invalid post or profile given. Likely an attempt to comment on "new-post" page' })
+        .json({ message: 'Invalid post or profile given. Likely an attempt to comment on "new-post" page.' })
 
     newComment.profile = profile
     newComment.post = post
