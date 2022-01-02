@@ -2,19 +2,17 @@ import chai = require('chai')
 import chaiHttp = require('chai-http')
 import assert = require('assert')
 import Post from '../entities/post'
+import { GuestAgentStore, UserAgentStore } from './data/agents'
 
 require('dotenv').config()
-
-const captcha = process.env.HCAPTCHA_TEST_TOKEN
 
 chai.use(chaiHttp)
 
 describe('Like posts', () => {
-  const agent = chai.request.agent('http://localhost:8000/api')
   let post: Post
 
   before((done) => {
-    agent
+    UserAgentStore.agent
       .get('/post/owned-by/Admin')
       .end((err, res) => {
         assert.equal(res.status, 200)
@@ -27,29 +25,8 @@ describe('Like posts', () => {
   describe('Like functionalities as guest', () => {
     require('dotenv').config()
 
-    before((done) => {
-      agent
-        .post('/login')
-        .send({
-          username: 'User',
-          password: 'Qwerty123',
-          captcha
-        })
-        .end(() => {
-          agent
-            .post('/post/like/' + post.path)
-            .end(() => {
-              agent
-                .get('/logout')
-                .end(() => {
-                  done()
-                })
-            })
-        })
-    })
-
     it('Shouldn\'t like a post', (done) => {
-      agent
+      GuestAgentStore.agent
         .post('/post/like/' + post.path)
         .end((err, res) => {
           assert.equal(res.status, 401)
@@ -59,34 +36,21 @@ describe('Like posts', () => {
   })
 
   describe('Like functionalities as user', () => {
-    before((done) => {
-      agent
-        .post('/login')
-        .send({
-          username: 'User',
-          password: 'Qwerty123',
-          captcha
-        })
-        .end(() => {
-          done()
-        })
-    })
-
     it('Should like a post', (done) => {
-      agent
+      UserAgentStore.agent
         .post('/post/like/' + post.path)
         .end((err, res) => {
-          assert.equal(res.status, 400)
+          assert.equal(res.status, 200)
           done()
         })
     })
 
     it('Should delete a like', (done) => {
-      agent
+      UserAgentStore.agent
         .delete('/post/like/' + post.path)
         .end((err, res) => {
           assert.equal(res.status, 200)
-          agent
+          UserAgentStore.agent
             .get('/post/liked-by/recent/User')
             .end((err, res) => {
               if (Array.isArray(res.body)) {
@@ -101,7 +65,7 @@ describe('Like posts', () => {
     })
 
     it('Shouln\'t unlike a post', (done) => {
-      agent
+      UserAgentStore.agent
         .delete('/post/like/' + post.path)
         .end((err, res) => {
           assert.equal(res.status, 404)

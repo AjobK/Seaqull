@@ -2,45 +2,18 @@ import fs = require('fs');
 import chai = require('chai')
 import chaiHttp = require('chai-http')
 import assert = require('assert')
+import { AdminAgentStore, UserAgentStore } from './data/agents'
 
 require('dotenv').config()
-
-const captcha = process.env.HCAPTCHA_TEST_TOKEN
 
 chai.use(chaiHttp)
 
 describe('Profile page', () => {
-  const agentAdmin = chai.request.agent('http://localhost:8000/api')
-  const agentUser = chai.request.agent('http://localhost:8000/api')
-
-  before((done) => {
-
-    agentUser
-      .post('/login')
-      .send({
-        username: 'User',
-        password: 'Qwerty123',
-        captcha
-      })
-      .end(() => {
-        agentAdmin
-          .post('/login')
-          .send({
-            username: 'Admin',
-            password: 'Qwerty123',
-            captcha
-          })
-          .end(() => {
-            done()
-          })
-      })
-  })
-
   describe('Profile following', () => {
     let amountOfFollowers = 0
 
     it('Should retrieve the current amount of followers', (done) => {
-      agentAdmin
+      AdminAgentStore.agent
         .get('/profile/Admin/followers')
         .end((err, res) => {
           if (res.status == 200) {
@@ -54,12 +27,12 @@ describe('Profile page', () => {
     })
 
     it('Should follow the admin', (done) => {
-      agentUser
+      UserAgentStore.agent
         .post('/profile/follow/Admin')
         .end((err, res) => {
           assert.equal(res.status, 200)
 
-          agentAdmin
+          UserAgentStore.agent
             .get('/profile/Admin/followers')
             .end((err, res) => {
               assert.equal(res.body.followers.length, (amountOfFollowers + 1))
@@ -69,12 +42,12 @@ describe('Profile page', () => {
     })
 
     it('Should unfollow the admin as user', (done) => {
-      agentUser
+      UserAgentStore.agent
         .post('/profile/follow/Admin')
         .end((err, res) => {
           assert.equal(res.status, 200)
 
-          agentAdmin
+          UserAgentStore.agent
             .get('/profile/Admin/followers')
             .end((err, res) => {
               amountOfFollowers = res.status == 200 ? res.body.followers.length : 0
@@ -90,7 +63,7 @@ describe('Profile page', () => {
     let currentBanner = ''
 
     before((done) => {
-      agentUser
+      UserAgentStore.agent
         .get('/profile/User')
         .end((err, res) => {
           currentAvatar = res.body.profile.avatar
@@ -100,7 +73,7 @@ describe('Profile page', () => {
     })
 
     it('Should update user', (done) => {
-      agentUser
+      UserAgentStore.agent
         .put('/profile/User')
         .send({
           username: 'User',
@@ -109,7 +82,7 @@ describe('Profile page', () => {
         .end((err, res) => {
           assert.equal(res.status, 200)
 
-          agentUser
+          UserAgentStore.agent
             .get('/profile/User')
             .end((err, res) => {
               assert.equal(res.body.profile.description, 'update user')
@@ -119,7 +92,7 @@ describe('Profile page', () => {
     })
 
     it('Should update profile picture', (done) => {
-      agentUser
+      UserAgentStore.agent
         .put('/profile/avatar')
         .attach('file', fs.readFileSync(`${__dirname}/data/avatar.jpg`), 'avatar.jpg')
         .end((err, res) => {
@@ -129,7 +102,7 @@ describe('Profile page', () => {
     })
 
     it('Should update banner', (done) => {
-      agentUser
+      UserAgentStore.agent
         .put('/profile/banner')
         .attach('file', fs.readFileSync(`${__dirname}/data/banner.jpeg`), 'banner.jpeg')
         .end((err, res) => {
@@ -141,7 +114,7 @@ describe('Profile page', () => {
 
   describe('Testing role functionalities', () => {
     it('Should retrieve role', ((done) => {
-      agentUser
+      UserAgentStore.agent
         .get('/role')
         .end((err, res) => {
           assert.equal(res.body.name, 'User')
