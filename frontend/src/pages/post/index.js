@@ -201,7 +201,7 @@ class Post extends App {
   deletePost = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
-    Axios.put(`/post/archive/${this.postPath}`, {}, { withCredentials: true }).then((_res) => {
+    Axios.put(`/post/archive/${ this.postPath }`, {}, { withCredentials: true }).then((_res) => {
       this.props.history.push('/')
     }).catch((_err) => { })
   }
@@ -213,7 +213,7 @@ class Post extends App {
         path: this.postPath
       }
 
-      const url = `${this.props.store.defaultData.backendUrl}/post/view`
+      const url = `${ this.props.store.defaultData.backendUrl }/post/view`
 
       Axios.post(url, payload)
     }

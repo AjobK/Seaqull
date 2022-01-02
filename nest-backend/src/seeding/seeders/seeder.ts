@@ -1,7 +1,14 @@
 import { Factory, Seeder } from 'typeorm-seeding'
 import { Connection } from 'typeorm'
 import { Role } from '../../entities/role.entity'
-import { permissionsAdmins, permissionsHeadAdmins, permissionsModerators, permissionsUsers } from '../data/seed.data'
+import {
+  permissionsAdmins,
+  permissionsHeadAdmins,
+  permissionsModerators,
+  permissionsUsers,
+  attachments,
+  roles,
+} from '../data/seed.data'
 
 const roleSeeder = require('./role.seeder')
 const attachmentSeeder = require('./attachment.seeder')
@@ -24,14 +31,14 @@ export default class CreateObjects implements Seeder {
       return
     }
 
-    const userRole = await roleSeeder(factory, 'User')
-    const modRole = await roleSeeder(factory, 'Moderator')
-    const adminRole = await roleSeeder(factory, 'Admin')
-    const headAdminRole = await roleSeeder(factory, 'Head-admin')
+    const userRole = await roleSeeder(factory, roles[0])
+    const modRole = await roleSeeder(factory, roles[1])
+    const adminRole = await roleSeeder(factory, roles[2])
+    const headAdminRole = await roleSeeder(factory, roles[3])
 
-    const profilePic = await attachmentSeeder(factory, 'default/defaultAvatar.png')
-    const bannerPic = await attachmentSeeder(factory, 'default/defaultBanner.jpg')
-    const thumbnailPic = await attachmentSeeder(factory, 'default/defaultThumbnail.jpg')
+    const profilePic = await attachmentSeeder(factory, attachments[0])
+    const bannerPic = await attachmentSeeder(factory, attachments[1])
+    const thumbnailPic = await attachmentSeeder(factory, attachments[2])
 
     await accountSeeder(factory, userRole, profilePic, bannerPic, thumbnailPic)
     await accountSeeder(factory, modRole, profilePic, bannerPic, thumbnailPic)

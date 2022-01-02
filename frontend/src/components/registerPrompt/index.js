@@ -47,8 +47,8 @@ class RegisterPrompt extends Component {
         this.props.store.profile.setProfileData(res.data.user)
         this.goToProfile(res.data.user.profile.display_name)
       })
-      .catch((res) => {
-        this.handleError(res?.response?.data?.message)
+      .catch((err) => {
+        this.handleError(err.response?.data?.message)
       })
   }
 

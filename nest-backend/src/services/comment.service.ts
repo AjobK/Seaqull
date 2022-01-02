@@ -106,8 +106,8 @@ export class CommentService {
 
     const commentProfile = await this.commentRespository.getCommentProfileById(comment.id)
 
-    if (!(commentProfile.display_name === profile.display_name)) {
-      throw new ForbiddenException('Forbidden resource')
+    if (commentProfile.display_name !== profile.display_name) {
+      throw new ForbiddenException()
     }
 
     const archivedDate = new Date()
