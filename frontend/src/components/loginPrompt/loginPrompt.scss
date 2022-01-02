@@ -104,6 +104,7 @@
 		margin-top: 15px;
 		justify-content: space-around;
 		display: flex;
+		gap: 30px;
 		width: 100%;
 		@include mobile-all-portrait {
 			margin-top: 0;
@@ -125,13 +126,13 @@
 
 .image {
 	display: inline-block;
-	min-width: 110px;
+	min-width: 230px;
 	margin-top: auto;
 	height: calc(110px * 1.65);
 	border-radius: 10px;
-	margin-left: 30px;
 	background-repeat: no-repeat;
-	background-image: url('../../static/login/phone.svg');
+	background-image: url('../../static/login/login.svg');
+	background-size: contain;
 
 	@include mobile-all-portrait {
 		display: none;
