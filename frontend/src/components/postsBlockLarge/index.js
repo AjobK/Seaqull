@@ -17,10 +17,10 @@ class PostsBlockLarge extends Component {
   }
 
   render() {
-    const { post, store } = this.props
+    const { post, store, className } = this.props
 
     return (
-      <div className={ styles.large }>
+      <div className={ `${styles.large} ${styles[className]}` }>
         <div className={ styles.largeThumbnail }>
           <span
             className={ styles.largeThumbnailBookmark }
@@ -42,7 +42,7 @@ class PostsBlockLarge extends Component {
             Work in progress
           </ReactTooltip>
           <div className={ styles.largeThumbnailContent }>
-            <Link to={ `posts/${post.path}` }>
+            <Link to={ `/posts/${post.path}` }>
               <h3 className={ styles.largeThumbnailContentTitle }>{post.title}</h3>
               <div className={ styles.largeThumbnailContentDescription }>
                 <p>{post.description}</p>
@@ -80,7 +80,7 @@ class PostsBlockLarge extends Component {
               </Link>
             </div>
           </div>
-          <Link to={ `posts/${post.path}` }>
+          <Link to={ `/posts/${post.path}` }>
             <img src={ `${ store.defaultData.backendUrlBase }/${ post.thumbnail_attachment.path }` } alt={ 'post' } />
           </Link>
         </div>

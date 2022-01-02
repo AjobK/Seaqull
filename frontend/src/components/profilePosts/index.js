@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { convertFromRaw } from 'draft-js'
 import { PostsBlockLarge } from '..'
-import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import { TextUtil } from '../../util'
 import styles from './profilePosts.scss'
@@ -45,22 +44,14 @@ class ProfilePosts extends Component {
   render () {
     const posts = this.convertPosts(this.props.posts)
 
-    const canCreate = this.props.profile.loggedIn && this.props.isOwner
-
     let arr = []
 
     posts.forEach((post) => {
-      arr.push(<PostsBlockLarge post={ post } key={ post.id } />)
+      arr.push(<PostsBlockLarge className="profile" post={ post } key={ post.id } />)
     })
 
     return (
       <section className={ styles.wrapper }>
-        {/* for testing, will be removed in production */}
-        {canCreate && (
-          <Link to="/new-post" className={ styles.add }>
-            <p>Create</p>
-          </Link>
-        )}
         <div className={ styles.profilePosts }>
           {arr}
         </div>

@@ -33,6 +33,7 @@ class PostDAO {
 
       const postList = await repository.createQueryBuilder('post')
         .leftJoinAndSelect('post.profile', 'profile')
+        .leftJoinAndSelect('post.thumbnail_attachment', 'thumbnail')
         .where('post.profile = :profileId', { profileId: profile.id })
         .andWhere('post.archived_at IS NULL')
         .orderBy({

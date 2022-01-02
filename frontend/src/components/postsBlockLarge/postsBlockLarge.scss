@@ -331,6 +331,18 @@ $post-padding: 20px;
 	}
 }
 
+.profile {
+	max-height: 250px;
+
+	.largeThumbnail {
+		max-height: 250px;
+	}
+
+	.goTo {
+		display: none;
+	}
+}
+
 .toolTip {
 	@include tooltip();
 }

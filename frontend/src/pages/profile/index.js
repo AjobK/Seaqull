@@ -4,10 +4,11 @@ import { Standard, Section } from '../../layouts'
 import { observer, inject } from 'mobx-react'
 import Axios from 'axios'
 import { ProfileBanner, PostsPreview, Loader, ProfileCard } from '../../components'
-import styles from './profile.scss'
 import ProfileFollowerList from '../../components/profileFollowerList'
 import { withRouter } from 'react-router'
 import { ProfilePosts } from '../../components'
+import { Icon } from '../../components'
+import styles from './profile.scss'
 
 @inject('store')
 @observer
@@ -135,7 +136,43 @@ class Profile extends App {
             changeFollowerCount={ this.changeFollowerCount }
             openFollowersList={ this.openFollowersList }
           />
-          <div className={ styles.profileContentWrapper }>
+          <div className={ styles.profileContent }>
+            <div className={ styles.profileContentNavigation }>
+              <div className={ styles.profileContentNavigationTabs }>
+                <p>
+                  <Icon
+                    className={
+                      `${styles.profileContentNavigationTabsIcon} 
+                      ${styles.profileContentNavigationTabsIconActive}`
+                    } iconName={ 'History' }></Icon>
+                  Recent posts
+                </p>
+                <p>
+                  <Icon className={ styles.profileContentNavigationTabsIcon } iconName={ 'Heart' }></Icon>
+                  Liked posts
+                </p>
+                <p>
+                  <Icon className={ styles.profileContentNavigationTabsIcon } iconName={ 'ChartLine' }></Icon>
+                  Analytics
+                </p>
+                <p>
+                  <Icon className={ styles.profileContentNavigationTabsIcon } iconName={ 'ChartLine' }></Icon>
+                  Activity
+                </p>
+                <p>
+                  <Icon className={ styles.profileContentNavigationTabsIcon } iconName={ 'Star' }></Icon>
+                  Achievements
+                </p>
+              </div>
+              <div className={ styles.profileContentNavigationIcons }>
+                <div>
+                  <Icon iconName={ 'Bookmark' }></Icon>
+                </div>
+                <div>
+                  <Icon iconName={ 'History' }></Icon>
+                </div>
+              </div>
+            </div>
             <ProfilePosts posts={ this.state.posts } user={ user } isOwner={ isOwner } profile={ profile } />
             <Section title={ 'LIKED POSTS' }>
               <PostsPreview posts={ this.state.likes } />

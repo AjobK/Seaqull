@@ -8,8 +8,42 @@
 	margin: 0 auto;
 	padding: $header-spacing;
 
-	.profileContentWrapper {
+	.profileContent {
 		width: 100%;
+
+		&Navigation {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 50px;
+			font-size: $nr-sm-fontsize;
+			color: $secondary;
+		}
+
+		&NavigationTabs {
+			display: flex;
+			justify-content: space-between;
+
+			p {
+				margin-right: 40px;
+			}
+
+			&Icon {
+				margin-right: 12px;
+
+				&Active {
+					color: $primary;
+				}
+			}
+		}
+
+		&NavigationIcons {
+			display: flex;
+			justify-content: space-between;
+
+			div {
+				margin-left: 20px;
+			}
+		}
 	}
 	
 	@include mobile-all-portrait {
