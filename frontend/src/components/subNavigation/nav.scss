@@ -1,0 +1,44 @@
+@import '../../styles/index.scss';
+
+.navigation {
+	transition: 1s;
+	max-width: $wrapper-width;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	pointer-events: initial;
+}
+
+.sNavOpen {
+	@include mobile-all-portrait {
+		transition: 1s;
+		width: 325px;
+		max-width: 75vw;
+	}
+}
+
+.menu {
+	width: 325px;
+	max-width: 75vw;
+	border-radius: 5px;
+	overflow: hidden;
+	background-color: $background;
+	padding: $header-spacing / 2;
+	margin: $header-spacing;
+	
+	&Ul {
+		list-style-type: none;
+		text-transform: capitalize;
+		font-size: 0.8em;
+		font-family: $navigationfont, 'Times New Roman', Times, serif;
+	}
+
+	@include mobile-sm {
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
+		width: 100%;
+		height: 100%;
+		max-width: initial;
+		margin: 0;
+		border-radius: 0;
+	}
+}
