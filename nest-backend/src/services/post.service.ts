@@ -45,7 +45,6 @@ export class PostService {
       if (posts.length === 0) {
         throw new NotFoundException('You`ve reached the last post')
       }
-
     } else {
       posts = await this.postRepository.getPosts('0', skipAmount)
     }
@@ -78,7 +77,6 @@ export class PostService {
     const postLikesAmount = postLikes ? postLikes.length : 0
 
     let userLiked = false
-
     let isOwner = false
 
     if (account) {
@@ -90,7 +88,6 @@ export class PostService {
 
     post = {
       ...post,
-      // TODO, attachments have the server host url hardcoded prepended
       thumbnail: `${ hostUrl }/${ attachment.path }`
     }
 

@@ -11,7 +11,7 @@ chai.use(chaiHttp)
 
 describe('Testing the login/register', () => {
   const id = uuidv4()
-  const agent = chai.request.agent('http://localhost:8000/api')
+  const agent = chai.request.agent(process.env.BACKEND_TEST_URL)
 
   describe('Register tests', () => {
     it('Shouldn\'t register user because no numbers are present in the password', (done) => {
@@ -20,7 +20,7 @@ describe('Testing the login/register', () => {
         .send({
           username: `test${ id }`,
           password: 'Qwerty',
-          email: `${id}@test.com`,
+          email: `${ id }@test.com`,
           captcha
         })
         .end((err, res) => {
@@ -35,7 +35,7 @@ describe('Testing the login/register', () => {
         .send({
           username: `test${ id }`,
           password: 'qwerty123',
-          email: `${id}@test.com`,
+          email: `${ id }@test.com`,
           captcha
         })
         .end((err, res) => {
@@ -50,7 +50,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          email: `${id}@test.com`,
+          email: `${ id }@test.com`,
           captcha
         })
         .end((err, res) => {
@@ -65,7 +65,7 @@ describe('Testing the login/register', () => {
         .send({
           username: `test${ id }`,
           password: '123Qwerty',
-          email: `${id}@test.com`,
+          email: `${ id }@test.com`,
           captcha
         })
         .end((err, res) => {

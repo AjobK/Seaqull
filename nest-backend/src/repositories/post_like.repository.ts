@@ -29,9 +29,7 @@ export class PostLikeRepository extends Repository<PostLike> {
   }
 
   public async findLikeByPostAndProfile(post: Post, profile: Profile): Promise<PostLike> {
-    const postLike = await this.findOne({ where: { post: post.id, profile: profile.id } })
-
-    return postLike
+    return await this.findOne({ where: { post: post.id, profile: profile.id } })
   }
 
   public async unlikePost(postLike: PostLike): Promise<void> {

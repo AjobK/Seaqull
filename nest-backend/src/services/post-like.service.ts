@@ -34,13 +34,7 @@ export class PostLikeService {
 
     const likes = await this.postLikeRepository.getUserLikesByProfileId(profile.id, 8)
 
-    const posts = []
-
-    likes.forEach((like) => {
-      posts.push(like.post)
-    })
-
-    return posts
+    return likes.map((like) => like.post)
   }
 
   public async likePost(path: string, profile: Profile): Promise<void> {

@@ -10,8 +10,8 @@ const captcha = process.env.HCAPTCHA_TEST_TOKEN
 chai.use(chaiHttp)
 
 describe('Profile page', () => {
-  const agentAdmin = chai.request.agent('http://localhost:8000/api')
-  const agentUser = chai.request.agent('http://localhost:8000/api')
+  const agentAdmin = chai.request.agent(process.env.BACKEND_TEST_URL)
+  const agentUser = chai.request.agent(process.env.BACKEND_TEST_URL)
 
   before((done) => {
 

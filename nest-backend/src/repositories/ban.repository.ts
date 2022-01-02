@@ -28,9 +28,7 @@ export class BanRepository extends Repository<Ban> {
   }
 
   public async getBanByUser(account: Account): Promise<Ban> {
-    const ban = await this.findOne({ where: { user: account.id } })
-
-    return ban
+    return await this.findOne({ where: { user: account.id } })
   }
 
   public async banUser(

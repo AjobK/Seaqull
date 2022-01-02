@@ -20,15 +20,11 @@ export class CommentRepository extends Repository<Comment> {
   }
 
   public async getCommentChildren(parent_comment_id: number): Promise<Comment[]> {
-    const comments = await this.find({ where: { parent_comment_id } })
-
-    return comments
+    return await this.find({ where: { parent_comment_id } })
   }
 
   public async getCommentById(id: number): Promise<Comment> {
-    const comment = await this.findOne(id)
-
-    return comment
+    return await this.findOne(id)
   }
 
   public async getPostByCommentId(id: number): Promise<Post> {

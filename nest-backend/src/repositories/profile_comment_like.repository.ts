@@ -15,9 +15,7 @@ export class ProfileCommentLikeRepository extends Repository<ProfileCommentLike>
   public async createCommentLike(comment: Comment, profile: Profile): Promise<void> {
     const commentLikes = await this.find({ where: { profile: profile.id, comment: comment.id } })
 
-    if (commentLikes.length > 0) {
-      return
-    }
+    if (commentLikes.length > 0) return
 
     await this.save(
       await this.create({
@@ -31,9 +29,7 @@ export class ProfileCommentLikeRepository extends Repository<ProfileCommentLike>
   public async deleteCommentLike(profile: Profile, comment: Comment): Promise<void> {
     const commentLikes = await this.find({ where: { profile: profile.id, comment: comment.id } })
 
-    if (commentLikes.length < 1) {
-      return
-    }
+    if (commentLikes.length < 1) return
 
     await this.remove(commentLikes)
   }

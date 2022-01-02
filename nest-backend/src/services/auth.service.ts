@@ -17,18 +17,16 @@ export class AuthService {
     @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
     @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
     private readonly jwtService: JwtService
-  ) {
-  }
+  ) { }
 
   public async loginVerify(token: string): Promise<Profile> {
     const decodedToken = this.jwtService.verify(token)
 
     const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedToken.user_name)
+    const profile = account.profile
 
     const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
     const title = await this.profileRepository.getTitleByUserId(account.profile.id)
-
-    const profile = account.profile
 
     profile['role'] = account.role.name
     profile.avatar_attachment = attachments.avatar

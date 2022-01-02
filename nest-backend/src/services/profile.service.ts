@@ -72,7 +72,7 @@ export class ProfileService {
 
     if (ban) throw new ForbiddenException({ errors: [ban] })
 
-    const title: Title = (await this.profileRepository.getTitleByUserId(profile.id)) || null
+    const title: Title = await this.profileRepository.getTitleByUserId(profile.id) || null
 
     const followerCount = await this.profileFollowedByRepository.getFollowersCount(profile.id)
     const followingCount = await this.profileFollowedByRepository.getFollowingCount(profile.id)
@@ -141,7 +141,7 @@ export class ProfileService {
       profile: createAccount.profile,
       username: createAccount.user_name,
       email: createAccount.email,
-      token,
+      token
     }
   }
 
@@ -165,9 +165,7 @@ export class ProfileService {
 
     if (!isImage) throw new BadRequestException('Only images are allowed')
 
-    const avatar = this.updateAttachment(file, user_name, 'avatar')
-
-    return avatar
+    return this.updateAttachment(file, user_name, 'avatar')
   }
 
   public async updateProfileBanner(file: Express.Multer.File, user_name: string): Promise<Attachment> {
@@ -175,9 +173,7 @@ export class ProfileService {
 
     if (!isImage) throw new BadRequestException('Only images are allowed')
 
-    const banner = this.updateAttachment(file, user_name, 'banner')
-
-    return banner
+    return this.updateAttachment(file, user_name, 'banner')
   }
 
   private async saveProfile(registerDTO: RegisterDTO, ip: string): Promise<Account> {
@@ -234,6 +230,7 @@ export class ProfileService {
     }
 
     let typeField
+
     if (type === 'avatar') typeField = 'avatar_attachment'
     else if (type === 'banner') typeField = 'banner_attachment'
 

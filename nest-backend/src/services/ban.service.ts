@@ -10,8 +10,7 @@ export class BanService {
   constructor(
     @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository
-  ) {
-  }
+  ) { }
 
   public async banUser(banUserDTO: BanUserDTO, account: Account, remoteAddress: string): Promise<void> {
     const { username, days, reason } = banUserDTO

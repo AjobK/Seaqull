@@ -25,6 +25,7 @@ import { FollowDTO } from '../dtos/response/follow.dto'
 import { ProfileAvatarDTO } from '../dtos/response/profile-avatar.dto'
 import { CaptchaService } from '../services/captcha.service'
 import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
+import {RegisterPayloadDTO} from "../dtos/register-payload.dto";
 
 @ApiTags('Profile')
 @Controller('profile')
@@ -85,10 +86,15 @@ export class ProfileController {
       } expires=${ +new Date(new Date().getTime() + 86409000).toUTCString() }; path=/`
     )
 
-    delete payload.token
+    const publicPayload: RegisterPayloadDTO = {
+      role: payload.role,
+      profile: payload.profile,
+      username: payload.username,
+      email: payload.email,
+    }
 
     res.status(200).json({
-      user: payload
+      user: publicPayload
     })
 
     res.send()

@@ -16,7 +16,7 @@ export class CommentController {
   public async getComments(@Param('postPath') postPath: string, @AuthorizedUser() user: Account): Promise<Comment[]> {
     const comments = await this.commentService.getCommentsByPostPath(postPath)
 
-    if (comments.length === 0) return []
+    if (comments.length === 0) return comments
 
     const payload = await this.commentService.getCommentsPayload(comments, user.profile)
 

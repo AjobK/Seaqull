@@ -12,5 +12,7 @@ export const configValidationSchema = Joi.object({
   SECURE: Joi.boolean().default(true),
   FRONTEND_URL: Joi.string().uri().default('https://seaqull.com'),
   HCAPTCHA_DEV_SECRET_KEY: Joi.string().required(),
-  HCAPTCHA_PROD_SECRET_KEY: Joi.string().required()
+  HCAPTCHA_PROD_SECRET_KEY: Joi.string().required(),
+  BACKEND_PORT: Joi.number().default(8000),
+  SWAGGER_DOCS_ENDPOINT: Joi.string().default('docs')
 })

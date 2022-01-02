@@ -22,9 +22,13 @@ export const hasPermission = (permission: string): any => {
 
       let hasPermission = false
 
-      rolePermissions.forEach(((rolePermission) => {
-        if (rolePermission.permission.name === permission) hasPermission = true
-      }))
+      for (const rolePermission of rolePermissions) {
+        if (rolePermission.permission.name === permission) {
+          hasPermission = true
+
+          break
+        }
+      }
 
       if (hasPermission) return true
 
@@ -36,4 +40,3 @@ export const hasPermission = (permission: string): any => {
 
   return guard
 }
-

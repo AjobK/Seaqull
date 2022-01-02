@@ -63,8 +63,9 @@ export class CommentService {
     comment.profile = profile
     comment.post = post
     comment.content = content
-    comment.parent_comment_id =
-      parent_comment_id ? await this.commentRespository.getCommentById(parent_comment_id) : undefined
+    comment.parent_comment_id = parent_comment_id
+      ? await this.commentRespository.getCommentById(parent_comment_id)
+      : undefined
     comment.created_at = new Date()
     comment.updated_at = new Date()
 
@@ -116,10 +117,8 @@ export class CommentService {
 
     comment.archived_at = archivedDate
 
-    if (children) {
-      for (const child of children) {
-        await this.commentRespository.archiveComment(child, archivedDate)
-      }
+    for (const child of children) {
+      await this.commentRespository.archiveComment(child, archivedDate)
     }
 
     await this.commentRespository.archiveComment(comment, archivedDate)

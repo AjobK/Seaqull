@@ -16,8 +16,6 @@ export class RoleService {
   public async getRole(token: string): Promise<Role> {
     const decodedToken = this.jwtService.decode(token) as JwtPayload
 
-    const role = await this.roleRepository.getRoleById(decodedToken.role_id)
-
-    return role
+    return await this.roleRepository.getRoleById(decodedToken.role_id)
   }
 }

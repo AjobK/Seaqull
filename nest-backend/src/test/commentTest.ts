@@ -11,7 +11,7 @@ const captcha = process.env.HCAPTCHA_TEST_TOKEN
 chai.use(chaiHttp)
 
 describe('Comment section', () => {
-  const agent = chai.request.agent('http://localhost:8000/api')
+  const agent = chai.request.agent(process.env.BACKEND_TEST_URL)
   let post: Post
 
   before((done) => {

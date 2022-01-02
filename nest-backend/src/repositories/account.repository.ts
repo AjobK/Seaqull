@@ -9,9 +9,7 @@ export class AccountRepository extends Repository<Account> {
   public async getProfileByUsername(username: string): Promise<Profile> {
     const account = await this.findOne({ where: { user_name: username }, relations: ['profile'] })
 
-    if (!account) return undefined
-
-    return account.profile
+    return account?.profile
   }
 
   public async getAccountByUsername(username: string): Promise<Account> {
