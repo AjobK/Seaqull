@@ -21,7 +21,7 @@ describe('Ban functionality', () => {
       .send({
         username: shortBannedUser,
         password: 'Qwerty123',
-        email: `${shortBannedUser}@test.com`,
+        email: `${ shortBannedUser }@test.com`,
         captcha
       })
       .end()
@@ -31,7 +31,7 @@ describe('Ban functionality', () => {
       .send({
         username: longBannedUser,
         password: 'Qwerty123',
-        email: `${longBannedUser}@test.com`,
+        email: `${ longBannedUser }@test.com`,
         captcha
       })
       .end(() => {
@@ -108,7 +108,7 @@ describe('Ban functionality', () => {
           assert.equal(res.status, 200)
 
           agent
-            .get(`/profile/${shortBannedUser}`)
+            .get(`/profile/${ shortBannedUser }`)
             .end((err, res) => {
               assert.equal(res.status, 403)
               done()
@@ -141,7 +141,7 @@ describe('Ban functionality', () => {
         })
         .end(() => {
           agent
-            .get(`/profile/'${longBannedUser}`)
+            .get(`/profile/'${ longBannedUser }`)
             .end((err, res) => {
               assert.equal(res.status, 404)
               done()

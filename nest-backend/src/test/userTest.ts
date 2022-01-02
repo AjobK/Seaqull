@@ -18,9 +18,9 @@ describe('Testing the login/register', () => {
       agent
         .post('/profile/register')
         .send({
-          username: `test${id}`,
+          username: `test${ id }`,
           password: 'Qwerty',
-          email: id + '@test.com',
+          email: `${id}@test.com`,
           captcha
         })
         .end((err, res) => {
@@ -33,9 +33,9 @@ describe('Testing the login/register', () => {
       agent
         .post('/profile/register')
         .send({
-          username: `test${id}`,
+          username: `test${ id }`,
           password: 'qwerty123',
-          email: id + '@test.com',
+          email: `${id}@test.com`,
           captcha
         })
         .end((err, res) => {
@@ -50,7 +50,7 @@ describe('Testing the login/register', () => {
         .send({
           username: 'User',
           password: 'Qwerty123',
-          email: id + '@test.com',
+          email: `${id}@test.com`,
           captcha
         })
         .end((err, res) => {
@@ -63,9 +63,9 @@ describe('Testing the login/register', () => {
       agent
         .post('/profile/register')
         .send({
-          username: `test${id}`,
+          username: `test${ id }`,
           password: '123Qwerty',
-          email: id + '@test.com',
+          email: `${id}@test.com`,
           captcha
         })
         .end((err, res) => {

@@ -43,7 +43,7 @@ export class PostLikeService {
     return posts
   }
 
-  async likePost(path: string, profile: Profile): Promise<void> {
+  public async likePost(path: string, profile: Profile): Promise<void> {
     const post = await this.postRepository.getPostByPath(path)
 
     if (!post) throw new NotFoundException('Post not found')
@@ -62,7 +62,7 @@ export class PostLikeService {
     }
   }
 
-  async unlikePost(path: string, profile: Profile): Promise<void> {
+  public async unlikePost(path: string, profile: Profile): Promise<void> {
     const post = await this.postRepository.getPostByPath(path)
 
     if (!post) throw new NotFoundException('Post not found')

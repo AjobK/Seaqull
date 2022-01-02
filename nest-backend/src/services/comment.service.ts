@@ -26,7 +26,7 @@ export class CommentService {
   public async getCommentsByPostPath(postPath: string): Promise<Comment[]> {
     const post = await this.postRepository.getPostByPath(postPath)
 
-    if (!post) throw new BadRequestException({ error: `No post with path ${postPath} found` })
+    if (!post) throw new BadRequestException({ error: `No post with path ${ postPath } found` })
 
     const comments = await this.commentRespository.getCommentsByPost(post)
 
@@ -58,7 +58,7 @@ export class CommentService {
 
     const post = await this.postRepository.getPostByPath(path)
 
-    if (!post) throw new NotFoundException(`No post found with path ${path}`)
+    if (!post) throw new NotFoundException(`No post found with path ${ path }`)
 
     comment.profile = profile
     comment.post = post
@@ -102,7 +102,7 @@ export class CommentService {
   public async deleteComment(comment_id: number, profile: Profile): Promise<void> {
     const comment = await this.commentRespository.getCommentById(comment_id)
 
-    if (!comment) throw new NotFoundException(`Comment to delete not found with id ${comment_id}`)
+    if (!comment) throw new NotFoundException(`Comment to delete not found with id ${ comment_id }`)
 
     const commentProfile = await this.commentRespository.getCommentProfileById(comment.id)
 

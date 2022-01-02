@@ -31,13 +31,8 @@ const bootstrap = async () => {
     SwaggerModule.setup(swaggerEndpointPath, app, document)
   }
 
-  const LOCALHOST = 'http://localhost'
-
   const allowedOrigins = [
     process.env.FRONTEND_URL,
-    LOCALHOST,
-    `${LOCALHOST}:8080`,
-    `${LOCALHOST}:3000`
   ]
 
   app.enableCors({
@@ -52,10 +47,10 @@ const bootstrap = async () => {
   app.use(cookieParser())
 
   await app.listen(port)
-  logger.log(`Application listening on port ${port}`)
+  logger.log(`Application listening on port ${ port }`)
 
   if (process.env.NODE_ENV === 'development') {
-    logger.log(`Documentation available at /${swaggerEndpointPath}`)
+    logger.log(`Documentation available at /${ swaggerEndpointPath }`)
   }
 }
 

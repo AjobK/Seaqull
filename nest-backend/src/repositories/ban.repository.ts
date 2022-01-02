@@ -21,7 +21,7 @@ export class BanRepository extends Repository<Ban> {
         (bannedDateobject.getHours() > 9 ? '' : '0') + bannedDateobject.getHours() + ':' +
         (bannedDateobject.getMinutes() > 9 ? '' : '0') + bannedDateobject.getMinutes()
 
-      return `Account banned until ${date}`
+      return `Account banned until ${ date }`
     }
 
     return null

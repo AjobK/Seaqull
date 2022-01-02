@@ -121,7 +121,7 @@ describe('Profile page', () => {
     it('Should update profile picture', (done) => {
       agentUser
         .put('/profile/avatar')
-        .attach('file', fs.readFileSync(`${__dirname}/data/avatar.jpg`), 'avatar.jpg')
+        .attach('file', fs.readFileSync(`${ __dirname }/data/avatar.jpg`), 'avatar.jpg')
         .end((err, res) => {
           assert.notEqual(currentAvatar, res.body.url)
           done()
@@ -131,7 +131,7 @@ describe('Profile page', () => {
     it('Should update banner', (done) => {
       agentUser
         .put('/profile/banner')
-        .attach('file', fs.readFileSync(`${__dirname}/data/banner.jpeg`), 'banner.jpeg')
+        .attach('file', fs.readFileSync(`${ __dirname }/data/banner.jpeg`), 'banner.jpeg')
         .end((err, res) => {
           assert.notEqual(currentBanner, res.body.url)
           done()

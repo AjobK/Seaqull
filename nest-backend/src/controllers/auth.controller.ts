@@ -83,9 +83,8 @@ export class AuthController {
   private setJWTCookieHeader(res: Response, token: string): Response {
     res.setHeader(
       'Set-Cookie',
-      `token=${token}; HttpOnly; ${this.configService.get('SECURE') == 'true' ? 'Secure;' : ''} expires=${+new Date(
-        new Date().getTime() + 86409000
-      ).toUTCString()}; path=/`
+      `token=${ token }; HttpOnly; ${ this.configService.get('SECURE') == 'true' ? 'Secure;' : '' } expires=${
+        +new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
     )
 
     return res

@@ -26,7 +26,7 @@ export class FileService {
     const year = today.getFullYear()
     const delimitedFile = file.originalname.split('.')
     const extension = delimitedFile[delimitedFile.length - 1]
-    const name = uuidv4() + `.${extension}`
+    const name = uuidv4() + `.${ extension }`
     let newPath = 'src/public/' + path + '/' + year
 
     if (!existsSync(newPath)) {

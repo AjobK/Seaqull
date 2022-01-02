@@ -100,7 +100,7 @@ class AuthorizationController {
 
       res.setHeader(
         'Set-Cookie',
-        `token=${token}; HttpOnly; ${SECURE == 'true' ? 'Secure;' : ''} expires=${
+        `token=${ token }; HttpOnly; ${ SECURE == 'true' ? 'Secure;' : '' } expires=${
           +new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
       )
 

@@ -67,7 +67,7 @@ export class PostService {
   ): Promise<PostDetailedPayloadDTO> {
     let post = await this.postRepository.getPostByPath(path) as any
 
-    if (!post) throw new NotFoundException(`No post found with path ${path}`)
+    if (!post) throw new NotFoundException(`No post found with path ${ path }`)
 
     const attachments = await this.profileRepository.getProfileAttachments(post.profile.id)
 
@@ -91,7 +91,7 @@ export class PostService {
     post = {
       ...post,
       // TODO, attachments have the server host url hardcoded prepended
-      thumbnail: `${hostUrl}/${attachment.path}`
+      thumbnail: `${ hostUrl }/${ attachment.path }`
     }
 
     return { post, likes: { amount: postLikesAmount, userLiked }, isOwner }

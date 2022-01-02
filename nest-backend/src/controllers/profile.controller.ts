@@ -7,7 +7,8 @@ import {
   Param,
   Post,
   Put,
-  Res, UnauthorizedException,
+  Res,
+  UnauthorizedException,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
@@ -79,9 +80,9 @@ export class ProfileController {
 
     res.setHeader(
       'Set-Cookie',
-      `token=${payload.token}; HttpOnly; ${
+      `token=${ payload.token }; HttpOnly; ${
         this.configService.get('SECURE') == 'true' ? 'secure;' : ''
-      } expires=${+new Date(new Date().getTime() + 86409000).toUTCString()}; path=/`
+      } expires=${ +new Date(new Date().getTime() + 86409000).toUTCString() }; path=/`
     )
 
     delete payload.token
@@ -98,7 +99,7 @@ export class ProfileController {
     const hasFollowedProfile = await this.profileService.follow(user.profile, username)
 
     return {
-      message: `Successfully ${hasFollowedProfile ? '' : 'un'}followed profile`,
+      message: `Successfully ${ hasFollowedProfile ? '' : 'un' }followed profile`,
       following: hasFollowedProfile,
     }
   }

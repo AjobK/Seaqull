@@ -28,7 +28,7 @@ export class ProfileCommentLikeRepository extends Repository<ProfileCommentLike>
     )
   }
 
-  async deleteCommentLike(profile: Profile, comment: Comment): Promise<void> {
+  public async deleteCommentLike(profile: Profile, comment: Comment): Promise<void> {
     const commentLikes = await this.find({ where: { profile: profile.id, comment: comment.id } })
 
     if (commentLikes.length < 1) {

@@ -31,7 +31,7 @@ export class CommentRepository extends Repository<Comment> {
     return comment
   }
 
-  async getPostByCommentId(id: number): Promise<Post> {
+  public async getPostByCommentId(id: number): Promise<Post> {
     const comment = await this.findOne(id, { relations: ['post'] })
 
     return comment.post

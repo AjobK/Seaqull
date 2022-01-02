@@ -30,7 +30,7 @@ import { CaptchaService } from '../services/captcha.service'
       useFactory: async (configService: ConfigService) => {
         return {
           secret: configService.get('JWT_SECRET'),
-          signOptions: { expiresIn: `${configService.get('JWT_EXPIRATION')}s` }
+          signOptions: { expiresIn: `${ configService.get('JWT_EXPIRATION') }s` }
         }
       }
     })
