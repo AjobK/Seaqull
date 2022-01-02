@@ -51,7 +51,7 @@ export class AuthController {
         profile,
         loggedIn: true,
       }
-    } catch () {
+    } catch {
       throw new UnauthorizedException({ loggedIn: false })
     }
   }

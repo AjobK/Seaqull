@@ -42,7 +42,7 @@ export class CommentService {
       let profileHasLikedComment = false
 
       commentLikes.forEach((commentLike) => {
-        if (commentLike.profile.id === profile.id) profileHasLikedComment = true
+        if (commentLike.profile.id === profile?.id) profileHasLikedComment = true
         commentLikePayload.push(commentLike)
       })
 

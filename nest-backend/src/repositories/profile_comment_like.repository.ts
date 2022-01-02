@@ -7,7 +7,7 @@ import { Comment } from '../entities/comment.entity'
 export class ProfileCommentLikeRepository extends Repository<ProfileCommentLike> {
 
   public async getCommentLikes(id: number): Promise<ProfileCommentLike[]> {
-    const commentLikes = await this.find({ where: { comment: id } })
+    const commentLikes = await this.find({ where: { comment: id }, relations: ['profile'] })
 
     return commentLikes
   }
