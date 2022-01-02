@@ -1,4 +1,4 @@
-import fs = require('fs');
+import fs = require('fs')
 import chai = require('chai')
 import chaiHttp = require('chai-http')
 import assert = require('assert')

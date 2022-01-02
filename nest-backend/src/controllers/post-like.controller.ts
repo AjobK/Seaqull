@@ -1,19 +1,16 @@
 import { Controller, Delete, Get, NotFoundException, Param, Post } from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger'
 import { PostLikeService } from '../services/post-like.service'
 import { PostLike } from '../entities/post_like.entity'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AllowAny } from '../decorators/allow-any.decorator'
-import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('Post-like')
 @Controller('post/like')
 export class PostLikeController {
 
-  constructor(
-    private readonly postLikeService: PostLikeService,
-  ) {
-  }
+  constructor(private readonly postLikeService: PostLikeService) { }
 
   @Get('/:path')
   @AllowAny()

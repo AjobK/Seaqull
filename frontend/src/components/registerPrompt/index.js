@@ -87,40 +87,33 @@ class RegisterPrompt extends Component {
   }
 
   handleError = (msg) => {
-    let username = []
-    let email = []
-    let password = []
-    let generalError = []
+    const errors = {
+      username: [],
+      email: [],
+      password: [],
+      generalError: [],
+    }
 
     for (const elem of msg) {
       const error = elem.toLowerCase()
 
-      if (error.includes('username')) {
-        username.push(elem)
+      let errorIsAdded = false
 
-        continue
-      }
+      Object.keys(errors).forEach((key) => {
+        if (error.includes(key)) {
+          errors[key].push(elem)
+          errorIsAdded = true
+        }
+      })
 
-      if (error.includes('email')) {
-        email.push(elem)
-
-        continue
-      }
-
-      if (error.includes('password')) {
-        password.push(elem)
-
-        continue
-      }
-
-      generalError.push(elem)
+      if (!errorIsAdded) errors.generalError.push(elem)
     }
 
     this.setState({
-      username,
-      email,
-      password,
-      generalError
+      username: errors.username,
+      email: errors.email,
+      password: errors.password,
+      generalError: errors.generalError,
     })
   }
 

@@ -1,5 +1,6 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { v4 as uuidv4 } from 'uuid'
 import { PostRepository } from '../repositories/post.repository'
 import { PostsDTO } from '../dtos/response/posts.dto'
 import { Account } from '../entities/account.entity'
@@ -17,7 +18,6 @@ import { ArchivedPost } from '../entities/archivedPost.entity'
 import { ArchivedPostRepository } from '../repositories/archived_post.repository'
 import { Attachment } from '../entities/attachment.entity'
 import { RolePermissionRepository } from '../repositories/role_permission.repository'
-import { v4 as uuidv4 } from 'uuid'
 import { ProfileRepository } from '../repositories/profile.repository'
 
 @Injectable()

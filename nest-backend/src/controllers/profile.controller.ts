@@ -12,18 +12,18 @@ import {
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiTags } from '@nestjs/swagger'
+import { Response } from 'express'
 import { ProfileService } from '../services/profile.service'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AllowAny } from '../decorators/allow-any.decorator'
 import { RegisterDTO } from '../dtos/register.dto'
-import { Response } from 'express'
-import { ConfigService } from '@nestjs/config'
 import { FollowDTO } from '../dtos/response/follow.dto'
-import { FileInterceptor } from '@nestjs/platform-express'
 import { ProfileAvatarDTO } from '../dtos/response/profile-avatar.dto'
 import { CaptchaService } from '../services/captcha.service'
-import { ApiTags } from '@nestjs/swagger'
 import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
 
 @ApiTags('Profile')

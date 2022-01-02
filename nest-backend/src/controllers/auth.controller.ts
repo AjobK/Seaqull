@@ -8,17 +8,17 @@ import {
   Res,
   UnauthorizedException
 } from '@nestjs/common'
-import { AuthService } from '../services/auth.service'
-import { Request, Response } from 'express'
+import { ConfigService } from '@nestjs/config'
 import { ApiTags } from '@nestjs/swagger'
+import { Request, Response } from 'express'
+import { AuthService } from '../services/auth.service'
 import { LoginDTO } from '../dtos/login.dto'
 import { Profile } from '../entities/profile.entity'
 import { CaptchaService } from '../services/captcha.service'
 import { AllowAny } from '../decorators/allow-any.decorator'
-import { ConfigService } from '@nestjs/config'
 
 @ApiTags('Auth')
-@Controller('')
+@Controller()
 export class AuthController {
   constructor(
     private readonly authorizationService: AuthService,

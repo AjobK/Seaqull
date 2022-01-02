@@ -1,7 +1,7 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import { Comment } from '../entities/comment.entity'
 import { CommentRepository } from '../repositories/comment.repository'
-import { InjectRepository } from '@nestjs/typeorm'
 import { PostRepository } from '../repositories/post.repository'
 import { CommentDTO } from '../dtos/comment.dto'
 import { Profile } from '../entities/profile.entity'

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { InjectRepository } from '@nestjs/typeorm'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { Role } from '../entities/role.entity'
-import { InjectRepository } from '@nestjs/typeorm'
 import { RoleRepository } from '../repositories/role.repository'
 
 @Injectable()

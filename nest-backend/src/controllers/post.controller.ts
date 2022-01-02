@@ -10,24 +10,22 @@ import {
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiTags } from '@nestjs/swagger'
 import { PostService } from '../services/post.service'
 import { PostsDTO } from '../dtos/response/posts.dto'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { CreatePostDTO } from '../dtos/create-post.dto'
 import { PostViewDTO } from '../dtos/post-view.dto'
-import { FileInterceptor } from '@nestjs/platform-express'
 import { PostCreationDTO } from '../dtos/post-creation.dto'
 import { AllowAny } from '../decorators/allow-any.decorator'
-import { ApiTags } from '@nestjs/swagger'
 import { ServerHost } from '../decorators/host.decorator'
 
 @ApiTags('Post')
 @Controller('post')
 export class PostController {
-  constructor(
-    private readonly postService: PostService,
-  ) {}
+  constructor(private readonly postService: PostService) { }
 
   @Get()
   @AllowAny()

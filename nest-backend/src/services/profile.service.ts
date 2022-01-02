@@ -5,6 +5,9 @@ import {
   NotFoundException,
   UnauthorizedException
 } from '@nestjs/common'
+import { v4 as uuidv4 } from 'uuid'
+import * as bcrypt from 'bcrypt'
+import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ProfileRepository } from '../repositories/profile.repository'
 import { ProfileFollowedByRepository } from '../repositories/profile_followed_by.repository'
@@ -20,11 +23,8 @@ import { RegisterPayloadDTO } from '../dtos/register-payload.dto'
 import { Profile } from '../entities/profile.entity'
 import { AttachmentRepository } from '../repositories/attachment.repository'
 import { RoleRepository } from '../repositories/role.repository'
-import { v4 as uuidv4 } from 'uuid'
-import * as bcrypt from 'bcrypt'
 import { FileService } from './file.service'
 import { Attachment } from '../entities/attachment.entity'
-import { JwtService } from '@nestjs/jwt'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
 

@@ -1,10 +1,10 @@
 import { BadRequestException, Body, Controller, Ip, Patch, UseGuards } from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger'
 import { BanService } from '../services/ban.service'
 import { BanUserDTO } from '../dtos/ban-user.dto'
 import { hasPermission } from '../guards/roles.guard'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
-import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('Ban')
 @Controller('ban')

@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger'
 import { CommentService } from '../services/comment.service'
 import { Comment } from '../entities/comment.entity'
 import { CommentDTO } from '../dtos/comment.dto'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AllowAny } from '../decorators/allow-any.decorator'
-import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('Comment')
 @Controller('comment')
