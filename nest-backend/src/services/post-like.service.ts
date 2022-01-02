@@ -6,6 +6,7 @@ import { PostLike } from '../entities/post_like.entity'
 import { ProfileRepository } from '../repositories/profile.repository'
 import { Profile } from '../entities/profile.entity'
 import { AccountRepository } from '../repositories/account.repository'
+import { Post } from '../entities/post.entity'
 
 export class PostLikeService {
   constructor(
@@ -26,14 +27,20 @@ export class PostLikeService {
     return postLikes
   }
 
-  public async getRecentUserLikes(username: string): Promise<PostLike[]> {
+  public async getRecentUserLikes(username: string): Promise<Post[]> {
     const profile = await this.accountRepository.getProfileByUsername(username)
 
     if (!profile) throw new NotFoundException('User not found')
 
     const likes = await this.postLikeRepository.getUserLikesByProfileId(profile.id, 8)
 
-    return likes
+    const posts = []
+
+    likes.forEach((like) => {
+      posts.push(like.post)
+    })
+
+    return posts
   }
 
   async likePost(path: string, profile: Profile): Promise<void> {
@@ -47,6 +54,7 @@ export class PostLikeService {
     postLike.profile = profile
     postLike.post = post
     postLike.liked_at = new Date()
+
     try {
       await this.postLikeRepository.likePost(postLike)
     } catch (e) {

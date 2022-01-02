@@ -76,6 +76,7 @@ export class ProfileService {
     const title: Title = (await this.profileRepository.getTitleByUserId(profile.id)) || null
 
     const followerCount = await this.profileFollowedByRepository.getFollowersCount(profile.id)
+    const followingCount = await this.profileFollowedByRepository.getFollowingCount(profile.id)
 
     let following = false
     let followsYou = false
@@ -105,6 +106,7 @@ export class ProfileService {
       title: title ? title.name : 'Title not found...',
       description: profile.description,
       followerCount,
+      followingCount,
     }
 
     const attachments = await this.profileRepository.getProfileAttachments(profile.id)

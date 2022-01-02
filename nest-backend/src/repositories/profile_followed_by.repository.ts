@@ -19,6 +19,12 @@ export class ProfileFollowedByRepository extends Repository<ProfileFollowedBy> {
     return amountOfFollowers
   }
 
+  public async getFollowingCount(id: number): Promise<number> {
+    const followingAmount = await this.count({ where: { follower: id } })
+
+    return followingAmount
+  }
+
   public async isFollowing(profileFollowedBy: ProfileFollowedBy): Promise<boolean> {
     const foundFollow = await this.findOne(profileFollowedBy)
 

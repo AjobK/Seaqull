@@ -100,7 +100,7 @@ export class ProfileController {
     }
   }
 
-  @Put('/:username')
+  @Put()
   public async updateProfile(@AuthorizedUser() user: Account, @Req() req: Request): Promise<string> {
     const updateUser = req.body
 
