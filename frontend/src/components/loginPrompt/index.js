@@ -61,13 +61,7 @@ class LoginPrompt extends Component {
           for (const elem of res.response.data.message) {
             const error = elem.toLowerCase()
 
-            for (const key of Object.keys(errors)) {
-              if (error.includes(key)) {
-                errors[key].push(elem)
-
-                break
-              }
-            }
+            errors[error.split(' ')[0]].push(error)
           }
 
           return this.setState({

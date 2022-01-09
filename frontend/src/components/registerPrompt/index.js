@@ -50,11 +50,11 @@ class RegisterPrompt extends Component {
       .catch((err) => {
         if (err.response.status === 400) {
           this.handleError(err.response?.data?.message)
+        } else {
+          this.setState({
+            generalError: 'Internal server error'
+          })
         }
-
-        this.setState({
-          generalError: 'Internal server error'
-        })
       })
   }
 
@@ -103,18 +103,9 @@ class RegisterPrompt extends Component {
     for (const elem of msg) {
       const error = elem.toLowerCase()
 
-      let errorIsAdded = false
+      errors[error.split(' ')[0]].push(error)
 
-      for (const key of Object.keys(errors)) {
-        if (error.includes(key)) {
-          errors[key].push(elem)
-          errorIsAdded = true
-
-          break
-        }
-      }
-
-      if (!errorIsAdded) errors.generalError.push(elem)
+      errors.generalError.push(elem)
     }
 
     this.setState({
