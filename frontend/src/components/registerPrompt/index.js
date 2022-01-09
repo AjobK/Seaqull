@@ -48,7 +48,13 @@ class RegisterPrompt extends Component {
         this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((err) => {
-        this.handleError(err.response?.data?.message)
+        if (err.response.status === 400) {
+          this.handleError(err.response?.data?.message)
+        }
+
+        this.setState({
+          generalError: 'Internal server error'
+        })
       })
   }
 
