@@ -13,10 +13,12 @@ import { RolePermissionRepository } from '../repositories/role_permission.reposi
 import { FileService } from '../services/file.service'
 import { RoleRepository } from '../repositories/role.repository'
 import { ProfileRepository } from '../repositories/profile.repository'
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
     AuthModule,
+    ConfigModule,
     TypeOrmModule.forFeature([
       AccountRepository,
       PostRepository,
