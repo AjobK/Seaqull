@@ -121,7 +121,7 @@ class PostContent extends Component {
   getBlockStyle = (block) => {
     let blockType = block.getType()
 
-    return blockType ? `DraftEditor-align${ blockType[0].toUpperCase() } ${ blockType.slice(1) }` : null
+    return blockType ? `DraftEditor-align${ blockType[0].toUpperCase() }${ blockType.slice(1) }` : null
   }
 
   render() {
