@@ -13,24 +13,31 @@ class PostInfo extends Component {
   }
 
   getTypeStyles = () => {
-    let { theme, size, minimizeOnMobile } = this.props
+    let { theme, size, minimizeOnMobile, fullWidthOnMobile } = this.props
 
     const typeStyles = []
 
     if (!theme) theme = 'light'
-    typeStyles.push(this.generateTypeStyle(theme))
-
     if (!size) size = 'small'
-    typeStyles.push(this.generateTypeStyle(size))
+
+    typeStyles.push(
+      this.generateTypeStyle(theme),
+      this.generateTypeStyle(size)
+    )
 
     if (minimizeOnMobile)
       typeStyles.push(this.generateTypeStyle('minimizeOnMobile'))
+
+    if (fullWidthOnMobile)
+      typeStyles.push(this.generateTypeStyle('fullWidthOnMobile'))
 
     return typeStyles
   }
 
   generateTypeStyle = (typeValue) => {
-    return styles[`postInfo${ typeValue.charAt(0).toUpperCase() + typeValue.slice(1) }`]
+    return styles[
+      `postInfo${ typeValue.charAt(0).toUpperCase() + typeValue.slice(1) }`
+    ]
   }
 
   render() {

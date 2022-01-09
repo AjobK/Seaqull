@@ -2,6 +2,18 @@
 
 $profile-bar-image-size: 40px;
 
+@mixin hide-category-separator {
+	.postInfo {
+		&Category {
+			&Wrapper {
+				> .postInfoBullet {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
 .postInfo {
 	display: flex;
 	align-items: center;
@@ -108,18 +120,18 @@ $profile-bar-image-size: 40px;
 
 		&MinimizeOnMobile {
 			.postInfo {
+				@include hide-category-separator;
+
 				&Section:not(.postInfoCategoryWrapper) {
 					display: none;
 				}
-
-				&Category {
-					&Wrapper {
-						> .postInfoBullet {
-							display: none;
-						}
-					}
-				}
 			}
+		}
+
+		&FullWidthOnMobile {
+			@include hide-category-separator;
+
+			width: 100%;
 		}
 	}
 }
