@@ -7,7 +7,10 @@ import { Post } from '../entities/post.entity'
 export class PostLikeRepository extends Repository<PostLike> {
 
   public async getPostLikesById(id: number): Promise<PostLike[]> {
-    const postLikes = await this.find({ where: { post: id } })
+    const postLikes = await this.find({
+      where: { post: id },
+      relations: ['post', 'profile', 'profile.avatar_attachment', 'profile.title']
+    })
 
     return postLikes
   }
