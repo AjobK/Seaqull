@@ -1,12 +1,12 @@
 import { IsNotEmpty } from 'class-validator'
 
 export class LoginDTO {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Username cannot be empty' })
   username: string
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Password cannot be empty' })
   password: string
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Captcha error' })
   captcha: string
 }
