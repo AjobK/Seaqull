@@ -6,9 +6,14 @@ import { Profile } from '../entities/profile.entity'
 @EntityRepository(Post)
 export class PostRepository extends Repository<Post> {
 
-  public async getPosts(skipSize: string, amount: number): Promise<Post[]> {
-    const skipAmount = parseInt(skipSize) * amount
-    const postList = this.find({ where: { archived_at: IsNull() }, take: amount, skip: skipAmount })
+  public async getPosts(page: number, amount: number): Promise<Post[]> {
+    const skipAmount = page * amount
+    const postList = this.find({
+      where: { archived_at: IsNull() },
+      take: amount,
+      skip: skipAmount,
+      relations: ['thumbnail_attachment']
+    })
 
     return postList
   }
