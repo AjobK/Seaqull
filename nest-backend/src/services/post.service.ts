@@ -278,7 +278,7 @@ export class PostService {
   private async getPostThumbnailURL(postId: number): Promise<string> {
     const attachment = await this.postRepository.getPostAttachment(postId)
 
-    return `${ this.configService.get('BACKEND_URL') }${ attachment.path }`
+    return `${ this.configService.get('BACKEND_URL') }/${ attachment.path }`
   }
 
   private async deleteThumbnailAttachment(attachment: Attachment, location: string) {
