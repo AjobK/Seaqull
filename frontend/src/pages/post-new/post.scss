@@ -64,6 +64,16 @@ $post-padding-top: $header-spacing * 3;
 			padding-top: 10px;
 		}
 	}
+
+	@include mobile-all {
+		.post {
+			display: none;
+
+			&Side {
+				display: none;
+			}
+		}
+	}
 }
 
 .delete {
