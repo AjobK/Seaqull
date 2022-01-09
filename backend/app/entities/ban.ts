@@ -6,11 +6,11 @@ export class Ban extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Account, (account) => account.id)
+    @ManyToOne(() => Account, (account) => account.id, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'staff_account_id', referencedColumnName: 'id' })
     staff: Account
 
-    @OneToOne(() => Account)
+    @OneToOne(() => Account, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'user_account_id', referencedColumnName: 'id' })
     user: Account
 

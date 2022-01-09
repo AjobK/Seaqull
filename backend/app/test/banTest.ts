@@ -3,6 +3,7 @@ import chaiHttp = require('chai-http')
 import assert = require('assert')
 import { v4 as uuidv4 } from 'uuid'
 import { UserAgentStore, AdminAgentStore, ModAgentStore, GuestAgentStore } from './data/agents'
+import DatabaseConnector from '../utils/databaseConnector'
 
 require('dotenv').config()
 
@@ -119,4 +120,18 @@ describe('Ban functionality', () => {
         })
     })
   })
+
+  after((done) => {
+    DatabaseConnector.getRepository('Account').then((repo) => {
+      repo.findOne({ where: { user_name: shortBannedUser } }).then((shortUser) => {
+        repo.delete(shortUser).then(() => {
+          repo.findOne({ where: { user_name: longBannedUser } }).then((longBanned) => {
+            repo.delete(longBanned)
+            done()
+          })
+        })
+      })
+    })
+  })
+
 })

@@ -25,6 +25,7 @@ describe('Post functionalities', () => {
 
   it('Should create a post', (done) => {
     const id = uuidv4()
+
     UserAgentStore.agent
       .post('/post')
       .send({

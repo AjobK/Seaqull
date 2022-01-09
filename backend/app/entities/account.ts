@@ -11,7 +11,7 @@ export class Account extends BaseEntity {
     @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
     role: Role
 
-    @OneToOne(() => Profile)
+    @OneToOne(() => Profile, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
     profile: Profile
 

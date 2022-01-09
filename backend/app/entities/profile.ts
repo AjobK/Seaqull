@@ -16,15 +16,15 @@ export class Profile extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Title, (title) => title.id)
+    @ManyToOne(() => Title, (title) => title.id, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'title_id', referencedColumnName: 'id' })
     title: Title
 
-    @ManyToOne(() => Attachment, (attachment) => attachment.id)
+    @ManyToOne(() => Attachment, (attachment) => attachment.id, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'avatar_attachment_id', referencedColumnName: 'id' })
     avatar_attachment: Attachment
 
-    @ManyToOne(() => Attachment, (attachment) => attachment.id)
+    @ManyToOne(() => Attachment, (attachment) => attachment.id, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'banner_attachment_id', referencedColumnName: 'id' })
     banner_attachment: Attachment
 
