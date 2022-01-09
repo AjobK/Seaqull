@@ -8,6 +8,11 @@ $profile-bar-image-size: 40px;
 	width: fit-content;
 	flex-wrap: wrap;
 	pointer-events: initial;
+	justify-content: space-between;
+
+	&Section {
+		display: flex;
+	}
 
 	&Category {
 		color: $primary;
@@ -87,21 +92,33 @@ $profile-bar-image-size: 40px;
 		}
 	}
 
+	@include mobile-tablet() {
+
+	}
+
 	@include mobile-all() {
 		.postInfo {
-			div:not(.postInfoCategory) {
-				display: none;
-			}
-
 			&Category {
 				&Bullet {
 					font-size: .5em;
 					vertical-align: 0;
 				}
 			}
+		}
 
-			&Bullet {
-				display: none;
+		&MinimizeOnMobile {
+			.postInfo {
+				&Section:not(.postInfoCategoryWrapper) {
+					display: none;
+				}
+
+				&Category {
+					&Wrapper {
+						> .postInfoBullet {
+							display: none;
+						}
+					}
+				}
 			}
 		}
 	}

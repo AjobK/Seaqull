@@ -8,15 +8,33 @@ import { Icon, PostViews } from '../index'
 @inject('store')
 @observer
 class PostInfo extends Component {
-  render() {
-    let { post, types, withViews } = this.props
+  constructor(props) {
+    super(props)
+  }
 
-    if (!types) types = ['light', 'small']
+  getTypeStyles = () => {
+    let { theme, size, minimizeOnMobile } = this.props
+
     const typeStyles = []
 
-    types.forEach((type) => {
-      typeStyles.push(styles[`postInfo${ type.charAt(0).toUpperCase() + type.slice(1) }`])
-    })
+    if (!theme) theme = 'light'
+    typeStyles.push(this.generateTypeStyle(theme))
+
+    if (!size) size = 'small'
+    typeStyles.push(this.generateTypeStyle(size))
+
+    if (minimizeOnMobile)
+      typeStyles.push(this.generateTypeStyle('minimizeOnMobile'))
+
+    return typeStyles
+  }
+
+  generateTypeStyle = (typeValue) => {
+    return styles[`postInfo${ typeValue.charAt(0).toUpperCase() + typeValue.slice(1) }`]
+  }
+
+  render() {
+    const { post, withViews } = this.props
 
     const getPostReadTime = () => {
       let content
@@ -35,34 +53,38 @@ class PostInfo extends Component {
     }
 
     return (
-      <div className={ `${ styles.postInfo } ${ typeStyles }` }>
-        <Link to={ '#' } className={ styles.postInfoCategory }>
-          <span className={ styles.postInfoCategoryBullet }>
-            <Icon iconName={ 'Circle' } />
-          </span>
-          <p>
-            Machine learning
-            <span>{/* UNDERLINE */}</span>
-          </p>
-        </Link>
-        { withViews && (
-          <div className={ styles.postInfoViews }>
-            <span className={ styles.postInfoBullet }>&bull;</span>
-            <PostViews />
-          </div>
-        ) }
-        <span className={ styles.postInfoBullet }>&bull;</span>
-        <div className={ styles.postInfoText }>
-          <span className={ styles.postInfoTextIcon }>
-            <Icon iconName={ 'Stopwatch' } />
-          </span>
-          <p>
-            { getPostReadTime() }
-          </p>
+      <div className={ `${ styles.postInfo } ${ this.getTypeStyles().join(' ') }` }>
+        <div className={ `${ styles.postInfoSection } ${ styles.postInfoCategoryWrapper }` }>
+          <Link to={ '#' } className={ styles.postInfoCategory }>
+            <span className={ styles.postInfoCategoryBullet }>
+              <Icon iconName={ 'Circle' } />
+            </span>
+            <p>
+              Machine learning
+              <span>{/* UNDERLINE */}</span>
+            </p>
+          </Link>
+          <span className={ styles.postInfoBullet }>&bull;</span>
         </div>
-        <span className={ styles.postInfoBullet }>&bull;</span>
-        <div className={ styles.postInfoText }>
-          <p>{ TimeUtil.timeAgo(new Date(post.created_at)) }</p>
+        <div className={ styles.postInfoSection }>
+          { withViews && (
+            <div className={ styles.postInfoViews }>
+              <PostViews />
+              <span className={ styles.postInfoBullet }>&bull;</span>
+            </div>
+          ) }
+          <div className={ styles.postInfoText }>
+            <span className={ styles.postInfoTextIcon }>
+              <Icon iconName={ 'Stopwatch' } />
+            </span>
+            <p>
+              { getPostReadTime() }
+            </p>
+          </div>
+          <span className={ styles.postInfoBullet }>&bull;</span>
+          <div className={ styles.postInfoText }>
+            <p>{ TimeUtil.timeAgo(new Date(post.created_at)) }</p>
+          </div>
         </div>
       </div>
     )

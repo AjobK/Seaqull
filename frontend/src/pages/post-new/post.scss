@@ -64,13 +64,19 @@ $post-padding-top: $header-spacing * 3;
 			padding-top: 10px;
 		}
 	}
+}
 
-	@include mobile-all {
-		.post {
+@include mobile-all {
+	.post {
+		&Side {
 			display: none;
+		}
 
-			&Side {
-				display: none;
+		&Wrapper {
+			padding: 0 16px;
+
+			&Top {
+				
 			}
 		}
 	}

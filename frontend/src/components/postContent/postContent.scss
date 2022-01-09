@@ -41,6 +41,21 @@ $content-side-padding: 35px;
 	}
 }
 
+@include mobile-all {
+	.postContent {
+		&Title {
+			font-size: $nr-xl-fontsize;
+		}
+		&Description {
+			font-size: $nr-xs-fontsize;
+			margin-bottom: 40px;
+		}
+		&Content {
+			padding: 0;
+		}
+	}
+}
+
 .controls {
 	z-index: 105;
 	position: fixed;
