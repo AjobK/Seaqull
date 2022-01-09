@@ -110,9 +110,13 @@ export class ProfileService {
 
     const attachments = await this.profileRepository.getProfileAttachments(profile.id)
 
-    if (attachments.avatar) payload['avatar'] = `${ this.configService.get('BACKEND_URL') }${ attachments.avatar.path }`
+    if (attachments.avatar) {
+      payload['avatar'] = `${ this.configService.get('BACKEND_URL') }/${ attachments.avatar.path }`
+    }
 
-    if (attachments.banner) payload['banner'] = `${ this.configService.get('BACKEND_URL') }${ attachments.banner.path }`
+    if (attachments.banner) {
+      payload['banner'] = `${ this.configService.get('BACKEND_URL') }/${ attachments.banner.path }`
+    }
 
     return {
       profile: payload,

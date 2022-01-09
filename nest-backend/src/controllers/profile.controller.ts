@@ -136,7 +136,7 @@ export class ProfileController {
 
     return {
       message: 'success',
-      url: `${ this.configService.get('BACKEND_URL') }${ avatar.path }`
+      url: `${ this.configService.get('BACKEND_URL') }/${ avatar.path }`
     }
   }
 
@@ -152,7 +152,7 @@ export class ProfileController {
 
     return {
       message: 'success',
-      url: `${ this.configService.get('BACKEND_URL') }${ banner.path }`
+      url: `${ this.configService.get('BACKEND_URL') }/${ banner.path }`
     }
   }
 }
