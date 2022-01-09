@@ -213,7 +213,7 @@ export class PostService {
 
     if (!foundAttachment) throw new NotFoundException('Attachment not found')
 
-    const attachmentURL = `${ this.configService.get('BACKEND_URL') }${ foundAttachment.path }`
+    const attachmentURL = `${ this.configService.get('BACKEND_URL') }/${ foundAttachment.path }`
 
     return attachmentURL
   }
