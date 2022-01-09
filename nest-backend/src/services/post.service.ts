@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { v4 as uuidv4 } from 'uuid'
 import { ConfigService } from '@nestjs/config'
@@ -37,26 +37,25 @@ export class PostService {
   ) {
   }
 
-  public async getPosts(skipSize: string): Promise<PostsDTO> {
-    let posts
-    const skipAmount = 6
+  public async getPosts(page: number): Promise<PostsDTO> {
+    const amount = 6
+    const totalPosts = await this.postRepository.getAmountPosts()
+    const totalPages = Math.ceil(totalPosts / amount)
 
-    if (skipSize) {
-      posts = await this.postRepository.getPosts(String(skipSize), skipAmount)
+    let posts = []
 
-      if (posts.length === 0) {
-        throw new NotFoundException('You`ve reached the last post')
-      }
-    } else {
-      posts = await this.postRepository.getPosts('0', skipAmount)
+    if (isNaN(+page) || +page < 0)
+      throw new UnprocessableEntityException('Invalid page number')
+
+    page = ~~page
+    posts = await this.postRepository.getPosts(+page, amount)
+
+    const message = {
+      currentPage: +page,
+      totalPages: totalPages,
+      postsPerPage: amount,
+      posts: posts
     }
-
-    for (const post of posts) {
-      post.thumbnail = await this.getPostThumbnailURL(post.id)
-    }
-
-    const count = await this.postRepository.getAmountPosts()
-    const message: PostsDTO = { posts: posts, totalPosts: count }
 
     return message
   }

@@ -29,8 +29,8 @@ export class PostController {
 
   @Get()
   @AllowAny()
-  public async getPosts(@Query('page') skipSize: string): Promise<PostsDTO> {
-    return await this.postService.getPosts(skipSize)
+  public async getPosts(@Query('page') page: number): Promise<PostsDTO> {
+    return await this.postService.getPosts(page)
   }
 
   @Get('/:path')
