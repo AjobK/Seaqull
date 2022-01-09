@@ -93,9 +93,11 @@ export class ProfileController {
       email: payload.email,
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       user: publicPayload
-    }).send()
+    })
+
+    res.send()
   }
 
   @Post('/follow/:username')

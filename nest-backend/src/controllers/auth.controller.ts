@@ -73,9 +73,11 @@ export class AuthController {
 
     this.setJWTCookieHeader(res, loginResponse.token)
 
-    return res.status(200).json({
+    res.status(200).json({
       user: loginResponse.account
-    }).send()
+    })
+
+    res.send()
   }
 
   private setJWTCookieHeader(res: Response, token: string): Response {
