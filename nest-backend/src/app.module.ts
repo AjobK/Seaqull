@@ -13,6 +13,7 @@ import { APP_GUARD, Reflector } from '@nestjs/core'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
+import { HealthModule } from './modules/health.module'
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { join } from 'path'
     BanModule,
     CommentModule,
     PostModule,
+    HealthModule,
     ProfileModule,
     RoleModule,
     PostLikeModule,
