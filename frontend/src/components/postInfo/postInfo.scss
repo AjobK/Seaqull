@@ -29,7 +29,6 @@ $profile-bar-image-size: 40px;
 	&Category {
 		color: $primary;
 		display: flex;
-		font-size: $nr-xs-fontsize;
 		align-items: center;
 
 		&Bullet {
@@ -55,7 +54,6 @@ $profile-bar-image-size: 40px;
 	}
 
 	&Text {
-		font-size: $nr-xs-fontsize;
 		font-weight: 300;
 		display: flex;
 
@@ -101,6 +99,30 @@ $profile-bar-image-size: 40px;
 				color: $secondary;
 				opacity: .4;
 			}
+		}
+	}
+
+	&Small {
+		.postInfo {
+			&Text {
+				font-size: $nr-xs-fontsize;
+			}
+		}
+
+		&Category {
+			font-size: $nr-xs-fontsize;
+		}
+	}
+
+	&Large {
+		.postInfo {
+			&Text {
+				font-size: $nr-sm-fontsize;
+			}
+		}
+
+		&Category {
+			font-size: $nr-sm-fontsize;
 		}
 	}
 
