@@ -66,17 +66,21 @@ $post-padding-top: $header-spacing * 3;
 	}
 }
 
-@include mobile-all {
+@include mobile-tablet() {
 	.post {
 		&Side {
 			display: none;
 		}
+	}
+}
 
+@include mobile-all {
+	.post {
 		&Wrapper {
 			padding: 0 16px;
 
 			&Top {
-				
+
 			}
 		}
 	}

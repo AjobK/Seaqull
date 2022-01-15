@@ -5,6 +5,7 @@ import TimeUtil from './timeUtil'
 import UnitFormatterUtil from './unitFormatterUtil'
 import URLUtil from './urlUtil'
 import DraftJsUtil from './draftJsUtil'
+import StyleUtil from './styleUtil'
 
 export {
   ColorUtil,
@@ -13,5 +14,6 @@ export {
   TimeUtil,
   UnitFormatterUtil,
   URLUtil,
-  DraftJsUtil
+  DraftJsUtil,
+  StyleUtil
 }

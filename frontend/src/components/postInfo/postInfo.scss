@@ -131,12 +131,10 @@ $profile-bar-image-size: 40px;
 	}
 
 	@include mobile-all() {
-		.postInfo {
-			&Category {
-				&Bullet {
-					font-size: .5em;
-					vertical-align: 0;
-				}
+		&Category {
+			&Bullet {
+				font-size: .5em;
+				vertical-align: 0;
 			}
 		}
 

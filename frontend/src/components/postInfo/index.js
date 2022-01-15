@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './postInfo.scss'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
-import { DraftJsUtil, TextUtil, TimeUtil } from '../../util/'
+import { DraftJsUtil, StyleUtil, TextUtil, TimeUtil } from '../../util/'
 import { Icon, PostViews } from '../index'
 
 @inject('store')
@@ -36,7 +36,7 @@ class PostInfo extends Component {
 
   generateTypeStyle = (typeValue) => {
     return styles[
-      `postInfo${ typeValue.charAt(0).toUpperCase() + typeValue.slice(1) }`
+      StyleUtil.generateStyleString('postInfo', typeValue)
     ]
   }
 
@@ -76,7 +76,7 @@ class PostInfo extends Component {
         <div className={ styles.postInfoSection }>
           { withViews && (
             <div className={ styles.postInfoViews }>
-              <PostViews />
+              <PostViews size={ 'large' }/>
               <span className={ styles.postInfoBullet }>&bull;</span>
             </div>
           ) }

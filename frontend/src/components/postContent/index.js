@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import { EditorState, Editor, convertToRaw, ContentState } from 'draft-js'
 import '../../DraftFallback.css'
+import { StyleUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -74,6 +75,12 @@ class PostContent extends Component {
     this.editorInput.current.focus()
   }
 
+  generateTypeStyle = (typeValue) => {
+    return styles[
+      StyleUtil.generateStyleString('postContent', typeValue)
+    ]
+  }
+
   componentDidMount() {
     let eState =
       typeof this.props.value == 'string'
@@ -90,15 +97,13 @@ class PostContent extends Component {
   render() {
     const { type, readOnly } = this.props
 
-    const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
-
     return (
       <div>
         <PostContentBlock
           heading={ `${type == 'content' ? 'Your' : ''} ${type}` }
           noHeading={ readOnly }
           // onClick={this.focusOnEditor}
-          className={ [style] }
+          className={ [this.generateTypeStyle(this.type)] }
         >
           <Editor
             editorState={ this.state.editorState }
