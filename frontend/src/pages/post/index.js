@@ -321,24 +321,29 @@ class Post extends App {
                   onClick={ () => this.save(post.path) }
                 />
               }
+              <div className={ styles.postActionButtonsMobile }>
+                <ProfileBarSmall profile={ author } />
+              </div>
             </div>
             <div className={ styles.postActionButtonsRight }>
               { !this.props.new && (this.canBanUser || isOwner) &&
-              <span
-                className={ styles.postActionButtonsDelete }
-                data-tip data-for={ 'postDeleteTooltip' }
-                onClick={ this.onDeletePostClicked }
-              >
-                <Icon iconName={ 'Trash' } />
-              </span>
+                <span
+                  className={ styles.postActionButtonsDelete }
+                  data-tip data-for={ 'postDeleteTooltip' }
+                  onClick={ this.onDeletePostClicked }
+                >
+                  <Icon iconName={ 'Trash' } />
+                </span>
               }
-              <div className={ styles.postActionButtonsLike }>
-                <PostLike
-                  likesAmount={ this.state.post.likes.amount || 0 }
-                  liked={ this.state.post.likes.userLiked }
-                  toggleLike={ this.toggleLike }
-                  isOwner={ isOwner }
-                />
+              <div className={ styles.postActionButtonsMobile }>
+                <div className={ styles.postActionButtonsMobileLike }>
+                  <PostLike
+                    likesAmount={ this.state.post.likes.amount || 0 }
+                    liked={ this.state.post.likes.userLiked }
+                    toggleLike={ this.toggleLike }
+                    isOwner={ isOwner }
+                  />
+                </div>
               </div>
             </div>
             <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
