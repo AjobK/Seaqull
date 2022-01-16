@@ -13,7 +13,7 @@ class PostInfo extends Component {
   }
 
   getTypeStyles = () => {
-    let { theme, size, minimizeOnMobile, fullWidthOnMobile } = this.props
+    let { theme, size, minimizeOnMobile, fullWidth, fullWidthOnMobile } = this.props
 
     const typeStyles = []
 
@@ -27,6 +27,9 @@ class PostInfo extends Component {
 
     if (minimizeOnMobile)
       typeStyles.push(this.generateTypeStyle('minimizeOnMobile'))
+
+    if (fullWidth)
+      typeStyles.push(this.generateTypeStyle('fullWidth'))
 
     if (fullWidthOnMobile)
       typeStyles.push(this.generateTypeStyle('fullWidthOnMobile'))

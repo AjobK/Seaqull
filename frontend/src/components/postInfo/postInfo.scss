@@ -126,6 +126,12 @@ $profile-bar-image-size: 40px;
 		}
 	}
 
+	&FullWidth {
+		@include hide-category-separator;
+
+		width: 100%;
+	}
+
 	@include mobile-tablet() {
 
 	}
