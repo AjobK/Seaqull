@@ -1,13 +1,7 @@
 @import '../../styles/index.scss';
 
-.stdBgWhite {
-	background-color: white;
-}
-
-.renderWrapper {
-	min-height: 50vh;
-	margin-bottom: $header-spacing;
-}
+$post-wrapper-width: 670px;
+$post-padding-top: $header-spacing * 3;
 
 .likePostWrapper {
 	width: 100%;
@@ -15,124 +9,128 @@
 	justify-content: space-between;
 }
 
-.container {
-	align-items: center;
-	padding: $header-spacing 0;
-	margin-top: $header-spacing * 2;
-	border-top: 2px solid $background-darker;
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	
-	&Text {
-		margin-right: $header-spacing;
-		font-weight: bold;
-		font-size: 1.1rem;
-	}
-}
+.post {
+	&Side {
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		left: 83px;
+		padding-top: $post-padding-top;
 
-.extraWhitespace {
-	padding: $header-spacing;
-}
+		&Author {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 20px;
 
-.title {
-	color: #4D4D4D;
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-	font-size: 2rem;
-}
-
-.saveContainer {
-	background: $primary;
-	min-height: 10vh;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	margin-top: 30px;
-}
-
-.save {
-	position: relative;
-	width: fit-content;
-	padding: 0 60px;
-}
-
-.delete {
-	cursor: pointer;
-	font-size: 1.2rem;
-	padding: 8px 0;
-	color: $text-dark;
-	border-radius: 100%;
-
-	&:hover {
-		color: $primary;
-	}
-}
-
-.postActionButtons {
-	display: flex;
-	justify-content: space-between;
-
-	&Left {
-
+			&Header {
+				color: $secondary;
+				font-size: $nr-sm-fontsize;
+				margin-bottom: 10px;
+			}
+		}
 	}
 
-	&Right {
-		padding-top: 10px;
-	}
-}
+	&Wrapper {
+		width: 100%;
+		max-width: $post-wrapper-width;
+		margin: 0 auto;
+		padding-top: $post-padding-top;
+		white-space: normal;
 
-.publish {
-	&Button {
-		@include noselect;
-		display: inline-block;
-		color: white;
-		padding: 10px 40px;
-		font-weight: bold;
-		font-size: 1rem;
-		letter-spacing: 1px;
-		transition: all .2s ease-in-out;
-		cursor: pointer;
-		list-style-type: none;
+		&Top {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 30px;
+		}
+
+		&Thumbnail {
+			margin-bottom: 40px;
+		}
+
+		&Content {
+			margin-bottom: 60px;
+		}
+	}
+
+	&ActionButtons {
+		display: flex;
+		justify-content: space-between;
 		margin-bottom: 80px;
+
+		&Left {
+			display: flex;
+			align-items: center;
+		}
+
+		&Right {
+			display: flex;
+			align-items: center;
+			padding-top: 10px;
+		}
+
+		&Publish {
+			&Button {
+				@include noselect;
+				display: inline-block;
+				color: white;
+				padding: 10px 40px;
+				font-weight: bold;
+				font-size: 1rem;
+				letter-spacing: 1px;
+				transition: all .2s ease-in-out;
+				cursor: pointer;
+				list-style-type: none;
+			}
+			&ed {
+				background-color: rgba(0,0,0,0.25);
+			}
+		}
+
+		&Delete {
+			cursor: pointer;
+			font-size: 1.2rem;
+			padding: 8px 0;
+			color: $text-dark;
+			border-radius: 100%;
+
+			&:hover {
+				color: $primary;
+			}
+		}
+
+		&Like {
+			margin-left: 20px;
+			display: none;
+		}
 	}
-	&ed {
-		background-color: rgba(0,0,0,0.25);
+
+	.toolTip {
+		@include tooltip();
 	}
 }
 
-.info {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	margin-bottom: $header-spacing * 2 - 10px;
+@include mobile-tablet() {
+	.post {
+		&Side {
+			display: none;
+		}
 
-	&Saving {
-		font-weight: bold;
-		color: rgba(0,0,0,0.25);
-		margin-left: $header-spacing;
-		text-transform: uppercase;
+		&ActionButtons {
+			&Like {
+				display: initial;
+			}
+		}
 	}
 }
 
-.date {
-	@include noselect;
-	display: flex;
-	align-items: center;
-	text-transform: uppercase;
-	color: gray;
-	opacity: 0.35;
-	font-size: 0.8rem;
-	font-weight: bold;
+@include mobile-all {
+	.post {
+		&Wrapper {
+			padding: 0 16px;
 
-	&Icon {
-		margin-right: 10px;
+			&Top {
+
+			}
+		}
 	}
-}
-
-.toolTip {
-	@include tooltip();
 }
