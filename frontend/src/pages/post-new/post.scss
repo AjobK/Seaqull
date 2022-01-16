@@ -55,14 +55,55 @@ $post-padding-top: $header-spacing * 3;
 	&ActionButtons {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 80px;
 
 		&Left {
-
+			display: flex;
 		}
 
 		&Right {
+			display: flex;
 			padding-top: 10px;
 		}
+
+		&Publish {
+			&Button {
+				@include noselect;
+				display: inline-block;
+				color: white;
+				padding: 10px 40px;
+				font-weight: bold;
+				font-size: 1rem;
+				letter-spacing: 1px;
+				transition: all .2s ease-in-out;
+				cursor: pointer;
+				list-style-type: none;
+			}
+			&ed {
+				background-color: rgba(0,0,0,0.25);
+			}
+		}
+
+		&Delete {
+			cursor: pointer;
+			font-size: 1.2rem;
+			padding: 8px 0;
+			color: $text-dark;
+			border-radius: 100%;
+			margin-right: 20px;
+
+			&:hover {
+				color: $primary;
+			}
+		}
+
+		&Like {
+
+		}
+	}
+
+	.toolTip {
+		@include tooltip();
 	}
 }
 
@@ -84,68 +125,4 @@ $post-padding-top: $header-spacing * 3;
 			}
 		}
 	}
-}
-
-.delete {
-	cursor: pointer;
-	font-size: 1.2rem;
-	padding: 8px 0;
-	color: $text-dark;
-	border-radius: 100%;
-
-	&:hover {
-		color: $primary;
-	}
-}
-
-.publish {
-	&Button {
-		@include noselect;
-		display: inline-block;
-		color: white;
-		padding: 10px 40px;
-		font-weight: bold;
-		font-size: 1rem;
-		letter-spacing: 1px;
-		transition: all .2s ease-in-out;
-		cursor: pointer;
-		list-style-type: none;
-		margin-bottom: 80px;
-	}
-	&ed {
-		background-color: rgba(0,0,0,0.25);
-	}
-}
-
-.info {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	margin-bottom: $header-spacing * 2 - 10px;
-
-	&Saving {
-		font-weight: bold;
-		color: rgba(0,0,0,0.25);
-		margin-left: $header-spacing;
-		text-transform: uppercase;
-	}
-}
-
-.date {
-	@include noselect;
-	display: flex;
-	align-items: center;
-	text-transform: uppercase;
-	color: gray;
-	opacity: 0.35;
-	font-size: 0.8rem;
-	font-weight: bold;
-
-	&Icon {
-		margin-right: 10px;
-	}
-}
-
-.toolTip {
-	@include tooltip();
 }

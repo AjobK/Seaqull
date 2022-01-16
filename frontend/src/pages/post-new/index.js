@@ -308,7 +308,7 @@ class PostNew extends App {
               {
                 isOwner && this.props.new &&
                 <Button
-                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  className={ styles.postActionButtonsPublishButton }
                   value={ 'Create' }
                   onClick={ () => this.save(post.path) }
                 />
@@ -316,7 +316,7 @@ class PostNew extends App {
               {
                 isOwner && isEditing && !this.props.new &&
                 <Button
-                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  className={ styles.postActionButtonsPublishButton }
                   value={ 'Update' }
                   onClick={ () => this.save(post.path) }
                 />
@@ -325,13 +325,20 @@ class PostNew extends App {
             <div className={ styles.postActionButtonsRight }>
               { !this.props.new && (this.canBanUser || isOwner) &&
               <span
-                className={ styles.delete }
+                className={ styles.postActionButtonsDelete }
                 data-tip data-for={ 'postDeleteTooltip' }
                 onClick={ this.onDeletePostClicked }
               >
                 <Icon iconName={ 'Trash' } />
               </span>
               }
+              <PostLike
+                className={ styles.postActionButtonsLike }
+                likesAmount={ this.state.post.likes.amount || 0 }
+                liked={ this.state.post.likes.userLiked }
+                toggleLike={ this.toggleLike }
+                isOwner={ isOwner }
+              />
             </div>
             <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
               Delete
