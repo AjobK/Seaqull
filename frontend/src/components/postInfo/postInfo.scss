@@ -132,10 +132,6 @@ $profile-bar-image-size: 40px;
 		width: 100%;
 	}
 
-	@include mobile-tablet() {
-
-	}
-
 	@include mobile-all() {
 		&Category {
 			&Bullet {

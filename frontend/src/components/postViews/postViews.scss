@@ -1,5 +1,4 @@
 @import '../../styles/index.scss';
-@import '../../styles/variables.scss';
 
 .postViews {
 	display: flex;
@@ -8,7 +7,7 @@
 	color: $secondary;
 	opacity: .8;
 
-	.postViewsText {
+	> p {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: center;
@@ -34,5 +33,13 @@
 
 	&Large {
 		font-size: $nr-sm-fontsize;
+	}
+
+	@include mobile-all() {
+		.postViews {
+			&Text {
+				display: none;
+			}
+		}
 	}
 }

@@ -52,11 +52,11 @@ class PostViews extends Component {
     return (
       <div className={ `${ styles.postViews } ${ this.getTypeStyles().join(' ') }` }>
         <Icon iconName={ 'Eye' } className={ styles.viewIcon } />
+        <p>
+          { UnitFormatterUtil.getNumberSuffix(this.state.views) }
+        </p>
         <p className={ styles.postViewsText }>
-          { `
-              ${ UnitFormatterUtil.getNumberSuffix(this.state.views) } 
-              ${ this.state.views === 1 ? 'view' : 'views' }
-          `}
+          &nbsp;{ this.state.views === 1 ? 'view' : 'views' }
         </p>
       </div>
     )
