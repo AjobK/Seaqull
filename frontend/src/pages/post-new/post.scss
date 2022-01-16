@@ -59,10 +59,12 @@ $post-padding-top: $header-spacing * 3;
 
 		&Left {
 			display: flex;
+			align-items: center;
 		}
 
 		&Right {
 			display: flex;
+			align-items: center;
 			padding-top: 10px;
 		}
 
@@ -90,7 +92,6 @@ $post-padding-top: $header-spacing * 3;
 			padding: 8px 0;
 			color: $text-dark;
 			border-radius: 100%;
-			margin-right: 20px;
 
 			&:hover {
 				color: $primary;
@@ -98,7 +99,8 @@ $post-padding-top: $header-spacing * 3;
 		}
 
 		&Like {
-
+			margin-left: 20px;
+			display: none;
 		}
 	}
 
@@ -111,6 +113,12 @@ $post-padding-top: $header-spacing * 3;
 	.post {
 		&Side {
 			display: none;
+		}
+
+		&ActionButtons {
+			&Like {
+				display: initial;
+			}
 		}
 	}
 }

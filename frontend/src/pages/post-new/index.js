@@ -332,13 +332,14 @@ class PostNew extends App {
                 <Icon iconName={ 'Trash' } />
               </span>
               }
-              <PostLike
-                className={ styles.postActionButtonsLike }
-                likesAmount={ this.state.post.likes.amount || 0 }
-                liked={ this.state.post.likes.userLiked }
-                toggleLike={ this.toggleLike }
-                isOwner={ isOwner }
-              />
+              <div className={ styles.postActionButtonsLike }>
+                <PostLike
+                  likesAmount={ this.state.post.likes.amount || 0 }
+                  liked={ this.state.post.likes.userLiked }
+                  toggleLike={ this.toggleLike }
+                  isOwner={ isOwner }
+                />
+              </div>
             </div>
             <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
               Delete
