@@ -138,7 +138,7 @@ class CommentSection extends Component {
   render() {
     return (
       <div className={ styles.commentSection }>
-        <Section noTitle>
+        <Section className={ styles.commentSectionContent } noTitle>
           {this.displayCommentForm()}
           {this.state.comments && this.state.comments.length > 0 ? (
             this.state.comments.map((comment) => (
