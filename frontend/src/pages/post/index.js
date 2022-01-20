@@ -10,7 +10,6 @@ import { convertFromRaw } from 'draft-js'
 import {
   Button,
   CommentSection,
-  Icon,
   Loader,
   PostBanner,
   PostContent,
@@ -259,6 +258,9 @@ class Post extends App {
               <PostInfo post={ post } theme={ 'dark' } size={ 'large' } withViews fullWidth />
             </div>
           }
+          <div className={ styles.postWrapperAuthor }>
+            <ProfileBarSmall profile={ author } />
+          </div>
           <PostContent
             type={ 'title' }
             // Saves post title with draftJS content
@@ -321,20 +323,19 @@ class Post extends App {
                   onClick={ () => this.save(post.path) }
                 />
               }
-              <div className={ styles.postActionButtonsMobile }>
-                <ProfileBarSmall profile={ author } />
-              </div>
+              {
+                !this.props.new && (this.canBanUser || isOwner) &&
+                <Button
+                  className={
+                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonDelete }`
+                  }
+                  value={ 'Delete' }
+                  inverted
+                  onClick={ this.onDeletePostClicked }
+                />
+              }
             </div>
             <div className={ styles.postActionButtonsRight }>
-              { !this.props.new && (this.canBanUser || isOwner) &&
-                <span
-                  className={ styles.postActionButtonsDelete }
-                  data-tip data-for={ 'postDeleteTooltip' }
-                  onClick={ this.onDeletePostClicked }
-                >
-                  <Icon iconName={ 'Trash' } />
-                </span>
-              }
               <div className={ styles.postActionButtonsMobile }>
                 <div className={ styles.postActionButtonsMobileLike }>
                   <PostLike

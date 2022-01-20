@@ -43,6 +43,11 @@ $post-padding-top: $header-spacing * 3;
 			margin-bottom: 30px;
 		}
 
+		&Author {
+			margin: 0 15px 0 0;
+			display: none;
+		}
+
 		&Thumbnail {
 			margin-bottom: 40px;
 		}
@@ -65,14 +70,12 @@ $post-padding-top: $header-spacing * 3;
 		&Right {
 			display: flex;
 			align-items: center;
-			padding-top: 10px;
 		}
 
 		&Publish {
 			&Button {
 				@include noselect;
 				display: inline-block;
-				color: white;
 				padding: 10px 40px;
 				font-weight: bold;
 				font-size: 1rem;
@@ -80,7 +83,11 @@ $post-padding-top: $header-spacing * 3;
 				transition: all .2s ease-in-out;
 				cursor: pointer;
 				list-style-type: none;
-				margin-right: 20px;
+				margin-right: 15px;
+
+				&Delete {
+					padding: 10px 20px;
+				}
 			}
 			&ed {
 				background-color: rgba(0,0,0,0.25);
@@ -118,6 +125,12 @@ $post-padding-top: $header-spacing * 3;
 	.post {
 		&Side {
 			display: none;
+		}
+
+		&Wrapper {
+			&Author {
+				display: initial;
+			}
 		}
 
 		&ActionButtons {
