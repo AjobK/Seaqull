@@ -8,7 +8,7 @@ import 'draft-js/dist/Draft.css'
 import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
-import { DraftJsTooltipButton, MobileBar } from '../../components'
+import { DraftJsTooltipButton, Icon, MobileBar } from '../../components'
 import {
   BoldIcon,
   ItalicIcon,
@@ -20,6 +20,7 @@ import {
   CenterAlignIcon,
   RightAlignIcon,
 } from '../../static/icons/inlineToolbar'
+import * as Icons from '@material-ui/icons'
 
 @inject('store')
 @observer
@@ -216,15 +217,16 @@ class PostContent extends Component {
               </InlineToolbar>
               { !readOnly &&
                 <MobileBar>
-                  {
-                    inlineButtonStyling.map((element, i) => (
-                      <DraftJsTooltipButton
-                        key={ i }
-                        iconName={ element.icon }
-                        onButtonClick={ (e) => this.onToggleInlineStyling(`${element.styling}`, e) }
-                      />
-                    ))
-                  }
+                  {/*{*/}
+                  {/*  inlineButtonStyling.map((element, i) => (*/}
+                  {/*    <DraftJsTooltipButton*/}
+                  {/*      key={ i }*/}
+                  {/*      iconName={ element.icon }*/}
+                  {/*      onButtonClick={ (e) => this.onToggleInlineStyling(`${element.styling}`, e) }*/}
+                  {/*    />*/}
+                  {/*  ))*/}
+                  {/*}*/}
+                  <Icon iconName={ <Icons.AirlineSeatFlatAngledSharp/> } prefix={ 'mui' } />
                   <Separator />
                   {
                     headlineButtons.map((element, i) => (

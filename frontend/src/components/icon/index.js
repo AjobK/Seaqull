@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as icons from '@fortawesome/free-solid-svg-icons'
 import * as brands from '@fortawesome/fontawesome-free-brands'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { MaterialIcon } from '../../components'
 
 class Icon extends Component {
   render() {
@@ -21,13 +22,20 @@ class Icon extends Component {
 
     library.add(icon)
 
-    return <FontAwesomeIcon
-      className={ classNames.join(' ') }
-      icon={ icon } onClick={ onClick }
-      onMouseDown={ onMouseDown }
-      onMouseUp={ onMouseUp }
-      style={ style }
-    />
+    return (
+      <>
+        { prefix === 'mui'
+          ? <MaterialIcon Icon={ iconName } />
+          : <FontAwesomeIcon
+            className={ classNames.join(' ') }
+            icon={ icon } onClick={ onClick }
+            onMouseDown={ onMouseDown }
+            onMouseUp={ onMouseUp }
+            style={ style }
+          />
+        }
+      </>
+    )
   }
 }
 
