@@ -153,6 +153,7 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
+	min-width: 300px;
 	width: 100%;
 
 	@include mobile-all-portrait {
@@ -231,8 +232,8 @@
 
 .image {
 	display: inline-block;
-	min-width: 230px;
-	height: calc(230px * 1.1);
+	min-width: 300px;
+	height: calc(230px * 1.1565);
 	border-radius: 10px;
 	background-repeat: no-repeat;
 	background-image: url('../../static/register/register.svg');

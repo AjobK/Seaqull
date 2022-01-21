@@ -84,6 +84,7 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
+	min-width: 250px;
 	width: 100%;
 
 	@include mobile-all-portrait {
@@ -126,9 +127,9 @@
 
 .image {
 	display: inline-block;
-	min-width: 230px;
+	min-width: 250px;
 	margin-top: auto;
-	height: calc(110px * 1.65);
+	height: calc(110px * 1.81);
 	border-radius: 10px;
 	background-repeat: no-repeat;
 	background-image: url('../../static/login/login.svg');
