@@ -84,7 +84,6 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
-	min-width: 250px;
 	width: 100%;
 
 	@include mobile-all-portrait {
