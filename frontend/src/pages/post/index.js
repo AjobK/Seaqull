@@ -52,8 +52,7 @@ class Post extends App {
           amount: 0,
           userLiked: false
         }
-      },
-      draftJsKey: Math.random()
+      }
     }
   }
 
@@ -99,10 +98,6 @@ class Post extends App {
         }
 
         this.post = newPost
-        this.initialPostContent = {
-          title: JSON.parse(post.title),
-          content: JSON.parse(post.content)
-        }
 
         this.setState({
           post: newPost,
@@ -240,26 +235,8 @@ class Post extends App {
     })
   }
 
-  cancelEdit = () => {
-    this.setIsEditing(false)
-
-    const { title, content } = this.initialPostContent
-
-    const newPost = {
-      ...this.state.post,
-      title,
-      content
-    }
-    console.log(newPost)
-
-    this.setState({
-      post: newPost,
-      draftJsKey: Math.random()
-    })
-  }
-
   render = () => {
-    const { isEditing, isOwner, post, loaded, author, draftJsKey } = this.state
+    const { isEditing, isOwner, post, loaded, author } = this.state
 
     if (!loaded && !this.props.new)
       return <Loader />
@@ -284,15 +261,14 @@ class Post extends App {
 
         <section className={ styles.postWrapper }>
           { !this.props.new &&
-            <div className={ styles.postWrapperTop }>
-              <PostInfo post={ post } theme={ 'dark' } size={ 'large' } withViews fullWidth />
-            </div>
+          <div className={ styles.postWrapperTop }>
+            <PostInfo post={ post } theme={ 'dark' } size={ 'large' } withViews fullWidth />
+          </div>
           }
           <div className={ styles.postWrapperAuthor }>
             <ProfileBarSmall profile={ author } />
           </div>
           <PostContent
-            key={ `title${ draftJsKey }` }
             type={ 'title' }
             // Saves post title with draftJS content
             callBackSaveData={ (data) => {
@@ -304,7 +280,6 @@ class Post extends App {
             value={ post.title } // Initial no content, should be prefilled by API
           />
           <PostContent
-            key={ `description${ draftJsKey }` }
             type={ 'description' }
             // Saves post description with draftJS content
             callBackSaveData={ (data) => {
@@ -364,21 +339,10 @@ class Post extends App {
                 />
               }
               {
-                isOwner && isEditing && !this.props.new &&
+                !this.props.new && (this.canBanUser || isOwner) &&
                 <Button
                   className={
-                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
-                  }
-                  value={ 'Cancel' }
-                  inverted
-                  onClick={ this.cancelEdit }
-                />
-              }
-              {
-                !this.props.new && (this.canBanUser || isOwner) && !isEditing &&
-                <Button
-                  className={
-                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
+                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonDelete }`
                   }
                   value={ 'Delete' }
                   inverted
