@@ -283,17 +283,6 @@ class Post extends App {
             readOnly={ !isOwner || !isEditing }
             value={ post.title } // Initial no content, should be prefilled by API
           />
-          <PostContent
-            type={ 'description' }
-            // Saves post description with draftJS content
-            callBackSaveData={ (data) => {
-              post.description = data
-
-              this.setState({ post: post })
-            } }
-            readOnly={ !isOwner || !isEditing }
-            value={ post.description } // Initial no content, should be prefilled by API
-          />
           <div className={ styles.postWrapperThumbnail }>
             <PostBanner
               post={ this.state.post }
