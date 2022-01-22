@@ -25,7 +25,7 @@ class Icon extends Component {
     return (
       <>
         { prefix === 'mui'
-          ? <MaterialIcon Icon={ iconName } />
+          ? <MaterialIcon iconName={ iconName } />
           : <FontAwesomeIcon
             className={ classNames.join(' ') }
             icon={ icon } onClick={ onClick }

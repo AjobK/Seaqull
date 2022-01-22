@@ -20,7 +20,6 @@ import {
   CenterAlignIcon,
   RightAlignIcon,
 } from '../../static/icons/inlineToolbar'
-import * as Icons from '@material-ui/icons'
 
 @inject('store')
 @observer
@@ -226,7 +225,7 @@ class PostContent extends Component {
                   {/*    />*/}
                   {/*  ))*/}
                   {/*}*/}
-                  <Icon iconName={ <Icons.AirlineSeatFlatAngledSharp/> } prefix={ 'mui' } />
+                  <Icon iconName={ 'AirlineSeatFlatAngledSharp' } prefix={ 'mui' } />
                   <Separator />
                   {
                     headlineButtons.map((element, i) => (
