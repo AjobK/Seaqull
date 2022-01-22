@@ -225,7 +225,10 @@ class PostContent extends Component {
                   {/*    />*/}
                   {/*  ))*/}
                   {/*}*/}
-                  <Icon iconName={ 'AirlineSeatFlatAngledSharp' } prefix={ 'mui' } />
+                  <Icon
+                    // onMouseDown={ (e) => this.onToggleInlineStyling('BOLD', e) }
+                    iconName={ 'AirlineSeatFlatAngledSharp' }
+                    prefix={ 'mui' } />
                   <Separator />
                   {
                     headlineButtons.map((element, i) => (

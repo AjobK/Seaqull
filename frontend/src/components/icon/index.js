@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { MaterialIcon } from '../../components'
 
 class Icon extends Component {
+
   render() {
     let classNames = []
     const { className, iconName, onClick, onMouseDown, onMouseUp, style } = this.props
@@ -22,18 +23,30 @@ class Icon extends Component {
 
     library.add(icon)
 
-    return (
-      <>
-        { prefix === 'mui'
-          ? <MaterialIcon iconName={ iconName } />
-          : <FontAwesomeIcon
+    const renderSwitch = () => {
+      switch (prefix) {
+        case 'mui':
+          return <MaterialIcon
+            className={ classNames.join(' ') }
+            iconName={ iconName }
+            onMouseDown={ onMouseDown }
+            onMouseUp={ onMouseUp }
+            style={ style }
+          />
+        default:
+          return <FontAwesomeIcon
             className={ classNames.join(' ') }
             icon={ icon } onClick={ onClick }
             onMouseDown={ onMouseDown }
             onMouseUp={ onMouseUp }
             style={ style }
           />
-        }
+      }
+    }
+
+    return (
+      <>
+        {renderSwitch()}
       </>
     )
   }

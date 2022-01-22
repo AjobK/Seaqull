@@ -3,14 +3,16 @@ import * as icons from '@mui/icons-material'
 
 class MaterialIcon extends Component {
   render() {
-    const { iconName } = this.props
-    console.log(iconName)
+    const { className, iconName, onMouseDown, onMouseUp, style } = this.props
     const Icon = icons[iconName]
 
     return (
-      <>
-        <Icon />
-      </>
+      <Icon
+        className={ className }
+        onMouseDown={ onMouseDown }
+        onMouseUp={ onMouseUp }
+        style={ style }
+      />
     )
   }
 }
