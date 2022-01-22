@@ -101,7 +101,7 @@ class PostContent extends Component {
       <div>
         <PostContentBlock
           heading={ `${type == 'content' ? 'Your' : ''} ${type}` }
-          noHeading={ readOnly }
+          noHeading
           // onClick={this.focusOnEditor}
           className={ [this.generateTypeStyle(this.type)] }
         >
