@@ -33,8 +33,8 @@ class Post extends App {
     this.addedThumbnail = null
 
     this.state = {
-      isOwner: true,
-      isEditing: true,
+      isOwner: false,
+      isEditing: false,
       author: {
         name: '',
         bannerURL: '',
@@ -103,7 +103,6 @@ class Post extends App {
           post: newPost,
           loaded: true,
           isOwner: isOwner,
-          isEditing: true,
           author: author
         }, this.addViewToDB)
       })
@@ -152,6 +151,8 @@ class Post extends App {
       this.createPost()
     } else if (typeof path == 'string') {
       this.updatePost()
+
+      this.setIsEditing(false)
     }
   }
 
@@ -226,6 +227,12 @@ class Post extends App {
 
   onThumbnailAdded = (thumbnail) => {
     this.addedThumbnail = thumbnail
+  }
+
+  setIsEditing = (newValue) => {
+    this.setState({
+      isEditing: newValue
+    })
   }
 
   render = () => {
@@ -316,10 +323,18 @@ class Post extends App {
                 />
               }
               {
-                isOwner && isEditing && !this.props.new &&
+                isOwner && !isEditing && !this.props.new &&
                 <Button
                   className={ styles.postActionButtonsPublishButton }
                   value={ 'Update' }
+                  onClick={ () => this.setIsEditing(true) }
+                />
+              }
+              {
+                isOwner && isEditing && !this.props.new &&
+                <Button
+                  className={ styles.postActionButtonsPublishButton }
+                  value={ 'Save' }
                   onClick={ () => this.save(post.path) }
                 />
               }
