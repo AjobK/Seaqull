@@ -235,6 +235,10 @@ class Post extends App {
     })
   }
 
+  cancelEdit = () => {
+    this.setIsEditing(false)
+  }
+
   render = () => {
     const { isEditing, isOwner, post, loaded, author } = this.state
 
@@ -339,7 +343,18 @@ class Post extends App {
                 />
               }
               {
-                !this.props.new && (this.canBanUser || isOwner) &&
+                isOwner && isEditing && !this.props.new &&
+                <Button
+                  className={
+                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
+                  }
+                  value={ 'Cancel' }
+                  inverted
+                  onClick={ this.cancelEdit }
+                />
+              }
+              {
+                !this.props.new && (this.canBanUser || isOwner) && !isEditing &&
                 <Button
                   className={
                     `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
