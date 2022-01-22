@@ -247,20 +247,24 @@ class Post extends App {
 
     return (
       <Standard className={ styles.post }>
-        <div className={ styles.postSide }>
-          <div className={ styles.postSideAuthor }>
-            <p className={ styles.postSideAuthorHeader }>
-              Written by:
-            </p>
-            <ProfileBarSmall profile={ author } />
-          </div>
+        <div className={ styles.postSideWrapper }>
+          <div className={ styles.postSideWrapperContent }>
+            <div className={ styles.postSide }>
+              <div className={ styles.postSideAuthor }>
+                <p className={ styles.postSideAuthorHeader }>
+                  Written by:
+                </p>
+                <ProfileBarSmall profile={ author } />
+              </div>
 
-          <PostLike
-            likesAmount={ this.state.post.likes.amount || 0 }
-            liked={ this.state.post.likes.userLiked }
-            toggleLike={ this.toggleLike }
-            isOwner={ isOwner }
-          />
+              <PostLike
+                likesAmount={ this.state.post.likes.amount || 0 }
+                liked={ this.state.post.likes.userLiked }
+                toggleLike={ this.toggleLike }
+                isOwner={ isOwner }
+              />
+            </div>
+          </div>
         </div>
 
         <section className={ styles.postWrapper }>

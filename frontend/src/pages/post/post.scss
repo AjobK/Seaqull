@@ -10,11 +10,21 @@ $post-padding-top: $header-spacing * 3;
 
 .post {
 	&Side {
-		display: flex;
+		width: fit-content;
 		flex-direction: column;
-		position: fixed;
-		left: 83px;
 		padding-top: $post-padding-top;
+		margin-left: -260px;
+
+		&Wrapper {
+			position: fixed;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+
+			&Content {
+				width: $post-wrapper-width;
+			}
+		}
 
 		&Author {
 			display: flex;
