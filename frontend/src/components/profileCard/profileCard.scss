@@ -35,30 +35,13 @@
 		@include box-shadow;
 
 		&Edit {
-			position: absolute;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			font-size: 2rem;
+			@include dark-overlay;
 			border-radius: 50%;
-			background-color: rgba(0,0,0,0.75);
-			color: white;
-			transition: 0.2s;
-			opacity: 0;
-	
-			&:hover {
-				transition: 0.2s;
-				opacity: 1;
-			}
 
 			@include mobile-all-portrait {
 				border-radius: 100%;
 			}
-	
+
 			input {
 				position: absolute;
 				width: 100%;
@@ -67,7 +50,7 @@
 				cursor: pointer;
 			}
 		}
-	
+
 		&DraggingOver {
 			transition: 0.2s;
 			opacity: 1;
@@ -85,7 +68,7 @@
 		font-size: $nr-md-fontsize;
 		color: $primary;
 	}
-	
+
 	&Badge {
 		vertical-align: middle;
 		height: auto;
@@ -93,7 +76,7 @@
 		font-size: 28px;
 		color: $primary;
 	}
-	
+
 	&Username {
 		text-align: center;
 		color: $secondary;
@@ -112,7 +95,7 @@
 
 	.followButton {
 		width: 100%;
-	
+
 		&.following {
 			background: white;
 			color: $primary;
@@ -145,12 +128,12 @@
 			}
 		}
 	}
-	
+
 	.editButton {
 		width: 100%;
 		background-color: black;
 	}
-	
+
 	.chatButton {
 		margin-left: 10px;
 		background-color: transparent;

@@ -342,7 +342,7 @@ class Post extends App {
                 !this.props.new && (this.canBanUser || isOwner) &&
                 <Button
                   className={
-                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonDelete }`
+                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
                   }
                   value={ 'Delete' }
                   inverted

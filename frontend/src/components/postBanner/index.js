@@ -14,7 +14,7 @@ class PostBanner extends Component {
     this.state = {
       thumbnail: this.props.post.thumbnail,
       popUpOpen: false,
-      draggingOverThumbnail: true
+      draggingOver: false
     }
   }
 
@@ -26,13 +26,13 @@ class PostBanner extends Component {
 
   onThumbnailDragEnter = () => {
     this.setState({
-      draggingOverThumbnail: true
+      draggingOver: true
     })
   }
 
   onThumbnailDragLeave = () => {
     this.setState({
-      draggingOverThumbnail: false
+      draggingOver: false
     })
   }
 
@@ -88,26 +88,24 @@ class PostBanner extends Component {
 
   render() {
     const { isOwner } = this.props
+    const { thumbnail, draggingOver } = this.state
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
-        <img className={ styles.thumbnail } src={ this.state.thumbnail } alt={ 'post' } />
+        <img className={ styles.thumbnail } src={ thumbnail } alt={ 'post' } />
 
         { isOwner && (
-          <div className={ styles.wrapperThumbnailEdit }>
+          <div className={ `${ styles.wrapperThumbnailEdit }
+            ${ draggingOver && styles.wrapperThumbnailDraggingOver }` }
+          >
+            <Icon iconName={ 'Pen' } />
+
             <input
               type='file' accept='image/png, image/jpeg' value={ '' }
               onChange={ this.onEditThumbnail }
               onDragEnter={ this.onThumbnailDragEnter }
               onDragLeave={ this.onThumbnailDragLeave }
             />
-
-            <div className={ styles.wrapperThumbnailEditButtonContainer }>
-              <span className={ styles.wrapperThumbnailEditButton }>
-                <span className={ styles.wrapperThumbnailEditButtonContent }>Click to edit</span>
-                <Icon iconName={ 'Pen' } />
-              </span>
-            </div>
           </div>
         ) }
 
