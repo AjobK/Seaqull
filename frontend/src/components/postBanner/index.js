@@ -47,6 +47,8 @@ class PostBanner extends Component {
   }
 
   changeThumbnail = (newThumbnail) => {
+    console.log(newThumbnail)
+
     if (!this.props.isNew) {
       this.setState({
         thumbnail: newThumbnail
