@@ -54,7 +54,7 @@ class Post extends App {
   loadArticle = () => {
     const { defaultData } = this.props.store
 
-    Axios.get(`${defaultData.backendUrl}/post/${this.postPath}`, { withCredentials: true })
+    Axios.get(`${ defaultData.backendUrl }/post/${ this.postPath }`, { withCredentials: true })
       .then((res) => {
         const { post, likes, isOwner } = res.data
         let newPost
@@ -75,16 +75,15 @@ class Post extends App {
             content: convertFromRaw(JSON.parse(post.content)),
           }
         } catch (e) {
-
         }
 
         let author = {
           name: post.profile.display_name,
           bannerURL: '/src/static/dummy/user/banner.jpg',
           avatarURL: post.profile.avatar_attachment
-            ? `${defaultData.backendUrlBase}/${post.profile.avatar_attachment}`
+            ? `${ defaultData.backendUrlBase }/${ post.profile.avatar_attachment }`
             : '/src/static/dummy/user/profile.jpg',
-          path: `/profile/${post.profile.display_name}`,
+          path: `/profile/${ post.profile.display_name }`,
           title: post.profile.title || 'No title'
         }
 
@@ -99,7 +98,7 @@ class Post extends App {
         }, this.addViewToDB)
       })
       .catch((error) => {
-        let { name, message } = error.toJSON()
+        let message
 
         if (error?.response?.data?.message) {
           message = error.response.data.message
@@ -157,7 +156,7 @@ class Post extends App {
     Axios.post('/post', fd, {
       withCredentials: true, 'content-type': 'multipart/form-data'
     }).then((res) => {
-      this.props.history.push(`/posts/${res.data.path}`)
+      this.props.history.push(`/posts/${ res.data.path }`)
     })
   }
 
@@ -168,7 +167,7 @@ class Post extends App {
       content: this.state.post.content,
     }
 
-    Axios.put(`/post/${this.state.post.path}`, payload, { withCredentials: true }).then(() => {
+    Axios.put(`/post/${ this.state.post.path }`, payload, { withCredentials: true }).then(() => {
       const { notification } = this.props.store
 
       notification.setContent(popUpData.messages.updatePostNotification)
@@ -202,20 +201,21 @@ class Post extends App {
   deletePost = () => {
     Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
 
-    Axios.put(`/post/archive/${this.postPath}`, {}, { withCredentials: true }).then((_res) => {
+    Axios.put(`/post/archive/${ this.postPath }`, {}, { withCredentials: true }).then((_res) => {
       this.props.history.push('/')
     }).catch((_err) => { })
   }
 
   addViewToDB = () => {
     if (!this.state.isOwner) {
-      Axios.defaults.baseUrl = this.props.store.defaultData.backendUrl
 
       const payload = {
         path: this.postPath
       }
 
-      Axios.post('api/post/view', payload)
+      const url = `${ this.props.store.defaultData.backendUrl }/post/view`
+
+      Axios.post(url, payload)
     }
   }
 
