@@ -41,7 +41,7 @@ class Comment extends Component {
           <img
             src={
               avatar_attachment.path
-                ? `${defaultData.backendUrlBase}/${avatar_attachment.path}`
+                ? `${ defaultData.backendUrlBase }/${ avatar_attachment.path }`
                 : require('../../static/dummy/user/profile.jpg')
             }
             className={ styles.comment__avatarPicture }
@@ -76,7 +76,7 @@ class Comment extends Component {
   }
 
   onDeleteConfirm = () => {
-    const url = `http://localhost:8000/api/comment/${this.props.comment.id}`
+    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }`
 
     axios
       .delete(url, { withCredentials: true })
@@ -93,7 +93,7 @@ class Comment extends Component {
   }
 
   onLikeClick = () => {
-    const url = `http://localhost:8000/api/comment/likes/${this.props.comment.id}/`
+    const url = `http://localhost:8000/api/comment/likes/${ this.props.comment.id }/`
     this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
   }
 
@@ -125,7 +125,7 @@ class Comment extends Component {
   }
 
   onPinClick = () => {
-    const url = `http://localhost:8000/api/comment/${this.props.comment.id}/${this.state.isPinned ? 'un' : ''}pin`
+    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
 
     axios.patch(url, null, { withCredentials: true })
       .then(() => {
@@ -142,7 +142,7 @@ class Comment extends Component {
             <Icon
               iconName={ 'Heart' }
               className={ `
-                ${styles.comment__likeButtonIcon}
+                ${ styles.comment__likeButtonIcon }
                 ${
                     this.state.likes.profileHasLiked ?
                       styles.comment__hasLikedComment :
@@ -193,9 +193,9 @@ class Comment extends Component {
 
     if (comment) {
       return (
-        <article className={ `${styles.comment} ${this.isReply && styles.reply}` }>
-          <div className={ `${styles.comment__body} ${isReplying ? styles.isReplying : ''}` }>
-            <Link to={ `/profile/${comment.profile.display_name}` }>{this.displayAvatar()}</Link>
+        <article className={ `${ styles.comment } ${ this.isReply && styles.reply }` }>
+          <div className={ `${ styles.comment__body } ${ isReplying ? styles.isReplying : '' }` }>
+            <Link to={ `/profile/${ comment.profile.display_name }` }>{this.displayAvatar()}</Link>
             <div className={ styles.comment__main }>
               <div className={ styles.comment_content }>
                 <div className={ styles.comment__header }>
@@ -204,9 +204,9 @@ class Comment extends Component {
                       <Icon
                         iconName={ 'Thumbtack' }
                         className={ `
-                              ${styles.comment__pinButtonIcon}
-                              ${styles.comment__pinButtonHover} 
-                              ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                              ${ styles.comment__pinButtonIcon }
+                              ${ styles.comment__pinButtonHover } 
+                              ${ this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned } 
                             ` }
                         onClick={ this.onPinClick }
                       />
@@ -215,8 +215,8 @@ class Comment extends Component {
                       <Icon
                         iconName={ 'Thumbtack' }
                         className={ `
-                              ${styles.comment__pinButtonIcon}
-                              ${this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned} 
+                              ${ styles.comment__pinButtonIcon }
+                              ${ this.state.isPinned ? styles.comment__isPinned : styles.comment__isUnpinned } 
                             ` }
                       />
                     ) }

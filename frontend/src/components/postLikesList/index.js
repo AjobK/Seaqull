@@ -25,7 +25,7 @@ class PostLikesList extends Component {
   loadLikes = () => {
     const path = URLUtil.getLastPathArgument()
 
-    Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/${path}`).then((res) => {
+    Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/${ path }`).then((res) => {
       const likes = []
 
       res.data.forEach((like) => {
@@ -46,11 +46,11 @@ class PostLikesList extends Component {
 
   render() {
     return (
-      <div className={ `${styles.postLikesListWrapper}` }>
-        <div className={ `${styles.likesBackground}` } onClick={ this.props.closeLikesList } />
-        <div className={ `${styles.likesListWrapper}` }>
+      <div className={ `${ styles.postLikesListWrapper }` }>
+        <div className={ `${ styles.likesBackground }` } onClick={ this.props.closeLikesList } />
+        <div className={ `${ styles.likesListWrapper }` }>
           <div className={ styles.likesListHeader }>
-            <div className={ `${styles.likesListTitle}` }>
+            <div className={ `${styles.likesListTitle }` }>
               <h2>
                 <Icon iconName={ 'Heart' } className={ styles.like } /> Liked by{' '}
               </h2>
