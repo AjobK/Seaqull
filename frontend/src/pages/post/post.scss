@@ -130,6 +130,14 @@ $post-padding-top: $header-spacing * 3;
 	}
 }
 
+@include desktop-small() {
+	.post {
+		&Side {
+			margin-left: -220px;
+		}
+	}
+}
+
 @include mobile-tablet() {
 	.post {
 		&Side {
