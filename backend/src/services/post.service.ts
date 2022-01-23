@@ -189,8 +189,6 @@ export class PostService {
   public async archivePost(path: string, user: Account): Promise<void> {
     const post = await this.postRepository.getPostByPath(path)
 
-    console.log(post.profile.display_name == user.profile.display_name)
-
     if (
       !(post ||
       post.profile.display_name == user.profile.display_name ||
