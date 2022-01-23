@@ -9,6 +9,9 @@ import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
 import { DraftJsTooltipButton, MobileBar } from '../../components'
+import HeadingOne from '../../static/icons/inlineToolbar/HeadingOne.svg'
+import HeadingTwo from '../../static/icons/inlineToolbar/HeadingTwo.svg'
+import HeadingThree from '../../static/icons/inlineToolbar/HeadingThree.svg'
 
 @inject('store')
 @observer
@@ -116,20 +119,20 @@ class PostContent extends Component {
   returnButtons = () => {
     const inlineButtonStyling = [
       { icon: 'FormatBold', styling: 'BOLD' },
-      { icon: 'FormatBold', styling: 'UNDERLINE' },
-      { icon: 'FormatBold', styling: 'ITALIC' },
+      { icon: 'FormatUnderlined', styling: 'UNDERLINE' },
+      { icon: 'FormatItalic', styling: 'ITALIC' },
     ]
 
     const headlineButtons = [
-      { icon: 'HeadingOne', styling: 'header-one' },
-      { icon: 'HeadingTwo', styling: 'header-two' },
-      { icon: 'HeadingThree', styling: 'header-three' },
+      { icon: HeadingOne, styling: 'header-one' },
+      { icon: HeadingTwo, styling: 'header-two' },
+      { icon: HeadingThree, styling: 'header-three' },
     ]
 
     const alignButtonArray = [
-      { icon: 'FormatBold', styling: 'left' },
-      { icon: 'FormatBold', styling: 'center' },
-      { icon: 'FormatBold', styling: 'right' },
+      { icon: 'FormatAlignLeft', styling: 'left' },
+      { icon: 'FormatAlignCenter', styling: 'center' },
+      { icon: 'FormatAlignRight', styling: 'right' },
     ]
 
     return (

@@ -5,6 +5,6 @@
     </clipPath>
   </defs>
   <g id="HeadingThree" clip-path="url(#clip-HeadingThree)">
-    <text id="H3" transform="translate(8 36)" fill="rgba(43,41,41,0.73)" font-size="31" font-family="Rockwell"><tspan x="0" y="0">H</tspan><tspan y="0" font-size="24">3</tspan></text>
+    <text id="H3" transform="translate(6 36)" fill="#888" stroke="#888" stroke-width="0.5" font-size="31" font-family="Rockwell"><tspan x="0" y="0">H3</tspan></text>
   </g>
 </svg>

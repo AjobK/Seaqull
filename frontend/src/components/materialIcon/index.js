@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import * as icons from '@mui/icons-material'
+import { SvgIcon } from '@mui/material'
 
 class MaterialIcon extends Component {
   render() {
     const { className, iconName, onMouseDown, onMouseUp, style } = this.props
-    console.log(iconName)
     const Icon = icons[iconName]
 
     return (
-      <Icon
+      <SvgIcon
+        component={ Icon }
         className={ className }
         onMouseDown={ onMouseDown }
         onMouseUp={ onMouseUp }
