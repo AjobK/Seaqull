@@ -42,7 +42,7 @@ export class FileService {
 
     newPath = newPath + '/' + month + '/' + day + '/' + name
 
-    const writeStream = createWriteStream(newPath)
+    const writeStream = createWriteStream(newPath + '.png')
     createReadStream(file.buffer).pipe(writeStream)
 
     return path + '/' + year + '/' + month + '/' + day + '/' + name
