@@ -1,10 +1,11 @@
 import { popUpData } from '../components/popUp/popUpData'
 import { inject } from 'mobx-react'
+import { RedirectUtil } from './index'
 
 @inject('store')
 class NotificationUtil {
   static showLoginRedirect = (store, history) => {
-    const { notification, nav } = store
+    const { notification } = store
 
     notification.setContent(popUpData.messages.loginRequired)
     notification.setActions([
@@ -15,7 +16,7 @@ class NotificationUtil {
       {
         ...popUpData.actions.confirmWithText,
         action: () => {
-          nav.setPathRedirectAfterLogin(window.location.pathname)
+          RedirectUtil.setRedirectPath(window.location.pathname)
           notification.close()
           history.push('/login/')
         }

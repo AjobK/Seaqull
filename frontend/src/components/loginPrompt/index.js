@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
-import { NotificationUtil } from '../../util'
+import { NotificationUtil, RedirectUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -28,7 +28,7 @@ class LoginPrompt extends Component {
   }
 
   auth = (captchaToken) => {
-    const { defaultData, nav } = this.props.store
+    const { defaultData } = this.props.store
 
     Axios.defaults.baseURL = defaultData.backendUrl
 
@@ -46,7 +46,7 @@ class LoginPrompt extends Component {
         profile.setLoggedIn(true)
         profile.setProfileData(user)
 
-        nav.pathRedirectAfterLogin
+        RedirectUtil.getRedirectPath()
           ? this.redirect()
           : this.goToProfile(user.profile.display_name)
       })
@@ -97,11 +97,9 @@ class LoginPrompt extends Component {
   }
 
   redirect = () => {
-    const { nav } = this.props.store
+    this.props.history.push(RedirectUtil.getRedirectPath())
 
-    this.props.history.push(nav.pathRedirectAfterLogin)
-
-    nav.undoPathRedirectAfterLogin()
+    RedirectUtil.undoRedirectPath()
   }
 
   onSubmit = (e) => {

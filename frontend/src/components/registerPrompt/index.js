@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
+import { RedirectUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -26,7 +27,7 @@ class RegisterPrompt extends Component {
   }
 
   auth = (captchaToken) => {
-    const { defaultData, nav } = this.props.store
+    const { defaultData } = this.props.store
 
     this.setState({
       username: 'loading',
@@ -50,7 +51,7 @@ class RegisterPrompt extends Component {
         this.props.store.profile.loginVerify()
         this.props.store.profile.setProfileData(user)
 
-        nav.pathRedirectAfterLogin
+        RedirectUtil.getRedirectPath()
           ? this.redirect()
           : this.goToProfile(user.profile.display_name)
       })
@@ -71,11 +72,9 @@ class RegisterPrompt extends Component {
   }
 
   redirect = () => {
-    const { nav } = this.props.store
+    this.props.history.push(RedirectUtil.getRedirectPath())
 
-    this.props.history.push(nav.pathRedirectAfterLogin)
-
-    nav.undoPathRedirectAfterLogin()
+    RedirectUtil.undoRedirectPath()
   }
 
   onSubmit = (e) => {
