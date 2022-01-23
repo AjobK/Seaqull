@@ -1,0 +1,30 @@
+{
+  "navigationItemsLoggedIn": {
+    "home": {
+      "ref": "/",
+      "icon": "Home"
+    },
+    "profile": {
+      "ref": "/profile",
+      "icon": "UserCircle"
+    },
+    "create post": {
+      "ref": "/new-post",
+      "icon": "Pen"
+    }
+  },
+  "navigationItemsLoggedOut": {
+    "home": {
+      "ref": "/",
+      "icon": "Home"
+    },
+    "log in": {
+      "ref": "/login",
+      "icon": "SignInAlt"
+    },
+    "sign up": {
+      "ref": "/register",
+      "icon": "Users"
+    }
+  }
+}
