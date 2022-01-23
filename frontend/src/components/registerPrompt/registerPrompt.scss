@@ -4,7 +4,7 @@
 	background-color: $prompt-background;
 	border: 1px solid $prompt-border-color;
 	border-radius: 13px;
-	padding: 50px 100px;
+	padding: 50px 60px;
 	
 	@include mobile-all-portrait {
 		display: flex;
@@ -170,10 +170,9 @@
 	}
 
 	&Wrapper {
-		margin-top: 35px;
-		justify-content: space-around;
 		display: flex;
-		gap: 30px;
+		justify-content: space-around;
+		margin-top: 35px;
 		width: 100%;
 		@include mobile-all-portrait {
 			margin-top: 0;
@@ -231,8 +230,9 @@
 
 .image {
 	display: inline-block;
-	min-width: 300px;
-	height: calc(230px * 1.1565);
+	margin-left: 50px;
+	min-width: 350px;
+	height: calc(230px * 1.3);
 	border-radius: 10px;
 	background-repeat: no-repeat;
 	background-image: url('../../static/register/register.svg');

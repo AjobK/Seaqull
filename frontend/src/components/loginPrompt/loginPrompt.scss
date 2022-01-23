@@ -101,10 +101,9 @@
 	}
 
 	&Wrapper {
-		margin-top: 15px;
+		margin-top: 35px;
 		justify-content: space-around;
 		display: flex;
-		gap: 30px;
 		width: 100%;
 		@include mobile-all-portrait {
 			margin-top: 0;
@@ -126,6 +125,7 @@
 
 .image {
 	display: inline-block;
+	margin-left: 35px;
 	min-width: 180px;
 	margin-top: auto;
 	height: calc(110px * 1.81);
