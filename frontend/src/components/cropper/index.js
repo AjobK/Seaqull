@@ -121,7 +121,7 @@ class Cropper extends Component {
       canvas.toBlob((blob) => {
         if (!blob) return
 
-        resolve(new File([blob], 'cropped', { type: 'image/png' }))
+        resolve(new File([blob], 'cropped.png', { type: 'image/png' }))
       }, 'image/png')
     })
   }
