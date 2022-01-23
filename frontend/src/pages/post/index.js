@@ -57,7 +57,7 @@ class Post extends App {
   }
 
   componentDidMount = () => {
-    if (!this.props.new) return this.loadArticle()
+    if (!this.props.isNew) return this.loadArticle()
   }
 
   loadArticle = () => {
@@ -259,8 +259,9 @@ class Post extends App {
 
   render = () => {
     const { isEditing, isOwner, post, loaded, author } = this.state
+    const { isNew } = this.props
 
-    if (!loaded && !this.props.new)
+    if (!loaded && !isNew)
       return <Loader />
 
     return (
@@ -284,9 +285,8 @@ class Post extends App {
             </div>
           </div>
         </div>
-
         <section className={ styles.postWrapper }>
-          { !this.props.new &&
+          { !isNew &&
           <div className={ styles.postWrapperTop }>
             <PostInfo post={ post } theme={ 'dark' } size={ 'large' } withViews fullWidth />
           </div>
@@ -302,14 +302,14 @@ class Post extends App {
 
               this.setState({ post: post })
             } }
-            readOnly={ !isOwner || !isEditing }
+            readOnly={ isNew ? false : (!isEditing || !isOwner) }
             value={ post.title } // Initial no content, should be prefilled by API
           />
           <div className={ styles.postWrapperThumbnail }>
             <PostBanner
               post={ this.state.post }
               isOwner={ isOwner }
-              isNew={ this.props.new }
+              isNew={ isNew }
               onThumbnailAdded={ this.onThumbnailAdded }
             />
           </div>
@@ -322,7 +322,7 @@ class Post extends App {
 
                 this.setState({ post: post })
               } }
-              readOnly={ !isOwner || !isEditing }
+              readOnly={ isNew ? false : (!isEditing || !isOwner) }
               value={ post.content } // Initial no content, should be prefilled by API
             />
           </div>
@@ -330,7 +330,7 @@ class Post extends App {
           <div className={ styles.postActionButtons }>
             <div className={ styles.postActionButtonsLeft }>
               {
-                isOwner && this.props.new &&
+                isNew &&
                 <Button
                   className={ styles.postActionButtonsPublishButton }
                   value={ 'Create' }
@@ -338,7 +338,7 @@ class Post extends App {
                 />
               }
               {
-                isOwner && !isEditing && !this.props.new &&
+                isOwner && !isEditing && !isNew &&
                 <Button
                   className={ styles.postActionButtonsPublishButton }
                   value={ 'Update' }
@@ -346,7 +346,7 @@ class Post extends App {
                 />
               }
               {
-                isOwner && isEditing && !this.props.new &&
+                isOwner && isEditing && !isNew &&
                 <Button
                   className={ styles.postActionButtonsPublishButton }
                   value={ 'Save' }
@@ -354,7 +354,7 @@ class Post extends App {
                 />
               }
               {
-                isOwner && isEditing && !this.props.new &&
+                isOwner && isEditing && !isNew &&
                 <Button
                   className={
                     `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
@@ -365,7 +365,7 @@ class Post extends App {
                 />
               }
               {
-                !this.props.new && (this.canBanUser || isOwner) && !isEditing &&
+                !isNew && (this.canBanUser || isOwner) && !isEditing &&
                 <Button
                   className={
                     `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
@@ -393,7 +393,7 @@ class Post extends App {
             </ReactTooltip>
           </div>
         </section>
-        { !this.props.new && <CommentSection isPostOwner={ this.state.isOwner } /> }
+        { !isNew && <CommentSection isPostOwner={ this.state.isOwner } /> }
       </Standard>
     )
   }
