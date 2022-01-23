@@ -302,6 +302,7 @@ class Post extends App {
 
               this.setState({ post: post })
             } }
+            getPostBeforeEdit={ () => post.title }
             readOnly={ isNew ? false : (!isEditing || !isOwner) }
             value={ post.title } // Initial no content, should be prefilled by API
           />
@@ -322,6 +323,7 @@ class Post extends App {
 
                 this.setState({ post: post })
               } }
+              getPostBeforeEdit={ () => post.content }
               readOnly={ isNew ? false : (!isEditing || !isOwner) }
               value={ post.content } // Initial no content, should be prefilled by API
             />
@@ -341,7 +343,7 @@ class Post extends App {
                 isOwner && !isEditing && !isNew &&
                 <Button
                   className={ styles.postActionButtonsPublishButton }
-                  value={ 'Update' }
+                  value={ 'Edit' }
                   onClick={ this.enableEdit }
                 />
               }

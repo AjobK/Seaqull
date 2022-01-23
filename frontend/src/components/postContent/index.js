@@ -20,6 +20,7 @@ class PostContent extends Component {
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.editorInput = React.createRef()
+    this.wasReadOnly = false
 
     this.state = {
       editorState: EditorState.createEmpty(),
@@ -87,6 +88,8 @@ class PostContent extends Component {
         ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
         : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
 
+    this.wasReadOnly = this.props.readOnly
+
     try {
       eState = EditorState.createWithContent(this.props.value)
     } catch (e) {}
@@ -95,7 +98,7 @@ class PostContent extends Component {
   }
 
   render() {
-    const { type, readOnly } = this.props
+    const { type, readOnly, getPostBeforeEdit } = this.props
 
     return (
       <div>
@@ -109,7 +112,7 @@ class PostContent extends Component {
             editorState={ this.state.editorState }
             ref={ this.editorInput }
             onChange={ this.onChange }
-            readOnly={ readOnly != undefined ? readOnly : false }
+            readOnly={ readOnly }
             // onFocus={this.onFocus}
             // onBlur={this.onBlur}
             spellCheck={ true }
