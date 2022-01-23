@@ -11,7 +11,10 @@ class NotificationUtil {
     notification.setActions([
       {
         ...popUpData.actions.cancel,
-        action: () => { notification.close() }
+        action: () => {
+          RedirectUtil.undoRedirectPath()
+          notification.close()
+        }
       },
       {
         ...popUpData.actions.confirmWithText,
