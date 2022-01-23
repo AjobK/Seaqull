@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, convertToRaw, ContentState } from 'draft-js'
+import { EditorState, Editor, convertToRaw, ContentState, convertFromRaw } from 'draft-js'
 import '../../DraftFallback.css'
 import { StyleUtil } from '../../util'
 

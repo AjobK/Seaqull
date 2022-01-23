@@ -235,8 +235,26 @@ class Post extends App {
     })
   }
 
+  enableEdit = () => {
+    const { post } = this.state
+
+    this.setIsEditing(true)
+
+    this.initialPost = {
+      ...post,
+      title: post.title,
+      content: post.content
+    }
+  }
+
   cancelEdit = () => {
     this.setIsEditing(false)
+
+    this.initialPost && (
+      this.setState({
+        post: this.initialPost
+      })
+    )
   }
 
   render = () => {
@@ -324,7 +342,7 @@ class Post extends App {
                 <Button
                   className={ styles.postActionButtonsPublishButton }
                   value={ 'Update' }
-                  onClick={ () => this.setIsEditing(true) }
+                  onClick={ this.enableEdit }
                 />
               }
               {
