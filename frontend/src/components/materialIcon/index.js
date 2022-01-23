@@ -4,6 +4,7 @@ import * as icons from '@mui/icons-material'
 class MaterialIcon extends Component {
   render() {
     const { className, iconName, onMouseDown, onMouseUp, style } = this.props
+    console.log(iconName)
     const Icon = icons[iconName]
 
     return (

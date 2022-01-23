@@ -8,18 +8,7 @@ import 'draft-js/dist/Draft.css'
 import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
-import { DraftJsTooltipButton, Icon, MobileBar } from '../../components'
-import {
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-  HeadingOne,
-  HeadingTwo,
-  HeadingThree,
-  LeftAlignIcon,
-  CenterAlignIcon,
-  RightAlignIcon,
-} from '../../static/icons/inlineToolbar'
+import { DraftJsTooltipButton, MobileBar } from '../../components'
 
 @inject('store')
 @observer
@@ -124,30 +113,69 @@ class PostContent extends Component {
     return blockType ? `DraftEditor-align${ blockType[0].toUpperCase() }${ blockType.slice(1) }` : null
   }
 
+  returnButtons = () => {
+    const inlineButtonStyling = [
+      { icon: 'FormatBold', styling: 'BOLD' },
+      { icon: 'FormatBold', styling: 'UNDERLINE' },
+      { icon: 'FormatBold', styling: 'ITALIC' },
+    ]
+
+    const headlineButtons = [
+      { icon: 'HeadingOne', styling: 'header-one' },
+      { icon: 'HeadingTwo', styling: 'header-two' },
+      { icon: 'HeadingThree', styling: 'header-three' },
+    ]
+
+    const alignButtonArray = [
+      { icon: 'FormatBold', styling: 'left' },
+      { icon: 'FormatBold', styling: 'center' },
+      { icon: 'FormatBold', styling: 'right' },
+    ]
+
+    return (
+      <>
+        {
+          inlineButtonStyling.map((element, i) => (
+            <DraftJsTooltipButton
+              key={ i }
+              iconName={ element.icon }
+              prefix={ 'mui' }
+              mouseDown={ (e) => this.onToggleInlineStyling(element.styling, e) }
+            />
+          ))
+        }
+        <Separator />
+        {
+          headlineButtons.map((element, i) => (
+            <DraftJsTooltipButton
+              key={ i }
+              iconName={ element.icon }
+              isHeadingButton={ true }
+              mouseDown={ (e) => this.onToggleBlockStyling(element.styling, e) }
+            />
+          ))
+        }
+        <Separator />
+        {
+          alignButtonArray.map((element, i) => (
+            <DraftJsTooltipButton
+              key={ i }
+              iconName={ element.icon }
+              prefix={ 'mui' }
+              mouseDown={ (e) => this.onToggleBlockStyling(element.styling, e) }
+            />
+          ))
+        }
+      </>
+    )
+  }
+
   render() {
     const { type, readOnly } = this.props
 
     const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     const { InlineToolbar } = this.PluginComponents
-
-    const inlineButtonStyling = [
-      { icon: BoldIcon, styling: 'BOLD' },
-      { icon: UnderlineIcon, styling: 'UNDERLINE' },
-      { icon: ItalicIcon, styling: 'ITALIC' },
-    ]
-
-    const headlineButtons = [
-      { icon: HeadingOne, styling: 'header-one' },
-      { icon: HeadingTwo, styling: 'header-two' },
-      { icon: HeadingThree, styling: 'header-three' },
-    ]
-
-    const alignButtonArray = [
-      { icon: LeftAlignIcon, styling: 'left' },
-      { icon: CenterAlignIcon, styling: 'center' },
-      { icon: RightAlignIcon, styling: 'right' },
-    ]
 
     return (
       <div>
@@ -181,74 +209,14 @@ class PostContent extends Component {
                 {
                   () => (
                     <>
-                      {
-                        inlineButtonStyling.map((element, i) => (
-                          <DraftJsTooltipButton
-                            key={ i }
-                            iconName={ element.icon }
-                            onButtonClick={ (e) => this.onToggleInlineStyling(element.styling, e) }
-                          />
-                        ))
-                      }
-                      <Separator />
-                      {
-                        headlineButtons.map((element, i) => (
-                          <DraftJsTooltipButton
-                            key={ i }
-                            iconName={ element.icon }
-                            onButtonClick={ (e) => this.onToggleBlockStyling(element.styling, e) }
-                          />
-                        ))
-                      }
-                      <Separator />
-                      {
-                        alignButtonArray.map((element, i) => (
-                          <DraftJsTooltipButton
-                            key={ i }
-                            iconName={ element.icon }
-                            onButtonClick={ (e) => this.onToggleBlockStyling(element.styling, e) }
-                          />
-                        ))
-                      }
+                      { this.returnButtons() }
                     </>
                   )
                 }
               </InlineToolbar>
               { !readOnly &&
                 <MobileBar>
-                  {/*{*/}
-                  {/*  inlineButtonStyling.map((element, i) => (*/}
-                  {/*    <DraftJsTooltipButton*/}
-                  {/*      key={ i }*/}
-                  {/*      iconName={ element.icon }*/}
-                  {/*      onButtonClick={ (e) => this.onToggleInlineStyling(`${element.styling}`, e) }*/}
-                  {/*    />*/}
-                  {/*  ))*/}
-                  {/*}*/}
-                  <Icon
-                    // onMouseDown={ (e) => this.onToggleInlineStyling('BOLD', e) }
-                    iconName={ 'AirlineSeatFlatAngledSharp' }
-                    prefix={ 'mui' } />
-                  <Separator />
-                  {
-                    headlineButtons.map((element, i) => (
-                      <DraftJsTooltipButton
-                        key={ i }
-                        iconName={ element.icon }
-                        onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
-                      />
-                    ))
-                  }
-                  <Separator />
-                  {
-                    alignButtonArray.map((element, i) => (
-                      <DraftJsTooltipButton
-                        key={ i }
-                        iconName={ element.icon }
-                        onButtonClick={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
-                      />
-                    ))
-                  }
+                  { this.returnButtons() }
                 </MobileBar>
               }
             </div>
