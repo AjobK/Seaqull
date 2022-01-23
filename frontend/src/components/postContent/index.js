@@ -9,9 +9,9 @@ import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
 import { DraftJsTooltipButton, MobileBar } from '../../components'
-import HeadingOne from '../../static/icons/inlineToolbar/HeadingOne.svg'
-import HeadingTwo from '../../static/icons/inlineToolbar/HeadingTwo.svg'
-import HeadingThree from '../../static/icons/inlineToolbar/HeadingThree.svg'
+import { ReactComponent as HeadingOne } from '../../static/icons/inlineToolbar/HeadingOne.svg'
+import { ReactComponent as HeadingTwo } from '../../static/icons/inlineToolbar/HeadingTwo.svg'
+import { ReactComponent as HeadingThree } from '../../static/icons/inlineToolbar/HeadingThree.svg'
 
 @inject('store')
 @observer
@@ -153,7 +153,7 @@ class PostContent extends Component {
             <DraftJsTooltipButton
               key={ i }
               iconName={ element.icon }
-              isHeadingButton={ true }
+              prefix={ 'custom' }
               mouseDown={ (e) => this.onToggleBlockStyling(element.styling, e) }
             />
           ))

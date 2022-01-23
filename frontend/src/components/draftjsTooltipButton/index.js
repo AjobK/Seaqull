@@ -8,14 +8,11 @@ class DraftJsTooltipButton extends Component {
   }
 
   render() {
-    const { isHeadingButton, iconName, icon, prefix, mouseDown } = this.props
+    const { iconName, icon, prefix, mouseDown } = this.props
 
     return (
       <button onMouseDown={ mouseDown } className={ styles.draftJsButton }>
-        { isHeadingButton
-          ? <figure><img src={ iconName } alt={ iconName }/></figure>
-          : <Icon prefix={ prefix } iconName={ iconName } icon={ icon } />
-        }
+        <Icon prefix={ prefix } iconName={ iconName } icon={ icon } />
       </button>
     )
   }

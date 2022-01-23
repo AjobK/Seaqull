@@ -19,19 +19,19 @@ $width: 36px;
 		outline: 0;
 	}
 
-	> figure {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		max-height: $height;
-		max-width: $width;
-		> img {
-			max-height: inherit;
-			max-width: inherit;
-			width: 34px;
-			height: 36px;
-		}
-	}
+	//> figure {
+	//	display: flex;
+	//	justify-content: center;
+	//	align-items: center;
+	//	width: 100%;
+	//	height: 100%;
+	//	max-height: $height;
+	//	max-width: $width;
+	//	> img {
+	//		max-height: inherit;
+	//		max-width: inherit;
+	//		width: 34px;
+	//		height: 36px;
+	//	}
+	//}
 }

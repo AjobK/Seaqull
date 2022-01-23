@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as icons from '@fortawesome/free-solid-svg-icons'
+import * as muiIcons from '@mui/icons-material'
 import * as brands from '@fortawesome/fontawesome-free-brands'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { MaterialIcon } from '../../components'
+import { SvgIcon } from '@mui/material'
 
 class Icon extends Component {
 
@@ -19,16 +20,26 @@ class Icon extends Component {
     else if (className)
       classNames = [...className]
 
-    let icon = icons[`${prefix}${iconName}`] || brands[`${prefix}${iconName}`] || icons['faBan']
+    let icon = icons[`${ prefix }${ iconName }`] || brands[`${ prefix }${ iconName }`] || icons['faBan']
 
     library.add(icon)
+
+    const materialIcon = muiIcons[iconName]
 
     const renderSwitch = () => {
       switch (prefix) {
         case 'mui':
-          return <MaterialIcon
+          return <SvgIcon
             className={ classNames.join(' ') }
-            iconName={ iconName }
+            component={ materialIcon }
+            onMouseDown={ onMouseDown }
+            onMouseUp={ onMouseUp }
+            style={ style }
+          />
+        case 'custom':
+          return <SvgIcon
+            className={ classNames.join(' ') }
+            component={ iconName }
             onMouseDown={ onMouseDown }
             onMouseUp={ onMouseUp }
             style={ style }
@@ -46,7 +57,7 @@ class Icon extends Component {
 
     return (
       <>
-        {renderSwitch()}
+        { renderSwitch() }
       </>
     )
   }

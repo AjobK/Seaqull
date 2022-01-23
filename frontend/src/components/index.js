@@ -42,7 +42,6 @@ import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
 import DraftJsTooltipButton from './draftjsTooltipButton'
 import MobileBar from './mobileBar'
-import MaterialIcon from './materialIcon'
 
 export {
   Button,
@@ -89,5 +88,4 @@ export {
   BanUser,
   DraftJsTooltipButton,
   MobileBar,
-  MaterialIcon,
 }
