@@ -9,9 +9,9 @@ import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
 import { DraftJsTooltipButton, MobileBar } from '../../components'
-import { ReactComponent as HeadingOne } from '../../static/icons/inlineToolbar/HeadingOne.svg'
-import { ReactComponent as HeadingTwo } from '../../static/icons/inlineToolbar/HeadingTwo.svg'
-import { ReactComponent as HeadingThree } from '../../static/icons/inlineToolbar/HeadingThree.svg'
+import HeadingOne from '../../static/icons/inlineToolbar/HeadingOne.svg'
+import HeadingTwo from '../../static/icons/inlineToolbar/HeadingTwo.svg'
+import HeadingThree from '../../static/icons/inlineToolbar/HeadingThree.svg'
 
 @inject('store')
 @observer
@@ -107,6 +107,8 @@ class PostContent extends Component {
 
   onToggleBlockStyling = (styling, e) => {
     e.preventDefault()
+    // const currentBlock = this.state.editorState.getCurrentContent().getBlocksAsArray()
+    // console.log(currentBlock)
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, styling))
   }
 
@@ -153,7 +155,7 @@ class PostContent extends Component {
             <DraftJsTooltipButton
               key={ i }
               iconName={ element.icon }
-              prefix={ 'custom' }
+              isHeadingButton={ true }
               mouseDown={ (e) => this.onToggleBlockStyling(element.styling, e) }
             />
           ))

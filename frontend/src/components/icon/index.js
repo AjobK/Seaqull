@@ -36,14 +36,6 @@ class Icon extends Component {
             onMouseUp={ onMouseUp }
             style={ style }
           />
-        case 'custom':
-          return <SvgIcon
-            className={ classNames.join(' ') }
-            component={ iconName }
-            onMouseDown={ onMouseDown }
-            onMouseUp={ onMouseUp }
-            style={ style }
-          />
         default:
           return <FontAwesomeIcon
             className={ classNames.join(' ') }

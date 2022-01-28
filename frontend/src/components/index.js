@@ -40,7 +40,7 @@ import GlobalNotification from './globalNotification'
 import ProfileCard from './profileCard'
 import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
-import DraftJsTooltipButton from './draftjsTooltipButton'
+import DraftJsTooltipButton from './tooltipButton'
 import MobileBar from './mobileBar'
 
 export {
