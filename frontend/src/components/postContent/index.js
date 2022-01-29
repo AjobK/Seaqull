@@ -8,7 +8,7 @@ import 'draft-js/dist/Draft.css'
 import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
-import { DraftJsTooltipButton, MobileBar } from '../../components'
+import { TooltipButton, MobileBar } from '../../components'
 import HeadingOne from '../../static/icons/inlineToolbar/HeadingOne.svg'
 import HeadingTwo from '../../static/icons/inlineToolbar/HeadingTwo.svg'
 import HeadingThree from '../../static/icons/inlineToolbar/HeadingThree.svg'
@@ -107,8 +107,6 @@ class PostContent extends Component {
 
   onToggleBlockStyling = (styling, e) => {
     e.preventDefault()
-    // const currentBlock = this.state.editorState.getCurrentContent().getBlocksAsArray()
-    // console.log(currentBlock)
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, styling))
   }
 
@@ -141,7 +139,7 @@ class PostContent extends Component {
       <>
         {
           inlineButtonStyling.map((element, i) => (
-            <DraftJsTooltipButton
+            <TooltipButton
               key={ i }
               iconName={ element.icon }
               prefix={ 'mui' }
@@ -152,7 +150,7 @@ class PostContent extends Component {
         <Separator />
         {
           headlineButtons.map((element, i) => (
-            <DraftJsTooltipButton
+            <TooltipButton
               key={ i }
               iconName={ element.icon }
               isHeadingButton={ true }
@@ -163,7 +161,7 @@ class PostContent extends Component {
         <Separator />
         {
           alignButtonArray.map((element, i) => (
-            <DraftJsTooltipButton
+            <TooltipButton
               key={ i }
               iconName={ element.icon }
               prefix={ 'mui' }
