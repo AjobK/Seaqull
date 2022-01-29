@@ -9,15 +9,13 @@ import '../../DraftFallback.css'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
 import { TooltipButton, MobileBar } from '../../components'
-import HeadingOne from '../../static/icons/inlineToolbar/HeadingOne.svg'
-import HeadingTwo from '../../static/icons/inlineToolbar/HeadingTwo.svg'
-import HeadingThree from '../../static/icons/inlineToolbar/HeadingThree.svg'
 
 @inject('store')
 @observer
 class PostContent extends Component {
   constructor(props) {
     super(props)
+
     const { type } = this.props
 
     this.type = type || 'content'
@@ -123,38 +121,26 @@ class PostContent extends Component {
   }
 
   getBlockStyle = (block) => {
-    let blockType = block.getType()
+    let blockType = block.getType().split('Format').pop()
 
-    switch (blockType) {
-      case 'FormatAlignLeft':
-        return blockType += ' DraftEditor-alignLeft'
-      case 'FormatAlignCenter':
-        return blockType += ' DraftEditor-alignCenter'
-      case 'FormatAlignRight':
-        return blockType += ' DraftEditor-alignRight'
-      default:
-        return null
-    }
+    return blockType
+      ? `DraftEditor-${blockType[0].toLowerCase() + blockType.slice(1)}`
+      : null
+  }
+
+  toPascalCase = (text) => {
+    console.log(text)
+    const words = text.split('-')
+    const capitalizedWord = words.map((word) => word[0].toUpperCase() + word.slice(1))
+    console.log(capitalizedWord.join(''))
+
+    return capitalizedWord.join('')
   }
 
   renderButtons = () => {
-    const inlineButtonStyling = [
-      { icon: 'FormatBold' },
-      { icon: 'FormatUnderlined' },
-      { icon: 'FormatItalic' },
-    ]
-
-    const headlineButtons = [
-      { icon: HeadingOne, styling: 'header-one' },
-      { icon: HeadingTwo, styling: 'header-two' },
-      { icon: HeadingThree, styling: 'header-three' },
-    ]
-
-    const alignButtonArray = [
-      { icon: 'FormatAlignLeft' },
-      { icon: 'FormatAlignCenter' },
-      { icon: 'FormatAlignRight' },
-    ]
+    const inlineButtonStyling = ['FormatBold', 'FormatUnderlined', 'FormatItalic']
+    const headlineButtons = ['header-one', 'header-two', 'header-three']
+    const alignButtonArray = ['FormatAlignLeft', 'FormatAlignCenter', 'FormatAlignRight']
 
     return (
       <>
@@ -162,9 +148,9 @@ class PostContent extends Component {
           inlineButtonStyling.map((element, i) => (
             <TooltipButton
               key={ i }
-              iconName={ element.icon }
+              iconName={ element }
               prefix={ 'mui' }
-              mouseDown={ (e) => this.onToggleInlineStyling(element.icon, e) }
+              mouseDown={ (e) => this.onToggleInlineStyling(element, e) }
             />
           ))
         }
@@ -173,9 +159,9 @@ class PostContent extends Component {
           headlineButtons.map((element, i) => (
             <TooltipButton
               key={ i }
-              iconName={ element.icon }
+              iconName={ require(`../../static/icons/inlineToolbar/${this.toPascalCase(element)}.svg`) }
               prefix={ 'custom' }
-              mouseDown={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
+              mouseDown={ (e) => this.onToggleBlockStyling(`${element}`, e) }
             />
           ))
         }
@@ -184,9 +170,9 @@ class PostContent extends Component {
           alignButtonArray.map((element, i) => (
             <TooltipButton
               key={ i }
-              iconName={ element.icon }
+              iconName={ element }
               prefix={ 'mui' }
-              mouseDown={ (e) => this.onToggleBlockStyling(element.icon, e) }
+              mouseDown={ (e) => this.onToggleBlockStyling(element, e) }
             />
           ))
         }
