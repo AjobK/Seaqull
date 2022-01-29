@@ -42,6 +42,7 @@ import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
 import TooltipButton from './tooltipButton'
 import MobileBar from './mobileBar'
+import IconCustom from './iconCustom'
 
 export {
   Button,
@@ -88,4 +89,5 @@ export {
   BanUser,
   TooltipButton,
   MobileBar,
+  IconCustom,
 }

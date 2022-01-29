@@ -4,7 +4,7 @@ $tooltip-hover: #EFEFEF;
 $height: 36px;
 $width: 36px;
 
-.draftJsButton {
+.tooltipButton {
 	background-color: #fbfbfb;
 	padding: 5px;
 	color: #888;
@@ -17,21 +17,5 @@ $width: 36px;
 	&:hover, &:focus {
 		background: $tooltip-hover;
 		outline: 0;
-	}
-
-	> figure {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		max-height: $height;
-		max-width: $width;
-		> img {
-			max-height: inherit;
-			max-width: inherit;
-			width: 34px;
-			height: 36px;
-		}
 	}
 }

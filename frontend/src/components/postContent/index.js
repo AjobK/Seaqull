@@ -36,6 +36,18 @@ class PostContent extends Component {
 
     this.editorInput = React.createRef()
 
+    this.customStyleMap = {
+      FormatBold: { fontWeight: 'bold' },
+      FormatUnderlined: { textDecoration: 'underline' },
+      FormatItalic: { fontStyle: 'italic' },
+    }
+
+    this.blockRenderMap = {
+      'HeadingOne': { element: 'h1' },
+      'HeadingTwo': { element: 'h2' },
+      'HeadingThree': { element: 'h3' },
+    }
+
     this.state = {
       editorState: EditorState.createEmpty(),
       focused: false,
@@ -113,14 +125,23 @@ class PostContent extends Component {
   getBlockStyle = (block) => {
     let blockType = block.getType()
 
-    return blockType ? `DraftEditor-align${ blockType[0].toUpperCase() }${ blockType.slice(1) }` : null
+    switch (blockType) {
+      case 'FormatAlignLeft':
+        return blockType += ' DraftEditor-alignLeft'
+      case 'FormatAlignCenter':
+        return blockType += ' DraftEditor-alignCenter'
+      case 'FormatAlignRight':
+        return blockType += ' DraftEditor-alignRight'
+      default:
+        return null
+    }
   }
 
-  returnButtons = () => {
+  renderButtons = () => {
     const inlineButtonStyling = [
-      { icon: 'FormatBold', styling: 'BOLD' },
-      { icon: 'FormatUnderlined', styling: 'UNDERLINE' },
-      { icon: 'FormatItalic', styling: 'ITALIC' },
+      { icon: 'FormatBold' },
+      { icon: 'FormatUnderlined' },
+      { icon: 'FormatItalic' },
     ]
 
     const headlineButtons = [
@@ -130,9 +151,9 @@ class PostContent extends Component {
     ]
 
     const alignButtonArray = [
-      { icon: 'FormatAlignLeft', styling: 'left' },
-      { icon: 'FormatAlignCenter', styling: 'center' },
-      { icon: 'FormatAlignRight', styling: 'right' },
+      { icon: 'FormatAlignLeft' },
+      { icon: 'FormatAlignCenter' },
+      { icon: 'FormatAlignRight' },
     ]
 
     return (
@@ -143,7 +164,7 @@ class PostContent extends Component {
               key={ i }
               iconName={ element.icon }
               prefix={ 'mui' }
-              mouseDown={ (e) => this.onToggleInlineStyling(element.styling, e) }
+              mouseDown={ (e) => this.onToggleInlineStyling(element.icon, e) }
             />
           ))
         }
@@ -153,8 +174,8 @@ class PostContent extends Component {
             <TooltipButton
               key={ i }
               iconName={ element.icon }
-              isHeadingButton={ true }
-              mouseDown={ (e) => this.onToggleBlockStyling(element.styling, e) }
+              prefix={ 'custom' }
+              mouseDown={ (e) => this.onToggleBlockStyling(`${element.styling}`, e) }
             />
           ))
         }
@@ -165,7 +186,7 @@ class PostContent extends Component {
               key={ i }
               iconName={ element.icon }
               prefix={ 'mui' }
-              mouseDown={ (e) => this.onToggleBlockStyling(element.styling, e) }
+              mouseDown={ (e) => this.onToggleBlockStyling(element.icon, e) }
             />
           ))
         }
@@ -202,7 +223,9 @@ class PostContent extends Component {
             stripPastedStyles={ true }
             handleBeforeInput={ this.handleBeforeInput }
             handlePastedText={ this.handlePastedText }
+            customStyleMap={ this.customStyleMap }
             blockStyleFn={ this.getBlockStyle }
+            blockRenderMap={ this.blockRenderMap }
             plugins={ this.plugins }
           />
 
@@ -212,14 +235,14 @@ class PostContent extends Component {
                 {
                   () => (
                     <>
-                      { this.returnButtons() }
+                      { this.renderButtons() }
                     </>
                   )
                 }
               </InlineToolbar>
               { !readOnly &&
                 <MobileBar>
-                  { this.returnButtons() }
+                  { this.renderButtons() }
                 </MobileBar>
               }
             </div>

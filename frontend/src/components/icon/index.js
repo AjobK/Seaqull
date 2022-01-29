@@ -5,6 +5,7 @@ import * as muiIcons from '@mui/icons-material'
 import * as brands from '@fortawesome/fontawesome-free-brands'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { SvgIcon } from '@mui/material'
+import IconCustom from '../iconCustom'
 
 class Icon extends Component {
 
@@ -34,6 +35,15 @@ class Icon extends Component {
             component={ materialIcon }
             onMouseDown={ onMouseDown }
             onMouseUp={ onMouseUp }
+            style={ style }
+          />
+        case 'custom':
+          return <IconCustom
+            className={ classNames.join(' ') }
+            iconName={ iconName }
+            onMouseDown={ onMouseDown }
+            onMouseUp={ onMouseUp }
+            onClick={ onClick }
             style={ style }
           />
         default:
