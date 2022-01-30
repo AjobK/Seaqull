@@ -259,6 +259,8 @@ export class PostService {
       return await this.deleteThumbnailAttachment(attachment, location)
     }
 
+    console.log(location)
+
     attachment = await this.convertThumbnailToAttachment(location)
 
     post.thumbnail_attachment = await this.attachmentRepository.saveAttachment(attachment)
