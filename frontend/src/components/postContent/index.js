@@ -129,10 +129,8 @@ class PostContent extends Component {
   }
 
   toPascalCase = (text) => {
-    console.log(text)
     const words = text.split('-')
     const capitalizedWord = words.map((word) => word[0].toUpperCase() + word.slice(1))
-    console.log(capitalizedWord.join(''))
 
     return capitalizedWord.join('')
   }
