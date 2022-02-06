@@ -47,15 +47,14 @@ class RegisterPrompt extends Component {
         this.props.store.profile.setProfileData(res.data.user)
         this.goToProfile(res.data.user.profile.display_name)
       })
-      .catch((res) => {
-        const { username, email, password, captcha } = res.response?.data?.errors
-
-        this.setState({
-          username: username || [],
-          email: email || [],
-          password: password || [],
-          generalError: captcha || [],
-        })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          this.handleError(err.response?.data?.message)
+        } else {
+          this.setState({
+            generalError: 'Internal server error'
+          })
+        }
       })
   }
 
@@ -91,6 +90,30 @@ class RegisterPrompt extends Component {
 
   onCaptchaError = () => {
     this.props.store.notification.setContent(popUpData.messages.captchaError)
+  }
+
+  handleError = (msg) => {
+    const errors = {
+      username: [],
+      email: [],
+      password: [],
+      generalError: [],
+    }
+
+    for (const elem of msg) {
+      const error = elem.toLowerCase()
+
+      errors[error.split(' ')[0]].push(error)
+
+      errors.generalError.push(elem)
+    }
+
+    this.setState({
+      username: errors.username,
+      email: errors.email,
+      password: errors.password,
+      generalError: errors.generalError,
+    })
   }
 
   render() {

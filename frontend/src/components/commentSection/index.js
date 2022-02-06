@@ -21,7 +21,7 @@ class CommentSection extends Component {
   loadComments() {
     const path = URLUtil.getLastPathArgument()
     const { backendUrl } = this.props.store.defaultData
-    const postCommentsUrl = `${backendUrl}/comment/${path}/${this.props.store.profile.loggedIn ? '' : 'no-login'}`
+    const postCommentsUrl = `${ backendUrl }/comment/${ path }/${ this.props.store.profile.loggedIn ? '' : 'no-login' }`
 
     Axios.get(postCommentsUrl, { withCredentials: true })
       .then((response) => {
