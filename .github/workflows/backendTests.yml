@@ -46,7 +46,7 @@ jobs:
       - name: Prepare for back-end tests
         run: |
           mv ormconfig.example.js ormconfig.js
-          mv .env.example env
+          mv .env.example .env
           npm install
       - name: Setup and seed database
         run: npm run reset
