@@ -73,6 +73,9 @@ export class AuthService {
   }
 
   private async attemptLogin(account: Account, password: string): Promise<void> {
+    const labelWithTimeUnsuccessfulLogin = 'unsuccessfull ' + Date.now()
+    console.time(labelWithTimeUnsuccessfulLogin)
+
     const passwordIsCorrect = await bcrypt.compare(password, account.password)
 
     if (passwordIsCorrect) {
@@ -86,12 +89,12 @@ export class AuthService {
 
     if (account.login_attempts_counts > 2) {
       const remainingTime = await this.accountRepository.lockAccount(account)
-
       throw new ForbiddenException({ errors: ['Too many login attempts'], remainingTime: remainingTime })
     }
 
     await this.accountRepository.updateAccount(account)
 
+    console.timeEnd(labelWithTimeUnsuccessfulLogin)
     throw new ForbiddenException({ errors: ['Incorrect username of password'] })
   }
 

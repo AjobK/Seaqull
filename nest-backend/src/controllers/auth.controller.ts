@@ -16,6 +16,7 @@ import { LoginDTO } from '../dtos/login.dto'
 import { Profile } from '../entities/profile.entity'
 import { CaptchaService } from '../services/captcha.service'
 import { AllowAny } from '../decorators/allow-any.decorator'
+import { Interval } from '@nestjs/schedule'
 
 @ApiTags('Auth')
 @Controller()
@@ -59,13 +60,19 @@ export class AuthController {
   @Post('/login')
   @AllowAny()
   public async login(@Req() req: Request, @Res() res: Response, @Body() loginDTO: LoginDTO): Promise<any> {
+    // Remove timing
+    const labelWithTime = 'label ' + Date.now()
+    console.time(labelWithTime)
+
     const isCaptchaValid = await this.captchaService.verifyHCaptcha(loginDTO.captcha)
 
     if (!isCaptchaValid) throw new ForbiddenException('We could not verify that you are not a robot')
 
     const account = await this.authorizationService.getAccountByUsername(loginDTO.username)
 
-    if (!account) throw new ForbiddenException({ errors: ['Incorrect username or password'] })
+    if (!account) {
+      throw new ForbiddenException({ errors: ['Incorrect username or password'] })
+    }
 
     const loginResponse = await this.authorizationService.login(account, loginDTO.password)
 
@@ -76,6 +83,8 @@ export class AuthController {
     res.status(200).json({
       user: loginResponse.account
     })
+
+    console.timeEnd(labelWithTime)
 
     res.send()
   }
