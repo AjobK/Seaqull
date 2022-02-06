@@ -45,7 +45,7 @@ jobs:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 50
+          --health-retries 5
         ports:
           - 5432:5432
 
@@ -64,7 +64,7 @@ jobs:
       - name: Log all files in folder
         run: ls -a
       - name: Start back-end server
-        run: npm start &
+        run: npm start
       - name: Wait for OK status
         uses: nev7n/wait_for_response@v1
         with:
