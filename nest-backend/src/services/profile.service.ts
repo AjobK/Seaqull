@@ -214,7 +214,7 @@ export class ProfileService {
     let filePath
 
     if (type === 'avatar') {
-      dimensions = 800
+      dimensions = { width: 800, height: 800 }
       filePath = 'profile/avatar'
       typeDefaultPath += 'defaultAvatar.png'
     } else if (type === 'banner') {
@@ -223,8 +223,11 @@ export class ProfileService {
       typeDefaultPath += 'defaultBanner.jpg'
     }
 
-    const location = await this.fileService.storeImage(file, filePath)
-    await this.fileService.convertImage(location, dimensions)
+    // const location = await this.fileService.storeImage(file, filePath)
+
+    const image = await this.fileService.convertImage(null, dimensions)
+
+    const location = await this.fileService.storeImage(image, filePath)
 
     if (attachment.path !== typeDefaultPath) {
       this.fileService.deleteImage(attachment.path)

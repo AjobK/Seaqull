@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Injectable } from '@nestjs/common'
 import { createWriteStream, existsSync, mkdirSync, unlink } from 'fs'
 import { createReadStream } from 'streamifier'
+import { Canvas, createCanvas, loadImage } from 'canvas'
 
 const sharp = require('sharp')
 
@@ -15,8 +16,16 @@ export class FileService {
     return extensions.indexOf(mimetype) != -1
   }
 
-  public async convertImage(path: string, dimensions: Record<number, number>): Promise<void> {
-    sharp(path).resize(dimensions)
+  public async convertImage(path: string, dimensions: { width: number, height: number }): Promise<Buffer> {
+    const canvas = createCanvas(dimensions.width, dimensions.height)
+    const ctx = canvas.getContext('2d')
+
+    const avatar = await loadImage(path)
+    ctx.drawImage(avatar, 0, 0)
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 1)'
+
+    return canvas.toBuffer()
   }
 
   public async storeImage(file: Express.Multer.File, path: string): Promise<string> {
