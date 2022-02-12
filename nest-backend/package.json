@@ -28,6 +28,7 @@
     "@nestjs/swagger": "^5.1.0",
     "@nestjs/typeorm": "^8.0.2",
     "bcrypt": "^5.0.1",
+    "canvas": "^2.9.0",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "class-transformer": "^0.4.0",
