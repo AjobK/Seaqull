@@ -28,7 +28,7 @@ class TimeUtil {
       const { interval, epoch } = this.getDuration(timeAgoInSeconds)
       const suffix = interval === 1 ? '' : 's'
 
-      return `${interval} ${epoch}${suffix} ago`
+      return `${ interval } ${ epoch }${ suffix } ago`
     }
 
     return 'Just now'

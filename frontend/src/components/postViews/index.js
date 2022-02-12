@@ -12,7 +12,7 @@ class PostViews extends Component {
 
   loadViews() {
     const path = URLUtil.getLastPathArgument()
-    const url = `http://localhost:8000/api/post/view/${path}`
+    const url = `http://localhost:8000/api/post/view/${ path }`
 
     Axios.get(url)
       .then((response) => {

@@ -51,12 +51,31 @@ class LoginPrompt extends Component {
           : this.goToProfile(user.profile.display_name)
       })
       .catch((res) => {
-        if (res.message === 'Network Error') {
+        if (res.status === 404) {
           NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
 
           return this.setState({
             username: ['No connection'],
             password: ['No connection'],
+            loadingTimeout: false,
+          })
+        }
+
+        if (res.response.data.message) {
+          const errors = {
+            username: [],
+            password: []
+          }
+
+          for (const elem of res.response.data.message) {
+            const error = elem.toLowerCase()
+
+            errors[error.split(' ')[0]].push(error)
+          }
+
+          return this.setState({
+            username: errors.username,
+            password: errors.password,
             loadingTimeout: false,
           })
         }

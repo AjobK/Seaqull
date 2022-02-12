@@ -23,7 +23,7 @@ class ProfileFollowerList extends Component {
 
     loadFollowers = () => {
       Axios.get(
-        `${this.props.store.defaultData.backendUrl}/profile/${this.props.user.username}/followers`)
+        `${ this.props.store.defaultData.backendUrl }/profile/${ this.props.user.username }/followers`)
         .then((res
         ) => {
           const followers = []

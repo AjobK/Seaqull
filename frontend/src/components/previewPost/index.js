@@ -18,7 +18,7 @@ class previewPost extends Component {
 
     return (
       <Link
-        to={ post.path ? `/posts/${post.path}` : '#' }
+        to={ post.path ? `/posts/${ post.path }` : '#' }
         className={ [styles.article, ...className || ''].join(' ') }
         style={ {
           backgroundImage: `url(${ post.thumbnail })`
