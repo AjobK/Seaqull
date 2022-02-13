@@ -78,7 +78,7 @@ class Post extends App {
         }
 
         let author = {
-          name: post.profile.display_name,
+          display_name: post.profile.display_name,
           bannerURL: '/src/static/dummy/user/banner.jpg',
           avatarURL: post.profile.avatar_attachment
             ? `${ defaultData.backendUrlBase }/${ post.profile.avatar_attachment }`
