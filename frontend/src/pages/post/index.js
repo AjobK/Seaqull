@@ -224,19 +224,13 @@ class Post extends App {
     const { profile } = this.props.store
     const { isEditing, isOwner, post, loaded, author } = this.state
 
-    const ownerAuthor = {
-      name: profile.display_name,
-      avatarURL: profile.avatarURL,
-      title: profile.title
-    }
-
     if (!loaded && !this.props.new)
       return <Loader />
 
     return (
       <Standard className={ styles.stdBgWhite }>
         <PostBanner
-          author={ this.props.new ? ownerAuthor : author }
+          author={ this.props.new ? profile : author }
           post={ this.state.post }
           isOwner={ isOwner }
           isNew={ this.props.new }
