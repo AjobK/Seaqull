@@ -23,8 +23,6 @@ export class PostLikeController {
   public async getRecentUserLikes(@Param('username') username: string): Promise<any[]> {
     const recentUserLikes = await this.postLikeService.getRecentUserLikes(username)
 
-    if (recentUserLikes.length < 1) throw new NotFoundException('No likes found for that username')
-
     return recentUserLikes
   }
 
