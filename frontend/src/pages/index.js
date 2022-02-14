@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { initStore } from '../stores'
 import { Provider } from 'mobx-react'
 import { GlobalNotification } from '../components'
@@ -10,6 +10,7 @@ import Error from './error'
 import Login from './login'
 import Register from './register'
 import { Header } from '../layouts'
+import GuardedRoute from '../components/guardedRoute'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class AppRouter extends Component {
   }
 
   render () {
+
     return (
       <Provider store={ this.store }>
         <>
@@ -32,13 +34,7 @@ class AppRouter extends Component {
                 <Route path='/profile' exact component={ Profile } />
                 <Route path='/profile/:path' exact component={ Profile } />
                 <Route path='/error' exact component={ Error } />
-                <Route path='/new-post' exact component={ () =>
-                  (this.store.profile.loggedIn
-                    ? ( <Post new={ true } />
-                    ) : (
-                      <Redirect to={ '/' }/>
-                    ))
-                } />
+                <GuardedRoute path={ '/new-post' } redirect={ '/' } component={ () => <Post new={ true } /> } />
                 <Route path='/posts/:postUrl' exact component={ Post } />
                 <Route path='/login' exact component={ Login } />
                 <Route path='/register' exact component={ Register } />
