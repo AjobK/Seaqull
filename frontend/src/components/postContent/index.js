@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, convertToRaw, ContentState } from 'draft-js'
+import { EditorState, Editor, convertToRaw, convertFromRaw, ContentState } from 'draft-js'
 import '../../DraftFallback.css'
 import { StyleUtil } from '../../util'
 
@@ -38,6 +38,18 @@ class PostContent extends Component {
 
   onChange = (editorState) => {
     this.setState({ editorState }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
+  }
+
+  // TODO: Make safe
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { callBackGetData, canceled, type } = nextProps
+
+    if (type == 'content') {
+      let calledBackData = callBackGetData()
+
+      if (canceled && calledBackData)
+        this.setContent(calledBackData)
+    }
   }
 
   handleBeforeInput = (chars) => {
@@ -83,16 +95,18 @@ class PostContent extends Component {
     ]
   }
 
-  resetContent() {
-    let eState =
-      typeof this.props.value == 'string'
-        ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
-        : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+  setContent(content) {
+    let convertedContent = convertFromRaw(content)
+    this.props.callBackSaveData(content)
 
     try {
-      eState = EditorState.createWithContent(this.props.value)
+      let eState = EditorState.createWithContent(
+        convertedContent
+      )
       this.setState({ editorState: eState })
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   componentDidMount() {
