@@ -69,7 +69,7 @@ class PostBanner extends Component {
   fetchDefaultThumbnail = () => {
     const { defaultData, notification } = this.props.store
 
-    Axios.get(`${defaultData.backendUrl}/post/thumbnail/default`)
+    Axios.get(`${ defaultData.backendUrl }/post/thumbnail/default`)
       .then((res) => {
         this.setState({
           thumbnail: res.data.thumbnail

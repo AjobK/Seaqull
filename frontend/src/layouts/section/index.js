@@ -33,7 +33,7 @@ class Section extends Component {
         onChange={ this.onChange }
         active={ this.state.sensorActive }
       >
-        <section className={ `${styles.wrapper} ${this.state.visibleClass} ${className || ''}` }>
+        <section className={ `${ styles.wrapper } ${ this.state.visibleClass } ${ className || '' }` }>
           { editable && (
             <PostContentBlock heading={ 'title' }>
               <Title value={ title } />

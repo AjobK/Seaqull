@@ -30,7 +30,7 @@ class BanUser extends Component {
     let url = 'ban'
 
     if (this.props.store.profile.role == 'moderator') {
-      url = 'shortBan'
+      url = 'ban/short'
     }
 
     Axios.patch(url, payload, { withCredentials: true })

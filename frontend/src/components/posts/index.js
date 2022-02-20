@@ -35,7 +35,7 @@ class Posts extends Component {
   fetchPosts = () => {
     this.setIsFetching(true)
 
-    Axios.get(`${ this.props.store.defaultData.backendUrl }/post/?page=${ this.state.page }`, { withCredentials: true })
+    Axios.get(`${ this.props.store.defaultData.backendUrl }/post?page=${ this.state.page }`, { withCredentials: true })
       .then((response) => response.data)
       .then((json) => {
         this.setIsFetching(false)
