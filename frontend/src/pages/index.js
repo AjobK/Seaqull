@@ -34,7 +34,7 @@ class AppRouter extends Component {
                 <Route path='/profile' exact component={ Profile } />
                 <Route path='/profile/:path' exact component={ Profile } />
                 <Route path='/error' exact component={ Error } />
-                <GuardedRoute path={ '/new-post' } redirect={ '/' } component={ () => <Post new={ true } /> } />
+                <GuardedRoute path={ '/new-post' } redirect={ '/login' } component={ () => <Post new={ true } /> } />
                 <Route path='/posts/:postUrl' exact component={ Post } />
                 <Route path='/login' exact component={ Login } />
                 <Route path='/register' exact component={ Register } />
