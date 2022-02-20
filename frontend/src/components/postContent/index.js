@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
@@ -11,17 +11,16 @@ import { StyleUtil } from '../../util'
 class PostContent extends Component {
   constructor(props) {
     super(props)
+
     const { type } = this.props
 
     this.type = type || 'content'
     this.selected = false
     this.maxLength = this.type == 'title' ? 128 : null
-    this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.editorInput = React.createRef()
     this.wasReadOnly = false
-    this.lastEditorStateBeforeSave
 
     this.state = {
       editorState: EditorState.createEmpty(),
@@ -96,17 +95,18 @@ class PostContent extends Component {
   }
 
   setContent(content) {
+    const { callBackSaveData } = this.props
     let convertedContent = convertFromRaw(content)
-    this.props.callBackSaveData(content)
 
     try {
       let eState = EditorState.createWithContent(
         convertedContent
       )
+
+      callBackSaveData(content)
+
       this.setState({ editorState: eState })
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) { }
   }
 
   componentDidMount() {

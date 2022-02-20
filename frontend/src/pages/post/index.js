@@ -32,9 +32,6 @@ class Post extends App {
 
     this.addedThumbnail = null
 
-    // TEMP?
-    this.contentRef = null
-
     this.state = {
       canceledEdit: false,
       isOwner: false,
