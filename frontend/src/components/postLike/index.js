@@ -78,6 +78,7 @@ class PostLike extends Component {
     })
   }
 
+  // TODO logging out does not cause the like button state to reset
   render() {
     const { likesAmount, isOwner } = this.props
 
