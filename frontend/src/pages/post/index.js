@@ -249,6 +249,8 @@ class Post extends App {
   }
 
   cancelEdit = () => {
+    // TODO:  We did this for a lack of a better solution. This triggers a prop state once enabling us to react
+    //        to a change in the parent (for postcontent). On cancelling edit we can revert the content.
     this.setState({
       isEditing: false,
       canceledEdit: true
