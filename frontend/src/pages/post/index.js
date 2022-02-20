@@ -32,6 +32,9 @@ class Post extends App {
 
     this.addedThumbnail = null
 
+    // TEMP?
+    this.contentRef = null
+
     this.state = {
       isOwner: false,
       isEditing: false,
@@ -248,13 +251,17 @@ class Post extends App {
   }
 
   cancelEdit = () => {
-    this.setIsEditing(false)
+    // this.setIsEditing(false)
+    let revertedPost = this.initialPost
+    revertedPost.content.blocks = []
 
-    this.initialPost && (
-      this.setState({
-        post: this.initialPost
-      })
-    )
+    console.log(this.contentRef)
+    this.contentRef.current.resetContent()
+
+    this.setState({
+      isEditing: false,
+      // post: null
+    })
   }
 
   render = () => {
@@ -302,7 +309,6 @@ class Post extends App {
 
               this.setState({ post: post })
             } }
-            getPostBeforeEdit={ () => post.title }
             readOnly={ isNew ? false : (!isEditing || !isOwner) }
             value={ post.title } // Initial no content, should be prefilled by API
           />
@@ -318,13 +324,19 @@ class Post extends App {
             <PostContent
               type={ 'content' }
               // Saves post content with draftJS content
+              ref={ (instance) => {
+                if (this.contentRef != null) return
+                console.log('REFFING')
+                console.log(instance)
+                console.log(instance.context)
+                this.contentRef = instance
+              } }
               callBackSaveData={ (data) => {
                 post.content = data
 
                 this.setState({ post: post })
               } }
-              getPostBeforeEdit={ () => post.content }
-              readOnly={ isNew ? false : (!isEditing || !isOwner) }
+              readOnly={ isNew ? false : !(isEditing && isOwner) }
               value={ post.content } // Initial no content, should be prefilled by API
             />
           </div>

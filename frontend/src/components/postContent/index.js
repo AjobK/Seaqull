@@ -21,6 +21,7 @@ class PostContent extends Component {
 
     this.editorInput = React.createRef()
     this.wasReadOnly = false
+    this.lastEditorStateBeforeSave
 
     this.state = {
       editorState: EditorState.createEmpty(),
@@ -82,6 +83,18 @@ class PostContent extends Component {
     ]
   }
 
+  resetContent() {
+    let eState =
+      typeof this.props.value == 'string'
+        ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
+        : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+
+    try {
+      eState = EditorState.createWithContent(this.props.value)
+      this.setState({ editorState: eState })
+    } catch (e) {}
+  }
+
   componentDidMount() {
     let eState =
       typeof this.props.value == 'string'
@@ -98,7 +111,7 @@ class PostContent extends Component {
   }
 
   render() {
-    const { type, readOnly, getPostBeforeEdit } = this.props
+    const { type, readOnly } = this.props
 
     return (
       <div>
