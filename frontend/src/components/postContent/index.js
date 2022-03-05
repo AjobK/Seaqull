@@ -38,6 +38,9 @@ class PostContent extends Component {
       FormatBold: { fontWeight: 'bold' },
       FormatUnderlined: { textDecoration: 'underline' },
       FormatItalic: { fontStyle: 'italic' },
+      'header-one': { fontSize: '2em', fontWeight: 'bold' },
+      'header-two': { fontSize: '1.5em', fontWeight: 'bold' },
+      'header-three': { fontSize: '1em', fontWeight: 'bold' },
     }
 
     this.blockRenderMap = {
@@ -56,11 +59,25 @@ class PostContent extends Component {
         right: -9999,
         display: 'none',
       },
+      selected: false,
     }
   }
 
   onChange = (editorState) => {
-    this.setState({ editorState }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
+    this.setState({
+      editorState,
+      selected: editorState.getSelection().getHasFocus()
+        ? this.isTextSelected(editorState)
+        : false
+    }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
+  }
+
+  isTextSelected = (editorState) => {
+    const selectionState = editorState.getSelection()
+    const start = selectionState.getStartOffset()
+    const end = selectionState.getEndOffset()
+
+    return start - end !== 0
   }
 
   handleBeforeInput = (chars) => {
@@ -91,6 +108,7 @@ class PostContent extends Component {
     this.focused = false
     this.setState({
       focused: false,
+      selected: false,
     })
 
     this.selected = false
@@ -159,7 +177,7 @@ class PostContent extends Component {
               key={ i }
               iconName={ require(`../../static/icons/inlineToolbar/${this.toPascalCase(element)}.svg`) }
               prefix={ 'custom' }
-              mouseDown={ (e) => this.onToggleBlockStyling(`${element}`, e) }
+              mouseDown={ (e) => this.onToggleInlineStyling(`${element}`, e) }
             />
           ))
         }
@@ -224,15 +242,13 @@ class PostContent extends Component {
                   )
                 }
               </InlineToolbar>
-              { !readOnly &&
+              { !readOnly && this.state.selected &&
                 <MobileBar>
                   { this.renderButtons() }
                 </MobileBar>
               }
             </div>
           }
-
-          {/*{ type != 'title' && this.inlineStyleControls()}*/}
         </PostContentBlock>
       </div>
     )

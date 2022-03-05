@@ -13,6 +13,7 @@ $width: 36px;
 	vertical-align: bottom;
 	height: $height;
 	width: $width;
+	cursor: pointer;
 
 	&:hover, &:focus {
 		background: $tooltip-hover;
