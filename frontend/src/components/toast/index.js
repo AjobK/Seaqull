@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { resolveValue, Toaster } from 'react-hot-toast'
 import styles from './toast.scss'
+import { Icon } from '../index'
 
 @inject('store')
 @observer
@@ -10,16 +11,18 @@ class Toast extends Component {
     super(props)
   }
 
-  getToastColors = (toastType) => {
+  getToastTypeStyles = (toastType) => {
+    return styles[`toast${toastType.charAt(0).toUpperCase() + toastType.slice(1)}`]
+  }
+
+  getToastTypeIcon = (toastType) => {
     switch (toastType) {
       case 'success':
-        return styles.toastSuccess
+        return (<Icon iconName={ 'Check' } />)
       case 'error':
-        return styles.toastError
-      case 'loading':
-        return styles.toastWarning
-      default:
-        return styles.toastGeneral
+        return (<Icon iconName={ 'ExclamationCircle' } />)
+      case 'warning':
+        return (<Icon iconName={ 'ExclamationTriangle' } />)
     }
   }
 
@@ -29,27 +32,34 @@ class Toast extends Component {
         position='bottom-right'
         reverseOrder={ false }
         toastOptions={ {
-          duration: 5000
+          duration: 50000
         } }
       >
         { (toast) => {
-          const message = JSON.parse(toast.message)
-          const colors = this.getToastColors(toast.type)
+          const toastInput = JSON.parse(toast.message)
+
+          if (!toastInput.type)
+            toastInput.type = 'general'
+
+          const toastTypeStyles = this.getToastTypeStyles(toastInput.type)
 
           return (
             <div
-              className={ [styles.toast, colors].join(' ') }
-              style={ {
-                opacity: toast.visible ? 1 : 0,
-              } }
+              className={ [styles.toast, toastTypeStyles].join(' ') }
+              style={ { opacity: toast.visible ? 1 : 0, } }
             >
               { resolveValue(
                 <>
-                  <p className={ [styles.toastText, styles.toastTitle].join(' ') }>
-                    { message.title }
-                  </p>
+                  <div className={ styles.toastHeader }>
+                    <p className={ styles.toastIcon }>
+                      { this.getToastTypeIcon(toastInput.type) }
+                    </p>
+                    <p className={ [styles.toastText, styles.toastTitle].join(' ') }>
+                      { toastInput.title }
+                    </p>
+                  </div>
                   <p className={ styles.toastText }>
-                    { message.content }
+                    { toastInput.content }
                   </p>
                 </>, toast)
               }

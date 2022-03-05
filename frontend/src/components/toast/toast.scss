@@ -16,6 +16,14 @@ $toast-line-width: 6px;
 		transform: translate(-$toast-padding - $toast-line-width, -$toast-padding);
 	}
 
+	&Header {
+		display: flex;
+	}
+
+	&Icon {
+		margin-right: 10px;
+	}
+
 	&Text {
 		margin-bottom: 5px;
 	}
@@ -31,8 +39,8 @@ $toast-line-width: 6px;
 			background-color: #1BCB5E;
 		}
 
-		.toastTitle {
-			color: #1BCB5E;
+		.toastTitle, .toastIcon {
+			color: #0D7637;
 		}
 	}
 
@@ -43,7 +51,7 @@ $toast-line-width: 6px;
 			background-color: #E5BA33;
 		}
 
-		.toastTitle {
+		.toastTitle, .toastIcon {
 			color: #E5BA33;
 		}
 	}
@@ -55,7 +63,7 @@ $toast-line-width: 6px;
 			background-color: #EB0012;
 		}
 
-		.toastTitle {
+		.toastTitle, .toastIcon {
 			color: #EB0012;
 		}
 	}
@@ -67,7 +75,7 @@ $toast-line-width: 6px;
 			background-color: #3F6BFA;
 		}
 
-		.toastTitle {
+		.toastTitle, .toastIcon {
 			display: none;
 		}
 	}
