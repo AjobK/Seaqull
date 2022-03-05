@@ -22,7 +22,7 @@ export class AuthService {
   public async loginVerify(token: string): Promise<Profile> {
     const decodedToken = this.jwtService.verify(token)
 
-    const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedToken.user_name)
+    const account = await this.accountRepository.getAccountProfileAndRoleByEmail(decodedToken.email)
     const profile = account.profile
 
     const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
@@ -40,6 +40,10 @@ export class AuthService {
     const account = await this.accountRepository.getAccountByUsername(username)
 
     return account
+  }
+
+  public async getAccountByEmail(email: string): Promise<Account> {
+    return await this.accountRepository.getAccountByEmail(email)
   }
 
   public async login(
@@ -63,7 +67,7 @@ export class AuthService {
 
     const payload: JwtPayload = {
       role_id,
-      user_name: account.user_name,
+      email: account.email,
       expiration: Date.now() + parseInt(process.env.JWT_EXPIRATION_TIME)
     }
 
@@ -73,7 +77,7 @@ export class AuthService {
   }
 
   private async attemptLogin(account: Account, password: string): Promise<void> {
-    const labelWithTimeUnsuccessfulLogin = 'unsuccessfull ' + Date.now()
+    const labelWithTimeUnsuccessfulLogin = 'unsuccessful ' + Date.now()
     console.time(labelWithTimeUnsuccessfulLogin)
 
     const passwordIsCorrect = await bcrypt.compare(password, account.password)
