@@ -1,0 +1,74 @@
+@import '../../styles/index.scss';
+
+$toast-padding: 10px;
+$toast-line-width: 6px;
+
+.toast {
+	padding: $toast-padding;
+	max-width: 600px;
+
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		width: $toast-line-width;
+		height: 100%;
+		transform: translate(-$toast-padding - $toast-line-width, -$toast-padding);
+	}
+
+	&Text {
+		margin-bottom: 5px;
+	}
+
+	&Title {
+		font-weight: bold;
+	}
+
+	&Success {
+		background-color: #E5F9EE;
+
+		&:before {
+			background-color: #1BCB5E;
+		}
+
+		.toastTitle {
+			color: #1BCB5E;
+		}
+	}
+
+	&Warning {
+		background-color: #FCF8E7;
+
+		&:before {
+			background-color: #E5BA33;
+		}
+
+		.toastTitle {
+			color: #E5BA33;
+		}
+	}
+
+	&Error {
+		background-color: #FDE5E5;
+
+		&:before {
+			background-color: #EB0012;
+		}
+
+		.toastTitle {
+			color: #EB0012;
+		}
+	}
+
+	&General {
+		background-color: #EBEFFE;
+
+		&:before {
+			background-color: #3F6BFA;
+		}
+
+		.toastTitle {
+			display: none;
+		}
+	}
+}
