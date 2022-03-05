@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { resolveValue, Toaster } from 'react-hot-toast'
+import { resolveValue, Toaster, ToastBar } from 'react-hot-toast'
 import styles from './toast.scss'
 import { Icon } from '../index'
 import { toastData } from './toastData'
@@ -17,54 +17,51 @@ class Toast extends Component {
   }
 
   getToastTypeIcon = (toastType) => {
-    const { success, error, warning } = toastData.types
-
-    switch (toastType) {
-      case success:
-        return (<Icon iconName={ 'Check' } />)
-      case error:
-        return (<Icon iconName={ 'ExclamationCircle' } />)
-      case warning:
-        return (<Icon iconName={ 'ExclamationTriangle' } />)
-    }
+    return (<Icon iconName={ toastData.types[toastType].icon } />)
   }
 
   render() {
     return (
       <Toaster
-        position='bottom-right'
+        position='top-right'
         reverseOrder={ false }
+        toastOptions={ { className: styles.toastRoot } }
       >
-        { (toast) => {
-          const toastInput = JSON.parse(toast.message)
+        { (toast) =>
+          <ToastBar toast={ toast }>
+            { () => {
+              const toastInput = JSON.parse(toast.message)
 
-          if (!toastInput.type)
-            toastInput.type = 'general'
+              if (!toastInput.type)
+                toastInput.type = toastData.types.general.name
 
-          const toastTypeStyles = this.getToastTypeStyles(toastInput.type)
+              const toastTypeStyles = this.getToastTypeStyles(toastInput.type)
 
-          return (
-            <div
-              className={ [styles.toast, toastTypeStyles].join(' ') }
-              style={ { opacity: toast.visible ? 1 : 0 } }
-            >
-              { resolveValue(
-                <>
-                  <div className={ styles.toastHeader }>
-                    <p className={ styles.toastIcon }>
-                      { this.getToastTypeIcon(toastInput.type) }
-                    </p>
-                    <p className={ [styles.toastText, styles.toastTitle].join(' ') }>
-                      { toastInput.title }
-                    </p>
-                  </div>
-                  <p className={ styles.toastText }>
-                    { toastInput.description }
-                  </p>
-                </>, toast)
-              }
-            </div>
-          )}}
+              return (
+                <div
+                  className={ [styles.toast, toastTypeStyles].join(' ') }
+                  style={ { opacity: toast.visible ? 1 : 0, } }
+                >
+                  { resolveValue(
+                    <>
+                      <div className={ styles.toastHeader }>
+                        <p className={ styles.toastIcon }>
+                          { this.getToastTypeIcon(toastInput.type) }
+                        </p>
+                        <p className={ [styles.toastText, styles.toastTitle].join(' ') }>
+                          { toastInput.title }
+                        </p>
+                      </div>
+                      <p className={ styles.toastText }>
+                        { toastInput.description }
+                      </p>
+                    </>, toast)
+                  }
+                </div>
+              )
+            } }
+          </ToastBar>
+        }
       </Toaster>
     )
   }

@@ -5,14 +5,18 @@ $toast-line-width: 6px;
 
 .toast {
 	padding: $toast-padding;
-	max-width: 600px;
+	margin: -$toast-padding;
+
+	&Root {
+		margin-top: $header-height;
+	}
 
 	&:before {
 		content: '';
 		display: block;
 		position: absolute;
 		width: $toast-line-width;
-		height: 100%;
+		height: calc(100% + #{ $toast-line-width / 2 });
 		transform: translate(-$toast-padding - $toast-line-width, -$toast-padding);
 	}
 
