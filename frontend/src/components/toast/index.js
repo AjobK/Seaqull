@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import { resolveValue, Toaster } from 'react-hot-toast'
 import styles from './toast.scss'
 import { Icon } from '../index'
+import { toastData } from './toastData'
 
 @inject('store')
 @observer
@@ -12,16 +13,18 @@ class Toast extends Component {
   }
 
   getToastTypeStyles = (toastType) => {
-    return styles[`toast${toastType.charAt(0).toUpperCase() + toastType.slice(1)}`]
+    return styles[`toast${ toastType.charAt(0).toUpperCase() + toastType.slice(1) }`]
   }
 
   getToastTypeIcon = (toastType) => {
+    const { success, error, warning } = toastData.types
+
     switch (toastType) {
-      case 'success':
+      case success:
         return (<Icon iconName={ 'Check' } />)
-      case 'error':
+      case error:
         return (<Icon iconName={ 'ExclamationCircle' } />)
-      case 'warning':
+      case warning:
         return (<Icon iconName={ 'ExclamationTriangle' } />)
     }
   }
@@ -31,9 +34,6 @@ class Toast extends Component {
       <Toaster
         position='bottom-right'
         reverseOrder={ false }
-        toastOptions={ {
-          duration: 50000
-        } }
       >
         { (toast) => {
           const toastInput = JSON.parse(toast.message)
@@ -46,7 +46,7 @@ class Toast extends Component {
           return (
             <div
               className={ [styles.toast, toastTypeStyles].join(' ') }
-              style={ { opacity: toast.visible ? 1 : 0, } }
+              style={ { opacity: toast.visible ? 1 : 0 } }
             >
               { resolveValue(
                 <>
@@ -59,7 +59,7 @@ class Toast extends Component {
                     </p>
                   </div>
                   <p className={ styles.toastText }>
-                    { toastInput.content }
+                    { toastInput.description }
                   </p>
                 </>, toast)
               }
