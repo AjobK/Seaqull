@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { resolveValue, Toaster, ToastBar } from 'react-hot-toast'
+import { resolveValue, Toaster, ToastBar, toast } from 'react-hot-toast'
 import styles from './toast.scss'
 import { Icon } from '../index'
 import { toastData } from './toastData'
@@ -20,6 +20,15 @@ class Toast extends Component {
     return (<Icon iconName={ toastData.types[toastType].icon } />)
   }
 
+  getToastInput = (toast) => {
+    const toastInput = JSON.parse(toast.message)
+
+    if (!toastInput.type)
+      toastInput.type = toastData.types.general.name
+
+    return toastInput
+  }
+
   render() {
     return (
       <Toaster
@@ -27,20 +36,17 @@ class Toast extends Component {
         reverseOrder={ false }
         toastOptions={ { className: styles.toastRoot } }
       >
-        { (toast) =>
-          <ToastBar toast={ toast }>
+        { (t) =>
+          <ToastBar toast={ t }>
             { () => {
-              const toastInput = JSON.parse(toast.message)
-
-              if (!toastInput.type)
-                toastInput.type = toastData.types.general.name
-
+              const toastInput = this.getToastInput(t)
               const toastTypeStyles = this.getToastTypeStyles(toastInput.type)
 
               return (
                 <div
                   className={ [styles.toast, toastTypeStyles].join(' ') }
-                  style={ { opacity: toast.visible ? 1 : 0, } }
+                  style={ { opacity: t.visible ? 1 : 0, } }
+                  onClick={ () => toast.dismiss(t.id) }
                 >
                   { resolveValue(
                     <>
@@ -55,7 +61,7 @@ class Toast extends Component {
                       <p className={ styles.toastText }>
                         { toastInput.description }
                       </p>
-                    </>, toast)
+                    </>, t)
                   }
                 </div>
               )
