@@ -23,7 +23,7 @@ class Toast extends Component {
   render() {
     return (
       <Toaster
-        position='top-right'
+        position='bottom-right'
         reverseOrder={ false }
         toastOptions={ { className: styles.toastRoot } }
       >

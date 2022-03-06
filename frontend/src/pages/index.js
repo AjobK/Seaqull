@@ -10,7 +10,7 @@ import Error from './error'
 import Login from './login'
 import Register from './register'
 import { Header } from '../layouts'
-import { toast } from 'react-hot-toast'
+import { ToastUtil } from '../util'
 import { toastData } from '../components/toast/toastData'
 
 class AppRouter extends Component {
@@ -20,7 +20,7 @@ class AppRouter extends Component {
     this.store = initStore(true)
     this.store.profile.loginVerify()
 
-    toast(JSON.stringify(toastData.messages.prototypeNotification))
+    ToastUtil.createToast(toastData.messages.prototypeNotification)
   }
 
   render () {
