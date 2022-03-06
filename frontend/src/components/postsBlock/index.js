@@ -8,7 +8,7 @@ class PostsBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      posts: props.posts,
+      posts: [],
     }
   }
 
@@ -19,7 +19,7 @@ class PostsBlock extends Component {
   convertPosts() {
     let convertedPosts = []
 
-    this.state.posts.forEach((post) => {
+    this.props.posts.forEach((post) => {
       try {
         post.title = this.getRawContentFromPostData(post.title)
         post.readTime = TextUtil.getReadTimeFromText(this.getRawContentFromPostData(post.content))
@@ -52,11 +52,11 @@ class PostsBlock extends Component {
             <PostsBlockLarge post={ this.state.posts[0] } />
           </div>
         )}
-        <div className={ `${styles.small} ${styles.small1}` }>
+        <div className={ `${ styles.small } ${ styles.small1 }` }>
           {this.state.posts[1] && <PostsBlockSmall post={ this.state.posts[1] } />}
           {this.state.posts[2] && <PostsBlockSmall post={ this.state.posts[2] } />}
         </div>
-        <div className={ `${styles.small} ${styles.small2}` }>
+        <div className={ `${ styles.small } ${ styles.small2 }` }>
           {this.state.posts[3] && <PostsBlockSmall post={ this.state.posts[3] } />}
           {this.state.posts[4] && <PostsBlockSmall post={ this.state.posts[4] } />}
         </div>

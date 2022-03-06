@@ -10,7 +10,7 @@ class FormInput extends Component {
 
     this.elId = []
     this.id = this.getElId(name)
-    this.toolTipId = this.getElId(`${name}ToolTip`)
+    this.toolTipId = this.getElId(`${ name }ToolTip`)
 
     this.state = {
       passwordVisible: false,
@@ -98,8 +98,8 @@ class FormInput extends Component {
           />
           {isPassword && (
             <Icon
-              className={ `${styles.icon} ${styles.iconPassword}` }
-              iconName={ 'Eye' }
+              className={ `${ styles.icon } ${ styles.iconPassword }` }
+              iconName={ passwordVisible ? 'EyeSlash' : 'Eye' }
               onClick={ this.togglePasswordVisible }
             />
           )}
