@@ -3,14 +3,23 @@
 $toast-padding: 10px;
 $toast-line-width: 6px;
 
+$toast-success-primary: #1BCB5E;
+$toast-success-secondary: #E5F9EE;
+$toast-success-text: #0D7637;
+
+$toast-warning-primary: #E5BA33;
+$toast-warning-secondary: #FCF8E7;
+
+$toast-error-primary: #EB0012;
+$toast-error-secondary: #FDE5E5;
+
+$toast-general-primary: #3F6BFA;
+$toast-general-secondary: #EBEFFE;
+
 .toast {
 	padding: $toast-padding;
 	margin: -$toast-padding;
 	border-left: $toast-line-width solid;
-
-	&Root {
-		margin-top: $header-height;
-	}
 
 	&Header {
 		display: flex;
@@ -29,35 +38,35 @@ $toast-line-width: 6px;
 	}
 
 	&Success {
-		background-color: #E5F9EE;
-		border-color: #1BCB5E;
+		background-color: $toast-success-secondary;
+		border-color: $toast-success-primary;
 
 		.toastTitle, .toastIcon {
-			color: #0D7637;
+			color: $toast-success-text;
 		}
 	}
 
 	&Warning {
-		background-color: #FCF8E7;
-		border-color: #E5BA33;
+		background-color: $toast-warning-secondary;
+		border-color: $toast-warning-primary;
 
 		.toastTitle, .toastIcon {
-			color: #E5BA33;
+			color: $toast-warning-primary;
 		}
 	}
 
 	&Error {
-		background-color: #FDE5E5;
-		border-color: #EB0012;
+		background-color: $toast-error-secondary;
+		border-color: $toast-error-primary;
 
 		.toastTitle, .toastIcon {
-			color: #EB0012;
+			color: $toast-error-primary;
 		}
 	}
 
 	&General {
-		background-color: #EBEFFE;
-		border-color: #3F6BFA;
+		background-color: $toast-general-secondary;
+		border-color: $toast-general-primary;
 
 		.toastTitle, .toastIcon {
 			display: none;

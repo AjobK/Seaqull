@@ -16,15 +16,11 @@ class Toast extends Component {
     return styles[`toast${ toastType.charAt(0).toUpperCase() + toastType.slice(1) }`]
   }
 
-  getToastTypeIcon = (toastType) => {
-    return (<Icon iconName={ toastData.types[toastType].icon } />)
-  }
-
   getToastInput = (toast) => {
     const toastInput = JSON.parse(toast.message)
 
     if (!toastInput.type)
-      toastInput.type = toastData.types.general.name
+      toastInput.type = toastData.types.general.type
 
     return toastInput
   }
@@ -34,7 +30,6 @@ class Toast extends Component {
       <Toaster
         position='bottom-right'
         reverseOrder={ false }
-        toastOptions={ { className: styles.toastRoot } }
       >
         { (t) =>
           <ToastBar toast={ t }>
@@ -44,7 +39,7 @@ class Toast extends Component {
 
               return (
                 <div
-                  className={ [styles.toast, toastTypeStyles].join(' ') }
+                  className={ `${ styles.toast } ${ toastTypeStyles }` }
                   style={ { opacity: t.visible ? 1 : 0, } }
                   onClick={ () => toast.dismiss(t.id) }
                 >
@@ -52,9 +47,9 @@ class Toast extends Component {
                     <>
                       <div className={ styles.toastHeader }>
                         <p className={ styles.toastIcon }>
-                          { this.getToastTypeIcon(toastInput.type) }
+                          <Icon iconName={ toastInput.icon } />
                         </p>
-                        <p className={ [styles.toastText, styles.toastTitle].join(' ') }>
+                        <p className={ `${ styles.toastText } ${ styles.toastTitle }` }>
                           { toastInput.title }
                         </p>
                       </div>
