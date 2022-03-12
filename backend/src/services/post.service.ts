@@ -1,4 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common'
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { v4 as uuidv4 } from 'uuid'
 import { ConfigService } from '@nestjs/config'
@@ -185,9 +190,9 @@ export class PostService {
     const post = await this.postRepository.getPostByPath(path)
 
     if (
-      !post ||
-      post.profile.display_name !== user.profile.display_name ||
-      !(await this.hasRemovePostPermission(user))
+      !(post ||
+      post.profile.display_name == user.profile.display_name ||
+      (await this.hasRemovePostPermission(user)))
     ) {
       throw new ForbiddenException({
         message: 'The authorized requesting user does not have access to this resource'
