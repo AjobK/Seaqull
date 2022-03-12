@@ -90,7 +90,7 @@ class PostBanner extends Component {
   render() {
     const { author, isOwner } = this.props
 
-    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.display_name)
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
