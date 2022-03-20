@@ -63,8 +63,8 @@ class Comment extends Component {
   }
 
   onReplyAdd = () => {
-    this.setState({ showReplies: true })
     this.props.onReplyAdd()
+    this.setState({ showReplies: true })
   }
 
   onReplyClick = () => {

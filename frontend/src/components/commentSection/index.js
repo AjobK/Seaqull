@@ -6,7 +6,7 @@ import Axios from 'axios'
 import styles from './commentSection.scss'
 
 import { Section } from '../../layouts'
-import { Comment, Loader } from '../'
+import { Comment } from '../'
 import { CommentForm } from '../'
 import { URLUtil } from '../../util/'
 
@@ -15,36 +15,32 @@ import { URLUtil } from '../../util/'
 class CommentSection extends Component {
   constructor(props) {
     super(props)
-    this.state = { isPostOwner: props.isPostOwner, comments: [], isLoaded: false }
+    this.state = { isPostOwner: props.isPostOwner, comments: [] }
   }
 
-  loadComments = () => {
-    this.setState({
-      isLoaded: false
-    })
-
+  loadComments() {
     const path = URLUtil.getLastPathArgument()
     const { backendUrl } = this.props.store.defaultData
     const postCommentsUrl = `${ backendUrl }/comment/${ path }/${ this.props.store.profile.loggedIn ? '' : 'no-login' }`
 
     Axios.get(postCommentsUrl, { withCredentials: true })
       .then((response) => {
-        const comments = []
+        // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
+        this.setState({ comments: [] }, () => {
+          let newComments = response.data.map((element) => {
+            const comment = element.comment
+            comment.likes = {
+              commentLikes: element.commentLikePayload,
+              profileHasLiked: element.profileHasLikedComment,
+              length: element.commentLikePayload.length
+            }
 
-        response.data.forEach((element) => {
-          const comment = element.comment
-          comment.likes = {
-            commentLikes: element.commentLikePayload,
-            profileHasLiked: element.profileHasLikedComment,
-            length: element.commentLikePayload.length
-          }
+            return comment
+          })
 
-          comments.push(comment)
-        })
-
-        this.setState({
-          comments: this.nestComments(comments),
-          isLoaded: true
+          this.setState({
+            comments: this.nestComments(newComments)
+          })
         })
       })
       .catch((err) => {
@@ -140,7 +136,7 @@ class CommentSection extends Component {
   )
 
   render() {
-    return this.state.isLoaded ? (
+    return (
       <div className={ styles.commentSection }>
         <Section noTitle>
           {this.displayCommentForm()}
@@ -158,7 +154,7 @@ class CommentSection extends Component {
           )}
         </Section>
       </div>
-    ) : <Loader/>
+    )
   }
 }
 
