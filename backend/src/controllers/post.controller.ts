@@ -36,11 +36,13 @@ export class PostController {
   @Get('/timeout')
   public async postTimeoutPassed(
     @AuthorizedUser() user: Account
-  ): Promise<{ message: string, allowedToPost: boolean }> {
-    const allowedToPost = await this.postService.isAllowedToPost(user)
+  ): Promise<{ message: string, allowedToPost: boolean, msDiff: number }> {
+    const { allowedToPost, msDiff } = await this.postService.isAllowedToPost(user)
 
     return {
-      message: allowedToPost ? 'Success' : 'You are not allowed to post yet', allowedToPost
+      message: allowedToPost ? 'Success' : 'You are not allowed to post yet',
+      allowedToPost,
+      msDiff
     }
   }
 

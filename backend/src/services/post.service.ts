@@ -246,15 +246,19 @@ export class PostService {
     return `${ this.configService.get('BACKEND_URL') }${ banner.path }`
   }
 
-  public async isAllowedToPost(user: Account): Promise<boolean> {
+  public async isAllowedToPost(user: Account): Promise<{ allowedToPost: boolean, msDiff: number }> {
     const post = await this.postRepository.getLastPostByProfile(user.profile)
 
+    let allowedToPost = true
+
+    const msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
+
     if (post &&
-      (new Date().getMilliseconds() - post.created_at.getMilliseconds()) < parseInt(process.env.POST_TIMEOUT)) {
-      return false
+      msDiff > parseInt(process.env.POST_TIMEOUT)) {
+      allowedToPost = false
     }
 
-    return true
+    return { allowedToPost, msDiff: msDiff }
   }
 
   private async createThumbnailAttachment(file: Express.Multer.File) {

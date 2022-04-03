@@ -145,7 +145,13 @@ class Post extends App {
     }
   }
 
-  createPost = () => {
+  createPost = async () => {
+    const allowedToPost = await this.checkPostTimeout()
+
+    if (!allowedToPost) {
+      return
+    }
+
     const fd = new FormData()
 
     fd.append('file', this.addedThumbnail)
@@ -172,6 +178,12 @@ class Post extends App {
 
       notification.setContent(popUpData.messages.updatePostNotification)
     })
+  }
+
+  checkPostTimeout = async () => {
+    const response = await Axios.get('/post/timeout', { withCredentials: true })
+
+    return response.data.allowedToPost
   }
 
   onThumbnailAdded = (thumbnail) => {
