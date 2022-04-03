@@ -141,6 +141,11 @@ export class PostService {
   }
 
   public async createPost(createPostDTO: CreatePostDTO, file: Express.Multer.File, user: Account): Promise<string> {
+    if (!this.isAllowedToPost(user)) {
+      //TODO: add messaging system if not there yet?
+      return null
+    }
+
     let thumbnailAttachment
     const newPost = new Post()
 
@@ -239,6 +244,17 @@ export class PostService {
     const banner = await this.updateThumbnailAttachment(post, file)
 
     return `${ this.configService.get('BACKEND_URL') }${ banner.path }`
+  }
+
+  public async isAllowedToPost(user: Account): Promise<boolean> {
+    const post = await this.postRepository.getLastPostByProfile(user.profile)
+
+    if (post &&
+      (new Date().getMilliseconds() - post.created_at.getMilliseconds()) < parseInt(process.env.POST_TIMEOUT)) {
+      return false
+    }
+
+    return true
   }
 
   private async createThumbnailAttachment(file: Express.Multer.File) {

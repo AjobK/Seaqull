@@ -33,6 +33,17 @@ export class PostController {
     return await this.postService.getPosts(page)
   }
 
+  @Get('/timeout')
+  public async postTimeoutPassed(
+    @AuthorizedUser() user: Account
+  ): Promise<{ message: string, allowedToPost: boolean }> {
+    const allowedToPost = await this.postService.isAllowedToPost(user)
+
+    return {
+      message: allowedToPost ? 'Success' : 'You are not allowed to post yet', allowedToPost
+    }
+  }
+
   @Get('/:path')
   @AllowAny()
   public async getPostByPath(
