@@ -92,7 +92,7 @@ export class ProfileController {
     }
 
     res.status(200).json({
-      user: publicPayload
+      verification: publicPayload
     })
 
     res.send()

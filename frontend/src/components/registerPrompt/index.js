@@ -17,7 +17,6 @@ class RegisterPrompt extends Component {
       username: null,
       email: null,
       password: null,
-      generalError: null
     }
 
     this.captchaRef = createRef()
@@ -43,9 +42,10 @@ class RegisterPrompt extends Component {
 
     Axios.post('/profile/register', payload, { withCredentials: true })
       .then((res) => {
-        this.props.store.profile.loginVerify()
-        this.props.store.profile.setProfileData(res.data.user)
-        this.goToProfile(res.data.user.profile.display_name)
+        this.props.onRegistration(res.data.verification)
+        // this.props.store.profile.loginVerify()
+        // this.props.store.profile.setProfileData(res.data.user)
+        // this.goToProfile(res.data.user.profile.display_name)
       })
       .catch((err) => {
         if (err.response.status === 400) {
