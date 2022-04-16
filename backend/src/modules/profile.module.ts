@@ -13,6 +13,7 @@ import { AttachmentRepository } from '../repositories/attachment.repository'
 import { ConfigService } from '@nestjs/config'
 import { FileService } from '../services/file.service'
 import { CaptchaService } from '../services/captcha.service'
+import { VerificationRepository } from '../repositories/verification.repository'
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { CaptchaService } from '../services/captcha.service'
       TitleRepository,
       BanRepository,
       RoleRepository,
-      AttachmentRepository
+      AttachmentRepository,
+      VerificationRepository
     ])
   ],
   controllers: [ProfileController],

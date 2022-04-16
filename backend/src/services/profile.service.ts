@@ -27,12 +27,15 @@ import { FileService } from './file.service'
 import { Attachment } from '../entities/attachment.entity'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
+import { Verification } from '../entities/verification'
+import { VerificationRepository } from '../repositories/verification.repository'
 
 @Injectable()
 export class ProfileService {
   constructor(
     @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
+    @InjectRepository(VerificationRepository) private readonly verificationRepository: VerificationRepository,
     @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
     @InjectRepository(TitleRepository) private readonly titleRepository: TitleRepository,
     @InjectRepository(ProfileFollowedByRepository)
@@ -131,21 +134,22 @@ export class ProfileService {
     if (credentialsInUse) throw new UnauthorizedException('Account with this email or username is already in use')
 
     const createAccount = await this.saveProfile(registerDTO, ip)
+    const verification = await this.createVerification(registerDTO)
 
-    const payload: JwtPayload = {
-      role_id: createAccount.role.id,
-      user_name: createAccount.user_name,
-      expiration: Date.now() + parseInt(this.configService.get('JWT_EXPIRATION')),
-    }
-
-    const token = this.jwtService.sign(payload)
+    // todo do after verify
+    // const payload: JwtPayload = {
+    //   role_id: createAccount.role.id,
+    //   user_name: createAccount.user_name,
+    //   expiration: Date.now() + parseInt(this.configService.get('JWT_EXPIRATION')),
+    // }
+    //
+    // const token = this.jwtService.sign(payload)
 
     return {
       role: createAccount.role,
       profile: createAccount.profile,
       username: createAccount.user_name,
-      email: createAccount.email,
-      token
+      email: createAccount.email
     }
   }
 
@@ -202,6 +206,20 @@ export class ProfileService {
     const createdAccount = await this.accountRepository.saveAccount(acc)
 
     return createdAccount
+  }
+
+  private async createVerification(registerDTO: RegisterDTO): Promise<Verification> {
+    const newVerification = new Verification()
+    newVerification.code = await this.generateVerificationCode(registerDTO.email)
+    newVerification.expires_at = new Date()
+
+    return await this.verificationRepository.saveVerification(newVerification)
+  }
+
+  private async generateVerificationCode(email: string): Promise<string> {
+    const emailHash = await bcrypt.hash(email, 5)
+
+    return uuidv4(emailHash)
   }
 
   private async updateAttachment(file: Express.Multer.File, username: string, type: string): Promise<any> {
