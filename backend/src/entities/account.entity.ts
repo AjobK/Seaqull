@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToOne } from 'typeorm'
 import { Role } from './role.entity'
 import { Profile } from './profile.entity'
-import { Verification } from './verification'
+import { Verification } from './verification.entity'
 
 @Entity('account')
 export class Account {
@@ -18,7 +18,7 @@ export class Account {
 
     @OneToOne(() => Verification, { nullable: true })
     @JoinColumn({ name: 'verification_id', referencedColumnName: 'id' })
-    verification: Profile
+    verification: Verification
 
     @Column({ unique: true })
     user_name: string

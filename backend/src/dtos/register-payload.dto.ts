@@ -1,14 +1,13 @@
-import { Profile } from '../entities/profile.entity'
-import { Role } from '../entities/role.entity'
-
 export class RegisterPayloadDTO {
-  role: Role
+  // role: Role
 
-  profile: Profile
+  // profile: Profile
 
-  username: string
+  // username: string
+
+  verificationUrl: string
 
   email: string
 
-  token?: string
+  // token?: string
 }

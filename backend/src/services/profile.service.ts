@@ -27,7 +27,7 @@ import { FileService } from './file.service'
 import { Attachment } from '../entities/attachment.entity'
 import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { ProfileUpdateDTO } from '../dtos/profile-update.dto'
-import { Verification } from '../entities/verification'
+import { Verification } from '../entities/verification.entity'
 import { VerificationRepository } from '../repositories/verification.repository'
 
 @Injectable()
@@ -144,12 +144,11 @@ export class ProfileService {
     // }
     //
     // const token = this.jwtService.sign(payload)
+    const verificationUrl = `${ process.env.BACKEND_URL }/api/account/verify?code=${ verification.code }`
 
     return {
-      role: createAccount.role,
-      profile: createAccount.profile,
-      username: createAccount.user_name,
-      email: createAccount.email
+      email: createAccount.email,
+      verificationUrl
     }
   }
 
