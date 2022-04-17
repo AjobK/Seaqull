@@ -252,7 +252,6 @@ export class PostService {
     let allowedToPost = true
 
     let msDiff = 0
-    console.log(post)
 
     if (post) {
       msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
