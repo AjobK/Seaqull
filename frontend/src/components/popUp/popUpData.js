@@ -2,7 +2,8 @@ export const popUpData = {
   'messages': {
     'networkError': {
       'title': 'Network Error',
-      'description': 'The network connection is lost.'
+      'description': 'The network connection is lost.',
+      'imageKeyword': 'serverDown'
     },
     'cookies': {
       'title': 'Cookies',
@@ -23,6 +24,11 @@ export const popUpData = {
     'captchaError': {
       'title': 'Captcha error',
       'description': 'An error occurred while performing the captcha. Please try again.'
+    },
+    'loginRequired': {
+      'title': 'Community feature',
+      'description': 'Welp, you can not use this feature yet... Get access by joining our (awesome) community!',
+      'imageKeyword': 'socialNetwork'
     }
   },
   'actions': {

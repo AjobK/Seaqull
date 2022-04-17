@@ -5,6 +5,8 @@ import TimeUtil from './timeUtil'
 import UnitFormatterUtil from './unitFormatterUtil'
 import URLUtil from './urlUtil'
 import ToastUtil from './toastUtil'
+import NotificationUtil from './notificationUtil'
+import RedirectUtil from './redirectUtil'
 
 export {
   ColorUtil,
@@ -13,5 +15,7 @@ export {
   TimeUtil,
   UnitFormatterUtil,
   URLUtil,
-  ToastUtil
+  ToastUtil,
+  NotificationUtil,
+  RedirectUtil
 }

@@ -26,6 +26,14 @@
 		@include pop-up();
 		height: auto;
 		padding: 20px 30px;
+		display: flex;
+		flex-direction: column;
+
+		&Image {
+			width: 70%;
+			align-self: center;
+			margin: 30px 0 40px;
+		}
 
 		&Header {
 			display: flex;
@@ -41,6 +49,10 @@
 			}
 
 			&Close {
+				position: absolute;
+				top: 20px;
+				right: 30px;
+
 				cursor: pointer;
 				display: flex;
 				margin-left: auto;
@@ -71,6 +83,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
+			margin-top: 10px;
 
 			&Action {
 				margin: 5px 5px;
