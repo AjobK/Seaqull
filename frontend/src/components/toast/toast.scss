@@ -13,13 +13,15 @@ $toast-warning-secondary: #FCF8E7;
 $toast-error-primary: #EB0012;
 $toast-error-secondary: #FDE5E5;
 
-$toast-general-primary: #3F6BFA;
-$toast-general-secondary: #EBEFFE;
+$toast-info-primary: #3F6BFA;
+$toast-info-secondary: #EBEFFE;
 
 .toast {
 	padding: $toast-padding;
 	margin: -$toast-padding;
 	border-left: $toast-line-width solid;
+
+	@include fade-in;
 
 	&Header {
 		display: flex;
@@ -64,12 +66,12 @@ $toast-general-secondary: #EBEFFE;
 		}
 	}
 
-	&General {
-		background-color: $toast-general-secondary;
-		border-color: $toast-general-primary;
+	&Info {
+		background-color: $toast-info-secondary;
+		border-color: $toast-info-primary;
 
 		.toastTitle, .toastIcon {
-			display: none;
+			color: $toast-info-primary;
 		}
 	}
 }

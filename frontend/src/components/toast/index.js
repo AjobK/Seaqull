@@ -20,7 +20,7 @@ class Toast extends Component {
     const toastInput = JSON.parse(toast.message)
 
     if (!toastInput.type)
-      toastInput.type = toastData.types.general.type
+      toastInput.type = toastData.types.info.type
 
     return toastInput
   }
@@ -28,11 +28,12 @@ class Toast extends Component {
   render() {
     return (
       <Toaster
-        position='bottom-right'
+        position='bottom-center'
         reverseOrder={ false }
+        style={ { animation:'fade-in' } }
       >
         { (t) =>
-          <ToastBar toast={ t }>
+          <ToastBar toast={ t } position='bottom-center' style={ { animation:'none' } }>
             { () => {
               const toastInput = this.getToastInput(t)
               const toastTypeStyles = this.getToastTypeStyles(toastInput.type)

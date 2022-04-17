@@ -14,8 +14,9 @@ const types = {
     icon: 'ExclamationTriangle',
     duration: 4000
   },
-  general: {
-    type: 'general',
+  info: {
+    type: 'info',
+    icon: 'ExclamationCircle',
     duration: 4000
   }
 }
@@ -34,9 +35,10 @@ export const toastData = {
       description: 'An error occurred while updating your avatar.'
     },
     prototypeNotification: {
-      ...types.general,
-      description: 'Seaqull is currently still a work in progress, so be aware that certain features may not be ' +
-        'finished yet. Let us know what you think!',
+      ...types.info,
+      title: 'Info',
+      description: 'This project is meant as a prototype, not as a production-grade application. ' +
+      'Please refrain from storing any sensitive information.',
       duration: Infinity
     },
     exampleWarning: {
