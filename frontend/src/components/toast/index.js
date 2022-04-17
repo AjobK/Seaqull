@@ -30,10 +30,12 @@ class Toast extends Component {
       <Toaster
         position='bottom-center'
         reverseOrder={ false }
-        style={ { animation:'fade-in' } }
       >
         { (t) =>
-          <ToastBar toast={ t } position='bottom-center' style={ { animation:'none' } }>
+          <ToastBar
+            toast={ t }
+            position='bottom-center'
+          >
             { () => {
               const toastInput = this.getToastInput(t)
               const toastTypeStyles = this.getToastTypeStyles(toastInput.type)
@@ -41,7 +43,7 @@ class Toast extends Component {
               return (
                 <div
                   className={ `${ styles.toast } ${ toastTypeStyles }` }
-                  style={ { opacity: t.visible ? 1 : 0, } }
+                  style={ { opacity: t.visible ? 1 : 0 } }
                   onClick={ () => toast.dismiss(t.id) }
                 >
                   { resolveValue(
