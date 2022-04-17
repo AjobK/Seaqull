@@ -10,6 +10,8 @@ import { popUpData } from '../../components/popUp/popUpData'
 import URLUtil from '../../util/urlUtil'
 import styles from './post.scss'
 import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews, Loader } from '../../components'
+import { ToastUtil } from '../../util'
+import { toastData } from '../../components/toast/toastData'
 
 @inject('store')
 @observer
@@ -149,6 +151,8 @@ class Post extends App {
     const allowedToPost = await this.checkPostTimeout()
 
     if (!allowedToPost) {
+      ToastUtil.createToast(toastData.messages.spamWarning)
+
       return
     }
 

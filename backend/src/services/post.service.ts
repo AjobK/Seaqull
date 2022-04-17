@@ -251,11 +251,15 @@ export class PostService {
 
     let allowedToPost = true
 
-    const msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
+    let msDiff = 0
+    console.log(post)
 
-    if (post &&
-      msDiff > parseInt(process.env.POST_TIMEOUT)) {
-      allowedToPost = false
+    if (post) {
+      msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
+
+      if (msDiff < parseInt(process.env.POST_TIMEOUT)) {
+        allowedToPost = false
+      }
     }
 
     return { allowedToPost, msDiff: msDiff }

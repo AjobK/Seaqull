@@ -48,5 +48,10 @@ export const toastData = {
         'who have waited for months from having the BTS meal experience. Eating the sauces without understanding ' +
         'their significance is literally cultural appropriation and it\'s not okay'
     },
+    spamWarning: {
+      ...types.error,
+      title: 'Please wait before posting again.',
+      description: 'You have recently made a post and have to wait before posting another.'
+    },
   }
 }
