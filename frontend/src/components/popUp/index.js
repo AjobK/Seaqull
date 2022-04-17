@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import styles from './popUp.scss'
 import { Button, Icon } from '../index'
+import UndrawUtil from '../../util/undrawUtil'
 
 @inject('store') @observer
 class PopUp extends Component {
@@ -20,13 +21,19 @@ class PopUp extends Component {
   }
 
   render() {
-    const { title, description, titleIcon, actions, canCloseWithClick } = this.props.content
+    const { title, description, imageKeyword, titleIcon, actions, canCloseWithClick } = this.props.content
 
     return (
       <div className={ styles.popUpWrapper }>
         <div className={ styles.popUpBackground }
           onClick={ canCloseWithClick ? this.props.content.close : undefined } />
         <div className={ styles.popUp }>
+          { imageKeyword && (
+            <img
+              className={ styles.popUpImage }
+              src={ UndrawUtil.getUndrawImage(imageKeyword) } alt={ 'Notification image' }
+            />
+          )}
           <div className={ styles.popUpHeader }>
             { title && (
               <h2 className={ styles.popUpHeaderTitle }>

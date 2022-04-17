@@ -27,7 +27,7 @@ class CommentSection extends Component {
       .then((response) => {
         // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
         this.setState({ comments: [] }, () => {
-          response.data.forEach((element) => {
+          let newComments = response.data.map((element) => {
             const comment = element.comment
             comment.likes = {
               commentLikes: element.commentLikePayload,
@@ -35,11 +35,11 @@ class CommentSection extends Component {
               length: element.commentLikePayload.length
             }
 
-            const comments = this.state.comments
-            comments.push(comment)
-            this.setState({
-              comments: this.nestComments(comments)
-            })
+            return comment
+          })
+
+          this.setState({
+            comments: this.nestComments(newComments)
           })
         })
       })

@@ -67,7 +67,7 @@ class PostBanner extends Component {
   }
 
   fetchDefaultThumbnail = () => {
-    const { defaultData, notification } = this.props.store
+    const { defaultData } = this.props.store
 
     Axios.get(`${ defaultData.backendUrl }/post/thumbnail/default`)
       .then((res) => {
@@ -76,7 +76,7 @@ class PostBanner extends Component {
         })
       })
       .catch(() => {
-        notification.setContent(popUpData.messages.networkError)
+        NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
       })
   }
 

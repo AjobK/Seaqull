@@ -17,12 +17,12 @@ class ProfileBarSmall extends Component {
           className={ styles.profileBarSmallImage }
           style={ {
             backgroundImage: `url(${ profile.avatarURL || '' })`,
-            backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.name)
+            backgroundColor: ColorUtil.getUniqueColorBasedOnString(profile.display_name)
           } }
         />
         <div className={ styles.profileBarSmallContent }>
           <Icon className={ styles.profileBarSmallContentBadge } iconName={ 'At' }/>
-          <h2 className={ styles.profileBarSmallContentUsername }>{ profile.name || 'Username' }</h2>
+          <h2 className={ styles.profileBarSmallContentUsername }>{ profile.display_name || 'Username' }</h2>
         </div>
       </Link>
     )

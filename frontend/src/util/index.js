@@ -6,6 +6,8 @@ import UnitFormatterUtil from './unitFormatterUtil'
 import URLUtil from './urlUtil'
 import DraftJsUtil from './draftJsUtil'
 import StyleUtil from './styleUtil'
+import NotificationUtil from './notificationUtil'
+import RedirectUtil from './redirectUtil'
 
 export {
   ColorUtil,
@@ -15,5 +17,7 @@ export {
   UnitFormatterUtil,
   URLUtil,
   DraftJsUtil,
-  StyleUtil
+  StyleUtil,
+  NotificationUtil,
+  RedirectUtil
 }
