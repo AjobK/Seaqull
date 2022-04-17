@@ -78,7 +78,7 @@ class Post extends App {
         }
 
         let author = {
-          name: post.profile.display_name,
+          display_name: post.profile.display_name,
           bannerURL: '/src/static/dummy/user/banner.jpg',
           avatarURL: post.profile.avatar_attachment
             ? `${ defaultData.backendUrlBase }/${ post.profile.avatar_attachment }`
@@ -225,9 +225,7 @@ class Post extends App {
         path: this.postPath
       }
 
-      const url = `${ this.props.store.defaultData.backendUrl }/post/view`
-
-      Axios.post(url, payload)
+      Axios.post(`${ this.props.store.defaultData.backendUrl }/post/view`, payload)
     }
   }
 
@@ -236,19 +234,13 @@ class Post extends App {
     const { profile } = this.props.store
     const { isEditing, isOwner, post, loaded, author } = this.state
 
-    const ownerAuthor = {
-      name: profile.display_name,
-      avatarURL: profile.avatarURL,
-      title: profile.title
-    }
-
     if (!loaded && !this.props.new)
       return <Loader />
 
     return (
       <Standard className={ styles.stdBgWhite }>
         <PostBanner
-          author={ this.props.new ? ownerAuthor : author }
+          author={ this.props.new ? profile : author }
           post={ this.state.post }
           isOwner={ isOwner }
           isNew={ this.props.new }

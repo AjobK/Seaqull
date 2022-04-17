@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
+import { NotificationUtil, RedirectUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -27,7 +28,9 @@ class LoginPrompt extends Component {
   }
 
   auth = (captchaToken) => {
-    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    const { defaultData } = this.props.store
+
+    Axios.defaults.baseURL = defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
@@ -37,13 +40,19 @@ class LoginPrompt extends Component {
 
     Axios.post('/login', payload, { withCredentials: true })
       .then((res) => {
-        this.props.store.profile.setLoggedIn(true)
-        this.props.store.profile.setProfileData(res.data.user)
-        this.goToProfile(res.data.user.profile.display_name)
+        const { user } = res.data
+        const { profile } = this.props.store
+
+        profile.setLoggedIn(true)
+        profile.setProfileData(user)
+
+        RedirectUtil.getRedirectPath()
+          ? this.redirect()
+          : this.goToProfile(user.profile.display_name)
       })
       .catch((res) => {
         if (res.status === 404) {
-          this.props.store.notification.setContent(popUpData.messages.networkError)
+          NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
 
           return this.setState({
             username: ['No connection'],
@@ -104,6 +113,12 @@ class LoginPrompt extends Component {
 
   goToProfile = (username) => {
     this.props.history.push('/profile/' + username)
+  }
+
+  redirect = () => {
+    this.props.history.push(RedirectUtil.getRedirectPath())
+
+    RedirectUtil.undoRedirectPath()
   }
 
   onSubmit = (e) => {
