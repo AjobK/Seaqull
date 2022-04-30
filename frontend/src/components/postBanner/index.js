@@ -3,7 +3,7 @@ import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Cropper, Icon } from '..'
 import { Link } from 'react-router-dom'
-import { ColorUtil, InputUtil } from '../../util/'
+import { ColorUtil, InputUtil, NotificationUtil } from '../../util/'
 import Axios from 'axios'
 import { popUpData } from '../popUp/popUpData'
 
@@ -68,7 +68,7 @@ class PostBanner extends Component {
   }
 
   fetchDefaultThumbnail = () => {
-    const { defaultData, notification } = this.props.store
+    const { defaultData } = this.props.store
 
     Axios.get(`${ defaultData.backendUrl }/post/thumbnail/default`)
       .then((res) => {
@@ -77,7 +77,7 @@ class PostBanner extends Component {
         })
       })
       .catch(() => {
-        notification.setContent(popUpData.messages.networkError)
+        NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
       })
   }
 
@@ -90,7 +90,7 @@ class PostBanner extends Component {
   render() {
     const { author, isOwner } = this.props
 
-    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
+    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.display_name)
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
@@ -119,7 +119,7 @@ class PostBanner extends Component {
 
         <div className={ styles.innerWrapper }>
           <div className={ styles.info }>
-            <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
+            <Link to={ `/profile/${ author.display_name }` } className={ styles.profileLink }>
               <div className={ styles.infoInner }>
                 <div
                   className={ styles.picture }
@@ -129,7 +129,7 @@ class PostBanner extends Component {
                   } }
                 />
                 <div className={ styles.user_info }>
-                  <h2 className={ [styles.name].join(' ') }>{ author.name || '' }</h2>
+                  <h2 className={ [styles.name].join(' ') }>{ author.display_name || '' }</h2>
                   <div className={ styles.achieved }>
                     <h3 className={ styles.role }>{ author.title || '' }</h3>
                   </div>
