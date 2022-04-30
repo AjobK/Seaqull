@@ -4,7 +4,6 @@ import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import { Editor, EditorState, convertFromRaw } from 'draft-js'
 import { CommentForm, CommentChildren, Icon, Dialog } from '../'
-
 import { TimeUtil, ColorUtil } from '../../util/'
 import axios from 'axios'
 
@@ -140,7 +139,8 @@ class Comment extends Component {
         <>
           <div className={ styles.like__wrapper }>
             <Icon
-              iconName={ 'Heart' }
+              prefix={ 'mui' }
+              iconName={ 'Favorite' }
               className={ `
                 ${ styles.comment__likeButtonIcon }
                 ${
