@@ -141,14 +141,15 @@ class Comment extends Component {
             <Icon
               prefix={ 'mui' }
               iconName={ 'Favorite' }
+              style = { { color: 'red' } }
               className={ `
-                ${ styles.comment__likeButtonIcon }
-                ${
-                    this.state.likes.profileHasLiked ?
-                      styles.comment__hasLikedComment :
-                      styles.comment__hasNotLikedComment
-                }
-              ` }
+                  ${ styles.comment__likeButtonIcon }` }
+              onClick={ this.onLikeClick }
+            />
+            : <Icon
+              prefix={ 'mui' }
+              iconName={ 'Favorite' }
+              className={ `${ styles.comment__likeButtonIcon}` }
               onClick={ this.onLikeClick }
             />
             <p>{ this.state.likes.length }</p>
