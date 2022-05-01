@@ -51,7 +51,7 @@ export class AuthService {
 
     if (!account) return null
 
-    const verificationId = account.verification.id
+    const verificationId = account.verification?.id
 
     await this.accountRepository.nullAccountVerification(account)
     await this.verificationRepository.deleteVerificationById(verificationId)
