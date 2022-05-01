@@ -19,8 +19,6 @@ class Register extends App {
   }
 
   setVerification(verification) {
-    console.log(verification)
-
     this.setState({
       verification
     })
@@ -29,8 +27,6 @@ class Register extends App {
   render() {
     const { verification } = this.state
     const { code } = this.props.match.params
-
-    console.log(!verification)
 
     return (
       <Standard>

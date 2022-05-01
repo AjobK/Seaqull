@@ -96,7 +96,7 @@ class VerificationPrompt extends Component {
           { code ? this.verifyCodeContent() : this.emailSentContent() }
         </div>
 
-        {/* TODO temporary email replacement */}
+        {/* TODO This button temporarily provides the link that is supposed to be in e-mails */}
         { !code && (
           <a href={ verification?.verificationUrl || '#' }>
             Verify
