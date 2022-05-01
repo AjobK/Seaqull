@@ -79,13 +79,6 @@ export class ProfileController {
 
     const payload = await this.profileService.register(registerDTO, ip)
 
-    // res.setHeader(
-    //   'Set-Cookie',
-    //   `token=${ payload.token }; HttpOnly; ${
-    //     this.configService.get('SECURE') == 'true' ? 'secure;' : ''
-    //   } expires=${ +new Date(new Date().getTime() + 86409000).toUTCString() }; path=/`
-    // )
-
     const publicPayload: RegisterPayloadDTO = {
       verificationUrl: payload.verificationUrl,
       email: payload.email,

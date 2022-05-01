@@ -54,3 +54,19 @@
 		margin-top: 0;
 	}
 }
+
+.image {
+	display: inline-block;
+	margin-left: 71px;
+	min-width: 260px;
+	margin-top: auto;
+	height: calc(146px * 1.81);
+	border-radius: 10px;
+	background-repeat: no-repeat;
+	background-image: url('../../static/register/register.svg');
+	background-size: contain;
+
+	@include mobile-all-portrait {
+		display: none;
+	}
+}

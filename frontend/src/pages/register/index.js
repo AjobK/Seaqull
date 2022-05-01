@@ -28,6 +28,7 @@ class Register extends App {
 
   render() {
     const { verification } = this.state
+    const { code } = this.props.match.params
 
     console.log(!verification)
 
@@ -35,9 +36,15 @@ class Register extends App {
       <Standard>
         <div className={ styles.container }>
           <div className={ styles.background } />
-          { !verification
+          { !verification && !code
             ? (<RegisterPrompt className={ styles.prompt } onRegistration={ this.setVerification } />)
-            : (<VerificationPrompt className={ styles.prompt } verification={ verification } />)
+            : (
+              <VerificationPrompt
+                className={ styles.prompt }
+                verification={ verification }
+                code={ code }
+              />
+            )
           }
         </div>
       </Standard>

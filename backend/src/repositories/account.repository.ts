@@ -15,8 +15,10 @@ export class AccountRepository extends Repository<Account> {
   public async getAccountByVerificationCode(code: string): Promise<Account> {
     return await this.createQueryBuilder('account')
       .leftJoinAndSelect('account.role', 'role')
-      .leftJoinAndSelect('account.profile', 'profile')
       .leftJoinAndSelect('account.verification', 'verification')
+      .leftJoinAndSelect('account.profile', 'profile')
+      .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
+      .leftJoinAndSelect('profile.title', 'title')
       .where('verification.code = :code', { code })
       .getOne()
   }

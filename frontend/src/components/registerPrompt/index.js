@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
-import { RedirectUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -47,14 +46,6 @@ class RegisterPrompt extends Component {
     Axios.post('/profile/register', payload, { withCredentials: true })
       .then((res) => {
         this.props.onRegistration(res.data.verification)
-        // const { user } = res.data
-        //
-        // this.props.store.profile.loginVerify()
-        // this.props.store.profile.setProfileData(user)
-        //
-        // RedirectUtil.getRedirectPath()
-        //   ? this.redirect()
-        //   : this.goToProfile(user.profile.display_name)
       })
       .catch((err) => {
         if (err.response.status === 400) {
@@ -67,23 +58,13 @@ class RegisterPrompt extends Component {
       })
   }
 
-  goToProfile = (username) => {
-    this.props.history.push('/profile/' + username)
-  }
-
-/*  redirect = () => {
-    this.props.history.push(RedirectUtil.getRedirectPath())
-
-    RedirectUtil.undoRedirectPath()
-  }*/
-
   onSubmit = (e) => {
     e.preventDefault()
 
     this.captchaRef.current.execute()
   }
 
-  handleVerificationSuccess(token) {
+  handleCaptchaSuccess(token) {
     this.setState({
       username: 'loading',
       email: 'loading',
@@ -172,7 +153,7 @@ class RegisterPrompt extends Component {
                 ? process.env.HCAPTCHA_DEV_SITE_KEY
                 : process.env.HCAPTCHA_PROD_SITE_KEY }
               size={ 'invisible' }
-              onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
+              onVerify={ (token) => this.handleCaptchaSuccess(token) }
               onError={ this.onCaptchaError }
               ref={ this.captchaRef }
             />
