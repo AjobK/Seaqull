@@ -55,14 +55,16 @@ class VerificationPrompt extends Component {
   }
 
   emailSentTitle() {
-    return <p>
-      Verification email sent
-    </p>
+    return <p>Verification email sent</p>
   }
 
   emailSentContent() {
+    const { verification } = this.props
+
     return <p>
-      Almost done! Please verify your email address at { this.props.verification?.email } to get started.
+      Almost done! Please verify your email address {
+        verification.email ? `at ${ this.props.verification?.email }` : ''
+      } to get started.
     </p>
   }
 
@@ -79,9 +81,7 @@ class VerificationPrompt extends Component {
           This verification code does not exist. Has your account already been verified?
         </p>
       )
-      : (
-        <Loader/>
-      )
+      : <Loader/>
   }
 
   render() {
@@ -97,11 +97,11 @@ class VerificationPrompt extends Component {
         </div>
 
         {/* TODO This button temporarily provides the link that is supposed to be in e-mails */}
-        { !code && (
+        { !code &&
           <a href={ verification?.verificationUrl || '#' }>
             Verify
           </a>
-        ) }
+        }
       </div>
     )
   }

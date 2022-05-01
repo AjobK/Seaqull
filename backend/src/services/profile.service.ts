@@ -125,6 +125,8 @@ export class ProfileService {
   }
 
   public async register(registerDTO: RegisterDTO, ip: string): Promise<RegisterPayloadDTO> {
+    const { FRONTEND_URL } = process.env
+
     if (registerDTO.email.endsWith('@seaqull.com')) throw new UnauthorizedException('No permission to use this e-mail')
 
     const credentialsInUse = await this.accountRepository.accountAlreadyExists(registerDTO.email, registerDTO.username)
@@ -134,7 +136,7 @@ export class ProfileService {
     const verification = await this.createVerification(registerDTO)
     const createAccount = await this.saveProfile(registerDTO, ip, verification)
 
-    const verificationUrl = `${ process.env.FRONTEND_URL }/verify/${ verification.code }`
+    const verificationUrl = `${ FRONTEND_URL }/verify/${ verification.code }`
 
     return {
       email: createAccount.email,

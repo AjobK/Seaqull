@@ -26,7 +26,7 @@ class Register extends App {
 
   render() {
     const { verification } = this.state
-    const { code } = this.props.match.params
+    const { code } = this.props?.match?.params
 
     return (
       <Standard>
