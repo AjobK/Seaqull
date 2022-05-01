@@ -19,26 +19,29 @@ class Icon extends Component {
     else if (className)
       classNames = [...className]
 
-    let icon = icons[`${ prefix }${ iconName }`] || brands[`${ prefix }${ iconName }`] || icons['faBan']
+    let combinedIconName = `${ prefix }${ iconName }`
+    let icon = icons[combinedIconName ] || brands[combinedIconName] || icons['faBan']
 
     library.add(icon)
 
     const materialIcon = muiIcons[iconName]
 
-    const renderSwitch = () => {
+    const renderIconByPrefix = () => {
       switch (prefix) {
         case 'mui':
           return <SvgIcon
             className={ classNames.join(' ') }
             component={ materialIcon }
             onMouseDown={ onMouseDown }
+            onClick={ onClick }
             onMouseUp={ onMouseUp }
             style={ style }
           />
         default:
           return <FontAwesomeIcon
             className={ classNames.join(' ') }
-            icon={ icon } onClick={ onClick }
+            icon={ icon }
+            onClick={ onClick }
             onMouseDown={ onMouseDown }
             onMouseUp={ onMouseUp }
             style={ style }
@@ -48,7 +51,7 @@ class Icon extends Component {
 
     return (
       <>
-        { renderSwitch() }
+        { renderIconByPrefix() }
       </>
     )
   }
