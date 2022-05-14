@@ -12,7 +12,7 @@ class ProfileBarSmall extends Component {
     const { profile } = this.props
 
     return (
-      <Link to={ `/profile/${ profile.name }` } className={ styles.profileBarSmall }>
+      <Link to={ profile.path } className={ styles.profileBarSmall }>
         <div
           className={ styles.profileBarSmallImage }
           style={ {

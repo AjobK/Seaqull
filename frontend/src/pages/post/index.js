@@ -37,7 +37,7 @@ class Post extends App {
       isOwner: false,
       isEditing: false,
       author: {
-        name: '',
+        display_name: '',
         bannerURL: '',
         avatarURL: '',
         path: '/profile/',
@@ -58,7 +58,9 @@ class Post extends App {
   }
 
   componentDidMount = () => {
-    if (!this.props.isNew) return this.loadArticle()
+    return this.props.isNew
+      ? this.loadOwnProfile()
+      : this.loadArticle()
   }
 
   loadArticle = () => {
@@ -123,6 +125,19 @@ class Post extends App {
           }
         })
       })
+  }
+
+  loadOwnProfile = () => {
+    const { profile } = this.props.store
+
+    this.setState({
+      author: {
+        display_name: profile.display_name,
+        avatarURL: profile.avatarURL,
+        path: '/profile/' + profile.display_name,
+        title: profile.title
+      }
+    })
   }
 
   toggleLike = () => {
@@ -274,12 +289,14 @@ class Post extends App {
                 <ProfileBarSmall profile={ author } />
               </div>
 
-              <PostLike
-                likesAmount={ this.state.post.likes.amount || 0 }
-                liked={ this.state.post.likes.userLiked }
-                toggleLike={ this.toggleLike }
-                isOwner={ isOwner }
-              />
+              { !isNew && (
+                <PostLike
+                  likesAmount={ this.state.post.likes.amount || 0 }
+                  liked={ this.state.post.likes.userLiked }
+                  toggleLike={ this.toggleLike }
+                  isOwner={ isOwner }
+                />
+              )}
             </div>
           </div>
         </div>
@@ -378,14 +395,16 @@ class Post extends App {
             </div>
             <div className={ styles.postActionButtonsRight }>
               <div className={ styles.postActionButtonsMobile }>
-                <div className={ styles.postActionButtonsMobileLike }>
-                  <PostLike
-                    likesAmount={ this.state.post.likes.amount || 0 }
-                    liked={ this.state.post.likes.userLiked }
-                    toggleLike={ this.toggleLike }
-                    isOwner={ isOwner }
-                  />
-                </div>
+                { !isNew && (
+                  <div className={ styles.postActionButtonsMobileLike }>
+                    <PostLike
+                      likesAmount={ this.state.post.likes.amount || 0 }
+                      liked={ this.state.post.likes.userLiked }
+                      toggleLike={ this.toggleLike }
+                      isOwner={ isOwner }
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
