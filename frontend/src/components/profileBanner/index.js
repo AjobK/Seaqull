@@ -79,7 +79,7 @@ class ProfileBanner extends Component {
               </div>
             </div>
           )}
-          { role !== 'User' && !this.props.owner && this.props.store.profile.loggedIn && (
+          { role.toUpperCase() !== 'USER' && !this.props.owner && this.props.store.profile.loggedIn && (
             <div
               onDragEnter={ this.onBannerDragEnter }
               onDragLeave={ this.onBannerDragLeave }
