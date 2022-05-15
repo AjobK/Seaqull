@@ -27,11 +27,12 @@ class ProfileFollowerList extends Component {
         .then((res
         ) => {
           const followers = []
+          const { backendUrlBase } = this.props.store.defaultData
 
           res.data.followers.forEach((follower) => {
             followers.push({
               displayName: follower.display_name,
-              avatarURL: 'http://localhost:8000/' + follower.avatar_attachment.path,
+              avatarURL: `${ backendUrlBase }${ follower.avatar_attachment.path }`,
               title: follower.title.name,
             })
           })

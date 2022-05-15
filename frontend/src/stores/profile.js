@@ -11,7 +11,8 @@ const ProfileStore = types
   })
   .actions((self) => ({
     loginVerify() {
-      Axios.defaults.baseURL = 'http://localhost:8000'
+      const { BACKEND_URL } = process.env
+      Axios.defaults.baseURL = BACKEND_URL
 
       Axios.get('/api/login-verify', { withCredentials: true })
         .then((res) => {
@@ -23,10 +24,11 @@ const ProfileStore = types
     },
     setProfileData(data) {
       const { profile } = data
+      const { BACKEND_URL } = process.env
 
       self.setLoggedIn(true)
       self.setDisplayName(profile.display_name)
-      self.setAvatarURL(`http://localhost:8000/${ profile.avatar_attachment.path }`)
+      self.setAvatarURL(`${ BACKEND_URL }/${ profile.avatar_attachment.path }`)
       self.setTitle(profile.title.name)
       self.setRole(profile.role)
     },
@@ -46,7 +48,8 @@ const ProfileStore = types
       self.role = role
     },
     logOut() {
-      Axios.defaults.baseURL = 'http://localhost:8000'
+      const { BACKEND_URL } = process.env
+      Axios.defaults.baseURL = BACKEND_URL
 
       Axios.get('/api/logout', { withCredentials: true })
         .then(() => {

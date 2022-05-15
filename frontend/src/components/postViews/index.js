@@ -12,7 +12,8 @@ class PostViews extends Component {
 
   loadViews() {
     const path = URLUtil.getLastPathArgument()
-    const url = `http://localhost:8000/api/post/view/${ path }`
+    const { backendUrl } = this.props.store.defaultData
+    const url = `${ backendUrl }/post/view/${ path }`
 
     Axios.get(url)
       .then((response) => {

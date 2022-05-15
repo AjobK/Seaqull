@@ -76,7 +76,8 @@ class Comment extends Component {
   }
 
   onDeleteConfirm = () => {
-    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }`
+    const { defaultData } = this.props.store
+    const url = `${ defaultData.backendUrlBase }/api/comment/${ this.props.comment.id }`
 
     axios
       .delete(url, { withCredentials: true })
@@ -93,7 +94,8 @@ class Comment extends Component {
   }
 
   onLikeClick = () => {
-    const url = `http://localhost:8000/api/comment/likes/${ this.props.comment.id }/`
+    const { defaultData } = this.props.store
+    const url = `${ defaultData.backendUrlBase }api/comment/likes/${ this.props.comment.id }/`
     this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
   }
 
@@ -125,7 +127,10 @@ class Comment extends Component {
   }
 
   onPinClick = () => {
-    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
+    const { defaultData } = this.props.store
+    const url = `${
+      defaultData.backendUrlBase
+    }}/api/comment/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
 
     axios.patch(url, null, { withCredentials: true })
       .then(() => {

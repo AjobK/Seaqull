@@ -20,7 +20,8 @@ class CommentForm extends Component {
   }
 
   onCommentSubmit = () => {
-    const url = 'http://localhost:8000/api/comment/'
+    const { backendUrl } = this.props.store.defaultData
+    const url = `${ backendUrl }/comment/`
 
     Axios.post(url, this.state.comment, { withCredentials: true })
       .then(() => {
