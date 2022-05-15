@@ -63,7 +63,7 @@ export class AuthController {
 
     if (!isCaptchaValid) throw new ForbiddenException('We could not verify that you are not a robot')
 
-    const account = await this.authorizationService.getAccountByUsername(loginDTO.username)
+    const account = await this.authorizationService.getAccountProfileAndRoleByUsername(loginDTO.username)
 
     if (!account) throw new ForbiddenException({ errors: ['Incorrect username or password'] })
 

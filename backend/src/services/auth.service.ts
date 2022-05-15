@@ -23,23 +23,18 @@ export class AuthService {
     const decodedToken = this.jwtService.verify(token)
 
     const account = await this.accountRepository.getAccountProfileAndRoleByUsername(decodedToken.user_name)
-    const profile = account.profile
 
-    const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
-    const title = await this.profileRepository.getTitleByUserId(account.profile.id)
-
-    profile['role'] = account.role.name
-    profile.avatar_attachment = attachments.avatar
-    profile.banner_attachment = attachments.banner
-    profile.title = title
-
-    return profile
+    return this.populateAccountProfile(account)
   }
 
   public async getAccountByUsername(username: string): Promise<Account> {
     const account = await this.accountRepository.getAccountByUsername(username)
 
     return account
+  }
+
+  public async getAccountProfileAndRoleByUsername(username: string): Promise<Account> {
+    return await this.accountRepository.getAccountProfileAndRoleByUsername(username)
   }
 
   public async login(
@@ -59,10 +54,10 @@ export class AuthService {
 
     if (ban) throw new ForbiddenException(ban)
 
-    const role_id = await this.accountRepository.getAccountRoleIdByUsername(account.user_name)
+    account.profile = await this.populateAccountProfile(account)
 
     const payload: JwtPayload = {
-      role_id,
+      role_id: account.role.id,
       user_name: account.user_name,
       expiration: Date.now() + parseInt(process.env.JWT_EXPIRATION_TIME)
     }
@@ -107,5 +102,19 @@ export class AuthService {
     delete account.locked_to
 
     return account
+  }
+
+  private async populateAccountProfile(account: Account): Promise<Profile> {
+    const profile = account.profile
+
+    const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
+    const title = await this.profileRepository.getTitleByUserId(account.profile.id)
+
+    profile['role'] = account.role.name
+    profile.avatar_attachment = attachments.avatar
+    profile.banner_attachment = attachments.banner
+    profile.title = title
+
+    return profile
   }
 }
