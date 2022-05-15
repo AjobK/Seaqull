@@ -10,12 +10,16 @@
 			color: $primary
 		}
 	}
+
+	&Content {
+		max-width: $post-wrapper-width !important;
+	}
 }
 
 .commentForm {
 	> section {
 		margin-bottom: 20px;
-	
+
 		> div:first-child {
 			margin-bottom: 10px;
 		}

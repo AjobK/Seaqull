@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { convertFromRaw } from 'draft-js'
 import { PostsBlockLarge, PostsBlockSmall } from '../../components'
+import { DraftJsUtil } from '../../util/'
 import styles from './postsBlock.scss'
-import { TextUtil } from '../../util/'
 
 class PostsBlock extends Component {
   constructor(props) {
@@ -21,8 +20,7 @@ class PostsBlock extends Component {
 
     this.props.posts.forEach((post) => {
       try {
-        post.title = this.getRawContentFromPostData(post.title)
-        post.readTime = TextUtil.getReadTimeFromText(this.getRawContentFromPostData(post.content))
+        post.title = DraftJsUtil.getRawContentFromData(JSON.parse(post.title))
       } catch (e) {}
 
       convertedPosts.push(post)
@@ -31,17 +29,6 @@ class PostsBlock extends Component {
     this.setState({
       posts: convertedPosts,
     })
-  }
-
-  //TODO: add to util
-  getRawContentFromPostData(data) {
-    try {
-      const parsedText = JSON.parse(data)
-
-      return convertFromRaw(parsedText).getPlainText()
-    } catch (e) {
-      return data
-    }
   }
 
   render() {

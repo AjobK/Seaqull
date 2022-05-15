@@ -1,13 +1,20 @@
 @import '../../styles/index.scss';
 
+$content-side-padding: 35px;
+
 .postContent {
 	&Title {
-		color: #4D4D4D;
-		width: 100%;
-		text-align: center;
-		font-weight: bold;
-		font-size: 2rem;
-		margin-bottom: $header-spacing;
+		color: $secondary;
+		font-size: $nr-xxl-fontsize;
+		line-height: 1.13;
+		margin-bottom: 10px;
+		font-weight: 900;
+	}
+	&Description {
+		color: $text;
+		font-size: $nr-sm-fontsize;
+		line-height: 1.5;
+		font-weight: 600;
 	}
 	&Heading {
 		color: $primary;
@@ -24,6 +31,27 @@
 		font-size: 1.25rem;
 		line-height: 1.9rem;
 		letter-spacing: 0.05rem;
+	}
+	&Content {
+		color: $text;
+		font-size: $nr-sm-fontsize;
+		line-height: 1.5;
+		padding: 0 $content-side-padding;
+	}
+}
+
+@include mobile-all {
+	.postContent {
+		&Title {
+			font-size: $nr-xl-fontsize;
+		}
+		&Description {
+			font-size: $nr-xs-fontsize;
+			margin-bottom: 40px;
+		}
+		&Content {
+			padding: 0;
+		}
 	}
 }
 

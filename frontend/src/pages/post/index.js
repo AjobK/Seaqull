@@ -1,15 +1,24 @@
 import React from 'react'
 import App from '../App'
 import { observer, inject } from 'mobx-react'
-import { Standard, Section } from '../../layouts'
+import { Standard } from '../../layouts'
 import { withRouter } from 'react-router-dom'
+import styles from './post.scss'
+import URLUtil from '../../util/urlUtil'
 import Axios from 'axios'
 import { convertFromRaw } from 'draft-js'
+import {
+  Button,
+  CommentSection,
+  Loader,
+  PostBanner,
+  PostContent,
+  PostInfo,
+  PostLike,
+  ProfileBarSmall
+} from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
-import URLUtil from '../../util/urlUtil'
-import styles from './post.scss'
-import { PostBanner, PostContent, Button, PostLike, Icon, CommentSection, PostViews, Loader } from '../../components'
 
 @inject('store')
 @observer
@@ -24,10 +33,11 @@ class Post extends App {
     this.addedThumbnail = null
 
     this.state = {
-      isOwner: true,
-      isEditing: true,
+      canceledEdit: false,
+      isOwner: false,
+      isEditing: false,
       author: {
-        name: '',
+        display_name: '',
         bannerURL: '',
         avatarURL: '',
         path: '/profile/',
@@ -48,7 +58,9 @@ class Post extends App {
   }
 
   componentDidMount = () => {
-    if (!this.props.new) return this.loadArticle()
+    return this.props.isNew
+      ? this.loadOwnProfile()
+      : this.loadArticle()
   }
 
   loadArticle = () => {
@@ -93,7 +105,6 @@ class Post extends App {
           post: newPost,
           loaded: true,
           isOwner: isOwner,
-          isEditing: true,
           author: author
         }, this.addViewToDB)
       })
@@ -114,6 +125,19 @@ class Post extends App {
           }
         })
       })
+  }
+
+  loadOwnProfile = () => {
+    const { profile } = this.props.store
+
+    this.setState({
+      author: {
+        display_name: profile.display_name,
+        avatarURL: profile.avatarURL,
+        path: '/profile/' + profile.display_name,
+        title: profile.title
+      }
+    })
   }
 
   toggleLike = () => {
@@ -142,6 +166,8 @@ class Post extends App {
       this.createPost()
     } else if (typeof path == 'string') {
       this.updatePost()
+
+      this.setIsEditing(false)
     }
   }
 
@@ -172,10 +198,6 @@ class Post extends App {
 
       notification.setContent(popUpData.messages.updatePostNotification)
     })
-  }
-
-  onThumbnailAdded = (thumbnail) => {
-    this.addedThumbnail = thumbnail
   }
 
   onDeletePostClicked = () => {
@@ -217,47 +239,96 @@ class Post extends App {
     }
   }
 
-  render = () => {
-    // Values change based on initial response from server
-    const { profile } = this.props.store
-    const { isEditing, isOwner, post, loaded, author } = this.state
+  onThumbnailAdded = (thumbnail) => {
+    this.addedThumbnail = thumbnail
+  }
 
-    if (!loaded && !this.props.new)
+  setIsEditing = (newValue) => {
+    this.setState({
+      isEditing: newValue
+    })
+  }
+
+  enableEdit = () => {
+    const { post } = this.state
+
+    this.setIsEditing(true)
+
+    this.initialPost = {
+      ...post,
+      title: post.title,
+      content: post.content
+    }
+  }
+
+  cancelEdit = () => {
+    // TODO:  We did this for a lack of a better solution. This triggers a prop state once enabling us to react
+    //        to a change in the parent (for postcontent). On cancelling edit we can revert the content.
+    this.setState({
+      isEditing: false,
+      canceledEdit: true
+    }, () => this.setState({ canceledEdit: false }))
+  }
+
+  render = () => {
+    const { isEditing, isOwner, post, loaded, author, canceledEdit } = this.state
+    const { isNew } = this.props
+
+    if (!loaded && !isNew)
       return <Loader />
 
     return (
-      <Standard className={ styles.stdBgWhite }>
-        <PostBanner
-          author={ this.props.new ? profile : author }
-          post={ this.state.post }
-          isOwner={ isOwner }
-          isNew={ this.props.new }
-          onThumbnailAdded={ this.onThumbnailAdded }
-        />
-        <Section noTitle className={ styles.extraWhitespace }>
-          { !this.props.new &&
-          <div className={ styles.likePostWrapper }>
-            <PostViews />
-            <PostLike
-              likesAmount={ this.state.post.likes.amount || 0 }
-              liked={ this.state.post.likes.userLiked }
-              toggleLike={ this.toggleLike }
-              isOwner={ isOwner }
-            />
+      <Standard className={ styles.post }>
+        <div className={ styles.postSideWrapper }>
+          <div className={ styles.postSideWrapperContent }>
+            <div className={ styles.postSide }>
+              <div className={ styles.postSideAuthor }>
+                <p className={ styles.postSideAuthorHeader }>
+                  Written by:
+                </p>
+                <ProfileBarSmall profile={ author } />
+              </div>
+
+              { !isNew && (
+                <PostLike
+                  likesAmount={ this.state.post.likes.amount || 0 }
+                  liked={ this.state.post.likes.userLiked }
+                  toggleLike={ this.toggleLike }
+                  isOwner={ isOwner }
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        <section className={ styles.postWrapper }>
+          { !isNew &&
+          <div className={ styles.postWrapperTop }>
+            <PostInfo post={ post } theme={ 'dark' } size={ 'large' } withViews fullWidth />
           </div>
           }
-          <div className={ styles.renderWrapper }>
-            <PostContent
-              type={ 'title' }
-              // Saves post title with draftJS content
-              callBackSaveData={ (data) => {
-                post.title = data
+          <div className={ styles.postWrapperAuthor }>
+            <ProfileBarSmall profile={ author } />
+          </div>
+          <PostContent
+            type={ 'title' }
+            // Saves post title with draftJS content
+            callBackSaveData={ (data) => {
+              post.title = data
 
-                this.setState({ post: post })
-              } }
-              readOnly={ !isOwner || !isEditing }
-              value={ post.title } // Initial no content, should be prefilled by API
+              this.setState({ post: post })
+            } }
+            readOnly={ isNew ? false : (!isEditing || !isOwner) }
+            value={ post.title } // Initial no content, should be prefilled by API
+          />
+          <div className={ styles.postWrapperThumbnail }>
+            <PostBanner
+              post={ this.state.post }
+              isOwner={ isOwner }
+              isNew={ isNew }
+              onThumbnailAdded={ this.onThumbnailAdded }
             />
+          </div>
+          <div className={ styles.postWrapperContent }>
             <PostContent
               type={ 'content' }
               // Saves post content with draftJS content
@@ -266,46 +337,82 @@ class Post extends App {
 
                 this.setState({ post: post })
               } }
-              readOnly={ !isOwner || !isEditing }
+              callBackGetData={ () => this.initialPost?.content }
+              canceled={ canceledEdit }
+              readOnly={ isNew ? false : !(isEditing && isOwner) }
               value={ post.content } // Initial no content, should be prefilled by API
             />
           </div>
+
           <div className={ styles.postActionButtons }>
             <div className={ styles.postActionButtonsLeft }>
               {
-                isOwner && this.props.new &&
+                isNew &&
                 <Button
-                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
+                  className={ styles.postActionButtonsPublishButton }
                   value={ 'Create' }
                   onClick={ () => this.save(post.path) }
                 />
               }
               {
-                isOwner && isEditing && !this.props.new &&
+                isOwner && !isEditing && !isNew &&
                 <Button
-                  className={ [styles.publishButton, /* isPublished ? styles.published : */''].join(' ') }
-                  value={ 'Update' }
+                  className={ styles.postActionButtonsPublishButton }
+                  value={ 'Edit' }
+                  onClick={ this.enableEdit }
+                />
+              }
+              {
+                isOwner && isEditing && !isNew &&
+                <Button
+                  className={ styles.postActionButtonsPublishButton }
+                  value={ 'Save' }
                   onClick={ () => this.save(post.path) }
+                />
+              }
+              {
+                isOwner && isEditing && !isNew &&
+                <Button
+                  className={
+                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
+                  }
+                  value={ 'Cancel' }
+                  inverted
+                  onClick={ this.cancelEdit }
+                />
+              }
+              {
+                !isNew && (this.canBanUser || isOwner) && !isEditing &&
+                <Button
+                  className={
+                    `${ styles.postActionButtonsPublishButton } ${ styles.postActionButtonsPublishButtonSecondary }`
+                  }
+                  value={ 'Delete' }
+                  inverted
+                  onClick={ this.onDeletePostClicked }
                 />
               }
             </div>
             <div className={ styles.postActionButtonsRight }>
-              { !this.props.new && (this.canBanUser || isOwner) &&
-              <span
-                className={ styles.delete }
-                data-tip data-for={ 'postDeleteTooltip' }
-                onClick={ this.onDeletePostClicked }
-              >
-                <Icon iconName={ 'Trash' } />
-              </span>
-              }
+              <div className={ styles.postActionButtonsMobile }>
+                { !isNew && (
+                  <div className={ styles.postActionButtonsMobileLike }>
+                    <PostLike
+                      likesAmount={ this.state.post.likes.amount || 0 }
+                      liked={ this.state.post.likes.userLiked }
+                      toggleLike={ this.toggleLike }
+                      isOwner={ isOwner }
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             <ReactTooltip id={ 'postDeleteTooltip' } effect={ 'solid' } place={ 'left' } className={ styles.toolTip }>
               Delete
             </ReactTooltip>
           </div>
-        </Section>
-        { !this.props.new && <CommentSection isPostOwner={ this.state.isOwner } /> }
+        </section>
+        { !isNew && <CommentSection isPostOwner={ this.state.isOwner } /> }
       </Standard>
     )
   }
