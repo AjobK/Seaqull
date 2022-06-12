@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CommentService } from '../services/comment.service'
 import { Comment } from '../entities/comment.entity'
@@ -6,6 +6,7 @@ import { CommentDTO } from '../dtos/comment.dto'
 import { AuthorizedUser } from '../decorators/jwt.decorator'
 import { Account } from '../entities/account.entity'
 import { AllowAny } from '../decorators/allow-any.decorator'
+import { hasPermission } from '../guards/roles.guard'
 
 @ApiTags('Comment')
 @Controller('comment')
@@ -67,7 +68,18 @@ export class CommentController {
 
   @Delete('/:id')
   public async deleteComment(@Param('id') comment_id: number, @AuthorizedUser() user: Account): Promise<string> {
-    await this.commentService.deleteComment(comment_id, user.profile)
+    await this.commentService.deleteComment(comment_id, user.profile, true)
+
+    return 'Successfully deleted comment'
+  }
+
+  @Delete('/:id/moderator')
+  @UseGuards(hasPermission('REMOVE_COMMENTS'))
+  public async deleteCommentModerator(
+      @Param('id') comment_id: number,
+      @AuthorizedUser() user: Account
+  ): Promise<string> {
+    await this.commentService.deleteComment(comment_id, user.profile, false)
 
     return 'Successfully deleted comment'
   }

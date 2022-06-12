@@ -29,6 +29,8 @@ class Comment extends Component {
     if (this.props.comment && this.props.comment.parent_comment_id) {
       this.isReply = true
     }
+
+    this.isDeletingAsAdmin = false
   }
 
   displayAvatar = () => {
@@ -76,7 +78,8 @@ class Comment extends Component {
   }
 
   onDeleteConfirm = () => {
-    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }`
+    const url =
+      `http://localhost:8000/api/comment/${ this.props.comment.id }${ this.isDeletingAsAdmin ? '/moderator' : '' }`
 
     axios
       .delete(url, { withCredentials: true })
@@ -162,7 +165,12 @@ class Comment extends Component {
     const { comment } = this.props
     const { profile } = this.props.store
 
-    if (comment.profile.display_name === profile.display_name) {
+    const isOwner = comment.profile.display_name === profile.display_name
+    const isAdmin = profile.loggedIn && profile.role.toUpperCase() !== 'USER'
+
+    this.isDeletingAsAdmin = isAdmin
+
+    if (isOwner || isAdmin) {
       return (
           <>
             <Icon
