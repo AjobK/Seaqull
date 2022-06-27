@@ -8,19 +8,19 @@ module.exports = {
   'synchronize': true,
   'logging': false,
   'entities': [
-    'entities/*.entity.ts'
+    '**/*.entity.ts'
   ],
   'migrations': [
-    'migration/**/*.ts'
+    'src/migration/**/*.ts'
   ],
   'subscribers': [
-    'subscriber/**/*.ts'
+    'src/subscriber/**/*.ts'
   ],
   'cli': {
     'entitiesDir': 'entities',
-    'migrationsDir': 'migration',
-    'subscribersDir': 'subscriber'
+    'migrationsDir': 'src/migration',
+    'subscribersDir': 'src/subscriber'
   },
-  'seeds': ['seeding/seeders/seeder.ts'],
-  'factories': ['seeding/factories/*.ts']
+  'seeds': ['src/seeding/seeders/seeder.ts'],
+  'factories': ['src/seeding/factories/*.ts']
 }
