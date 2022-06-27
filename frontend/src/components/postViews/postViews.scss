@@ -1,14 +1,13 @@
 @import '../../styles/index.scss';
-@import '../../styles/variables.scss';
 
 .postViews {
 	display: flex;
 	align-items: center;
-	margin-bottom: 10px;
 	justify-content: flex-start;
-	color: $nav-items;
+	color: $secondary;
+	opacity: .8;
 
-	.postViewsText {
+	> p {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-align-items: center;
@@ -16,12 +15,31 @@
 		-webkit-justify-content: center;
 		justify-content: center;
 		height: 100%;
-		margin-left: 8px;
 		vertical-align: middle;
+		font-weight: 300;
 	}
 
 	.viewIcon {
-		font-size: 1.2em;
 		vertical-align: middle;
+		font-size: .8em;
+		margin-right: 10px;
+		display: flex;
+		align-items: center;
+	}
+
+	&Small {
+		font-size: $nr-xs-fontsize;
+	}
+
+	&Large {
+		font-size: $nr-sm-fontsize;
+	}
+
+	@include mobile-all() {
+		.postViews {
+			&Text {
+				display: none;
+			}
+		}
 	}
 }

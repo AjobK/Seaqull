@@ -1,0 +1,39 @@
+@import '../../styles/index.scss';
+
+$profile-bar-image-size: 40px;
+
+.profileBarSmall {
+	display: flex;
+	align-items: center;
+
+	&Image {
+		background-size: cover;
+		background-position: center;
+		display: inherit;
+		width: $profile-bar-image-size;
+		height: $profile-bar-image-size;
+		border-radius: 100%;
+		margin-right: 10px;
+	}
+
+	&Content {
+		display: flex;
+		justify-content: center;
+		color: $primary;
+		align-items: center;
+		font-weight: 900;
+
+		&Badge {
+			vertical-align: middle;
+			height: auto;
+			color: $primary;
+			font-size: $nr-sm-fontsize;
+		}
+
+		&Username {
+			text-align: center;
+			color: $secondary;
+			font-size: $nr-sm-fontsize;
+		}
+	}
+}
