@@ -13,7 +13,8 @@ module.exports = {
     'src\\entities\\*.entity.ts'
   ],
   'migrations': [
-    'src\\migration\\**\\*.ts'
+    'src\\migration\\**\\*.ts',
+    'dist\\entities\\**\\*.js'
   ],
   'subscribers': [
     'src\\subscriber\\**\\*.ts'
