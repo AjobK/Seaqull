@@ -63,6 +63,8 @@ jobs:
         run: npm run reset
       - name: Log all files in folder
         run: ls -a
+      - name: Display ORM config
+        run: cat ormconfig.js
       - name: Start back-end server
         run: npm start
       - name: Wait for OK status

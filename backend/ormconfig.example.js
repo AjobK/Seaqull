@@ -1,3 +1,5 @@
+// This is an example ORM CONFIG
+
 module.exports = {
   'type': 'postgres',
   'host': process.env.DB_HOST,
