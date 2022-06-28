@@ -10,11 +10,11 @@ module.exports = {
   'synchronize': true,
   'logging': false,
   'entities': [
-    'src/entities/*.entity.ts'
+    'src/entities/*.entity.ts',
+    'dist/**/*.entity.js'
   ],
   'migrations': [
-    'src/migration/**/*.ts',
-    'dist/entities/**/*.js'
+    'src/migration/**/*.ts'
   ],
   'subscribers': [
     'src/subscriber/**/*.ts'
