@@ -8,13 +8,13 @@ module.exports = {
   'synchronize': true,
   'logging': false,
   'entities': [
-    '**/*.entity.ts'
+    './src/entities/*.entity.ts'
   ],
   'migrations': [
-    'src/migration/**/*.ts'
+    './src/migration/**/*.ts'
   ],
   'subscribers': [
-    'src/subscriber/**/*.ts'
+    './src/subscriber/**/*.ts'
   ],
   'cli': {
     'entitiesDir': 'entities',
