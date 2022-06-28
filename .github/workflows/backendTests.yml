@@ -65,6 +65,8 @@ jobs:
         run: ls -a
       - name: Display ORM config
         run: cat ormconfig.js
+      - name: Display Node version
+        run: node -v
       - name: Start back-end server
         run: npm start
       - name: Wait for OK status
