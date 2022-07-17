@@ -69,6 +69,10 @@ export class AuthController {
 
     if (!account) throw new ForbiddenException({ errors: ['Incorrect username or password'] })
 
+    const isVerified = !!account.verification
+
+    if (!isVerified) throw new ForbiddenException({ errors: ['You must verify your e-mail to proceed'] })
+
     const loginResponse = await this.authorizationService.login(account, loginDTO.password)
 
     if (req.cookies['token']) res.clearCookie('token')
