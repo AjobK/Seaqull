@@ -47,6 +47,12 @@ export class PostRepository extends Repository<Post> {
     return posts
   }
 
+  public async getLastPostByProfile(profile: Profile): Promise<Post> {
+    const post = await this.findOne({ where: { profile: profile }, order: { created_at: 'DESC' } })
+
+    return post
+  }
+
   public async createPost(newPost: Post): Promise<void> {
     await this.save(newPost)
   }

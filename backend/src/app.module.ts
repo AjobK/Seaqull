@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Logger, Module } from '@nestjs/common'
 import { AuthModule } from './modules/auth.module'
 import { BanModule } from './modules/ban.module'
 import { CommentModule } from './modules/comment.module'

@@ -28,8 +28,8 @@ npm-debug.log
 
 .env
 
-package-lock.json
-/package-lock.json
+# package-lock.json
+# /package-lock.json
 
 #VScode
 *.code-workspace
