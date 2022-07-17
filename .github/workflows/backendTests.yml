@@ -68,7 +68,7 @@ jobs:
       - name: Display Node version
         run: node -v
       - name: Start back-end server
-        run: npm start
+        run: npm start &
       - name: Wait for OK status
         uses: nev7n/wait_for_response@v1
         with:
