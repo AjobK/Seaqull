@@ -105,16 +105,15 @@ export class AuthService {
   }
 
   private async populateAccountProfile(account: Account): Promise<Profile> {
-    const profile = account.profile
+    const { profile, role } = account
 
-    const attachments = await this.profileRepository.getProfileAttachments(account.profile.id)
+    const { avatar, banner } = await this.profileRepository.getProfileAttachments(account.profile.id)
     const title = await this.profileRepository.getTitleByUserId(account.profile.id)
 
-    profile['role'] = account.role.name
-    profile.avatar_attachment = attachments.avatar
-    profile.banner_attachment = attachments.banner
+    profile.avatar_attachment = avatar
+    profile.banner_attachment = banner
     profile.title = title
 
-    return profile
+    return { role: role.name, ...profile } as Profile
   }
 }
