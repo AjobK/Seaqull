@@ -21,8 +21,6 @@ $toast-info-secondary: #EBEFFE;
 	margin: -$toast-padding;
 	border-left: $toast-line-width solid;
 
-	@include fade-in;
-
 	&Header {
 		display: flex;
 	}

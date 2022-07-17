@@ -46,5 +46,10 @@ export const toastData = {
       title: 'This is an example warning.',
       description: 'Lorem ipsum dolor sit amet'
     },
+    spamWarning: {
+      ...types.error,
+      title: 'Please wait before posting again.',
+      description: 'You have recently made a post and have to wait before posting another.'
+    },
   }
 }
