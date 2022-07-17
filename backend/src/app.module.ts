@@ -36,13 +36,6 @@ import { HealthModule } from './modules/health.module'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        Logger.log('THESE ARE CONFIGSERVICE THINGS')
-        Logger.log(configService.get('DB_HOST'))
-        Logger.log(configService.get('DB_PORT'))
-        Logger.log(configService.get('DB_USERNAME'))
-        Logger.log(configService.get('DB_PASSWORD'))
-        Logger.log(configService.get('DB_NAME'))
-
         return {
           type: 'postgres',
           host: configService.get('DB_HOST'),
