@@ -248,17 +248,14 @@ export class PostService {
 
   public async isAllowedToPost(user: Account): Promise<{ allowedToPost: boolean, msDiff: number }> {
     const post = await this.postRepository.getLastPostByProfile(user.profile)
+    const POST_TIMEOUT = 30000
 
     let allowedToPost = true
-
     let msDiff = 0
 
-    if (post) {
+    if (post && msDiff < POST_TIMEOUT) {
       msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
-
-      if (msDiff < parseInt(process.env.POST_TIMEOUT)) {
-        allowedToPost = false
-      }
+      allowedToPost = false
     }
 
     return { allowedToPost, msDiff: msDiff }

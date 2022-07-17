@@ -1,24 +1,26 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, convertToRaw, ContentState } from 'draft-js'
+import { EditorState, Editor, convertToRaw, convertFromRaw, ContentState } from 'draft-js'
 import '../../DraftFallback.css'
+import { StyleUtil } from '../../util'
 
 @inject('store')
 @observer
 class PostContent extends Component {
   constructor(props) {
     super(props)
+
     const { type } = this.props
 
     this.type = type || 'content'
     this.selected = false
     this.maxLength = this.type == 'title' ? 128 : null
-    this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.editorInput = React.createRef()
+    this.wasReadOnly = false
 
     this.state = {
       editorState: EditorState.createEmpty(),
@@ -35,6 +37,18 @@ class PostContent extends Component {
 
   onChange = (editorState) => {
     this.setState({ editorState }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
+  }
+
+  // TODO: Make safe
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { callBackGetData, canceled, type } = nextProps
+
+    if (type == 'content') {
+      let calledBackData = callBackGetData()
+
+      if (canceled && calledBackData)
+        this.setContent(calledBackData)
+    }
   }
 
   handleBeforeInput = (chars) => {
@@ -74,11 +88,34 @@ class PostContent extends Component {
     this.editorInput.current.focus()
   }
 
+  generateTypeStyle = (typeValue) => {
+    return styles[
+      StyleUtil.generateStyleString('postContent', typeValue)
+    ]
+  }
+
+  setContent(content) {
+    const { callBackSaveData } = this.props
+    let convertedContent = convertFromRaw(content)
+
+    try {
+      let eState = EditorState.createWithContent(
+        convertedContent
+      )
+
+      callBackSaveData(content)
+
+      this.setState({ editorState: eState })
+    } catch (e) { }
+  }
+
   componentDidMount() {
     let eState =
       typeof this.props.value == 'string'
         ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
         : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+
+    this.wasReadOnly = this.props.readOnly
 
     try {
       eState = EditorState.createWithContent(this.props.value)
@@ -90,21 +127,19 @@ class PostContent extends Component {
   render() {
     const { type, readOnly } = this.props
 
-    const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
-
     return (
       <div>
         <PostContentBlock
           heading={ `${type == 'content' ? 'Your' : ''} ${type}` }
-          noHeading={ readOnly }
+          noHeading
           // onClick={this.focusOnEditor}
-          className={ [style] }
+          className={ [this.generateTypeStyle(this.type)] }
         >
           <Editor
             editorState={ this.state.editorState }
             ref={ this.editorInput }
             onChange={ this.onChange }
-            readOnly={ readOnly != undefined ? readOnly : false }
+            readOnly={ readOnly }
             // onFocus={this.onFocus}
             // onBlur={this.onBlur}
             spellCheck={ true }

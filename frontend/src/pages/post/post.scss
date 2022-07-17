@@ -1,13 +1,6 @@
 @import '../../styles/index.scss';
 
-.stdBgWhite {
-	background-color: white;
-}
-
-.renderWrapper {
-	min-height: 50vh;
-	margin-bottom: $header-spacing;
-}
+$post-padding-top: $header-spacing * 3;
 
 .likePostWrapper {
 	width: 100%;
@@ -15,124 +8,164 @@
 	justify-content: space-between;
 }
 
-.container {
-	align-items: center;
-	padding: $header-spacing 0;
-	margin-top: $header-spacing * 2;
-	border-top: 2px solid $background-darker;
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	
-	&Text {
-		margin-right: $header-spacing;
-		font-weight: bold;
-		font-size: 1.1rem;
-	}
-}
+.post {
+	&Side {
+		width: fit-content;
+		flex-direction: column;
+		padding-top: $post-padding-top;
+		margin-left: -260px;
 
-.extraWhitespace {
-	padding: $header-spacing;
-}
+		&Wrapper {
+			position: fixed;
+			width: 100%;
+			display: flex;
+			justify-content: center;
 
-.title {
-	color: #4D4D4D;
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-	font-size: 2rem;
-}
+			&Content {
+				width: $post-wrapper-width;
+			}
+		}
 
-.saveContainer {
-	background: $primary;
-	min-height: 10vh;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	margin-top: 30px;
-}
+		&Author {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 20px;
 
-.save {
-	position: relative;
-	width: fit-content;
-	padding: 0 60px;
-}
-
-.delete {
-	cursor: pointer;
-	font-size: 1.2rem;
-	padding: 8px 0;
-	color: $text-dark;
-	border-radius: 100%;
-
-	&:hover {
-		color: $primary;
-	}
-}
-
-.postActionButtons {
-	display: flex;
-	justify-content: space-between;
-
-	&Left {
-
+			&Header {
+				color: $secondary;
+				font-size: $nr-sm-fontsize;
+				margin-bottom: 10px;
+			}
+		}
 	}
 
-	&Right {
-		padding-top: 10px;
-	}
-}
+	&Wrapper {
+		width: 100%;
+		max-width: $post-wrapper-width;
+		margin: 0 auto;
+		padding-top: $post-padding-top;
+		white-space: normal;
 
-.publish {
-	&Button {
-		@include noselect;
-		display: inline-block;
-		color: white;
-		padding: 10px 40px;
-		font-weight: bold;
-		font-size: 1rem;
-		letter-spacing: 1px;
-		transition: all .2s ease-in-out;
-		cursor: pointer;
-		list-style-type: none;
+		&Top {
+			display: flex;
+			justify-content: flex-end;
+			margin-bottom: 30px;
+		}
+
+		&Author {
+			margin: 0 15px 0 0;
+			display: none;
+		}
+
+		&Thumbnail {
+			margin: 30px 0 40px;
+		}
+
+		&Content {
+			margin-bottom: 60px;
+		}
+	}
+
+	&ActionButtons {
+		display: flex;
+		justify-content: space-between;
 		margin-bottom: 80px;
+
+		&Left {
+			display: flex;
+			align-items: center;
+		}
+
+		&Right {
+			display: flex;
+			align-items: center;
+		}
+
+		&Publish {
+			&Button {
+				@include noselect;
+				display: inline-block;
+				padding: 10px 40px;
+				font-weight: bold;
+				font-size: 1rem;
+				letter-spacing: 1px;
+				transition: all .2s ease-in-out;
+				cursor: pointer;
+				list-style-type: none;
+				margin-right: 15px;
+
+				&Secondary {
+					padding: 10px 20px;
+				}
+			}
+			&ed {
+				background-color: rgba(0,0,0,0.25);
+			}
+		}
+
+		&Delete {
+			cursor: pointer;
+			font-size: 1.2rem;
+			padding: 8px 0;
+			color: $text-dark;
+			border-radius: 100%;
+
+			&:hover {
+				color: $primary;
+			}
+		}
+
+		&Mobile {
+			display: none;
+			align-items: center;
+
+			&Like {
+				margin-left: 20px;
+			}
+		}
 	}
-	&ed {
-		background-color: rgba(0,0,0,0.25);
+
+	.toolTip {
+		@include tooltip();
 	}
 }
 
-.info {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	margin-bottom: $header-spacing * 2 - 10px;
-
-	&Saving {
-		font-weight: bold;
-		color: rgba(0,0,0,0.25);
-		margin-left: $header-spacing;
-		text-transform: uppercase;
+@include desktop-small() {
+	.post {
+		&Side {
+			margin-left: -220px;
+		}
 	}
 }
 
-.date {
-	@include noselect;
-	display: flex;
-	align-items: center;
-	text-transform: uppercase;
-	color: gray;
-	opacity: 0.35;
-	font-size: 0.8rem;
-	font-weight: bold;
+@include mobile-tablet() {
+	.post {
+		&Side {
+			display: none;
+		}
 
-	&Icon {
-		margin-right: 10px;
+		&Wrapper {
+			&Author {
+				display: initial;
+			}
+		}
+
+		&ActionButtons {
+			&Mobile {
+				display: flex;
+			}
+		}
 	}
 }
 
-.toolTip {
-	@include tooltip();
+@include mobile-all {
+	.post {
+		&Wrapper {
+			padding: 0 16px;
+
+			&Top {
+
+			}
+		}
+	}
 }

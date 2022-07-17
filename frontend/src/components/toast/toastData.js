@@ -43,10 +43,8 @@ export const toastData = {
     },
     exampleWarning: {
       ...types.warning,
-      title: 'Please DO NOT buy the BTS meal if you don\'t stan them.',
-      description: 'Please DO NOT buy the BTS meal if you don\'t stan them. You\'re preventing the actual BTS fans ' +
-        'who have waited for months from having the BTS meal experience. Eating the sauces without understanding ' +
-        'their significance is literally cultural appropriation and it\'s not okay'
+      title: 'This is an example warning.',
+      description: 'Lorem ipsum dolor sit amet'
     },
     spamWarning: {
       ...types.error,

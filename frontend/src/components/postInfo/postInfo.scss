@@ -1,0 +1,160 @@
+@import '../../styles/index.scss';
+
+$profile-bar-image-size: 40px;
+
+@mixin hide-category-separator {
+	.postInfo {
+		&Category {
+			&Wrapper {
+				> .postInfoBullet {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+.postInfo {
+	display: flex;
+	align-items: center;
+	width: fit-content;
+	flex-wrap: wrap;
+	pointer-events: initial;
+	justify-content: space-between;
+
+	&Section {
+		display: flex;
+	}
+
+	&Category {
+		color: $primary;
+		display: flex;
+		align-items: center;
+		margin-right: 20px;
+
+		&Bullet {
+			margin-right: 10px;
+			font-size: .7em;
+			display: flex;
+			margin-top: 1px;
+		}
+
+		&:hover {
+			> p > span {
+				width: 100%;
+			}
+		}
+
+		> p {
+			position: relative;
+
+			> span {
+				@include fancy-underline;
+			}
+		}
+	}
+
+	&Text {
+		font-weight: 300;
+		display: flex;
+
+		&Icon {
+			font-size: .8em;
+			margin-right: 10px;
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	&Bullet {
+		font-size: .9em;
+		margin: 0 10px;
+	}
+
+	&Views {
+		display: flex;
+	}
+
+	&Light {
+		.postInfo {
+			&Text {
+				color: $dark-light;
+				opacity: .8;
+			}
+
+			&Bullet {
+				color: white;
+				opacity: .4;
+			}
+		}
+	}
+
+	&Dark {
+		.postInfo {
+			&Text {
+				color: $secondary;
+				opacity: .8;
+			}
+
+			&Bullet {
+				color: $secondary;
+				opacity: .4;
+			}
+		}
+	}
+
+	&Small {
+		.postInfo {
+			&Text {
+				font-size: $nr-xs-fontsize;
+			}
+		}
+
+		&Category {
+			font-size: $nr-xs-fontsize;
+		}
+	}
+
+	&Large {
+		.postInfo {
+			&Text {
+				font-size: $nr-sm-fontsize;
+			}
+		}
+
+		&Category {
+			font-size: $nr-sm-fontsize;
+		}
+	}
+
+	&FullWidth {
+		@include hide-category-separator;
+
+		width: 100%;
+	}
+
+	@include mobile-all() {
+		&Category {
+			&Bullet {
+				font-size: .5em;
+				vertical-align: 0;
+			}
+		}
+
+		&MinimizeOnMobile {
+			.postInfo {
+				@include hide-category-separator;
+
+				&Section:not(.postInfoCategoryWrapper) {
+					display: none;
+				}
+			}
+		}
+
+		&FullWidthOnMobile {
+			@include hide-category-separator;
+
+			width: 100%;
+		}
+	}
+}

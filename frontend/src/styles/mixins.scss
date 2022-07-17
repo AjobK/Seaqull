@@ -195,3 +195,23 @@
 		}
 	}
 }
+
+@mixin dark-overlay {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-size: 2rem;
+	background-color: rgba(0,0,0,0.75);
+	color: white;
+	transition: 0.2s;
+	opacity: 0;
+
+	&:hover {
+		opacity: 1;
+	}
+}
