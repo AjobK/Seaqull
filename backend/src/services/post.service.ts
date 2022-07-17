@@ -251,9 +251,9 @@ export class PostService {
     const POST_TIMEOUT = 30000
 
     let allowedToPost = true
-    let msDiff = 0
+    let msDiff = post ? new Date().getMilliseconds() - post.created_at.getMilliseconds() : 0
 
-    if (post && msDiff < POST_TIMEOUT) {
+    if (msDiff < POST_TIMEOUT) {
       msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
       allowedToPost = false
     }
