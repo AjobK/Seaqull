@@ -250,15 +250,10 @@ export class PostService {
     const post = await this.postRepository.getLastPostByProfile(user.profile)
     const POST_TIMEOUT = 30000
 
-    let allowedToPost = true
-    let msDiff = post ? new Date().getMilliseconds() - post.created_at.getMilliseconds() : 0
+    const MS_DIFFERENCE = post ? new Date().getMilliseconds() - post.created_at.getMilliseconds() : 0
+    const ALLOWED_TO_POST = MS_DIFFERENCE > POST_TIMEOUT || !post
 
-    if (msDiff < POST_TIMEOUT) {
-      msDiff = new Date().getMilliseconds() - post.created_at.getMilliseconds()
-      allowedToPost = false
-    }
-
-    return { allowedToPost, msDiff: msDiff }
+    return { allowedToPost: ALLOWED_TO_POST, msDiff: MS_DIFFERENCE }
   }
 
   private async createThumbnailAttachment(file: Express.Multer.File) {
