@@ -247,8 +247,10 @@ export class PostService {
     const post = await this.postRepository.getLastPostByProfile(user.profile)
     const POST_TIMEOUT = 30000
 
-    const MS_DIFFERENCE = post ? new Date().getMilliseconds() - post.created_at.getMilliseconds() : 0
+    const MS_DIFFERENCE = post ? +(new Date()) - +post.created_at : 0
     const ALLOWED_TO_POST = MS_DIFFERENCE > POST_TIMEOUT || !post
+
+    console.log({ allowedToPost: ALLOWED_TO_POST, msDiff: MS_DIFFERENCE })
 
     return { allowedToPost: ALLOWED_TO_POST, msDiff: MS_DIFFERENCE }
   }
