@@ -28,7 +28,7 @@ class Post extends App {
   constructor(props) {
     super(props)
 
-    this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
+    this.canBanUser = this.props.store.profile.role.toUpperCase() !== 'USER'
 
     this.postPath = URLUtil.getLastPathArgument()
 
