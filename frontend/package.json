@@ -81,6 +81,7 @@
     "npm-check": "^5.9.2",
     "react-addons-update": "^15.6.3",
     "react-contenteditable": "^3.3.5",
+    "react-hot-toast": "^2.2.0",
     "react-image-crop": "^8.6.6",
     "react-router": "^4.3.1",
     "react-sane-contenteditable": "^1.6.1",

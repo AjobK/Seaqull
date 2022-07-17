@@ -141,31 +141,33 @@ export class PostService {
   }
 
   public async createPost(createPostDTO: CreatePostDTO, file: Express.Multer.File, user: Account): Promise<string> {
+    if (!this.isAllowedToPost(user)) return null
+
     let thumbnailAttachment
-    const newPost = new Post()
+    const NEW_POST = new Post()
 
     if (file) {
-      const isImage = this.fileService.isImage(file)
+      const IS_IMAGE = this.fileService.isImage(file)
 
-      if (!isImage) throw new BadRequestException({ error: 'Only images are allowed' })
+      if (!IS_IMAGE) throw new BadRequestException({ error: 'Only images are allowed' })
 
       thumbnailAttachment = await this.createThumbnailAttachment(file)
     } else {
       thumbnailAttachment = await this.attachmentRepository.getDefaultThumbnailAttachment()
     }
 
-    newPost.title = createPostDTO.title
-    newPost.description = createPostDTO.description
-    newPost.content = createPostDTO.content
-    newPost.published_at = new Date()
-    newPost.created_at = new Date()
-    newPost.thumbnail_attachment = thumbnailAttachment
-    newPost.profile = user.profile
-    newPost.path = uuidv4()
+    NEW_POST.title = createPostDTO.title
+    NEW_POST.description = createPostDTO.description
+    NEW_POST.content = createPostDTO.content
+    NEW_POST.published_at = new Date()
+    NEW_POST.created_at = new Date()
+    NEW_POST.thumbnail_attachment = thumbnailAttachment
+    NEW_POST.profile = user.profile
+    NEW_POST.path = uuidv4()
 
-    await this.postRepository.createPost(newPost)
+    await this.postRepository.createPost(NEW_POST)
 
-    return newPost.path
+    return NEW_POST.path
   }
 
   public async updatePost(path: string, createPostDTO: CreatePostDTO, display_name: string): Promise<void> {
@@ -232,13 +234,23 @@ export class PostService {
       })
     }
 
-    const isImage = this.fileService.isImage(file)
+    const IS_IMAGE = this.fileService.isImage(file)
 
-    if (!isImage) throw new BadRequestException('Only images are allowed')
+    if (!IS_IMAGE) throw new BadRequestException('Only images are allowed')
 
-    const banner = await this.updateThumbnailAttachment(post, file)
+    const BANNER = await this.updateThumbnailAttachment(post, file)
 
-    return `${ this.configService.get('BACKEND_URL') }${ banner.path }`
+    return `${ this.configService.get('BACKEND_URL') }${ BANNER.path }`
+  }
+
+  public async isAllowedToPost(user: Account): Promise<{ allowedToPost: boolean, msDiff: number }> {
+    const post = await this.postRepository.getLastPostByProfile(user.profile)
+    const POST_TIMEOUT = 30000
+
+    const MS_DIFFERENCE = post ? +(new Date()) - +post.created_at : 0
+    const ALLOWED_TO_POST = MS_DIFFERENCE > POST_TIMEOUT || !post
+
+    return { allowedToPost: ALLOWED_TO_POST, msDiff: MS_DIFFERENCE }
   }
 
   private async createThumbnailAttachment(file: Express.Multer.File) {

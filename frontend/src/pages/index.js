@@ -11,6 +11,8 @@ import Login from './login'
 import Register from './register'
 import { Header } from '../layouts'
 import GuardedRoute from '../components/guardedRoute'
+import { ToastUtil } from '../util'
+import { toastData } from '../components/toast/toastData'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -18,10 +20,11 @@ class AppRouter extends Component {
 
     this.store = initStore(true)
     this.store.profile.loginVerify()
+
+    ToastUtil.createToast(toastData.messages.prototypeNotification)
   }
 
   render () {
-
     return (
       <Provider store={ this.store }>
         <>

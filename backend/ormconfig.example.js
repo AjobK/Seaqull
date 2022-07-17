@@ -1,3 +1,5 @@
+// This is an example ORM CONFIG
+
 module.exports = {
   'type': 'postgres',
   'host': process.env.DB_HOST,
@@ -8,7 +10,8 @@ module.exports = {
   'synchronize': true,
   'logging': false,
   'entities': [
-    'src/entities/*.entity.ts'
+    './src/entities/*.entity{.ts,.js}',
+    './dist/**/*.entity.js'
   ],
   'migrations': [
     'src/migration/**/*.ts'
