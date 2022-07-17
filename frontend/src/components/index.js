@@ -20,6 +20,7 @@ import Loader from './loader'
 import Icon from './icon'
 import LoginPrompt from './loginPrompt'
 import RegisterPrompt from './registerPrompt'
+import VerificationPrompt from './verificationPrompt'
 import StyleButton from './styleButton'
 import FormInput from './formInput'
 import CommentSection from './commentSection'
@@ -68,6 +69,7 @@ export {
   StyleButton,
   LoginPrompt,
   RegisterPrompt,
+  VerificationPrompt,
   FormInput,
   CommentSection,
   Comment,

@@ -9,14 +9,18 @@ import { JwtPayload } from '../interfaces/jwt-payload.interface'
 import { SuccessfulLoginDTO } from '../dtos/successful-login.dto'
 import { BanRepository } from '../repositories/ban.repository'
 import { ProfileRepository } from '../repositories/profile.repository'
+import { VerificationRepository } from '../repositories/verification.repository'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
     @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
+    @InjectRepository(VerificationRepository) private readonly verificationRepository: VerificationRepository,
     @InjectRepository(BanRepository) private readonly banRepository: BanRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
   ) { }
 
   public async loginVerify(token: string): Promise<Profile> {
@@ -40,6 +44,33 @@ export class AuthService {
     const account = await this.accountRepository.getAccountByUsername(username)
 
     return account
+  }
+
+  public async verifyAccount(code: string): Promise<any> {
+    const account = await this.accountRepository.getAccountByVerificationCode(code)
+
+    if (!account) return null
+
+    const verificationId = account.verification?.id
+
+    await this.accountRepository.nullAccountVerification(account)
+    await this.verificationRepository.deleteVerificationById(verificationId)
+
+    const payload: JwtPayload = {
+      role_id: account.role.id,
+      user_name: account.user_name,
+      expiration: Date.now() + parseInt(this.configService.get('JWT_EXPIRATION')),
+    }
+
+    const token = this.jwtService.sign(payload)
+
+    return {
+      role: account.role,
+      profile: account.profile,
+      username: account.user_name,
+      email: account.email,
+      token
+    }
   }
 
   public async login(

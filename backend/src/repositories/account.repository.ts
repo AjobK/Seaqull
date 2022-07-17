@@ -12,6 +12,17 @@ export class AccountRepository extends Repository<Account> {
     return account?.profile
   }
 
+  public async getAccountByVerificationCode(code: string): Promise<Account> {
+    return await this.createQueryBuilder('account')
+      .leftJoinAndSelect('account.role', 'role')
+      .leftJoinAndSelect('account.verification', 'verification')
+      .leftJoinAndSelect('account.profile', 'profile')
+      .leftJoinAndSelect('profile.avatar_attachment', 'attachment')
+      .leftJoinAndSelect('profile.title', 'title')
+      .where('verification.code = :code', { code })
+      .getOne()
+  }
+
   public async getAccountByUsername(username: string): Promise<Account> {
     const account = await this.createQueryBuilder('account')
       .leftJoinAndSelect('account.profile', 'profile')
@@ -69,5 +80,11 @@ export class AccountRepository extends Repository<Account> {
     if (!account) return undefined
 
     return account.role
+  }
+
+  public async nullAccountVerification(account: Account): Promise<void> {
+    account.verification = null
+
+    await this.updateAccount(account)
   }
 }

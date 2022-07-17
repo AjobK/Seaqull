@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   ForbiddenException,
+  NotFoundException,
   Get,
   Post,
   Req,
@@ -16,6 +17,7 @@ import { LoginDTO } from '../dtos/login.dto'
 import { Profile } from '../entities/profile.entity'
 import { CaptchaService } from '../services/captcha.service'
 import { AllowAny } from '../decorators/allow-any.decorator'
+import { VerifyPayloadDTO } from '../dtos/verify-payload.dto'
 
 @ApiTags('Auth')
 @Controller()
@@ -75,6 +77,34 @@ export class AuthController {
 
     res.status(200).json({
       user: loginResponse.account
+    })
+
+    res.send()
+  }
+
+  @Post('/account-verify/:code')
+  @AllowAny()
+  public async accountVerify(@Req() req: Request, @Res() res: Response): Promise<any> {
+    const payload = await this.authorizationService.verifyAccount(req.params.code)
+
+    if (!payload) throw new NotFoundException({ errors: ['The verification code is invalid'] })
+
+    res.setHeader(
+      'Set-Cookie',
+      `token=${ payload.token }; HttpOnly; ${
+        this.configService.get('SECURE') == 'true' ? 'secure;' : ''
+      } expires=${ +new Date(new Date().getTime() + 86409000).toUTCString() }; path=/`
+    )
+
+    const publicPayload: VerifyPayloadDTO = {
+      role: payload.role,
+      profile: payload.profile,
+      username: payload.username,
+      email: payload.email,
+    }
+
+    res.status(200).json({
+      user: publicPayload
     })
 
     res.send()

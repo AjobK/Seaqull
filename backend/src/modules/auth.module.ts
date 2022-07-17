@@ -12,6 +12,7 @@ import { TitleRepository } from '../repositories/title.repository'
 import { AttachmentRepository } from '../repositories/attachment.repository'
 import { BanRepository } from '../repositories/ban.repository'
 import { CaptchaService } from '../services/captcha.service'
+import { VerificationRepository } from '../repositories/verification.repository'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CaptchaService } from '../services/captcha.service'
       ProfileRepository,
       TitleRepository,
       BanRepository,
+      VerificationRepository,
       AttachmentRepository
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),

@@ -41,6 +41,7 @@ class AppRouter extends Component {
                 <Route path='/posts/:postUrl' exact component={ Post } />
                 <Route path='/login' exact component={ Login } />
                 <Route path='/register' exact component={ Register } />
+                <Route path='/verify/:code' exact component={ Register } />
                 <Route component={ () => <Error title={ 404 } sub={ 'Page not found' } /> } />
               </Switch>
             </>

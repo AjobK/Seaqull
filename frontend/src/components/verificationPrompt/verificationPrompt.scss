@@ -1,0 +1,56 @@
+@import '../../styles/index.scss';
+
+.prompt {
+	background-color: $prompt-background;
+	border: 1px solid $prompt-border-color;
+	border-radius: 13px;
+	padding: 50px 60px;
+
+	@include mobile-all-portrait {
+		display: flex;
+		background-color: $background-trans-less;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		border: none;
+		border-radius: 0;
+		height: 100%;
+		max-width: 100%;
+		width: 100%;
+		padding: 0;
+	}
+}
+
+.text {
+	word-break: break-word;
+	white-space: normal;
+	padding: 0 2rem;
+	font-size: 2rem;
+	line-height: 33px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+
+	@include mobile-all-portrait {
+		word-break: break-word;
+		font-size: 1.8rem;
+		color: $raw-text-color;
+		font-weight: bold;
+	}
+
+	@include mobile-sm {
+		font-size: 1.4rem;
+		line-height: 1.4rem;
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	margin-top: 35px;
+	width: 100%;
+	@include mobile-all-portrait {
+		margin-top: 0;
+	}
+}
