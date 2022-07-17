@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { onSnapshot } from 'mobx-state-tree'
-import { PopUp } from '../../components'
+import { PopUp, Toast } from '../../components'
 import { popUpData } from '../popUp/popUpData'
 
 @inject('store') @observer
@@ -68,6 +68,7 @@ class GlobalNotification extends Component {
 
     return (
       <div>
+        <Toast />
         { this.state.isNotificationVisible && (
           <PopUp content={ {
             ...notification.getContentJSON(),

@@ -87,6 +87,18 @@
 	animation: fade-in 1s;
 }
 
+@mixin fade-out () {
+	@keyframes fade-out {
+		from {
+			opacity: 1;
+		} to {
+			opacity: 0;
+		}
+	}
+
+	animation: fade-out 1s;
+}
+
 @mixin pop-up () {
 	position: fixed;
 	background-color: white;
