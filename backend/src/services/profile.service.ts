@@ -134,7 +134,7 @@ export class ProfileService {
 
     const payload: JwtPayload = {
       role_id: createAccount.role.id,
-      user_name: createAccount.user_name,
+      email: createAccount.email,
       expiration: Date.now() + parseInt(this.configService.get('JWT_EXPIRATION')),
     }
 
