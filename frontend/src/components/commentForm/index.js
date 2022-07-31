@@ -3,7 +3,9 @@ import Axios from 'axios'
 
 import { CommentEditor } from '../'
 import { URLUtil } from '../../util/'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class CommentForm extends Component {
   constructor(props) {
     super(props)

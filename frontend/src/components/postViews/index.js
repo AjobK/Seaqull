@@ -3,7 +3,9 @@ import styles from './postViews.scss'
 import Axios from 'axios'
 import { Icon } from '../../components'
 import { URLUtil, UnitFormatterUtil, StyleUtil } from '../../util/'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class PostViews extends Component {
   constructor(props) {
     super(props)
