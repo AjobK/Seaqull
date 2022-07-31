@@ -56,7 +56,6 @@ class RegisterPrompt extends Component {
           : this.goToProfile(user.profile.display_name)
       })
       .catch((err) => {
-        console.log(err.response)
         const { status, data: { message } } = err.response
 
         if (status >= 400 && status <= 499) {
