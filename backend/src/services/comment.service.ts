@@ -100,14 +100,16 @@ export class CommentService {
     await this.commentRespository.unpinCommentById(id)
   }
 
-  public async deleteComment(comment_id: number, profile: Profile): Promise<void> {
+  public async deleteComment(comment_id: number, profile: Profile, requireOwner: boolean): Promise<void> {
     const comment = await this.commentRespository.getCommentById(comment_id)
 
     if (!comment) throw new NotFoundException(`Comment to delete not found with id ${ comment_id }`)
 
     const commentProfile = await this.commentRespository.getCommentProfileById(comment.id)
 
-    if (commentProfile.display_name !== profile.display_name) {
+    const isOwner = commentProfile.display_name === profile.display_name
+
+    if (requireOwner && !isOwner) {
       throw new ForbiddenException()
     }
 

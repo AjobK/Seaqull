@@ -28,6 +28,9 @@ class Comment extends Component {
     if (this.props.comment && this.props.comment.parent_comment_id) {
       this.isReply = true
     }
+
+    this.isDeletingAsAdmin = false
+    this.COMMENT_ENDPOINT = `${ this.props.store.defaultData.backendUrl }/comment`
   }
 
   displayAvatar = () => {
@@ -75,7 +78,8 @@ class Comment extends Component {
   }
 
   onDeleteConfirm = () => {
-    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }`
+    const url =
+      `${ this.COMMENT_ENDPOINT }/${ this.props.comment.id }${ this.isDeletingAsAdmin ? '/moderator' : '' }`
 
     axios
       .delete(url, { withCredentials: true })
@@ -92,7 +96,7 @@ class Comment extends Component {
   }
 
   onLikeClick = () => {
-    const url = `http://localhost:8000/api/comment/likes/${ this.props.comment.id }/`
+    const url = `${ this.COMMENT_ENDPOINT }/likes/${ this.props.comment.id }/`
     this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
   }
 
@@ -124,7 +128,7 @@ class Comment extends Component {
   }
 
   onPinClick = () => {
-    const url = `http://localhost:8000/api/comment/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
+    const url = `${ this.COMMENT_ENDPOINT }/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
 
     axios.patch(url, null, { withCredentials: true })
       .then(() => {
@@ -160,7 +164,12 @@ class Comment extends Component {
     const { comment } = this.props
     const { profile } = this.props.store
 
-    if (comment.profile.display_name === profile.display_name) {
+    const isOwner = comment.profile.display_name === profile.display_name
+    const isAdmin = profile.loggedIn && profile.role.toUpperCase() !== 'USER'
+
+    this.isDeletingAsAdmin = isAdmin
+
+    if (isOwner || isAdmin) {
       return (
           <>
             <Icon

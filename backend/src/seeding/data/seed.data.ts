@@ -13,6 +13,7 @@ export const permissionsModerators = [
   'REMOVE_POSTS',
   'RECOVER_POSTS',
   'SEE_REPORTED_POSTS',
+  'REMOVE_COMMENTS',
   'VIEW_TICKETS',
   'CONTENT_BLOCK_USERS',
   'COMMENT_BLOCK_USERS',
