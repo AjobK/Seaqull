@@ -56,11 +56,13 @@ class RegisterPrompt extends Component {
           : this.goToProfile(user.profile.display_name)
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          this.handleError(err.response?.data?.message)
+        const { status, data: { message } } = err.response
+
+        if (status >= 400 && status <= 499) {
+          this.handleError(Array.isArray(message) ? message : [message])
         } else {
           this.setState({
-            generalError: 'Internal server error'
+            generalError: ['Internal server error']
           })
         }
       })
@@ -116,10 +118,12 @@ class RegisterPrompt extends Component {
 
     for (const elem of msg) {
       const error = elem.toLowerCase()
+      const errorKey = error.split(' ')[0]
 
-      errors[error.split(' ')[0]].push(error)
-
-      errors.generalError.push(elem)
+      if (errors?.[errorKey])
+        errors[errorKey].push(elem)
+      else
+        errors.generalError.push(elem)
     }
 
     this.setState({
