@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as cookieParser from 'cookie-parser'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
-import fs from 'fs'
+import * as fs from 'fs'
 import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface'
 
 const bootstrap = async () => {
