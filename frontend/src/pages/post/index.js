@@ -19,6 +19,8 @@ import {
 } from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
+import { ToastUtil } from '../../util'
+import { toastData } from '../../components/toast/toastData'
 
 @inject('store')
 @observer
@@ -26,7 +28,7 @@ class Post extends App {
   constructor(props) {
     super(props)
 
-    this.canBanUser = this.props.store.profile.role !== 'User' && this.props.store.profile.role !== 'user'
+    this.canBanUser = this.props.store.profile.role.toUpperCase() !== 'USER'
 
     this.postPath = URLUtil.getLastPathArgument()
 
@@ -171,7 +173,15 @@ class Post extends App {
     }
   }
 
-  createPost = () => {
+  createPost = async () => {
+    const allowedToPost = await this.checkPostTimeout()
+
+    if (!allowedToPost) {
+      ToastUtil.createToast(toastData.messages.spamWarning)
+
+      return
+    }
+
     const fd = new FormData()
 
     fd.append('file', this.addedThumbnail)
@@ -198,6 +208,16 @@ class Post extends App {
 
       notification.setContent(popUpData.messages.updatePostNotification)
     })
+  }
+
+  checkPostTimeout = async () => {
+    const response = await Axios.get('/post/timeout', { withCredentials: true })
+
+    return response.data.allowedToPost
+  }
+
+  onThumbnailAdded = (thumbnail) => {
+    this.addedThumbnail = thumbnail
   }
 
   onDeletePostClicked = () => {

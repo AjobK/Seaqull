@@ -9,7 +9,7 @@ const Action = types.model({
 })
 
 const NotificationStore = types
-  .model('UserStore', {
+  .model('NotificationStore', {
     visible: types.optional(types.boolean, false),
     title: types.optional(types.string, ''),
     titleIcon: types.optional(types.string, ''),
