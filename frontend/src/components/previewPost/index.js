@@ -16,12 +16,14 @@ class previewPost extends Component {
       return <article className={ [styles.article, styles.filler].join(' ') }></article>
     }
 
+    const { BACKEND_URL } = process.env
+
     return (
       <Link
         to={ post.path ? `/posts/${ post.path }` : '#' }
         className={ [styles.article, ...className || ''].join(' ') }
         style={ {
-          backgroundImage: `url(${ post.thumbnail })`
+          backgroundImage: `url(${ BACKEND_URL }/${ post?.thumbnail_attachment?.path })`
         } }>
         <div className={ styles.articleWrapper }>
           <div className={ styles.articleWrapperStats }>

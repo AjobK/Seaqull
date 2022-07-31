@@ -117,10 +117,6 @@ export class PostService {
 
     const posts = await this.postRepository.getPostsByProfile(account.profile) as any[]
 
-    for (const post of posts) {
-      post.thumbnail = await this.getPostThumbnailURL(post.id)
-    }
-
     return posts
   }
 

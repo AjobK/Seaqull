@@ -12,15 +12,17 @@ const bootstrap = async () => {
   const logger = new Logger('Main')
 
   const httpsOptions: HttpsOptions = {}
+  let app: any
 
   if (process?.env?.CERT_PRIVATE_KEY_PEM && process?.env?.CERT_PUBLIC_PEM) {
     const { CERT_PRIVATE_KEY_PEM, CERT_PUBLIC_PEM } = process.env
 
     httpsOptions.key = fs.readFileSync(CERT_PRIVATE_KEY_PEM)
     httpsOptions.cert = fs.readFileSync(CERT_PUBLIC_PEM)
+    app = await NestFactory.create(AppModule, { httpsOptions })
+  } else {
+    app = await NestFactory.create(AppModule)
   }
-
-  const app = await NestFactory.create(AppModule, { httpsOptions })
 
   app.setGlobalPrefix('api')
 
