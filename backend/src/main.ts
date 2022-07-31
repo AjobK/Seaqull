@@ -4,10 +4,22 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as cookieParser from 'cookie-parser'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
+import fs from 'fs'
+import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface'
 
 const bootstrap = async () => {
   const logger = new Logger('Main')
-  const app = await NestFactory.create(AppModule)
+
+  const httpsOptions: HttpsOptions = {}
+
+  if (process?.env?.CERT_PRIVATE_KEY_PEM && process?.env?.CERT_PUBLIC_PEM) {
+    const { CERT_PRIVATE_KEY_PEM, CERT_PUBLIC_PEM } = process.env
+
+    httpsOptions.key = fs.readFileSync(CERT_PRIVATE_KEY_PEM)
+    httpsOptions.cert = fs.readFileSync(CERT_PUBLIC_PEM)
+  }
+
+  const app = await NestFactory.create(AppModule, { httpsOptions })
 
   app.setGlobalPrefix('api')
 
