@@ -199,7 +199,7 @@ class Post extends App {
   updatePost = () => {
     const payload = {
       title: this.state.post.title,
-      description: 'None',
+      description: '',
       content: this.state.post.content,
     }
 
