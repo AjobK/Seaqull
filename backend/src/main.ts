@@ -2,9 +2,10 @@ import { NestFactory, Reflector } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as cookieParser from 'cookie-parser'
+import * as fs from 'fs'
+import { urlencoded, json } from 'body-parser'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
-import * as fs from 'fs'
 import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface'
 
 const bootstrap = async () => {
@@ -46,6 +47,9 @@ const bootstrap = async () => {
   const allowedOrigins = [
     process.env.FRONTEND_URL,
   ]
+
+  app.use(json({ limit: '50mb' }))
+  app.use(urlencoded({ limit: '50mb', extended: true }))
 
   app.enableCors({
     origin: allowedOrigins,
