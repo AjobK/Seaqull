@@ -236,7 +236,7 @@ export class PostService {
 
     const BANNER = await this.updateThumbnailAttachment(post, file)
 
-    return `${ this.configService.get('BACKEND_URL') }${ BANNER.path }`
+    return `${ this.configService.get('BACKEND_URL') }/${ BANNER.path }`
   }
 
   public async isAllowedToPost(user: Account): Promise<{ allowedToPost: boolean, msDiff: number }> {
