@@ -29,8 +29,8 @@
 			border-radius: 100%;
 			background-size: cover;
 			background-position: center;
-			width: 85px;
-			height: 85px;
+			width: 2.4rem;
+			height: 2.4rem;
 			position: relative;
 			cursor: pointer;
 		}
@@ -53,7 +53,7 @@
 	}
 
 	&__main {
-		margin-left: 30px;
+		margin-left: $header-spacing;
 		width: 100%;
 		font-size: 1rem;
 		display: flex;
@@ -69,6 +69,7 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
+		margin-top: 10px;
 
 		> button {
 			position: relative;
@@ -137,12 +138,11 @@
 			display: flex;
 			color: $gray;
 			align-items: center;
-			font-size: 1em;
 		}
 
 		&PinIcon {
 			color: $primary;
-			font-size: 1.2rem;
+			font-size: 1rem;
 			margin-right: 10px;
 		}
 
@@ -155,7 +155,7 @@
 	}
 
 	&__likeButtonIcon {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		margin-right: 10px;
 
 		&:hover {
@@ -169,7 +169,7 @@
 		justify-content: flex-end;
 		&Icon {
 			color: $text-dark;
-			font-size: 1.2rem;
+			font-size: 1rem;
 			&:hover {
 				color: $primary;
 				cursor: pointer;
@@ -178,18 +178,16 @@
 	}
 
 	&__isPinned {
-		background-color: $primary;
-		color: #FFFFFF;
+		color: $primary;
 	}
 
 	&__isUnpinned {
-		background-color: $light-gray;
-		color: #FFFFFF;
+		color: rgba(0, 0, 0, 0.25);
 	}
 
 	&__deleteButtonIcon {
 		color: $text-dark;
-		font-size: 1.2rem;
+		font-size: 1rem;
 		margin-right: 10px;
 
 		&:hover {
@@ -199,21 +197,16 @@
 	}
 
 	&__pinButtonIcon {
-		transform: rotate(45deg);
-		height: 25px;
-		width: 25px !important;
-		padding: 6px 5px 5px 5px;
-		border-radius: 20px;
-		font-size: 1.2rem;
+		font-size: 1rem;
 		margin-right: 10px;
-		transition: .2s ease-in-out;
-
+		transition: 0.2s;
+		cursor: pointer;
+		margin-bottom: -3px;
 	}
 
 	&__pinButtonHover {
 		&:hover {
-			background-color: $primary;
-			cursor: pointer;
+			color: rgba($primary, 0.5);
 		}
 	}
 
@@ -274,14 +267,15 @@
 
 	.comment__hasLikedComment {
 		color: $primary;
+		font-size: 1.2rem;
 	}
 
 	.comment__hasNotLikedComment {
 		color: $text-dark;
+		font-size: 1.2rem;
 	}
 
 	p {
-		font-size: 1.2rem;
 		margin-right: 10px;
 	}
 }

@@ -94,7 +94,7 @@ class Comment extends Component {
 
   onLikeClick = () => {
     const { defaultData } = this.props.store
-    const url = `${ defaultData.backendUrlBase }api/comment/likes/${ this.props.comment.id }/`
+    const url = `${ defaultData.backendUrlBase }/api/comment/likes/${ this.props.comment.id }/`
     this.state.likes.profileHasLiked ? this.onUnlikeComment(url) : this.onLikeComment(url)
   }
 
