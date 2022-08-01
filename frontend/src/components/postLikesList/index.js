@@ -32,8 +32,7 @@ class PostLikesList extends Component {
       res.data.forEach((like) => {
         const userLike = {
           displayName: like.profile.display_name,
-          avatarURL: `${ backendUrlBase }${ like.profile.avatar_attachment.path }`,
-          title: like.profile.title.name,
+          avatarURL: `${ backendUrlBase }/${ like.profile.avatar_attachment.path }`,
         }
 
         likes.push(userLike)
@@ -76,7 +75,6 @@ class PostLikesList extends Component {
                     </div>
                     <div className={ `${styles.profileTextWrapper}` }>
                       <p className={ `${styles.profileDisplayName}` }>{like.displayName}</p>
-                      <p className={ `${styles.profileTitle}` }>{like.title}</p>
                     </div>
                   </Link>
                 </li>

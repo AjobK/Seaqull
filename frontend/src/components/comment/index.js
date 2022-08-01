@@ -129,7 +129,7 @@ class Comment extends Component {
     const { defaultData } = this.props.store
     const url = `${
       defaultData.backendUrlBase
-    }}/api/comment/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
+    }/api/comment/${ this.props.comment.id }/${ this.state.isPinned ? 'un' : '' }pin`
 
     axios.patch(url, null, { withCredentials: true })
       .then(() => {

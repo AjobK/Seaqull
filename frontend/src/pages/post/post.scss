@@ -16,7 +16,7 @@ $post-padding-top: $header-spacing * 3;
 		margin-left: -260px;
 
 		&Wrapper {
-			position: fixed;
+			position: absolute;
 			width: 100%;
 			display: flex;
 			justify-content: center;
