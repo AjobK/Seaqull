@@ -23,15 +23,16 @@ class PostsBlockSmall extends Component {
       <div className={ styles.small }>
         <div className={ styles.smallThumbnail }>
           <div className={ styles.smallThumbnailContent }>
-            <Link to={ '#' } className={ styles.smallThumbnailContentCategory }>
+            {/* TODO: Remove or add back when categories/tags work */}
+            {/* <Link to={ '#' } className={ styles.smallThumbnailContentCategory }>
               <span className={ styles.smallThumbnailContentCategoryBullet }>
                 <Icon iconName={ 'Circle' } />
               </span>
               <p>
                 Machine learning
-                <span>{/* UNDERLINE */}</span>
+                <span></span>
               </p>
-            </Link>
+            </Link> */}
             <span
               className={ styles.bookmark }
               onClick={ this.bookmarkPost }
@@ -57,7 +58,10 @@ class PostsBlockSmall extends Component {
           <div>
             <div>
               <h4 className={ styles.smallContentTitle }>{post.title}</h4>
-              <p className={ styles.smallContentDescription }>{post.description}</p>
+              { post.description?.length > 0
+                ? <p className={ styles.smallContentDescription }>{post.description}</p>
+                : <p className={ styles.smallContentDescription }>Hi, check out my post!</p>
+              }
             </div>
             <div className={ styles.smallContentBottom }>
               <div className={ styles.smallContentBottomInfo }>

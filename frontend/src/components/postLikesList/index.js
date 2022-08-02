@@ -24,7 +24,6 @@ class PostLikesList extends Component {
 
   loadLikes = () => {
     const path = URLUtil.getLastPathArgument()
-    const { backendUrlBase } = this.props.store.defaultData
 
     Axios.get(`${this.props.store.defaultData.backendUrl}/post/like/${ path }`).then((res) => {
       const likes = []
@@ -32,7 +31,7 @@ class PostLikesList extends Component {
       res.data.forEach((like) => {
         const userLike = {
           displayName: like.profile.display_name,
-          avatarURL: `${ backendUrlBase }/${ like.profile.avatar_attachment.path }`,
+          avatarURL: like.profile.avatar_attachment.path,
         }
 
         likes.push(userLike)

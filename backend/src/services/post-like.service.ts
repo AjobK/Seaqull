@@ -3,17 +3,17 @@ import { BadRequestException, ForbiddenException, NotFoundException } from '@nes
 import { PostLikeRepository } from '../repositories/post_like.repository'
 import { PostRepository } from '../repositories/post.repository'
 import { PostLike } from '../entities/post_like.entity'
-import { ProfileRepository } from '../repositories/profile.repository'
 import { Profile } from '../entities/profile.entity'
 import { AccountRepository } from '../repositories/account.repository'
 import { Post } from '../entities/post.entity'
+import { ConfigService } from '@nestjs/config'
 
 export class PostLikeService {
   constructor(
     @InjectRepository(PostRepository) private readonly postRepository: PostRepository,
     @InjectRepository(PostLikeRepository) private readonly postLikeRepository: PostLikeRepository,
-    @InjectRepository(ProfileRepository) private readonly profileRepository: ProfileRepository,
     @InjectRepository(AccountRepository) private readonly accountRepository: AccountRepository,
+    private readonly configService: ConfigService,
   ) {
   }
 
@@ -23,6 +23,11 @@ export class PostLikeService {
     if (!post) throw new NotFoundException('Post not found')
 
     const postLikes = await this.postLikeRepository.getPostLikesById(post.id)
+
+    postLikes.forEach((entry) => {
+      const { avatar_attachment } = entry.profile
+      entry.profile.avatar_attachment.path = `${this.configService.get('BACKEND_URL')}/${avatar_attachment.path}`
+    })
 
     return postLikes
   }

@@ -12,5 +12,5 @@ export class ProfileFollowedBy {
 
     @ManyToOne(() => Profile, (Profile) => Profile.id, { nullable: false })
     @JoinColumn({ name: 'follower_id', referencedColumnName: 'id' })
-    follower: number
+    follower: Profile
 }

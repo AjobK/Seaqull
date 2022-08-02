@@ -7,6 +7,7 @@ import { PostRepository } from '../repositories/post.repository'
 import { ProfileRepository } from '../repositories/profile.repository'
 import { AuthModule } from './auth.module'
 import { AccountRepository } from '../repositories/account.repository'
+import { ConfigService } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { AccountRepository } from '../repositories/account.repository'
       AccountRepository,
     ])],
   controllers: [PostLikeController],
-  providers: [PostLikeService],
+  providers: [PostLikeService, ConfigService],
 })
 export class PostLikeModule {}
