@@ -89,9 +89,8 @@ export class ProfileService {
 
       const followingProfile = await this.accountRepository.getProfileByUsername(username)
 
-      currentProfile.profile = profile.id
-
-      loggedInProfile.profile = followingProfile.id
+      currentProfile.profile = profile
+      loggedInProfile.profile = followingProfile
 
       following = await this.profileFollowedByRepository.isFollowing(currentProfile)
       followsYou = await this.profileFollowedByRepository.isFollowing(loggedInProfile)
@@ -156,7 +155,8 @@ export class ProfileService {
     if (follower.id == profileToBeFollowed.id) throw new ForbiddenException('Not allowed to follow yourself')
 
     const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
-    profileFollowedBy.profile = profileToBeFollowed.id
+    profileFollowedBy.follower = follower
+    profileFollowedBy.profile = profileToBeFollowed
 
     const followedProfile = await this.profileFollowedByRepository.follow(profileFollowedBy)
 
