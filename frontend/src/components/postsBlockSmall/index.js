@@ -57,11 +57,16 @@ class PostsBlockSmall extends Component {
           <Link to={ `posts/${post.path}` } className={ styles.smallContentClickable } />
           <div>
             <div>
-              <h4 className={ styles.smallContentTitle }>{post.title}</h4>
-              { post.description?.length > 0
-                ? <p className={ styles.smallContentDescription }>{post.description}</p>
-                : <p className={ styles.smallContentDescription }>Hi, check out my post!</p>
-              }
+              <h4 className={ styles.smallContentTitle }>
+                { post.title.length > 0
+                  ? post.title
+                  : 'Untitled' }
+              </h4>
+              <p className={ styles.smallContentDescription }>
+                { post.description.length > 0
+                  ? post.description
+                  : 'Hi, check out my post!' }
+              </p>
             </div>
             <div className={ styles.smallContentBottom }>
               <div className={ styles.smallContentBottomInfo }>
