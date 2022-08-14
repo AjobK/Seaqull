@@ -3,7 +3,7 @@
 .prompt {
 	background-color: $prompt-background;
 	border: 1px solid $prompt-border-color;
-	border-radius: 13px;
+	border-radius: 5px;
 	padding: 50px 60px;
 	
 	@include mobile-all-portrait {

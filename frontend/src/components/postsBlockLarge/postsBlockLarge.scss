@@ -39,7 +39,7 @@ $post-padding: 20px;
 		position: relative;
 		height: 336px;
 		overflow: hidden;
-		border-radius: 10px;
+		border-radius: 5px;
 
 		&::before {
 			@include post-blocks-overlay;

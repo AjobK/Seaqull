@@ -10,7 +10,7 @@
 	padding-top: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	margin-bottom: $header-spacing;
 	background-color: rgba($secondary, 0.1);
-	border-radius: 10px;
+	border-radius: 5px;
 
 	&:not(.filler)::before {
 		@include post-blocks-overlay;
