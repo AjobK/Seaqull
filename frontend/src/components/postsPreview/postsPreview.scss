@@ -73,18 +73,23 @@
 	background-color: transparent;
 	position: relative;
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 0;
+	border-radius: 10px;
+	transition: 0.2s;
+	border: 2px dashed rgba($secondary, 0.5);
+
 	&:hover {
-		transition: 0.2s;
-		background-color: rgba(0,0,0,0.1);
+		border: 2px dashed rgba($secondary, 0);
+		background-color: rgba($secondary, 0.4);
 	}
 	
 	&Icon {
-		position: absolute;
-		top: 33%;
-		left: 33%;
-		width: 34%;
-		height: 34%;
-		margin: 0 auto;
+		color: $secondary;
+		width: 80px !important;
+		height: 80px !important;
 	}
 }
 

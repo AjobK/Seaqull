@@ -9,7 +9,12 @@
 	min-width: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	padding-top: calc(100% / 4 - #{$header-spacing} / 4 * 3);
 	margin-bottom: $header-spacing;
-	background-color: rgba(0,0,0,0.25);
+	background-color: rgba($secondary, 0.1);
+	border-radius: 10px;
+
+	&:not(.filler)::before {
+		@include post-blocks-overlay;
+	}
 
 	&:nth-child(n+9) {
 		display: none;
@@ -44,35 +49,37 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
+		transition: 0.2s;
 
-		&:hover {
-			transition: 0.2s;
-			background-color: rgba(0,0,0,0.5);
+		&:hover { 
+			background-color: rgba($secondary,0.25);
 
 			.articleWrapperText {
 				opacity: 1;
-				background-color: rgba(0,0,0,0);
+				background-color: rgba($secondary,0);
 			}
 
 			.articleWrapperStatsLikes {
-				background-color: rgba(0,0,0,0);
+				background-color: rgba($secondary,0);
 			}
 		}
 
 		&Text {
 			transition: 0.3s;
-			opacity: 0.75;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 			transition: 0.2s;
-			background-color: rgba(0,0,0,0.5);
+			text-shadow: 0 0 5px $secondary;
 			color: white;
 			white-space: normal;
 			bottom: 0;
 			right: 0;
 			left: 0;
 			padding: 5%;
+			text-overflow: ellipsis;
+			word-break: break-word;
+			white-space: nowrap;
 			
 			&Title {
 				overflow: hidden;
@@ -94,7 +101,7 @@
 				border-radius: 10%;
 				align-items: center;
 				margin-left: auto;
-				background-color: rgba(0,0,0,0.5);
+				background-color: rgba($secondary,0.5);
 				&Text {
 					margin-left: 0.5rem;
 					font-size: 0.9rem;
@@ -106,6 +113,5 @@
 }
 
 .filler {
-	background-color: darken($background, 10%);
 	cursor: default;
 }
