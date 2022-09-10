@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { withRouter } from 'react-router'
 import { PostLikesList } from '../../components'
 import { Icon } from '../../components'
-import { UnitFormatterUtil, URLUtil } from '../../util/'
+import { UnitFormatterUtil, URLUtil, NotificationUtil } from '../../util/'
 
 @inject('store')
 @observer
@@ -23,7 +23,11 @@ class PostLike extends Component {
   }
 
   postLike = () => {
+    const { profile } = this.props.store
+
     const path = URLUtil.getLastPathArgument()
+
+    if (!profile.loggedIn) return this.showLoginRedirect()
 
     Axios.post(`${this.props.store.defaultData.backendUrl}/post/like/${path}`, {}, { withCredentials: true })
       .then(() => {
@@ -31,9 +35,15 @@ class PostLike extends Component {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          this.props.history.push('/login/')
+          this.showLoginRedirect()
         }
       })
+  }
+
+  showLoginRedirect = () => {
+    const { store, history } = this.props
+
+    NotificationUtil.showLoginRedirect(store, history)
   }
 
   postUnlike = () => {
@@ -68,6 +78,7 @@ class PostLike extends Component {
     })
   }
 
+  // TODO logging out does not cause the like button state to reset
   render() {
     const { likesAmount, isOwner } = this.props
 

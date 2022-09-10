@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import styles from './postBanner.scss'
 import { inject, observer } from 'mobx-react'
 import { Cropper, Icon } from '..'
-import { Link } from 'react-router-dom'
-import { ColorUtil, InputUtil } from '../../util/'
+import { InputUtil } from '../../util/'
 import Axios from 'axios'
 import { popUpData } from '../popUp/popUpData'
 
@@ -15,7 +14,7 @@ class PostBanner extends Component {
     this.state = {
       thumbnail: this.props.post.thumbnail,
       popUpOpen: false,
-      draggingOverThumbnail: true
+      draggingOver: false
     }
   }
 
@@ -27,13 +26,13 @@ class PostBanner extends Component {
 
   onThumbnailDragEnter = () => {
     this.setState({
-      draggingOverThumbnail: true
+      draggingOver: true
     })
   }
 
   onThumbnailDragLeave = () => {
     this.setState({
-      draggingOverThumbnail: false
+      draggingOver: false
     })
   }
 
@@ -68,16 +67,16 @@ class PostBanner extends Component {
   }
 
   fetchDefaultThumbnail = () => {
-    const { defaultData, notification } = this.props.store
+    const { defaultData } = this.props.store
 
-    Axios.get(`${defaultData.backendUrl}/post/thumbnail/default`)
+    Axios.get(`${ defaultData.backendUrl }/post/thumbnail/default`)
       .then((res) => {
         this.setState({
           thumbnail: res.data.thumbnail
         })
       })
       .catch(() => {
-        notification.setContent(popUpData.messages.networkError)
+        NotificationUtil.showNotification(this.props.store, popUpData.messages.networkError)
       })
   }
 
@@ -88,55 +87,29 @@ class PostBanner extends Component {
   }
 
   render() {
-    const { author, isOwner } = this.props
-
-    const uniqueAvatarColorBasedOnHash = ColorUtil.getUniqueColorBasedOnString(author.name)
+    const { isOwner } = this.props
+    const { thumbnail, draggingOver } = this.state
 
     return (
       <section className={ `${ styles.wrapper } ${ isOwner ? styles.owner : '' }` }>
-        <div
-          className={ styles.background }
-          style={ { backgroundImage: `url(${ this.state.thumbnail })` } }
-        />
+        <img className={ styles.thumbnail } src={ thumbnail } alt={ 'post' } />
 
         { isOwner && (
-          <div className={ styles.wrapperThumbnailEdit }>
+          <div className={ `${ styles.wrapperThumbnailEdit }
+            ${ draggingOver && styles.wrapperThumbnailDraggingOver }` }
+          >
+            <Icon iconName={ 'Pen' } />
+
             <input
               type='file' accept='image/png, image/jpeg' value={ '' }
               onChange={ this.onEditThumbnail }
               onDragEnter={ this.onThumbnailDragEnter }
               onDragLeave={ this.onThumbnailDragLeave }
             />
-
-            <div className={ styles.wrapperThumbnailEditButtonContainer }>
-              <span className={ styles.wrapperThumbnailEditButton }>
-                <span className={ styles.wrapperThumbnailEditButtonContent }>Click to edit</span>
-                <Icon iconName={ 'Pen' } />
-              </span>
-            </div>
           </div>
         ) }
 
         <div className={ styles.innerWrapper }>
-          <div className={ styles.info }>
-            <Link to={ `/profile/${ author.name }` } className={ styles.profileLink }>
-              <div className={ styles.infoInner }>
-                <div
-                  className={ styles.picture }
-                  style={ {
-                    backgroundImage: `url(${author.avatarURL || ''})`,
-                    backgroundColor: uniqueAvatarColorBasedOnHash
-                  } }
-                />
-                <div className={ styles.user_info }>
-                  <h2 className={ [styles.name].join(' ') }>{ author.name || '' }</h2>
-                  <div className={ styles.achieved }>
-                    <h3 className={ styles.role }>{ author.title || '' }</h3>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
           { this.state.upThumbnail && (
             <Cropper
               inputType={ 'thumbnail' }

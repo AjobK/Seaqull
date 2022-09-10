@@ -69,6 +69,8 @@ class ProfileCard extends Component {
 
   changeAvatar = (newAvatar) => {
     this.props.user.picture = newAvatar
+
+    this.props.store.profile.setAvatarURL(newAvatar)
   }
 
   closePopup = () => {

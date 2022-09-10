@@ -9,11 +9,12 @@ const Action = types.model({
 })
 
 const NotificationStore = types
-  .model('UserStore', {
+  .model('NotificationStore', {
     visible: types.optional(types.boolean, false),
     title: types.optional(types.string, ''),
     titleIcon: types.optional(types.string, ''),
     description: types.optional(types.string, ''),
+    imageKeyword: types.optional(types.string, ''),
     actionsData: types.optional(types.array(Action), []),
     canCloseWithClick: types.optional(types.boolean, true)
   })
@@ -26,6 +27,7 @@ const NotificationStore = types
       self.title = content.title
       self.titleIcon = content.titleIcon
       self.description = content.description
+      self.imageKeyword = content.imageKeyword
     },
     setActions(actions) {
       self.actionsData = actions
@@ -37,7 +39,8 @@ const NotificationStore = types
       return {
         title: self.title,
         titleIcon: self.titleIcon,
-        description: self.description
+        description: self.description,
+        imageKeyword: self.imageKeyword
       }
     },
     setCanCloseWithClick(canCloseWithClick) {
@@ -55,6 +58,7 @@ const NotificationStore = types
       self.actionsData = []
       self.canCloseWithClick = true
       self.customClose = null
+      self.imageKeyword = ''
     },
   }))
 

@@ -1,6 +1,5 @@
 import { types, applySnapshot } from 'mobx-state-tree'
 import DefaultDataStore from './defaultData'
-import UserStore from './user'
 import PostStore from './post'
 import ProfileStore from './profile'
 import NotificationStore from './notification'
@@ -10,7 +9,6 @@ let store = null
 const Store = types
   .model('Store', {
     defaultData: types.optional(DefaultDataStore, {}),
-    user: types.optional(UserStore, {}),
     post: types.optional(PostStore, {}),
     profile: types.optional(ProfileStore, {}),
     notification: types.optional(NotificationStore, {}),

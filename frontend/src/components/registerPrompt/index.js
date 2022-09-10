@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { popUpData } from '../popUp/popUpData'
+import { RedirectUtil } from '../../util'
 
 @inject('store')
 @observer
@@ -26,13 +27,15 @@ class RegisterPrompt extends Component {
   }
 
   auth = (captchaToken) => {
+    const { defaultData } = this.props.store
+
     this.setState({
       username: 'loading',
       email: 'loading',
       password: 'loading',
     })
 
-    Axios.defaults.baseURL = this.props.store.defaultData.backendUrl
+    Axios.defaults.baseURL = defaultData.backendUrl
 
     const payload = {
       username: document.getElementById(this.elId.Username).value,
@@ -43,24 +46,36 @@ class RegisterPrompt extends Component {
 
     Axios.post('/profile/register', payload, { withCredentials: true })
       .then((res) => {
-        this.props.store.profile.loginVerify()
-        this.props.store.profile.setProfileData(res.data.user)
-        this.goToProfile(res.data.user.profile.display_name)
-      })
-      .catch((res) => {
-        const { username, email, password, captcha } = res.response?.data?.errors
+        const { user } = res.data
 
-        this.setState({
-          username: username || [],
-          email: email || [],
-          password: password || [],
-          generalError: captcha || [],
-        })
+        this.props.store.profile.loginVerify()
+        this.props.store.profile.setProfileData(user)
+
+        RedirectUtil.getRedirectPath()
+          ? this.redirect()
+          : this.goToProfile(user.profile.display_name)
+      })
+      .catch((err) => {
+        const { status, data: { message } } = err.response
+
+        if (status >= 400 && status <= 499) {
+          this.handleError(Array.isArray(message) ? message : [message])
+        } else {
+          this.setState({
+            generalError: ['Internal server error']
+          })
+        }
       })
   }
 
   goToProfile = (username) => {
     this.props.history.push('/profile/' + username)
+  }
+
+  redirect = () => {
+    this.props.history.push(RedirectUtil.getRedirectPath())
+
+    RedirectUtil.undoRedirectPath()
   }
 
   onSubmit = (e) => {
@@ -91,6 +106,32 @@ class RegisterPrompt extends Component {
 
   onCaptchaError = () => {
     this.props.store.notification.setContent(popUpData.messages.captchaError)
+  }
+
+  handleError = (msg) => {
+    const errors = {
+      username: [],
+      email: [],
+      password: [],
+      generalError: [],
+    }
+
+    for (const elem of msg) {
+      const error = elem.toLowerCase()
+      const errorKey = error.split(' ')[0]
+
+      if (errors?.[errorKey])
+        errors[errorKey].push(elem)
+      else
+        errors.generalError.push(elem)
+    }
+
+    this.setState({
+      username: errors.username,
+      email: errors.email,
+      password: errors.password,
+      generalError: errors.generalError,
+    })
   }
 
   render() {

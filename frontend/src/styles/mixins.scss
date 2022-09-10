@@ -87,6 +87,18 @@
 	animation: fade-in 1s;
 }
 
+@mixin fade-out () {
+	@keyframes fade-out {
+		from {
+			opacity: 1;
+		} to {
+			opacity: 0;
+		}
+	}
+
+	animation: fade-out 1s;
+}
+
 @mixin pop-up () {
 	position: fixed;
 	background-color: white;
@@ -181,5 +193,25 @@
 			margin-right: 10px;
 			letter-spacing: 1px;
 		}
+	}
+}
+
+@mixin dark-overlay {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-size: 2rem;
+	background-color: rgba(0,0,0,0.75);
+	color: white;
+	transition: 0.2s;
+	opacity: 0;
+
+	&:hover {
+		opacity: 1;
 	}
 }

@@ -101,7 +101,7 @@
 	}
 
 	&Wrapper {
-		margin-top: 15px;
+		margin-top: 35px;
 		justify-content: space-around;
 		display: flex;
 		width: 100%;
@@ -125,13 +125,14 @@
 
 .image {
 	display: inline-block;
-	min-width: 110px;
+	margin-left: 35px;
+	min-width: 180px;
 	margin-top: auto;
-	height: calc(110px * 1.65);
+	height: calc(110px * 1.81);
 	border-radius: 10px;
-	margin-left: 30px;
 	background-repeat: no-repeat;
-	background-image: url('../../static/login/phone.svg');
+	background-image: url('../../static/login/login.svg');
+	background-size: contain;
 
 	@include mobile-all-portrait {
 		display: none;

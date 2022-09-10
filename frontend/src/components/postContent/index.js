@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
 import { EditorState, convertToRaw, ContentState, RichUtils } from 'draft-js'
@@ -6,6 +6,7 @@ import Editor from '@draft-js-plugins/editor'
 import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
 import 'draft-js/dist/Draft.css'
 import '../../DraftFallback.css'
+import { StyleUtil } from '../../util'
 import styles from './postContent.scss'
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
 import { TooltipButton, MobileBar } from '../../components'
@@ -21,7 +22,6 @@ class PostContent extends Component {
     this.type = type || 'content'
     this.selected = false
     this.maxLength = this.type == 'title' ? 128 : null
-    this.elRef = createRef()
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
     this.inlineToolbarPlugin = createInlineToolbarPlugin()
@@ -33,6 +33,7 @@ class PostContent extends Component {
     this.plugins = [this.inlineToolbarPlugin]
 
     this.editorInput = React.createRef()
+    this.wasReadOnly = false
 
     this.customStyleMap = {
       FormatBold: { fontWeight: 'bold' },
@@ -80,6 +81,18 @@ class PostContent extends Component {
     return start - end !== 0
   }
 
+  // TODO: Make safe
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { callBackGetData, canceled, type } = nextProps
+
+    if (type == 'content') {
+      let calledBackData = callBackGetData()
+
+      if (canceled && calledBackData)
+        this.setContent(calledBackData)
+    }
+  }
+
   handleBeforeInput = (chars) => {
     if (!this.maxLength) return false
 
@@ -115,11 +128,38 @@ class PostContent extends Component {
     this.props.callBackSaveData(this)
   }
 
+  focusOnEditor = () => {
+    this.editorInput.current.focus()
+  }
+
+  generateTypeStyle = (typeValue) => {
+    return styles[
+      StyleUtil.generateStyleString('postContent', typeValue)
+    ]
+  }
+
+  setContent(content) {
+    const { callBackSaveData } = this.props
+    let convertedContent = convertFromRaw(content)
+
+    try {
+      let eState = EditorState.createWithContent(
+        convertedContent
+      )
+
+      callBackSaveData(content)
+
+      this.setState({ editorState: eState })
+    } catch (e) { }
+  }
+
   componentDidMount() {
     let eState =
       typeof this.props.value == 'string'
         ? EditorState.createWithContent(ContentState.createFromText(this.props.value))
         : EditorState.createWithContent(ContentState.createFromText(JSON.stringify(this.props.value)))
+
+    this.wasReadOnly = this.props.readOnly
 
     try {
       eState = EditorState.createWithContent(this.props.value)
@@ -199,7 +239,7 @@ class PostContent extends Component {
   render() {
     const { type, readOnly } = this.props
 
-    const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
+    // const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
 
     const { InlineToolbar } = this.PluginComponents
 
@@ -207,9 +247,9 @@ class PostContent extends Component {
       <div>
         <PostContentBlock
           heading={ `${type == 'content' ? 'Your' : ''} ${type}` }
-          noHeading={ readOnly }
+          noHeading
           // onClick={this.focusOnEditor}
-          className={ [style] }
+          className={ [this.generateTypeStyle(this.type)] }
         >
           <Editor
             editorState={ this.state.editorState }

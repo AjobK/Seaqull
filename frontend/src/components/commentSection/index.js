@@ -21,13 +21,13 @@ class CommentSection extends Component {
   loadComments() {
     const path = URLUtil.getLastPathArgument()
     const { backendUrl } = this.props.store.defaultData
-    const postCommentsUrl = `${backendUrl}/comment/${path}/${this.props.store.profile.loggedIn ? '' : 'no-login'}`
+    const postCommentsUrl = `${ backendUrl }/comment/${ path }/${ this.props.store.profile.loggedIn ? '' : 'no-login' }`
 
     Axios.get(postCommentsUrl, { withCredentials: true })
       .then((response) => {
         // TODO: Forces rerender, but is not the best way to do it... Lack for a better solution
         this.setState({ comments: [] }, () => {
-          response.data.forEach((element) => {
+          let newComments = response.data.map((element) => {
             const comment = element.comment
             comment.likes = {
               commentLikes: element.commentLikePayload,
@@ -35,11 +35,11 @@ class CommentSection extends Component {
               length: element.commentLikePayload.length
             }
 
-            const comments = this.state.comments
-            comments.push(comment)
-            this.setState({
-              comments: this.nestComments(comments)
-            })
+            return comment
+          })
+
+          this.setState({
+            comments: this.nestComments(newComments)
           })
         })
       })
@@ -138,7 +138,7 @@ class CommentSection extends Component {
   render() {
     return (
       <div className={ styles.commentSection }>
-        <Section noTitle>
+        <Section className={ styles.commentSectionContent } noTitle>
           {this.displayCommentForm()}
           {this.state.comments && this.state.comments.length > 0 ? (
             this.state.comments.map((comment) => (

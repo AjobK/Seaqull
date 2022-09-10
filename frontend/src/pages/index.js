@@ -10,6 +10,9 @@ import Error from './error'
 import Login from './login'
 import Register from './register'
 import { Header } from '../layouts'
+import GuardedRoute from '../components/guardedRoute'
+import { ToastUtil } from '../util'
+import { toastData } from '../components/toast/toastData'
 
 class AppRouter extends Component {
   constructor(props) {
@@ -17,6 +20,8 @@ class AppRouter extends Component {
 
     this.store = initStore(true)
     this.store.profile.loginVerify()
+
+    ToastUtil.createToast(toastData.messages.prototypeNotification)
   }
 
   render () {
@@ -32,7 +37,7 @@ class AppRouter extends Component {
                 <Route path='/profile' exact component={ Profile } />
                 <Route path='/profile/:path' exact component={ Profile } />
                 <Route path='/error' exact component={ Error } />
-                <Route path='/new-post' exact component={ () => <Post new={ true } /> } />
+                <GuardedRoute path={ '/new-post' } redirect={ '/login' } component={ () => <Post isNew={ true } /> } />
                 <Route path='/posts/:postUrl' exact component={ Post } />
                 <Route path='/login' exact component={ Login } />
                 <Route path='/register' exact component={ Register } />

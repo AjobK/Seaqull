@@ -15,12 +15,24 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      JWT_SECRET: KGn]FCx0w~TI
-      JWT_EXPIRATION_TIME: 600000
-      secure: false
-      HCAPTCHA_DEV_SECRET_KEY: '0x0000000000000000000000000000000000000000'
-      HCAPTCHA_TEST_TOKEN: 10000000-aaaa-bbbb-cccc-000000000001
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: root
+      DB_NAME: seaqull
+      JWT_SECRET: KGn]FCx0w~TIdsfasdfAAd22
+      JWT_EXPIRATION: 6000000
+      SECURE: false
       NODE_ENV: development
+      HCAPTCHA_DEV_SECRET_KEY: '0x0000000000000000000000000000000000000000'
+      HCAPTCHA_PROD_SECRET_KEY: '0x0000000000000000000000000000000000000001'
+      HCAPTCHA_TEST_TOKEN: 10000000-aaaa-bbbb-cccc-000000000001
+      BACKEND_URL: http://localhost:8000
+      BACKEND_PORT: 8000
+      SWAGGER_DOCS_ENDPOINT: docs
+      BACKEND_TEST_URL: http://localhost:8000/api
+      HCAPTCHA_SITE_VERIFY: https://hcaptcha.com/siteverify/
+
 
     services:
       postgres:
@@ -42,15 +54,19 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '14.x'
       - name: Prepare for back-end tests
         run: |
-          mv ormconfig.example.json ormconfig.json
+          mv ormconfig.example.js ormconfig.js
           npm install
       - name: Setup and seed database
         run: npm run reset
       - name: Log all files in folder
         run: ls -a
+      - name: Display ORM config
+        run: cat ormconfig.js
+      - name: Display Node version
+        run: node -v
       - name: Start back-end server
         run: npm start &
       - name: Wait for OK status

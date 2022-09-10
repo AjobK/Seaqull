@@ -1,6 +1,7 @@
 import Button from './button'
 import Hamburger from './hamburger'
 import ProfileBar from './profileBar'
+import ProfileBarSmall from './profileBarSmall'
 import HeaderNavigation from './headerNavigation'
 import SubNavigation from './subNavigation'
 import SubNavigationElement from './subNavigationElement'
@@ -28,6 +29,7 @@ import CommentEditor from './commentEditor'
 import CommentChildren from './commentChildren'
 import ProfileInfo from './profileInfo'
 import PostLike from './postLike'
+import PostInfo from './postInfo'
 import PostLikesList from './postLikesList'
 import Cropper from './cropper'
 import Dialog from './dialog'
@@ -40,6 +42,7 @@ import GlobalNotification from './globalNotification'
 import ProfileCard from './profileCard'
 import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
+import Toast from './toast'
 import TooltipButton from './tooltipButton'
 import MobileBar from './mobileBar'
 import IconCustom from './iconCustom'
@@ -48,6 +51,7 @@ export {
   Button,
   Hamburger,
   ProfileBar,
+  ProfileBarSmall,
   HeaderNavigation,
   SubNavigation,
   SubNavigationElement,
@@ -74,6 +78,7 @@ export {
   CommentEditor,
   CommentChildren,
   PostLike,
+  PostInfo,
   ProfileInfo,
   PostLikesList,
   Cropper,
@@ -87,7 +92,8 @@ export {
   ProfileCard,
   ProfileBanner,
   BanUser,
+  Toast,
   TooltipButton,
   MobileBar,
-  IconCustom,
+  IconCustom
 }
