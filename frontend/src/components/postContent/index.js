@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-import styles from './postContent.scss'
 import { inject, observer } from 'mobx-react'
 import PostContentBlock from '../postContentBlock'
-import { EditorState, Editor, convertToRaw, convertFromRaw, ContentState } from 'draft-js'
+import { EditorState, convertToRaw, ContentState, RichUtils } from 'draft-js'
+import Editor from '@draft-js-plugins/editor'
+import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
+import 'draft-js/dist/Draft.css'
 import '../../DraftFallback.css'
 import { StyleUtil } from '../../util'
+import styles from './postContent.scss'
+import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar'
+import { TooltipButton, MobileBar } from '../../components'
 
 @inject('store')
 @observer
@@ -19,8 +24,31 @@ class PostContent extends Component {
     this.maxLength = this.type == 'title' ? 128 : null
     this.nextCallBackTime = ~~(Date.now() / 1000) + 10
 
+    this.inlineToolbarPlugin = createInlineToolbarPlugin()
+
+    this.PluginComponents = {
+      InlineToolbar: this.inlineToolbarPlugin.InlineToolbar
+    }
+
+    this.plugins = [this.inlineToolbarPlugin]
+
     this.editorInput = React.createRef()
     this.wasReadOnly = false
+
+    this.customStyleMap = {
+      FormatBold: { fontWeight: 'bold' },
+      FormatUnderlined: { textDecoration: 'underline' },
+      FormatItalic: { fontStyle: 'italic' },
+      'header-one': { fontSize: '2em', fontWeight: 'bold' },
+      'header-two': { fontSize: '1.5em', fontWeight: 'bold' },
+      'header-three': { fontSize: '1em', fontWeight: 'bold' },
+    }
+
+    this.blockRenderMap = {
+      'HeadingOne': { element: 'h1' },
+      'HeadingTwo': { element: 'h2' },
+      'HeadingThree': { element: 'h3' },
+    }
 
     this.state = {
       editorState: EditorState.createEmpty(),
@@ -32,11 +60,25 @@ class PostContent extends Component {
         right: -9999,
         display: 'none',
       },
+      selected: false,
     }
   }
 
   onChange = (editorState) => {
-    this.setState({ editorState }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
+    this.setState({
+      editorState,
+      selected: editorState.getSelection().getHasFocus()
+        ? this.isTextSelected(editorState)
+        : false
+    }, () => this.props.callBackSaveData(convertToRaw(editorState.getCurrentContent())))
+  }
+
+  isTextSelected = (editorState) => {
+    const selectionState = editorState.getSelection()
+    const start = selectionState.getStartOffset()
+    const end = selectionState.getEndOffset()
+
+    return start - end !== 0
   }
 
   // TODO: Make safe
@@ -62,6 +104,7 @@ class PostContent extends Component {
   handlePastedText = (text) => {
     if (!this.maxLength) return false
 
+    text.removeInlineStyle()
     const totalLength = this.state.editorState.getCurrentContent().getPlainText().length + text.length
 
     return totalLength > this.maxLength
@@ -78,6 +121,7 @@ class PostContent extends Component {
     this.focused = false
     this.setState({
       focused: false,
+      selected: false,
     })
 
     this.selected = false
@@ -124,8 +168,80 @@ class PostContent extends Component {
     this.setState({ editorState: eState }, () => this.props.callBackSaveData(convertToRaw(eState.getCurrentContent())))
   }
 
+  onToggleInlineStyling = (styling, e) => {
+    e.preventDefault()
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, styling))
+  }
+
+  onToggleBlockStyling = (styling, e) => {
+    e.preventDefault()
+    this.onChange(RichUtils.toggleBlockType(this.state.editorState, styling))
+  }
+
+  getBlockStyle = (block) => {
+    let blockType = block.getType().split('Format').pop()
+
+    return blockType
+      ? `DraftEditor-${blockType[0].toLowerCase() + blockType.slice(1)}`
+      : null
+  }
+
+  toPascalCase = (text) => {
+    const words = text.split('-')
+    const capitalizedWord = words.map((word) => word[0].toUpperCase() + word.slice(1))
+
+    return capitalizedWord.join('')
+  }
+
+  renderButtons = () => {
+    const inlineButtonStyling = ['FormatBold', 'FormatUnderlined', 'FormatItalic']
+    const headlineButtons = ['header-one', 'header-two', 'header-three']
+    const alignButtonArray = ['FormatAlignLeft', 'FormatAlignCenter', 'FormatAlignRight']
+
+    return (
+      <>
+        {
+          inlineButtonStyling.map((element, i) => (
+            <TooltipButton
+              key={ i }
+              iconName={ element }
+              prefix={ 'mui' }
+              mouseDown={ (e) => this.onToggleInlineStyling(element, e) }
+            />
+          ))
+        }
+        <Separator />
+        {
+          headlineButtons.map((element, i) => (
+            <TooltipButton
+              key={ i }
+              iconName={ require(`../../static/icons/inlineToolbar/${this.toPascalCase(element)}.svg`) }
+              prefix={ 'custom' }
+              mouseDown={ (e) => this.onToggleInlineStyling(`${element}`, e) }
+            />
+          ))
+        }
+        <Separator />
+        {
+          alignButtonArray.map((element, i) => (
+            <TooltipButton
+              key={ i }
+              iconName={ element }
+              prefix={ 'mui' }
+              mouseDown={ (e) => this.onToggleBlockStyling(element, e) }
+            />
+          ))
+        }
+      </>
+    )
+  }
+
   render() {
     const { type, readOnly } = this.props
+
+    // const style = styles[`postContent${this.type.charAt(0).toUpperCase() + this.type.slice(1)}`]
+
+    const { InlineToolbar } = this.PluginComponents
 
     return (
       <div>
@@ -137,18 +253,42 @@ class PostContent extends Component {
         >
           <Editor
             editorState={ this.state.editorState }
-            ref={ this.editorInput }
+            ref={ (element) => {
+              this.editor = element
+            } }
             onChange={ this.onChange }
-            readOnly={ readOnly }
-            // onFocus={this.onFocus}
-            // onBlur={this.onBlur}
+            readOnly={ readOnly !== undefined ? readOnly : false }
+            onFocus={ this.onFocus }
+            onBlur={ this.onBlur }
             spellCheck={ true }
-            placeholder={ type == 'title' ? 'Title' : 'Write your story...' }
+            placeholder={ type === 'title' ? 'Title' : 'Write your story...' }
+            stripPastedStyles={ true }
             handleBeforeInput={ this.handleBeforeInput }
             handlePastedText={ this.handlePastedText }
-            blockStyleFn={ () => `${styles.postContent} ${styles[type]}` }
+            customStyleMap={ this.customStyleMap }
+            blockStyleFn={ this.getBlockStyle }
+            blockRenderMap={ this.blockRenderMap }
+            plugins={ this.plugins }
           />
-          {/* { type != 'title' && this.inlineStyleControls()} */}
+
+          { type === 'content' &&
+            <div>
+              <InlineToolbar>
+                {
+                  () => (
+                    <>
+                      { this.renderButtons() }
+                    </>
+                  )
+                }
+              </InlineToolbar>
+              { !readOnly && this.state.selected &&
+                <MobileBar>
+                  { this.renderButtons() }
+                </MobileBar>
+              }
+            </div>
+          }
         </PostContentBlock>
       </div>
     )

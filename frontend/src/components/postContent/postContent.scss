@@ -26,7 +26,7 @@ $content-side-padding: 35px;
 	}
 	&Story {
 		margin-bottom: 2.5rem;
-		font-family: Sanchez;
+		font-family: Sanchez, serif;
 		color: rgba(0,0,0,0.8);
 		font-size: 1.25rem;
 		line-height: 1.9rem;
@@ -65,8 +65,7 @@ $content-side-padding: 35px;
 		max-width: 10px;
 		height: 10px;
 		background-color: black;
-		margin: 0 auto;
-		margin-top: -5px;
+		margin: -5px auto 0;
 		transform: rotate(45deg);
 	}
 
@@ -89,4 +88,22 @@ $content-side-padding: 35px;
 			color: lighten($primary, 15%);
 		}
 	}
+}
+// Default styling class of inline toolbar which needs to get overridden
+div[class^='tukdd6b']{
+	@include mobile-all-portrait {
+		display: none;
+	}
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1em;
 }

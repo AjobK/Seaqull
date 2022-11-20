@@ -1,0 +1,22 @@
+@import '../../styles/index.scss';
+
+$tooltip-hover: #EFEFEF;
+$height: 36px;
+$width: 36px;
+
+.tooltipButton {
+	background-color: #fbfbfb;
+	padding: 5px;
+	color: #888;
+	font-size: 18px;
+	border: 0;
+	vertical-align: bottom;
+	height: $height;
+	width: $width;
+	cursor: pointer;
+
+	&:hover, &:focus {
+		background: $tooltip-hover;
+		outline: 0;
+	}
+}
