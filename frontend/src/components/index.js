@@ -43,6 +43,9 @@ import ProfileCard from './profileCard'
 import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
 import Toast from './toast'
+import TooltipButton from './tooltipButton'
+import MobileBar from './mobileBar'
+import IconCustom from './iconCustom'
 
 export {
   Button,
@@ -89,5 +92,8 @@ export {
   ProfileCard,
   ProfileBanner,
   BanUser,
-  Toast
+  Toast,
+  TooltipButton,
+  MobileBar,
+  IconCustom
 }
