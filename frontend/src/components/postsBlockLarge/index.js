@@ -15,6 +15,20 @@ class PostsBlockLarge extends Component {
     // TODO: Add bookmark functionality
   }
 
+  getDescription = (post) => {
+    var description = post.description
+
+    if (description != null || description != '') {
+      description = post.content.substring(0, 150)
+
+      if (post.content.length > description.length) {
+        description += '...'
+      }
+    }
+
+    return description
+  }
+
   render() {
     const { post, store } = this.props
 
@@ -44,7 +58,7 @@ class PostsBlockLarge extends Component {
             <Link to={ `posts/${ post.path }` }>
               <h3 className={ styles.largeThumbnailContentTitle }>{post.title}</h3>
               <div className={ styles.largeThumbnailContentDescription }>
-                <p>{post.description}</p>
+                <p>{this.getDescription(post)}</p>
               </div>
             </Link>
             <div className={ styles.largeThumbnailContentBottom }>

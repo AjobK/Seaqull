@@ -28,7 +28,7 @@ export class Post {
   @Column()
   content: string
 
-  @Column()
+  @Column({ nullable: true })
   description: string
 
   @ManyToOne(() => Attachment, (attachment) => attachment.id)
