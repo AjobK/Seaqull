@@ -15,7 +15,8 @@ import {
   PostContent,
   PostInfo,
   PostLike,
-  ProfileBarSmall
+  ProfileBarSmall,
+  DocumentHead
 } from '../../components'
 import ReactTooltip from 'react-tooltip'
 import { popUpData } from '../../components/popUp/popUpData'
@@ -299,6 +300,11 @@ class Post extends App {
 
     return (
       <Standard className={ styles.post }>
+        <DocumentHead
+          title={ `${ post.title } | @${ author } on Seaqull` }
+          description={ post.description ?? post.content }
+          image={ post.thumbnail }
+        />
         <div className={ styles.postSideWrapper }>
           <div className={ styles.postSideWrapperContent }>
             <div className={ styles.postSide }>

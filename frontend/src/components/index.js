@@ -43,6 +43,7 @@ import ProfileCard from './profileCard'
 import ProfileBanner from './profileBanner'
 import BanUser from './banUser'
 import Toast from './toast'
+import DocumentHead from './documentHead'
 
 export {
   Button,
@@ -89,5 +90,6 @@ export {
   ProfileCard,
   ProfileBanner,
   BanUser,
-  Toast
+  Toast,
+  DocumentHead
 }
