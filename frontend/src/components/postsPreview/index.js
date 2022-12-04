@@ -1,31 +1,35 @@
 import React, { Component } from 'react'
 import styles from './postsPreview.scss'
-import Plus from '../../static/icons/plus.svg'
 import { PreviewPost } from '../../components'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
+import { Icon } from '../../components'
 
 @inject('store')
 @observer
 class PostsPreview extends Component {
   render() {
-    const posts = this.props.posts
+    const { create, posts } = this.props
 
     let arr = []
 
-    for (let i = 0; i < (posts.length > 9 ? posts.length : 9); i++) {
-      arr.push(<PreviewPost post={ posts[i] || {} } key={ i } />)
+    let postsAmountToRender = create ? 7 : 8
+
+    if (posts.length > 8)
+      postsAmountToRender = posts.length + (posts.length + (create ? 1 : 0)) % 4
+
+    for (let i = 0; i < postsAmountToRender; i++) {
+      arr.push(<PreviewPost post={ posts[i] || {} } key={ i } filler={ i > posts.length - 1 } />)
     }
 
     return (
       <section className={ styles.wrapper }>
-        {this.props.create && (
+        {create && (
           <Link to="/new-post" className={ styles.add }>
-            <img className={ styles.addIcon } src={ Plus } draggable={ false } />
+            <Icon prefix={ 'mui' } iconName={ 'Add' } className={ styles.addIcon } />
           </Link>
         )}
         {arr}
-        <div className={ `${styles.article} ${styles.fillerMobile}` } />
       </section>
     )
   }

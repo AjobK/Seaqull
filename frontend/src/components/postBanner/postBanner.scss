@@ -9,6 +9,8 @@
 	justify-content: flex-end;
 	align-items: flex-end;
 	z-index: 2;
+	overflow: hidden;
+	border-radius: 5px;
 
 	&Thumbnail {
 		&Edit {

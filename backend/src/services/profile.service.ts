@@ -55,6 +55,8 @@ export class ProfileService {
     const followers = []
 
     followersById.forEach((entry) => {
+      const { avatar_attachment } = entry.follower
+      entry.follower.avatar_attachment.path = `${this.configService.get('BACKEND_URL')}/${avatar_attachment.path}`
       followers.push(entry.follower)
     })
 
@@ -87,11 +89,8 @@ export class ProfileService {
 
       const followingProfile = await this.accountRepository.getProfileByUsername(username)
 
-      currentProfile.follower = followingProfile.id
-      currentProfile.profile = profile.id
-
-      loggedInProfile.follower = profile.id
-      loggedInProfile.profile = followingProfile.id
+      currentProfile.profile = profile
+      loggedInProfile.profile = followingProfile
 
       following = await this.profileFollowedByRepository.isFollowing(currentProfile)
       followsYou = await this.profileFollowedByRepository.isFollowing(loggedInProfile)
@@ -156,8 +155,8 @@ export class ProfileService {
     if (follower.id == profileToBeFollowed.id) throw new ForbiddenException('Not allowed to follow yourself')
 
     const profileFollowedBy: ProfileFollowedBy = new ProfileFollowedBy()
-    profileFollowedBy.follower = follower.id
-    profileFollowedBy.profile = profileToBeFollowed.id
+    profileFollowedBy.follower = follower
+    profileFollowedBy.profile = profileToBeFollowed
 
     const followedProfile = await this.profileFollowedByRepository.follow(profileFollowedBy)
 

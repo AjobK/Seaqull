@@ -12,7 +12,7 @@ $post-padding: 10px;
 	margin-top: auto;
 	cursor: pointer;
 	color: white;
-	opacity: .8;
+	opacity: 0.8;
 	align-items: center;
 	font-size: 1.1em;
 
@@ -29,6 +29,14 @@ $post-padding: 10px;
 		position: relative;
 		width: 100%;
 		max-width: $small-thumbnail-width-desktop;
+		border-radius: 5px;
+		overflow: hidden;
+		
+		&::before {
+			@include post-blocks-overlay;
+			background-image: none;
+			background-color: rgba($secondary, 0.2) !important;
+		}
 
 		&Content {
 			display: flex;
@@ -38,7 +46,6 @@ $post-padding: 10px;
 			width: 100%;
 			padding: 30px $post-padding $post-padding;
 			pointer-events: none;
-			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 			min-height: 35%;
 
 			> * {
@@ -157,7 +164,6 @@ $post-padding: 10px;
 				display: flex;
 				align-items: center;
 				font-size: $nr-xs-fontsize;
-				font-weight: 300;
 				overflow: hidden;
 
 				& > * {
@@ -165,8 +171,8 @@ $post-padding: 10px;
 				}
 
 				&Text {
-					color: $primary;
-					opacity: .6;
+					color: rgba($secondary, 0.35);
+					font-size: 14px;
 					display: flex;
 
 					&Icon {

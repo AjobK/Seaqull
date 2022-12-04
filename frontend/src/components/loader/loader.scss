@@ -34,23 +34,19 @@
 }
 
 .loader {
-	display: inline-block;
+	display: flex;
 	margin: 0 auto;
-	animation: load 1.5s infinite;
+	animation: load 1.5s ease-in-out infinite;
 	border-radius: 100%;
+	pointer-events: none;
 
-	&Image {
+	&Icon {
 		border-radius: 100%;
+		width: 40px !important;
 		height: 40px;
-		width: 40px;
+		font-size: 26px;
+		padding: 7px;
 		background-color: $primary;
-		background-repeat: no-repeat;
-		background-position: bottom;
-		background-size: cover;
-
-		@include mobile-all {
-			height: 40px;
-			width: 40px;
-		}
+		color: white;
 	}
 }

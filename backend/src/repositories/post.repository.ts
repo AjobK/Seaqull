@@ -37,6 +37,7 @@ export class PostRepository extends Repository<Post> {
   public async getPostsByProfile(profile: Profile): Promise<Post[]> {
     const posts = await this.createQueryBuilder('post')
       .leftJoinAndSelect('post.profile', 'profile')
+      .leftJoinAndSelect('post.thumbnail_attachment', 'attachment')
       .where('post.profile = :profileId', { profileId: profile.id })
       .andWhere('post.archived_at IS NULL')
       .orderBy({

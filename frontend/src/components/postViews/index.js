@@ -3,7 +3,9 @@ import styles from './postViews.scss'
 import Axios from 'axios'
 import { Icon } from '../../components'
 import { URLUtil, UnitFormatterUtil, StyleUtil } from '../../util/'
+import { inject, observer } from 'mobx-react'
 
+@inject('store') @observer
 class PostViews extends Component {
   constructor(props) {
     super(props)
@@ -12,7 +14,8 @@ class PostViews extends Component {
 
   loadViews() {
     const path = URLUtil.getLastPathArgument()
-    const url = `http://localhost:8000/api/post/view/${ path }`
+    const { backendUrl } = this.props.store.defaultData
+    const url = `${ backendUrl }/post/view/${ path }`
 
     Axios.get(url)
       .then((response) => {

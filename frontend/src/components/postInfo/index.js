@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styles from './postInfo.scss'
-import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import { DraftJsUtil, StyleUtil, TextUtil, TimeUtil } from '../../util/'
 import { Icon, PostViews } from '../index'
@@ -64,18 +63,19 @@ class PostInfo extends Component {
 
     return (
       <div className={ `${ styles.postInfo } ${ this.getTypeStyles().join(' ') }` }>
-        <div className={ `${ styles.postInfoSection } ${ styles.postInfoCategoryWrapper }` }>
+        {/* TODO: Remove or add back when categories/tags work */}
+        {/* <div className={ `${ styles.postInfoSection } ${ styles.postInfoCategoryWrapper }` }>
           <Link to={ '#' } className={ styles.postInfoCategory }>
             <span className={ styles.postInfoCategoryBullet }>
               <Icon iconName={ 'Circle' } />
             </span>
             <p>
               Machine learning
-              <span>{/* UNDERLINE */}</span>
+              <span></span>
             </p>
           </Link>
           <span className={ styles.postInfoBullet }>&bull;</span>
-        </div>
+        </div> */}
         <div className={ styles.postInfoSection }>
           { withViews && (
             <div className={ styles.postInfoViews }>

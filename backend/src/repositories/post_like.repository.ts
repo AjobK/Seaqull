@@ -21,8 +21,12 @@ export class PostLikeRepository extends Repository<PostLike> {
     return !!postLike
   }
 
-  public async getUserLikesByProfileId(id: number, limit: number): Promise<PostLike[]> {
-    const userLikes = await this.find({ where: { profile: id }, take: limit, relations: ['post'] })
+  public async getUserLikesByProfileId(id: number, limit: number): Promise<any[]> {
+    const userLikes = await this.find({
+      where: { profile: id },
+      take: limit,
+      relations: ['post', 'post.thumbnail_attachment']
+    })
 
     return userLikes
   }

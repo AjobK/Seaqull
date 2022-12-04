@@ -117,10 +117,6 @@ export class PostService {
 
     const posts = await this.postRepository.getPostsByProfile(account.profile) as any[]
 
-    for (const post of posts) {
-      post.thumbnail = await this.getPostThumbnailURL(post.id)
-    }
-
     return posts
   }
 
@@ -240,7 +236,7 @@ export class PostService {
 
     const BANNER = await this.updateThumbnailAttachment(post, file)
 
-    return `${ this.configService.get('BACKEND_URL') }${ BANNER.path }`
+    return `${ this.configService.get('BACKEND_URL') }/${ BANNER.path }`
   }
 
   public async isAllowedToPost(user: Account): Promise<{ allowedToPost: boolean, msDiff: number }> {

@@ -125,7 +125,6 @@
 	right: 0;
 	cursor: pointer;
 	color: white;
-	opacity: 0.5;
 	align-items: center;
 	font-size: 1.3em;
 	transition: 0.2s linear;
@@ -214,4 +213,22 @@
 	&:hover {
 		opacity: 1;
 	}
+}
+
+@mixin post-blocks-overlay {
+	pointer-events: none;
+	cursor: pointer;
+	bottom: 0;
+	content: '';
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-image: linear-gradient(
+		0deg,
+		$secondary,
+		rgba($secondary, 0.8) 20%,
+		rgba($secondary, 0.2) 60%,
+		rgba($secondary, 0.05)
+	);
 }

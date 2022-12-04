@@ -21,7 +21,7 @@ class NotificationUtil {
         action: () => {
           RedirectUtil.setRedirectPath(window.location.pathname)
           notification.close()
-          history.push('/login/')
+          history.push('/register/')
         }
       }
     ])

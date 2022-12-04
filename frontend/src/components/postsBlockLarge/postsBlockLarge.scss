@@ -38,14 +38,21 @@ $post-padding: 20px;
 	&Thumbnail {
 		position: relative;
 		height: 336px;
+		overflow: hidden;
+		border-radius: 5px;
+
+		&::before {
+			@include post-blocks-overlay;
+		}
 
 		&Bookmark {
 			padding: 4px;
 			margin: $post-padding - 4px;
 			@include bookmark();
-
+			opacity: 0.8;
+			
 			&Icon {
-				filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.45));
+				filter: drop-shadow(0 0 2px rgba($secondary, 0.45));
 			}
 		}
 
@@ -59,8 +66,6 @@ $post-padding: 20px;
 			max-width: inherit;
 			max-height: 100%;
 			min-height: 52%;
-			background: $secondary;
-			background: linear-gradient(0deg, rgba($secondary, .9) 0%, rgba($secondary, .6) 70%, rgba($secondary, 0) 100%);
 			padding: 50px $post-padding 0;
 			line-height: 22px;
 			pointer-events: none;
@@ -144,6 +149,7 @@ $post-padding: 20px;
 		}
 
 		.goTo {
+			transition: 0.2s;
 			margin-top: 15px;
 			display: flex;
 			font-size: $nr-xxs-fontsize;

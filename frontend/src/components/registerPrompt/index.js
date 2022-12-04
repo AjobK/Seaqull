@@ -172,8 +172,8 @@ class RegisterPrompt extends Component {
             </div>
             <HCaptcha
               sitekey={ process.env.NODE_ENV === 'development'
-                ? process.env.HCAPTCHA_DEV_SITE_KEY
-                : process.env.HCAPTCHA_PROD_SITE_KEY }
+                ? process.env.HCAPTCHA_DEVELOPMENT_SITE_KEY
+                : process.env.HCAPTCHA_PRODUCTION_SITE_KEY }
               size={ 'invisible' }
               onVerify={ (token, ekey) => this.handleVerificationSuccess(token, ekey) }
               onError={ this.onCaptchaError }

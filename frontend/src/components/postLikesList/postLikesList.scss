@@ -38,7 +38,7 @@ $likes-list-padding: 20px;
 				display: flex;
 
 				h2 {
-					color: $dark;
+					color: $secondary;
 					font-size: 1em;
 
 					.like {
@@ -68,20 +68,22 @@ $likes-list-padding: 20px;
 			list-style: none;
 			overflow-y: auto;
 			max-height: 100%;
-			padding-bottom: 15%;
+			margin-top: 10px;
 
 			&Item {
 				padding: 0 $likes-list-padding;
 
 				.profileLikeLink {
-					padding: 20px 0;
+					padding: 10px;
 					display: flex;
 					align-items: center;
 					cursor: pointer;
-					border-bottom: #CFCFCF 1px solid;
+					border-radius: 5px;
+					transition: 0.2s;
+					border: 1px solid transparent;
 
 					&:hover {
-						border-bottom-color: $primary;
+						border: 1px solid rgba($secondary, 0.2);
 					}
 
 					.profileAvatarWrapper {
@@ -95,8 +97,8 @@ $likes-list-padding: 20px;
 							background-size: cover;
 							background-position: center;
 							background-color: #1f1f1f;
-							width: 50px;
-							height: 50px;
+							width: 40px;
+							height: 40px;
 
 							&:hover {
 								filter: brightness(90%);

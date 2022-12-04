@@ -1,7 +1,7 @@
 # Node Modules
 /node_modules
 
-# Distribution
+# Distribution 
 dist/
 
 # Storybook static files

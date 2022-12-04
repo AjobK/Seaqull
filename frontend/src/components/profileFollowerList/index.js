@@ -31,7 +31,7 @@ class ProfileFollowerList extends Component {
           res.data.followers.forEach((follower) => {
             followers.push({
               displayName: follower.display_name,
-              avatarURL: 'http://localhost:8000/' + follower.avatar_attachment.path,
+              avatarURL: follower.avatar_attachment.path,
               title: follower.title.name,
             })
           })
@@ -42,6 +42,10 @@ class ProfileFollowerList extends Component {
         })
     }
 
+    /* TODO:
+        Refactor. Currently this uses a different scss file.
+        Extract the entirety to a resuable component which is implemented in LikesList and FollowerList
+    */
     render() {
       return (
         <div className={ `${styles.postLikesListWrapper}` }>
@@ -77,7 +81,6 @@ class ProfileFollowerList extends Component {
                       </div>
                       <div className={ `${styles.profileTextWrapper}` }>
                         <p className={ `${styles.profileDisplayName}` }> {follower.displayName }</p>
-                        <p className={ `${styles.profileTitle}` }>{ follower.title }</p>
                       </div>
                     </Link>
                   </li>

@@ -23,15 +23,16 @@ class PostsBlockSmall extends Component {
       <div className={ styles.small }>
         <div className={ styles.smallThumbnail }>
           <div className={ styles.smallThumbnailContent }>
-            <Link to={ '#' } className={ styles.smallThumbnailContentCategory }>
+            {/* TODO: Remove or add back when categories/tags work */}
+            {/* <Link to={ '#' } className={ styles.smallThumbnailContentCategory }>
               <span className={ styles.smallThumbnailContentCategoryBullet }>
                 <Icon iconName={ 'Circle' } />
               </span>
               <p>
                 Machine learning
-                <span>{/* UNDERLINE */}</span>
+                <span></span>
               </p>
-            </Link>
+            </Link> */}
             <span
               className={ styles.bookmark }
               onClick={ this.bookmarkPost }

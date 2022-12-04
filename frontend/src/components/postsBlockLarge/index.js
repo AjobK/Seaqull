@@ -44,7 +44,11 @@ class PostsBlockLarge extends Component {
           </ReactTooltip>
           <div className={ styles.largeThumbnailContent }>
             <Link to={ `posts/${ post.path }` }>
-              <h3 className={ styles.largeThumbnailContentTitle }>{post.title}</h3>
+              <h3 className={ styles.largeThumbnailContentTitle }>
+                { post.title.length > 0
+                  ? post.title
+                  : 'Untitled' }
+              </h3>
               <div className={ styles.largeThumbnailContentDescription }>
                 <p>{TextUtil.getShortPostDescription(post, 150)}</p>
               </div>

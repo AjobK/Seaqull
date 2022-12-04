@@ -186,7 +186,7 @@ class Post extends App {
 
     fd.append('file', this.addedThumbnail)
     fd.append('title', JSON.stringify(this.state.post.title))
-    fd.append('description', JSON.stringify('None'))
+    fd.append('description', '')
     fd.append('content', JSON.stringify(this.state.post.content))
 
     Axios.post('/post', fd, {
