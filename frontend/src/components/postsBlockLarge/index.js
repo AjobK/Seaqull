@@ -5,6 +5,8 @@ import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
+import { TextUtil } from '../../util'
+
 @inject('store') @observer
 class PostsBlockLarge extends Component {
   constructor(props) {
@@ -13,20 +15,6 @@ class PostsBlockLarge extends Component {
 
   bookmarkPost = () => {
     // TODO: Add bookmark functionality
-  }
-
-  getDescription = (post) => {
-    var description = post.description
-
-    if (description != null || description != '') {
-      description = post.content.substring(0, 150)
-
-      if (post.content.length > description.length) {
-        description += '...'
-      }
-    }
-
-    return description
   }
 
   render() {
@@ -58,7 +46,7 @@ class PostsBlockLarge extends Component {
             <Link to={ `posts/${ post.path }` }>
               <h3 className={ styles.largeThumbnailContentTitle }>{post.title}</h3>
               <div className={ styles.largeThumbnailContentDescription }>
-                <p>{this.getDescription(post)}</p>
+                <p>{TextUtil.getShortPostDescription(post, 150)}</p>
               </div>
             </Link>
             <div className={ styles.largeThumbnailContentBottom }>

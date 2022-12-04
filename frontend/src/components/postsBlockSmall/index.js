@@ -57,7 +57,7 @@ class PostsBlockSmall extends Component {
           <div>
             <div>
               <h4 className={ styles.smallContentTitle }>{post.title}</h4>
-              <p className={ styles.smallContentDescription }>{post.description}</p>
+              <p className={ styles.smallContentDescription }>{TextUtil.getShortPostDescription(post, 150)}</p>
             </div>
             <div className={ styles.smallContentBottom }>
               <div className={ styles.smallContentBottomInfo }>
