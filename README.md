@@ -22,7 +22,7 @@ Big thank you from the Seaqull team to the people who gave us feedback and helpe
 
 Cheers,
 
-Ajob Kustra
+Ajob Kustra  
 Founder of Seaqull
 
 
