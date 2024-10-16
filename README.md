@@ -10,6 +10,22 @@ The platform made for technology enthousiasts! With community members ranging fr
   <img src="https://user-images.githubusercontent.com/35965716/121772716-7d612f80-cb77-11eb-8f57-236b3e0a9a13.png">
 </p>
 
+<h2 align="center" colo="red"> Seaqull Open-Source - 16th of October 2024  </h2>
+
+Dear reader 👋,
+
+As of the **16th of October 2024**, our team has decided to make the Seaqull project open-source. For many years, we worked on and off on this project with the ambition to connect people in the engineering community. However, reality showed that we lacked the resources and time to make this project a true success. It is with pleasure that we make our project open-source with the hope to help people in their own projects.
+
+We apologise in advance for potential unprofessional language in the code or documentation. This project was the product of enthousiastic engineers in the early stages of their career, and we initially did not plan on making it open-source. If you feel like contributing to the project, feel free! We will gladly review your work and make it part of our project. You can also contact us directly on LinkedIn or in the issues of this repository.
+
+Big thank you from the Seaqull team to the people who gave us feedback and helped us throughout the project.
+
+Cheers,
+
+Ajob Kustra
+Founder of Seaqull
+
+
 
 ---
 
