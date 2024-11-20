@@ -5,6 +5,8 @@ import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
+import { TextUtil } from '../../util'
+
 @inject('store') @observer
 class PostsBlockLarge extends Component {
   constructor(props) {
@@ -48,11 +50,7 @@ class PostsBlockLarge extends Component {
                   : 'Untitled' }
               </h3>
               <div className={ styles.largeThumbnailContentDescription }>
-                <p>
-                  { post.description.length > 0
-                    ? post.description
-                    : 'Hi, check out my post!' }
-                </p>
+                <p>{TextUtil.getShortPostDescription(post, 150)}</p>
               </div>
             </Link>
             <div className={ styles.largeThumbnailContentBottom }>

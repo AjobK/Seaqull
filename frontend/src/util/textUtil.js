@@ -38,6 +38,20 @@ class TextUtil {
   static getTrimmedText(text) {
     return text.replace(/^\s+/, '').replace(/\s+$/, '')
   }
+
+  static getShortPostDescription = (post, length) => {
+    var description = post.description
+
+    if (description != null || description != '') {
+      description = post.content.substring(0, length)
+
+      if (post.content.length > description.length) {
+        description += '...'
+      }
+    }
+
+    return description
+  }
 }
 
 export default TextUtil
